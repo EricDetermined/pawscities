@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  avatarUrl     String?
+  role          String    @default("user")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  dogProfiles   DogProfile[]
+  reviews       Review[]
+  checkIns      CheckIn[]
+  favorites     Favorite[]
+}
+
+model DogProfile {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  breed       String?
+  size        String?
+  age         Int?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model City {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  state         String
+  country       String   @default("USA")
+  description   String?
+  imageUrl      String?
+  latitude      Float?
+  longitude     Float?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  establishments Establishment[]
+}
+
+model Establishment {
+  id            String   @id @default(cuid())
+  cityId        String
+  name          String
+  slug          String
+  category      String
+  address       String?
+  phone         String?
+  website       String?
+  description   String?
+  imageUrl      String?
+  latitude      Float?
+  longitude     Float?
+  dogPolicy     String?
+  amenities     String[]
+  isVerified    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  city          City     @relation(fields: [cityId], references: [id])
+  reviews       Review[]
+  checkIns      CheckIn[]
+  favorites     Favorite[]
+  @@unique([cityId, slug])
+}
+
+model Review {
+  id              String   @id @default(cuid())
+  userId          String
+  establishmentId String
+  rating          Int
+  content         String?
+  createdAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id])
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+}
+
+model CheckIn {
+  id              String   @id @default(cuid())
+  userId          String
+  establishmentId String
+  note            String?
+  createdAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id])
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+}
+
+model Favorite {
+  id              String   @id @default(cuid())
+  userId          String
+  establishmentId String
+  createdAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id])
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  @@unique([userId, establishmentId])
+}
