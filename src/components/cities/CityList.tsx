@@ -5,7 +5,7 @@ interface CityListProps {
   limit?: number;
 }
 
-export default function CityList({ limit }: CityListProps) {
+function CityList({ limit }: CityListProps) {
   const cities = Object.values(CITIES);
   const displayed = limit ? cities.slice(0, limit) : cities;
 
@@ -35,3 +35,6 @@ export default function CityList({ limit }: CityListProps) {
     </div>
   );
 }
+
+export { CityList };
+export default CityList;
