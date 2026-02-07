@@ -72,14 +72,31 @@ function getDefaultImage(category: string, name: string): string {
 }
 
 function normalizeCategory(cat: string): CategorySlug {
-  const mapping: Record<string, CategorySlug> = {
+  // Exact match first (handles simple singular/plural forms)
+  const exactMapping: Record<string, CategorySlug> = {
     park: 'parks', parks: 'parks', restaurant: 'restaurants', restaurants: 'restaurants',
     cafe: 'cafes', cafes: 'cafes', hotel: 'hotels', hotels: 'hotels',
     beach: 'beaches', beaches: 'beaches', vet: 'vets', vets: 'vets',
     groomer: 'groomers', groomers: 'groomers', shop: 'shops', shops: 'shops',
-    activity: 'activities', activities: 'activities',
+    'pet shop': 'shops', 'pet shops': 'shops',
+    activity: 'activities', activities: 'activities', activitie: 'activities',
+    pub: 'restaurants', pubs: 'restaurants', bar: 'restaurants',
   };
-  return mapping[cat.toLowerCase()] || 'activities';
+  const lower = cat.toLowerCase().trim();
+  if (exactMapping[lower]) return exactMapping[lower];
+
+  // Fuzzy match for compound categories (e.g. "dog park", "Dog Beach/Park", "Cafe/Brunch", "Pub/Restaurant")
+  // Order matters: check more specific terms first
+  if (lower.includes('beach')) return 'beaches';
+  if (lower.includes('park')) return 'parks';
+  if (lower.includes('restaurant') || lower.includes('pub') || lower.includes('brunch')) return 'restaurants';
+  if (lower.includes('cafe') || lower.includes('café') || lower.includes('coffee')) return 'cafes';
+  if (lower.includes('hotel') || lower.includes('hostel') || lower.includes('lodge') || lower.includes('bnb')) return 'hotels';
+  if (lower.includes('vet') || lower.includes('clinic')) return 'vets';
+  if (lower.includes('groom')) return 'groomers';
+  if (lower.includes('shop') || lower.includes('store') || lower.includes('boutique')) return 'shops';
+
+  return 'activities';
 }
 
 interface RawPlace {
