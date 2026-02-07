@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Providers } from '@/components/providers';
-import { Navigation } from 'A/components/layout/Navigation';
-  
+
 export const metadata: Metadata = {
-  title: 'Paws Cities',
-  description: 'Find dogs and establishments in your city',
+  title: { default: 'PawsCities - Dog-Friendly Places Worldwide', template: '%s | PawsCities' },
+  description: 'Discover dog-friendly restaurants, cafes, parks, hotels and more worldwide.',
 };
 
-export default function RootLayout({
-  children,
-}: 
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body className="min-h-screen bg-background font-sans antialiased">{children}</body>
+    </html>
+  );
+}
