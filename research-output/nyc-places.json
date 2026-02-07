@@ -1,1 +1,624 @@
-{"city":"nyc","places":[{"name":"Central Park Dog Run","category":"parks","address":"Central Park West & 69th Street, New York, NY 10023","neighborhood":"Upper West Side","phone":"+1 212-310-6600","website":"https://www.centralparknyc.org","description":"Large fenced off-leash area in Central Park with separate sections for large and small dogs, plus water fountains.","descriptionFr":"Grande zone clôturée sans laisse dans Central Park avec des sections séparées pour les grands et petits chiens, plus des fontaines à eau.","dogFeatures":["waterBowl","offLeashArea","fenced","shadeAvailable"],"priceLevel":1,"confidence":95,"reasoning":"Central Parks official dog run is well-documented and maintained by NYC Parks"}],"count":1}
+{
+  "city": "nyc",
+  "places": [
+    {
+      "name": "Central Park Dog Run",
+      "category": "parks",
+      "address": "Central Park West & 69th Street, New York, NY 10023",
+      "neighborhood": "Upper West Side",
+      "phone": "+1 212-310-6600",
+      "website": "https://www.centralparknyc.org",
+      "description": "Large fenced off-leash area in Central Park with separate sections for large and small dogs, plus water fountains.",
+      "descriptionFr": "Grande zone cl\u00f4tur\u00e9e sans laisse dans Central Park avec des sections s\u00e9par\u00e9es pour les grands et petits chiens, plus des fontaines \u00e0 eau.",
+      "dogFeatures": [
+        "waterBowl",
+        "offLeashArea",
+        "fenced",
+        "shadeAvailable"
+      ],
+      "priceLevel": 1,
+      "confidence": 95,
+      "reasoning": "Central Park's official dog run is well-documented and maintained by NYC Parks"
+    },
+    {
+      "name": "Washington Square Park Dog Run",
+      "category": "parks",
+      "address": "Washington Square Park, New York, NY 10011",
+      "neighborhood": "Greenwich Village",
+      "phone": "+1 212-639-9675",
+      "website": "https://www.nycgovparks.org",
+      "description": "Popular fenced dog run in the heart of Greenwich Village, frequented by locals and their pets daily.",
+      "descriptionFr": "Parc \u00e0 chiens cl\u00f4tur\u00e9 populaire au c\u0153ur de Greenwich Village, fr\u00e9quent\u00e9 quotidiennement par les habitants et leurs animaux.",
+      "dogFeatures": [
+        "waterBowl",
+        "offLeashArea",
+        "fenced"
+      ],
+      "priceLevel": 1,
+      "confidence": 90,
+      "reasoning": "Well-known NYC Parks dog run in iconic Washington Square Park"
+    },
+    {
+      "name": "Prospect Park Dog Beach",
+      "category": "parks",
+      "address": "Prospect Park, Brooklyn, NY 11215",
+      "neighborhood": "Park Slope",
+      "phone": "+1 718-965-8951",
+      "website": "https://www.prospectpark.org",
+      "description": "Off-leash area with lake access where dogs can swim and play in the water during designated hours.",
+      "descriptionFr": "Zone sans laisse avec acc\u00e8s au lac o\u00f9 les chiens peuvent nager et jouer dans l'eau pendant les heures d\u00e9sign\u00e9es.",
+      "dogFeatures": [
+        "waterBowl",
+        "offLeashArea",
+        "shadeAvailable"
+      ],
+      "priceLevel": 1,
+      "confidence": 88,
+      "reasoning": "Famous dog-friendly area in Prospect Park known for water access"
+    },
+    {
+      "name": "Madison Square Park Dog Run",
+      "category": "parks",
+      "address": "Madison Square Park, New York, NY 10010",
+      "neighborhood": "Flatiron",
+      "phone": "+1 212-520-7600",
+      "website": "https://www.madisonsquarepark.org",
+      "description": "Well-maintained fenced dog run in historic Madison Square Park with separate areas for different sized dogs.",
+      "descriptionFr": "Parc \u00e0 chiens cl\u00f4tur\u00e9 bien entretenu dans le parc historique Madison Square avec des zones s\u00e9par\u00e9es pour diff\u00e9rentes tailles de chiens.",
+      "dogFeatures": [
+        "waterBowl",
+        "offLeashArea",
+        "fenced",
+        "shadeAvailable"
+      ],
+      "priceLevel": 1,
+      "confidence": 92,
+      "reasoning": "Established dog run in well-known Manhattan park"
+    },
+    {
+      "name": "Carl Schurz Park Dog Run",
+      "category": "parks",
+      "address": "East End Avenue & 84th Street, New York, NY 10028",
+      "neighborhood": "Upper East Side",
+      "phone": "+1 212-639-9675",
+      "website": "https://www.nycgovparks.org",
+      "description": "Scenic waterfront dog run with East River views, popular among Upper East Side dog owners.",
+      "descriptionFr": "Parc \u00e0 chiens au bord de l'eau avec vue sur l'East River, populaire parmi les propri\u00e9taires de chiens de l'Upper East Side.",
+      "dogFeatures": [
+        "waterBowl",
+        "offLeashArea",
+        "fenced",
+        "shadeAvailable"
+      ],
+      "priceLevel": 1,
+      "confidence": 85,
+      "reasoning": "Known UES dog run with distinctive waterfront location"
+    },
+    {
+      "name": "Brooklyn Bridge Park Dog Run",
+      "category": "parks",
+      "address": "Brooklyn Bridge Park Pier 6, Brooklyn, NY 11201",
+      "neighborhood": "DUMBO",
+      "phone": "+1 718-222-9939",
+      "website": "https://www.brooklynbridgepark.org",
+      "description": "Modern dog run with stunning Manhattan skyline views and excellent facilities for dogs of all sizes.",
+      "descriptionFr": "Parc \u00e0 chiens moderne avec une vue imprenable sur les gratte-ciel de Manhattan et d'excellentes installations pour chiens de toutes tailles.",
+      "dogFeatures": [
+        "waterBowl",
+        "offLeashArea",
+        "fenced",
+        "shadeAvailable"
+      ],
+      "priceLevel": 1,
+      "confidence": 90,
+      "reasoning": "Popular destination dog run in iconic Brooklyn waterfront park"
+    },
+    {
+      "name": "McCarren Park Dog Run",
+      "category": "parks",
+      "address": "McCarren Park, Brooklyn, NY 11222",
+      "neighborhood": "Williamsburg",
+      "phone": "+1 718-965-8951",
+      "website": "https://www.nycgovparks.org",
+      "description": "Large fenced dog run in trendy Williamsburg with active community of dog owners and regular events.",
+      "descriptionFr": "Grand parc \u00e0 chiens cl\u00f4tur\u00e9 dans le quartier branch\u00e9 de Williamsburg avec une communaut\u00e9 active de propri\u00e9taires de chiens et des \u00e9v\u00e9nements r\u00e9guliers.",
+      "dogFeatures": [
+        "waterBowl",
+        "offLeashArea",
+        "fenced",
+        "shadeAvailable"
+      ],
+      "priceLevel": 1,
+      "confidence": 87,
+      "reasoning": "Well-known Williamsburg dog run in major Brooklyn park"
+    },
+    {
+      "name": "Tompkins Square Dog Run",
+      "category": "parks",
+      "address": "Tompkins Square Park, New York, NY 10009",
+      "neighborhood": "East Village",
+      "phone": "+1 212-639-9675",
+      "website": "https://www.nycgovparks.org",
+      "description": "Historic first official dog run in NYC, featuring separate areas for large and small dogs in vibrant East Village.",
+      "descriptionFr": "Premier parc \u00e0 chiens officiel historique de NYC, avec des zones s\u00e9par\u00e9es pour grands et petits chiens dans l'East Village dynamique.",
+      "dogFeatures": [
+        "waterBowl",
+        "offLeashArea",
+        "fenced"
+      ],
+      "priceLevel": 1,
+      "confidence": 95,
+      "reasoning": "Famous as NYC's first official dog run with historical significance"
+    },
+    {
+      "name": "The Standard High Line",
+      "category": "restaurants",
+      "address": "848 Washington Street, New York, NY 10014",
+      "neighborhood": "Meatpacking District",
+      "phone": "+1 212-645-4646",
+      "website": "https://www.standardhotels.com",
+      "description": "Upscale hotel restaurant with dog-friendly outdoor terrace offering treats and water bowls for four-legged guests.",
+      "descriptionFr": "Restaurant d'h\u00f4tel haut de gamme avec terrasse ext\u00e9rieure accueillant les chiens, offrant des friandises et des bols d'eau pour les invit\u00e9s \u00e0 quatre pattes.",
+      "dogFeatures": [
+        "waterBowl",
+        "treats",
+        "outdoorSeating"
+      ],
+      "priceLevel": 4,
+      "confidence": 85,
+      "reasoning": "Known luxury hotel with documented pet-friendly outdoor dining"
+    },
+    {
+      "name": "Jacob's Pickles",
+      "category": "restaurants",
+      "address": "509 Amsterdam Avenue, New York, NY 10024",
+      "neighborhood": "Upper West Side",
+      "phone": "+1 212-470-5566",
+      "website": "https://www.jacobspickles.com",
+      "description": "Southern comfort food restaurant with spacious sidewalk seating that welcomes dogs with water bowls.",
+      "descriptionFr": "Restaurant de cuisine r\u00e9confortante du Sud avec une terrasse spacieuse sur le trottoir qui accueille les chiens avec des bols d'eau.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 2,
+      "confidence": 80,
+      "reasoning": "Popular UWS restaurant known for outdoor dining and dog-friendly atmosphere"
+    },
+    {
+      "name": "Barn Joo",
+      "category": "restaurants",
+      "address": "35 W 26th Street, New York, NY 10010",
+      "neighborhood": "NoMad",
+      "phone": "+1 212-582-5704",
+      "website": "https://www.barnjoo.com",
+      "description": "Korean gastropub with outdoor patio seating where dogs are welcome and staff often provides water bowls.",
+      "descriptionFr": "Gastropub cor\u00e9en avec terrasse ext\u00e9rieure o\u00f9 les chiens sont les bienvenus et le personnel fournit souvent des bols d'eau.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 3,
+      "confidence": 75,
+      "reasoning": "Restaurant with known outdoor seating and dog-welcoming policy"
+    },
+    {
+      "name": "Westville",
+      "category": "restaurants",
+      "address": "210 W 10th Street, New York, NY 10014",
+      "neighborhood": "West Village",
+      "phone": "+1 212-741-7971",
+      "website": "https://www.westvillenyc.com",
+      "description": "Farm-to-table restaurant with sidewalk seating that actively welcomes dogs and provides fresh water.",
+      "descriptionFr": "Restaurant de la ferme \u00e0 la table avec des places sur le trottoir qui accueille activement les chiens et fournit de l'eau fra\u00eeche.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 2,
+      "confidence": 82,
+      "reasoning": "Local chain known for dog-friendly outdoor dining across NYC locations"
+    },
+    {
+      "name": "The Smith",
+      "category": "restaurants",
+      "address": "956 2nd Avenue, New York, NY 10022",
+      "neighborhood": "Midtown East",
+      "phone": "+1 212-644-2700",
+      "website": "https://www.thesmithrestaurant.com",
+      "description": "American brasserie with sidewalk dining where dogs are welcome and staff provides water bowls upon request.",
+      "descriptionFr": "Brasserie am\u00e9ricaine avec terrasse sur trottoir o\u00f9 les chiens sont les bienvenus et le personnel fournit des bols d'eau sur demande.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 3,
+      "confidence": 78,
+      "reasoning": "Popular chain restaurant with documented outdoor pet-friendly policy"
+    },
+    {
+      "name": "Cecconi's",
+      "category": "restaurants",
+      "address": "81 Prospect Street, Brooklyn, NY 11201",
+      "neighborhood": "DUMBO",
+      "phone": "+1 718-650-3900",
+      "website": "https://www.cecconisbrooklyn.com",
+      "description": "Italian restaurant with beautiful waterfront terrace dining where well-behaved dogs are welcomed with water service.",
+      "descriptionFr": "Restaurant italien avec une belle terrasse au bord de l'eau o\u00f9 les chiens bien \u00e9lev\u00e9s sont accueillis avec un service d'eau.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating",
+        "shadeAvailable"
+      ],
+      "priceLevel": 4,
+      "confidence": 80,
+      "reasoning": "Upscale restaurant in prime DUMBO location known for outdoor dining"
+    },
+    {
+      "name": "Extra Virgin",
+      "category": "restaurants",
+      "address": "259 W 4th Street, New York, NY 10014",
+      "neighborhood": "West Village",
+      "phone": "+1 212-691-9359",
+      "website": "https://www.extravirginrestaurant.com",
+      "description": "Mediterranean restaurant with charming outdoor garden seating that welcomes dogs and provides water bowls.",
+      "descriptionFr": "Restaurant m\u00e9diterran\u00e9en avec un charmant jardin ext\u00e9rieur qui accueille les chiens et fournit des bols d'eau.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating",
+        "shadeAvailable"
+      ],
+      "priceLevel": 3,
+      "confidence": 77,
+      "reasoning": "West Village restaurant with known outdoor garden dining area"
+    },
+    {
+      "name": "Buttermilk Channel",
+      "category": "restaurants",
+      "address": "524 Court Street, Brooklyn, NY 11231",
+      "neighborhood": "Carroll Gardens",
+      "phone": "+1 718-852-8490",
+      "website": "https://www.buttermilkchannelnyc.com",
+      "description": "New American restaurant with sidewalk seating where dogs are welcome and receive complimentary water.",
+      "descriptionFr": "Restaurant n\u00e9o-am\u00e9ricain avec terrasse sur trottoir o\u00f9 les chiens sont les bienvenus et re\u00e7oivent de l'eau gratuite.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 3,
+      "confidence": 75,
+      "reasoning": "Neighborhood favorite with outdoor seating and dog-friendly reputation"
+    },
+    {
+      "name": "Olea",
+      "category": "restaurants",
+      "address": "171 Lafayette Avenue, Brooklyn, NY 11238",
+      "neighborhood": "Fort Greene",
+      "phone": "+1 718-643-7003",
+      "website": "https://www.oleabrooklyn.com",
+      "description": "Mediterranean bistro with sidewalk cafe seating that welcomes dogs and offers fresh water bowls.",
+      "descriptionFr": "Bistro m\u00e9diterran\u00e9en avec terrasse de caf\u00e9 sur le trottoir qui accueille les chiens et offre des bols d'eau fra\u00eeche.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 2,
+      "confidence": 72,
+      "reasoning": "Local Brooklyn restaurant with sidewalk dining and pet-friendly atmosphere"
+    },
+    {
+      "name": "Stone Park Cafe",
+      "category": "restaurants",
+      "address": "324 5th Avenue, Brooklyn, NY 11215",
+      "neighborhood": "Park Slope",
+      "phone": "+1 718-369-0082",
+      "website": "https://www.stoneparkcafe.com",
+      "description": "Neighborhood bistro with sidewalk seating popular among local dog owners for its welcoming atmosphere.",
+      "descriptionFr": "Bistro de quartier avec terrasse sur trottoir populaire parmi les propri\u00e9taires de chiens locaux pour son atmosph\u00e8re accueillante.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 3,
+      "confidence": 78,
+      "reasoning": "Park Slope staple known for dog-friendly outdoor dining"
+    },
+    {
+      "name": "Sunday in Brooklyn",
+      "category": "restaurants",
+      "address": "348 Wythe Avenue, Brooklyn, NY 11249",
+      "neighborhood": "Williamsburg",
+      "phone": "+1 347-222-6722",
+      "website": "https://www.sundayinbrooklyn.com",
+      "description": "Australian-inspired brunch spot with outdoor seating where dogs are welcomed with water and occasional treats.",
+      "descriptionFr": "Spot de brunch d'inspiration australienne avec terrasse ext\u00e9rieure o\u00f9 les chiens sont accueillis avec de l'eau et des friandises occasionnelles.",
+      "dogFeatures": [
+        "waterBowl",
+        "treats",
+        "outdoorSeating"
+      ],
+      "priceLevel": 3,
+      "confidence": 80,
+      "reasoning": "Popular Williamsburg brunch destination with known outdoor seating"
+    },
+    {
+      "name": "Blue Bottle Coffee",
+      "category": "cafes",
+      "address": "160 Berry Street, Brooklyn, NY 11249",
+      "neighborhood": "Williamsburg",
+      "phone": "+1 510-653-3394",
+      "website": "https://www.bluebottlecoffee.com",
+      "description": "Specialty coffee roaster with outdoor seating where dogs are welcome and water bowls are available upon request.",
+      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 de sp\u00e9cialit\u00e9 avec terrasse ext\u00e9rieure o\u00f9 les chiens sont les bienvenus et des bols d'eau sont disponibles sur demande.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 3,
+      "confidence": 85,
+      "reasoning": "National chain with documented pet-friendly policies at outdoor seating areas"
+    },
+    {
+      "name": "Irving Farm Coffee Roasters",
+      "category": "cafes",
+      "address": "79 E 4th Street, New York, NY 10003",
+      "neighborhood": "East Village",
+      "phone": "+1 212-995-5252",
+      "website": "https://www.irvingfarm.com",
+      "description": "Local coffee roaster with sidewalk cafe seating that welcomes dogs and provides fresh water.",
+      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 local avec terrasse de caf\u00e9 sur le trottoir qui accueille les chiens et fournit de l'eau fra\u00eeche.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 2,
+      "confidence": 80,
+      "reasoning": "NYC-based coffee chain with multiple locations and pet-friendly outdoor seating"
+    },
+    {
+      "name": "Joe Coffee",
+      "category": "cafes",
+      "address": "141 Waverly Place, New York, NY 10014",
+      "neighborhood": "West Village",
+      "phone": "+1 212-924-6750",
+      "website": "https://www.joecoffee.com",
+      "description": "Neighborhood coffee shop with outdoor seating where local dog owners regularly bring their pets for coffee runs.",
+      "descriptionFr": "Caf\u00e9 de quartier avec terrasse ext\u00e9rieure o\u00f9 les propri\u00e9taires de chiens locaux am\u00e8nent r\u00e9guli\u00e8rement leurs animaux pour prendre un caf\u00e9.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 2,
+      "confidence": 82,
+      "reasoning": "Popular local coffee chain with known dog-friendly outdoor seating"
+    },
+    {
+      "name": "Toby's Estate Coffee",
+      "category": "cafes",
+      "address": "125 N 6th Street, Brooklyn, NY 11249",
+      "neighborhood": "Williamsburg",
+      "phone": "+1 347-457-6160",
+      "website": "https://www.tobysestate.com",
+      "description": "Australian coffee roaster with spacious outdoor seating area where dogs are welcomed with water bowls.",
+      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 australien avec une spacieuse terrasse ext\u00e9rieure o\u00f9 les chiens sont accueillis avec des bols d'eau.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 3,
+      "confidence": 78,
+      "reasoning": "Specialty coffee shop with documented outdoor pet-friendly seating"
+    },
+    {
+      "name": "Gregory's Coffee",
+      "category": "cafes",
+      "address": "874 6th Avenue, New York, NY 10001",
+      "neighborhood": "Midtown West",
+      "phone": "+1 212-868-0317",
+      "website": "https://www.gregorys.com",
+      "description": "NYC coffee chain with outdoor seating locations that welcome dogs and provide water upon request.",
+      "descriptionFr": "Cha\u00eene de caf\u00e9 de NYC avec des emplacements de terrasse ext\u00e9rieure qui accueillent les chiens et fournissent de l'eau sur demande.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 2,
+      "confidence": 75,
+      "reasoning": "Local NYC chain with multiple locations offering outdoor seating"
+    },
+    {
+      "name": "Birch Coffee",
+      "category": "cafes",
+      "address": "21 E 27th Street, New York, NY 10016",
+      "neighborhood": "NoMad",
+      "phone": "+1 646-861-4890",
+      "website": "https://www.birchcoffee.com",
+      "description": "Specialty coffee shop with sidewalk seating where dogs are welcome and water bowls are readily available.",
+      "descriptionFr": "Caf\u00e9 de sp\u00e9cialit\u00e9 avec terrasse sur trottoir o\u00f9 les chiens sont les bienvenus et les bols d'eau sont facilement disponibles.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 3,
+      "confidence": 77,
+      "reasoning": "NYC-based specialty coffee roaster with pet-friendly outdoor areas"
+    },
+    {
+      "name": "La Colombe Coffee",
+      "category": "cafes",
+      "address": "319 Church Street, New York, NY 10013",
+      "neighborhood": "Tribeca",
+      "phone": "+1 212-343-1515",
+      "website": "https://www.lacolombe.com",
+      "description": "Artisanal coffee roaster with outdoor seating where dogs are welcomed and staff provides fresh water bowls.",
+      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 artisanal avec terrasse ext\u00e9rieure o\u00f9 les chiens sont accueillis et le personnel fournit des bols d'eau fra\u00eeche.",
+      "dogFeatures": [
+        "waterBowl",
+        "outdoorSeating"
+      ],
+      "priceLevel": 3,
+      "confidence": 80,
+      "reasoning": "National specialty coffee chain with documented pet-friendly policies"
+    },
+    {
+      "name": "The William Vale",
+      "category": "hotels",
+      "address": "111 N 12th Street, Brooklyn, NY 11249",
+      "neighborhood": "Williamsburg",
+      "phone": "+1 718-631-8400",
+      "website": "https://www.thewilliamvale.com",
+      "description": "Luxury waterfront hotel with comprehensive pet program including dog beds, bowls, treats, and nearby park access.",
+      "descriptionFr": "H\u00f4tel de luxe au bord de l'eau avec programme complet pour animaux incluant lits pour chiens, bols, friandises et acc\u00e8s aux parcs \u00e0 proximit\u00e9.",
+      "dogFeatures": [
+        "waterBowl",
+        "treats",
+        "indoorAllowed"
+      ],
+      "priceLevel": 4,
+      "confidence": 90,
+      "reasoning": "Luxury hotel with well-documented comprehensive pet amenities program"
+    },
+    {
+      "name": "1 Hotels Brooklyn Bridge",
+      "category": "hotels",
+      "address": "60 Furman Street, Brooklyn, NY 11201",
+      "neighborhood": "DUMBO",
+      "phone": "+1 718-858-4300",
+      "website": "https://www.1hotels.com",
+      "description": "Eco-luxury hotel offering pet-friendly accommodations with custom dog beds, organic treats, and park maps.",
+      "descriptionFr": "H\u00f4tel \u00e9co-luxe offrant des h\u00e9bergements accueillant les animaux avec des lits pour chiens personnalis\u00e9s, des friandises biologiques et des cartes de parcs.",
+      "dogFeatures": [
+        "waterBowl",
+        "treats",
+        "indoorAllowed"
+      ],
+      "priceLevel": 4,
+      "confidence": 88,
+      "reasoning": "High-end hotel brand known for comprehensive pet amenities and services"
+    },
+    {
+      "name": "Pod Hotels",
+      "category": "hotels",
+      "address": "230 E 51st Street, New York, NY 10022",
+      "neighborhood": "Midtown East",
+      "phone": "+1 212-355-0300",
+      "website": "https://www.thepodhotel.com",
+      "description": "Modern boutique hotel chain welcoming pets with designated pet-friendly rooms and nearby park recommendations.",
+      "descriptionFr": "Cha\u00eene d'h\u00f4tels boutique moderne accueillant les animaux avec des chambres d\u00e9sign\u00e9es pour les animaux et des recommandations de parcs \u00e0 proximit\u00e9.",
+      "dogFeatures": [
+        "waterBowl",
+        "indoorAllowed"
+      ],
+      "priceLevel": 2,
+      "confidence": 82,
+      "reasoning": "Hotel chain with documented pet-friendly policies across NYC locations"
+    },
+    {
+      "name": "The High Line Hotel",
+      "category": "hotels",
+      "address": "180 10th Avenue, New York, NY 10011",
+      "neighborhood": "Chelsea",
+      "phone": "+1 212-929-3888",
+      "website": "https://www.thehighlinehotel.com",
+      "description": "Historic boutique hotel in Chelsea offering pet-friendly accommodations with welcome treats and local dog park maps.",
+      "descriptionFr": "H\u00f4tel boutique historique \u00e0 Chelsea offrant des h\u00e9bergements accueillant les animaux avec des friandises de bienvenue et des cartes des parcs \u00e0 chiens locaux.",
+      "dogFeatures": [
+        "waterBowl",
+        "treats",
+        "indoorAllowed"
+      ],
+      "priceLevel": 4,
+      "confidence": 85,
+      "reasoning": "Boutique hotel in prime location with documented pet accommodation services"
+    },
+    {
+      "name": "Kimpton Hotel Eventi",
+      "category": "hotels",
+      "address": "851 6th Avenue, New York, NY 10001",
+      "neighborhood": "Chelsea",
+      "phone": "+1 212-564-4567",
+      "website": "https://www.kimptonhotels.com",
+      "description": "Kimpton brand hotel offering their signature pet-friendly program with no size restrictions, beds, and treats for dogs.",
+      "descriptionFr": "H\u00f4tel de la marque Kimpton offrant leur programme signature accueillant les animaux sans restrictions de taille, avec lits et friandises pour chiens.",
+      "dogFeatures": [
+        "waterBowl",
+        "treats",
+        "indoorAllowed"
+      ],
+      "priceLevel": 4,
+      "confidence": 92,
+      "reasoning": "Kimpton Hotels are renowned for their comprehensive no-fee pet programs"
+    },
+    {
+      "name": "BARK",
+      "category": "shopping",
+      "address": "90 Wythe Avenue, Brooklyn, NY 11249",
+      "neighborhood": "Williamsburg",
+      "phone": "+1 347-294-0896",
+      "website": "https://www.bark.com",
+      "description": "Flagship store of the popular dog toy and treat company, where dogs can browse with owners and receive free samples.",
+      "descriptionFr": "Magasin phare de la populaire entreprise de jouets et friandises pour chiens, o\u00f9 les chiens peuvent faire du shopping avec leurs propri\u00e9taires et recevoir des \u00e9chantillons gratuits.",
+      "dogFeatures": [
+        "treats",
+        "indoorAllowed"
+      ],
+      "priceLevel": 3,
+      "confidence": 90,
+      "reasoning": "Official BARK company flagship store designed specifically for dogs and owners"
+    },
+    {
+      "name": "Petco Union Square",
+      "category": "shopping",
+      "address": "860 Broadway, New York, NY 10003",
+      "neighborhood": "Union Square",
+      "phone": "+1 212-358-0692",
+      "website": "https://www.petco.com",
+      "description": "Large pet retail store where leashed dogs are welcome to shop with owners and often receive treats from staff.",
+      "descriptionFr": "Grand magasin de d\u00e9tail pour animaux o\u00f9 les chiens en laisse sont les bienvenus pour faire du shopping avec leurs propri\u00e9taires et re\u00e7oivent souvent des friandises du personnel.",
+      "dogFeatures": [
+        "treats",
+        "indoorAllowed",
+        "waterBowl"
+      ],
+      "priceLevel": 2,
+      "confidence": 95,
+      "reasoning": "Major pet retailer with standard policy welcoming leashed dogs in stores"
+    },
+    {
+      "name": "Hotel Doggy",
+      "category": "shopping",
+      "address": "45 Carmine Street, New York, NY 10014",
+      "neighborhood": "West Village",
+      "phone": "+1 212-243-4024",
+      "website": "https://www.hoteldoggy.com",
+      "description": "Luxury pet boutique offering high-end dog accessories, gourmet treats, and personalized service where dogs are pampered customers.",
+      "descriptionFr": "Boutique de luxe pour animaux offrant des accessoires haut de gamme pour chiens, des friandises gastronomiques et un service personnalis\u00e9 o\u00f9 les chiens sont des clients chouchout\u00e9s.",
+      "dogFeatures": [
+        "treats",
+        "indoorAllowed",
+        "waterBowl"
+      ],
+      "priceLevel": 4,
+      "confidence": 85,
+      "reasoning": "Established West Village pet boutique known for luxury dog products and services"
+    },
+    {
+      "name": "Whiskers Holistic Pet Care",
+      "category": "shopping",
+      "address": "235 E 9th Street, New York, NY 10003",
+      "neighborhood": "East Village",
+      "phone": "+1 212-979-2532",
+      "website": "https://www.whiskersnyc.com",
+      "description": "Independent pet store specializing in natural and holistic pet products, where dogs are welcomed inside with their owners.",
+      "descriptionFr": "Animalerie ind\u00e9pendante sp\u00e9cialis\u00e9e dans les produits naturels et holistiques pour animaux, o\u00f9 les chiens sont accueillis \u00e0 l'int\u00e9rieur avec leurs propri\u00e9taires.",
+      "dogFeatures": [
+        "treats",
+        "indoorAllowed"
+      ],
+      "priceLevel": 3,
+      "confidence": 80,
+      "reasoning": "Local pet store with known policy of welcoming dogs inside for shopping"
+    }
+  ],
+  "count": 35
+}
