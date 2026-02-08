@@ -1,15 +1,48 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import { Inter, Outfit } from 'next/font/google';
+import { AuthProvider } from '@/components/auth/AuthProvider';
+import '@/styles/globals.css';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-outfit',
+});
 
 export const metadata: Metadata = {
-  title: { default: 'PawsCities - Dog-Friendly Places Worldwide', template: '%s | PawsCities' },
-  description: 'Discover dog-friendly restaurants, cafes, parks, hotels and more worldwide.',
+  title: {
+    default: 'PawsCities - Dog-Friendly Places Worldwide',
+    template: '%s | PawsCities',
+  },
+  description: 'Discover dog-friendly restaurants, cafes, parks, hotels and more in Geneva, Paris, London, and beyond.',
+  keywords: ['dog-friendly', 'pet-friendly', 'restaurants', 'cafes', 'parks', 'hotels'],
+  authors: [{ name: 'PawsCities' }],
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://pawscities.com',
+    siteName: 'PawsCities',
+    title: 'PawsCities - Dog-Friendly Places Worldwide',
+    description: 'Discover dog-friendly restaurants, cafes, parks, hotels and more.',
+  },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-background font-sans antialiased">{children}</body>
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+      <body className="min-h-screen bg-background font-sans antialiased">
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   );
 }
