@@ -9,7 +9,7 @@
       "phone": "+1 212-310-6600",
       "website": "https://www.centralparknyc.org",
       "description": "Large fenced off-leash area in Central Park with separate sections for large and small dogs, plus water fountains.",
-      "descriptionFr": "Grande zone cl\u00f4tur\u00e9e sans laisse dans Central Park avec des sections s\u00e9par\u00e9es pour les grands et petits chiens, plus des fontaines \u00e0 eau.",
+      "descriptionFr": "Grande zone clôturée sans laisse dans Central Park avec des sections séparées pour les grands et petits chiens, plus des fontaines à eau.",
       "dogFeatures": [
         "waterBowl",
         "offLeashArea",
@@ -18,7 +18,28 @@
       ],
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Central Park's official dog run is well-documented and maintained by NYC Parks"
+      "reasoning": "Central Park's official dog run is well-documented and maintained by NYC Parks",
+      "googlePlaceId": "ChIJR0pVJptZwokRiaPABvUCSG0",
+      "latitude": 40.782207899999996,
+      "longitude": -73.97352409999999,
+      "rating": 4.5,
+      "reviewCount": 79,
+      "photoRefs": [
+        "places/ChIJR0pVJptZwokRiaPABvUCSG0/photos/AcnlKN2qMCBUh6_VrwT6njGufeP8r5uJChSiuvD-HMD-mUbtOq8aycZgdqqd48x20gUijOvzNt43Ugdcu7TATLa33gf92kfouOCVxuW1xgWTHgfHAi-M733qZRXjOiNmBo9K9A7F8tFW37NTxyVBkt2Zpy7c9tM2wNOag0_bvj9xWojfq--smpQdCE3xH4ZFLXD8APdoBPY1ZyNg8yQqmAWPW7zW3fMkmT_tYaqroU1Y0LggwCg_X4fH96PDVo8QddRo7B6EMG6sjZOHQdbhcCO-7ypOxZ0wjZ2YsqO0kgbEHZ424hMFXTLA4ryH7aujxDTKAM9np07_WSsJCNs6-9EeY4EwrMyhEjW9pQvb3mqgNzdEkRyeVVfmcht_5aJN3Njr3T3krlQTwAUtuqc49UoImdwAxyeSa_-dr6qbMehpxaWeXVrO",
+        "places/ChIJR0pVJptZwokRiaPABvUCSG0/photos/AcnlKN33kTxjcPboWiS3BVttGgficdaXlhqCynzHWzvAKnO_ZEGf8r9ZIUthhPJ9mcT6RGyYLa8Dh1_eEUYMFsZcPlyj8E4mlzydr_6nhZngYJnieOhsPouihJAGzi5How3xCcWO9_Puzhn4dXKmozRowa8oi-cq4cVVR0K9SiNrUFWYhSmmnacYQd7clDcLjmA3J_eTZXLzg3Pm1bCrZN1c4Iynh5REGcG0ohkXWhhSgtOrXeAasDqRU3vC4gwjjFqschnb_3K5EPsskNyQhQRQiEEt8HEb5Zi21DVU7_f2kT3J71ObVP1IF9DNlIq1U1hKecfBYywrx_EBzZTcmam767iqM5D04VZf3kYvPb76R7OMCXUCBT1oErajw_N7Za-UG4O_xA8xCdTekkpQmvwAinyCNXtIkA5z5VLM22gE_JMKhO0",
+        "places/ChIJR0pVJptZwokRiaPABvUCSG0/photos/AcnlKN0sbm68p8--7h5TwNtamhL0yUFxfw7VwHHw1Nd8EPPcuTE8rtJhHILTfYBKXr7qa75cqtMo0CNTiW5xVcrSBkSmxd2xl1dYIGFru_rjRpeZXlXOqhCHBbQ81o8M_gTKy9Zf0A8GZY0Pbt0tJBeYl6nM5y-fa-PSFX8KSIvWSdOX234u7Kf-hhZpjqt2ZPp9tU_xCTgeUdVZknFwQoDWKqbnx7L0XQnnqOTJSrpjEpIT-u2vaJ0yqQMjN3aPvKk2rHJZo4vpI_1KAc0CEMXBT6BnAVayY68_Bk9Iku1bP5HUnpH0iDeeFdb40aWKzWau9JRE0jap9XqbD1kBY0tVZC8mnKueQ5_FdaD3I7V91L6Mov-4Voflk4vEjwHWGPoMZT61SpRFfja34NJLZ0s1Z6CvY1gATu8VyoatjMq7PBkYdw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7874547199860843401&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 10:00 PM",
+        "Tuesday: 6:00 AM – 10:00 PM",
+        "Wednesday: 6:00 AM – 10:00 PM",
+        "Thursday: 6:00 AM – 10:00 PM",
+        "Friday: 6:00 AM – 10:00 PM",
+        "Saturday: 6:00 AM – 10:00 PM",
+        "Sunday: 6:00 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Washington Square Park Dog Run",
@@ -26,9 +47,9 @@
       "address": "Washington Square Park, New York, NY 10011",
       "neighborhood": "Greenwich Village",
       "phone": "+1 212-639-9675",
-      "website": "https://www.nycgovparks.org",
+      "website": "http://wspdogrun.org/",
       "description": "Popular fenced dog run in the heart of Greenwich Village, frequented by locals and their pets daily.",
-      "descriptionFr": "Parc \u00e0 chiens cl\u00f4tur\u00e9 populaire au c\u0153ur de Greenwich Village, fr\u00e9quent\u00e9 quotidiennement par les habitants et leurs animaux.",
+      "descriptionFr": "Parc à chiens clôturé populaire au cœur de Greenwich Village, fréquenté quotidiennement par les habitants et leurs animaux.",
       "dogFeatures": [
         "waterBowl",
         "offLeashArea",
@@ -36,7 +57,20 @@
       ],
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Well-known NYC Parks dog run in iconic Washington Square Park"
+      "reasoning": "Well-known NYC Parks dog run in iconic Washington Square Park",
+      "googlePlaceId": "ChIJQyyX1aFZwokRC-6LbSW6v5U",
+      "latitude": 40.7308026,
+      "longitude": -73.9985385,
+      "rating": 4.2,
+      "reviewCount": 27,
+      "photoRefs": [
+        "places/ChIJQyyX1aFZwokRC-6LbSW6v5U/photos/AcnlKN1Sqwo5XIzYFd0Kk2qEyV4alHFDmBi4O5D1zsaBcUg6wPJn5UKpvoGdCN2-baVrEz6qIf8Cc0QmEUse7jPD5Q1ZHMv0mj2RdzN4SQBQczZS5GDK2Rx5PbTt3KK7sLNB_jWDuU13AXgERVF2V3BFRhC--zX39PFO6S5cRHeb24gUnYaGtHvlzw0n6lQKC6jyVMpAoB2VkBCs50AODnWDKU4sKSCCcGas6RAzmkGm-BpcwTPgLLy1TwNT10eh0R2NJAtav-IObmpQEMJB6vUUlnyhj_IR1_bHm94YppsNfcbECdIVwCUaGFNtLOuPVRQI7vKg6tcVQKyud2yY8T6zHuSNetFanoN-Y6DG6eSp5qhp325KsEG44pNE-3ynWjIzPLpsjPyZcocxcKJCPIiu_UssbzWxpK786MHZPcQpZIvN6A",
+        "places/ChIJQyyX1aFZwokRC-6LbSW6v5U/photos/AcnlKN1qwkdqjieEgnD7j9XTFcgLAJVTgnShr1qs3gyUb6xVYXodEyZftYUd1fLpvj-0V-i4uPBHCvKlCsOQ6Nzh4u8yrYOAFNJyMdAuUmzVzpQj6Jy0qhKJfHVsi3naORPRKPuF-Uip25__v1stXAzaRMuL6oO8kszXtX45hvFnppICaVqe1CyGLMgTki22hxtnvkAVcRSvv2wihjYa-raNSQ8gGUQRFIzKM9O2nSiMGe9q0siB8Wc3Itg97R35tF_ki78fFt7_bGlYnnAb-mGQqV-3w8hjYu-kSI1UKqKnTG79C3bvmCvJ9ZVHMosAIDzu548GiXJ3bvcUk2sDlcC9b5UhBZXKYnswehQL6D9Wg-PKpqi2wNSNabn__mVhxYXe-07uGRGijAfNb8PYYI-dev4qrv7DwIxtg020iLPXDyMCwA",
+        "places/ChIJQyyX1aFZwokRC-6LbSW6v5U/photos/AcnlKN1zTGCE-UZDh1U9I9UwScvWfWfe57gwtEy7l3tIuuCsyFr41jBa2C9D6TC_SnhzLXtuReRoQIxfQ7HECGWWecHuf1trVE_Z7B57WB05LPhby_2Bb6C8wMdRaAAOR5CvDFZwzruNuu7WKGpInKZs8FcxMlqBhaMjdUMMXvCE2Zqsk9ySdlvrkajyhkdRjh70qFLn09sT7ybkI9THgwf2_tNpSXCzg8IqS3ubQck9ss3mss3UZYJiGEGeJGNVRd4kmfROR946nM3L51twZjgBSwVkQmRSbS2Kfg3ufRP-9SjDc5lqVK9KYWzWCsO9a2OxxbpsTk6r64QL2khtgOwnTFrcwiNbfySpqUVjWDrKaQH0RBGFin0cbGiYua-tuAGGJRdOwzoZKaRxW4NDNLKCr_lqGkwl-E9B2x8CEzQQ64igh1KZ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10790547902117441035&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Prospect Park Dog Beach",
@@ -44,9 +78,9 @@
       "address": "Prospect Park, Brooklyn, NY 11215",
       "neighborhood": "Park Slope",
       "phone": "+1 718-965-8951",
-      "website": "https://www.prospectpark.org",
+      "website": "https://www.prospectpark.org/news-events/news/dog-beach-reopens-after-renovation/",
       "description": "Off-leash area with lake access where dogs can swim and play in the water during designated hours.",
-      "descriptionFr": "Zone sans laisse avec acc\u00e8s au lac o\u00f9 les chiens peuvent nager et jouer dans l'eau pendant les heures d\u00e9sign\u00e9es.",
+      "descriptionFr": "Zone sans laisse avec accès au lac où les chiens peuvent nager et jouer dans l'eau pendant les heures désignées.",
       "dogFeatures": [
         "waterBowl",
         "offLeashArea",
@@ -54,7 +88,28 @@
       ],
       "priceLevel": 1,
       "confidence": 88,
-      "reasoning": "Famous dog-friendly area in Prospect Park known for water access"
+      "reasoning": "Famous dog-friendly area in Prospect Park known for water access",
+      "googlePlaceId": "ChIJERgvjxpbwokRkOp4ojS9vRQ",
+      "latitude": 40.6625946,
+      "longitude": -73.9719428,
+      "rating": 4.6,
+      "reviewCount": 600,
+      "photoRefs": [
+        "places/ChIJERgvjxpbwokRkOp4ojS9vRQ/photos/AcnlKN3BydxMWsjMd7kDgobTSNmSEBUjIqUSDWkEVtEjyD0DDW2nttyvzsXdGZXE7YtNeeWSiPaNSx_jBZ1-DhZFNZl59pz9Zor8uOmKG0Jj7P1CuA-v5lhruUXn1Rha2sAzmXrc9BOEr0DICcSBiiypprCwP-TEBgyZ_JrVUBs7X81FdwxfQbSLLOuUAhVLQaTJklL-P4arYzh15Q_NTTh2mCm32LyrCku_7r4QCNjIWdVKu2u-BX_WDR0J-UG6ve62NrznjgU_dIdclUYfW067nNc8U_bdmoOPQ3dCFYqL15jVrKGEoT0crBBuZlh2Jl7YyKmO1HqhUbc6Wo2pxz-b0X1JQKUMseNcP7H-kirLOOg4eDzLaA6lQsLMUCzdC1ek-juQus61CwniRflfN8dt8G9nH-fhtNqJ_z6wUyjl6LK8gpc",
+        "places/ChIJERgvjxpbwokRkOp4ojS9vRQ/photos/AcnlKN1NJrdDJ3ANcpdKqRza6LjuEFq34FRV4CiHqHcrtUl8pUFq2G5QKdxN4hCEtn5SL1IcfuJGZm8rul2UfZiJf5rdB3wGx6T6zaLipXKdJaCOYiHIQt2RVYHc1cb-16xsRKN1XHvq5R3YJkvxhfS3siW-4Sz-1b22LOnkY2oUOPTfnJA45cBsNinKTpHjMwCdE7JxJ_PSt6X4P_zvY-S3lnj-Sxe6LsHKJ99DrIwB42N9FXBCUTiHmiZa06zUow2LWB33GgOikmoWlt2nhhgo6pulYEzZl2HfP807VR5bA4vslGsIbuCuvE3v1nQ-EzxVpIJdPoMswOHDmil3jh0N3IJlSazn_El2R5v4TrO2uOjOyMCM3RJBAGQE09fdHY4y40E56STnvhzhGdFEqvvfHZ0nAmgZa-imWjJkJrHrgW0",
+        "places/ChIJERgvjxpbwokRkOp4ojS9vRQ/photos/AcnlKN2YnwykcC4R61XUZAXr3vb_xune3U9GX4M4jlWyDA4AjPcAp3Qqt48vnsrKFkNgB4yQssUZcQYraYn0xcFSxRikF4sfVNNabmmdr9m9A36-IBhe0o2piIEF7-53bfp6_sa8EWjBBn4sxmP4AzPeoZMmRU9VmeohwwoGA69ItM0ZmmY3F53U7JB0TXcGdS03NfgnGrdKOsE7Kj6JgaecyRA6pJeTjWc2Ln8tjLNKLQbOoTEBkcGXBi_Mcwx32SzNoFAJsSn87nLOBx29BRdix7Wt7jk1V-XI4yan5r8EJkusTPGDTwQicc8ZWOqIV3u-qxGfeU8CeD-ZA-g3fY9LZhYb1CzV_Fh0_aXRsUQJA0AiXgj9voDJYICntM1Rv0pf_92aBxr_yxaMtCGRm9MV5lBpxXRaTCyZZCqhX9a1KPkIXA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1494558685118655120&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 5:00 AM – 1:00 AM",
+        "Tuesday: 5:00 AM – 1:00 AM",
+        "Wednesday: 5:00 AM – 1:00 AM",
+        "Thursday: 5:00 AM – 1:00 AM",
+        "Friday: 5:00 AM – 1:00 AM",
+        "Saturday: 5:00 AM – 1:00 AM",
+        "Sunday: 5:00 AM – 1:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "Madison Square Park Dog Run",
@@ -62,9 +117,9 @@
       "address": "Madison Square Park, New York, NY 10010",
       "neighborhood": "Flatiron",
       "phone": "+1 212-520-7600",
-      "website": "https://www.madisonsquarepark.org",
+      "website": "https://www.madisonsquarepark.org/mad-sq-dogs",
       "description": "Well-maintained fenced dog run in historic Madison Square Park with separate areas for different sized dogs.",
-      "descriptionFr": "Parc \u00e0 chiens cl\u00f4tur\u00e9 bien entretenu dans le parc historique Madison Square avec des zones s\u00e9par\u00e9es pour diff\u00e9rentes tailles de chiens.",
+      "descriptionFr": "Parc à chiens clôturé bien entretenu dans le parc historique Madison Square avec des zones séparées pour différentes tailles de chiens.",
       "dogFeatures": [
         "waterBowl",
         "offLeashArea",
@@ -73,7 +128,28 @@
       ],
       "priceLevel": 1,
       "confidence": 92,
-      "reasoning": "Established dog run in well-known Manhattan park"
+      "reasoning": "Established dog run in well-known Manhattan park",
+      "googlePlaceId": "ChIJ_Uhhn6ZZwokR1cs_8ACJd64",
+      "latitude": 40.742295,
+      "longitude": -73.98859399999999,
+      "rating": 4.5,
+      "reviewCount": 297,
+      "photoRefs": [
+        "places/ChIJ_Uhhn6ZZwokR1cs_8ACJd64/photos/AcnlKN0Pr5OiPHjrF9AMJyF6l3L3gSuSN7JMVwxfNUxljjPjlJbYbCG2uuoI9McPOixDu7_fgUVUKedqlr67zXU6vdab76oyPzZcNQNEcCMBVvQfVGnxIrWAsu2Nnnfo9k28hX2Jb9OrdThXH8eWf9z2NOQsIZJFextyWunSbRWrDgqZC0x9NYhbX8uIbF8GGUQl2m4wVAsiUyX817iAXu0-NImID5Ta_FEjOHlCSLaIxBIIR3noCAZeIZxm01gXupN_T1YCUpjUWiAlFBBfi9SOF5Xc47S9ngKQ3kz4rxi3b3gGLFNbIsdd09udHdTpUwP_hq1fsq2lIsFfVkt948TDZXeVWRIHjWeD4yqA-XnUuBCU3hVM4rYvnk5QCuiArIDAg2u5ZJechEYfP2UljGZYJy6u9Radz75C5Pksy16T3Rab4Q",
+        "places/ChIJ_Uhhn6ZZwokR1cs_8ACJd64/photos/AcnlKN3KqkZB1V0xMn7iUXfNHz_vvCvQ7x2TtOIKrK7dJ9YJEkyVm98lTEp41d0sT1IeTy7dMlnBKE_qBU5xUkzoEixuotbVtW0axdzUopzXIb9R6AUn_0holp35PCdJZFz9q2z_4jcYaYEezfoR50m2XGs9q5kz8yHL51SHEe53vIkKTu_cLDdqyCcp62fjebLP7RCVjjV8oD9Y1vSKyP2mXD0X9cwe_gOWUbI1s-oLIo-9lD-vrzhOh1ksM89-zDavyFGgRMA0yiAtTcLAHPCjw_0yQwskC5TvhEEsNZG0-rt5ZERD5kOfzlT2OawdLJ2Dm1XdzItnUPHXQn1-SkpQGSoQVsZUOk-fspqzOdzZNkBkcnKeiA_K-oNeCvt_lkRBYHDHJs5ZNw3Q0DNmFq4KXV738j8AhV3E7JpOvbor0c7FduOQ",
+        "places/ChIJ_Uhhn6ZZwokR1cs_8ACJd64/photos/AcnlKN1LBsxpwhJ8bFemutWczgW9ellHAC6-b7ST7M91_WiZHejoz7bbUqWtLXFIm8cc5iCcuvZ1k8ErQVt3gDTjuDf-wstxsmiztxU0oC7eDodkm7PxBFkzlSSlZA0hS_lAVANuhN3yfkuxLhQDYbkD8Sz5D_DTbR9XNQpeUQl0dglmwBpqHQJS_SN-WK6Lz2405Fkvb7fEXC6rVGtmghWs3PVeuTLcZN8w3lwkp2BwLF06R3KXaizcjX77hT7dO2-hlNI1laYfU7g-yR-NTSkJS0xqq5EjhKbaum429aLoRgRNpvMGgcnCA1ALx9clYanBq5nvyGSjhQ8YWp8OW_gmcZq8sQkuZGmZ5DZJ_4f7-kwQ1ho3a2QpSkRqe46jwkw-7uPPovX2VkRko7MG7-LAKZHEOqRpDs9LpOxi2j993tktczp3"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12571667521951747029&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 11:00 PM",
+        "Tuesday: 6:00 AM – 11:00 PM",
+        "Wednesday: 6:00 AM – 11:00 PM",
+        "Thursday: 6:00 AM – 11:00 PM",
+        "Friday: 6:00 AM – 11:00 PM",
+        "Saturday: 6:00 AM – 11:00 PM",
+        "Sunday: 6:00 AM – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Carl Schurz Park Dog Run",
@@ -81,9 +157,9 @@
       "address": "East End Avenue & 84th Street, New York, NY 10028",
       "neighborhood": "Upper East Side",
       "phone": "+1 212-639-9675",
-      "website": "https://www.nycgovparks.org",
+      "website": "https://www.nycgovparks.org/parks/M081/facilities/dogareas",
       "description": "Scenic waterfront dog run with East River views, popular among Upper East Side dog owners.",
-      "descriptionFr": "Parc \u00e0 chiens au bord de l'eau avec vue sur l'East River, populaire parmi les propri\u00e9taires de chiens de l'Upper East Side.",
+      "descriptionFr": "Parc à chiens au bord de l'eau avec vue sur l'East River, populaire parmi les propriétaires de chiens de l'Upper East Side.",
       "dogFeatures": [
         "waterBowl",
         "offLeashArea",
@@ -92,17 +168,38 @@
       ],
       "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Known UES dog run with distinctive waterfront location"
+      "reasoning": "Known UES dog run with distinctive waterfront location",
+      "googlePlaceId": "ChIJu4qHwl5ZwokR9RXRpZD04ZQ",
+      "latitude": 40.7742629,
+      "longitude": -73.9440271,
+      "rating": 4.7,
+      "reviewCount": 319,
+      "photoRefs": [
+        "places/ChIJu4qHwl5ZwokR9RXRpZD04ZQ/photos/AcnlKN1bsBS1E9Tzof1RjOUx7KZ4urO6mhXzQsSc2bh18hHbnjBkDwTNWWsy6DRcyxl6ON0OP_JyOt8eVdxr7F40s4O_G9Yb3C-9QXju-2R5vlgJw9wFWOPBWz74pe_w6IX_N5jcOQpf6tZhcJYn3mwpngReV-Hpf8rs6b2l1bTgT9c6wu7FgkaVjhzV4YW8LB-cr_hUVyMrSd8r6UMgLNkXy64PvvLTXJACNSFgIWBDVmPspeW87-wfI5JQtDtVzoU33Hc8anPcDxUrMlLM9d9YtvAU1dY2-ukpn8PqB7UFh_h2rw",
+        "places/ChIJu4qHwl5ZwokR9RXRpZD04ZQ/photos/AcnlKN1UUAvymk2YXSnsUkLE1bWBruahVMn8Jy-Zc8OHDiQiz3tNGPBTVCC-Xk-mVv-bKe1tIAW-70_Ek7w4Kqu4PRnBePKrPDJIvbhMoBj1XzN-UP-5d-vhSHLdk1qZmEpS938BTF0ExGvWEZkM2LfAh43VlpSGG9GE2vcKPvqbCbjSwcxd8qH5hpve-jH8_MzV5qHuNYkilQr9e-85NiVQcuDdnkU31HbnJKD9ynhWlzJH7Frbax5vKVD7UnoCztDHDd5dd3wS-hb84ymrAIZXp4oFSXKHnq3_x2jGmSRHr-tpyhw5VXbBSlHg8KZKiWggDDMq2qxYGdsLYNalVqg4zboxw-n7YAiUV_gZRjTG0hi64GDxsYrGpN5XMvguOZLz9gYF73Cx0vK5L-X5-Z7G3WiWcFIfOUJuqJxZ2jnAx6UMqQ",
+        "places/ChIJu4qHwl5ZwokR9RXRpZD04ZQ/photos/AcnlKN0dezvvVuhsWnslpbXfTV_dY83NrvxreFDofw6tOPQvaH5lzQ855EGNPb3a-ZJo1eU_iR-gTVwTaP-LaFG_HYYHAOV6p_oTX6gqOzn3JRhV9oHZC9_VRIaIEaw6kzzZNceDjTwl7ZVljhgdgADhQafJQLY8xBQMMiGausRC6Rof5oNHwFnBVOZtuogtWEFxYB4GtTjNrQgne891ZID6NONJ40zKK-pDpctBIEpyw4trA53ccCfpR5x-Crv2geAZDbDIIjFa2Qf9QSve0mQ6QjUIThEmqmO3hMkuEMf9NNE0mmYFOgQEaWzuCJspUvb3SkS09WTBsJ_66XEItWhNACq7Yy3YBS6is2GhjqSKQ9S4m2KTizDDXsARNoU_GkXTF3apXU9qy4vaqLYIbXY129R8KPEOxSNAwu32qzMBrUDZhMwnoDA3ZcUlOkOUlA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10728124689467643381&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 12:00 AM",
+        "Tuesday: 6:00 AM – 12:00 AM",
+        "Wednesday: 6:00 AM – 12:15 PM, 1:15 PM – 12:00 AM",
+        "Thursday: 6:00 AM – 12:15 PM, 1:15 PM – 12:00 AM",
+        "Friday: 6:00 AM – 12:00 AM",
+        "Saturday: 6:00 AM – 12:00 AM",
+        "Sunday: 6:00 AM – 12:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "Brooklyn Bridge Park Dog Run",
       "category": "parks",
       "address": "Brooklyn Bridge Park Pier 6, Brooklyn, NY 11201",
       "neighborhood": "DUMBO",
-      "phone": "+1 718-222-9939",
-      "website": "https://www.brooklynbridgepark.org",
+      "phone": "+1 212-639-9675",
+      "website": "http://www.nycgovparks.org/parks/brooklyn-bridge-park/facilities/dogareas",
       "description": "Modern dog run with stunning Manhattan skyline views and excellent facilities for dogs of all sizes.",
-      "descriptionFr": "Parc \u00e0 chiens moderne avec une vue imprenable sur les gratte-ciel de Manhattan et d'excellentes installations pour chiens de toutes tailles.",
+      "descriptionFr": "Parc à chiens moderne avec une vue imprenable sur les gratte-ciel de Manhattan et d'excellentes installations pour chiens de toutes tailles.",
       "dogFeatures": [
         "waterBowl",
         "offLeashArea",
@@ -111,7 +208,20 @@
       ],
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Popular destination dog run in iconic Brooklyn waterfront park"
+      "reasoning": "Popular destination dog run in iconic Brooklyn waterfront park",
+      "googlePlaceId": "ChIJgXlmgTFawokRPtiKhaYVx5c",
+      "latitude": 40.7039605,
+      "longitude": -73.9885382,
+      "rating": 4,
+      "reviewCount": 72,
+      "photoRefs": [
+        "places/ChIJgXlmgTFawokRPtiKhaYVx5c/photos/AcnlKN1muoHbFroN3Qkr4re8k_RrpYacCcg7B4e-ZnSw0-V5vSvDPz5BIZUp8FrexRIi8PeI0AxNPkDs22ktaZeD9JxSPV1omx4RtkAGfsWBlHtWF6cIctO_guU1APm3AZUQrEV3e8LpUSR1y2csJ9AjuZLG76CigkJAGRfslzfuPiSXzbjVPCO4Q8U6bgwK35O0Wjc6Z_MibvjoKXHXKKffsm1PemP4vWBbW3SQ6ikiIhWtpEIFZxy1Arn65mVKB-Qx-QoS6qk0F8hkjDqIUOlIm32w6zPFjHHldkJKc2a96yi0dGPz2U7rNPln5rd2koNvEMDuFDVet-0yxEMYf77s_ZrjvW5zyRxFaPVwwCr-zJ4JUmrmsve8selyMnDCAGQdKkK2-QnD0n4npZocf-bQAQ7AuBGol7f1L4cOsN687LaB7-I",
+        "places/ChIJgXlmgTFawokRPtiKhaYVx5c/photos/AcnlKN3VcTQm1XbYjBaqb6CIaQuumW3BMdJ4myyHDlXgIuY66hLmZ9loWc7DpsmYFy4Xee2Cty2JSxMGFPkerR61r2E7f9XB3eRNFZBQWl8p-TMSKLYU1aiQ8iidlvxxuOl7TC9uKnVp-TopSfHtHg2k72tjWoLI3IFWbKHkfAwQ4uwWnVoNTWr_SZxSYU9JjsbawV0NXSX1WiLVJasS3JVtGicNdkw3X_FBCiB3iRBMJLTlbA5hPkruB6K8kqG90nq2j-ChLDm7beqGvFJgUK6CBwmwVPmN_SdybGzwDdtFBLrT1I_MFR3CB3GJMEtMtqFgMG3WYQoFiPca-krDNBiiuaPW6M5CJRyQvR5YFb2pXIQLKFJBM422L6BmWSuYf3goCS2dJOvSD4cdWd3lSNErXXnyFGqbjmpOPMLCSfZ-oKQetuI9",
+        "places/ChIJgXlmgTFawokRPtiKhaYVx5c/photos/AcnlKN1ytssZRhglyyWZN27kPrBZqfXh5CwrvkfyW2Yv9C92SIfwF0Ae613gtdoiH68hQxqKIHpgm9wU24LqgVePWVMgzEmlnvu0M8hcqFgh8dO86MjaSc2X-MWGYvVCr_TcPAofPQS-sUSAWIhdMiPuXUfWxCtQOL1XM5Jzf0m47h-YOqkgT5mPXDzHYbghILckfA05cr19HCrZJB6XT6TYWedVHVpzCuOjV3r3A0AyN_-frjA_ktggu0w7wqlrTQpUrzKUnjV61orFbJy9ODaWGlSdDkzlP1cMQZF9b0Dps7ogdTFs1BRqBSBpNQVWPDE85_LHUoPGQivh2CLvHjJmuoxc-F4L9zb1zhPE_ZyIqCIfNKO7CiG6dp07Db9G-cMtBsG7BD9BtOnpZ-YUQxmvVvvSs96jfTRgIvhjQpCGKWifTQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10936734025041762366&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "McCarren Park Dog Run",
@@ -119,9 +229,9 @@
       "address": "McCarren Park, Brooklyn, NY 11222",
       "neighborhood": "Williamsburg",
       "phone": "+1 718-965-8951",
-      "website": "https://www.nycgovparks.org",
+      "website": "https://www.nycgovparks.org/parks/mccarren-park/facilities/dogareas",
       "description": "Large fenced dog run in trendy Williamsburg with active community of dog owners and regular events.",
-      "descriptionFr": "Grand parc \u00e0 chiens cl\u00f4tur\u00e9 dans le quartier branch\u00e9 de Williamsburg avec une communaut\u00e9 active de propri\u00e9taires de chiens et des \u00e9v\u00e9nements r\u00e9guliers.",
+      "descriptionFr": "Grand parc à chiens clôturé dans le quartier branché de Williamsburg avec une communauté active de propriétaires de chiens et des événements réguliers.",
       "dogFeatures": [
         "waterBowl",
         "offLeashArea",
@@ -130,7 +240,20 @@
       ],
       "priceLevel": 1,
       "confidence": 87,
-      "reasoning": "Well-known Williamsburg dog run in major Brooklyn park"
+      "reasoning": "Well-known Williamsburg dog run in major Brooklyn park",
+      "googlePlaceId": "ChIJq1_VXFtZwokRJeRTzdbq5X4",
+      "latitude": 40.7200908,
+      "longitude": -73.9528866,
+      "rating": 4.2,
+      "reviewCount": 201,
+      "photoRefs": [
+        "places/ChIJq1_VXFtZwokRJeRTzdbq5X4/photos/AcnlKN2so4P2KU6VB9OTUgC9kOhA7AXNuAl4RLQj_b6jfFv2I9eP6sAXkvWKijFOXIXdSeBf8azzNMtmwwrYrtpukp2jRuySm2HWEfz0c8y6krvoLpJaZ2rmUXY0-F2GudkWefHjUSoRAaNoHttJvwXIh2u5YAL-lF_5qrsfb7zixqDPGexRA2nl-FoM5w2ccDiLtjRvl7kDitzIrKixq85xuBUxGRts5i1txmeRRUQxBvcycYNq5RCWqnmq_d9Ua29cf8gRxlsXUjumW3FHoiwNBRlqZfSBDAZgcDee4GF6Iq0gkBtfeQuZUEFmGENKDupfjbz29AWvU3YXI8IpCcVYLgE0o8XPVCGsngETMr_Me2pvx5L-ASJ3VyO4HdEUbt0Ylt0bUFK_JtbzVd3xhmvRok8VNCkgLGxFwymwVYuuA394rA",
+        "places/ChIJq1_VXFtZwokRJeRTzdbq5X4/photos/AcnlKN1ZvtVxU9J9V9qogsBVXPYM5Qgy9XgXKS3Bv7zryEJe7EyEciuCVf19i-CEq1i3q0GXof-OsaaAjwtEZthxQqkOwDQhpt79WHadMhp-nJx1npJJ5_14hQUwnrCvcbJkvSprgyVJv9F3tYG9qs5AKJU4OpOIBz-nO4Dc5vHgCYM3TmssRBh564ZikDDc5QhpkqiOVLh5_9Yrgvn6uBkHlywC3bAWQ7a32WAn8VFet-3lxU4N80VPfa87tZ8KTfbv-kPX2GXjazxF16YWh1I_JxfVqicFEFT-owOcmKSFa2nzDXuyKc_9Pson3JrQphEqpWFIcxTyenJd8VtvkNmD9tt88_jgn_UhgIeEYX4iHY-2VB2qY0bmbTqAT-iA8EHfYajzNhJnQPBwnGB-2sHk5XTw2vIWC3M0ftYHOaX3X3OmJA",
+        "places/ChIJq1_VXFtZwokRJeRTzdbq5X4/photos/AcnlKN2ksuQ7kqBTOEbHW8Mjgswz0e_V9Cz_fogU5BOMOXHzPNDOSBW5-1ycETbOh90bK2XuHqiTQF19D5IZh7SKkG6gnlmXvxVZtkGyzcb5RbfFuRXpxdT9PKtfGpZEL3qsYzPQIJVTH0aTA_6_IsYRrbJN1XCokAaQXyAFcmK-7FE1_Y5ccH3peV2IEin2YI8sPXHuEj4fNeo_Ix6EBdlr_T8zYrWCeQ-NtwF2Ke79WabccW538q3VY1Moe6opKi_2VThDKhA6ktHCT4vbVi0LBK4BSEQQqGqaEHnn4cxlX8NjVMcfldpJ7xbFUr4yicAMaf0t-Zl3hrWZzA3Tcav2AxXG-O75NvkcMoMZsEugA0F7O-Rtf5CMwmDS0XQgpLF0haCReb9B8wO6o359WenG_yi0AZG6dKO5EW5pifo6GXPJUIHl"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9143972826734388261&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Tompkins Square Dog Run",
@@ -138,9 +261,9 @@
       "address": "Tompkins Square Park, New York, NY 10009",
       "neighborhood": "East Village",
       "phone": "+1 212-639-9675",
-      "website": "https://www.nycgovparks.org",
+      "website": "http://www.tompkinssquaredogrun.com/",
       "description": "Historic first official dog run in NYC, featuring separate areas for large and small dogs in vibrant East Village.",
-      "descriptionFr": "Premier parc \u00e0 chiens officiel historique de NYC, avec des zones s\u00e9par\u00e9es pour grands et petits chiens dans l'East Village dynamique.",
+      "descriptionFr": "Premier parc à chiens officiel historique de NYC, avec des zones séparées pour grands et petits chiens dans l'East Village dynamique.",
       "dogFeatures": [
         "waterBowl",
         "offLeashArea",
@@ -148,93 +271,219 @@
       ],
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Famous as NYC's first official dog run with historical significance"
+      "reasoning": "Famous as NYC's first official dog run with historical significance",
+      "googlePlaceId": "ChIJ330ClndZwokRXY4DMT4ivKU",
+      "latitude": 40.7265008,
+      "longitude": -73.9811366,
+      "rating": 4.6,
+      "reviewCount": 113,
+      "photoRefs": [
+        "places/ChIJ330ClndZwokRXY4DMT4ivKU/photos/AcnlKN3qZsFPm8a-xyEkMCt7uuKkY3qrP9b3RFHAZ68G_isFg6nWjhfzHfMVONALmkCjKI1SvmYc9MkVMQvnginGr4iz2y9MSPOAdwVOCgRlhALpu7bjMC2bkDFVkvvc7WjChVSrqyb9aOKXgqRwIwKjdFC9ysaFwAQbXrPBfAOe6GEGpf3qN7cDBe_nqLV6Jm8mkuMQck4uTx1l9WcZ7yP4olSLN1b1fcR988TPLTF0vjDx2LMhjVj1bla9YWnzwnKnvgCY03FFU_qlEdS9q4o3qB1LQH5FbRito6W-xrTiaRqTCQ",
+        "places/ChIJ330ClndZwokRXY4DMT4ivKU/photos/AcnlKN0HN_DBwFNxg62O8QBqgGJ89triHKoMZgYIFqhz8CECNh0Um5voDyV6dyI33RSPDznfvN7ZWdVpwIuU7xLpyapqr3yNp1MrWcm6wGFYe9wcuiAY5gidofmeO5OXUiOZZPl9XRXo9JqZ43HTshiO83rMYFJr2Sw_61hSLlhPYDmb-OJrcLzeAIdElOMz3t8h44EQFSjf1BIOENEn7b7559mZhR1bmgzbR2pr8NaBlYFePvX4jD-ThoY_7Kh1xchN56ZdEXr0spFW8Opy3a2Xb4MpwlPBsCVK47g2LnvM_Ol9B-oRcpbKCRws4WxeB0C624mIeMVY0MbHe-GoEbn0GCvS5YkAfdfeyd68gmDHFiNR3E27MLwYG35xBScnzJhq2VmsRe8SSP0zS77p-SW93aiHZhk9GsLueXV6Z97NEnJwDOTc",
+        "places/ChIJ330ClndZwokRXY4DMT4ivKU/photos/AcnlKN1ILqG4n7DD5Kt_fBPKT4hM4YHph2RM6yA8eCdo-1yYC4SRqEuUEhFMyAVcDMWFxyXIINFdzDFx9ilTOSYRnpWulnKNr3hfZUczA4-A4Dv5YOrSz0_fd9SDVWCPwBGhTL1cyAYbgGJY75zUq719p84AUhomCDaa9nyyXYXxHgFwl2o-6_e0acnFtPeWt527HuRASvUeJ6E2G7e852ISRLcy_OqXmh5d3R8zm6XINWiQVntBbTpmVPb0Miu3IsidujrjalyL_8a0h_6IexWHRCs57n5BY3hSNGs4ITsDBoMZLhzJObGSVe_-Ijp94CgdDbu5XAsKarH3x1PMc00ylNHxvGmgxPoyAfxqBA73qimd4hdANk7ShaMJ391Kx5CcPq1HX89bTrqqGWFK1gF69v6fKeec0bUz5Kwl4HZv28g8LQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=11942457962385346141&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 11:00 PM",
+        "Tuesday: 6:00 AM – 11:00 PM",
+        "Wednesday: 6:00 AM – 11:00 PM",
+        "Thursday: 6:00 AM – 11:00 PM",
+        "Friday: 6:00 AM – 11:00 PM",
+        "Saturday: 6:00 AM – 11:00 PM",
+        "Sunday: 6:00 AM – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Standard High Line",
       "category": "restaurants",
       "address": "848 Washington Street, New York, NY 10014",
       "neighborhood": "Meatpacking District",
-      "phone": "+1 212-645-4646",
-      "website": "https://www.standardhotels.com",
+      "phone": "+1 212-645-4100",
+      "website": "https://www.thestandardgrill.com/?utm_source=google&utm_campaign=google_my_business&utm_medium=organic",
       "description": "Upscale hotel restaurant with dog-friendly outdoor terrace offering treats and water bowls for four-legged guests.",
-      "descriptionFr": "Restaurant d'h\u00f4tel haut de gamme avec terrasse ext\u00e9rieure accueillant les chiens, offrant des friandises et des bols d'eau pour les invit\u00e9s \u00e0 quatre pattes.",
+      "descriptionFr": "Restaurant d'hôtel haut de gamme avec terrasse extérieure accueillant les chiens, offrant des friandises et des bols d'eau pour les invités à quatre pattes.",
       "dogFeatures": [
         "waterBowl",
         "treats",
         "outdoorSeating"
       ],
-      "priceLevel": 4,
+      "priceLevel": 3,
       "confidence": 85,
-      "reasoning": "Known luxury hotel with documented pet-friendly outdoor dining"
+      "reasoning": "Known luxury hotel with documented pet-friendly outdoor dining",
+      "googlePlaceId": "ChIJN-93ZsBZwokRonoT5y_yB1c",
+      "latitude": 40.7406769,
+      "longitude": -74.00787629999999,
+      "rating": 4.1,
+      "reviewCount": 1481,
+      "photoRefs": [
+        "places/ChIJN-93ZsBZwokRonoT5y_yB1c/photos/AcnlKN1Aq1F5ogTGGPazmu9zaC9YuPInD_0xvJXEgyuvIcIcIYUBQeaenXCpyUSUWSoScLo8agapUA2BJmC7sUR_nZ0BmoeyesJ1Jk5f_ykx_OTfGYLKjeBpaaBY-ja9YnSoOocrwr1LumkzQdvnmFxGQF4Ntne5HOgC-z03VCozgZKl2YeibM2QzFmDIneoxdSul8QCtDXLm-zIi3JpWKPA_KHB-FyRYweOiFndX9cQn4lZ58E7BWlq_s30vgClzETScDjZR9DWNnJd_PJWqyGrwxju9y73wrnDV6CfB0U-oeLHHQ",
+        "places/ChIJN-93ZsBZwokRonoT5y_yB1c/photos/AcnlKN1V1Kzai6T6BndCTEtIHCeIVYRHFsXDbCtek_SGUtyj1RJ7oRtXw69Gjt2AofSiEBh9hMKysLNxlrOX5i-m_2s27EeFzQQG9PGg57ltOm19_mBr-nnmzJpFd-QwSKMMY6XgHF6ljNQHNXDNIsdvROZHyb0Ocfs8g7AJYGmI-Cc9YtYIDmeqooG34sMTBvXcS-98vwYRMD-uv5uvmcEdKSrQA-2g7fKsRxvpy5jLr3TnG-OdaJi5bSV0oSt2FT9Lo0_1xqL3J0L_QbONCP-eoIP5-e2BDnSTFfZw9iqYg60CaDsZan8_2glBNjzgKi9XQyH3WmmaiI1NQ3Kk5w7k9XFx_jg82e2Jn7TSJxLtxlMSi8P35CbLUtGJL2S4apdORYuoBjsJctSwyAcWaOiolfxTB35zAc28SY2Kel9MazTHd7NoNhLnyWO06wkGdg",
+        "places/ChIJN-93ZsBZwokRonoT5y_yB1c/photos/AcnlKN3sRjf5SZPSMCGuTLaCDPnJufH4DgL21p02FpYP3n0o-89CUA9FcRjImL-bN36jSsIAXBeO1Toug2Nm00Ad9bDiZQxdhnsxul7wXi_9uzfsPfujsOoUO32BXwyiXT9S-eyB1LKROz8mDec1w7eeDJVGht--l2pmG6JUkl6lhFDm7LCGh4RwJQ7fLUo3g4tWQqI1XyFZWeov6eYlfmGvXqAyzFsqPWsR7VsHaGxDGN7asglstLPoE3eOysg55xVH_e-6eGU54Te5IpF0XMMBK2OUlRYbFVFn__6xOBdrzKpjpw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6271247293690903202&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 11:00 PM",
+        "Tuesday: 7:00 AM – 11:00 PM",
+        "Wednesday: 7:00 AM – 11:00 PM",
+        "Thursday: 7:00 AM – 1:00 AM",
+        "Friday: 7:00 AM – 1:00 AM",
+        "Saturday: 7:00 AM – 1:00 AM",
+        "Sunday: 7:00 AM – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Jacob's Pickles",
       "category": "restaurants",
       "address": "509 Amsterdam Avenue, New York, NY 10024",
       "neighborhood": "Upper West Side",
-      "phone": "+1 212-470-5566",
-      "website": "https://www.jacobspickles.com",
+      "phone": "+1 646-566-6630",
+      "website": "https://www.jacobspickles.com/",
       "description": "Southern comfort food restaurant with spacious sidewalk seating that welcomes dogs with water bowls.",
-      "descriptionFr": "Restaurant de cuisine r\u00e9confortante du Sud avec une terrasse spacieuse sur le trottoir qui accueille les chiens avec des bols d'eau.",
+      "descriptionFr": "Restaurant de cuisine réconfortante du Sud avec une terrasse spacieuse sur le trottoir qui accueille les chiens avec des bols d'eau.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Popular UWS restaurant known for outdoor dining and dog-friendly atmosphere"
+      "reasoning": "Popular UWS restaurant known for outdoor dining and dog-friendly atmosphere",
+      "googlePlaceId": "ChIJCehOSIRYwokRs4ijKsy1oiI",
+      "latitude": 40.7911551,
+      "longitude": -73.9690457,
+      "rating": 4.5,
+      "reviewCount": 7187,
+      "photoRefs": [
+        "places/ChIJCehOSIRYwokRs4ijKsy1oiI/photos/AcnlKN2irrYQGF1GDxy22VIb_IPPIPr1hrNR1BHUIuvRspHJdPW6vtTVaZDou-WSJcTg5Nia-njsXSQn0mZ3O6_lrDa5_1XdfvxQLkyiCjjBltDgXV80SSKDjq3Lcvnrt6CjNjqP9Vr0AMUn0qO1xzdBZvmtDzfLXPKYT1s4jZYcsWea_hFURghcsyluPI1eiCS-vXJpjPVldJ5NIh1jWgdUd066XXTLnCtmTZ1ZizcqRs__iS8elWIhT62KOuenojtAdlOoxgR0Rh8wtL9yjFFvp2zqt72oa093xN76bcoiqh_BxQ",
+        "places/ChIJCehOSIRYwokRs4ijKsy1oiI/photos/AcnlKN2tKvfoC9WE1afydKVheGDaT4Gvwqh__D8PiX0POObT5VFTgRoTqKOka9jPqPnxV1trMMnvPlhYBHoupz53_s_-i-iJZliqOTo31ISAUA3YZdx7Mj4Y6i9hWNNgd_AIpmi5ZirZN8OKC_qRb6tdkv8vrCBVFaH7SbDahrDF4VMcuucT8M73wkm3KDXwUZxAYtLLIuHWFkg2zcLWE7Bit46T6BVVBKDgwMXr44Fv5V_OudeQahVaOw2mZshXPjtqhn4SIq9fidMC9eMe1ERZq-SNyzBRmsnw6GfthXKfp2HeiOApxi6qOLGupqg-VwwnBc_Ql6TgmZKurGxioFHjUt4mDwgDkNadu0Q_CymjMERKU1ukRrpX7Q0ejHzSuQgpLNP093TNNsgQ0RedU70wTRmjzWYGv0jxzaCd4KUlPFkoKxn9CxJPv7aiFHidwubx",
+        "places/ChIJCehOSIRYwokRs4ijKsy1oiI/photos/AcnlKN3Fxa9PxSrggnu5n5Y-E9b9g-vFHjqX6YmVzcfUG9F359aBBD4x1tCzlWz97ZKLt8K7xTOm7JRxZvh3fAZKCAsdN2-Revu8G6O3q06OeIpADPCnD1BpB3aKYtCle5641qS3-G0dxQ4_9YWScTNf6kzaRPPbg8fnSxjTgDNW5BewhfAZGUp8vgIOLmMZihY3cWMzqp7JnsYF3EgBGQi3H3us2olzWloWl4CaqNAdgeuqLJ3fJx3T-fNcU2aiSlSGZm-xzeeGsDy3QIuFIsgRENUH9oNPL5G3Q4qgvSRdAhy43g"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2495757032009992371&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:00 AM – 12:00 AM",
+        "Tuesday: 10:00 AM – 12:00 AM",
+        "Wednesday: 10:00 AM – 12:00 AM",
+        "Thursday: 10:00 AM – 12:00 AM",
+        "Friday: 10:00 AM – 12:00 AM",
+        "Saturday: 9:00 AM – 12:00 AM",
+        "Sunday: 9:00 AM – 12:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "Barn Joo",
       "category": "restaurants",
       "address": "35 W 26th Street, New York, NY 10010",
       "neighborhood": "NoMad",
-      "phone": "+1 212-582-5704",
-      "website": "https://www.barnjoo.com",
+      "phone": "+1 646-398-9663",
+      "website": "https://www.barnjoo.com/",
       "description": "Korean gastropub with outdoor patio seating where dogs are welcome and staff often provides water bowls.",
-      "descriptionFr": "Gastropub cor\u00e9en avec terrasse ext\u00e9rieure o\u00f9 les chiens sont les bienvenus et le personnel fournit souvent des bols d'eau.",
+      "descriptionFr": "Gastropub coréen avec terrasse extérieure où les chiens sont les bienvenus et le personnel fournit souvent des bols d'eau.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Restaurant with known outdoor seating and dog-welcoming policy"
+      "reasoning": "Restaurant with known outdoor seating and dog-welcoming policy",
+      "googlePlaceId": "ChIJQ7XpyqNZwokRQpVfvGEViWM",
+      "latitude": 40.736868,
+      "longitude": -73.990738,
+      "rating": 4.4,
+      "reviewCount": 2048,
+      "photoRefs": [
+        "places/ChIJQ7XpyqNZwokRQpVfvGEViWM/photos/AcnlKN0z0nrqfxnVnAASkFD5e5cpOGRTwsnTKSAk2jk7Eyz9h1zUWddOwV-vV_tDvqFKLlbI_swy19hCqnI0zg8JTqzcCgF23aoBEdUgfqPYzUSMlg07ML5F8gzzK-TKtxovFc2T3k5IaJEXDxJBjd0bZx5dpMQ1JGbjc6IlgNCISEycgnwJ-MGVqBUtZTcXhdhFr5OYTlHJeqbimoVoh-xmt9gm5fIIDuHi13URiPtl1094ehsBqGaZk7DBOCKpgXPHw3MX55KcaXBv-iz2BhS9ndsdg8rU24hJnic5MsIPkLcvyw",
+        "places/ChIJQ7XpyqNZwokRQpVfvGEViWM/photos/AcnlKN2em9-ttBuEqbjMSQ-VdwYCSLRR7cTrREiSsLFhDykMsxz-IC9MM8nap-3Zvnj3G4oK-1ULp63ULGaeCbU1LpU5o2lm4pxYCOHeWGyhgrEKIjV-N1Euf_wY2cAM9tvcITuIp96z9BFYxwT83zd1Je3TukBN0y28kVGf0gep9wdvaFvfkb69MDk5kxSaKKh9xNRF1RAo04GA8DmrfvyS14EvJKckAj-1zMdrkBgMblgctNS7PVIUkSDLwsjuGmteJ6cYVnmWx6vCqJvlqngcFwacHsaymwry8K_oWcPSAv2f_A",
+        "places/ChIJQ7XpyqNZwokRQpVfvGEViWM/photos/AcnlKN3GWmhk78JBLH5HOiPdc0zv7qD3VkuLvoNoLL3FQP5knbe8An2nwUXPWnFJQdG-aCbpALl50h9ngP3gfa5LbOg4QYkta9qIQaCAc5YT7tXRdZYYZDenPzxK-We3K3U2byTfnbX7s0Tr8T35RGhnaVanOmZFIR0z-F1hkSTA0qWYRq9d_VdqzTcksACVy2j6wMmXqFAPdF9lKaqK_3XCaME1hnhvr9gwep7_JO9Hlvt_BI-FnemWkpRjcpDPmEkmCmtlBV994nhoQ48P3ppPTbVyHljw8C3U4xdwaMKQ9S7UoOQCiK62Q-leBcI7CR_-Puvm_Wirt0A-gGSf9mgSNkainAZp23IE6ypKhq4VVJ47U0TV94FR7bmxtVqUcxJtP9fX5b4ZrqcJ1OxNZMeEPKp8xtP-hwMO38KoQRQuPeMOTYBnXoaAq2Rb3YQJug"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7172287391080617282&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 10:00 PM",
+        "Tuesday: 12:00 – 10:00 PM",
+        "Wednesday: 12:00 – 10:00 PM",
+        "Thursday: 12:00 – 11:00 PM",
+        "Friday: 12:00 – 11:00 PM",
+        "Saturday: 12:00 – 11:00 PM",
+        "Sunday: 12:00 – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Westville",
       "category": "restaurants",
       "address": "210 W 10th Street, New York, NY 10014",
       "neighborhood": "West Village",
-      "phone": "+1 212-741-7971",
-      "website": "https://www.westvillenyc.com",
+      "phone": "+1 212-741-4780",
+      "website": "https://westville.com/locations/westville-wall-st/",
       "description": "Farm-to-table restaurant with sidewalk seating that actively welcomes dogs and provides fresh water.",
-      "descriptionFr": "Restaurant de la ferme \u00e0 la table avec des places sur le trottoir qui accueille activement les chiens et fournit de l'eau fra\u00eeche.",
+      "descriptionFr": "Restaurant de la ferme à la table avec des places sur le trottoir qui accueille activement les chiens et fournit de l'eau fraîche.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
       "priceLevel": 2,
       "confidence": 82,
-      "reasoning": "Local chain known for dog-friendly outdoor dining across NYC locations"
+      "reasoning": "Local chain known for dog-friendly outdoor dining across NYC locations",
+      "googlePlaceId": "ChIJNa5r9j1awokR7V0YcDbff0o",
+      "latitude": 40.7048442,
+      "longitude": -74.0064313,
+      "rating": 4.5,
+      "reviewCount": 1108,
+      "photoRefs": [
+        "places/ChIJNa5r9j1awokR7V0YcDbff0o/photos/AcnlKN0jlryuoHqAXERIkOefRwSCjCDyULYVEer_EaIcNyM5U_EfnXmJQeM0CH4BXw82-nmeYy0jM_YSCuvnYz3xxd3O6WSjtsBbQPuPj2g4TA_t8CNRUmTJtr6uz-11wM4oiOp4RozSsvzUkLyQm1s8BucoaFJSeEQa7RxrOHsdvQAkivyqNdIbRdmZMw_F_rCPDi_URO4dUuss4lQHvKVTvDCUb3Iat5Vxby8bVL0FNzxHROXeEzSorJFrBs022y3ezkCIENG9nh1rkkuUvLkRqJOplFXdK9fQTipo60XqaJ3SNA",
+        "places/ChIJNa5r9j1awokR7V0YcDbff0o/photos/AcnlKN0ZW5h3zSGBzdp8MLJLaH4u7u7MThg0Jd_n_NjXZYGCgihFjR3knwMRRvtie3CAhtagRRnBx8f0I8LLtBXiR1E462504ZAVDzq5gZnxC094369E4Cjy-4NJbNwDJdOjRFpXLgPD7f_y-WqQDDIkg_IKGSLDcWLsT754u8oZFt3gVHNFpOPojf4ZAmKnkPY9q-ns4RHUmZdanF2lUtNF3VCHV2barfVdT15ZcYixoDmvDLuY3IiswRtvf-XBqHPc_DZJR5qJqiL8tj-7abSss0SRUFtaeBmSXFNrwJLuxjThkQ",
+        "places/ChIJNa5r9j1awokR7V0YcDbff0o/photos/AcnlKN3wRzetWfK2yA1tOoCQybZXKYZq6QBdJgvJqLN2LGr-xa0uRhIinBeU_l2fBo5rbh-hgIPfMOLEZ3q25_wbO6b-ZDI1eHsuUBVvtC0v5pZxNWMOjhdZBvkrzhio0NMbnLLjGyv7Jx7E7CegD6L7Gj1nSj1tT5NZRfkwtdnxzadGfHPJTs3YJ29gNldepNKezIUFn7VbjMVCa89X1tMTrNyh-iEdeL-dcW1yFhg8nrkfM1qEjTa1ZB8GN4Hwb76ZAznK_il29ARRvJO8F8Txp9ua3FkpAx8Sa5Eyh5nhHFzE9mIKAbwU5eSuJe5eqGLlIO_3YQaimklgFH55kNm6FmtZBfBZMXJgHKf4fpn84dwXvogDpYTw5Mb-PfXzt2PKm0UTBzQi-B10wTB9iYlVL89SLKq7MdbW6Vp3ZPtH56kMytgW_t71r0Iw2166HUJN"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=5368254705750793709&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:30 AM – 10:00 PM",
+        "Tuesday: 11:30 AM – 10:00 PM",
+        "Wednesday: 11:30 AM – 10:00 PM",
+        "Thursday: 11:30 AM – 10:00 PM",
+        "Friday: 11:30 AM – 10:00 PM",
+        "Saturday: 10:00 AM – 10:00 PM",
+        "Sunday: 10:00 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Smith",
       "category": "restaurants",
       "address": "956 2nd Avenue, New York, NY 10022",
       "neighborhood": "Midtown East",
-      "phone": "+1 212-644-2700",
-      "website": "https://www.thesmithrestaurant.com",
+      "phone": "+1 212-685-4500",
+      "website": "https://thesmithrestaurant.com/location/nomad/",
       "description": "American brasserie with sidewalk dining where dogs are welcome and staff provides water bowls upon request.",
-      "descriptionFr": "Brasserie am\u00e9ricaine avec terrasse sur trottoir o\u00f9 les chiens sont les bienvenus et le personnel fournit des bols d'eau sur demande.",
+      "descriptionFr": "Brasserie américaine avec terrasse sur trottoir où les chiens sont les bienvenus et le personnel fournit des bols d'eau sur demande.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 78,
-      "reasoning": "Popular chain restaurant with documented outdoor pet-friendly policy"
+      "reasoning": "Popular chain restaurant with documented outdoor pet-friendly policy",
+      "googlePlaceId": "ChIJK0Nld6ZZwokRyOd9fsyinLY",
+      "latitude": 40.7442419,
+      "longitude": -73.9886085,
+      "rating": 4.4,
+      "reviewCount": 6175,
+      "photoRefs": [
+        "places/ChIJK0Nld6ZZwokRyOd9fsyinLY/photos/AcnlKN3PSeWRsLDxz1Q7yUDc2Wg6gbZE8I3VXWniKr324v9eV7YQ92KcshDj1PqMaFR2x5TEuxCrYVqiit2qSsqIDsyflXFy3uPnSnkSTytQHSxMfxj3wyWoXnlHrNqP2KBpLHxxNEygS7Y3lXzZ-OJKK2JHl9cwALq4TbVWMTYSfABZO8lxlHSpp9EC6Y0bJG5JmvLlP5ds51dcE7qoUuWxkfgOl5TwBpwJ4p5kLp5mt25GdakpRG2j7aNz7x1rh3y5Cl1wBfz2r295Z0Ml4wehDhFDW6e_VQuyJY3o4_4o7wSe5MqM9OhzAjFEUeY0TSS6v0XOEWzmfrJJrIpX_sIYMicN3XLQxWfJE2F3dOhO_dIqdHYuJiKzd_IBBQcFdp3a42UWFoT8dayNVhzMHjkbTgmLPnM_EsscqVLsUWO512ScrqYC",
+        "places/ChIJK0Nld6ZZwokRyOd9fsyinLY/photos/AcnlKN0aAhEyyAafdqsVwy0Ap3r4kENjfJrbmuBI_viDzJwP65nr0ttM2kOjKtohvBxmcfGfPXCEJceBdz04RFpxnCKHswssZsTiGJYce2P6iP-xOv-DE5iX0Eis2zexjxrrsN4f0UhhdzFhVmK61KN1nkGMSX-sIGfpVat6xK8HO15twD-o6UKN_PoWeyEaP9ZUIi5LwbA8G04mHg6uQDI4BmuvjDNdxRv82eEYyLii8q6zKX0EzgmcvvXDdXNYMxoLrwftTFZ0PKObGSaVzsxiKqtbcdoe7GZ39EVNcb7vEs1I5BTJA9KCq7NdJN__RyjSRSB8KIJb3efhgWz9FQwT7cLvyicM6dhUXXJbngzAViqizB9eUBRvcr8_g3cIgfDFmz70C6Fe5MnyOPrA28aT7mgim-Cz0GuuJEENNNJEdLbER8aLAgNgDM_CfKEuRCOr",
+        "places/ChIJK0Nld6ZZwokRyOd9fsyinLY/photos/AcnlKN2G22hL0z1yeqJwcvmE7sDbJI-OwCwlFg-j1f66uzilIn5WgAAcHBjh1WnC0s0NkPAWtmIkf5fmJf3B2pj7HAr8olpg0nf7VXfpbI9qd320_vNhXup2G85gtly1z3VsbGfvKY80hDAdN3DgtLAKr8Z0SPtGXCO3-rir_yMbQ27eVRSGwyxx0uQwhhlxvBrwxId3n1dCyypjjofuczfVqEfKKhYm1UKJQg7N83cIBoH3_VB7g699I51F73_kWVIzvyhVUC1SSZziMlQhIgqiTtzE_23PvqRZWkmd6MZA9cHW0wfiNtgPEZsfTXLhggDcGrZXH5vJ5XAWiSVRhTLvQoMEezl-KJtJ43Vf6ogy2w7WV9Nd7XXqTAWZbBkkVUmQ_aywzqHgtN_qYmcp-kaG5OnHtYGODVFKX6dmh5oAIawUqONSSitMovJfNdYrPruH"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13158571210448955336&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 11:00 PM",
+        "Tuesday: 8:00 AM – 11:00 PM",
+        "Wednesday: 8:00 AM – 11:00 PM",
+        "Thursday: 8:00 AM – 11:00 PM",
+        "Friday: 8:00 AM – 12:00 AM",
+        "Saturday: 9:00 AM – 12:00 AM",
+        "Sunday: 9:00 AM – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Cecconi's",
@@ -242,17 +491,38 @@
       "address": "81 Prospect Street, Brooklyn, NY 11201",
       "neighborhood": "DUMBO",
       "phone": "+1 718-650-3900",
-      "website": "https://www.cecconisbrooklyn.com",
+      "website": "http://cecconisdumbo.com/?utm_source=google&utm_medium=organic&utm_campaign=googlemybusiness",
       "description": "Italian restaurant with beautiful waterfront terrace dining where well-behaved dogs are welcomed with water service.",
-      "descriptionFr": "Restaurant italien avec une belle terrasse au bord de l'eau o\u00f9 les chiens bien \u00e9lev\u00e9s sont accueillis avec un service d'eau.",
+      "descriptionFr": "Restaurant italien avec une belle terrasse au bord de l'eau où les chiens bien élevés sont accueillis avec un service d'eau.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating",
         "shadeAvailable"
       ],
-      "priceLevel": 4,
+      "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Upscale restaurant in prime DUMBO location known for outdoor dining"
+      "reasoning": "Upscale restaurant in prime DUMBO location known for outdoor dining",
+      "googlePlaceId": "ChIJB2xIGTFawokRSX4sCtT9djg",
+      "latitude": 40.703487599999995,
+      "longitude": -73.9916178,
+      "rating": 4.1,
+      "reviewCount": 3098,
+      "photoRefs": [
+        "places/ChIJB2xIGTFawokRSX4sCtT9djg/photos/AcnlKN0pHhvLpcTBOV4_NQLT-sxO97LPWIjfTb4Db6xl0sFW0eEf2EzFU1dah4h8KfJN33TPkmWaCdfeHg7XNSx1wjd6pSBq5rHVq8cm-M8Qrk2EO57lrR2A4FqQkXl8HUcQWot-kOQKkOfTikEQLb_sU6BfgSf_1JZQEXXUlhKgMxzkcCn2VN2rKSxi4H2xBMyRTRqNOB9scuCymQ0GlYRL5BooBzstnGz82LWC--Sl__YsTPSXK1qcKWQWp2RJAdkXHkB_tXj7Y0fIJv8iCbjCmydKkqUpuxSMLn0mTZgwKydvzg",
+        "places/ChIJB2xIGTFawokRSX4sCtT9djg/photos/AcnlKN1r4TyxeDP2EHYH7BfqAywl_dYaaTJRM2cU4fGm0s172B7nxLwzaEfDaYUDNjkFYKQT67RUJLvpwwyyC9U-ev7Airc-cQZmzDqNZuo6-oqAxDHdzaU_-Kkl_cFoYxRvQqs9wDOeyMi4s_HwUrsi0eKFrIT8E7e65265gtIfsKWEkeaFL3mnfy9wHurwPb6dTDdleGggGRcJrdPYlZ4XWGSvdqusJ7cx1lSPwA22HWdeQxU-caZSoLMaSFefbaXMnG9CncInWDDzeD-nUKRYSOWU6pROw1ttw6ngLZh_6acAIQ",
+        "places/ChIJB2xIGTFawokRSX4sCtT9djg/photos/AcnlKN2A7zM9BeSo3iStrPoEiCkt_4ouKakj00vade-qOfM_yIpX6AvTFfT6erjhELPJVQV91dV7m-om3at1y3aT2aY15m1DCWUtVa6fBfl4q3K9m9HjdsUkGxA5l3D4bFxjIdm1HJ509Qc3XIhoJiXSQRfV9M6wSbCgPpcChIMnyFpptBlk4ESxGzIdhcnezfNPFleRCEzZleevQYVzgmLYHc_JCU6FMNcljZcz4qkl1fczNcz7N1CS1vvIpA5mDQ-yJRU1rwiYIjanKjxG126d7elbi75AdR6-2yeUylN8VF7gSR1zhIw7wHpSqow_oBJ_5eXsmhVCPZFFgPMO7rMpUt55kJ5Iu3K74he1mSjuc38I6XFLjhzLw8ZSScFdIzkRKG3yPepKjepOUQ2hvxBQToGF_ms-qVZH524TXHNvlc9g69BXiL7wypyus6v-Zr4Q"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4068718400521403977&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 11:00 PM",
+        "Tuesday: 12:00 – 11:00 PM",
+        "Wednesday: 12:00 – 11:00 PM",
+        "Thursday: 12:00 – 11:00 PM",
+        "Friday: 12:00 – 11:00 PM",
+        "Saturday: 12:00 – 11:00 PM",
+        "Sunday: 12:00 – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Extra Virgin",
@@ -260,34 +530,68 @@
       "address": "259 W 4th Street, New York, NY 10014",
       "neighborhood": "West Village",
       "phone": "+1 212-691-9359",
-      "website": "https://www.extravirginrestaurant.com",
+      "website": "http://extravirginrestaurant.com/",
       "description": "Mediterranean restaurant with charming outdoor garden seating that welcomes dogs and provides water bowls.",
-      "descriptionFr": "Restaurant m\u00e9diterran\u00e9en avec un charmant jardin ext\u00e9rieur qui accueille les chiens et fournit des bols d'eau.",
+      "descriptionFr": "Restaurant méditerranéen avec un charmant jardin extérieur qui accueille les chiens et fournit des bols d'eau.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating",
         "shadeAvailable"
       ],
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 77,
-      "reasoning": "West Village restaurant with known outdoor garden dining area"
+      "reasoning": "West Village restaurant with known outdoor garden dining area",
+      "googlePlaceId": "ChIJN03iU5RZwokRN5Wy8Ox2YeA",
+      "latitude": 40.7354394,
+      "longitude": -74.003166,
+      "rating": 4,
+      "reviewCount": 1011,
+      "photoRefs": [
+        "places/ChIJN03iU5RZwokRN5Wy8Ox2YeA/photos/AcnlKN2twlz3Oaaoh21I8hFhCm-liV8USbLbQQZoD01ZS5Znc4RDXeDzFj_zkA0ZtrgceY33lSjEhEEDoPfjV2A8WkYdzU3VOM7qannkTB-k5eKRu5BjGVdsMdAIltzsTictFfMaw-rreez-uEITvE5J2dVex0GFRciB0dScgwj6eYdlLuffgPUmfAKh87cOG17dyMrVuBHPq8aGXuTSq-DVbWinOvVRfiLvRJP8QL6oLR8wtDOdib8HdAJlkMnjCN-zk19_9d0QZg7B8bASxAQ4s8OYaUBvJZ__gWEflB__1Qvvtw",
+        "places/ChIJN03iU5RZwokRN5Wy8Ox2YeA/photos/AcnlKN1Quo5HMLCgtRi98kPWx8ti7klZ8K5nUfHGnK-jYpRz_1KQDEuSCkNtzt_h8IuLwT7a_o7a_mVeH1CrHyw4BN0uNwBMaO0uxJPIxvJVyzyPcUJIw9ehWzkBl1Sgf9fszEfhg7yt5kgNxG4bjmMGh9Y6NbGiEE13RNH5FXq1Js9cRoYgUI-RiQaE0H_NU3HzuLusg_Pne-sDnpKnRsnJzOVgmQtjm8GB7pCEknxhJkMxjnTZsUpCKr9WGwfjnaDghcXCiQF1pUJASuxin8sBuGAAsit4ZMz2hMf4ZmB5K7Y6VQ",
+        "places/ChIJN03iU5RZwokRN5Wy8Ox2YeA/photos/AcnlKN1olakOLOtUD-Fli4Bqv6xixjK_bOPuXAOQ2935SxALAzP0eJsZh8walY3Homzpd201sFs_j764OGOjUgLcRkQ_hm9hozdyKra9gDNeGieEBAs9bKICmpair9PFKmLlqHAy4WlZ2BGrYqheW_ogAoa5hCJjaA9I-2VK7DeMil_ilOz6c_-fXU6OGe9VtZIZjz4rAYxTNpH8eRmStx0RF-zue3PE0K9xNjzh7UqLZvhcU2eJ19Ln7ohVYjBgnXnDIAmqh0yBJAtDxUbl9W680mX6MTYztmTsPy17PHYplVdNYQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=16168334897259386167&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Buttermilk Channel",
       "category": "restaurants",
       "address": "524 Court Street, Brooklyn, NY 11231",
       "neighborhood": "Carroll Gardens",
-      "phone": "+1 718-852-8490",
-      "website": "https://www.buttermilkchannelnyc.com",
+      "phone": "+1 646-682-7577",
+      "website": "http://www.themalthousefidi.com/",
       "description": "New American restaurant with sidewalk seating where dogs are welcome and receive complimentary water.",
-      "descriptionFr": "Restaurant n\u00e9o-am\u00e9ricain avec terrasse sur trottoir o\u00f9 les chiens sont les bienvenus et re\u00e7oivent de l'eau gratuite.",
+      "descriptionFr": "Restaurant néo-américain avec terrasse sur trottoir où les chiens sont les bienvenus et reçoivent de l'eau gratuite.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Neighborhood favorite with outdoor seating and dog-friendly reputation"
+      "reasoning": "Neighborhood favorite with outdoor seating and dog-friendly reputation",
+      "googlePlaceId": "ChIJT4JpKxhawokRJsGwYfLpp60",
+      "latitude": 40.7096649,
+      "longitude": -74.0093444,
+      "rating": 4.3,
+      "reviewCount": 2132,
+      "photoRefs": [
+        "places/ChIJT4JpKxhawokRJsGwYfLpp60/photos/AcnlKN3_Bye7_pcyNdhbMM1pBUxLsgVQG1_O70-QtNCwalBu3Pu8Vqni4MHVNbKUar0Cjw-z-GECd3qgSTlloguA9adpk9rsiuNFl7jWH4hOmQoGlGetH3N8gmVwUWavTS97RVZ28FIL01dOB4k-h8Rdj1pvGNJ7x_OZ_JJ6zg6eKlkB8WYy1HCMO5NABbVBv0A6k23pPmOx1RB_W8xmcTOqVH3IECQDb6Tf1ODWjb942GB-RJ6XaQFPo1ut87bBPRrQ_EPyhXnin35RiWhPeV0GImiOG5Su69dpWX6ge0aM8SA1AA",
+        "places/ChIJT4JpKxhawokRJsGwYfLpp60/photos/AcnlKN2bqhvf7IXds1GAspyx8Rsvyo3_ylf6ijRujGeVA9DAZTPsOE68yvbIQlGM9yVDM3hhCPI-pvig4bzTV4W5-I1CuTtA5ZRb2gZyyTj_o3cTzp1RjiF5ckHyvUsSsMMhoEHi-cAvqPF7fojo7FdwWhyawPwD2vetxCsZaVE1pt_R9mrMWeD6vxSaDJ9YqNmMvLdVcVAMb86DpHchqbmSaXRlPoDb_z62RElslBxptafZ9JWCPVyS1oSt6fEVG6JtMmtXjvdNBhD40ZwTXOlVq21w3AWMG_tAmScBw-qlTrW3Cg",
+        "places/ChIJT4JpKxhawokRJsGwYfLpp60/photos/AcnlKN1A14vjzvajPblPjJHUsc_ivG-W9RdWxaJFAlAndlneb3zDvzrx6ptAHH8-soFqSP0e8eKXfa3fO2VQqkVmJL2GSu7-VjpGB49eJ-KbxPNI13yWdvEdzlJrCtwJgaN6aEnRaTCNxZheCp1LKDfxpBAaXsCUQdeJgtR53cITd84SjZnflqDDJU0ARep0Qi5pU6xpdBr3h_E2ZphPFydiX4tgavypBW1RBAwNTIk4tzaHuM_tJ5249jeDOU0FKg7kzNKbSy6A1bo7f0MDC3OoiGTN2wINnvgEISsWk7LmtPMbfP4AsCT-OCHPab7X4Kak6zNbIjS0V95L5dgkSpTO3yUy2TuFapCb3B7mPfUxLSOQTF6GpdLj5eBjgUMpqFXCfug8WOl0URS8X_4HOYIYiPveNPafpnzntt9w401rbl0h7wNWsjgx3eMnvBgVNQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12513227316902543654&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 2:00 AM",
+        "Tuesday: 11:00 AM – 2:00 AM",
+        "Wednesday: 11:00 AM – 2:00 AM",
+        "Thursday: 11:00 AM – 2:00 AM",
+        "Friday: 11:00 AM – 2:00 AM",
+        "Saturday: 10:00 AM – 2:00 AM",
+        "Sunday: 10:00 AM – 2:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "Olea",
@@ -295,16 +599,37 @@
       "address": "171 Lafayette Avenue, Brooklyn, NY 11238",
       "neighborhood": "Fort Greene",
       "phone": "+1 718-643-7003",
-      "website": "https://www.oleabrooklyn.com",
+      "website": "http://www.oleabrooklyn.com/",
       "description": "Mediterranean bistro with sidewalk cafe seating that welcomes dogs and offers fresh water bowls.",
-      "descriptionFr": "Bistro m\u00e9diterran\u00e9en avec terrasse de caf\u00e9 sur le trottoir qui accueille les chiens et offre des bols d'eau fra\u00eeche.",
+      "descriptionFr": "Bistro méditerranéen avec terrasse de café sur le trottoir qui accueille les chiens et offre des bols d'eau fraîche.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
       "priceLevel": 2,
       "confidence": 72,
-      "reasoning": "Local Brooklyn restaurant with sidewalk dining and pet-friendly atmosphere"
+      "reasoning": "Local Brooklyn restaurant with sidewalk dining and pet-friendly atmosphere",
+      "googlePlaceId": "ChIJC3VecrpbwokRLNJIz-9s4VQ",
+      "latitude": 40.6878197,
+      "longitude": -73.9706231,
+      "rating": 4.6,
+      "reviewCount": 1822,
+      "photoRefs": [
+        "places/ChIJC3VecrpbwokRLNJIz-9s4VQ/photos/AcnlKN2XMzKVzmtblrFYDs4N8MJ8W696DZywS-Pb_Wb3f25nvx0FrDKVWTtRvhP8E7r1Bn5FiGYsItsRfH6WpMMK7m79re9fkF6IbFSWG-2VobUKLmkSrVe4MU1JeTxootH7nExwSxlMMQkP9wNROiVm7ouEMgaS9N8oQi4-U1wcC2_dKN5IQg_vBILUpAYUhhTXKsYXO3_pWXvj4rjOtazRLRg2LM2hcIaF4sBDN0RZmjAxR3IJBTsU5eavRurpH42tbe8eXGcuon4JIuh2cDGw5UyUjbgCJZVnmeLcivtcX8ZUJ1D1QwULtzhauMquc27VCK4uryhj5WWJ7TfBl08QjxjERYU8ph2L3-2KmeQEiaZtuqqnOt9gLZiSDSQn3sm51DQsB3RIp4R7nyehQnhmbKQhC4TSmLZHIq4LriicodZ0L0SHKf6OR5lYDYPMiB1S",
+        "places/ChIJC3VecrpbwokRLNJIz-9s4VQ/photos/AcnlKN2XQWaT7pChVKM-QyFh6-OwoYRVRaU9mRkhL9jDoyEUuoGoPCT_kCsqJr7F3MMwipogKboWEJ_cMW8gJDNX4PguaVHMnbhhdS4dJs78PYBE3_fMPEXBPNR-YxYpjrLssYEnwdORZAQI1mfmm7YvJJ0gWYRYHhjFQ2mTXM7bqUYQD9OBzPwTRDdi8cHqvDpKF16OZUytud6Phto4yFWoHd4LCFHMx77tZhuwAey0i1pbNm3aSxjq5SiKGtSWT0MnOubH3qPTcLz6VKeE0PmFGRrXAvMeQEMw6nZxda19BrC8s1CdpiBu2w6r9fLJh9-8EWfhYlx376CkEzZSJD8XF5YLEh-rZjL7S5rpSd7bl4olb4dpWEbmT2qmfDqFRt-q3VvbZEwmmyezTLvP_zcWjHagWjksUGQYrzzmt8AmMTAfxZUYtyiDVwJxk4WyiJn7",
+        "places/ChIJC3VecrpbwokRLNJIz-9s4VQ/photos/AcnlKN2WggPsEH8lzsin1yLNqJlDNXGEb5RbS9iDzv60heLrHXHbMk7oniwJXQqTqNoHE9oYbebwP79jP4Cpjg-AomM7NzUjXEjRQEumTvxGZU8yz5cbxIUYfoRERvqOJ7LzMlbSxWpM138unpWq3_McJs2oL7gkKwk65s1Wl5rEnmo5UxMKbGFhevdfooD9EfFODg2unkdwvxvHg5VIxwGZKJYNG6LSTYn6iOabKeKhdT5RQ-Ypbi2ufn-6yF5dsuotReSb89zwQRMOOp0pXEkNPlLzwL9H01DzYGbj6bnv8rn8lBawSs4KrOzHHNKu8aEdUI4Py6J_6zLNywIEEm7_SDg4c929U8-tFU3jukGXMj94PGVILRj-5Jg9ppvR7T_390ExbbbERLh1xW0zsPVPNg6hpBuVgGZANLVXyJ87srB16Glcuert1Bx4Apg4xxQt"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6116289546176483884&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 3:45 PM, 4:30 – 9:30 PM",
+        "Tuesday: 11:00 AM – 3:45 PM, 4:30 – 9:30 PM",
+        "Wednesday: 11:00 AM – 3:45 PM, 4:30 – 9:30 PM",
+        "Thursday: 11:00 AM – 3:45 PM, 4:30 – 9:30 PM",
+        "Friday: 11:00 AM – 3:45 PM, 4:30 – 10:00 PM",
+        "Saturday: 10:00 AM – 3:45 PM, 4:30 – 10:00 PM",
+        "Sunday: 10:00 AM – 3:45 PM, 4:30 – 9:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Stone Park Cafe",
@@ -312,16 +637,37 @@
       "address": "324 5th Avenue, Brooklyn, NY 11215",
       "neighborhood": "Park Slope",
       "phone": "+1 718-369-0082",
-      "website": "https://www.stoneparkcafe.com",
+      "website": "https://www.stoneparkcafe.com/",
       "description": "Neighborhood bistro with sidewalk seating popular among local dog owners for its welcoming atmosphere.",
-      "descriptionFr": "Bistro de quartier avec terrasse sur trottoir populaire parmi les propri\u00e9taires de chiens locaux pour son atmosph\u00e8re accueillante.",
+      "descriptionFr": "Bistro de quartier avec terrasse sur trottoir populaire parmi les propriétaires de chiens locaux pour son atmosphère accueillante.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 78,
-      "reasoning": "Park Slope staple known for dog-friendly outdoor dining"
+      "reasoning": "Park Slope staple known for dog-friendly outdoor dining",
+      "googlePlaceId": "ChIJF6deL_5awokRh2ohKTMG2HE",
+      "latitude": 40.6730516,
+      "longitude": -73.98346,
+      "rating": 4.5,
+      "reviewCount": 911,
+      "photoRefs": [
+        "places/ChIJF6deL_5awokRh2ohKTMG2HE/photos/AcnlKN3QEyn8I7MidKh4vaQZtRIq-O_dJf_y2_9b34Clt2TIiQuhE4RIFNt5yYZ-2H5Jbtk2AK_F2cy72C5phZCTg6GL4njt4USWo-yuG3cbBz4R0_x1ey8LQBXip4D8c7ErNiqMd3L8YvKWQRCS0LoUTT-_ZUm32YxzsNT7dWYlJkVkhXjiL2or2wL3TpRABBeOtReW2AZ5jbtYEMCDdSjDOw6XcSAIiMDR5YwzG7EgwTeRFHffG22XpIXRP2NRVjk6895dgNEgwS877pmIB7wA4qaEIBghH9aGjn5Eys99C0g5uw",
+        "places/ChIJF6deL_5awokRh2ohKTMG2HE/photos/AcnlKN2J8U4j0w-XmodOjN31jHeK6ZSG0UAerogPJLO-kDbpkU2rf-DzpAfnGgge2sVJWQYvfMXkeOTOvWKgbNCVSSPgO2wSrgMQBj_6j4vjRFETbNFmrqz4dodjUeDPY5w5RHaIRziPSdi5r6JAtd6j4NGDpQjLNn_--dRnLM9kIYWXi2m5vq9D9eRAXHIpsuFCzqZ2XYjCPtTfhR3hKI2ickFOW9w9eoEHXeON2PCC_N1xDAwd5oxPeQaqYqYUagCQnELJFHX82fz9mKf0DfjJYJRBM-cbNs-AOhVNm_DNC3hRkw",
+        "places/ChIJF6deL_5awokRh2ohKTMG2HE/photos/AcnlKN1NCULwXFwW5Lo4qJ_J9B3qoDwDRckVe_d6Pz_p4NWknkQZ1zTjx-dJoUZw4HEfGHkEiC02jogWdDFmOd8pDFj-plQZQ5yShXeE5WMPQ_dKNo_QTGJoJAddvATYSjcHWJkV0mE57mkkbRNeWkXtwD9__SEUvquZ0ZkzhyXc5j9zBw7mvQweJvTj4ruE_czVS01F0XWOwLObNCIg1H071j1QB4_3mdz34Z2VkecWTyb5SaQIO2SlTnQyvzbOT964DpwZ62fJxEdv3Bt-ak8MjGaE1GqXguxIyIcRuQksbVveBPSLGcNZMoXSXjiQH4kfqW3RrmFq7-_t9JTo8tC8vafvtHrDHbEzQdBRrs0OsaeuC2gHgC4LUfHQgAuXjL0N_hin-1sD5iIgXl9My6-K8Af-NBoZE2Gn3rjjxgkQsUYi9112"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8203313538058513031&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 5:00 – 9:00 PM",
+        "Tuesday: Closed",
+        "Wednesday: 5:00 – 9:00 PM",
+        "Thursday: 5:00 – 9:00 PM",
+        "Friday: 5:00 – 10:00 PM",
+        "Saturday: 10:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Sunday: 10:00 AM – 3:00 PM, 5:00 – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Sunday in Brooklyn",
@@ -329,68 +675,152 @@
       "address": "348 Wythe Avenue, Brooklyn, NY 11249",
       "neighborhood": "Williamsburg",
       "phone": "+1 347-222-6722",
-      "website": "https://www.sundayinbrooklyn.com",
+      "website": "http://sundayinbrooklyn.com/",
       "description": "Australian-inspired brunch spot with outdoor seating where dogs are welcomed with water and occasional treats.",
-      "descriptionFr": "Spot de brunch d'inspiration australienne avec terrasse ext\u00e9rieure o\u00f9 les chiens sont accueillis avec de l'eau et des friandises occasionnelles.",
+      "descriptionFr": "Spot de brunch d'inspiration australienne avec terrasse extérieure où les chiens sont accueillis avec de l'eau et des friandises occasionnelles.",
       "dogFeatures": [
         "waterBowl",
         "treats",
         "outdoorSeating"
       ],
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Popular Williamsburg brunch destination with known outdoor seating"
+      "reasoning": "Popular Williamsburg brunch destination with known outdoor seating",
+      "googlePlaceId": "ChIJkRWC9WFZwokRfa5Uzor3e-g",
+      "latitude": 40.714199199999996,
+      "longitude": -73.9653462,
+      "rating": 4.4,
+      "reviewCount": 3840,
+      "photoRefs": [
+        "places/ChIJkRWC9WFZwokRfa5Uzor3e-g/photos/AcnlKN0WAl8yVC8nI-1XEGHiOLnUN4sY56hPG_5aeAs0gEOEE6HnUcPIDUuLUT1Ly95bYFcpRXb_6Wjl44Z-1o__buRDfcTOh6f2C31V7KbkZuAtJ-HeDr-u0hUpAZLW6mL7hlSYOS26K-KcB9BeafSRyauukCnJ5nNOPzwwHqZW5hn2LAvHvELxeqZL7pVVcnSftsvuPkCfVpI3AtggggJrvfkNv1TVods3Hj6Asy6CeTaVRJEaFnq2scgP0jCmc6UBGB_4n2p-GnxLICd70y90n2OXLYOKilZD-KFIUxtxwT_5qw",
+        "places/ChIJkRWC9WFZwokRfa5Uzor3e-g/photos/AcnlKN1wrVMGcGvXLsGeY6pF7-0oyEUOvjADYGX8FKXnPZn_pogjbfNaDlgj8CfexGb6BNYqpLaEF68QQ7vSilf3sjJGa6vUFop5GNe7I_FAH2hyDbqtUBa1LG-QIABNQev-XejwAiu6ifxEyq_jqt0PR8In5tyL_D5bdhsKKr4a9ecbXk4mPtbTqju74dcuE9kOXzCS3UI69_o3Zbz7dulLVg72_V9mHndZAvmECJa_ISsSe2aNoCRMUHAB8cYTBw1gHQwbdfRMxW0QefK0B_ov2DH0ve29Zib-shkKatuOVCXzPw",
+        "places/ChIJkRWC9WFZwokRfa5Uzor3e-g/photos/AcnlKN0sJ5OP31TJ9ugYIVm-N1apLBSD5uOxsrWEc7yrTBc3MWr0C24iSwBCr70zgkVr358rt8Cl4nbTDDw8zQWzQ3q8tACNJjNq6RCN75_BBy_fG9pemuw41ZAbHGLvCpTpTRCNhyOWiZ9qcpToNXHeMQOcyJkctOIlV09NQaUZ9XpwPdCgpUbVUrvIr2Dd92JiJ2HRNLNRNh943EiOhBMZDdhDmDXgq4VOHh6-emWODlfnfs5wxJb974F5EuLMRcByDACSQRnhSaOmIVGEFadhOvobvZ9niBNs7H4hxgp42IfwavNzGbW94-BdoGW0sZ31sC4elsjcaL-NEDq-041WMF9JdqQNcX3_DtlrRoCKWdzRx2Ow6AwvjtNw8M9lOwcGQtnssqq7TpZ7vkaovEMk6bX0oCYOr0GZhJoWNBsgnc98RQCwkz1K0NRSu71U_7b1"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=16752255414473895549&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 10:00 PM",
+        "Tuesday: 8:00 AM – 10:00 PM",
+        "Wednesday: 8:00 AM – 10:00 PM",
+        "Thursday: 8:00 AM – 10:00 PM",
+        "Friday: 8:00 AM – 10:00 PM",
+        "Saturday: 8:00 AM – 10:00 PM",
+        "Sunday: 8:00 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Blue Bottle Coffee",
       "category": "cafes",
       "address": "160 Berry Street, Brooklyn, NY 11249",
       "neighborhood": "Williamsburg",
-      "phone": "+1 510-653-3394",
-      "website": "https://www.bluebottlecoffee.com",
+      "phone": "+1 510-661-3510",
+      "website": "https://bluebottlecoffee.com/us/eng/new-york-cafes?utm_source=google&utm_medium=organic&utm_campaign=cafe_business_listing_NY",
       "description": "Specialty coffee roaster with outdoor seating where dogs are welcome and water bowls are available upon request.",
-      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 de sp\u00e9cialit\u00e9 avec terrasse ext\u00e9rieure o\u00f9 les chiens sont les bienvenus et des bols d'eau sont disponibles sur demande.",
+      "descriptionFr": "Torréfacteur de café de spécialité avec terrasse extérieure où les chiens sont les bienvenus et des bols d'eau sont disponibles sur demande.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "National chain with documented pet-friendly policies at outdoor seating areas"
+      "reasoning": "National chain with documented pet-friendly policies at outdoor seating areas",
+      "googlePlaceId": "ChIJpf6R9hlawokRxWh0XAKtTsI",
+      "latitude": 40.71066020000001,
+      "longitude": -74.0121506,
+      "rating": 4.3,
+      "reviewCount": 1087,
+      "photoRefs": [
+        "places/ChIJpf6R9hlawokRxWh0XAKtTsI/photos/AcnlKN1jy76MJG9YeZhEYxG6y2AAp20v3sVjZic_UASDxFhdpJT9HcNhZcgSPQILzdxKUggJyxkpe1sqqBGtkwtJCs6oEGzAUEHsGShHqhiZEfHwn9SvxXfSLctqEphvT0tXR8uEIJr4UCyGVTpLbuReoAUkfbCkUOV6XjTwzFP-oDwEXMFnKu-EvQx2r4_ZiU1pvJQuOoplEcW8TSQcDOAjtUBC-ptkIVs1x-HMlyzFeNfkkcWE_qUhKYL9Tp6r3zO60BhqabLp-mLW1bDRuHJ8G_YXhbFRW0PVAWszWce4WPw93vQ0DXI9YIplXQL59zcw2yfOfOWQHtPdguAsjBpwB5NaMh2_uDhQKpCix9IuY57ZfwC0zWj-hUex9xiL-kVlgrl3qV5HMY8TlyvITywpCfDmiqGLSKPSV4mpvNsmhmfHhQtE",
+        "places/ChIJpf6R9hlawokRxWh0XAKtTsI/photos/AcnlKN3yMRMi75Zr-X93GaPj-8V1thPSbH9lAWWPkyB2AxsgaSeCrqKQRCr7BW3MIiZwot7WaCKfOiIOGi1Q4_TROEoygNpCMO0X1-Pk6Xg40veq8NuVc-T1ZSyr3iucT3-LK8tJ36TFyitXGIdbPu6PSp5MpKFe7t3ySnVp00-foLrG4v2mc7-r02NUKWGYfyKB7-6RgeWBd1J5OPwNDbIXag0Sq6Rm5DQq2tpJcLW2yW2KBsGZu3szTrSojrXEn45whEsskbXAzOhWRyg8J6VzQMDX7vsKOQ8d6_rGh8Cikl6ZfbbIK3VG9TNU0IIQfmv_WHr7BburywpPjBQ8j1eHznUGnlrVvwFUybvsHb3y4qaQvBi3Dy2LHs249FUWqyIWdNWvi7zMFtNsZcRktPMGEFmj5t9IapfF7WV6wh3UcTr4Dw",
+        "places/ChIJpf6R9hlawokRxWh0XAKtTsI/photos/AcnlKN2RA_ebQ7FGnZqlIOEzsXnXbFfcRTtXVdaQxJU0wyOzhMLL_c7cFu3PlILYVtV39SKq0mbQ0fmiuKNr3nssAznxvfjsAl_UN3hz4HlI9XIoz-UQk_sAu37iVaMbt6fke_FRBXVESH_9vsP4egHXOhQQpyK9gUbpfGK0vdNZAbqHSpQP-bwSWIjY3enl3PUs9RHtPranlO38CSZQViBzwU3Dz--RQCgUuJzsaNupQzJmvIJ8JTU393g1oKoFMyvxEyn3NkFzjwdAA_FfnBTI2RFZB5N80vUZg6g7S6RnV0O59C7cf_N3RKd8JHt_qP2hH3C5IjwcATRQKquot9KDGDOb_1k3R9pzCrTTb-4jlntNkY_gxch9egst4ZCs8QuidRB0BmuXzjwJx9h0e4p3na9t3F9ey0chMcbftUgpvuNTOVo-fojLjnvl1lH76w"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14001318517194123461&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:30 AM – 7:00 PM",
+        "Tuesday: 7:00 AM – 6:00 PM",
+        "Wednesday: 7:00 AM – 6:00 PM",
+        "Thursday: 6:30 AM – 7:00 PM",
+        "Friday: 6:30 AM – 7:00 PM",
+        "Saturday: 7:00 AM – 7:00 PM",
+        "Sunday: 7:00 AM – 7:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Irving Farm Coffee Roasters",
       "category": "cafes",
       "address": "79 E 4th Street, New York, NY 10003",
       "neighborhood": "East Village",
-      "phone": "+1 212-995-5252",
-      "website": "https://www.irvingfarm.com",
+      "phone": "+1 212-206-0707",
+      "website": "http://irvingfarm.com/",
       "description": "Local coffee roaster with sidewalk cafe seating that welcomes dogs and provides fresh water.",
-      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 local avec terrasse de caf\u00e9 sur le trottoir qui accueille les chiens et fournit de l'eau fra\u00eeche.",
+      "descriptionFr": "Torréfacteur de café local avec terrasse de café sur le trottoir qui accueille les chiens et fournit de l'eau fraîche.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "NYC-based coffee chain with multiple locations and pet-friendly outdoor seating"
+      "reasoning": "NYC-based coffee chain with multiple locations and pet-friendly outdoor seating",
+      "googlePlaceId": "ChIJ99rtOstZwokRH9gPcAsftbw",
+      "latitude": 40.731227499999996,
+      "longitude": -73.98992559999999,
+      "rating": 4.5,
+      "reviewCount": 316,
+      "photoRefs": [
+        "places/ChIJ99rtOstZwokRH9gPcAsftbw/photos/AcnlKN01mk9SD6cp_LWEHIU_4IJw2ZFYwo8QUuLIFTulevwHudxDB9F7GxFYnS6Z0ugLI_6bhtFMVlxJII_Q0zvhDEwADYKuPyjgBfroBFV_arSHsSn6IO4GbbnUS9ZtbXpkE064tfZlAMB1dmVdPSEXFvYdLRSNitUlkT7qtWaOG59sql6Q1b2xwR-oaDsM-Cz6rghtSaqI2hPjNHYZQB5vsLZ_vwTeO3fLwpD4CWZhcJZ2QYWp5XO5WkFRNOv_bnTAWfNH5UOCRaZ1FnvDtIUwud6XHBAdwmSeHBjzSZ1aE7n-Ew",
+        "places/ChIJ99rtOstZwokRH9gPcAsftbw/photos/AcnlKN3USp1ixa00T15bbPa_4OXsmXuWHszqeT1BIQDw94OVu3tFZSm67Aja7UkjP3jBDABLRkPw-FtVDGrTYNXqbVIE44IyHMTlrFfc6NCT3QLq-goqBgLMq4Z8sKHIh7vGh002UyN91maBZSmY6FDu5QNElPmzSqZHWDfT5wbGcEmL4COa7vJWvy8XU29aktcZMFMUG65vpt8Tr211QP8PsByd-tBBKwWwWKzEKu2yac2hi2r5DQOLZixMtZOpt2j9Y7kX-POWU66PiPRBgKApQoC3SA5Af6jocQyW77Ufvp4owQ",
+        "places/ChIJ99rtOstZwokRH9gPcAsftbw/photos/AcnlKN1db2k_G-GD_IG0QVuqf6lGkRPWkvNVtxjCoBOwSb2B10ImLvnE7AjTWZhKhn6RxKjt65e_SuPEJrqYikw5jAAlGOEp0Bo7XmoS-2VPKBuYhxdfTtLHwInbDYMyn2XXX-qgztz6vzHW4dM0du6Ihinl8A4EwBlaFYyv6U2NvF8etQ3gnfAPA2N8Mxe4zPYAgSGqX3qJPUEQNZeWvBaP5h7wCrQz-FQWhYuOeH5t46vFkaaSSBdPckBp4JcxS4gsYJ-VzcERUijScO_KYn0ZWvzoMX0CdAg9GzijQqi7Dy1I7A"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13597808783900268575&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 4:00 PM",
+        "Tuesday: 7:00 AM – 4:00 PM",
+        "Wednesday: 7:00 AM – 4:00 PM",
+        "Thursday: 7:00 AM – 4:00 PM",
+        "Friday: 7:00 AM – 4:00 PM",
+        "Saturday: 8:00 AM – 4:00 PM",
+        "Sunday: 8:00 AM – 4:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Joe Coffee",
       "category": "cafes",
       "address": "141 Waverly Place, New York, NY 10014",
       "neighborhood": "West Village",
-      "phone": "+1 212-924-6750",
-      "website": "https://www.joecoffee.com",
+      "phone": "+1 212-924-7400",
+      "website": "https://joecoffeecompany.com/",
       "description": "Neighborhood coffee shop with outdoor seating where local dog owners regularly bring their pets for coffee runs.",
-      "descriptionFr": "Caf\u00e9 de quartier avec terrasse ext\u00e9rieure o\u00f9 les propri\u00e9taires de chiens locaux am\u00e8nent r\u00e9guli\u00e8rement leurs animaux pour prendre un caf\u00e9.",
+      "descriptionFr": "Café de quartier avec terrasse extérieure où les propriétaires de chiens locaux amènent régulièrement leurs animaux pour prendre un café.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
-      "priceLevel": 2,
+      "priceLevel": 1,
       "confidence": 82,
-      "reasoning": "Popular local coffee chain with known dog-friendly outdoor seating"
+      "reasoning": "Popular local coffee chain with known dog-friendly outdoor seating",
+      "googlePlaceId": "ChIJjcx5mhlawokR-ddZsuYN64c",
+      "latitude": 40.7129147,
+      "longitude": -74.01307369999999,
+      "rating": 4.3,
+      "reviewCount": 306,
+      "photoRefs": [
+        "places/ChIJjcx5mhlawokR-ddZsuYN64c/photos/AcnlKN2ge_6E4J9EHrctb6GafheIDR7m6zAwiH9boC_xD5Hp7nZ30z-iUUz2qzbcrTOwmYDc1E3L6ReWYQ6RF9x5Tj3nN7TsHeHInGjgat6FE4QAAxJUoKB1rRZU-BTjPAqXBeSSeiNwC8xbWG9GBwNpH48tBLJQYIdqH9FOMKNqggKSo6NZxeJR7FGqt7O_LM1v5UUhMHci7QvNyeT-gzRiiHDybxcTMJkm1CwbMZ5adJNXhetUDY69N1qisgHxAlPqHasK1_OQr7Bm2LCoYcsU5hyg-UELOD6lo3CKZyZPYa13Ww",
+        "places/ChIJjcx5mhlawokR-ddZsuYN64c/photos/AcnlKN2ymWLpyGdkiyl-mFAV5_d9M3S15eTfL9EWVLIM9MP2sE7qABbAbePp7RwRucXRLV1lDWBLqdBnqdmHgQBDwybsmYAGZqOC92pR7tr1VTuygyiIccHIqB-2mex7xFR8STFYHzVbmbs9yMHaFS65xmuiBxC7y0EaF8cDoLg-v2CByNkkR4US3Xh5Kzt3J9Xh2hH3GEj0HdHsZIM8Xbhh3pbzW8Ta_Nceo2Z3jCHd5w559krE--PxyQvz26L2n-2kAtKfP55t6SmbBh_b2iOAKUTP1DjAOICFANEw1na_ni4DxA",
+        "places/ChIJjcx5mhlawokR-ddZsuYN64c/photos/AcnlKN0W6thPavrmubXx-Y_494afk5Sqv_87fgtQPCHJmT0dQRK64zGThh4Nmyz9ixFZEFVtAUvVjlVYBr3asSwihGDd738Z3J4yCMnkR8sCvsHUxRyM-D_ql1XjwHFR2crZxAzPkUcsoE3UOMbSbnSH3yOYuUHSiSNPrHtAN24SCjVdNIie_Goct6ZIxjGuFmKG8L3-IFTvvuwbIUpzRw5hItmv05lngWdPD5qz6ULIk0ErYZw8nAdRqSDW-tqyQ2BHSDgvoVG7HtV4VhsrSH1JjYbcqRh8I-X400lmKCK_sjAAKQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9793937099133147129&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:30 AM – 4:00 PM",
+        "Tuesday: 7:30 AM – 4:00 PM",
+        "Wednesday: 7:30 AM – 4:00 PM",
+        "Thursday: 7:30 AM – 4:00 PM",
+        "Friday: 7:30 AM – 4:00 PM",
+        "Saturday: Closed",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Toby's Estate Coffee",
@@ -400,48 +830,111 @@
       "phone": "+1 347-457-6160",
       "website": "https://www.tobysestate.com",
       "description": "Australian coffee roaster with spacious outdoor seating area where dogs are welcomed with water bowls.",
-      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 australien avec une spacieuse terrasse ext\u00e9rieure o\u00f9 les chiens sont accueillis avec des bols d'eau.",
+      "descriptionFr": "Torréfacteur de café australien avec une spacieuse terrasse extérieure où les chiens sont accueillis avec des bols d'eau.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
       "priceLevel": 3,
       "confidence": 78,
-      "reasoning": "Specialty coffee shop with documented outdoor pet-friendly seating"
+      "reasoning": "Specialty coffee shop with documented outdoor pet-friendly seating",
+      "googlePlaceId": "ChIJ5-0nRgBZwokRsSVBGMAeJRs",
+      "latitude": 40.735096299999995,
+      "longitude": -74.00580289999999,
+      "rating": 4.5,
+      "reviewCount": 64,
+      "photoRefs": [
+        "places/ChIJ5-0nRgBZwokRsSVBGMAeJRs/photos/AcnlKN2v-RGvmQNz-lWeL2KUXe3UZfDQFhCshznDpgS_SekQ68bKxgICUVG-Wjv5zbo8uPlfaD0yZGjAJJbEymRRBdnQGRmrRd26fsUbeLOGeeq9nwbu2Sf_iVZql2SIqHuqtlG9fIMGu3p-m-8b9obfE4SBFngnOJ7bUoCXfAwA6fp5PipBczS_F3_aex7mimixE3qnhaQRKpVU9X0dxbicqZc3X93oIAHqcUdmM_leYqtpfhAx4AojsO1CdFABkrJhV1fJvJee13oshEF-kcoo6UUVpEkwKvxGgKCzb6PK9GxN-g",
+        "places/ChIJ5-0nRgBZwokRsSVBGMAeJRs/photos/AcnlKN0wzhTM_kWVU_Fb-KZsq7TQOzBKCKsasydmruN9v0QZ5a6K_uZjVfJXbTpkwt4FI_MaZYCNop1wCoIOoTQStSEBP9Lqt76SUX0etIL1f2U1VYWeqGX_R5RjFUhv9byCxl4OzZOWIIq6321ROMWQHXhiLDEjUEtWRNyBDumkfBVhyZVhLTlmOowNsF58wmUWatFdlDI5Q81Ja_R4Z1Z2BHp39GSYzd3fhD7A4vyMV4Se75q2uXfM0x7XlDCmzS8l4H5TEmw57jpmr85m_IpfRofEgURu0SRyz3NiF7RDKfgVJqewfH_qu13h_r9pbMbttpTU0-ONuuo_1TVwgp6S9tgbw2N_cBpIt1kYyRSG0cWzo7vhazU-uMBGQnlaeBuwMhpAhJEGRFA5_3YdmwhQ8iyEryVstuRBZVBvg8bbK0G6IUJYN0scwxPvVcpVNwSM",
+        "places/ChIJ5-0nRgBZwokRsSVBGMAeJRs/photos/AcnlKN2rosfmg2dfU6eKb65IoydWFqxbo_pK872wckcg5W-8O9T4nWJ3wSNRxukdhVanSMTou8aQioHYLovZRKhmJp7haEyufi72arFFeII_PtDDBngUr6Re6s_NHajQN08PxrSJdO3HJNaq-DRQcs4zmL4GKNS-TEZchI6OenlivMj4ZM88fGP1pNWEFOBxQ_ANJKfHcv_kLFiHhAAyiyzOOUP9QfXSnOi7pL0SqB4hJUGCkR_VhfMn8olZugqqUuBoAiibR4a-L1V8NtBNI1AqOZ2MWUabKmQ_OZTPp5HaF4qCcB9_3phCUHdqFdhnuKhMnpKXBPl2gNn6n5sRqCd4TD0AffU4ZaQAyF7edQGd0ZSJz4pBNwEFVasMMYxSiPeNN6TcIjWXgrVuTE8QyhE4dlvO0SIB5nqU6mdv1ZjaEk6_qi25CzMGuWEqtlWUlSAs"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1956003423551825329&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:30 AM – 6:00 PM",
+        "Tuesday: 6:30 AM – 6:00 PM",
+        "Wednesday: 6:30 AM – 6:00 PM",
+        "Thursday: 6:30 AM – 6:00 PM",
+        "Friday: 7:00 AM – 6:00 PM",
+        "Saturday: 8:00 AM – 7:00 PM",
+        "Sunday: 8:00 AM – 7:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Gregory's Coffee",
       "category": "cafes",
       "address": "874 6th Avenue, New York, NY 10001",
       "neighborhood": "Midtown West",
-      "phone": "+1 212-868-0317",
-      "website": "https://www.gregorys.com",
+      "phone": "+1 877-347-4673",
+      "website": "https://gregoryscoffee.com/",
       "description": "NYC coffee chain with outdoor seating locations that welcome dogs and provide water upon request.",
-      "descriptionFr": "Cha\u00eene de caf\u00e9 de NYC avec des emplacements de terrasse ext\u00e9rieure qui accueillent les chiens et fournissent de l'eau sur demande.",
+      "descriptionFr": "Chaîne de café de NYC avec des emplacements de terrasse extérieure qui accueillent les chiens et fournissent de l'eau sur demande.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
       "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Local NYC chain with multiple locations offering outdoor seating"
+      "reasoning": "Local NYC chain with multiple locations offering outdoor seating",
+      "googlePlaceId": "ChIJJTMm8wdZwokRsBOVpiDblIQ",
+      "latitude": 40.746489200000006,
+      "longitude": -73.982579,
+      "rating": 4.2,
+      "reviewCount": 493,
+      "photoRefs": [
+        "places/ChIJJTMm8wdZwokRsBOVpiDblIQ/photos/AcnlKN2SAixUJhYrisc_v1RNXU1O5tycTpfsoRm95tgxoQdEOHnyieD1HAJRD0tjGwnwjT2ga6XS9t03Jhtf6K3gJW5964acMQ0AjqJrVScHqknwBmKKmeOdP3pzFup6Z0pSL_lNc9oMdn_hN_iU0X44o37TgxTrgajyWRyIO8IJaBWlngJ9tVyZdcZLSkaKqA4T9QdFmb_5iOr9i8pc_B_p--sjLcxHrt73DSSIEE99N50LyHgXO8TRO3RCyZmew3foz25stIlWq2nXhPmxy_Uh4kfFlqJZMwgkyEnfy9rimguZ99LjAgGwFPkXjeaWWiRv7av9-tCHe2ICbcGt0bSCgfRDgjYzj2qFX5sXf0ONuAwKRboEkdtOenh9kVaP35jZlbXKxTGBaVV817dQ-zpgIIuHnD1IrQTtRZT3qLqdnVo",
+        "places/ChIJJTMm8wdZwokRsBOVpiDblIQ/photos/AcnlKN0Vp_oR3ctv7rArCrQiAoV8vWz0ZqWFm5GRBnv0D5fnGUaMDjEUUBGQNIvAzOW7azzfSljbcpgo4WArX23VjXvNQ8J2r2YaVGuiJHRx9mhARvO5R-nildMwp8sOtK8qnZdXuW3WZYnmwAJjPbJq_3SnvhZy4B-hG7DVedhEoF_2zqcnxSVrKZXIg5rmEVBUorA6qYP0pank1OcHYUelWZGpfnvRoZtnRPcZaTu4AFVh9llC0CSHCUfNppx4p2y_Hb11u4EvTxpPnOQvG4DBROWdZUfgUGjL8ldWV1-Z46HRM3vMxqulFgbZ406w_lK8IOHmMI35gcg2DKJwiEdmI6ijyyJUkSYorpUcnQ76yQ9e8V5XLm_1Yq-hwSq8Cfl9ChbIpebcN_paVfMk85pfsIfcr8Jl4kbAA7KALgg3iqx6RCs",
+        "places/ChIJJTMm8wdZwokRsBOVpiDblIQ/photos/AcnlKN3hyNQ-zG3z6-qFU-vceSBqmNulsTmdFd2imuFdUvCj4tx-Dk74NRcYQEz4TeThCCsgWnpOkOODgwhDG5MdOxNQ1yGnqPvUluINkRPaFOnCLiRb2dSn0lAtal18cJZ89DR-mvPsuK4RcGGnzHuo9l-MoU8vHYlvlNSXLrSDUQ8AEDrKQaLGwdRvEuBvyKMJUq_nyqk_3bv0yOtKhE5h7cmiWVWz7JkMfGO3EIRBdiDkIKw0ZqspqpotUtNedURWkXwm4Yg-LvwsxDrqCaodoXlyII2SwnYXj0rNfNAisoyMHUTmmE4yn2lffIA4jnl_MzeFomdp3w5Ay1ycyt9t63Rax8LLwn1bx5WtBgzILsXvh-Ou3uuHIzizgSokKEJ4seW_ocQ92UcQP1hdk6watZDr98nY0i4_Mw381qkiIg-kRGZC24EPT6zxi7iB5Q"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9553501642839888816&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 6:00 PM",
+        "Tuesday: 6:00 AM – 6:00 PM",
+        "Wednesday: 6:00 AM – 6:00 PM",
+        "Thursday: 6:00 AM – 6:00 PM",
+        "Friday: 6:00 AM – 6:00 PM",
+        "Saturday: 8:00 AM – 5:00 PM",
+        "Sunday: 8:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Birch Coffee",
       "category": "cafes",
       "address": "21 E 27th Street, New York, NY 10016",
       "neighborhood": "NoMad",
-      "phone": "+1 646-861-4890",
-      "website": "https://www.birchcoffee.com",
+      "phone": "+1 212-686-1444",
+      "website": "https://shop.birchcoffee.com/pages/visit",
       "description": "Specialty coffee shop with sidewalk seating where dogs are welcome and water bowls are readily available.",
-      "descriptionFr": "Caf\u00e9 de sp\u00e9cialit\u00e9 avec terrasse sur trottoir o\u00f9 les chiens sont les bienvenus et les bols d'eau sont facilement disponibles.",
+      "descriptionFr": "Café de spécialité avec terrasse sur trottoir où les chiens sont les bienvenus et les bols d'eau sont facilement disponibles.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 77,
-      "reasoning": "NYC-based specialty coffee roaster with pet-friendly outdoor areas"
+      "reasoning": "NYC-based specialty coffee roaster with pet-friendly outdoor areas",
+      "googlePlaceId": "ChIJFzVdjyJawokRy2JFNZcc8bY",
+      "latitude": 40.7109333,
+      "longitude": -74.0060101,
+      "rating": 4.5,
+      "reviewCount": 463,
+      "photoRefs": [
+        "places/ChIJFzVdjyJawokRy2JFNZcc8bY/photos/AcnlKN1-S2G78t2VESoKe04zDAst_jJ9C5V1hYdWKNCyjnLA0bCTYqaTcF88g8mDrtlXvtzkDbTvPcxDNz3MBslN3CbfZV0VvYMdQ2uKnvli58Frdd_9kb65FFw7XjKZKEcxUzWgK-zlwzqn-CaIs4UGcmPXIydykkZWo8Nr77ibHKTNAZ1aTg9Ou0b-XAgiEF-CRjD-qRXb1Teq2UCdfp7aGu2xcHfev39D-aqCNy1EtSWLAPsCkUyI_-lMwaHLSKVB-I4GY2Vl7OjDcw84hUvm-OkulNnhEEIxa8kqLSQMqFmGgzzIbD8OcmDk63tRs2t9oRCBBGSYwqOHVWn_TE1Dafvn12m-tULdWG5iInP6AQh8uOK3nMmyFJwOGQlR99LN4UiZC_CFfafnUpP3IA8INsDmbaCHyP1spK5YDIURsFKD-mVF",
+        "places/ChIJFzVdjyJawokRy2JFNZcc8bY/photos/AcnlKN3Duf23HZ99AcAAMXNNG2f4OnGUKbKdmUnblWATmEyv8LQGmnlQeTWsq_N_kfq7gFAJtzRSwS3KYBy4BjbBinC3WKmENeywZTU2dmMsPwwJ9rTO6NwNWOoxSGvDVjwMx-6cBoBf6ef1ViyW-_Vs9HrL07x-t9DkbECAaXojEESg0F2ikRQh221iHCn4ptFhuADQNjk3XENVGJRH_axkLE_QrMn8rCmrtlx7VUzOC3-jgYFA5Za9l5jiheZ162NlZbySLgLU_JxCcUSQeelj0ed4UO_kCs5kB88u7AqaLfKohdO1hoanP8ZVk6wU4OAgmhmuOusMWFkkJfVEEgIu9fKuDnq9kIfz74sf853BceT00lvMN53QChn0Q47RhofdR6zAG1PeRNRZKNKCSd0j25OZBXcHQMXwIn-3_awzMC7DkkMRgiVPNJ5ZnLBfglQA",
+        "places/ChIJFzVdjyJawokRy2JFNZcc8bY/photos/AcnlKN1RHFwyoqMfpDRYxH05mqEkJraRNTUVDjKtGqakaPj7VNdah9DiBOUuaa_DF32HWXSkvTYlnP5lCGdV9LXYCO4_2b89XesrxcsASyS9e2Vi_5WztU4_IELBRZYi2osyqYq4iwPFQ1cXq1hRmnAkebMRfDB_XZJeW9Xkk4BEUqDWolFmIPOCR9dRB6wHq1HS2NDdlP92STvkVBBF9uSOV90Z20Tr4Kj3Ejf5gADJP6M5ArSnyurxpAOWbVvnixS-pio87nBOqXYl8Zx0VaK7KZo3HoEWD7BQYRj-PeRzp8uh7xR_hhHB8npS4dyATPBe4OVfK-IR8f1fZqHAaEmVOJvxlvFI3PwOAf5H47MoCkigFc8-4rH6wB2zijB9t12SRDLunU9B_cCXBmXuKgeMWCqukXYm4I8MON6GNd5jv-ZZzBcqRSGHH6zXPBRSoiqC"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13182349020049531595&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 4:00 PM",
+        "Tuesday: 7:00 AM – 4:00 PM",
+        "Wednesday: 7:00 AM – 4:00 PM",
+        "Thursday: 7:00 AM – 4:00 PM",
+        "Friday: 7:00 AM – 4:00 PM",
+        "Saturday: 7:30 AM – 4:00 PM",
+        "Sunday: 7:30 AM – 4:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "La Colombe Coffee",
@@ -449,16 +942,37 @@
       "address": "319 Church Street, New York, NY 10013",
       "neighborhood": "Tribeca",
       "phone": "+1 212-343-1515",
-      "website": "https://www.lacolombe.com",
+      "website": "https://www.lacolombe.com/pages/cafes/tribeca?utm_source=google&utm_medium=organic&utm_campaign=gbp",
       "description": "Artisanal coffee roaster with outdoor seating where dogs are welcomed and staff provides fresh water bowls.",
-      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 artisanal avec terrasse ext\u00e9rieure o\u00f9 les chiens sont accueillis et le personnel fournit des bols d'eau fra\u00eeche.",
+      "descriptionFr": "Torréfacteur de café artisanal avec terrasse extérieure où les chiens sont accueillis et le personnel fournit des bols d'eau fraîche.",
       "dogFeatures": [
         "waterBowl",
         "outdoorSeating"
       ],
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "National specialty coffee chain with documented pet-friendly policies"
+      "reasoning": "National specialty coffee chain with documented pet-friendly policies",
+      "googlePlaceId": "ChIJPWpv9IpZwokRyO_TqOA2hbo",
+      "latitude": 40.719882899999995,
+      "longitude": -74.0038136,
+      "rating": 4.4,
+      "reviewCount": 610,
+      "photoRefs": [
+        "places/ChIJPWpv9IpZwokRyO_TqOA2hbo/photos/AcnlKN1HU7tV9ClQo_NoyvSSamOmhCjdta5sV78UriHZnp3VqGxsequ1gZzHTSwpabmwaulLRn-GjtlGmYPS-2BgHWYMj9UeWeNMRXrYbdjftgKwxvwIfIhEVumSw-j-eI9LUnA4uLBBRANwelkouuItSuQ8h02ixj59-swtPO-SNfhMq_LsRFFrWJ-7fl_l2Rb6zAY-Vm5XM65V5ieYXOZtHfysaKd8KJ1DYsW96Ypbo3UHFc7JNFE2x-OM5vJJWtgCEUAoy19gRjJ7WuhnqnuOK7qEKslxUYqZoykWtRjznL5ktDjJf1Jn5HEhdSczmTxmPOkQVYhvOBlM3X2TJC8NM8NzTc5Fq2Gnv5gxH7GO7yY-0PklRho6FjaBsTNpCE3MpBk722WhnnWXbD1ovh8MKlbpC2jb9bzpKU-TbPVysaZeMJJ0",
+        "places/ChIJPWpv9IpZwokRyO_TqOA2hbo/photos/AcnlKN05HVzdwA9e6C5F2OUj9yWWaTCLhFEpUkgel7TeIYejoyyxzHSuuAJe4iUcgCQpa0jIHpAtqseGsBuxYuiAGjHoM6DnT165JwIUDlEdoZDZ46qAIKmTIh3au_MugJ2-eecEIOnidxRZryclJUe87zj88U93dgHmss4MLL_DWzf5gBeiPMKJFWLU4yjKcqgxdK40B5VstJzyPVSDSZRj_gWYYvlrFtBHNny066PmeB3NofjAYZwRegPSUsxMr0DcNPWT8fIUrqIcaSqabHILi9bYNab4qvgEtlE3HnoPmvWncvmW6cgAPIpVKXbsscTbe4A9qYXW_Lxue7UPvNmUDAJsYmOk9WsmA6AD9j2wLvMJIlUQA4PdqIS5u3FBTnVEn5nPDYiDktsh8vPpQCX5winAWvCvAxubQ580_uRP7uvBKQ",
+        "places/ChIJPWpv9IpZwokRyO_TqOA2hbo/photos/AcnlKN3oPdiQiRWZKHGS9fcZaHMj3SapTUuJA1lCcdGEFBlfb0NEy_vRQ4-uJPbpp24C23zTsHVxo6GT5Rl3WK7v3jwEinKsHX0VxrB46orja67PC4_cKDTBQHXZhK2pAmqjb2ftxlIr0bJiHNZaJex8S3sfrE6RQ19kkg4PRp9xJMbKkunpc4-TN4ur_tqN_KxMQqs0yDrN4uH40dr0skQANAg-sxlo6IFn3iFePh_YPDjvGBFHjfnTWbe__38P1kgmQh915HznANUr4CZd2RmISpHjBEUFSvmKC1rJ9zlIwa5xLONBBGIm4zTH_L_Lf4s0yS45cpz6hZ00sBjwex0I5xG5f93MpDkAJT2BhgPQLrwTZ0JRaa2ChFcWzAShCLkmAzw1xuvNyFCG47rIDPy98DGMIQHAc3b8U6I1bGiEqwDVvA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13440209001490149320&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 6:00 PM",
+        "Tuesday: 7:00 AM – 6:00 PM",
+        "Wednesday: 7:00 AM – 6:00 PM",
+        "Thursday: 7:00 AM – 6:00 PM",
+        "Friday: 7:00 AM – 6:00 PM",
+        "Saturday: 7:00 AM – 6:00 PM",
+        "Sunday: 7:00 AM – 6:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The William Vale",
@@ -466,9 +980,9 @@
       "address": "111 N 12th Street, Brooklyn, NY 11249",
       "neighborhood": "Williamsburg",
       "phone": "+1 718-631-8400",
-      "website": "https://www.thewilliamvale.com",
+      "website": "https://www.thewilliamvale.com/",
       "description": "Luxury waterfront hotel with comprehensive pet program including dog beds, bowls, treats, and nearby park access.",
-      "descriptionFr": "H\u00f4tel de luxe au bord de l'eau avec programme complet pour animaux incluant lits pour chiens, bols, friandises et acc\u00e8s aux parcs \u00e0 proximit\u00e9.",
+      "descriptionFr": "Hôtel de luxe au bord de l'eau avec programme complet pour animaux incluant lits pour chiens, bols, friandises et accès aux parcs à proximité.",
       "dogFeatures": [
         "waterBowl",
         "treats",
@@ -476,17 +990,30 @@
       ],
       "priceLevel": 4,
       "confidence": 90,
-      "reasoning": "Luxury hotel with well-documented comprehensive pet amenities program"
+      "reasoning": "Luxury hotel with well-documented comprehensive pet amenities program",
+      "googlePlaceId": "ChIJT0OO0UJZwokRDV4t1oFOrso",
+      "latitude": 40.722076799999996,
+      "longitude": -73.9566198,
+      "rating": 4.3,
+      "reviewCount": 2893,
+      "photoRefs": [
+        "places/ChIJT0OO0UJZwokRDV4t1oFOrso/photos/AcnlKN2VsT5Ny5hRiMUoJQdHMluo7irF6De5bPCKUegZLtIzHDUcs4LjGAsit8FSUPk7JRgW0381qwXTpja8jXuiJUrmSzAIjx9DcgFUYID0usZNuMZRmbwiSN7848nQoqYTydnUzwDNHPwhWmTgZypKfm_IOnn4m-ZPlOPwjxryAl5UP9pFD58NP3fxH4O0I47e_owEg1Y49Bw9kTK19nqyOQJeWZWa97IuJQJ7N-K0U1JcPkz1yQ7xUUeBZOQ6dHVVuPIWVacNmOU2XJClyFEzQXen2ZRij_7DT8GhrGEzOqkFHg",
+        "places/ChIJT0OO0UJZwokRDV4t1oFOrso/photos/AcnlKN09f64OD6ZfyYdu615jMvoSA-KtA0iIU7I0tmKlmtHeMIBi5cmuwTQFOMqhux5TpaotGkIV1c2KuqzeD8f98dZKmHVSixWzfHrkY07gjX6MdLprK9OkJqrmZ3HmldSdXile__NuWQtZ2o5DkUvY3ToiT0tCWWYymIr_VMUeYa0QE2O6hlxo-XtBvRPyFJP77IeebmDUUyHKgCpPWDHL7xAHBowCxK91NOhF_dBHyKK2y29EVErKPWVQUCPzP_5zPiAeK9DgKCmt8sf6f6oNEymbnX9aOxvMq6qGLiiMaJd47w",
+        "places/ChIJT0OO0UJZwokRDV4t1oFOrso/photos/AcnlKN3HD2YtJgcCHGeRm7fXQo2VBg2mk1Q6Y4g15qexjFuPo6qMZgjL5Hw6TcXEKrZPjbYw_Te7nzwe2w_jKyD0so1zQaz8kN2Kcca-zTf9y8ZsBntXYZZQsqQXM6S7VAeY6mK6oTH7vt5p8P9qVlkxlOgTdBqFWImgSnv6-L4_5dDH_9kBvnRavaaeI_0ETermSMIlUP9nE8cRH22NX6USgAfMszGDpDxHgF_tj95JcVSuSrx_y2Vnx018g6AsfwEIW4X_1d1hY0-bbvwhNS34cYuA-aXfMXkZSY_4Cg_FzB1OUg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14604696961160142349&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "1 Hotels Brooklyn Bridge",
       "category": "hotels",
       "address": "60 Furman Street, Brooklyn, NY 11201",
       "neighborhood": "DUMBO",
-      "phone": "+1 718-858-4300",
-      "website": "https://www.1hotels.com",
+      "phone": "+1 347-696-2500",
+      "website": "https://www.1hotels.com/brooklyn-bridge?utm_source=google-gbp&utm_medium=organic&utm_campaign=gbp",
       "description": "Eco-luxury hotel offering pet-friendly accommodations with custom dog beds, organic treats, and park maps.",
-      "descriptionFr": "H\u00f4tel \u00e9co-luxe offrant des h\u00e9bergements accueillant les animaux avec des lits pour chiens personnalis\u00e9s, des friandises biologiques et des cartes de parcs.",
+      "descriptionFr": "Hôtel éco-luxe offrant des hébergements accueillant les animaux avec des lits pour chiens personnalisés, des friandises biologiques et des cartes de parcs.",
       "dogFeatures": [
         "waterBowl",
         "treats",
@@ -494,24 +1021,50 @@
       ],
       "priceLevel": 4,
       "confidence": 88,
-      "reasoning": "High-end hotel brand known for comprehensive pet amenities and services"
+      "reasoning": "High-end hotel brand known for comprehensive pet amenities and services",
+      "googlePlaceId": "ChIJI3iV7jlawokRGIVhEkj651U",
+      "latitude": 40.702363,
+      "longitude": -73.995487,
+      "rating": 4.3,
+      "reviewCount": 2760,
+      "photoRefs": [
+        "places/ChIJI3iV7jlawokRGIVhEkj651U/photos/AcnlKN1dAmX5xmuaXaD187UR-BtLQ2BZp_3-fC0Lo3_8MXJPHO9gsS8LXY8kmuA01N6O1VYqwoSVEePod-mZwPW50u3BVPT_2wyX3__F6ilUAgpQ6xdnZkRgcrX3O-RwGpkbo96ONYBj0lznqslLmixJNnKVTqg4OZ_qa7ntmY0NtUF2Qr_U7xat38by0QQZjfqIr4L72MmM1nqbStvVN_8QSxg5tFysg5aej9EDwHh_pRxOtGW-RYnZREsUbfYTm0FEgeqrKuJJHlAOG1ve5314DuRqMqa2TbL3AWLJpiIvviJ5hg",
+        "places/ChIJI3iV7jlawokRGIVhEkj651U/photos/AcnlKN17GFWvOJxLjPnzknd4jiAleGyXy1JhSc_FGzmiy-FRscLt-0Crsg8AnLTMd_hr9EyaD1HxKTTN2L1tQFDKUxDGtfY6qqRBa8E4uvU9NYcESlzjeuG0BC9pmTbg31PGR0WJPo6wwzX7pKZbx1SqQPe8Q-HWg7XxxY05-zlWbevjBtvOILApFuHAD0GAVtW7KfAfwKK8DSNhx3bEwltUqIfgqz8FoY56AdHdcCVl1O-1nlgS6N5jB7CaF3J7HEzRsUWUBPmdI0jgeUfbb6WUGyewLs75g6wh0q82Pxhpg3Xfug",
+        "places/ChIJI3iV7jlawokRGIVhEkj651U/photos/AcnlKN12EBUeTHLZnkRiHTBQQFNvv5a9CTMbgk9tSDaZwUEgpgRa7IDCTHNhU27zN2O6RK0vkpHLWaYVMCPjY5AiSGN4EXLFs0eqYqD2Sv7NQ0Zg8bQtZyqtJnVantXYDAyzdkV6YmEJ2Lyi0n-rhq759rXRlcv_C17GP9DrE5qx2wwb6cfJdeLIrNNvQd2_BbMvKMwsgpVyvCMq2o5nTyn4u7vqGplU_0sUPMx0-BBYKXK_0ioBPzTVWB6Nt37DYj8_kZHzrUCOw-sX3Vij3n9R-qtS3pqX_X-TXhpKhDQ4_RXjxw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6190191400297006360&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Pod Hotels",
       "category": "hotels",
       "address": "230 E 51st Street, New York, NY 10022",
       "neighborhood": "Midtown East",
-      "phone": "+1 212-355-0300",
-      "website": "https://www.thepodhotel.com",
+      "phone": "+1 332-239-6649",
+      "website": "https://414hotel.com/",
       "description": "Modern boutique hotel chain welcoming pets with designated pet-friendly rooms and nearby park recommendations.",
-      "descriptionFr": "Cha\u00eene d'h\u00f4tels boutique moderne accueillant les animaux avec des chambres d\u00e9sign\u00e9es pour les animaux et des recommandations de parcs \u00e0 proximit\u00e9.",
+      "descriptionFr": "Chaîne d'hôtels boutique moderne accueillant les animaux avec des chambres désignées pour les animaux et des recommandations de parcs à proximité.",
       "dogFeatures": [
         "waterBowl",
         "indoorAllowed"
       ],
       "priceLevel": 2,
       "confidence": 82,
-      "reasoning": "Hotel chain with documented pet-friendly policies across NYC locations"
+      "reasoning": "Hotel chain with documented pet-friendly policies across NYC locations",
+      "googlePlaceId": "ChIJhwBD1VNYwokR7eKcshuz914",
+      "latitude": 40.761192099999995,
+      "longitude": -73.99181759999999,
+      "rating": 4.1,
+      "reviewCount": 415,
+      "photoRefs": [
+        "places/ChIJhwBD1VNYwokR7eKcshuz914/photos/AcnlKN2-QEqXi-1fxhSDQPaM3bJcNUX1lQQa1HhqlOfxiXHdtfy2pJ1FXXzZtgY-4gSjUO2C8FDa49lvbPNifoWe5E94q5VJjJK860C5W-K61pn_lBz_1PlNubAmRHXfHWQDeHG9zUOe6_gqBGVWybTz1MWf7nUmtSSX0E0ihuVAiN0C7dpHOr2xqlI4EJqV8eCOT-shSod7uXw153eQ_rihlBS75OzI8OBa1D00fJGaIzBIOFjQiVlJU_zDV69yxJRPBB4VeKQ3143kB-2kfT84fNNbyEogVAnx-XP0BmKwOkoQGg",
+        "places/ChIJhwBD1VNYwokR7eKcshuz914/photos/AcnlKN26z10osuzX5t_aMMMIan61BwEvinj9dDYSdTLlh3hN10gWxk8zcpF5POH16tE553M5usNVYN_l8Rdl7bt15MEAOaRlDg3i8QBxL8QU4bpOggMdHdxVVZj9IDbN1HMRuhHJQAEIRy32dpgyw0trxQfTsZsgk2g4MH2RWe-fIXxkuEN0-kDMLV2A2rd6eotEyb85DaetuNnmJkKv9em68Sv7n2_9wtXfPHllHDNMSgltE8ZQDMN0NjdDljMSbbR3-N6h0ybOaDh118I9EDLxJX4sB2iCozjG1LjP4dWtqrHeNg",
+        "places/ChIJhwBD1VNYwokR7eKcshuz914/photos/AcnlKN0bPzbnvd907YwAvvFedJ7NV3l1sRHF4YBFE0S2BYcPxVrP0CvYg_JdBPKJnvBZL4sjxujzGEyQkxTDypgUyxmPJqyHk0bzfKXOsSWPmJhDijMvikdzZktxRqzhrkcXjgbu4iw_fieQxo-yzAKIxpViiHqNvDnNgEZ8lyTEAGtW3auQskXjFynBkPJevZGQKRBCfNwVEoAjWTfHUocI39LY0so8NDNXepXWaMMuRTPDBJiyklt2QkNlA_6P5hzDa8z2PlJrnxrl6PTKQs4NpypQ1xDQcBuASORyp8X3YaK3Yw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6843135090354873069&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "The High Line Hotel",
@@ -519,17 +1072,38 @@
       "address": "180 10th Avenue, New York, NY 10011",
       "neighborhood": "Chelsea",
       "phone": "+1 212-929-3888",
-      "website": "https://www.thehighlinehotel.com",
+      "website": "http://www.thehighlinehotel.com/",
       "description": "Historic boutique hotel in Chelsea offering pet-friendly accommodations with welcome treats and local dog park maps.",
-      "descriptionFr": "H\u00f4tel boutique historique \u00e0 Chelsea offrant des h\u00e9bergements accueillant les animaux avec des friandises de bienvenue et des cartes des parcs \u00e0 chiens locaux.",
+      "descriptionFr": "Hôtel boutique historique à Chelsea offrant des hébergements accueillant les animaux avec des friandises de bienvenue et des cartes des parcs à chiens locaux.",
       "dogFeatures": [
         "waterBowl",
         "treats",
         "indoorAllowed"
       ],
-      "priceLevel": 4,
+      "priceLevel": 3,
       "confidence": 85,
-      "reasoning": "Boutique hotel in prime location with documented pet accommodation services"
+      "reasoning": "Boutique hotel in prime location with documented pet accommodation services",
+      "googlePlaceId": "ChIJ-1XDX7hZwokRHLjn63mDetU",
+      "latitude": 40.7459912,
+      "longitude": -74.0049983,
+      "rating": 4.2,
+      "reviewCount": 1123,
+      "photoRefs": [
+        "places/ChIJ-1XDX7hZwokRHLjn63mDetU/photos/AcnlKN26QOOdxbEpfqOA6kvoeGLt6FkjNYsYJKbZ7eZ_UnrKifnWXof8hwVF-LVEqWDn40UrPCvt8NG5ZWjNwuIRqou1NA444ORnEyG4nqAOxjiDOGJ69iXYxmgli4So9-cB3cHX0eWE8k-qf6zkNs42Y95BnSGUYvvsFzpIGIXZuMneta_3ateoVrZgNDiJXat9kH0pR7Yu6Gk16ttnARX_TTpd66sgXHKfh8OGPxCzSnU7rfR7BeRwmIM2mmlitxFeU40Z7VIjZGLIGNyd7KJL71Y7k5x0sEqGULm9NL42xwqbfA",
+        "places/ChIJ-1XDX7hZwokRHLjn63mDetU/photos/AcnlKN0gDwaREF0hhRuRfpue9gdQsBkfp56yT4s89g9BqxhigGWZtjvtQocgLYB-aex33_ZDO4ns3ihYNnNztOOdKRTkXkNL8Y2z6tRJw9IZzJ82KxerwkR3194V1VO_lLHNbxIVMyWrpnHug1rSkCyiY-Dvn84kojQOAplfc_TIIrGIcuzQLdAkBQuW1Qv_0EHyl4IJ_Hi6mz-nEDkEOvI8DV9nnlzvJ5kdAG14COKPFPJwG-r-49o43GyRPbcdezeYbR8XjoGm7qbVmKAGzU3w1wLSiH3VVi3JQxhFbxhmo8D-1g",
+        "places/ChIJ-1XDX7hZwokRHLjn63mDetU/photos/AcnlKN2rTAhC3s4mwAEJw0PqPzS4yBYMH8rRsOJBS8Ws3M1qCdaK7QnydoRLeb8LvgcNcX70C7u3HOek-0prAzoywD0cc_jJHIhGTD-DlMDlPLOOAlg-eH4y93M4dTlfNq-QlZDR9jKvWEHicAeNo8gAn0MIqzxklHSa1wuiy01ZaZQD0vL705hvw0M3IU-11E8iTRbpq_C9MW8tr7M20BTpUNhZl2LVJLbH_oyJZE0vrhzL1o5QnY_9bxA__GjI-hjzJh-SKylsL_llUXr2tNkIwBDGHJYy8NoJY5zI926ct4bsEeLsmHYQ0mLfxX5FS-fbfHdjkQBGVmH0OPyTdvbhiHteAAZnbdYe2jO_AV6gjtSEwwxS2BurF6vE8nsWbRo2H6Wht_KboGXJcrE7UvA6jEW0KjSnsH6SVK5-lkqb2SFyjhU"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15382752036909463580&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Kimpton Hotel Eventi",
@@ -537,44 +1111,86 @@
       "address": "851 6th Avenue, New York, NY 10001",
       "neighborhood": "Chelsea",
       "phone": "+1 212-564-4567",
-      "website": "https://www.kimptonhotels.com",
+      "website": "https://www.hoteleventi.com/?&cm_mmc=WEB-_-KI-_-AMER-_-EN-_-EV-_-Google%20Business%20Profile-_-DD-_-eventi",
       "description": "Kimpton brand hotel offering their signature pet-friendly program with no size restrictions, beds, and treats for dogs.",
-      "descriptionFr": "H\u00f4tel de la marque Kimpton offrant leur programme signature accueillant les animaux sans restrictions de taille, avec lits et friandises pour chiens.",
+      "descriptionFr": "Hôtel de la marque Kimpton offrant leur programme signature accueillant les animaux sans restrictions de taille, avec lits et friandises pour chiens.",
       "dogFeatures": [
         "waterBowl",
         "treats",
         "indoorAllowed"
       ],
-      "priceLevel": 4,
+      "priceLevel": 3,
       "confidence": 92,
-      "reasoning": "Kimpton Hotels are renowned for their comprehensive no-fee pet programs"
+      "reasoning": "Kimpton Hotels are renowned for their comprehensive no-fee pet programs",
+      "googlePlaceId": "ChIJ_U_NR69ZwokRkOaA92AjJ4U",
+      "latitude": 40.747022199999996,
+      "longitude": -73.9900333,
+      "rating": 4.4,
+      "reviewCount": 2172,
+      "photoRefs": [
+        "places/ChIJ_U_NR69ZwokRkOaA92AjJ4U/photos/AcnlKN0kX8e_JuZlHkhgR84CpMDiwDn8kyoi8lRz4HNFzCBfGDo6KCMjA8QR3-FRPCAoWI4mun_dMJ5zebOBzhVODdmm67Y2V0-d7dLF2iJDN38lxJTIhTjpUXGoO-Cj25wJnFQ0k5NNw1Cv_zIksaIDqE_ViYOXF7maElru4ht_A-SDxaAvpEexY01uLWLm-FHQHDfdCIg7qTxiJ6-DbXRRuFC4L1zlSJoK3If1M4P_rhgERXkxJp5cQetuaEYRstjm8w0cGJmfvIV36mG9ZE3n_jeoT577oFK8vxZ3XWIzhyEMHQ",
+        "places/ChIJ_U_NR69ZwokRkOaA92AjJ4U/photos/AcnlKN1QxI-WTOQtuWaw6QpX9JhFCwZ8CaC0SDjF67UZDltEpD_QtTnYc5eOwupY9qMxDn1dChh-tLRLTcsxp2iUZmLvnH8QL4jbLZ6gHNA0Wq8dcQ4BvAbLTBroQOeFcvjVoOHZC0GZ2jHmJt_XEiDa3_Uwv-sfg7-UabOnOWXtF9HBDLDnPp4oTBhlob8jThtbDj2u6Yz3ULf4bd1GsMvRrK0uLLjTnWt0wuFNvTvhdDnP_pszEPw43bba9j6MLWYaIo-m5hd1I0ltQd3M5lbm-cmu9O441VMUNjWWu2E3bbc7wA",
+        "places/ChIJ_U_NR69ZwokRkOaA92AjJ4U/photos/AcnlKN3q_nPvKzEHFxypZGHEGPWErN3vScmXc48AdC65VQokC21R8lE2J8ZQMhBPtHYjzfBDyKOEJIX5aPzV8GtfsCmoKV4ypCQ79Ujr9UV8rzRw6C912yalXy2g46j84xrLTlkqSrhPFjkGAzK7GAwzh2rJ5iqVEOV9pXnhXDNs7IBiF427uLNumu7taNtau3pV3_a6-mtsoeavEtoTKALDALG7vdmnMPVu_EBk2xF-IODMx0RBnWC8OPi1bLSDXZZ9M6O8nZJ59A8w_o-ef0RCzjewuBPvBkFgmAlkRxbTW8VQVk3J2md_GF-eYr2ePOiBdEKVqNGq-QvZSjXPas-B3bE9lBmH0ScbCuCnA8sXyUT1ItXc28I6Dr4UzZcoUqk6okh1jfLRege1q5Ihx-P8raZZg9R5yJ_bVZypnOfbkF2fSuAk"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9594676430512383632&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "BARK",
       "category": "shopping",
       "address": "90 Wythe Avenue, Brooklyn, NY 11249",
       "neighborhood": "Williamsburg",
-      "phone": "+1 347-294-0896",
-      "website": "https://www.bark.com",
+      "phone": "+1 855-520-2275",
+      "website": "http://bark.co/",
       "description": "Flagship store of the popular dog toy and treat company, where dogs can browse with owners and receive free samples.",
-      "descriptionFr": "Magasin phare de la populaire entreprise de jouets et friandises pour chiens, o\u00f9 les chiens peuvent faire du shopping avec leurs propri\u00e9taires et recevoir des \u00e9chantillons gratuits.",
+      "descriptionFr": "Magasin phare de la populaire entreprise de jouets et friandises pour chiens, où les chiens peuvent faire du shopping avec leurs propriétaires et recevoir des échantillons gratuits.",
       "dogFeatures": [
         "treats",
         "indoorAllowed"
       ],
       "priceLevel": 3,
       "confidence": 90,
-      "reasoning": "Official BARK company flagship store designed specifically for dogs and owners"
+      "reasoning": "Official BARK company flagship store designed specifically for dogs and owners",
+      "googlePlaceId": "ChIJkSsk4IlZwokRCO4QKGrKsZc",
+      "latitude": 40.7084773,
+      "longitude": -74.01059839999999,
+      "rating": 3.2,
+      "reviewCount": 64,
+      "photoRefs": [
+        "places/ChIJkSsk4IlZwokRCO4QKGrKsZc/photos/AcnlKN3AyIHyfAJEhhU9E330Pw9cb4hBki8c2UDJPQHz8vMqFx-u9vFFqutXSe38oy8j1BugSNHxni_TNTxqmgKEdBhoixybYROxzvvQ5kfF2bogKPr5SRis7x3-8H_z6NN3O-4UGHn2OYE5ZO2ouL6zUiWLDdvQnHQJ2HNEzcBhnLAKOVeCOc0Mj_a3n31hrFGfZb-1Xh4q28Y1-GsPawj9Mwd869i7y-1RM1qDqmdVOWZRyAOd6xoikdMO7WVgjMD496N2unyLU_X33WuavOtsI_wxJ2r75VomvAxRBqjb-E-EiinSobCX2kwFus5-Mh7VE2vXQiplekPCOcxH4ZujxOep6TVPCFjUfiNft1oTt9xxJ0XK6q6olAiKUMK266k4dDRSbmL04ULXB1FZik5qGxF86vY5p8zu59_FwI8Z03G9Uyff",
+        "places/ChIJkSsk4IlZwokRCO4QKGrKsZc/photos/AcnlKN2g7TY4Uy5GMY_0Q767fi1hv5Pzl1ttYOnI4REtwijP4TaCKM7cvBRv2JWK26ZcR_70-2QzdlKVALJd06YWtuocU-Oul7yZ3O9tSAfEmv2eaUYm-kULAFETtphGilbTee29jg8QfuqLbroNeOLq2Yhu4Gx1p--pM9UHUIiIHhbknlKMJ4hH9lZAOUvW5FevUwb66QQjnl470sAV3yywcT8uEiNq3Hn1cfOxDlCwaIHreJI29fMPelZsqj_0AZQs01l5FT97bNBFHWYh47BDlK5xUBiZ5kvAYkuGhnDTZ4_xnFSQMPx9NwLyil8plpaAmm6HFNAOCdTcaChOk6OtRH04wVUD819n-bDpAX6Y2oxiOxjLCLMYSJb26XfNPEIXpoubEOoT9zwZ1FVJp_IrltzYd9IA_0Z-v_IVglmi-RgQZA",
+        "places/ChIJkSsk4IlZwokRCO4QKGrKsZc/photos/AcnlKN3SSNgRqKjASmE_FvOGFnE-EGav2mlYwEq0QkKMlj7oguMihN-Ru95EssDNL0s5AhAoo2zXrNZusXS5ZR4BLlnTtv2bLA5ijewZI0oIqYxQB-iaLmvYtkpWNSI4A9RWEzYmBCRT2meTILMs8Fre98mckc5gkRMsTT22twEYftiGapJU4-GOY52EWHVeAvi_MLard8YnTAv2pldjJpMpe0OYJAO0RL_mC5AvA5rDr-PaWJWxCiN9zWEN54-kabUkewVuNGjVldctbuh91QOctvkskVPxVyZW_FXUEwDBQkhcgFwQ1vyrO9l8iFUU-nb1HHB8yWXXtwELO-PJzYO6MTTwurhCIjdFi7tEAHzipd0fTzscN1dyBNiGnKtj5nQ7zwxbh8kNNGF7Jwkm5CqkWAfzlweMD3zv0XvoQw_Oq2l6GQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10930740327892446728&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:00 AM – 5:00 PM",
+        "Tuesday: 10:00 AM – 5:00 PM",
+        "Wednesday: 10:00 AM – 5:00 PM",
+        "Thursday: 10:00 AM – 5:00 PM",
+        "Friday: 10:00 AM – 5:00 PM",
+        "Saturday: Closed",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Petco Union Square",
       "category": "shopping",
       "address": "860 Broadway, New York, NY 10003",
       "neighborhood": "Union Square",
-      "phone": "+1 212-358-0692",
-      "website": "https://www.petco.com",
+      "phone": "+1 212-895-9851",
+      "website": "https://stores.petco.com/ny/newyork/pet-supplies-newyork-ny-778.html",
       "description": "Large pet retail store where leashed dogs are welcome to shop with owners and often receive treats from staff.",
-      "descriptionFr": "Grand magasin de d\u00e9tail pour animaux o\u00f9 les chiens en laisse sont les bienvenus pour faire du shopping avec leurs propri\u00e9taires et re\u00e7oivent souvent des friandises du personnel.",
+      "descriptionFr": "Grand magasin de détail pour animaux où les chiens en laisse sont les bienvenus pour faire du shopping avec leurs propriétaires et reçoivent souvent des friandises du personnel.",
       "dogFeatures": [
         "treats",
         "indoorAllowed",
@@ -582,25 +1198,67 @@
       ],
       "priceLevel": 2,
       "confidence": 95,
-      "reasoning": "Major pet retailer with standard policy welcoming leashed dogs in stores"
+      "reasoning": "Major pet retailer with standard policy welcoming leashed dogs in stores",
+      "googlePlaceId": "ChIJrb33EqJZwokRxcSw3DeyRK8",
+      "latitude": 40.7363801,
+      "longitude": -73.98885430000001,
+      "rating": 4.4,
+      "reviewCount": 3816,
+      "photoRefs": [
+        "places/ChIJrb33EqJZwokRxcSw3DeyRK8/photos/AcnlKN1fYR2fxci9EoK3g9g6Fgg6jqVpIDAlYa-ttzQy8WEEFYzuf-Q836sGQG8DiaLJFT72lKPtqrGdRUiFK0KQDZe-dbsTCCeILt2CBAyaXn1QuPWJEPe5LTTyjosYCkm_2ch9wDtOem7ap2td3ex89v_sRun4zhl9m79rRoAZFAei6poebXeRivwqBTeQ4xyLEzynk-wVZJb7AzxNZQQgzW86vmUwhu8M8s_Qilz3q-3MwndS9zlKcQi-H1bibu9NKSdec-YhwITWBEDWiZgFdzGx4nmJYlm84lNHtQgkPv2H_PbKhH_cxn0EBla2zil4obfqGySeEjswGSr7CjLZmrbZW2g2mTvFSYiYafNGjkfGncY6dOcg8dY_-r8-pEeiWF_QNYpnrPzLOOmtlxh_tCfcqPK29rCapQ_P6IeuzRwpQw",
+        "places/ChIJrb33EqJZwokRxcSw3DeyRK8/photos/AcnlKN3pLD5lSYnFEh4t1kNGQNf6LYw0F5Vu568_o5-evMH2xMXdkKSE2lHNuWcBmG7jwC8zerzAcNfjVgHwgxB4-bFr9mpyfGgaKjP3mUUIup-CY3l-VbibHJ5nNeMEhRxCZ6rTEgK3FKuqzT1_xCzeBHB1LsL4c1_QHa-MHUQMV5sp8if2J4GBEHf-LspRtahBegmv9GW6gnsTcbKHSnaI8blJsCXV5JmX8anazecVT2lVRHgphRtgd-NwiL-NcdLf2PGIvKmw_Ht_Omo1jJFk5KcKSqRgl5fiRM_CoOkThGiGSCTExAoxqjzVUo6L4NaGuzjzZGq19bVUhksM-6FYFsJ0v9XjNDsoZGo-Qk27BiCbmDOeITk8sDIPCvSjsxAovZb4N0VdFcCULIuWKheOMJbJJfgOv42abj_l48531d52Prs9Zqzn_ghKjWpaGLm3",
+        "places/ChIJrb33EqJZwokRxcSw3DeyRK8/photos/AcnlKN2mEC5W36BBFBZYNOruaZ8bX4R1zRiZXr3VpDWMVSM_C_vxbos2EH9oKJj1trtg20mL2Eow2e6nGpbHCKHTdAdPWsG7_tguP_B_s6Zr7YCP45V9CItJdbHzff-ChNVqHfmiMAllVsIG5x7GAG2YWTpxjTcjePS_yxuhCI77qR1FVTJ84CEhX4uUek1VdzMvjcQw6Py65TIQDI3Bn0Gt2y-57zUeFC66zV7uOfRgIOlfaesOFoSDGNnHayFjDPJVvUfyP9N-e52MqSeOXmevoVf3TppH7LrjVU_GjxfH8_VfgAzlPmRxT6i5XGaAsTQsPJ8ZON9FoCPEi3EjDMe76PoT1OZu_gmob-5qCT-mIIzYvmY_JkRv7t4KdABX1cJQ-Q-QO9AIIOK3Nr4uU9zrZzmYFZtA52qc5Wy6I9NFK-E"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12629415208049231045&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 9:00 PM",
+        "Tuesday: 9:00 AM – 9:00 PM",
+        "Wednesday: 9:00 AM – 9:00 PM",
+        "Thursday: 9:00 AM – 9:00 PM",
+        "Friday: 9:00 AM – 9:00 PM",
+        "Saturday: 9:00 AM – 9:00 PM",
+        "Sunday: 9:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Hotel Doggy",
       "category": "shopping",
       "address": "45 Carmine Street, New York, NY 10014",
       "neighborhood": "West Village",
-      "phone": "+1 212-243-4024",
-      "website": "https://www.hoteldoggy.com",
+      "phone": "+1 212-243-1199",
+      "website": "https://dogspa.com/",
       "description": "Luxury pet boutique offering high-end dog accessories, gourmet treats, and personalized service where dogs are pampered customers.",
-      "descriptionFr": "Boutique de luxe pour animaux offrant des accessoires haut de gamme pour chiens, des friandises gastronomiques et un service personnalis\u00e9 o\u00f9 les chiens sont des clients chouchout\u00e9s.",
+      "descriptionFr": "Boutique de luxe pour animaux offrant des accessoires haut de gamme pour chiens, des friandises gastronomiques et un service personnalisé où les chiens sont des clients chouchoutés.",
       "dogFeatures": [
         "treats",
         "indoorAllowed",
         "waterBowl"
       ],
-      "priceLevel": 4,
+      "priceLevel": 3,
       "confidence": 85,
-      "reasoning": "Established West Village pet boutique known for luxury dog products and services"
+      "reasoning": "Established West Village pet boutique known for luxury dog products and services",
+      "googlePlaceId": "ChIJJxxoSaRZwokRWkywc_tlFT0",
+      "latitude": 40.74348,
+      "longitude": -73.9906141,
+      "rating": 4.5,
+      "reviewCount": 227,
+      "photoRefs": [
+        "places/ChIJJxxoSaRZwokRWkywc_tlFT0/photos/AcnlKN0Agry4NU-r_VhkI1Miy8hjjG5rQYdFC4zHl8N9Mged_UTjYKNEfv24Tl-7fvH9O5u9_85CuHKkDlchaJIhbiQIR_W1KMpRVnjwmr5IAP4CqxA8tNzNSzR2SIj-Y54YDHabAuvR1ACdvh-bqzkN7GWM0pEPkBKquOyZmRJKQ76AsgicorSATn60JmFBRiGV85MO_mw6iSw3eV8Uyn9jFY2CeGkTiEop0ZwYa73OnWVnamfXqUBNgXEiSkM-glU0yAyT50Ip4Zl3QkMBfROQqNOumc3-OcTsQJs61OupokxHOA",
+        "places/ChIJJxxoSaRZwokRWkywc_tlFT0/photos/AcnlKN21iGL3ZTlOJOy7J5Ad-PfP_1n2QtfOILB7EqkcEdKa3IgIyXTjYOk2k137vYdSvKiKKALEOwZVEMPUe6I7sYX0L9IcPau8ddKUIgGsDcmmZtwGUjAFH2IAgl7lUkKIh6zcZLyx5oxtKMVkh8WyviI2HXfKwR-hAYx369oMtGah1sP6Q5LTfjK53nVDhe-dsFs5_S-GCLgHxK7mbcZvawNYSo3oR569gbl8Y7oBTdc1ReRIlItrrbHYKP24cBdF3LfoyCtqWIuEZD0YW4VchxnYGJqvjqQ5-PSwPoXiWNW7wjT0zoNHiCLGvnSfPrlidtKncTNVeXKc7iNYeZB2L5q4NMNJQYbTptIK0tKPGcktPWxni8wWyeP_Kic3TCCC0TIjhUIAJY4DAqzITzThz9HcO_jooAVrrUX4ukdgh9JAJQ",
+        "places/ChIJJxxoSaRZwokRWkywc_tlFT0/photos/AcnlKN2GvYML9kGOaOIdU-icL-TD1QZIj8D6Jb07shc1M_AznzRJOXZFR9HOb5ZFzScIWuK_yHF5nrIAS9N8--vVx1oK2ReVxXZjneh_XXn1v4_r6XQiw6dDi0GlqibpomZ7xV0L2bzlrwAEEe-PsLKf7eKx8Fxe0L6EjY5JvhenRBTwjbA1QPU1X_XmZifn-4ngZ9ctVticfmNlZUzVMdwKnv1Q8nERoL5YqBrfL7UjfSNJ9t1WhHLDkWN0sIvCfI3v8e17epyyGbaZE8g3FQTFncI6WU1qhpJopUjuu27IcFfcSQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4401536341476658266&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 8:00 PM",
+        "Tuesday: 8:00 AM – 8:00 PM",
+        "Wednesday: 8:00 AM – 8:00 PM",
+        "Thursday: 8:00 AM – 8:00 PM",
+        "Friday: 8:00 AM – 8:00 PM",
+        "Saturday: 9:00 AM – 5:00 PM",
+        "Sunday: 9:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Whiskers Holistic Pet Care",
@@ -608,16 +1266,37 @@
       "address": "235 E 9th Street, New York, NY 10003",
       "neighborhood": "East Village",
       "phone": "+1 212-979-2532",
-      "website": "https://www.whiskersnyc.com",
+      "website": "http://www.1800whiskers.com/",
       "description": "Independent pet store specializing in natural and holistic pet products, where dogs are welcomed inside with their owners.",
-      "descriptionFr": "Animalerie ind\u00e9pendante sp\u00e9cialis\u00e9e dans les produits naturels et holistiques pour animaux, o\u00f9 les chiens sont accueillis \u00e0 l'int\u00e9rieur avec leurs propri\u00e9taires.",
+      "descriptionFr": "Animalerie indépendante spécialisée dans les produits naturels et holistiques pour animaux, où les chiens sont accueillis à l'intérieur avec leurs propriétaires.",
       "dogFeatures": [
         "treats",
         "indoorAllowed"
       ],
       "priceLevel": 3,
       "confidence": 80,
-      "reasoning": "Local pet store with known policy of welcoming dogs inside for shopping"
+      "reasoning": "Local pet store with known policy of welcoming dogs inside for shopping",
+      "googlePlaceId": "ChIJe_gvbJxZwokRlOKej055-j8",
+      "latitude": 40.7294372,
+      "longitude": -73.98755109999999,
+      "rating": 4.7,
+      "reviewCount": 303,
+      "photoRefs": [
+        "places/ChIJe_gvbJxZwokRlOKej055-j8/photos/AcnlKN3yiBSLm-lbcx2GkMCF1tnm4DhsAAh-zbUwl3qoJRUeYy64yx5ZQS8J4Iri1G7hIjP5-6qGqaqGxvDollU06SyZefNSQFgjliU7y7cctzXDVztsdLJJglcciF6BlyGK1MgxlcBqW6m5RFWxWaGAWSfievaesO2Ltfy7kaunf4DE45eMHftcpFaR4rfctK14BOXpAQlfD9ZVVBDeijs2RuKIDWWdVyZs5XDHWGl8f2ARSIvwO8cGiuscKQ8HJltTjBTH46MtyejAUX5c3n0G8t930tUXfYD4T1cgRHnqPXrigw",
+        "places/ChIJe_gvbJxZwokRlOKej055-j8/photos/AcnlKN1PjX-ropmB-camDyAMzaCqoT4IIVMsN0c9e2Y45OEg8z8KoOM_T8h_GVH_OLwcztBTkSGe-XlFIQ3Sr5QYbaKtU14Yi4uThXFJbmV5t23-82flECEsOZqy7vDjWdimxLN3Mw6Pciq_Tz0t_Mofvw93hpgbkmwcvfM6PbfeFZ8K5hMU4LzH3Y78IiBR4NZynLEd2-QyquBk77x5qDhu6K9zj90QCLMCZmRHrTnTpro1sBvysitEWJY_ItJPVH3266Iwp1hysyx4RUlHy3laHOGQm4oKHr6CZhbc1QxaJTE1xQ",
+        "places/ChIJe_gvbJxZwokRlOKej055-j8/photos/AcnlKN0YlZir5RRRaTRgtAXnztwxNvxATY-gsY3ZBr0Ck6hYZguWabK-D2o5TLmQLEEZFU_D_C5KH4NNJWR92vNVA6Mx9_lyEL3ggZpeGueSmT8DxLfN9mcTBcJRHpmCgkDjOprs0xgynJDJw2uNlk1zb0vzaWNCD5UQJbTU9zy07yYGtpL4z0xm0rCYGv7sisrEMREFADml9ZBHTW6v_CMH795DtwRdPaLmOt7B28Ntj9kUOquec7XEdTuinJpGLhZj7_aOzHPgtYcZJsjCoXJbcMSkp7iqlTz6uPXqbwP-37lCfQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4610130546891088532&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 7:00 PM",
+        "Tuesday: 11:00 AM – 7:00 PM",
+        "Wednesday: 11:00 AM – 7:00 PM",
+        "Thursday: 11:00 AM – 7:00 PM",
+        "Friday: 11:00 AM – 7:00 PM",
+        "Saturday: 11:00 AM – 7:00 PM",
+        "Sunday: 12:00 – 6:00 PM"
+      ],
+      "enriched": true
     }
   ],
   "count": 35
