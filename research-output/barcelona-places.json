@@ -7,9 +7,9 @@
       "address": "Passeig de Picasso, 21, 08003 Barcelona",
       "neighborhood": "El Born",
       "phone": "+34 932 562 200",
-      "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/parques-y-jardines/parc-de-la-ciutadella",
+      "website": "https://www.barcelona.cat/es/que-hacer-en-bcn/parques-y-jardines/parque-de-la-ciutadella-92086011921",
       "description": "Large historic park with lake, fountain, zoo nearby, and plenty of space for dogs to exercise on leash.",
-      "descriptionFr": "Grand parc historique avec lac, fontaine, zoo \u00e0 proximit\u00e9 et beaucoup d'espace pour que les chiens puissent faire de l'exercice en laisse.",
+      "descriptionFr": "Grand parc historique avec lac, fontaine, zoo à proximité et beaucoup d'espace pour que les chiens puissent faire de l'exercice en laisse.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -22,7 +22,28 @@
       },
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Major Barcelona park, well-documented as dog-friendly with water fountains"
+      "reasoning": "Major Barcelona park, well-documented as dog-friendly with water fountains",
+      "googlePlaceId": "ChIJ4QmWQ_2ipBIRcD1a5hhhOEI",
+      "latitude": 41.388123,
+      "longitude": 2.1860152,
+      "rating": 4.6,
+      "reviewCount": 76244,
+      "photoRefs": [
+        "places/ChIJ4QmWQ_2ipBIRcD1a5hhhOEI/photos/AcnlKN1xlGi83h-QiRzYaEGe3Bm1g25JCp-WAopaClCGqJjE9OlJpS5tjFBRiqp4Lm_VPwovhYQblIy32OImk6KL2vKpFmTTQNR3KAfDpD6F5SEtPj3rfAmnPIYhmwR6QuhR1NAgyFdek8_yEIoaBPTcQ6TSGX9OYDsxviYWuFR1IBKljq-xQUrGRYN18ClxnLoe56gOxAttDHvT6HKno4R8mVtpAAT7teP4ohgZeU6aEdrX9sRlrYu4z8F73ohLvV8Yc6bT045KGVRGutd1VtPxOiaNWFClsIdkV6b2ociHJQo0WHTd9WzHHpn37YE3-PSS7y8FnG3RBKw3mdyGUOOpRVNDW1Bb0I8TFH-xiHbCFE0ENNRSZzai84lSIw_n4eB8NtpIWsuHCSFX4b9hMyNuSAI046vGLxomg2ocfJzGARlv_g",
+        "places/ChIJ4QmWQ_2ipBIRcD1a5hhhOEI/photos/AcnlKN3UMZpVR9j4oaf5vefSKXWbJGxsc74Z9z1ZWq9UTQVIFe3Dy_hsHzNwMNHN1V2osu9e4yvAoYtAcH8zcVffX65Qll3LKt6LR63Sue_c79WM8h-hSR67V3YrIBUJAiJx44hj2o440WCDBOZYr1xejde1hdzyS8SjJaoDmooIfVlFImIUY_nbHMD9IBFotwkwXow3S9-65oqWqNYRc-XNmssQ-W7yA5Yd0MzTg29W1MLMyLUZfUpRySwqoi2sBiL5IcZ-7hmk2ABqL10cpRsQO5ZlhUryg5dH_UiHpjOTktHJv7CWsFKMixLRHIx4DiHjI_v0iMoY8IchuDAgIMikLRM9bxNq2cig-Te7x4VN-2t9iwfBibN_J_bXH4-bEgis7BYmu79rMWCc4PCFDr5h57kFyy-4a_cmh2V4P4IuKcEPnA",
+        "places/ChIJ4QmWQ_2ipBIRcD1a5hhhOEI/photos/AcnlKN09lcKIAR2aAdHMEL0aMGT_l0UOejchfR7sT6cUrhaCofnxuP7jkxL67DM7jVxEfpSMTIm9Rb-fhBYdIjRne5zFtRDm0cJozq_mIBxVV-jfzePGCyLhBaUO9n0IXh_wzcVFRRdItFCWZuf7ZGKVCwXb1lahGJbxdm832EQtSn6tHTrFksqbJx_SQvI4La96-DzYdqhPKZ3jafM4q1KTztb6j-_1BKBQLNcGSFe_d_iJrUOJQDPDyYOyZuUdH0JvrDfo3fi6xTFvE0pij6eah6dPczPvqRrKn8A4T7_8xstsC1RmmDitmMobSvB18-Mdg-oiRKnHvnUVBUV9eE6sIJKWMWiewwniOAPhOd_aLZGjcrpIRy8XA-dP6i56XY71pT2HQst-VAVJRHOatW1P12fDpWmy_CTbvl-2kjl5xGD08w"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4771670564770823536&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 10:30 PM",
+        "Tuesday: 7:00 AM – 10:30 PM",
+        "Wednesday: 7:00 AM – 10:30 PM",
+        "Thursday: 7:00 AM – 10:30 PM",
+        "Friday: 7:00 AM – 10:30 PM",
+        "Saturday: 7:00 AM – 10:30 PM",
+        "Sunday: 7:00 AM – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Parc del Poblenou",
@@ -32,7 +53,7 @@
       "phone": "+34 932 562 200",
       "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/parques-y-jardines",
       "description": "Modern neighborhood park with green spaces, playgrounds, and dog-walking areas with waste stations.",
-      "descriptionFr": "Parc de quartier moderne avec espaces verts, aires de jeux et zones de promenade pour chiens avec stations de d\u00e9chets.",
+      "descriptionFr": "Parc de quartier moderne avec espaces verts, aires de jeux et zones de promenade pour chiens avec stations de déchets.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -45,17 +66,38 @@
       },
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Barcelona municipal park with standard dog amenities"
+      "reasoning": "Barcelona municipal park with standard dog amenities",
+      "googlePlaceId": "ChIJq-sut2ujpBIRbbFqGAnh70Q",
+      "latitude": 41.3971301,
+      "longitude": 2.2073986999999997,
+      "rating": 4.4,
+      "reviewCount": 3531,
+      "photoRefs": [
+        "places/ChIJq-sut2ujpBIRbbFqGAnh70Q/photos/AcnlKN0u_VToOOkzP5XO2nmHVhoe2Zb6cSuTrMqvvJhS5C_QFhu3soKUEES1vXauhFF11vfiWJWD4e0VfYNCi8kDLHzekkCYoNxNt1Vu4vTcf5WVD04pG77MQXRvXLJ7SlIzKdJEMXKAXcO3QZsnqcw8DrVOG_yGQs6ij-E4tvsSOIwLMY0eNJOPDIXc2AEr3StmspwmdjmxS-aZICNfoYO35uKdqQMOel7kbYGQjujmoN9oQwCbhd08fjdbm3hqxK49FW3n2u6Z4aIGCGxDxJRKDTB30JakYaN8qPHK0ahH85UIOTtsyxmOw68nr2tp1YB8f9PYS1NEeGbh8wdt0h4A3ydt_dw1JVL43fPr1dHhbcGQdBEl33rok015i_gSxgQOOrrWer7nHUzUJt-Qz4YwUnNgtZ3SFKLG5-El6OViTPNwaEFf",
+        "places/ChIJq-sut2ujpBIRbbFqGAnh70Q/photos/AcnlKN3lXrTqhhuNKRCA5_uAJG-dgq59YuytYTCYshaadGO3j36iT4h0YI80gQDFUCsV1ZJ9N65GDNvizLkvKpzHFU7p6dlGa65dZIji1s8chQ6l4ivqoUgp_bNpVs96bjKIvLo9-pXqywP017RRN0Vmbi13ptL7Mh-jEZUYAQ2CbTDzzr1hFGkw8yM8vWOhuJJAZNzT9yq8zXEpWWL15R0ZI1_4P9UAmGnSiXdkq1vZAlKJBwiRGf3rqfCRcD9xD2vpWzZK4B_pZuUBRozh8UO4GT6WGZ69jDXhQ1T4necTqyy5Y-r9f40UQ-7dAHwsqFphVf5QWvkHajXKlRZuuC2sy9N2zt9miCAyGSJY4WzD4Hxuc-_8TEbu7DiSFOrQ3YzBE4tXvjIuYpFNU3iMBUsCtAzrKDaQ1nx_fsJYXqX-p_46Vdc",
+        "places/ChIJq-sut2ujpBIRbbFqGAnh70Q/photos/AcnlKN1G8BmBXFvrdpS-2yjksZxPoSLmybHFxGEo2_2c78aNevHpfuFZRYFMMTYGpsTa6p9z3qE5dSDuBKxlbUgpqCO--Dwc39B4By4_USl82kZzmeipvSMvC39wSPhzZpDiTo61tYxmesgsxOBYBEJax3VhsUa8Wo4BJ5J-U8MWfFxUVoF_76LTWXSWjcVEUm6l65mmsE8Incnswm9rXL0b-q8ycUhPY9PcGyR9H8y3y3mA-a51ToyKYTUgZatrIHYop3R85E7I0Cw5O744bITCm43EOhzkpvoGfeCMCz9jSTiIlPM4o2hyuTKrATgASeundp0z5hKDeqvTPx4Tc0lgw8dve3Anmh6o-xn9K6b4IeZo21mqAuaGg3S4gwz3hhqwuoGIVV-j9sttn42_o1DLMgy6n9UBP5ycvhWw3i_XXoA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4967436343193547117&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
-      "name": "Parc G\u00fcell",
+      "name": "Parc Güell",
       "category": "park",
       "address": "Carrer d'Olot, s/n, 08024 Barcelona",
-      "neighborhood": "Gr\u00e0cia",
-      "phone": "+34 934 091 831",
-      "website": "https://www.parkguell.cat/",
-      "description": "Famous Gaud\u00ed park with mosaic benches and city views. Dogs allowed in free areas on leash.",
-      "descriptionFr": "C\u00e9l\u00e8bre parc de Gaud\u00ed avec bancs en mosa\u00efque et vues sur la ville. Chiens autoris\u00e9s dans les zones gratuites en laisse.",
+      "neighborhood": "Gràcia",
+      "phone": "+34 934 09 18 31",
+      "website": "https://parkguell.barcelona/",
+      "description": "Famous Gaudí park with mosaic benches and city views. Dogs allowed in free areas on leash.",
+      "descriptionFr": "Célèbre parc de Gaudí avec bancs en mosaïque et vues sur la ville. Chiens autorisés dans les zones gratuites en laisse.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -68,7 +110,28 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Tourist attraction with some dog restrictions but free areas allow dogs"
+      "reasoning": "Tourist attraction with some dog restrictions but free areas allow dogs",
+      "googlePlaceId": "ChIJq0HUUq6ipBIRWM6qGqALmok",
+      "latitude": 41.4144948,
+      "longitude": 2.1526945,
+      "rating": 4.4,
+      "reviewCount": 228409,
+      "photoRefs": [
+        "places/ChIJq0HUUq6ipBIRWM6qGqALmok/photos/AcnlKN3CSHxehYEnNAGalZbwyowNbWSfTxbMztuH0c7cbrbfGny0K5M1J1rTICFTs6eN2uEQg0BNasUpwGsh7RzIYuOIjSDm61YXpveuPHl2APxQ0Fkl8ug63sWNBK7H-B4gqVCG6ZojepQDDgnkhgvXyHp2Jnphj5Qx8mpMFa836M3hmOgTXkaDb4SjHZwqB6fKB6DYjTiKVRv0LpNhQUzeW9N9eMi9ppJWia3DUccsfzZjAU8Tk24Hd_HEMdvC7yvJOwRLu09p_-PGCN6rl78Gsa3amDZ7SbG9_FXzsN6Syl7jtLKJJfD-6v3-mNdu7mUUZjmNTZnlU8Y_O7suQgKnuOyRIYPro5PzeiVc8assnD7cA5TArAbEnJ4L5bziYinMGlwwjFCxqX2QV2tqbXXmJNwMXjIYv8BaJncIxVChcosG5_ve",
+        "places/ChIJq0HUUq6ipBIRWM6qGqALmok/photos/AcnlKN0g8170MAm-2OZL91gQDEgPrm2jbo4KZBxckABYF8ovuZ8fwlPw3NXmscjx34Mp0VW6MfsdlTQ6jvhpWowoMB02DHQ2Hu1ipVmD0AW3FERz0Dhbgbs9GKmFGHg5FJCNpHLd4RnicqhTxJLfAD_HPLUPRA_TfkfXfucwnvuLEtbTPL8I6eNTyjcCFlmrRfzBP2LYYoxI_qJMQYS6wpcR1catSe5vssLwB8fk41SsAmY56ciUX50hSEy0WnlrrftfpsAXDLkcwCzeZ5C2-Nuf8Xqge2hPaS9gFUPAgx7FyJGS0uzxQTHU9Z0XsOOPzUQENTQt0W14TGT6HruLxEonKJS0qdNOU4neD-oS0CTBNPGfNdEuy4HJU_LW9n-vaPG-BcV9j3IYbKrRrtdia6w4ObBjkOWB4cco8XEODHLZhFDSnXO6",
+        "places/ChIJq0HUUq6ipBIRWM6qGqALmok/photos/AcnlKN0eGrwmUOV23NgohBlsYgCyzS9VtbVCjWhvsDCs6Tuc6WJi-ce52NoaYvSdJreOISKG4CTWb-QfnoDmESwPnH7zDdY9eCXn-Nc4HHfB2Bk-KPbo6A_jJarGhIHbROUeVoIhF9L_IMnxUp1RwAxSUHzlbKkNhM1JazexX3pAoNIXr8ulrNIhoC_kJHPI8O0Ts3G6DqCxh3A-9BRyaokBcJUJ1x4evVATF466OI51dkM6GSe6Y8aczZXZdmLYMuF16-MRffWSLLH3Q1ukXh3wah3o587q_Rk24sr7BsdE_vjqDOHvCQoySj7xTfalR3ykOj_CZjXZTQhiAEOHrZf5HV7jcDMu3ei0lCnolL78oMfJNMoRcp0AXYUs0DoFe8XaiTfTLxRT6sMppWSx9OoIoZ_6KU8pDXiWjwH4oxtjnkQpHDqc"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9915250311879642712&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 8:00 PM",
+        "Tuesday: 9:00 AM – 8:00 PM",
+        "Wednesday: 9:00 AM – 8:00 PM",
+        "Thursday: 9:00 AM – 8:00 PM",
+        "Friday: 9:00 AM – 8:00 PM",
+        "Saturday: 9:00 AM – 8:00 PM",
+        "Sunday: 9:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Platja de la Barceloneta",
@@ -78,7 +141,7 @@
       "phone": "+34 932 562 200",
       "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/playas",
       "description": "Main city beach where dogs are allowed early morning (6-10am) and evening hours during summer.",
-      "descriptionFr": "Plage principale de la ville o\u00f9 les chiens sont autoris\u00e9s t\u00f4t le matin (6h-10h) et le soir en \u00e9t\u00e9.",
+      "descriptionFr": "Plage principale de la ville où les chiens sont autorisés tôt le matin (6h-10h) et le soir en été.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -91,7 +154,20 @@
       },
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Barcelona beaches have specific dog hours, well documented"
+      "reasoning": "Barcelona beaches have specific dog hours, well documented",
+      "googlePlaceId": "ChIJJ5Y4CaijpBIR-2VJP9cOjh4",
+      "latitude": 41.3783713,
+      "longitude": 2.1924685,
+      "rating": 4.4,
+      "reviewCount": 14611,
+      "photoRefs": [
+        "places/ChIJJ5Y4CaijpBIR-2VJP9cOjh4/photos/AcnlKN0bVdlgT7MRK8tWVQx9Jahqd-q1xOlpc5ZG13KLAb5-hPE8Ijzb15kgY_BAP64ljKMaGF29p9YyuP-u_zPsX9c0-OwKM-9jDORpqgJGEtns7mZerxHvviDxJExuBt4CchDNW9RJCCpkAA2DtBU2zRcOxDEzUdyuX2x20_0MjYuvzFi92nKfiNUa_MlDXPtNEUpgGtPJ-jFiK-0N6pxu1r53HlOFICA92a_rN5uuDY8RMTXTWkiZdyXHfkpdkr2vh7mPOdA8YEQlOfXyL3el2pnaPLIfKgPp8r5Tu21pQYX-p8pMMzlv4w2SAWAw-vKhHX-oMd8Ze3T4uoF2i9lInIa4pwfXFER1DP2dZDMN_2aBj8qUqDyvan4sK-_Vjh7wyXMcTyrXLdK7ki_9me0R9oX6HFCw3ZqAi17XjHSPPyhfrs7I",
+        "places/ChIJJ5Y4CaijpBIR-2VJP9cOjh4/photos/AcnlKN3hCBFw0X-WLAuaP6cgneGJ8O3MP5A5NTNqR14AN2DqRwpIbMmnlc7wRPRmq2b_xtTJ0Mm4uvKvRiwz70GX8IE9TicGkljH1mn8LgsLUNnJ8c7JDlYzhfJcwpIg7NHvpZpDwLUV9H_B5bEUBXorpFdFJ_3VaLZ5KHca97Z8mAcZrgvQlPIzq7txPf-IyGufgt76Ol0KNUlQL4hlOVpP6uIsMPfpmp5JJEUboTLMJMnDogijfBA7zQkLvNCMxQ9-GBmyWiCT-8I8T1ISNKT22jljgMnPBHBAxQJfeYihwsampL2hNPM8bbgecqJ0tbVKSuFlshcK3mrog1gOS30eyNOFf_6g49uZtxXs3RIJfnyHd5FdW9isq9Nl_omzfIosqjkmhc_JeuYzZsUXwxv5wBm1vjaewFitsOtS1xx4Jgga2Qw",
+        "places/ChIJJ5Y4CaijpBIR-2VJP9cOjh4/photos/AcnlKN2bU2ZdE3vPsed_xAYFdasLNHs0zCctFsmdCHn3rTRaNnuTFnlhPC8K8-HmPP-66c7OpejxcynyYUauLmwYlBkKiYaFJrWikagbyW94ZAwhhO2_WgYiM6M6vzgNOW5XVo9j3CVQnlQ3t6op4cGvbkxjqsJrjyGwCDS1ba9z-x9Cvv1p5II2eeULz80CB-CI9KkkiR-V0rjZu0yru0mNfePcm8TXuCYAd9DVfvrbn8_46d1yhYOnDbAjxLeruA48c_02E4Q6XCyJdtIB3o29FLh_PH-NhWgSU06pqgeEyxmR2-DfUuOvob-DjqB5649cGHrfp4ulrxVwrcqmIie2svLM-uw8CD8gGOwrZzn5j_LRDWBapLgdfMGaleyy1_sSPrPY1jRB_CrLSYSE51RJQAmBmqF7kE3UC7s1WSBXmnebGHr6"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2201713585473283579&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Platja de Llevant",
@@ -101,7 +177,7 @@
       "phone": "+34 932 562 200",
       "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/playas",
       "description": "Less crowded beach in Poblenou district, dogs allowed during restricted hours with off-leash areas.",
-      "descriptionFr": "Plage moins fr\u00e9quent\u00e9e du quartier de Poblenou, chiens autoris\u00e9s pendant les heures restreintes avec zones sans laisse.",
+      "descriptionFr": "Plage moins fréquentée du quartier de Poblenou, chiens autorisés pendant les heures restreintes avec zones sans laisse.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -114,17 +190,30 @@
       },
       "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Barcelona municipal beach with similar dog policies to main beaches"
+      "reasoning": "Barcelona municipal beach with similar dog policies to main beaches",
+      "googlePlaceId": "ChIJF6goGlyjpBIRblEAKWH8P0o",
+      "latitude": 41.404762999999996,
+      "longitude": 2.2185939,
+      "rating": 4.3,
+      "reviewCount": 517,
+      "photoRefs": [
+        "places/ChIJF6goGlyjpBIRblEAKWH8P0o/photos/AcnlKN3_CGi4Nc3uvf3UIVfxjw72Euex7c0REvpPxw5RJzjAMNp2Nb8llijOxTz0H4hc_kZ-RT2ZVrGoCWJssHE6pW-bR1HQaXT61cgePRzUE_qOTjvPzQXNckolaN34CVF68NuARm10AhtzH7nfELXnHyU9e0CJ5L4bRpdzyia1KPeS06PamVb5CBTXx9d7N--99AjTjDLqxInFjYBf5f9hnr1UJ6GBxjm9rxjIly_LGv04HK7VZElEnbe85WQg3owbLkkiFa4TiGvaBBGK7r0tZeE8Y5fzr2anoa2EG2BoVINnawdpVTG6x7aMi07MGcwUa-NwacohfYwbJZ60L7xwmUrwhnFELxPa2sLKSIUR8eH13pygcJ5inD6o0z659yXgzs_1al96O0N_qIulcd_njFoPew4o3sjvJ7fN434gov-4UQ",
+        "places/ChIJF6goGlyjpBIRblEAKWH8P0o/photos/AcnlKN11LEuLkoNjZMlgeaynIgacGbHp5CCj2tNQdcQVGNlHnZNSuwUC1p_9nyHvV4FIaGa62HbSXvdZ4yxSEducagDeVKVj_yqKsskTPP7D66kk3xYxmNKs3tTAQ8ydUq6xfj6e_svCHTuSBf3NiQUtcm1J-6R668Pw6kLMgLH_61DI2XGyrRoMtXxY1tbM-1V78Xz99nCcUeDmA8MjoXOX53AP-BX6O7VYEJufs2zV2RxUDiDGA0YRlagFy6M42vGmgFQi9RsMAoVxCn2ksjv6vS7CmNocV67VbmPMzoEIMYKIwmPLCM_bFU8vFUn6RGSbQ1zb69Hjnv6YEvVqRr6htugJCZaVkiM84ek7K7MS75dVG6Iv9B5c49M7JJIsfOwbu6lQLglOvFrgwSSD1WRn1viX84a_p3dkfeUK5_XJrxwCJus",
+        "places/ChIJF6goGlyjpBIRblEAKWH8P0o/photos/AcnlKN37BuDyHoD_iuA9BU75fjSDQ6lASpal4aW7gfsi7k8bkgx5g55K8Yvg29Q09UTt7jXoAjynea3tSwLi5YVvIlSMS4N6YbkXXTh41bRUEkdzhqZDMrVe_ecfNPoJHKhuz8s3QcCTC0sDmIEyN625OYczhz1NAtl_Jhir5VnuT76X0kR6I4b_YZsinOP8059plJ68VCOw6NzJ2RKnEv8IOE7Y6bFcpkSdaFYgZGNtQeWz8ZMecQFXi9LWGCevZKcOz_g90iIxaxyHeYO5A7fTzUNYEAPWfXE1jn9BRAA2WmkC2gBgTcxI3kbl_Q61h-ux_D1ba4x17K2qCE3lNWFcqoZ_yR-2853b2hnvX4tETHJpvhnzIZXhCP5CADiEkWCYQ5gpDATyksg60jbTc0nuACL674-h6Au8OPr7UGTG7SVx5g"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=5350272376569352558&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
-      "name": "Parc Joan Mir\u00f3",
+      "name": "Parc Joan Miró",
       "category": "park",
       "address": "Carrer de Tarragona, 74, 08015 Barcelona",
       "neighborhood": "Eixample",
       "phone": "+34 932 562 200",
-      "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/parques-y-jardines",
-      "description": "Urban park with Mir\u00f3 sculpture, palm trees, and open spaces perfect for dog walking.",
-      "descriptionFr": "Parc urbain avec sculpture de Mir\u00f3, palmiers et espaces ouverts parfaits pour promener les chiens.",
+      "website": "https://www.barcelona.cat/ca/que-pots-fer-a-bcn/parcs-i-jardins/parc-de-joan-miro_92086012013.html",
+      "description": "Urban park with Miró sculpture, palm trees, and open spaces perfect for dog walking.",
+      "descriptionFr": "Parc urbain avec sculpture de Miró, palmiers et espaces ouverts parfaits pour promener les chiens.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -137,17 +226,38 @@
       },
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Large Barcelona municipal park with standard dog amenities"
+      "reasoning": "Large Barcelona municipal park with standard dog amenities",
+      "googlePlaceId": "ChIJs4v77X6ipBIRl4PijsQk4Yk",
+      "latitude": 41.3786974,
+      "longitude": 2.1480025,
+      "rating": 4.2,
+      "reviewCount": 1689,
+      "photoRefs": [
+        "places/ChIJs4v77X6ipBIRl4PijsQk4Yk/photos/AcnlKN0FEM6I9DABbJ8VfxIgBEQedA3e_QkoVJNzn2wrk8ROdC1LLBT-gfawSNqm-ufd1Pere-kYddeIv4C8NCKU1X7OxT9w4gZuWcNz6KMSQiuP8b9IGVfiRyLm_QBLD2TvyadwU6KTpeqzQI2wkFFZKTNzUjg44KAS_rjs7mHUID3AQTBjTyWiBi8LhPEOSXxRPDjIg_VF5WT8koRpIaCcStgylB14tKB5LFSGjBbgcR8ghTihzmIKqD2oJmXmzlxNPk5ALjQNkHR25sKAEYUmXI0yJJKrKzGB_DlE4dpIvh-eU82QEql4JstM3XC54UivTDVDBNlCqsBJHTQsRyJ0zOG0RRj5o75hbkp6iCbZVwilYiUBbdG1HQC8Log4PzW4Y873FBnBuH1-yxDnCm5ze7jIfuY-E7yqaLNihGfTsZkqyQvTGrruzzf1i5RwwV5A",
+        "places/ChIJs4v77X6ipBIRl4PijsQk4Yk/photos/AcnlKN0FKeQG29V8X53AXW3UtOEvXeXAQHS7xSr7O7wjNk5F9_t7fb-iMKyvv76EPlYjkkCIBYKZ83zL8Xf5oFFkScaK835zUE9Of_km_DdwB8BxHLummFQ9swzUwuoVRI1P_cxS1-Rlt8O-eilGFkAXiORgiIFyHDlZMYWJI-NMbmbzK3m30TQ13pFmQlZSU26Ces4Wdb6L-SKvF3AG6KmkXFKPeiUMWQ5BlKr_AwwfBGZaiXSalUZCcf7j33scbxEWRYoBKVcpHoencKYQHoQyKAxfNUlsVnsGBQvG_mSrFSCjmmch7_-O9_t6bW4-f5RQ612eooAttAG0TzRABrZr0yu2pGzL3ujqQg2YDCXtmgrY0vRetc3e3-Lrb7AevkKHjnnaGfzI1uML7fFgCDJdtViurf_bBRRHH_IkApNHgiYedA",
+        "places/ChIJs4v77X6ipBIRl4PijsQk4Yk/photos/AcnlKN0pejkuBgWLn2vf77CHWV7w8wfPdFiYVEE1AhWh45Oi61dS3006j2WzJRHdTMyki_qGjtlslAh5-nDD_9-U9rZs4NPPgYG3CO5QCpdCImJVJAv_HCHkIJctddffqGJ2k3HKq0P6g1dajbqJXTjEdqJsqiI1D0uTRq6DEyXIXfzAPEvRr-veXtC6W4LdSbE3RblrtZJ1w_0b5Z3ZnkAcdIpm33KSUz0YB3VAOtuAG1CC1YACF154WVDC7Gh9A3drMl6zFpLX25aO3vq00A_UQFEjpBQOz1iy18fDAUyp0am0C_vU4OVv3H1pbrh_azJWWfNLn2p-UU-1w73Ui-gw4xzdU-T_zfkBDLRFjkEVgkv_htA5b06MNMDMA9gDrWLJyAErvE4VeThpz6m_LuVq9mXfNHTiJ8NGE3Hnl0wUBEM"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9935262679585424279&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:00 AM – 11:00 PM",
+        "Tuesday: 10:00 AM – 11:00 PM",
+        "Wednesday: 10:00 AM – 11:00 PM",
+        "Thursday: 10:00 AM – 11:00 PM",
+        "Friday: 10:00 AM – 11:00 PM",
+        "Saturday: 10:00 AM – 11:00 PM",
+        "Sunday: 10:00 AM – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Parc de la Trinitat",
       "category": "park",
       "address": "Carrer de Moscou, 101, 08016 Barcelona",
-      "neighborhood": "Gr\u00e0cia",
+      "neighborhood": "Gràcia",
       "phone": "+34 932 562 200",
       "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/parques-y-jardines",
       "description": "Large park with designated dog areas, walking paths, and waste disposal facilities.",
-      "descriptionFr": "Grand parc avec zones d\u00e9sign\u00e9es pour les chiens, sentiers de promenade et installations d'\u00e9limination des d\u00e9chets.",
+      "descriptionFr": "Grand parc avec zones désignées pour les chiens, sentiers de promenade et installations d'élimination des déchets.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -160,15 +270,36 @@
       },
       "priceLevel": 1,
       "confidence": 88,
-      "reasoning": "Known to have dedicated dog exercise areas in Barcelona"
+      "reasoning": "Known to have dedicated dog exercise areas in Barcelona",
+      "googlePlaceId": "ChIJSaBJvO-8pBIRt65w-N2_cSg",
+      "latitude": 41.4491072,
+      "longitude": 2.1952637000000004,
+      "rating": 4.2,
+      "reviewCount": 3942,
+      "photoRefs": [
+        "places/ChIJSaBJvO-8pBIRt65w-N2_cSg/photos/AcnlKN0x6YAAED-hCC-R-l60QTEW6ro01O5qzMM9cDDB5DPF50NpX9XEh44uvaLQxuBBuBJYP5aDY_fP7P9KF5_OKyxgscEHtf9QgrDRLmvs9HwSHQzsLmQ6buD9dlPum5o_iEw_cjkoR0eT8o0gbI_2nWMAjs4ekHMSNzo0pYBMkjYzMxBfsIJnRFl6-dA4tH3ijX-sebXKMM1agA4HxwRr5cMyXV-81FoXJBz-UzRKBYkpBalRMeWcEW7ugkXnrsEG0OfhPZvbpSd4b6-4Z2Cv3OtqkCJzmv-JMh3Lk_vnniNIP2RSIGmHg2NcSCHQBETAJM-JjBNSqI1OBVhdRns3rFSDKlhg1jSiJ9Ozi4BP3Cb1eZaGlSEF6ihICnaOy1CwoIiBoMcCrujlW1dDx2g3jD1XQeVSW57Q9mxfKiTczLlrMa4",
+        "places/ChIJSaBJvO-8pBIRt65w-N2_cSg/photos/AcnlKN0f1ylK_LoidfnO-FqbatmyBAK0MO-c_8_u3MCsTrT0yaLvD_iFaVnep9j7Rf3tZN_2B7m3Cq_iKSiOurAuHRqvVz_GR7lwMXjI08nlkQQbF46GKuBTDyQbLLcThibIfKqf24bwONi6ht2yd4PDwf9baiJd6dD2DivGYe5ZwdYJcGykZaraVaDlJ8kCM08FbLeYoPdd2SCQUp13JIiTbC5zlH8ne4NHx1XtuKPFq_KTNxx9JrJVlTlbU6CeO_pAivWJqod7hzapDqxJWk2GxQJtxWVAFGIfPmRINinunKiVXK5J8ySMNj78wEXn4o5q1RK6Zl2qoacillX7wstNJ9-i1MR84BLrlJlwIC_5ENvB6ZplOpwx5d22ySM8Wtlf37TWgoIA1A1KziHqwMecUvsKyWXbZ0qlQk5A_7Xlfkr9OQ",
+        "places/ChIJSaBJvO-8pBIRt65w-N2_cSg/photos/AcnlKN1cFw-KRFRqv6l3ZwS01TCOJU3it_Npwv7IZAd-3VsHTFBHbhmxczbKm3wlnm0Dwab-GFvVBOdA5-4fL-wbLa-fveACJKxObL3imyvnMoBRQZkgmiAwVHIoDr-7p2R7LnqShAHP_xBkNB6FuFQ8P3kjs5Wayeau6uHLjRegtQmiS6J83bjyz1mHj3EQC3AP4hLhTTm0VJgUHtk5KrsbDxqPc9bikmTUcYeNQ0M9CQAubTjKy8dTsXR8Zxrp27MQFve_CkVBYie6ni_HGkV316Zmk-a-UziQWhNibLC4LYZ8g5pg6Rj3sSe0yh2iyZoKc_H4hky4d10kFk7vLzUNtSlubDA3oIAa9w1P_skJNFPFwOct4H_8KVTKpMpqL3_SQDB-DT21GGb94f0mNv1sCxNPbwlNRC57zrBcfJN9gf4"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2914321393962233527&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:00 AM – 9:00 PM",
+        "Tuesday: 10:00 AM – 9:00 PM",
+        "Wednesday: 10:00 AM – 9:00 PM",
+        "Thursday: 10:00 AM – 9:00 PM",
+        "Friday: 10:00 AM – 9:00 PM",
+        "Saturday: 10:00 AM – 9:00 PM",
+        "Sunday: 10:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Jardins del Palau de la Virreina",
       "category": "park",
       "address": "Carrer de Sant Gervasi de Cassoles, 47, 08022 Barcelona",
-      "neighborhood": "Gr\u00e0cia",
-      "phone": "+34 932 562 200",
-      "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/parques-y-jardines",
+      "neighborhood": "Gràcia",
+      "phone": "+34 933 16 10 00",
+      "website": "http://ajuntament.barcelona.cat/lavirreina",
       "description": "Historic gardens with terraced levels, fountains, and peaceful paths for leashed dogs.",
       "descriptionFr": "Jardins historiques avec niveaux en terrasses, fontaines et sentiers paisibles pour les chiens en laisse.",
       "dogFeatures": {
@@ -183,17 +314,38 @@
       },
       "priceLevel": 1,
       "confidence": 80,
-      "reasoning": "Historic Barcelona gardens typically allow leashed dogs"
+      "reasoning": "Historic Barcelona gardens typically allow leashed dogs",
+      "googlePlaceId": "ChIJd9RJT_aipBIRbit5aqjvWnM",
+      "latitude": 41.38248840000001,
+      "longitude": 2.1717264,
+      "rating": 4.5,
+      "reviewCount": 2524,
+      "photoRefs": [
+        "places/ChIJd9RJT_aipBIRbit5aqjvWnM/photos/AcnlKN0ofTPWT-dkd1TdfyHNP6UaVNsLjCNQNtVCswwbw2pVB5b4W_ORB2_mhjE9BLAlv1cOAlpkngV8NFfSzAtNVTVsmU8QZMPRiVggFDuoVm2pBvZpA6GS_nMdmeyI2Qv2d2YwXCcSDwjX7w2aEb8eyoOkTDIrSOprPdykJ9a9RVmSevIBxu7FguqmBLtXrOAEu2-fYs5exUr35EthL1H7FGw4507J0yagcrjQcJon0bJ7A582sxwZiQVX2K4LH2Q5CSLi0jqi4Y4xMRvmxjkoWtx58pxM0H_BQwhD1Y1cnfcvfCs2HrsAWzxU4x3S-h-A5XuZt-_HmSVciMexyB1yQlxBrXVnUqkonHw4VgFImSbC_Txckz7zBzsdYziRL7hyP6jeVHkqNfqZfa6uFs9d_3eII9CaCp0qSECM3P40Uva-NQ",
+        "places/ChIJd9RJT_aipBIRbit5aqjvWnM/photos/AcnlKN2Qd_j_0-sEmQpMEA7HZynN1T7htQ8nRu_LOljUn5Gtcmo7Ln2R03g_ysq_6lXVIZKRLfDaehkvbqgXG-B7bGGv09GSP64PPnHGqHPmQdFyp0tmmFChPAcvcb8heh-5qtUnJL1ZNMU-b0mtoAJqtquBgo9-f8QpcK9c5GgbFXW64_iB1wTkudBuNwhy9qUC_lKqoFOfhcNyAXX3CHd-VHm6oin851AMTmn5NRRKvFgru3MtyS7hd7jBGfqMzcXQhSUZ-mAKFRbEu0hpcWwIrUQpOOratklnklp76jnAybtFEQPO5thJG1S7_f9qaAILWjD1zbAYq1bAjX5cVNe7cHUcnK2Bo7Mw40m_4sxkqcEl1NzEO1GdsmZ0LkoKb8f1xIl85lZjmuGFy5C6KqYbt6bGgaS_zq4CDK5e_Oez4E4",
+        "places/ChIJd9RJT_aipBIRbit5aqjvWnM/photos/AcnlKN1wX0XSMi5VgvdYxcEUxl46xrWJQQ4tGPyyXYhgFO-zZvr6mFEgXElI4WFIC7ftBVAd_cTo8XSeJ0YtggMh4AJmgOPzr15ITJHRIZo0XZxUWfOnEWKJcNg6L-s9e1kULWp4Zqo3pvWHPRdkX-4VGkaSvE7nOrWHpmfMYIl7Mc_VN4Z4u-KRLrDyF5NH1EPUqPMS4bknM2b4tRqv842wnCuOAVsz_SIjWWUx3ImuxKOySQVknbVphlVtpEMrjhzCwAoh2mdMHCPdbN7GAtb5BM37p3Z2Hv_WzfTG5QVyeqOSzCJhWvCBQkl0tCWDkFVMTmHelCMS6HWJH-gtNtsA_lJQ-YnIZYjdClrQ2EJHRPR-B5Dn5Yee8fr8GuuMDOaPUucKuzdKVB_uWNSPk38K7yhCojqc5_aDMY6VudJsMGBCuA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8312219568885541742&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Closed",
+        "Tuesday: 11:00 AM – 8:00 PM",
+        "Wednesday: 11:00 AM – 8:00 PM",
+        "Thursday: 11:00 AM – 8:00 PM",
+        "Friday: 11:00 AM – 8:00 PM",
+        "Saturday: 11:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Can Pep",
       "category": "restaurant",
-      "address": "Pla\u00e7a de les Olles, 8, 08003 Barcelona",
+      "address": "Plaça de les Olles, 8, 08003 Barcelona",
       "neighborhood": "El Born",
-      "phone": "+34 933 107 961",
-      "website": "https://www.canpep.com",
+      "phone": "+34 933 10 79 61",
+      "website": "https://www.calpep.com/",
       "description": "Famous tapas bar with outdoor seating, known for fresh seafood and welcoming dogs on terrace.",
-      "descriptionFr": "Bar \u00e0 tapas r\u00e9put\u00e9 avec terrasse ext\u00e9rieure, connu pour ses fruits de mer frais et accueillant les chiens sur la terrasse.",
+      "descriptionFr": "Bar à tapas réputé avec terrasse extérieure, connu pour ses fruits de mer frais et accueillant les chiens sur la terrasse.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -206,17 +358,38 @@
       },
       "priceLevel": 3,
       "confidence": 85,
-      "reasoning": "Well-known Barcelona tapas restaurant with outdoor terrace"
+      "reasoning": "Well-known Barcelona tapas restaurant with outdoor terrace",
+      "googlePlaceId": "ChIJbd9pOf6ipBIRt8JasLJbTHI",
+      "latitude": 41.3839621,
+      "longitude": 2.1834105999999998,
+      "rating": 4.4,
+      "reviewCount": 2956,
+      "photoRefs": [
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN12EIhBB0ws4Vfr-99z4cFkjy8-fTSWEdCn1k-qV8wItlsUyO3PCmA8gRZMMoWrDVmvuQekwZWrQZ4DlsCjYJaNlOuF5kB-K4zX926KXdWf8n2s1wvjW8KIPacH08EJhdtIJ-EWmqBcJGEnIOuhslZ-zim_VYB-SCwmTPu19LQeaERANu132yMDb6BN2_J9YoG6edPrhTfF8H8zT0VJZ6ToFrI0uNdEF_-vrL8MF3QRXDYLSc4LWa334v6kNnumES3EQt_xqmZZ9THwMIXjw8CeEB8x5RaWvtr5njGuLbblTw",
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN0d6m0Lg66K6zXkqgVzUmE4O1R_oyYdiV_omrXh9L63PVaJCl1djre5f6dkR_YWaBZb3EsENGsGKmb3ZPCfkjFuz_cCW2JgDhcCal8zYcffVp_9eJtj_Vor2pHRORqMM9ubhNifhQ25uLUwbF4SR407N5341kJ9Kmz-_JAH8G1j_FOgj2BqNajo-C9x9RHaw23hYb3sgLD0sxaLPe0iz9rUc6rW42Ax9xviwKLy3NaEjcXJp5YC03hS6yGfJ65LR0Po0Ru5IaOq2RftQiKEjQQmxfUBZocNaw9K7XLptW2Xug",
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN2XcWga9PmY7sn8xEOXwmQjv9OePixP16CiPvp28OG36i24MO7HMvjgKG0eF6oEA6SJvU3OLcqS45P90vL01VOZSE2L5li2TaLHjXFF8izZfA9DJ1mGNo-figWvP1p8hj6tD5Fb71EYYPdyTKvLOAikRyvUGs22fwiPZ9EsN0LJyV4tGUjEHrh42qjCSPHq7dg5AFqZD6RH4j-GcczfM0XWxlK6TdyD-izEhTo0T2o4Yp-IhaSfsVS6ivfaws0N39JViFIUGPO-j1OMeKrnwLEFF6ZA9KsYN0XAqRbjmxyCqsl8V4PIMS40R-gbRONZpKx1AA_gTOnRcn8IfsbPJ3m41G8pa2SsrEbv0GpwqA1EBhyDuoogUs4DpSqJTdBdvF0eOpZ4jW4qUvn8IiyqcApmjiOaXHDiSAl0ocd7VC1WqfxnrWZfP8DHGmCY3w"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8236058641574838967&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:30 – 11:30 PM",
+        "Tuesday: 1:00 – 3:45 PM, 7:30 – 11:30 PM",
+        "Wednesday: 1:00 – 3:45 PM, 7:30 – 11:30 PM",
+        "Thursday: 1:00 – 3:45 PM, 7:30 – 11:30 PM",
+        "Friday: 1:00 – 3:45 PM, 7:30 – 11:30 PM",
+        "Saturday: 1:15 – 3:45 PM, 7:30 – 11:30 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Cal Pep",
       "category": "restaurant",
-      "address": "Pla\u00e7a de les Olles, 8, 08003 Barcelona",
+      "address": "Plaça de les Olles, 8, 08003 Barcelona",
       "neighborhood": "El Born",
-      "phone": "+34 933 107 961",
-      "website": "https://www.calpep.com",
+      "phone": "+34 933 10 79 61",
+      "website": "https://www.calpep.com/",
       "description": "Traditional tapas counter with some outdoor tables, accepts well-behaved dogs in outdoor area.",
-      "descriptionFr": "Comptoir de tapas traditionnel avec quelques tables ext\u00e9rieures, accepte les chiens bien \u00e9lev\u00e9s dans l'espace ext\u00e9rieur.",
+      "descriptionFr": "Comptoir de tapas traditionnel avec quelques tables extérieures, accepte les chiens bien élevés dans l'espace extérieur.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -229,17 +402,38 @@
       },
       "priceLevel": 3,
       "confidence": 80,
-      "reasoning": "Historic tapas spot in El Born, likely has outdoor seating for dogs"
+      "reasoning": "Historic tapas spot in El Born, likely has outdoor seating for dogs",
+      "googlePlaceId": "ChIJbd9pOf6ipBIRt8JasLJbTHI",
+      "latitude": 41.3839621,
+      "longitude": 2.1834105999999998,
+      "rating": 4.4,
+      "reviewCount": 2956,
+      "photoRefs": [
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN1kmN0X44unEzmvBq2gs4zwzmpiQISclWJVe1PxTsZkET2_H41CT2JV3Fhn_mfmzLbIiyXN4fEThYslHoKfk_tQJBPLemYMejJV3_Lf0mJzAV441rW8O4XRvHnhdmW0JCZWHBB4AdJos9pr13617kv5MLcxmifKEOyUfO26EIPOoWGjwfRmaA4YZcMLSEtGRK4hPwl-YBBxeZL2SZgSzGhzms_2PuAfpwQsmF4XLBBAT8AWAclwnLSFsN5sGjLnEo5OVQQAUTOTUqStESYYUqF5BYnc7K3ALJh9byqgDSOCoA",
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN0FJ0JLXTqTzSWHcWgr4_QFvPJG4zclTd-bUy_MHn_8bXNfYyRiNLm8q18gXH7KjYVN1znVDNeSN9nmt85MUKlcbowP0PoqWwo7AMUTnHwe8tcSDEPeXK1RTd8vB914JhOA1pPsRDAourawW1J6hexrkt3PyA9qPxZ4kmnq_bO84-AiyU2YqY0BgEZfovGqUSK3us2IAhvGkM7qqJBwYsb67xCGTjxTH_2z4mJ0cSYax-FaiRNmdmlogSZzzEKmJ6nkm0mortl3HFPeuYJzBw5WNLRte0XhTk_4qBdJhrjKog",
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN0dNQmRjYAQRPL0UOpUpk2GWHW0iOlg466mBf7gz2kpTPqK8SbSxJpmSRx9Hv1eDftSbAUu9oPWp6r3moRjOBvgc4_8_i7SSs7q9OiJ9ByykLa8FnOFcuDM3he5zTcaX7CK5SYBS_lQ7enn0xmbon-Ay-cNAJOVbyOTUo3nS-_hcSjYVyzNYfpmSitgy0zB8Fg4-s8hKhuFNdSHaA-4CSfFaEWW83Tpmtz1GU13wOIp2yGgMtQZyx80aABicQnCA4TRhxzayTe7kocH4_5ZWVWX-YAXz0Y5VSJLWg-5IubLhc-t2PRvYcdhxtnGngWIk1NSe1bfpmsCZZlbbwq_kG7DnPU4hNvHH-NA6FDEPZN3nBIDEYVoOYrL82UtgmkcBSG0crgxOh3ZKnBuhLJjrdotcRc8q5d48Dv3UmuR3yAfoILKeuOclEfZlXFW3A"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8236058641574838967&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:30 – 11:30 PM",
+        "Tuesday: 1:00 – 3:45 PM, 7:30 – 11:30 PM",
+        "Wednesday: 1:00 – 3:45 PM, 7:30 – 11:30 PM",
+        "Thursday: 1:00 – 3:45 PM, 7:30 – 11:30 PM",
+        "Friday: 1:00 – 3:45 PM, 7:30 – 11:30 PM",
+        "Saturday: 1:15 – 3:45 PM, 7:30 – 11:30 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Bar del Pla",
       "category": "restaurant",
       "address": "Carrer de Montcada, 2, 08003 Barcelona",
       "neighborhood": "El Born",
-      "phone": "+34 932 683 003",
-      "website": "https://www.bardelpla.cat",
+      "phone": "+34 932 68 30 03",
+      "website": "http://www.bardelpla.cat/",
       "description": "Cozy tapas restaurant with outdoor terrace seating, dog-friendly with water bowls available.",
-      "descriptionFr": "Restaurant de tapas chaleureux avec terrasse ext\u00e9rieure, accueillant pour les chiens avec bols d'eau disponibles.",
+      "descriptionFr": "Restaurant de tapas chaleureux avec terrasse extérieure, accueillant pour les chiens avec bols d'eau disponibles.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -252,17 +446,38 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Small restaurant in El Born likely to have outdoor seating and be dog-friendly"
+      "reasoning": "Small restaurant in El Born likely to have outdoor seating and be dog-friendly",
+      "googlePlaceId": "ChIJlxLxp_6ipBIRNCx_SbYvUPs",
+      "latitude": 41.385602999999996,
+      "longitude": 2.1800143999999997,
+      "rating": 4.4,
+      "reviewCount": 5677,
+      "photoRefs": [
+        "places/ChIJlxLxp_6ipBIRNCx_SbYvUPs/photos/AcnlKN0DykJJOBTZn8eN2DgJbWWQYAE87ZVnlsqwKD_07HwT64ZFxl3D9da5PjcdQrUdkLFfhn2WkT_iJ4C9XLls-6IWqNzYLjROFHVfVXaiJDuYBiyKa5TJ6maWIDp9WrSr08Gur4NyTGdpdf6hoJEcchviAQS5p-GzAynrzYPidTsMuyJjJ2iQGgynayzOu8csJprNVvrfqu9mdASJ6a5R4Rts15XvNEqvRjC1rnWkSfl_-t-ijfBGCUDcUIis2oNZclt1005KgPWkNhHCZkafENZplIBdx8lnk16SGWuepgwFDA",
+        "places/ChIJlxLxp_6ipBIRNCx_SbYvUPs/photos/AcnlKN0hGi_p68pve1uvqmk5bkY-0G9rViHaPSSoCWBpUwDFeroQlLvLhBPIRu5mKOqCV_YQ5CZSFttSXqpDgy46fKBL_fBVUz4scXGVvv-S1hXTHAySIWKIfVpjtpvR6k2JaNhIAwrP0HuazrVsxWzNamW1uoXt1y22bvriIZLpWvuBkYmSQXe6ez_5Uz0dPZE4ZhxqGthDOhl6LVIBk5p0gSeNPcjrYkYzu4j9h-Fh5-5bRhoXs8mzKAUyu3P1AFdp2yh_tGTTh5Kz0ntD2SEfd063nL_rFSFtEFQWONaNsPCA5g",
+        "places/ChIJlxLxp_6ipBIRNCx_SbYvUPs/photos/AcnlKN1M2Ajizt7lAFDFH5XNFtvSmbTuYVAyas4-Mo6wa-bLnI1VyPIFA3KSiZCtw3M9fjp8BuHIciefhiUEFh4n-DeY-IS8FPABboqYkKGcVyGe7KkpvumfIV03baLfoUO90V-tDlezcMrjom_xInnGA0wf66avBC-6-ggSTVt7pDcJKAddiFeNPIoyRHCujRcjCqA4G55O62q651grgP6ciU3lcqBu9EVF0a5pLig48IXkUqeoB9cI9rZ4Le1Z8ct7w_T0zVZ3nouLzZAXR7mD01gdRUlTyXJuln66MUHW7P2dqr8NTqn1r-9Kg4-QMGGuKnFQjoUz9FDe02yX4t2bJ3RWCCOL4UVAO-rLMk6zLyjll4H3aWOyhQxbClSRmr-P3HZjvp2qINDh872LoreEPFlNi16ULS0QwGY-LvXwfzySIqZi-1pOGPYLmtiWVg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=18109026561620388916&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 11:00 PM",
+        "Tuesday: 12:00 – 11:00 PM",
+        "Wednesday: 12:00 – 11:00 PM",
+        "Thursday: 12:00 – 11:00 PM",
+        "Friday: 12:00 – 11:00 PM",
+        "Saturday: 12:00 – 11:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Els Quatre Gats",
       "category": "restaurant",
-      "address": "Carrer de Montsi\u00f3, 3, 08002 Barcelona",
+      "address": "Carrer de Montsió, 3, 08002 Barcelona",
       "neighborhood": "Gothic Quarter",
-      "phone": "+34 933 024 140",
-      "website": "https://www.4gats.com",
-      "description": "Historic modernist caf\u00e9-restaurant, dogs welcome on outdoor terrace with special dog menu available.",
-      "descriptionFr": "Caf\u00e9-restaurant moderniste historique, chiens bienvenus sur la terrasse ext\u00e9rieure avec menu sp\u00e9cial chien disponible.",
+      "phone": "+34 933 02 41 40",
+      "website": "http://www.4gats.com/",
+      "description": "Historic modernist café-restaurant, dogs welcome on outdoor terrace with special dog menu available.",
+      "descriptionFr": "Café-restaurant moderniste historique, chiens bienvenus sur la terrasse extérieure avec menu spécial chien disponible.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -275,17 +490,38 @@
       },
       "priceLevel": 3,
       "confidence": 90,
-      "reasoning": "Famous historic restaurant likely to accommodate dogs with outdoor seating"
+      "reasoning": "Famous historic restaurant likely to accommodate dogs with outdoor seating",
+      "googlePlaceId": "ChIJ4ecss_CipBIRzAR_ag45hM8",
+      "latitude": 41.3857621,
+      "longitude": 2.1736964000000003,
+      "rating": 4.1,
+      "reviewCount": 8239,
+      "photoRefs": [
+        "places/ChIJ4ecss_CipBIRzAR_ag45hM8/photos/AcnlKN2j_NzxpNIbjdZEzAnIhRTzLUHRGPykAYYP2jAcfbSHrp5ciLmTd2fj1-0UnOCwMr-c-htxVO7o2W9Jj85HrcboPlWsI9u4n13fvrSzp_wudFUIRnhHHaoUocdqBWyTybA40yArC9v-5obpmgGTszyI4cxVWBDXsT8eXKGD0SZs4hCULAxCart5nqwextuBC7sRI40DJ7F1rQ5fFnS1tpY8NUlYB-ONaDgbDwsw2wc6heBbHCgV8e-dA1kyyLxcz4-_1t0h_wzMxtXDEpuOakXqk0pNXRuXcBDMloLKC9zPFw",
+        "places/ChIJ4ecss_CipBIRzAR_ag45hM8/photos/AcnlKN0Z4pQ1OCSvoE9xXiNt42PvjNsB_bDLkmTgbuG5I5jIacQl9X4qWlZ02pqD5vFS04Z8IWXpM4h2x-xPY24sSM0o1i_bGctKPrBTzZK_ar-FRJQWTf7lIYww4XiNFB85YNou76Nh1Fr79N-JsS8JIBuH5wKIeiiZ4-NDrtgo_dbTxQP93Z86aiwPmUTwolycbTDM0QTJuiBcxVV2R-wMJK9UkPvQAw2WqLpuZxftPHnXLpJRxq-uPJ7YBQIL-itPA8DSgIVW_zwaubpMBMbJht7zKfnl1ET4KxXvaOkxbM5Bs2FtneuWYYT9k-XT9uXvE8WKE7g0Ux59yjbxv5By5dPY0sCxQ8imE0yQ-eSto-4HRtQA5zGidt_O4Aj9jzx4h0WydiDnA1JezFAw_P2SF5_tk-NL0zE5xSOO0OCTZDeA3n-JHx4orKJ9heEMwdLO",
+        "places/ChIJ4ecss_CipBIRzAR_ag45hM8/photos/AcnlKN1CLNoY2x8yohWxuXkZwwJonS24hnkgoqAA9SzxgrJ_qll_IW1rxxf-Q0cvHof39kqX12wWIEs7r8mxPjrjqcAZXYBtrKxPrwBNVwj7Xfi4pMmm6ut8qGs2q4So4XnGHWlgEOt7-2Nto0spYsCcJQgMoBlFXjV39uH1nCKJFbVhN8w6j_RliOzShwMVvA1DPyOTG0ZQ9JIMQwryn9hbaG0gUvM4hz-8rh89473JRI6J4TMjZrAiKa0me-VDwE7QbOUCoz6as45QQHS9vNCJpQqM843wx3KNcAX8mD2l_NIKRw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14953139396855923916&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Closed",
+        "Tuesday: 11:00 AM – 11:00 PM",
+        "Wednesday: 11:00 AM – 11:00 PM",
+        "Thursday: 11:00 AM – 11:00 PM",
+        "Friday: 11:00 AM – 11:00 PM",
+        "Saturday: 12:00 – 11:00 PM",
+        "Sunday: 12:00 – 4:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "La Vinya del Senyor",
       "category": "restaurant",
-      "address": "Pla\u00e7a de Santa Maria del Mar, 5, 08003 Barcelona",
+      "address": "Plaça de Santa Maria del Mar, 5, 08003 Barcelona",
       "neighborhood": "El Born",
-      "phone": "+34 933 103 379",
-      "website": "https://www.lavinyadelsenyor.com",
+      "phone": "+34 933 10 33 79",
+      "website": "http://www.lavinyadelsenyor.es/",
       "description": "Wine bar facing Santa Maria del Mar basilica, outdoor terrace welcomes dogs with views.",
-      "descriptionFr": "Bar \u00e0 vin face \u00e0 la basilique Santa Maria del Mar, terrasse ext\u00e9rieure accueille les chiens avec vue.",
+      "descriptionFr": "Bar à vin face à la basilique Santa Maria del Mar, terrasse extérieure accueille les chiens avec vue.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -296,19 +532,40 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Wine bar with prominent outdoor terrace in tourist area"
+      "reasoning": "Wine bar with prominent outdoor terrace in tourist area",
+      "googlePlaceId": "ChIJGZ6KVf6ipBIRnX9WIgIdp7U",
+      "latitude": 41.3832587,
+      "longitude": 2.1817960999999997,
+      "rating": 4.4,
+      "reviewCount": 1621,
+      "photoRefs": [
+        "places/ChIJGZ6KVf6ipBIRnX9WIgIdp7U/photos/AcnlKN3Ko6OVQCqyNfD7GIg6OfwT75RYVOgOGtPTisCqXajtjsoEDv1rg3f0k0IUauW_mUA61LKop4AaIQGKU5CJjRuKpknQLIWqrSzmOiapBM8095CfGQoupNvk7JjkBTzv-ybXn1CGmsgpvc2qCnCSfrannvRkCkm1e4N9YdmHqxG6mK7CmxWM2QZ6plDjQEzf8B8QstE6gPmZvdv9RXIAhpaB9aETinltfJXFljv4KnljuclaB5kvAEwNoJfXwizRKKdttbclPpfhePgAS-OvCW_vKFtbk4CfL47CP0m1vU8jCg",
+        "places/ChIJGZ6KVf6ipBIRnX9WIgIdp7U/photos/AcnlKN0QX7tolCPjo2CnPg8Vs_fPzH3JmGG9yDPlSO_qiwjbNtV76gx4W5NJxCep7QEMfp75afHtgSIp-mau0lLoPZiDBCul-ILM-I97N_hkbIP-bixfZkpLWfOSNjRDxXbKvLy5YmAgwfIGjH8GRIscvxajAi5z-v92X0XtJXJVsr9yY7xZ8wygzIZo52wAO0iGJPkxFMPqSr8FUtdNa0lFH7cqiDoRqKVU1XlnNJs5wXoPfL0XeAj1KWWyqMn4fa62G5aIWaeKMy9BacFbLCTDFt9wGTMDdkNNyhEkL0zKaX0v2pL3TmOHrmpmGJmVcgmdtrPwYPaD1SNk7BYGnd-pwm_yQjEwfpDe1ei407VMgGL3uvp1e-HwCqTXXtpQu_b-X-QhkY8S8yBBuIg1GjsBeh65K28AKHRnweQhbQMz5Izerve2gZ8a9GjCVUehIH90",
+        "places/ChIJGZ6KVf6ipBIRnX9WIgIdp7U/photos/AcnlKN3d5NlbhqKzgBsD2UgsZgRuCG7UkXVudf8cDlt_QkJFe-7QvHleaN7TvOSTC_rUDhXQfGSTwOHyXVQq596l7KcAwsl6RV9zmdsxmwINS8W8iEB8_tM7L7Bkgw9mmViKbyOpcybpicJNaOzP0AUIJfdR4gnVDgZz_cQNajolJpLhXBYSQhPb0taodQGza2tGaqmKUG52y4Oi0HHePgBGjebPvioLQoZYNxYUcKpHCNueLE7La50kVgLJ-TBcV9IHbLfhOcBHW00vsWAVS6G92GFFvBUqzau5kIXjG-I9Mhw0j4mSiAQZv12YaFR2ksVIZgXUUu1gxLkFDk_UxPmxTFnmURLV5G_I_PpkeBGdbYJHF6cdpLD4slR-vCfCjM8upWcfkZyr9mmyeap4bQSsaCIGsAMhWc240bs1XaEuA5RMVmJy"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13089462736978870173&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 PM – 12:00 AM",
+        "Tuesday: 12:00 PM – 12:00 AM",
+        "Wednesday: 12:00 PM – 12:00 AM",
+        "Thursday: 12:00 PM – 12:00 AM",
+        "Friday: 12:00 PM – 1:00 AM",
+        "Saturday: 12:00 PM – 1:00 AM",
+        "Sunday: 12:00 PM – 12:00 AM"
+      ],
+      "enriched": true
     },
     {
-      "name": "Xiringuito Escrib\u00e0",
+      "name": "Xiringuito Escribà",
       "category": "restaurant",
       "address": "Avinguda del Litoral, 42, 08005 Barcelona",
       "neighborhood": "Poblenou",
-      "phone": "+34 932 210 729",
-      "website": "https://www.escriba.es",
+      "phone": "+34 932 21 07 29",
+      "website": "https://restaurantsescriba.com/",
       "description": "Beachfront restaurant with terrace seating, dogs allowed on outdoor deck with sea views.",
-      "descriptionFr": "Restaurant en bord de mer avec terrasse, chiens autoris\u00e9s sur la terrasse ext\u00e9rieure avec vue sur mer.",
+      "descriptionFr": "Restaurant en bord de mer avec terrasse, chiens autorisés sur la terrasse extérieure avec vue sur mer.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -321,17 +578,38 @@
       },
       "priceLevel": 3,
       "confidence": 80,
-      "reasoning": "Beachfront location with outdoor dining typically accommodates dogs"
+      "reasoning": "Beachfront location with outdoor dining typically accommodates dogs",
+      "googlePlaceId": "ChIJux5s9Q2jpBIRDGd1vZQU9aE",
+      "latitude": 41.3935386,
+      "longitude": 2.2053561999999998,
+      "rating": 4.2,
+      "reviewCount": 8944,
+      "photoRefs": [
+        "places/ChIJux5s9Q2jpBIRDGd1vZQU9aE/photos/AcnlKN2lKB0ChJ9uBwFsNLTDlEQM7dfbzJcwXl5-iwcJH2fQLNASFJF0Awatrh9mCoLgK9Uh9LfDPYNH-4MPxNSNCuFNkolffBRngwSaYPdYhI6viAlISgiXT_xXa66YggFWYqfWn1Mi3Vk2bd-NCPRjlHitVY_1m11i5BmAZy9BgMAoKQJcAZbWgzkznlSv17kbG4Cn_Z50pSCqP75JZYKGA_I67o9m34sezJbhX0AA9kj9SuSPBxahokhTKaef0CC17WRjf1YPsUnYP42qIMIgPXcJKWmMEwnrT06H9bczJLgFlA",
+        "places/ChIJux5s9Q2jpBIRDGd1vZQU9aE/photos/AcnlKN2qTSIsYm4a2GdK7dRpKuaK_b2Zd2CAadbxH7TToCK8vGmYmxzxVmDtcMa2gjyDRwviBwy8uD_QavG4Eqv9WELMdlOfpSj_-Ksw4BIdo3_uDdEt7_i2y87VQ0mo6h2227N-zZuw88KVsb-YszS9pHDsIQV1Z-dHEx-dgAQYiHXBXg9DCGtih7DY9YOIVWfi-k6gv5SvcEOo5ge0MdU6Ub4HYhcOi2N5qJTNJr5adOieZ6gv4BIGaTW9Ctsh5CTcZ10aUI2vfcnnORJJXo8V8_I3F48SMv8WCvQyPGAVTz_rJw",
+        "places/ChIJux5s9Q2jpBIRDGd1vZQU9aE/photos/AcnlKN3GgaSF8L1E1oKy4h6oHDM77u53VcNywRisFF4_3P3f-Zj7PxzCsZ95E8HIpOFeBqKTdCOfAgOco749ThEodtXN6PlJ75hJlvA6BYlPne45dK_Xpnk9Cs1k1loDeEpeoFtby_Z0HRi28Yuky3wqFiD1vmdQmAeh3euJuhuXEuBZZWBt0i4zd80OuSTUXgiHF1-oTVZATUqEbSz-Kdv75GWc07ErcyHhLiuxF6NbEv2uXETlYJol04R2LEPCq7d2LVGifWkl7LQFmOPBda5begxyb8Dgeh2pStZyhDVJJy99HQGR1LoRSIxXSlgzFLxJu0y9yIPYEWl85aWFkMp3KLNouxZwurbqQAuoRJzczYz3EVVxUnfmFXWnoNdxYG4NDqnU1-12xNzB6Xr7leWwzDn6mbTXsPIuoxx-6CbO2LJC9UQtdagbLB6xIjcziQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=11670256638466811660&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 10:30 PM",
+        "Tuesday: 12:00 – 10:30 PM",
+        "Wednesday: 12:00 – 10:30 PM",
+        "Thursday: 12:00 – 10:30 PM",
+        "Friday: 12:00 – 10:30 PM",
+        "Saturday: 12:00 – 10:30 PM",
+        "Sunday: 12:00 – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Botafumeiro",
       "category": "restaurant",
-      "address": "Carrer Gran de Gr\u00e0cia, 81, 08012 Barcelona",
-      "neighborhood": "Gr\u00e0cia",
-      "phone": "+34 932 184 230",
-      "website": "https://www.botafumeiro.es",
+      "address": "Carrer Gran de Gràcia, 81, 08012 Barcelona",
+      "neighborhood": "Gràcia",
+      "phone": "+34 932 18 42 30",
+      "website": "https://botafumeiro.es/",
       "description": "Renowned seafood restaurant with outdoor terrace, dogs welcome with advance notice.",
-      "descriptionFr": "Restaurant de fruits de mer renomm\u00e9 avec terrasse ext\u00e9rieure, chiens bienvenus avec pr\u00e9avis.",
+      "descriptionFr": "Restaurant de fruits de mer renommé avec terrasse extérieure, chiens bienvenus avec préavis.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -344,17 +622,38 @@
       },
       "priceLevel": 4,
       "confidence": 75,
-      "reasoning": "Upscale restaurant may have outdoor seating and accommodate dogs"
+      "reasoning": "Upscale restaurant may have outdoor seating and accommodate dogs",
+      "googlePlaceId": "ChIJa0Y5HZiipBIROWRrQ0RCjVA",
+      "latitude": 41.4004531,
+      "longitude": 2.1546939,
+      "rating": 4.4,
+      "reviewCount": 8970,
+      "photoRefs": [
+        "places/ChIJa0Y5HZiipBIROWRrQ0RCjVA/photos/AcnlKN3BsXQnflPGTU0Dpn0UtmwpG7ps4RVmYNHM6DYIEDjaLykwVRerAvAaJpd9vghUQrHfx5s7r0qwtSp82LA67b6TLgiuxVvwhT0NGfTbBF7yHA5-J4G4Z3DPwJXEpJmRjxuSBAStgYJkqQb6FDXce3AeFqAqFP0pEkdn6wGffylrwz8pSmwsNFEJATafaTDRyVI10Gpe08nFLQ6BeDSY3DyyjQQCzHThBnwQpfO3Lpqv_jiOFh1a70OfQgSV4oG6puvmFCAxhZOLrdcgos5mPttMmIkjwJzQbnT3Y8sdkIxCsA",
+        "places/ChIJa0Y5HZiipBIROWRrQ0RCjVA/photos/AcnlKN0tV2qUYM5DCdXCmybjjiLmcyqt0gErDxKCr23gLKo-xquyap8kiLry4g6izofDwZq8SWIcdAly4bfIrfpbip7ja14-9ELIqDEyZOqq5uKS3cbd1zYW1uCETDnlTf3McJZ3wzvgUXWE1vONEK0iXgUraUtcj6mOUl-a4FS27IdLW_KLDPTa2OA4ePHGRcXWZ4LHwJf1jSPYjfMHUSHjdkNA9KwG8PW_ZuTsp-dwWRKiMXbVOTF-h4ALiTgWSNajvBBbu7nOj72oIJEviOyZKs6TwooV31JPJci5GZNwMpTdlA",
+        "places/ChIJa0Y5HZiipBIROWRrQ0RCjVA/photos/AcnlKN06hba9UcQ9GbQjBITzRbWC15GTRarEbEh8mrPvifyn6kJgcl3k9iVchWJLcP9PbysefqE7Ec9VIkXFAtT8q8ywSZTfzdGRIxuSMDOqa3fQ0aMelVtE4Vpth4CJZ--YSECXXSyIwZCQPKsZOjjg4dbuVB4vQCSHTeDDycZKFGJl9Gr-eWgmLalXQhE00_9yt8xjvPUSTGmh93V41mhfDlmj7RoWcecKEzAsznsiSD4xAmIZMTkuL-i03tKo29a4iJL28Y4-qjLekEehYCY9q121IiJDZJZtDbONvT5Bn3NRVA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=5804368355706758201&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 PM – 1:00 AM",
+        "Tuesday: 12:00 PM – 1:00 AM",
+        "Wednesday: 12:00 PM – 1:00 AM",
+        "Thursday: 12:00 PM – 1:00 AM",
+        "Friday: 12:00 PM – 1:00 AM",
+        "Saturday: 12:00 PM – 1:00 AM",
+        "Sunday: 12:00 PM – 1:00 AM"
+      ],
+      "enriched": true
     },
     {
-      "name": "Caf\u00e9 Central",
+      "name": "Café Central",
       "category": "restaurant",
-      "address": "Pla\u00e7a Reial, 10, 08002 Barcelona",
+      "address": "Plaça Reial, 10, 08002 Barcelona",
       "neighborhood": "Gothic Quarter",
-      "phone": "+34 933 024 140",
-      "website": null,
-      "description": "Traditional caf\u00e9 on famous Plaza Real with outdoor tables under historic arches, dogs welcome.",
-      "descriptionFr": "Caf\u00e9 traditionnel sur la c\u00e9l\u00e8bre Plaza Real avec tables ext\u00e9rieures sous des arcs historiques, chiens bienvenus.",
+      "phone": "+34 935 63 04 97",
+      "website": "https://www.cafedelcentre.com/",
+      "description": "Traditional café on famous Plaza Real with outdoor tables under historic arches, dogs welcome.",
+      "descriptionFr": "Café traditionnel sur la célèbre Plaza Real avec tables extérieures sous des arcs historiques, chiens bienvenus.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -367,17 +666,38 @@
       },
       "priceLevel": 2,
       "confidence": 88,
-      "reasoning": "Plaza Real restaurants typically have extensive outdoor seating"
+      "reasoning": "Plaza Real restaurants typically have extensive outdoor seating",
+      "googlePlaceId": "ChIJhcpqwu6ipBIRQIX-wz1yKRA",
+      "latitude": 41.3946073,
+      "longitude": 2.1711302999999997,
+      "rating": 4.5,
+      "reviewCount": 2578,
+      "photoRefs": [
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN1TpIqqeM3rgLrC3zVHYDJwI4lIDQWSOj88bh5Q1DNBJLVoNNUsEXNhMAw4vchikPOSb0Byt4Lo8921pzfKecWfXruDorNqU4sN_A7TI_z-8i1tZORz4wAnB_cEso85r0H_1Yoi-PX7ZLE89HduoB2mbaV3Z9Ne4aN0VZZn0QogzmoofDPYp98l7gL38VWodmV3CiNbqG57klE3gWgXn1A8fWMGupNrb6ssmIJ4WgyzsSaPDjxXFvRPEFqsf2EGXTP_Ma7_FKaOLfNkLp4gOv3dymOgArTSsDfToTwdhJ2ODQ",
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN2bMt5JI9qTYtNPiFzj-BLkMeYpSZ0YgKzMCQiG8f7IfC0sf82u8iQdZGB5S5HoLzQTeBvYFDDEBxK29uBJVQIkDks3XdMnEjXapQR6B6Pil-slGM9RIuGaMRxMVMFZDavGrB0FTWWu56nz_8QRGgF0sduqLemWbK1TA8laJXdPL_9R78IOFQMcoJxQAlMEgf8xj1YncmjaR810q1lBPHmmRSV1DfpXoPbGjMhyXgOqEesz4uTYBrAXOFLXwIHlMwGGqDUT_sn23he6pk8-3cJRroqs7J6QJYSyiwceq2jIQA",
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN2kMqqGcgG4sunNeSDYnnwNUYiOK5q7JyArOxegPZzuNlHlFcHf1vcvjIzVkrBT_Zt1hpj6gcQI_sxQ_kW4qSqw-1kAWkuySNuY9mwXyd1BVnVDz7I1qs7j3RPfZf5DhgP7xhNoU4ruDM_odrNKfUN-9f2OPZob5Sgi60neJilkSsB-7mwwg0hvCo9TrjFe_9qK2ytoLXMuA8M_mmOxDcNNzX6HY6XQg1k7Z0hrRiaTwF57sAAq_mKe_CMeP0rKl45ixhNn4m-0CNeKNN_UolP8AgSV4G2i4ch0mOL_Hga86tCklaPPF9Bnldz3KRmNmqpDO2Cwtmim_4zBBmlrziNXr0LAgUvDi3J-nRUS6-nwTHg9L25rSEM8AT559cT-hSvUpEDZMzxIwvKpV_Q1saJdyn9h_RiJJcfX4qmyHKSEkYCnvxiBTf4a35YL9aTb"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1164587588258792768&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 1:00 PM – 12:00 AM",
+        "Tuesday: 1:00 PM – 12:00 AM",
+        "Wednesday: 1:00 PM – 12:00 AM",
+        "Thursday: 1:00 PM – 12:00 AM",
+        "Friday: 1:00 PM – 12:00 AM",
+        "Saturday: 12:00 PM – 12:00 AM",
+        "Sunday: 12:00 PM – 12:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "Bar Mut",
       "category": "restaurant",
       "address": "Carrer de Pau Claris, 192, 08037 Barcelona",
       "neighborhood": "Eixample",
-      "phone": "+34 932 177 438",
-      "website": "https://www.barmut.com",
+      "phone": "+34 932 17 43 38",
+      "website": "https://www.barmut.com/",
       "description": "Modern tapas bar with sidewalk terrace, creative small plates, dogs allowed at outdoor tables.",
-      "descriptionFr": "Bar \u00e0 tapas moderne avec terrasse sur trottoir, petites assiettes cr\u00e9atives, chiens autoris\u00e9s aux tables ext\u00e9rieures.",
+      "descriptionFr": "Bar à tapas moderne avec terrasse sur trottoir, petites assiettes créatives, chiens autorisés aux tables extérieures.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -390,17 +710,38 @@
       },
       "priceLevel": 3,
       "confidence": 80,
-      "reasoning": "Modern Barcelona tapas bar likely has outdoor seating"
+      "reasoning": "Modern Barcelona tapas bar likely has outdoor seating",
+      "googlePlaceId": "ChIJ5_8SapSipBIRQkiXvYQHOmA",
+      "latitude": 41.3973351,
+      "longitude": 2.1612629,
+      "rating": 4.1,
+      "reviewCount": 1927,
+      "photoRefs": [
+        "places/ChIJ5_8SapSipBIRQkiXvYQHOmA/photos/AcnlKN0IVvBtigodxBHTAdIgG81MR0RkBj_laj8HWY51_XUr4deKcYvkgb6KW5M8acqw4yHSfRRI7lbb_-YGbjvZvlcbmoc-6DATOYak8xflvJmk7IceEl7fH8kgzJfabQyTHksPsxbl4-UpTOsBV_rZjNfRI1kmpqUM_98OcNibxA8O2Imo2plRI1KZ3ToDzjYxcgrgISBzywR5PGs7oGbif2yM_fLFaphWEmyVFNXHZQNrVlTP0-D01bwzU9-sbeyt65E_D46755pOUMYGcDON4hrX0uQ0WsjaCAHAdylPWxV-IA",
+        "places/ChIJ5_8SapSipBIRQkiXvYQHOmA/photos/AcnlKN0mcgiAiIC8nJDwiBppX6XA46XlckvwVLHU4dzI_GnwLJshCwR40q5F3ijukBstGQHqu7I1xKRUCzyzdePdPKXyrUaf59cgxsj8vaZh5DVhC_sSqfe1QZ4CxyTEj73kw6sC4liW8RMHiC6sx4wHa8TnpaTS6fpzsttdcO0SW54c2Kcbj2VEx9RFWJPDJO4LsMcvDO7uESlfwYBQq1urHPdrp3OxamvnLvl0dN2G88BFtAlzgtH9KdKUArlsBkaujFZN5EiohcBzsoqrAdnwcY4zf2yhxJj3tXB1L6h34F3CJg",
+        "places/ChIJ5_8SapSipBIRQkiXvYQHOmA/photos/AcnlKN30rGJmm2UWFWfTLORwnmpxaWk2_Kgxe3AMBeAM40g8-oSKOFL3NAkBSqC6igd-Xqyuya9wvmxdur2NOcEHNV1DrwWsCjdp5S5aCSSbHB1GPt3ZUhuNtBAbDkXRn2P1NuHj6BUWD-NBTFxW-WjJNAQ87XzV9UjeI6CBaxSsmO5WeNUrQTth5gcOh9IvcDBunw9IKfWeveKYsKa0494xaX0KQuy0jDZaJVOT3IBbqqGvi13l1srwAnyjvLv26FecsIkHnOIR4dTz44cgUlI3uzHvvPUuQPsv7QZjmDKUvRBrArBVH7TGau1dUdYMdOBJC7S7_hBx_8YYqVI0lWkyhFyBCfCZGQy7a7WwpqdqUkWBjJKICyHd76JmDwFMXb9kri97S9EewiN_K2hOModwQef2kBpn6iVJFpHccasUm6ADF9No-7ns2eipBT1Acg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6933862842988185666&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 1:00 PM – 12:00 AM",
+        "Tuesday: 1:00 PM – 12:00 AM",
+        "Wednesday: 1:00 PM – 12:00 AM",
+        "Thursday: 1:00 PM – 12:00 AM",
+        "Friday: 1:00 PM – 12:00 AM",
+        "Saturday: 1:00 PM – 12:00 AM",
+        "Sunday: 1:00 PM – 12:00 AM"
+      ],
+      "enriched": true
     },
     {
-      "name": "Casa Delf\u00edn",
+      "name": "Casa Delfín",
       "category": "restaurant",
       "address": "Passeig del Born, 36, 08003 Barcelona",
       "neighborhood": "El Born",
-      "phone": "+34 933 193 088",
-      "website": "https://www.casadelfin.com",
+      "phone": "+34 933 19 50 88",
+      "website": "http://www.casadelfinrestaurant.com/",
       "description": "Mediterranean restaurant on Born avenue with terrace dining, welcomes dogs with treats.",
-      "descriptionFr": "Restaurant m\u00e9diterran\u00e9en sur l'avenue Born avec terrasse, accueille les chiens avec des friandises.",
+      "descriptionFr": "Restaurant méditerranéen sur l'avenue Born avec terrasse, accueille les chiens avec des friandises.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -411,19 +752,40 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Restaurant on major El Born street likely accommodating to dogs"
+      "reasoning": "Restaurant on major El Born street likely accommodating to dogs",
+      "googlePlaceId": "ChIJRYr4C_6ipBIRFe_LoEEGcPg",
+      "latitude": 41.3852519,
+      "longitude": 2.1833796999999997,
+      "rating": 4.5,
+      "reviewCount": 6013,
+      "photoRefs": [
+        "places/ChIJRYr4C_6ipBIRFe_LoEEGcPg/photos/AcnlKN2Gx_d86HsBKm3kw0cGhe6DtWnSyAHqFJhQZn7uO5sx4q8P-umU0FudQYVs6qJL6pFvU4_1YeVd997GeboDTropHeAg_uBWQP9yJAO0z5CGDT2Y1Jp_AS4tXFCoVApy-LaiQ9jUoK3dWRvreIJTRaGKUjK3CBSx_jRMjm5vEZ5hyGUg-96_V-dNKk0hYPIog0qNqhwYtTh4lfwQUd_xI-TkXll46j6PKtWIbkBKmYUtxuUqhU3-rJLcFO_hKDfsI7NR4ZhgJ2coBpdgYINrztArc57WyC8lISWNIU-SFLbxgw",
+        "places/ChIJRYr4C_6ipBIRFe_LoEEGcPg/photos/AcnlKN3eX1qmxkXgpffbc0vkYPBlisw0FW5LDGSK9yoUUOgdmQU5BI4qcqWsgcy9er89plDW3-cxJ-dSOly5-KeFx1hYnEDPSyPLVhYa-BJr4B3oIJLN0AWiY5Znys2LZOwE7Y6zsbmokjvnlKsEJvfJ_blH6U0JzS8-ai1D4aa2bRmgSXRTWw8JIN931rluHOwUkD192u1Wd4sRpYt37QQiFFALLoSjpvsmOIO8SSU-NRP9LcRMr_3u9WHhhAiGfGsAL2U91TEkLVf8iQbRRrsDvHpwdNjldQtw-enNzX4GySF5AcylVYLV3PjW_gBAsMLYvwibTJdPhM3Yo-50cbvDYKNSQugJ8P6sLgVxsBNzJ3XWtpV9tZWMa2ctFfUnEAbrAGZNcyBpmOjzxsF-yRauJ7QMQFwAmsrf2KiUW6opfGCYiDPMH0x4QEltMOXRqV3R",
+        "places/ChIJRYr4C_6ipBIRFe_LoEEGcPg/photos/AcnlKN3_N656y8QPqEOTZvcDxVAXLPHrcaRhGMdIjk7qNQO2okYZyWLz9CIcCddK-Ui1_E9lI5TXbQUmrHwUJE6DMDJwb0yfcLCRmSYl3gYhFsKb62fYVuekxal0t8u3DAE250B2Xxk6D85KBNEWQ75yAhB2L12uV6IBFmbcxsg5SVP0k8Fk5_EjjUBMPLOB8_6fuyuYlHNBv3IUXmqota3jnjmLNIWMZztZZ3Lre3fPfYtWGjX55y0G3hBXfwGhLfH5iQnlc9ZhNjnxVRzfldm5xnGgEZQxHqKAA-CSK0U5QWOzfw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=17901815397738082069&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 12:00 AM",
+        "Tuesday: 11:00 AM – 12:00 AM",
+        "Wednesday: 11:00 AM – 12:00 AM",
+        "Thursday: 11:00 AM – 12:00 AM",
+        "Friday: 11:00 AM – 12:00 AM",
+        "Saturday: 11:00 AM – 1:00 AM",
+        "Sunday: 11:00 AM – 1:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "La Pubilla",
       "category": "restaurant",
-      "address": "Pla\u00e7a de la Llibertat, 23, 08012 Barcelona",
-      "neighborhood": "Gr\u00e0cia",
-      "phone": "+34 932 185 894",
-      "website": null,
+      "address": "Plaça de la Llibertat, 23, 08012 Barcelona",
+      "neighborhood": "Gràcia",
+      "phone": "+34 932 18 29 94",
+      "website": "https://www.instagram.com/lapubillagracia?igsh=NWF5YzJiOGJrMXJ4&utm_source=qr",
       "description": "Traditional Catalan restaurant on market square with outdoor seating, dog-friendly atmosphere.",
-      "descriptionFr": "Restaurant catalan traditionnel sur la place du march\u00e9 avec terrasse ext\u00e9rieure, atmosph\u00e8re accueillante pour les chiens.",
+      "descriptionFr": "Restaurant catalan traditionnel sur la place du marché avec terrasse extérieure, atmosphère accueillante pour les chiens.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -436,17 +798,38 @@
       },
       "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Traditional neighborhood restaurant likely to be dog-friendly"
+      "reasoning": "Traditional neighborhood restaurant likely to be dog-friendly",
+      "googlePlaceId": "ChIJ-aOyOJiipBIRagVCipaXrMw",
+      "latitude": 41.3995399,
+      "longitude": 2.1536577,
+      "rating": 4.6,
+      "reviewCount": 2860,
+      "photoRefs": [
+        "places/ChIJ-aOyOJiipBIRagVCipaXrMw/photos/AcnlKN05Y9_vtWSJZDc-LeMhzn19vm-iNDXLgDUxCmjE202-CLu_485s1GM-wFgRed8VhOFUCdwkcsXyrAV2rGMowHEVrl8DbBrFlAZOsPwRFUFKiFBmH6W8tUaB2YaUUc2wpffrpBdjmw5U-oyVWQPmOxHtkxMQ3qVvOKuC61M9xTju2Q5it8QVNVNVUVUOj5WYoeT6uikPCLou7Ydd8zNlPTMNTz0NtkGkZhfWZRUV3IHvU_Bf2jGhja6zLAdcjjfoBp766n4IgoMG8aH8DnlExg3-oXLzWD-QNW6ZdQgIIFM7BQ",
+        "places/ChIJ-aOyOJiipBIRagVCipaXrMw/photos/AcnlKN2YGxN-0ynV4UqZlOEGFqDdeiN5gJl8SWpTTUqYJcGhIBAZg-9jA1Zw40RJO4oot39nlE5jQZITNNOnuu0ByTODeC4edpHD4b4CZCAPf4DVc0SToYbqphOjIJxhA5NcFqLRCVBfsl5z_TADzL-erVcmYjAKq7KuX8pivtsmelWsVt5v9mBM41scUJB4JmlEqpsaOfNt9IrBQPSwIm6m-_6jhtRd-wm3FSAmAf1V8DJbmVq9IIJPNBOhORGgWKdB-m0FFT90bU9f4gZhTLo98Rr5ZIW8gE_Op0RalvaFZs_s-3phzkTP3APxznnmISxW1jb8W596uHVWQdDXApOcJf3zLrGJUVYS1u-h-jfy7K_ozjAnVoenG7I5sQ9Wd2F-zc_21JhrHguPLJTHW2S25DwdGY0OV20JaM7JaADNJL46S_slEl5uUZxltCv24t4i",
+        "places/ChIJ-aOyOJiipBIRagVCipaXrMw/photos/AcnlKN2Tihs-HVOvhdNyjc8EqfaROBZ8fU6O1bVt-chKUkBYxm-wpIrtOS_5_NHCvwHnx12A8_gbvHjI8X1zb0oNFJ5WlviaQalUIMif5fufDZksqdeSQnFw1lFSOdgn5kSl1cfKWp-bUoJyF0Mxm6UINQKWp8qNxbr7n7Nk6M-qoB6wZYXzowOyUTKt6sI9133GPsQfJ2YrfVcOYWuVlAgF-Zu8yScucG201mtEveJnAFgXK1SSm1GwXvaN_h4izt7Fpg61Yk_73PiFbzqx7dU_YIm9u5IhaBNWj2inaTTRhIe7bI-WTdo7cpOyzB4M2wDuTGaOEGbqAFRAejeAellnhJnUvMgOFjeJmUqfVJr5Zi6XTAApWytM1jayOPr11SWDUY2btSy7-cUFxsZuE6UKpJ7HjZsP8fhLQzXOG2kUagYSeJvewSoveGnLwWgpqo65"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14748329552552002922&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Closed",
+        "Tuesday: 9:00 AM – 12:00 PM, 1:00 – 3:30 PM, 8:00 – 11:00 PM",
+        "Wednesday: 9:00 AM – 12:00 PM, 1:00 – 3:30 PM, 8:00 – 11:00 PM",
+        "Thursday: 9:00 AM – 12:00 PM, 1:00 – 3:30 PM, 8:00 – 11:00 PM",
+        "Friday: 9:00 AM – 12:00 PM, 1:00 – 3:30 PM, 7:30 – 11:00 PM",
+        "Saturday: 9:00 AM – 12:00 PM, 1:00 – 3:30 PM, 7:30 – 11:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Bar Bodega Teo",
       "category": "restaurant",
       "address": "Carrer de Mallorca, 410, 08013 Barcelona",
       "neighborhood": "Eixample",
-      "phone": "+34 934 589 301",
+      "phone": "+34 934 30 91 04",
       "website": null,
       "description": "Local tapas bar with outdoor tables, neighborhood feel, welcomes dogs and provides water.",
-      "descriptionFr": "Bar \u00e0 tapas local avec tables ext\u00e9rieures, ambiance de quartier, accueille les chiens et fournit de l'eau.",
+      "descriptionFr": "Bar à tapas local avec tables extérieures, ambiance de quartier, accueille les chiens et fournit de l'eau.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -457,19 +840,40 @@
         "fenced": false,
         "shadeAvailable": false
       },
-      "priceLevel": 2,
+      "priceLevel": 1,
       "confidence": 75,
-      "reasoning": "Neighborhood tapas bar likely to be dog-friendly"
+      "reasoning": "Neighborhood tapas bar likely to be dog-friendly",
+      "googlePlaceId": "ChIJ6e2Ih5yipBIRWrKl4VF5jhg",
+      "latitude": 41.393712699999995,
+      "longitude": 2.1492944,
+      "rating": 4.3,
+      "reviewCount": 111,
+      "photoRefs": [
+        "places/ChIJ6e2Ih5yipBIRWrKl4VF5jhg/photos/AcnlKN1h777nMJBN2AEYxNQAdFqif_jUYULwA9b_N4XuTFPPK0uSNOJ_8VAGFpi6cYxO_JeN6WHwlPgME6A4mCJw9TnL-X2wKrkPXdqWRJtpqCvWVXymTmUw-ajTPJA5chuU7FD_qxQ8LvdEwqcK3QrOo24YZuJ68zuheDPS23UV87fG4Xo5IWNPg6mRqImCDDX-zRoy6QS4DBmIShxOIpxMpYxoiaYAjHiBgCPhFwbGO53mhgF8OftunH8Y6E1dIDOqxSEoapLngw_Jkqp92HQLHpbHOxCuRXHsMBo_1I95Zqdfsr-csIh7izWVBlv4ugGtyP4-3MyQwNZ-aP98ZheYojnxdLvckPX7Pb5KpVwi-bFHYuNTvLvQ4lcoZai5GVbSiJjPvFVcuA85mgIiaFEtCXbBmpFT8yZS71iWe6k47ZqD0g",
+        "places/ChIJ6e2Ih5yipBIRWrKl4VF5jhg/photos/AcnlKN33ABfppAfSWnVSB7gjN0J8M17qynVbVajMR5wyxD3XXg-DABdPDWUDVCwukGTEG2IGIdVCMRiK6LJLuP7m_NhlblklmU-2Upl4fO-mECNUVMaU3lYcKh8ClbTo2nJFi_uoZMlRFXv3ieU_IdWh_suqRP0CQK9Ls_KXCK3mrZCfeSIVBKHIptmuQM5ZLY7Vp8Ez2tgfg_fwFShLGPXicPiwK7cPoX6x2FkWR-diR--0f-ivqLlMNHFxNi7jbadwHov3HaiRqLVz97tEAP3JvHg91Q9__Y6Hc-p1XMC82Qj6TUnAkWw0kg7hspU0HxyWlCcLgVfhmVHHif5t52fV3Gq5GUBDKiK9Kqry7ktFuxR_4T4mVYojg9Lly9miw70zIa4u4VqKHQ8W8WOG86ZuEP3Gp7fTyRzgmiF3rm3FU8Xp",
+        "places/ChIJ6e2Ih5yipBIRWrKl4VF5jhg/photos/AcnlKN0313R5G36V9qQvF4VteUdD73F-kluUPLMN_kdvPc-LFEghpj08qKdHC_8lW9_lGYjNrUezENiwMgNfCGvw3cJKZCFpmDYaxu6KeQNyT3_7u3-uHc-YDAEnsY2GR6sKhyHWtAQEB2zGw9WgNSGbfyQSn5wizYjIG9CXXNQJya4oiC_srD8rzf6AF2bBKwVeEJrZ8u-nEynjSDZLBBRDjTSSH7kPdW_9_OCofJtEHM2vq46ejgoNLE8P4EtIVzwhILhFtqjzNJALLSGAkuyjpQ0hz8NtQf-DJrBO70J0IxqTHAfTJb3fI3qFQjIdpVc5NsM8uLilDVwgfw69TJim6KsEHadNtrLE63une8wZJvhLmoSskirluOZH_GpM76K1TfLIElJh6m68aDQIa58EhSaU4zhn2H4fgS4vETM_JA5DFaw4"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1769485096188228186&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:30 AM – 7:00 PM",
+        "Tuesday: 7:30 AM – 7:00 PM",
+        "Wednesday: 7:30 AM – 7:00 PM",
+        "Thursday: 7:30 AM – 7:00 PM",
+        "Friday: 7:30 AM – 7:00 PM",
+        "Saturday: 9:00 AM – 5:30 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
-      "name": "Federal Caf\u00e9",
+      "name": "Federal Café",
       "category": "cafe",
       "address": "Carrer del Parlament, 39, 08015 Barcelona",
       "neighborhood": "Eixample",
-      "phone": "+34 931 872 607",
-      "website": "https://www.federalcafe.es",
-      "description": "Australian-style brunch caf\u00e9 with large terrace, dog-friendly with special dog treats menu.",
-      "descriptionFr": "Caf\u00e9 brunch de style australien avec grande terrasse, accueillant les chiens avec menu sp\u00e9cial friandises pour chiens.",
+      "phone": "+34 932 80 81 71",
+      "website": "https://www.federalcafe.es/bcn-gotic",
+      "description": "Australian-style brunch café with large terrace, dog-friendly with special dog treats menu.",
+      "descriptionFr": "Café brunch de style australien avec grande terrasse, accueillant les chiens avec menu spécial friandises pour chiens.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -482,7 +886,28 @@
       },
       "priceLevel": 2,
       "confidence": 95,
-      "reasoning": "Well-known dog-friendly caf\u00e9 chain in Barcelona"
+      "reasoning": "Well-known dog-friendly café chain in Barcelona",
+      "googlePlaceId": "ChIJ0c3t9laipBIRvEUHQJkXfJU",
+      "latitude": 41.3780022,
+      "longitude": 2.1777241,
+      "rating": 4.2,
+      "reviewCount": 3097,
+      "photoRefs": [
+        "places/ChIJ0c3t9laipBIRvEUHQJkXfJU/photos/AcnlKN2cQsyRoLR04Cr6eQJcoZ9m5sWmuRVf6NeuzXeuFmIGG739zqBnFEJf9MaASxVIwBvpJN0vVz7-WdboljFPPW_YAGetm74fVZ4BrQWVseO8Ah9VKqDOaRl13YHavh5bTNuMy5M-EEWylD0FuXzqs1KP_f7Qar2EDgguBJuObWHozCHEAt6hqqUZ9fd8nM-NNnnOAdRoCGClczM_D941ZoFK5M9WJwnC-8O5JFrcg_AQb03BCA5O2smln5bJfY_I4m7L3aOZMLGjetLqaWAcIXspJQKJsMoUTatm7ubLEOof3w",
+        "places/ChIJ0c3t9laipBIRvEUHQJkXfJU/photos/AcnlKN2N7CGzbaiGbRpys1YaXvINyKR2PPbaaMNwyGr4CG9b5Cg4QrxDu4uyxZCiKXYawa4YqP9t-HSvbkWdQRBoHSDE8wAKuHBI6EWLA6mruyhDJ_WsAUW264JoKa2rWWsoIB_QBxolkHYYux4RKpVNuKdnqhg5AgOf8j9_EvNkGYPLMnOb602L8w2g729XVhR1zewnAabcC9vZbPLZQZbVXJ0V8JFkfP3RiATwW9_Z_I2058ErHchEK4e-siZUwcrkq6HZVgPjBz2nc70bfkIYKu2iL2Ljz0peMAAS-BGHeIvhAA",
+        "places/ChIJ0c3t9laipBIRvEUHQJkXfJU/photos/AcnlKN2r3NZR0GiwW3c_TxcVFla3r9DzNDMoysuLmimR1Rmf-Sb7q4dTdOxIKMFzFIZbTwaXkubHEhY6FqzS4ul-w5Aih7xlhC8-agvtXQVjJOhQwmzeN7LIS0IkmfUPTjHSRDNCQdoFj0pyfg9CUdw_tCpz3VcZ2I7S8BTLGkH52ikMiQ1YqTohZ9PFKexKeBvSLgtqSDeeN46g-oQAj69Qzhlb-FOvJWsQjrCFJ2ERvHH575tpG1ySXXJpb8rK7g_WR9hrqydsWI0nFpK9lr95s7JZMG9MoRfEsMd497LnS6CWzc21uIx8TWuiIaAr2WI5_TtUYSFCnQ_OdLtMj6vwgi1hladZTMprHAYn7aTWY-WlwcpEY41GfarZbAd5PrYRUfZOWbaZ3cJX_Y_tslpPtgBiwyQN3YQEFEQ-hFM-m6QbJn8qgkHiXxYenCad_oT_"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10771510355735037372&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 4:30 PM",
+        "Tuesday: 9:00 AM – 4:30 PM",
+        "Wednesday: 9:00 AM – 4:30 PM",
+        "Thursday: 9:00 AM – 4:30 PM",
+        "Friday: 9:00 AM – 4:30 PM",
+        "Saturday: 9:00 AM – 4:30 PM",
+        "Sunday: 9:00 AM – 4:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Nomad Coffee",
@@ -490,9 +915,9 @@
       "address": "Carrer de la Fusina, 9, 08003 Barcelona",
       "neighborhood": "El Born",
       "phone": "+34 932 687 405",
-      "website": "https://www.nomadcoffee.es",
+      "website": "http://nomadcoffee.es/",
       "description": "Specialty coffee roastery with outdoor seating, dogs welcome inside and out with water bowls.",
-      "descriptionFr": "Torr\u00e9faction de caf\u00e9 sp\u00e9cialis\u00e9e avec terrasse ext\u00e9rieure, chiens bienvenus \u00e0 l'int\u00e9rieur et \u00e0 l'ext\u00e9rieur avec bols d'eau.",
+      "descriptionFr": "Torréfaction de café spécialisée avec terrasse extérieure, chiens bienvenus à l'intérieur et à l'extérieur avec bols d'eau.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -505,17 +930,38 @@
       },
       "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Specialty coffee shops typically dog-friendly in Barcelona"
+      "reasoning": "Specialty coffee shops typically dog-friendly in Barcelona",
+      "googlePlaceId": "ChIJF3295_qipBIRFR8_uS69o6w",
+      "latitude": 41.3889218,
+      "longitude": 2.1770391,
+      "rating": 4.6,
+      "reviewCount": 2683,
+      "photoRefs": [
+        "places/ChIJF3295_qipBIRFR8_uS69o6w/photos/AcnlKN017dlX_01Zws1SC_VHuN6GTCz6roSQmEQ1NomJA0L6idL5Re1HImrrQJZ8eRlvbRKCqlWpflugEZiO1G87wMl0LXmQHYxZx3j8agbXSzvtCyew_TzCANd4l-N2kc04vZBQku7dVb01qAsO_sG2O8CzSa3C_Yru4ECOFHnbqW3tQOtVnJCFGIpJIrsakX3wWQYuWASBoOA5ri_Er7Xy2Ab8yUHB5fn1e0d_7ikWVsuRu3EQfGW8cGImW_O5Ql3Okzo_7Calg-DufeTzqhxrGnwuj1R0ecpaMDKlxR7IYHFSBA",
+        "places/ChIJF3295_qipBIRFR8_uS69o6w/photos/AcnlKN1qPCVnpW7mEYQGVxwoMO1bAxK9x9onsKXqCC6gYxuC3OOgoNwFZWOgGJ9fbkwQtdna3TlqrIm02NafdK4gSiUj_yUhugARK4I6_wOQ_lsjOTj-pXSCSQbD9NOyOz34NtY9X2wGYkqxCTjkpsKk43LGkLwoVArJP9slRBixFbNaHq_qXIoHQNuQssl1wnptnZjZ8U9hT9PtUrTAmeGAJ6agFyBqclA5jKg-jcytbY9D34X9HkoMEgRdVMqcY1G_liWfryMsrvGMgZEB7gAiWMoo6RiB_f5BX46tURHYwlFMcWtSnYDQr9f1Gv4BaxZ8HMJIL0p-Sfu_m7l4juSGn7znCHMhJ1lBYJqt35h_GYMWeJxmJ_arvd8AF-3uYZ_W_gvTOfpoBPCb-5cqvisbJ8tPAqYOKUwCNSAlUBotsPb_4c9BO6OxRTzbjCHAVQ",
+        "places/ChIJF3295_qipBIRFR8_uS69o6w/photos/AcnlKN1E60Kd_wajPOKljfiiR1XbhsAis1M8JjPUAZbHCxiZ3s4PJqVqdxRfrcxhP-cvAlM4B6fNgZc3nN6wQLH_2-pnw4RIBhwRtS3tX2KI1Grtk6SKu4COAiu5fDRNcJX5o4sb3zKP4U0QH7tQC_f9-szlsGTOu4A6ABM1gDYcTCZo6uOXCEIwM1HlGxyI5Re3KOozX2CzpoTWlfR4m0aqfJaqSPpoSlxcyZFxBOsypKbEGOGDe6Qxtzie9A2DrhpUrDlBLSNt6-0HoODbKTLG4vVsG6RITD8ELxWS0UZa1FeybQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12439994604101508885&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:30 AM – 6:00 PM",
+        "Tuesday: 8:30 AM – 6:00 PM",
+        "Wednesday: 8:30 AM – 6:00 PM",
+        "Thursday: 8:30 AM – 6:00 PM",
+        "Friday: 8:30 AM – 6:00 PM",
+        "Saturday: Closed",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Syra Coffee",
       "category": "cafe",
-      "address": "Carrer de Sant Pere M\u00e9s Alt, 5, 08003 Barcelona",
+      "address": "Carrer de Sant Pere Més Alt, 5, 08003 Barcelona",
       "neighborhood": "El Born",
-      "phone": "+34 932 954 801",
-      "website": "https://www.syracoffee.com",
+      "phone": "+34 623 59 58 83",
+      "website": "http://www.syra.coffee/",
       "description": "Third-wave coffee shop with courtyard seating, welcomes dogs with treats and water.",
-      "descriptionFr": "Caf\u00e9 troisi\u00e8me vague avec cour int\u00e9rieure, accueille les chiens avec friandises et eau.",
+      "descriptionFr": "Café troisième vague avec cour intérieure, accueille les chiens avec friandises et eau.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -526,19 +972,40 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 2,
+      "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Independent coffee shops in El Born typically accommodate dogs"
+      "reasoning": "Independent coffee shops in El Born typically accommodate dogs",
+      "googlePlaceId": "ChIJ-ZgJdwOjpBIRBHBmdOFZd4g",
+      "latitude": 41.388132899999995,
+      "longitude": 2.1763581999999997,
+      "rating": 4.7,
+      "reviewCount": 718,
+      "photoRefs": [
+        "places/ChIJ-ZgJdwOjpBIRBHBmdOFZd4g/photos/AcnlKN3xbv7zjKkT5EurK64tV1YprIuvGcVqfawhVtvc80Vt59qXeN9gGNzEbJ45odkxkr7dyAIkNn0JOkuWW9olw28VHtF5QuZF4GbaLM4egji9yaX7xhk7uRFduhThcMuKjNf6E26xo0Md_Vm0Xqb66t25lYuFr85C0I_PSj_owq3bIjW5-7IyyTmxHTlAPce-50zODZTcjDulUAyR0WrgzCvPtyI682zMDRPiHV_RgyFtzjwg88f9LcjFBD4bmHfIbKSXl1Xv-v-zRgGiRf7Bqa0nOLRcBpb39mU5pWMakD2m7P32049XVGyo_e4Ypt-3GGKBc_l_P7csm9x9N9wBmrACq4Bwj220i_NjLZqjOCGMDBrOXQmJHeicJZO_-t1xJnZ-qWTtgZn-VamYpjdkSgYLXBV-XNOjrRZYlag6nTneyQ",
+        "places/ChIJ-ZgJdwOjpBIRBHBmdOFZd4g/photos/AcnlKN1i1zLnNiVMQ7OBCKA2w2YQw_smY_YSjsREck0m-kSa2rJDZWvSix08hah4fFy-NpeI09d68H74vYzUf4XiZhAzS0GI28l95rAPfhQySO6hlj1qnc-oCdRJgUR5GYqp2NGJVvZWzaSmhZCFZHqShdTW6EprmVTGoUXxBb3UIzI3MSTLKw9uNf0PPGFkPYQYHYmsg6drO2pxaY3xLwSwOsdTKciG3nsUWMXKB2hjUtPsdUBDiM8u5-KU3kBCrjXcFB3zc8LvFWDgkN34KgaBCEllpEinb10VbrzNCDRISCI71Rl9Si3ygVI4y_auw42GM2LEmFRuAQE3f7yyXgaaHA5vcRuYEqCKMAvtIi5sb9R_2k3wy_UCDvm7m8uVj4JKj9cilkByTx5KWOebpZN2Yzj_LXI-OSCLpZbtMW5VKOzHDOIdMkkEi6akZK6w0w",
+        "places/ChIJ-ZgJdwOjpBIRBHBmdOFZd4g/photos/AcnlKN3WrrlNQXen9KSpAf-U9XWuq-5YLQIpJTll_mwXrTwqtlhzd-ARzu0UD5nD8qUQcaN7kq6_GXMEeRZ-9HV8p2k4gmMwhS3U0UXi0sYLYcQbJiizj2FUQFjXtj3fpBmwrgiMr2Olgfb5BsvIfY-Cf6JEnCcxYJybKX7ZenWTdLDJ-YPSkGisvk7MqV8iQLbDiaJ1sB8r9sCyJ-b_jdXhubRaeFYs86GtGsNnGsTZciUBFam-IFvC9UHd4Zzbmt70KrFm8BSHgvqFIHKgoZnq4atHzUMqxurBHnpVyP0FI7L3n-x6_clmFNTNdFZjR72uNo-i252wMan90sS9CTjIeRMDzCGPG7YZwSGxCv1jMwrnlcmkCoEwuLRGEjvlOa-jAHcuiPMsUUeQJNLSie1AZKJntwnO2aR6nxdOV9Q1CgvYujlS"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9833427136242151428&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 8:00 PM",
+        "Tuesday: 8:00 AM – 8:00 PM",
+        "Wednesday: 8:00 AM – 8:00 PM",
+        "Thursday: 8:00 AM – 8:00 PM",
+        "Friday: 8:00 AM – 8:00 PM",
+        "Saturday: 8:00 AM – 8:00 PM",
+        "Sunday: 8:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
-      "name": "Caf\u00e9 del Centre",
+      "name": "Café del Centre",
       "category": "cafe",
-      "address": "Pla\u00e7a Sant Jaume, 1, 08002 Barcelona",
+      "address": "Plaça Sant Jaume, 1, 08002 Barcelona",
       "neighborhood": "Gothic Quarter",
-      "phone": "+34 933 026 578",
-      "website": null,
-      "description": "Traditional caf\u00e9 on government square with outdoor tables, long-standing dog-friendly policy.",
-      "descriptionFr": "Caf\u00e9 traditionnel sur la place du gouvernement avec tables ext\u00e9rieures, politique d'accueil des chiens de longue date.",
+      "phone": "+34 935 63 04 97",
+      "website": "https://www.cafedelcentre.com/",
+      "description": "Traditional café on government square with outdoor tables, long-standing dog-friendly policy.",
+      "descriptionFr": "Café traditionnel sur la place du gouvernement avec tables extérieures, politique d'accueil des chiens de longue date.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -551,17 +1018,38 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Traditional caf\u00e9 in central location likely accommodates dogs outdoors"
+      "reasoning": "Traditional café in central location likely accommodates dogs outdoors",
+      "googlePlaceId": "ChIJhcpqwu6ipBIRQIX-wz1yKRA",
+      "latitude": 41.3946073,
+      "longitude": 2.1711302999999997,
+      "rating": 4.5,
+      "reviewCount": 2578,
+      "photoRefs": [
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN3klwqtY3aRnQoCYjvhDgGeHtW_YgIgf62Db5IoJICQmop3bk35p_biPYT7D3zy5180eNt_Ighdn645fo748rqTxHiXEOo4soWcS4ls00xcl7wwwWFWQxr0PF_hpcZHEuOBFfEVAIiud6FOsGnnToCgsq-9fbSJtiVyStu9napByXucDpred-6NEB-lfTb8v4ocxU07dJbpH3_2w0-5IcSsOolVpMJuE9JyNV8g31D7Bm39E4BvqUr-fpA6Rntr5IC58FTh96xq1XJdC1v55yxNoiiDUAah5C_Zee2YoW-Wpg",
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN0RSD6H_fNDLah4sUNvjAjU8Ak1Q6EjejcYG1a_7rFkdHrjKd6hTF4aP0Flv1fXmgutvsTBsE55hUdLNeG3zdroWxfeS_7mE1wYNczAQxBsTr5Q-2VtVeH9RJs9jtY0zC8hpTArwD0WfVjksYYZwhJ7AteAgYJu1vMNd68sZ6KbE7Q4nSURO_iHYKlK8wOZz665Xsdb1tJqeRZiDiozW1_2vMVIYLc8QrKHUYPbl3bKdxGEmOMNOIiQMSbaHgAL1M8BxgtErP3dl0wvwcdK1vAeygAg-9RLz-ZF5_QTtxIEKQ",
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN0u4aqzIhvS-sDxyoMxnowCxim7iKZ8l7KAwGLkwxSQBqR5d_ttuvtNBrRUZEchxJIBEdPLIDl70RvY0YISXcaUgS8pBVpJK10dnqIZL-a8FmDJkkicJQLU0LXtrvdn0gGxU2jZJThjsQaV-WTDKB5m_2u-RruHdxQfXF2V7k7yjTVrueE34DFUqbMXkOp-w6EgiMKg2KYnSkvdS3j6AgqW8NMosmD6gd2ZUW463bIH9kkWhoWCjGjP59mSUsDj4LVJg2fvgPkGLSHnAQSpn8en_xtHk4w-b5k5zUb_qvyAWqfXB6JsZJNbNoHNksQm2Lw18CZ0xlsE6E8yqPU5xbknbtmOUrEN4GpXtwkrtkS_YAsQfeyuvj5pYF8sIyD0T3DSLbALN_sBtUokcV4hZMGuKDzXIk4aA56PBQbvEljKkmoyfn70matquRSN4Fw6"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1164587588258792768&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 1:00 PM – 12:00 AM",
+        "Tuesday: 1:00 PM – 12:00 AM",
+        "Wednesday: 1:00 PM – 12:00 AM",
+        "Thursday: 1:00 PM – 12:00 AM",
+        "Friday: 1:00 PM – 12:00 AM",
+        "Saturday: 12:00 PM – 12:00 AM",
+        "Sunday: 12:00 PM – 12:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "Blue Project Coffee",
       "category": "cafe",
       "address": "Carrer de Girona, 11, 08010 Barcelona",
       "neighborhood": "Eixample",
-      "phone": "+34 934 881 022",
+      "phone": "+34 932 68 38 67",
       "website": "https://www.blueprojectcoffee.com",
       "description": "Modern coffee roastery with minimalist interior and sidewalk seating, dogs allowed throughout.",
-      "descriptionFr": "Torr\u00e9faction moderne avec int\u00e9rieur minimaliste et terrasse sur trottoir, chiens autoris\u00e9s partout.",
+      "descriptionFr": "Torréfaction moderne avec intérieur minimaliste et terrasse sur trottoir, chiens autorisés partout.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -574,17 +1062,30 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Modern coffee roastery likely to be dog-friendly"
+      "reasoning": "Modern coffee roastery likely to be dog-friendly",
+      "googlePlaceId": "ChIJGUvKu_2ipBIRYp3WeaVp-vA",
+      "latitude": 41.3872357,
+      "longitude": 2.1826452,
+      "rating": 4.1,
+      "reviewCount": 89,
+      "photoRefs": [
+        "places/ChIJGUvKu_2ipBIRYp3WeaVp-vA/photos/AcnlKN3Z4fb-zDORolUMHdsNm4FH4lh1iaPPt9OMoOE94DzTZq9hZXlbfRGCC_uCfszuUoTdNHpRo1LGO4vNhNwmFjKnq7eleUYsP4uyReaEwZ4JxD4lwu18t1RDVQ7-imHBZNpbIIhYLQaLjQFwbqV31SfyrsrWnhwMzSTO-rNWuXzRcB8eeQZ3GuSXz9zYsUHLl9crC16FWxqQAR2ElO2oKk7sz81KQF3TJpRSegoZDDQWZjYDNyG6cdatp47TaDrOuauqtQ6wseEIpszaUAa-B4T8ODoIblkJcNr9_cp9DRbcdA",
+        "places/ChIJGUvKu_2ipBIRYp3WeaVp-vA/photos/AcnlKN1vmFjzjAMu22IEk3pYdGgW6-pjnUSRrAzlYyZIqRwkkNIzu_gS--8AvVPaR_Eo7py3tJLhvbRkr_vHEXduKxkp7228Xtx2FrumceX9xY61jy3AxmK4jLuhwZu7FFOPMHX6W_1idtZlCiK16mGJV93wJCVIE9LP9RITMAzAkbLWPPiqotKGCaM2XF3eze2CPj0eG6cDyowfM5ixThT7kpqrRL2-gbgUnmqk9nyQeNdnF6M3wemOVyMvu5IPt9AG_s9IHa8nskNg4pCOd5ADevVUzmroFNIn77q9YWt4h7qaeQ",
+        "places/ChIJGUvKu_2ipBIRYp3WeaVp-vA/photos/AcnlKN0zFogeI3TjafHPnQCuTiMKnUffm2HzgmYtGjeu4hB5C2Cyj8XCeUjP8et922HiBUs-_QtNv2zdnGklD-lJcmD_ciueL81jw2EIU_XadKyoRu2tXsX774mSNjFDGz2wPik4mCYdzqHosKeZ4AOoF1Kq8KtVaCEBxMKWiDXwG-5MR9SkNG-hvcN60aniTyBMDbcPq-rC_fwtsddRmPkhe4euir3tHyQPfyiXNi8OBoaUQwvot6g_SH1axEJhYWlSLD5LsheWdTImiQxXLyxMmQ9dBOXkEKCbHchCHKogu5HLgw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=17364307472714997090&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
-      "name": "La Bicicleta Caf\u00e9",
+      "name": "La Bicicleta Café",
       "category": "cafe",
       "address": "Carrer de Verdi, 16, 08012 Barcelona",
-      "neighborhood": "Gr\u00e0cia",
-      "phone": "+34 934 157 374",
-      "website": null,
-      "description": "Quirky neighborhood caf\u00e9 with bike theme, outdoor terrace, very welcoming to dogs with treats.",
-      "descriptionFr": "Caf\u00e9 de quartier original \u00e0 th\u00e8me v\u00e9lo, terrasse ext\u00e9rieure, tr\u00e8s accueillant pour les chiens avec friandises.",
+      "neighborhood": "Gràcia",
+      "phone": "+34 931 96 43 30",
+      "website": "https://www.bicioci.com/",
+      "description": "Quirky neighborhood café with bike theme, outdoor terrace, very welcoming to dogs with treats.",
+      "descriptionFr": "Café de quartier original à thème vélo, terrasse extérieure, très accueillant pour les chiens avec friandises.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -595,9 +1096,30 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 2,
+      "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Quirky neighborhood caf\u00e9 in Gr\u00e0cia likely very dog-friendly"
+      "reasoning": "Quirky neighborhood café in Gràcia likely very dog-friendly",
+      "googlePlaceId": "ChIJqy85mZWipBIR3e8iyAdN-dg",
+      "latitude": 41.399964499999996,
+      "longitude": 2.1619078,
+      "rating": 4.6,
+      "reviewCount": 1402,
+      "photoRefs": [
+        "places/ChIJqy85mZWipBIR3e8iyAdN-dg/photos/AcnlKN3hndKgniNoVecLMOutMKGJ8jLnkfOd9fED8P3THfiBj7ONrV12IYcHzQmpHna8Aom1GGWp2VO9CdwI9pnqvZ3HoL3tFaXaOcdoJ9XYKqz0SiPeDqy6B2cp5ehFucz-jcUKV9bl90NZK951LRaUPXY7yG4AB7v0686lPOJYCQIVCF55nsaC5bUdtYaXLvmeJO-BwrHI3kJvw_7CBpjQ_caUtUmzj1pjkgcB0SEdIOOQgOqUcrXC9vyq33pGU3gQzS2s0DgdEWcgh7TxcEZSg9V7i1VzxJlru-N1u86H9mOGig",
+        "places/ChIJqy85mZWipBIR3e8iyAdN-dg/photos/AcnlKN0po3fsAOIztPJHuOTSfk4Hhwh1_f2y_3k_dQUEfU5Ys0dO8TwyUci3UiAdHKwq-XxTsXNYKEX7a7SoGCokGxDe04Xdw4yDn2jlRlsXD5dx8wwp1bpCBbW_HlYlYB_1JFDwFMdCU3pZNcEDOVlAlojIlyKc9XzxRUMBfzAVzQ48mISSfpdy29C9omisOLezp15Ozs8NTgb-_H-WzZQzv6GwmD7Cyry7n7e7rQeI2XFhFH2xEULM5KJNNdnllQSQkKizIl_LL4ZAwSkv1siQGT5LJ53_W8OUoDEoYjx1eAm5tGW0JJUWn_OiSrSYkahpRQI4eFLbAvfxjJT7DkP3IAWRdIEHHNRkFbpVul95BKEeEsuwps2pt267Dos5ZOEqslW6ZB91_bMcEWJxBcFq11y-1VBf-RYEG84QZoev9RNaUtbRHwR3YKzBY2enSw",
+        "places/ChIJqy85mZWipBIR3e8iyAdN-dg/photos/AcnlKN0up1_JU5ZD2XimtMo_8Tgt1_sXcccwEUPlvx678HxUUo52_8UNkIZKEjHv0GnsTyT77A8PIhlprTHFrajJP2SS3Wggy5rwRhU2aZ-fiEE_GRCPwxE9cV64QsptW3_KmSvjOIinxmxD6xmG7xb-62wZWC__cbi_U1lkyenRpb-5651NcEGK3tXUmYyJbYnTJGr2WHTSsrF97Pe4zslUMhgbn0nsrZaBGxt2-_qiswRTsl62e0rtCB3cM9aXY9OsXSbUgmqnOVBfXyfOUuCOi83V9TbHGvkfn14kDCXEodMBnw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15634612277211230173&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 4:00 PM",
+        "Tuesday: 8:00 AM – 4:00 PM",
+        "Wednesday: 8:00 AM – 4:00 PM",
+        "Thursday: 8:00 AM – 4:00 PM",
+        "Friday: 8:00 AM – 4:00 PM",
+        "Saturday: 9:00 AM – 2:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Satan's Coffee Corner",
@@ -605,9 +1127,9 @@
       "address": "Carrer de l'Arc de Sant Ramon del Call, 11, 08002 Barcelona",
       "neighborhood": "Gothic Quarter",
       "phone": "+34 666 022 255",
-      "website": "https://www.satanscoffee.com",
+      "website": "http://www.rightsidecoffee.com/",
       "description": "Small specialty coffee shop in medieval alley, dogs welcome with outdoor standing area.",
-      "descriptionFr": "Petit caf\u00e9 sp\u00e9cialis\u00e9 dans une ruelle m\u00e9di\u00e9vale, chiens bienvenus avec espace debout ext\u00e9rieur.",
+      "descriptionFr": "Petit café spécialisé dans une ruelle médiévale, chiens bienvenus avec espace debout extérieur.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -620,17 +1142,38 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Small specialty coffee shop likely accommodating to dogs"
+      "reasoning": "Small specialty coffee shop likely accommodating to dogs",
+      "googlePlaceId": "ChIJfb99MPiipBIRRm7r5cGAKF4",
+      "latitude": 41.3826099,
+      "longitude": 2.1752634,
+      "rating": 4.2,
+      "reviewCount": 2904,
+      "photoRefs": [
+        "places/ChIJfb99MPiipBIRRm7r5cGAKF4/photos/AcnlKN2BqhoMzEa6x75lgshTns9MemGRd51zHlsEJ5xXPruT4b0naIKAsxWOwyMFXF6G-Mbr9pZDcEUbfHVQ_2otQlmF_ZwZIg9QlTZdvrUkR05IWUZMouH8qFNCQM4Ymo0ZadrhhHq7cMHI7ZSQ4CQ3eH2beAkSf4IdvMPXbHEkEiLq3eV5EfwcLGnnOYAY0mQaU5uPVaXF3yvjwMuhI7M9XDzn9EH_-v4tMoC3QLlllTW437kfw0p5VRXrMXzYeUiAzkHNrEWlRZ4kwc90qHVCz7j4xTJT5PGdT3p7U-dKzy54hFWxqv6YmcjLmt9K_qex2o9xcLDbj_gtxtSdFi0ZElvVsF6qjcA_lNbfFPuudFuxDqi45dRHENIzyB1Syr9eiVtpVLN8Q5PtWr3zjFav0uPpKa-oqtuMrXl1wmm7TvvFwA",
+        "places/ChIJfb99MPiipBIRRm7r5cGAKF4/photos/AcnlKN1JDB9RUh-0rVl1WzjhRMAxDlcB4nqbCIH3nofBhXtrVtO9-ewlhPdszyA0ieSGk9Y3K0D7xGHIX401n6GC1PHokLAcmkCeqDK46eS517nSJGWEPIaIxugOfs-Y9liotUxt_mXoQTBHc93hrE0fKrygMnwdG5WQ2PmnRNJwl5hlTP5ZozRNflYEtXtU1eD8RgW5nLu3tYFX24gS89fW3Hwj5XNJHnL00y0EDdQGa8Sp9hW5LWQH4Lj-CiDUWj-X0f1VMGWy-ptZPthjOg2g1cr5Ya7YnE9Xfyvvtn7d-cMpTA",
+        "places/ChIJfb99MPiipBIRRm7r5cGAKF4/photos/AcnlKN3RDfPLS3in09UIbhWgFiFk_0MPxbcO-_r-EB8RxN5YbYx49HpcTBEa2499d_hxXcaHnFJ6KRJYDANhZ6-NWSIlMsbhjpkWJF6WMvSkdF9T5wFF74jfNMiWqMllYC2_xzHip0mjd_VYoj3JJjSyjAjegrm17zcVNP4AmH9zE9tXlKcylx9pd8IfZZqlb-BRWlKGrkgY4UT1MfGeUXpd6uZmGfg3QeU1Qi13ubRewuSc04pRDc5pBMWm8kRYbLBMxFhP7qVZolwVW9qmXRTsiSxQt4rp0qUsQ3tK3y7qM_tB2NowKGqxH_TTLAQwsmcB2j6sf2kV7hXPUnI__Sv9d-bcK2EWdefQCQ0nJCwvFV84g8lM11BwpoCze1w2-L7FdkgQQ2PRHGkET_WQhiPpCDTqqvsTORSsDoETerdmfBpL9hlCvwQlAaFaihHlsMfr"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6784814408908107334&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 5:00 PM",
+        "Tuesday: 9:00 AM – 5:00 PM",
+        "Wednesday: 9:00 AM – 5:00 PM",
+        "Thursday: 9:00 AM – 5:00 PM",
+        "Friday: 9:00 AM – 5:00 PM",
+        "Saturday: 10:00 AM – 6:00 PM",
+        "Sunday: 10:00 AM – 6:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Hotel Casa Fuster",
       "category": "hotel",
-      "address": "Passeig de Gr\u00e0cia, 132, 08008 Barcelona",
-      "neighborhood": "Gr\u00e0cia",
-      "phone": "+34 932 553 000",
-      "website": "https://www.hotelcasafuster.com",
+      "address": "Passeig de Gràcia, 132, 08008 Barcelona",
+      "neighborhood": "Gràcia",
+      "phone": "+34 932 55 30 00",
+      "website": "http://www.hotelcasafuster.com/",
       "description": "Luxury boutique hotel in modernist building, pet-friendly with dog beds, treats, and walking service.",
-      "descriptionFr": "H\u00f4tel boutique de luxe dans un b\u00e2timent moderniste, accueillant les animaux avec lits pour chiens, friandises et service de promenade.",
+      "descriptionFr": "Hôtel boutique de luxe dans un bâtiment moderniste, accueillant les animaux avec lits pour chiens, friandises et service de promenade.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -643,17 +1186,38 @@
       },
       "priceLevel": 4,
       "confidence": 90,
-      "reasoning": "Luxury hotel likely to offer comprehensive pet services"
+      "reasoning": "Luxury hotel likely to offer comprehensive pet services",
+      "googlePlaceId": "ChIJnyTG75aipBIRSWZ5epDlShs",
+      "latitude": 41.3979721,
+      "longitude": 2.1580323999999997,
+      "rating": 4.5,
+      "reviewCount": 3349,
+      "photoRefs": [
+        "places/ChIJnyTG75aipBIRSWZ5epDlShs/photos/AcnlKN1nCn5kpUU1IUoYSm7H9mRqAtJ-qpnVEvUMY90AkeykgHHEGwzFq96xPhhIAIQt7i8UtHaQErK9VFXxo6u5-423tn_Bg0HzXMRjK-5KQGp_mvmI0cPwI0ECnnO895B0nv3wNtNQPwkhF0ARca2PZQK81TY2wzNc4lYDz_aGdBZCy9DWs4bgDaCBfRyXTxrYmPn35beTtsouyWKVCg5ly41w5HPEvOi9So1E_Fj7Gt9J3ZZSdAsjK8zlFCWBu_R3IrL82UX-QANmuhIh1IhepzYCNAahsmNHjb05KXJdP494Fg",
+        "places/ChIJnyTG75aipBIRSWZ5epDlShs/photos/AcnlKN2cTERGoEDrHKz_V-28dlG6idzFw5KIRPSknaao_C3caJYE5G7CWJOOjzEes7QslnkTwe6DS8SM6C-q3Qk5ZdnGzRCGRZI4Qu4KR754Sj3iwjsRdAwYb-nwLH3M_qmLw4SLhSQjsyJMs0PK01t-vfTLTgFCdDQjEvF709HjEKxzln4OTGrbdDMndjJYWzr4cwFHz-MmSBWZM1-K898V_gm2IWRqM5Vs2uzyyQjRH7M3oNtp31wYLZFCa0retLStMWkenBZ-OsUmzKT4HVXGKMzIb2Kixn6Jf-lLyDeh8VaAfQ",
+        "places/ChIJnyTG75aipBIRSWZ5epDlShs/photos/AcnlKN1Z1LfZlw1g0-9yy6oeiaV9rd9DJV6Gn55S8arGZXEwvdBVzWCVPYgQByeX-m_D63sJH7k3olyiGCcIOz1KTr_Cx73OO4YS8-ZP9T_ZnKSDPG05clRfceISzlEIaadvHr0NmlctUhJUPk1_9BTPaaR1aPDbwy3G4ZLGidsFbNaGgXp0UKGG2JqUmdIIjB8aniIbkgFkhDAb2CL1eFAfXZLSqYO7h5ITKEfS4RA8qU3OXuvtt6bIn_lQdNcJDp5FKfR5FZTv2DpeKqm0rnr-_U5tjBK4CN1cV6QXal7ehLSAXA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1966636595993470537&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Hotel Brummell",
       "category": "hotel",
       "address": "Carrer de Nou de la Rambla, 174, 08015 Barcelona",
       "neighborhood": "Eixample",
-      "phone": "+34 933 125 002",
-      "website": "https://www.hotelbrummell.com",
+      "phone": "+34 931 25 86 22",
+      "website": "https://hotelbrummell.brummellprojects.com/?utm_source=gmb&utm_medium=organic",
       "description": "Design hotel with rooftop terrace, welcomes dogs with special amenities and nearby park access.",
-      "descriptionFr": "H\u00f4tel design avec terrasse sur le toit, accueille les chiens avec \u00e9quipements sp\u00e9ciaux et acc\u00e8s au parc nearby.",
+      "descriptionFr": "Hôtel design avec terrasse sur le toit, accueille les chiens avec équipements spéciaux et accès au parc nearby.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -666,17 +1230,30 @@
       },
       "priceLevel": 3,
       "confidence": 85,
-      "reasoning": "Modern design hotel likely to be pet-friendly"
+      "reasoning": "Modern design hotel likely to be pet-friendly",
+      "googlePlaceId": "ChIJK0u1Ol2ipBIRiapk0P5DqoQ",
+      "latitude": 41.3716911,
+      "longitude": 2.166437,
+      "rating": 4.7,
+      "reviewCount": 772,
+      "photoRefs": [
+        "places/ChIJK0u1Ol2ipBIRiapk0P5DqoQ/photos/AcnlKN1IspdVN26SJL_3042XzEHJwIbLPlhA6gnSE_n0aF4BW_mWTVQlhwJyfXHO_tZjOa2MsoufvGVb0t9EG8q-7l2oXejsHnESQH8fBChH4uDe1nwItDQRWUY_fTmUwbygkOWdD0mfKqtfwMqiVqy-LhC-aloIOku9Ip2oUGioPK3rY6e31ogAX6w-o1f5N3p62B3OoutZLNK4GRd3o_6DLgRfdQyKo4pdRSHdMH66G9hJxc8YqbYHgfWVZJHJqyTN0vRAdwRqScioOddUogEZtVLL8OLBSJNVbF0Qmr2zuH3ADQ",
+        "places/ChIJK0u1Ol2ipBIRiapk0P5DqoQ/photos/AcnlKN3u4UpeU_87PfGOKMEd0mpD6OErXtm_Nh3b6Oaaya2mGPgpV03sguDK18yjUm3RjiS1vd1Wxb0eLhLlKhTiU0HAq10crt8C_PVBhXrHjv1FGFGU1HWWEn30Cw_2Aj_CXTD1GOJ8PJ9tdgwUr8Yo3dYSr2uwFldSs7cnXL_0ty7kVa1Vl_Yov2DTbvMWo98pnHFVOYPTjXbwjELIQoH2aedZDfawcXL1QApPxNp9cg-rKvFB8DAf0dWXyjfyLY4YSydmq8orsx_K9mwQ6hiBncqaEZHZH68_EHE0FeSX0jCq5JZJEWCxsXZSEF1pwtKm2YBSxBxgnq1GE2Kq9XUu3dS3udZXgi23R8AEpNvOvQEvK-EOOU1H5hpogi8TE4Ikh7f4tuxMC5c-XhWFSjOlw-5xDtpyjBaJYrCBVLoBAUXrgTs",
+        "places/ChIJK0u1Ol2ipBIRiapk0P5DqoQ/photos/AcnlKN3Rk8_gMBO2a1iFOv1jdjrRwM7h5wrLIrVwnNJbR5dFqv8E3WpIAtUVEu0Y-29Kx3gexye6jYcbFTTPyIdXZIz5raFN0N-7-0T8MJ1Gz4pn0JrC5b7weyU2VDdGrTElABBB2fasHgIsF4yoTtguFO9QtTVHSArtHwJJjmmj1wAadKunIjWul8XTX_z_eTUMtz43eXybXvUCoUyVYuoAD2FAJK3RIv5ljJD-OHLzyv_cegP6XwxhhCxdZqlanmkjEY3J3NHn6LYG_mFtsbFUxyTYK3SMEkPKRw9PHq02du36Mw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9559527920744311433&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Hotel Barcelona Center",
       "category": "hotel",
       "address": "Carrer de Balmes, 103, 08008 Barcelona",
       "neighborhood": "Eixample",
-      "phone": "+34 935 181 300",
-      "website": "https://www.hotelbarcelonacentre.com",
-      "description": "Business hotel accepting pets, provides dog beds and bowls, near Passeig de Gr\u00e0cia.",
-      "descriptionFr": "H\u00f4tel d'affaires acceptant les animaux, fournit lits et bols pour chiens, pr\u00e8s du Passeig de Gr\u00e0cia.",
+      "phone": "+34 932 73 00 00",
+      "website": "http://www.hotelescenter.es/hotel-barcelona-center/",
+      "description": "Business hotel accepting pets, provides dog beds and bowls, near Passeig de Gràcia.",
+      "descriptionFr": "Hôtel d'affaires acceptant les animaux, fournit lits et bols pour chiens, près du Passeig de Gràcia.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -689,17 +1266,38 @@
       },
       "priceLevel": 3,
       "confidence": 80,
-      "reasoning": "Business hotel in central location likely accepts pets"
+      "reasoning": "Business hotel in central location likely accepts pets",
+      "googlePlaceId": "ChIJuWTB-pGipBIRiEdZbRcEnx8",
+      "latitude": 41.391723999999996,
+      "longitude": 2.159261,
+      "rating": 4.2,
+      "reviewCount": 2176,
+      "photoRefs": [
+        "places/ChIJuWTB-pGipBIRiEdZbRcEnx8/photos/AcnlKN2eFqhQh3mcJ1ae72htUHddyj91eaiv6X5isOcZteFLt6YoLvSsAWmnUg2_g0P2LUcxwHYM8KUAGQZFMGpGHypdtY9Iqnn4hmySmquXd8A01hUjK6PTYI4uZ20HbTlqnKUeFy5UuZuO7M-sUD848xyj-km3qsX95o2AdkN4EeaOgwI3FnLB6u-_fYmPZGTsttWnrMBtACvXG1GJaQojDgy9vrNT8i8HsxmrmdHQcWmAWnAWn9-KLxOhkWiEglEvwPdKdqn2dF3X4CFZ-4Z61VXR6zsFCVOEEKI-JVWGauZaIw",
+        "places/ChIJuWTB-pGipBIRiEdZbRcEnx8/photos/AcnlKN3L8gHKDY0gE-6BuWL65Al7jZar2mbLDCfvS-EYNvInadUE63t-UBnk_7EGpsPTbfteLcGJQbpfKeo2LOLwHI8xdWkcIT-9IMvrH-WNCU5iCOOTRomy1cxukzUu7KIo68vi6VoEsRt9C8jlC6WzLp2Bw3Y8Q06udgmJhrmLXbdNoeRlDv5iKoTcgJGlrnAgwBwIBkWUJGmDkiyJsG9DKbcHY9UXMtFrfKAbemH0-R478IX4CiyfBpxcXWsJhGOEo8EG-F-mzzg9WT7BVya_bS3CkG0C_Mwtnnu3Y2_vnxs3Fg",
+        "places/ChIJuWTB-pGipBIRiEdZbRcEnx8/photos/AcnlKN0IMph9T40GHGJiM__ywXtz1pPMLsjUBSD0dhZjjkcGYu1TFiqZuh_v_xMZHvFBKLw8xpUcIT_NaVRXM8yHIA29Kk3172Cs0yV4f-Pmu3DH8BELfOtEbN36viY_us4B-Cy8K2-BtFXcLtbftBnxpvzRc0mQOp8tiGKbcSvUsYAOxleUIeYLzuXajNt9XwtjDuf4eFm1cOi2ERobSvemuZ6zPRKUbhZ2GBGgy5SAo9ZxDnxphKqFl1O6b8CJXYKnkquMv_IV9hG-THaSc_p1RRDvO5S79FoE5qQczsx2L-jnAJhQxqP4y-46G2XuR8kjnG6LVN3iXfsZEk3mZZMVcLOJuxIyzxQg4gCJyJzIYB6J-NO0LSIeVTftoRIILYhUDJ1xLASglrLrbO6d_YokeH8qhTRoK3gO_1siGCSSSbp9xYBa"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2278544435138086792&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
-      "name": "Hotel Neri Relais & Ch\u00e2teaux",
+      "name": "Hotel Neri Relais & Châteaux",
       "category": "hotel",
       "address": "Carrer de Sant Sever, 5, 08002 Barcelona",
       "neighborhood": "Gothic Quarter",
-      "phone": "+34 933 040 655",
-      "website": "https://www.hotelneri.com",
+      "phone": "+34 933 04 06 55",
+      "website": "http://www.hotelneri.com/?utm_source=gmb&utm_medium=organic",
       "description": "Luxury boutique hotel in medieval palace, pet-friendly with premium dog services and terrace.",
-      "descriptionFr": "H\u00f4tel boutique de luxe dans un palais m\u00e9di\u00e9val, accueillant les animaux avec services premium pour chiens et terrasse.",
+      "descriptionFr": "Hôtel boutique de luxe dans un palais médiéval, accueillant les animaux avec services premium pour chiens et terrasse.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -712,17 +1310,38 @@
       },
       "priceLevel": 4,
       "confidence": 85,
-      "reasoning": "Luxury boutique hotel likely offers comprehensive pet services"
+      "reasoning": "Luxury boutique hotel likely offers comprehensive pet services",
+      "googlePlaceId": "ChIJWU9gM_iipBIRBo0JgzCmYjI",
+      "latitude": 41.3831717,
+      "longitude": 2.1753815,
+      "rating": 4.5,
+      "reviewCount": 641,
+      "photoRefs": [
+        "places/ChIJWU9gM_iipBIRBo0JgzCmYjI/photos/AcnlKN1t8FvbbqxpLr0rNOGkwOMSreGBKLScno7V169wtcpCTXfsaIs64vIlwyY9paHgOH3Ygv16AzYuczk1P9WeQdNj1YvUiWqhDB-4WlwwadDMdemk3Aw7uc7G_aul-ILltZcVeCsU9QgsGLQd3Cp0pdSB88cTjUkbfHalQhPgm9IrvZwJQgxJPwndcvUjfwOAydLyrai4rBwt1LBHyjqOF80EpT0cy93KsVt6Zuz5WKfbmf6sRfBu4u5cDdQ3rxtO2SpKqLbNj7MT7vAkReLo2ixVLIhfUsEXeZMDo1kLOM69xg",
+        "places/ChIJWU9gM_iipBIRBo0JgzCmYjI/photos/AcnlKN1l414QAK_iSbHgV4zJPTfUM07H6EMbpqe8keicMzwZ3_MfNqKkuBzTW2_4Qyd-rlaOUKJVJGsOl2OcBAnD-IrdMDKcEPxjA1qccMg2rENWj42HN4zgEIYNc00lOApR_gNtffA0bHjkyWz0H-d4_mqu6qPOoXF7qvzem5_MbTpund654V3DbZ_nUaX5wRBs25fTsa7SSLYvV2yWJfJGbhFfHQad8yCfojMv98w5hDH34hDtn20kQT0FdQe2x0n519xSWL-yqfwsGuK1yujES1GwmGeM4XM2DX8huQpM8gtsRA",
+        "places/ChIJWU9gM_iipBIRBo0JgzCmYjI/photos/AcnlKN1UcKoAImKGcGejZu-1jhb3heMhsDxx9qveHwhwIH88C3p5Ek82aYJL7HNM-G-qj4FZIMuQVUUX1ZW8za-NC4req8aHSS8ccu6F8y4y2Bpc-MaXP4MqJT61UWhAXDuF7EB-bTaEeXtoJH6jrRFqYvTwZWT05cX18KCutdtRsEnXPvpMtxmivS-YQJQ8-C-RiFY43zsaM216Af7Tdz8l-KiTzrr_RlRWpf0T6bLJ1Lfi9TwqLXHnGOZlzueaJTF9y_rCeOd7C4X3jvTgbm0TzY_nVxy0ApjaJgyCGVRjY_HBJw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=3630646976901123334&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Hotel Wittmore",
       "category": "hotel",
       "address": "Carrer de Fontanella, 14, 08010 Barcelona",
       "neighborhood": "Gothic Quarter",
-      "phone": "+34 935 508 100",
-      "website": "https://www.hotelwittmore.com",
+      "phone": "+34 935 50 08 85",
+      "website": "https://www.wittmorehotel.com/?utm_source=gmb&utm_medium=organic",
       "description": "Adults-only design hotel welcoming dogs, provides beds, toys, and treats upon arrival.",
-      "descriptionFr": "H\u00f4tel design pour adultes accueillant les chiens, fournit lits, jouets et friandises \u00e0 l'arriv\u00e9e.",
+      "descriptionFr": "Hôtel design pour adultes accueillant les chiens, fournit lits, jouets et friandises à l'arrivée.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -735,15 +1354,28 @@
       },
       "priceLevel": 4,
       "confidence": 75,
-      "reasoning": "Adults-only design hotel may have pet-friendly policies"
+      "reasoning": "Adults-only design hotel may have pet-friendly policies",
+      "googlePlaceId": "ChIJoeF3VP-ipBIRpjdaHk-xhgk",
+      "latitude": 41.380947,
+      "longitude": 2.1796175,
+      "rating": 4.6,
+      "reviewCount": 431,
+      "photoRefs": [
+        "places/ChIJoeF3VP-ipBIRpjdaHk-xhgk/photos/AcnlKN3AJmKq6Fu0zzugBQ_c4YwwxuprdKWiMWFDOdQxgDJxk0oU5vxzhFHFEZT5WF5sNaS3Zt-TsH_zJAj-qB2-paNJ2ml7QES8n0YrL8DAEmllWZT8-QdwCyqW7u2WVOwTnwH2ZAGjNMPr8u96hb1V_zqkTlRpW49B6gl4GbrA7ut2Zpefi6AUhe-R-qMApdnkeBOVCsjpgLKrEgzsXjze-hoZigXyRTbLQLFCjEisHaqtW8B7d4gGxgNeYb8rEOK2tWMOQNXe4Zf0uRVTshc_Ktv2CN5by9Zz8WT2rAAdb3LeMw",
+        "places/ChIJoeF3VP-ipBIRpjdaHk-xhgk/photos/AcnlKN1pSs0Hf0nKxZ-taMS9ygMJ738Wyi63yStrb3D81hvJVC1sAQsPxO1msiJcm4Rvg2Jr-GbcRnWqJEdN2aK4IA2_le7rbGW6q696RE13Y7TPm_jC70FtquYAjMgnRJBQQO8OlKloL_qvg8YJBxN-M7FjyAz9pe982mxE5t4gIiLjRRUmUNUuSiondo9eOUQ1550eb4GtLo6E2cvXHeLffZfp-RDB_HABrHiWJBA4HWQTh71K_zGSTcN1d_Xd423dggnJTPSti6lzC5DUQP-4OS4gEj3UUfFq9AcYvIkcLkzrng",
+        "places/ChIJoeF3VP-ipBIRpjdaHk-xhgk/photos/AcnlKN262SIz8pOGHhEUpOxaQz9Dwi2F-x9ZwLWSO41bEO9NtM-_oUnVdQYrUJNcd7IbovPVFWeDnxIoboPo7qs1OZPnv3pARw1l8w3nKRW2GVtR-JvIYlxJDVLJtwxJGHO7puVU3_jYqdzOnCzp8Sg_Ba_8bT0LCVrR89otUA3O0oLHTRfbCIr8NaGWH7FxxxkhX3J_bDHo1aftJeG4TNAB7uiLU4mmggtJuSxDiRg0WmFJsv3Uotp0bjpzgqT3i2uQUonYY12zMCogS3MKOsHwWjpYEXrj9LOzgsW0Ipr4VDMSOe6A_ZDQLh6zXQ8_LJ-aNCkgd4FMauNfZVU_-Nogq-tJu5_oavMUWdWSU1wL05dtCym4LWv_RgzXdyAIXSwFTpmQfFrbmDXFDV5Jl1J9MiPzVTNCD3AwwVxbzK7EOOO19A"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=686430946590341030&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Petite Maison",
       "category": "shop",
       "address": "Carrer del Rec, 23, 08003 Barcelona",
       "neighborhood": "El Born",
-      "phone": "+34 933 102 077",
-      "website": "https://www.petitemaison.es",
+      "phone": "+34 932 17 26 66",
+      "website": "https://lamaisonbarcelona.com/",
       "description": "Pet boutique with high-end accessories, food, toys, and grooming services for dogs.",
       "descriptionFr": "Boutique pour animaux avec accessoires haut de gamme, nourriture, jouets et services de toilettage pour chiens.",
       "dogFeatures": {
@@ -758,17 +1390,38 @@
       },
       "priceLevel": 3,
       "confidence": 95,
-      "reasoning": "Dedicated pet boutique specializing in dog products"
+      "reasoning": "Dedicated pet boutique specializing in dog products",
+      "googlePlaceId": "ChIJtas92piipBIRW98OpwHJWXA",
+      "latitude": 41.4006019,
+      "longitude": 2.1486639999999997,
+      "rating": 4.6,
+      "reviewCount": 70,
+      "photoRefs": [
+        "places/ChIJtas92piipBIRW98OpwHJWXA/photos/AcnlKN28Ok2ECieJj8r6dLFm7UiI0ksq34zanTKaas21O5bkTRtDQvnW5kCfewGug0gOShg_eTqUWbX5KpfpGxfLQBfCYJtEG6vguEtsLyLAAKd7ss828PjXHRPl1uSwBthfX14SSQ09gXhCsVcH0KS2IPpDLZl_T-W_mzUFUxdgQsOpKne1382YI6CgWMBR7hn7oWpTObXLPxr1HZuv9OTHSjX7YIYGF9IZ14kS02eH2dIKJaSXDtgQ_NY5RZ9kSwQD1rRF_EYho5rrx_6aBmfOfit68DRgcCyxsHoMa3tFKQHVCRGjHQBcumHnf9z9yU078TPtzel1608kx0Lc_UDyieeTvgc3BAVCochNmdUiH5Ih5UnPfUUnx8nYZddTubrx7wSGj069J1UBRWak52cKGpKwxFouw3JhaSj0ESWpvMakLFab",
+        "places/ChIJtas92piipBIRW98OpwHJWXA/photos/AcnlKN2fyb7T9ZXGOn6sg3CfZ_SaoFYQ4ezT8JMeNQV8-4mEegCwI3wX8nDUZEEXVpRP0k35fJ4pO2xfA8-yn2Fnbs_6mVRlZNpZ6HeEkfNkYLpqGKu2E7gMuzS4RYOGxJOtieFSl9HqIm-Hb-W6qrPXcTsOsJ1C4_zSq5H3oVrBhLIqAiUYQimHyYqr5ipMbzNgviJ1AqnU5RSALezADsEeNbXg7z08SuWZuWiNxkZ-GCBMN06NNY2GR6xuqRk4utl22gUeB3tfZJpik_zxHRcQ3xboIK8k96saUZc4Jy0GlYDhCQ",
+        "places/ChIJtas92piipBIRW98OpwHJWXA/photos/AcnlKN2g4PIIsE39PZY5MARdS-WYQWEFCpqJV9PHdqPG9DhbtgUwi83VQxkYqr4smujck3DTRYjHJqqVZDgQm_eebgYvlHqIcYOX8DKm2NHA-sNOiqZg4IpJ3_YRKTk8SqNFMSiZ0F0gZl5_PZSZge3yNsQNYMuLFcArj_841bJUxbv0FmXdrjmhMnVRV9NLfwddwBeOaFLM0NDaCYMAOIS4IXKJbZNtmu2ca3fFOEL9qSv25QX4mYJ4r1ToLaM_nW5WCG-JXBxP3Shk1sKYEQh62Ik4kUPp6xk-kgfhQMAWVnGlSw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8095722814110097243&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:00 AM – 8:00 PM",
+        "Tuesday: 10:00 AM – 8:00 PM",
+        "Wednesday: 10:00 AM – 8:00 PM",
+        "Thursday: 10:00 AM – 8:00 PM",
+        "Friday: 10:00 AM – 8:00 PM",
+        "Saturday: 10:00 AM – 2:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Kiwoko",
       "category": "shop",
       "address": "Carrer de Pelai, 32, 08001 Barcelona",
       "neighborhood": "Gothic Quarter",
-      "phone": "+34 934 123 456",
-      "website": "https://www.kiwoko.com",
+      "phone": "+34 935 48 09 20",
+      "website": "https://tiendas.kiwoko.com/catalunya/barcelona/barcelona/kiwoko-barcelona-aribau-33?utm_medium=maps&utm_source=google",
       "description": "Pet superstore chain with extensive dog supplies, food, accessories, and veterinary services.",
-      "descriptionFr": "Cha\u00eene de supermarch\u00e9s pour animaux avec fournitures \u00e9tendues pour chiens, nourriture, accessoires et services v\u00e9t\u00e9rinaires.",
+      "descriptionFr": "Chaîne de supermarchés pour animaux avec fournitures étendues pour chiens, nourriture, accessoires et services vétérinaires.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -781,17 +1434,38 @@
       },
       "priceLevel": 2,
       "confidence": 95,
-      "reasoning": "Major pet store chain specializing in pet supplies"
+      "reasoning": "Major pet store chain specializing in pet supplies",
+      "googlePlaceId": "ChIJ9WnFFYyipBIRo1RODlYGU1s",
+      "latitude": 41.3868705,
+      "longitude": 2.1611843,
+      "rating": 4.1,
+      "reviewCount": 2681,
+      "photoRefs": [
+        "places/ChIJ9WnFFYyipBIRo1RODlYGU1s/photos/AcnlKN2VL8dIUXOxfvKbbPEI0rGbEy7ZvXr0BH5o5PA8bgxD9WyPOQkgWE53eEnJNz9wWJ_6Ncs-rXsRp7Q0NASr3aiRh8IBYCSl3sD7bM6WXxyDbMTKBe16tDqRLatCfuxrOki_Do2C-jqvcu2bIoxBIQYIH5wgBGvZ4BDkKY62cjik32ficZiXxbaTZmYLGsbK24-QI4hNar8e9eJBCmV8Qt9tiMrjm1oa7LA1dX7NMorAVOXYe7_xL-Xe_NnfaiDvKOzTOwXQi_T0rJBnhNErc7_xdkLySwajKsw1i2AKa-VIkw",
+        "places/ChIJ9WnFFYyipBIRo1RODlYGU1s/photos/AcnlKN12DkqUsQWl_VDZtrfyLTDaEUmdhDHW867hM8oxt2C4XYqd0NsOXqwU1_7DnpsHy9nIk86vU0-ijPOM7P0oFkFYxmczqFbpCfwFLaN6ibCCGOfLO-_hWkoIUjRIo-w95FC9ORvc34xwRq0iwnX6DROkgY8UGQiSWDZJPK7nnFno06pXiMi_p1O862_kF_3q8psykVZpaVOLCvVKJM2TdZJfvJrvarumXMh1pHPRyyvwbu-FBmCG3CetvdhVUUzh-R27UuYApitv50GSYbVFGd8A6I_d0mj1AooBFZQydqag5XPZ6z-6r_m4-Gpoo6raeeM2zs6Yu7Ha-_XBwy1sMwhlQVhks_PFyiM3qyBYFyEitSo4W9so5hW6Uk3nNsjeTzPhqw-mNPwhJ9y_fHoHfVQxdAzZtYVkkFjIVWJ-PTxHcA",
+        "places/ChIJ9WnFFYyipBIRo1RODlYGU1s/photos/AcnlKN0hhNo-JU9A9NDuIyu9wcnxNZHotFi2sMb9dDCVpbMW4oNIXReR1aMY1du4aNZTloR0RgbtRv4ISym3yH5RRdpwNb4p-cdi8wm6iJIJhoGfya_UGq34yndMr5H8u4jg7zFIAFKiEHLhNWb5eZcUvgWidgKLewmG7ZS-TIqACjOV0ke0O-GeyMYjBWtqB7PsWrNViZqEeFFTGT3_-EHySOnOG-4-y7SI3JdTnt3qjRw4baiEaAjbpTMakxdhnKyb9H3sZexKSgy5M9YwMZ7YHOY9NKud6-zaJacB9BXgNfbMKg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6580610447195395235&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 9:00 PM",
+        "Tuesday: 9:00 AM – 9:00 PM",
+        "Wednesday: 9:00 AM – 9:00 PM",
+        "Thursday: 9:00 AM – 9:00 PM",
+        "Friday: 9:00 AM – 9:00 PM",
+        "Saturday: 9:00 AM – 9:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Decathlon",
       "category": "shop",
       "address": "Carrer de la Marina, 16, 08005 Barcelona",
       "neighborhood": "Poblenou",
-      "phone": "+34 932 254 200",
-      "website": "https://www.decathlon.es",
+      "phone": "+34 933 42 61 61",
+      "website": "https://www.decathlon.es/es/store-view/tienda-de-deportes-ciutat-vella-barcelona-0070025700257",
       "description": "Sports megastore with pet sports section including dog running gear, leashes, and outdoor equipment.",
-      "descriptionFr": "M\u00e9gamagasin de sport avec section sport pour animaux incluant \u00e9quipement de course pour chiens, laisses et \u00e9quipement d'ext\u00e9rieur.",
+      "descriptionFr": "Mégamagasin de sport avec section sport pour animaux incluant équipement de course pour chiens, laisses et équipement d'extérieur.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -804,17 +1478,38 @@
       },
       "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Major sports retailer with pet sports equipment section"
+      "reasoning": "Major sports retailer with pet sports equipment section",
+      "googlePlaceId": "ChIJlb_qI_eipBIRSok1XHpPIqs",
+      "latitude": 41.384794,
+      "longitude": 2.172671,
+      "rating": 4.3,
+      "reviewCount": 20687,
+      "photoRefs": [
+        "places/ChIJlb_qI_eipBIRSok1XHpPIqs/photos/AcnlKN0amw0-MxrujQ3UOg9noWfLAo3gefinEYxXQVHsD33X0pGGyvA2EO4FCjPnfBMZyVr7AbAlJhUvRix-rEn1bvuUDOHVM6iMmKWdaonYYBFuFXmp6aoHR5BAmH72_cDRB2H_kxOPoPpzOBfMeg1m80UWadhuP_KrLXIo805jr4kEM6GjhMudcoLYY-x5R9Qr0usOt5HaJnlC7I8iI4G8bOQ9N8hHzXEL6rohV_fImFz774ZLuZf7gwU6QwO1NZ-S62TQMd_Kiov8qmNKbmPe_60cpMNDuUrMcTa_XUL2toZWWg",
+        "places/ChIJlb_qI_eipBIRSok1XHpPIqs/photos/AcnlKN05_sTWqvrWskCbzYiFdrKwqx1XMz2Orv9b0xg5CSHjVRdTvolenDgAOGekJ8QKjFAoyj67YL_lmWiGRpEi0e_m567lX9kxs38obeYRj76r99Xah6TbI6P3Gq_5M01NL5zFJmwDOGkfQ_xcMKL-yN70QVr-UTe3OiiYSkq4rafXVRyiI-vzCkF3EtyfnYnlVGbbmg3uA85rP2M5wOH-4Dq7WHtnAOsT4Ls4IvRjqJARWJ1MmiJoLKzrRjcFfKsU1vgoRywEYpxn_Vfma2EJhUliTR0290GpjF02_TydgvSpmqYrFZrgwG8TMJghdYoV_Ytbt3kCEAxpwkTGrlEbJJcdSmm1xfFZP1gwmQM8BPprY5y3SmklKcnw8X4vf4XflSJEzjC1gA-huoX_eeZCqCYydj1mSpcAMLspt910IYR88djOh2_ycuoksahCihxJ",
+        "places/ChIJlb_qI_eipBIRSok1XHpPIqs/photos/AcnlKN0RE3AhYJm-sKDz6XxOIrcDqt4A2ZVZI2Ww6skOIiQvYEKApD5pIf3fY_gBT1EFqSWSnhNQ8LnwZ9_qR00qmSyfAsEdPe2tw40ckIP6E8MAYuH3j9oUvhmSzZ3t5niIvdb_GCvlGWZKwhCxQ2iBDFqmH-YOpygm0s-_IfmEMUKqEAQFmspKlphRnRbfD02rS1XDUkpVt30_pWq6ex_oO6QjJa616JOKVHJlor_hUfUi7xOVZNrRIszxoFU368aGWnNpNz1d9Wn2hiAbBI7VEkTbh0O0RRcPZy4qXQ-Tia6JYzBsKUsxRUvzwCpQB-geVw40_cdRbA4iND2ub3S3mbrN7zc9RNBfm07BZTZ3Ev9lL8Gge3q8m1xK5XlvHUlDY_fZ9XTtJXpvuQ5zzGtzqxbdN25CINmRf1mjs6hw19BAm6K3CMnE9u0YxF1w3GJZ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12331506116645456202&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 9:00 PM",
+        "Tuesday: 9:00 AM – 9:00 PM",
+        "Wednesday: 9:00 AM – 9:00 PM",
+        "Thursday: 9:00 AM – 9:00 PM",
+        "Friday: 9:00 AM – 9:00 PM",
+        "Saturday: 9:00 AM – 9:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
-      "name": "El Corte Ingl\u00e9s Pet Section",
+      "name": "El Corte Inglés Pet Section",
       "category": "shop",
-      "address": "Pla\u00e7a de Catalunya, 14, 08002 Barcelona",
+      "address": "Plaça de Catalunya, 14, 08002 Barcelona",
       "neighborhood": "Gothic Quarter",
-      "phone": "+34 933 063 800",
-      "website": "https://www.elcorteingles.es",
+      "phone": "+34 932 81 50 13",
+      "website": "https://www.elcorteingles.es/centroscomerciales/es/eci/centros/centro-comercial-placa-de-catalunya",
       "description": "Department store with dedicated pet floor featuring premium dog products, food, and accessories.",
-      "descriptionFr": "Grand magasin avec \u00e9tage d\u00e9di\u00e9 aux animaux proposant produits premium pour chiens, nourriture et accessoires.",
+      "descriptionFr": "Grand magasin avec étage dédié aux animaux proposant produits premium pour chiens, nourriture et accessoires.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": true,
@@ -827,7 +1522,28 @@
       },
       "priceLevel": 3,
       "confidence": 90,
-      "reasoning": "Major department store with comprehensive pet section"
+      "reasoning": "Major department store with comprehensive pet section",
+      "googlePlaceId": "ChIJJbiSbfGipBIRtqUfjy8u5sg",
+      "latitude": 41.3876381,
+      "longitude": 2.171023,
+      "rating": 4.2,
+      "reviewCount": 54528,
+      "photoRefs": [
+        "places/ChIJJbiSbfGipBIRtqUfjy8u5sg/photos/AcnlKN2TVq5iJFRjVraho1GMOvmIs5jvkAEirM7cu3-oBHhgKlM05xE6usGjPXa3wpuBj_vu3l6E6wFjzpJLhQZw_Zz2MCWlHu8gQ0v043TE89LwjiYHeeZ4CSLZKbIYEY7YhxgbXQ01J5HbnVfkSSho_Fyy3PKsS9FUAtysbUykDclVK5vmsgrback7B_vxFzxwBQG7Q9rIYQQqFadfZWJmJ809ttIcpqAKfTCB5S291RMrWvZkNd1gZouap-LXWV5fyZLB3AI-084LzMlJv6Pb0ISDDyss-YeR7lFWd1i0YppqUA",
+        "places/ChIJJbiSbfGipBIRtqUfjy8u5sg/photos/AcnlKN19ge_qVMMPKCPVaZQxB2G_XOgI9DpOP_C4Slt76qWCfh9602Q83mscMxi-BDUnRx0g79FU0zXCHzOFXizqA_GHLJldGgucQE0QL_SrMq5eya2hlkQFptPpTFiV4d2VcqFLRvObeJ-0eJT6qkUz1leviKHkAZabJ5TcAMAJI8UlfaAywG_a74w57_bauGWSRzNUp_hfYzWv2gghLcV8vjz0TFyPhq3hibV94iIjbj_gKkRIDxUzrHvoFVT2Oiv1S0d8b7Ws_X_fTrIQP5CNhDPb95UQxlQ5bBzcB7ZSMkXqyGSnMxI-H7iA6mSfgegvhXmMvDOKYlP52_uK3HCTI891BwoKJbosD38P1MyjGk0Zsu6y57XvDVj9odk167XuZ-QcPDm30xbaqveKPvyclRbQIvLJhurkiH76whavJz8F9h1Qex09k4JbncqSCg",
+        "places/ChIJJbiSbfGipBIRtqUfjy8u5sg/photos/AcnlKN16a7WAcUqMGcUr9XF-ukuRiylmb1PB6vE_lS1QqO8-zigTwFukq8l2GfWAJhZ-GYhmhBoEOp2MxGGq4nsQvj0sOfOzkgKvFr_jY-gRlo9Hkedb8d4yCV7AeA1AZCxeBp3TGS6NEUFF8p2O06Omy4VowpT3kDJl9ONNckED56DMN2JpXO-7erY6Tk4W5WFkJOw_FwWctt1BUd2_Q4DQYSeSwhkqQMCJFO3kU3d6PG0GhGdUZJHrVaYKhuko-lYec4TwVwIMbEqH8D-aLfvV3mOYrbf84kcXX_eMUZKh-GZBJ4SrTLz5erm7FZMFNCP5hrdGIUvCv2LNXWm__CjuCujeRDsCJSvE8UqWEVy6ASKdH96ehZn6jW2oVq7V6Wkomd_foy4uKfDBjuLYOk9Y_mNCbsD2fZlZ0ZXrZuarYRApFA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14476308834028594614&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 9:00 PM",
+        "Tuesday: 9:00 AM – 9:00 PM",
+        "Wednesday: 9:00 AM – 9:00 PM",
+        "Thursday: 9:00 AM – 9:00 PM",
+        "Friday: 9:00 AM – 9:00 PM",
+        "Saturday: 9:00 AM – 9:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     }
   ],
   "count": 36
