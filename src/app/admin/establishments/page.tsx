@@ -3,9 +3,14 @@
 import React, { useState, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { GENEVA_ESTABLISHMENTS } from '@/data/geneva-establishments';
-import { CATEGORIES } from '@/lib/cities-config';
-import { getCategoryIcon } from '@/lib/categories';
+// Mock data for admin display
+const MOCK_ESTABLISHMENTS = [
+  { id: '1', name: 'Café du Soleil', address: 'Place du Petit-Saconnex 6, 1209 Geneva', categorySlug: 'cafes', citySlug: 'geneva', rating: 4.5, reviewCount: 28, isVerified: true, isFeatured: true, tier: 'premium', images: ['https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=100'] },
+  { id: '2', name: 'Bains des Pâquis', address: 'Quai du Mont-Blanc 30, 1201 Geneva', categorySlug: 'activities', citySlug: 'geneva', rating: 4.7, reviewCount: 45, isVerified: true, isFeatured: false, tier: 'free', images: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100'] },
+  { id: '3', name: 'Parc des Bastions', address: 'Promenade des Bastions, 1204 Geneva', categorySlug: 'parks', citySlug: 'geneva', rating: 4.8, reviewCount: 62, isVerified: true, isFeatured: true, tier: 'free', images: ['https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=100'] },
+  { id: '4', name: 'Le Grütli', address: 'Rue du Général-Dufour 16, 1204 Geneva', categorySlug: 'restaurants', citySlug: 'geneva', rating: 4.2, reviewCount: 15, isVerified: false, isFeatured: false, tier: 'claimed', images: ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=100'] },
+  { id: '5', name: 'Dog Park Champel', address: 'Avenue de Champel, 1206 Geneva', categorySlug: 'parks', citySlug: 'geneva', rating: 4.6, reviewCount: 33, isVerified: true, isFeatured: false, tier: 'free', images: ['https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=100'] },
+];
 
 export default function EstablishmentsPage() {
   return (
@@ -23,8 +28,7 @@ function EstablishmentsContent() {
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
 
-  // Use Geneva data as mock
-  const establishments = GENEVA_ESTABLISHMENTS;
+  const establishments = MOCK_ESTABLISHMENTS;
 
   const filteredEstablishments = useMemo(() => {
     return establishments.filter((est) => {
@@ -246,7 +250,7 @@ function EstablishmentsContent() {
 function EstablishmentRow({
   establishment,
 }: {
-  establishment: (typeof GENEVA_ESTABLISHMENTS)[0];
+  establishment: (typeof MOCK_ESTABLISHMENTS)[0];
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
