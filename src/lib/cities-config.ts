@@ -32,7 +32,7 @@ export const CITIES: Record<string, CityConfig> = {
     languages: ['en', 'fr'],
     description: 'Discover dog-friendly parks, restaurants, hotels and more in Geneva. From Lake Geneva shores to the charming Old Town.',
     descriptionFr: 'Decouvrez les parcs, restaurants, hotels accueillant les chiens a Geneve.',
-    heroImage: 'https://images.unsplash.com/photo-1573108037329-37aa135a142e?w=800&h=600&fit=crop',
+    heroImage: 'https://images.unsplash.com/photo-1752405165625-15bc2e842f05?w=800&h=600&fit=crop',
     isActive: true, emergencyVetSearch: 'emergency vet 24h geneva',
     dogRegulations: { leashRequired: true, offLeashAreas: true,
       publicTransport: 'Small dogs in carriers travel free. Larger dogs need a reduced-fare ticket.',
