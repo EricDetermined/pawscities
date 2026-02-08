@@ -1,177 +1,146 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { prisma } from '@/lib/db';
+import { NextRequest, NextResponse } from 'next/server';
 
-// GET - List user's dogs
 export async function GET() {
-  try {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const dbUser = await prisma.user.findUnique({
-      where: { supabaseId: user.id },
-      include: {
-        dogs: {
-          orderBy: { createdAt: 'desc' },
-        },
-      },
-    });
-
-    return NextResponse.json({
-      success: true,
-      dogs: dbUser?.dogs || [],
-    });
-  } catch (error) {
-    console.error('Failed to fetch dogs:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch dogs' },
-      { status: 500 }
-    );
+  if (!user) {
+    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
+
+  const { data: dbUser } = await supabase
+    .from('User')
+    .select('id')
+    .eq('supabaseId', user.id)
+    .single();
+
+  if (!dbUser) {
+    return NextResponse.json({ dogs: [] });
+  }
+
+  const { data: dogs, error } = await supabase
+    .from('DogProfile')
+    .select('*')
+    .eq('userId', dbUser.id)
+    .order('createdAt', { ascending: false });
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ dogs: dogs || [] });
 }
 
-// POST - Create a new dog
 export async function POST(request: NextRequest) {
-  try {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const body = await request.json();
-    const { name, breed, birthDate, size, personality, photo, photos } = body;
-
-    if (!name || !size) {
-      return NextResponse.json(
-        { error: 'Name and size are required' },
-        { status: 400 }
-      );
-    }
-
-    // Find or create user in our database
-    let dbUser = await prisma.user.findUnique({
-      where: { supabaseId: user.id },
-    });
-
-    if (!dbUser) {
-      dbUser = await prisma.user.create({
-        data: {
-          supabaseId: user.id,
-          email: user.email!,
-          name: user.user_metadata?.name,
-        },
-      });
-    }
-
-    // Create the dog profile
-    const dog = await prisma.dogProfile.create({
-      data: {
-        userId: dbUser.id,
-        name,
-        breed,
-        birthDate: birthDate ? new Date(birthDate) : null,
-        size,
-        personality,
-        photo: photos && photos.length > 0 ? photos[0] : photo,
-      },
-    });
-
-    return NextResponse.json({
-      success: true,
-      dog,
-    });
-  } catch (error) {
-    console.error('Failed to create dog:', error);
-    return NextResponse.json(
-      { error: 'Failed to create dog profile' },
-      { status: 500 }
-    );
+  if (!user) {
+    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
+
+  const { name, breed, birthDate, size, personality, photo } = await request.json();
+  if (!name) {
+    return NextResponse.json({ error: 'Dog name is required' }, { status: 400 });
+  }
+
+  let { data: dbUser } = await supabase
+    .from('User')
+    .select('id')
+    .eq('supabaseId', user.id)
+    .single();
+
+  if (!dbUser) {
+    const { data: newUser } = await supabase
+      .from('User')
+      .insert({
+        supabaseId: user.id,
+        email: user.email || '',
+        name: user.user_metadata?.name || user.email?.split('@')[0] || 'Dog Lover',
+      })
+      .select('id')
+      .single();
+    dbUser = newUser;
+  }
+
+  if (!dbUser) {
+    return NextResponse.json({ error: 'Failed to resolve user' }, { status: 500 });
+  }
+
+  const { data: dog, error } = await supabase
+    .from('DogProfile')
+    .insert({
+      userId: dbUser.id,
+      name,
+      breed: breed || null,
+      birthDate: birthDate || null,
+      size: size || 'MEDIUM',
+      personality: personality || null,
+      photo: photo || null,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ dog }, { status: 201 });
 }
 
-// PUT - Update a dog
 export async function PUT(request: NextRequest) {
-  try {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const body = await request.json();
-    const { id, name, breed, birthDate, size, personality, photo, photos } = body;
-
-    if (!id) {
-      return NextResponse.json(
-        { error: 'Dog ID is required' },
-        { status: 400 }
-      );
-    }
-
-    // Verify ownership
-    const dbUser = await prisma.user.findUnique({
-      where: { supabaseId: user.id },
-    });
-
-    if (!dbUser) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      );
-    }
-
-    const existingDog = await prisma.dogProfile.findFirst({
-      where: {
-        id,
-        userId: dbUser.id,
-      },
-    });
-
-    if (!existingDog) {
-      return NextResponse.json(
-        { error: 'Dog not found or not owned by user' },
-        { status: 404 }
-      );
-    }
-
-    // Update the dog
-    const dog = await prisma.dogProfile.update({
-      where: { id },
-      data: {
-        name,
-        breed,
-        birthDate: birthDate ? new Date(birthDate) : null,
-        size,
-        personality,
-        photo: photos && photos.length > 0 ? photos[0] : photo,
-      },
-    });
-
-    return NextResponse.json({
-      success: true,
-      dog,
-    });
-  } catch (error) {
-    console.error('Failed to update dog:', error);
-    return NextResponse.json(
-      { error: 'Failed to update dog profile' },
-      { status: 500 }
-    );
+  if (!user) {
+    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
+
+  const { id, name, breed, birthDate, size, personality, photo } = await request.json();
+  if (!id) {
+    return NextResponse.json({ error: 'Dog profile ID is required' }, { status: 400 });
+  }
+
+  const { data: dbUser } = await supabase
+    .from('User')
+    .select('id')
+    .eq('supabaseId', user.id)
+    .single();
+
+  if (!dbUser) {
+    return NextResponse.json({ error: 'User not found' }, { status: 404 });
+  }
+
+  // Verify ownership
+  const { data: existing } = await supabase
+    .from('DogProfile')
+    .select('id')
+    .eq('id', id)
+    .eq('userId', dbUser.id)
+    .single();
+
+  if (!existing) {
+    return NextResponse.json({ error: 'Dog profile not found or unauthorized' }, { status: 404 });
+  }
+
+  const { data: dog, error } = await supabase
+    .from('DogProfile')
+    .update({
+      ...(name !== undefined && { name }),
+      ...(breed !== undefined && { breed }),
+      ...(birthDate !== undefined && { birthDate }),
+      ...(size !== undefined && { size }),
+      ...(personality !== undefined && { personality }),
+      ...(photo !== undefined && { photo }),
+    })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ dog });
 }
