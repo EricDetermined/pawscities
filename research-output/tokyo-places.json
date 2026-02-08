@@ -3,14 +3,14 @@
   "places": [
     {
       "name": "Yoyogi Park",
-      "nameLocal": "\u4ee3\u3005\u6728\u516c\u5712",
+      "nameLocal": "代々木公園",
       "category": "dog park",
       "address": "2-1 Yoyogikamizonocho, Shibuya City, Tokyo 151-0052",
       "neighborhood": "Yoyogi",
-      "phone": "+81-3-3469-6081",
+      "phone": "+81 3-3469-6081",
       "website": "https://www.tokyo-park.or.jp/park/format/index039.html",
       "description": "Large public park with spacious areas for dogs to walk and exercise, popular among dog owners",
-      "descriptionFr": "Grand parc public avec de vastes espaces pour promener et faire exercer les chiens, populaire parmi les propri\u00e9taires de chiens",
+      "descriptionFr": "Grand parc public avec de vastes espaces pour promener et faire exercer les chiens, populaire parmi les propriétaires de chiens",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -23,18 +23,39 @@
       },
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Major Tokyo park well-known for being dog-friendly with open spaces"
+      "reasoning": "Major Tokyo park well-known for being dog-friendly with open spaces",
+      "googlePlaceId": "ChIJN9-qU7SMGGARhCpTp43adx8",
+      "latitude": 35.6729086,
+      "longitude": 139.69443289999998,
+      "rating": 4.2,
+      "reviewCount": 548,
+      "photoRefs": [
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN0cvsXhS6a0SWDh2K4lG-Z02Zp6mGHMUcvGvEQLxuf2dhAWWl46gsiJ3ZVg5FkzOa6tj8ONnEPGfBfnXQ8fsx9pq7Hy8NrenrnN0u1HHZrmALf9FcgpkjFXMPdXWsr3D-SL_a1gbKnXp5yakNbPLOvNZw3g73tesXbsvRojHDPGAZZV2goQQOi72K0L2SPvCC_Ku-3FnL-LkiEY6p7JAhCwF0kAGoeYZzzKs6vgPKI2N7uQO9Xqx81O8jhEVVE5UmUbBs5Dt-Nza0m6zQHL95MptWluxifWcGh8BNVKe1gxMaK_kxCnbhZlFEfNgGTSqW99XQeMMG8sTGIIfJVTZFifqT6JSbNpTBYRzipDR3ToozdWchh5hTVKmFNdXauiVOQSKgB-_W5FkW1MX80lkYcqpbGk05ltD_npP13dejYyrWSO",
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN2rDadge-2gZ2JMcnv7wlqYvo3wSHRbOe-iA3NTtHMGO4r2z7DTCws4d-WYGQ8E5p6z4rzbQezzWffOb9kTRBwqWcBAFzT1QdtM_kXJVXzoRGvgBVVQx78XeAFaq_EItwbOV46DGCoYs1oRtHq5hgmpipiE9VbUmY2EexSq5T1cPz7iidhA2ztBKNKRaCmEET6MXoniy74X8X7M-UcszobFkC0-6lhk9xLCra-3BNlXxRoNsx3pI-z_Kg3xsQ70UDNPd472YOQ_j6zERzNL_Mc1Rbt1-KMgysMIsyOTG9Bbj_FnCIF_3J6hgHX9G4QckLFTP3iZk-tkhgGgPXSfg0Nsn6bUGyGkkJ4BFXN88fLZWOXzOwAKCLVcRwu-UTPtSZaYVBsYkKiW_MtmzAaQrXpXY-NBjW5CM-6fdUxDOG6DvhJw",
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN03qDD3Q4cc4yXrkSMSm7qdG5ERjAmSDmz4GzY7RLCXTTSmtnWSxRXsRTQCYgVXfLGq2OQqwCKIdk7fjOAjMeVsTqjy9Hp62ni08tCAM-4Sn8SVKddcRwGepDmpr3C8onkkK0hivgNhHvEDYMw84z-WcJAp_MERauPwhUWdh4tV14MRHprj2pkh2SjgHfD9JNcjHR7dtDNCPvxY8WLlDfx8VsZ8whtPCO0Y_joLOWGCkiJsR9gqsze20cbH50UmZ1T8QjN6jGZmPfWUMw6FZ3f6QQT11PJ9_yLLwm3Wa0UdvtRl3AzZoMguWyx_vLVJvOHs1kilJ2kgJbQWYNhWp0Fpuvi7m7yQPSmUx1ApdrYUmCyqmGAIhJt5XHVQ_LWb64eyVypF6dRYS1UdB9PHw35sGOsDb5ZIay2IRJcMnJ-5J6Sh"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2267521239336823428&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Shinjuku Park",
-      "nameLocal": "\u65b0\u5bbf\u516c\u5712",
+      "nameLocal": "新宿公園",
       "category": "dog park",
       "address": "11 Naitomachi, Shinjuku City, Tokyo 160-0014",
       "neighborhood": "Shinjuku",
-      "phone": "+81-3-3350-0151",
+      "phone": "+81 3-3469-6081",
       "website": "https://fng.or.jp/shinjuku/",
       "description": "Historic garden with beautiful landscapes where leashed dogs are welcome",
-      "descriptionFr": "Jardin historique avec de beaux paysages o\u00f9 les chiens en laisse sont les bienvenus",
+      "descriptionFr": "Jardin historique avec de beaux paysages où les chiens en laisse sont les bienvenus",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -47,18 +68,39 @@
       },
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Well-known Tokyo garden that allows leashed dogs"
+      "reasoning": "Well-known Tokyo garden that allows leashed dogs",
+      "googlePlaceId": "ChIJN9-qU7SMGGARhCpTp43adx8",
+      "latitude": 35.6729086,
+      "longitude": 139.69443289999998,
+      "rating": 4.2,
+      "reviewCount": 548,
+      "photoRefs": [
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN34Tqh1gNwrnhttMvA1gRU-HI6AdHYSSgOWnkOCUUO8dXyEdtL-s475XS66MSPczDLU4raW9BX4sgsBKfWipHlYMBbyiBSdzp9SQIncFy1e9o8uZKfN09xcpeHHcHW9YenAmx68gf8vnWiIGU5K7P4mNrQOJJmJEucK6LpA2IcTgZ-kl9XuGkEm3-VWbto_wLm3BwF_3uiorCkiDoO8a6zxVeQhDulUq5bRfyX04btbuudsy1vk1l9lYdajfqjgCokE-473ACb08yy3LJ50F4GaW8fwEgKZVaSH06xJZiEoIxCybox9zW-WPrkwNwGiIWji50pqr_PdiuWFyZdYjqWP0QUsAmSSNzoxjaSXJJfIpQfcrhul8lTQbZH6RI0WQyTKVEk0Lc-NV8XAP7hEyNFdMKIIHyezFlIBaxKN3WBMzotB",
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN1nopR6z6slIsH47msm5sqc0TSrJlTPPjsmbR2Jn2zt21W59iY9jTaHQAXyclpoaiStBP7ugX1PFsYEbRI1EUcVtA9ZqdHYIe-B9pgj5UgOB9eWk5H-L9sasVS39YvsnPw0p54MSuWKU_DaoLKgN2vPThq7Z10fMAGZPynvlJtEEL4yHT3qMPN1VuBzYYXeKwLPGL-NSx1Nbnf6rZ6BASO92kL9w8OEy5NZzjsTFCnM47aMRyRlk8LTvkzJ5jS0SjWaaEK5pJsC8nFPABX5w2Wrmgr98y1xG2ea8-4YBBjdGH-pMV37Iczg6x6qvagsAJvjVceV4N-lgtA5HMuxa7P9yRGSQMkE_necRi-WWAKLW4CxiTHqWoFJy2ZMLuDcO8o9Bwfzar4ICtlMFvwn8SB4zV_UUwBP6s9d5qYqdTizztrx",
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN1SUgYs9Vi16Ai5rxL2WGP8aewOBmLqfenXmZ5ULlY-s4mum4Yv7kvfLMmENhKgIn8iIvuFSb5prmVR081xGUvL7mMjfkrQ6M7rxWjZoZyOWWbHyj_MA9N9gPKiAGv5DRGZpoDKBYU7Ux86AYfWJ9EnZYLnpLCASeq9oCgB7D5e-Ga9Fxe1TrhskX0cWKCFElRSZHTXzV6vShA8hO8QaDPNk_6rQ-AzhTNAFx69ukzX_eskiqBKujm9-lwNGDKd71Rn43edS7oVc5ts5umwAK0sVmJrQGQ-hDaLjSHcfojX6Ouefx102Xvy1EEXKwNBPniMyFfliNMnf3A2UpUwXvq9TpzdmXkJ9m2hiYKe0meNvVmVoDXrQSqBRTkdAsT_kBpIlUf0R5H2VbcVqxYfBipJGRM6bbzOplW7DH1szno-q-Cf"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2267521239336823428&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Odaiba Marine Park",
-      "nameLocal": "\u304a\u53f0\u5834\u6d77\u6d5c\u516c\u5712",
+      "nameLocal": "お台場海浜公園",
       "category": "dog park",
       "address": "1-4 Daiba, Minato City, Tokyo 135-0091",
       "neighborhood": "Odaiba",
-      "phone": "+81-3-5500-2455",
-      "website": "https://www.tptc.co.jp/park/03_02",
+      "phone": "+81 3-5531-0852",
+      "website": "http://www.tptc.co.jp/park/01_02",
       "description": "Waterfront park with beach areas where dogs can enjoy walks along Tokyo Bay",
-      "descriptionFr": "Parc au bord de l'eau avec des zones de plage o\u00f9 les chiens peuvent se promener le long de la baie de Tokyo",
+      "descriptionFr": "Parc au bord de l'eau avec des zones de plage où les chiens peuvent se promener le long de la baie de Tokyo",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -71,18 +113,39 @@
       },
       "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Popular waterfront park in Odaiba known to allow dogs"
+      "reasoning": "Popular waterfront park in Odaiba known to allow dogs",
+      "googlePlaceId": "ChIJ9aeqHiCKGGARFh-fljrxUT0",
+      "latitude": 35.633554499999995,
+      "longitude": 139.77207819999998,
+      "rating": 4.2,
+      "reviewCount": 1021,
+      "photoRefs": [
+        "places/ChIJ9aeqHiCKGGARFh-fljrxUT0/photos/AcnlKN3EJqpRwF_PCDMvDPee9LwB0Oek-VVU9ufWX6TKzZon8EHZ8WTb6aaHmt9SSsrZXZmHkfB_iuyxr10LzvHyRZFu5YltOk-jSJPzFaeFEBBO_nhrMUaWczL6ytsoki_5xMbILtjRY_301cvNnkP5t9px8Rd1KzGKy2Mq97xXB4H6yUStmw_SlB4G99XIIp7l0_AHzV7oifh3iY6OTuDQRor5HoPLl0gDsHsz6cZviwovGshimuj5HDhSgc0tuxvLJ8AL9yvYPCYQDlk8lIckDm3GznI1oLqaI6fOjVErH8gpCXLoMGYD3q38yyaK01HGKOiLL3qkN5GM3WvVSfN9D_xQm40lmdzcxPTCDyAGneruoFHz7hlCQTGK0iVHEpcgDp6ORkWtJ4kG_vK9zPjOsphaRjlFZ_ZesQk12wohru_Yiw",
+        "places/ChIJ9aeqHiCKGGARFh-fljrxUT0/photos/AcnlKN0M4LDNbKxB9J2daZ02nKX_xsmx1z_ghMbyIuzm85a7Wow1YZFFz9h8uIptFFKyu8PKc0N5VYRE6DOLLkk6uCd5inMuOZrdH2IdO1ceWwSPthFT3dHRV3YMMzwoCpg4424bMy0AtSpcuwkkpDcbMOKWWzCyV-xkddwMrCj8JIFhH2qHDGWlFA3Ttag4V_HgBsfiHwNmYbPyQxdvn6ZYiQslzmvkexqsWaas7YbZHrS7qtwUWa0aj0N4Ax-BVKDqNuLABPEi51OoSO7NDF-b5SoHeNtYfaUVhDL2xaRIVwm4MPX46Vgx4GXV3p0EDFS1oTKo19GlFj6pw7G1AensTfyHlT3MZ5GUe8cdqzVYt2BoWd1FVG2n3dAufIZTmv7JCPiZ1mVU2n3hTCBd5G6xWzl6vYQLK7q-BNg-SCInrA_U1KPb",
+        "places/ChIJ9aeqHiCKGGARFh-fljrxUT0/photos/AcnlKN17Q9uv_G-RtrYUp3eXTQOS9p0cCkuN-sIdh0Zhs6pMlndEy-U0aRPS2gxxMGNBPL_3uJYzxpIMCHRguTasQCC39ANxjEhR5k8Kkk7H1OEjOSJw_QVEyVObtxJg1cz4XInK1MI06YhPuZ9Mv3AC7Zt0iDcHIqmPF2p73QyGYDlsFs-V5DKeaVJOo1EL-AYYC6LzizGis3bdqvEGv97wl4-zru2hkXbv7Lz_rfcnMSHiM8IGNfgeUsxcSf2Fy2pRDc4H7UG42LQ8rx90QFO7dUIAnmTyb-0_D9qG80qZmnsdSqko7Nnpp-DlQHxx4TnIoNWHletiArQn0IZsbuwYjrrSX7X4PPOOZdCHhQsUg3Qx43yEPTIcUkNv8YxWh3pIr8RfPwdiWdgQKnntAu3plaFifJ0gczqQ3S85aKGJui8"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4418577943364574998&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Roppongi Hills Mori Garden",
-      "nameLocal": "\u516d\u672c\u6728\u30d2\u30eb\u30ba\u6bdb\u5229\u5ead\u5712",
+      "nameLocal": "六本木ヒルズ毛利庭園",
       "category": "dog park",
       "address": "6-10-1 Roppongi, Minato City, Tokyo 106-6108",
       "neighborhood": "Roppongi",
-      "phone": "+81-3-6406-6000",
-      "website": "https://www.roppongihills.com/facilities/mohri_garden/",
+      "phone": "+81 3-6406-6000",
+      "website": "http://www.roppongihills.com/green/",
       "description": "Traditional Japanese garden in the heart of Roppongi where small dogs on leash are permitted",
-      "descriptionFr": "Jardin japonais traditionnel au c\u0153ur de Roppongi o\u00f9 les petits chiens en laisse sont autoris\u00e9s",
+      "descriptionFr": "Jardin japonais traditionnel au cœur de Roppongi où les petits chiens en laisse sont autorisés",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -95,18 +158,39 @@
       },
       "priceLevel": 1,
       "confidence": 80,
-      "reasoning": "Upscale garden area that typically allows well-behaved leashed dogs"
+      "reasoning": "Upscale garden area that typically allows well-behaved leashed dogs",
+      "googlePlaceId": "ChIJKwbstHeLGGARxzy-ttu57CM",
+      "latitude": 35.6603225,
+      "longitude": 139.7304934,
+      "rating": 4.1,
+      "reviewCount": 1569,
+      "photoRefs": [
+        "places/ChIJKwbstHeLGGARxzy-ttu57CM/photos/AcnlKN21g-KFYeUr0mMQogg7rzZ1tt9YpDs7oQKjNF9WFuidOOnubcCaarGemCK-wiEvzQUSeNIknSdDWyifygQl4_J8lQSN9Ru3FLVbMjD2X-v9psCUI8l54af-2accYs5-R9leGEqjtlrW5G3yQldG_kh73zigTqnM55nwYiJ87xYfaB_8MX6gVbitKSVDwfBQW1eefvKt7TCeLBKHxAfmEKlVRAxu4PKra_4Tjir3SoJPt5_AEvuFHWENakpTpqWjDfS2DBE5DG7iZXUejtERYU-yg1gE8a9OZvWhAW7i9oWPJ6htrdwTkZ-Gm-WxiEGOJoi8uqs2dLE3gFHmLZgxRH310DnZD1x61_6szKkXvvZQUFz55EdB98LJvqcJh5wh4Zvjo79ISJiwSbecHdJDJKhoBaocNNcQsBXFA7nAxjF9rWw",
+        "places/ChIJKwbstHeLGGARxzy-ttu57CM/photos/AcnlKN2dNMxQIX2Enz4PZfTUcY47u17o9XNyIcBEfGh3wJDIwyJfj7eVPs0GTPlkrFoUi6L71g7GcKzWrjpuCZRoIMA_0YgpOE7vXbKYrdCFUU7T6u4_73pARziMgk-lKthsXpyizMz5ANLEikqgtsRNYnziITplmoq5vAo_ACIo7daAQy0Ir3PDkE43xg_9iSFh24jkUoPd-E7SKFUodWDAjzwDaonbEEOUKVnb1iUGE_61kkfF8qyuJk8rgADphNDLefGrLPMeBiGn-TeMXp0VpPD9JBP6wZVA7bM4U7RKqqyDFc6wRw_kHP-jBgipx7MNWw9dn_dxRdlBq8fDM1YnXN9Ei5rU71HdrHilGmeL-0mEO_A2vefCY5poPz5TOfz0H-BgcylYYejixRvryKyeTPSePvvDcfduyw3ytAYPA51kyrZe",
+        "places/ChIJKwbstHeLGGARxzy-ttu57CM/photos/AcnlKN1i_4B0_DUpQ5xRjzV2pl2ovJnAwwocozQJfDIEh1IGQZ5whPTs_3b72EpHR77u9oSzcluegN7aVLoJVnrFQUKLH_7y94oAvSWFlTiJWgM9gETMV-q1Ev4BHdDSFBLy1Qi6y6NnuBz11q7IrTXSgmJ2dnnPsSXSlgx4AUrniI3-9CKYVHRd5YyuyZbnKQjcXPP3ErCFOIK4o0i3UFPzCbihEyiHJSmk5kIKrHzVH24koSInU79IUNOqYgRfysp2RFzjF8Ujib7XYp0esxhjJnwlkPJJGPk1E6_9FmCpluhcrg3ypOHC6Vo_OTeHGbPfcd8OCk9xDvftiSUqlnUSOrxTG5QGh4AFUQ5VG_LWPj3kwTHLqcdV7V2Zr85SsOuTcU97Ao67fAmtsS6BozWY6t84Wlk5spbJjcVEFevzxpqTyzvx"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2588648239146089671&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Daikanyama T-Site Garden",
-      "nameLocal": "\u4ee3\u5b98\u5c71T-SITE \u30ac\u30fc\u30c7\u30f3",
+      "nameLocal": "代官山T-SITE ガーデン",
       "category": "dog park",
       "address": "16-15 Sarugakucho, Shibuya City, Tokyo 150-0033",
       "neighborhood": "Daikanyama",
-      "phone": "+81-3-3770-2525",
-      "website": "https://store.tsite.jp/daikanyama/",
+      "phone": "+81 3-6427-8739",
+      "website": "http://www.green-dog.com/store/dky/",
       "description": "Modern cultural complex with outdoor spaces that welcome dogs and their owners",
-      "descriptionFr": "Complexe culturel moderne avec des espaces ext\u00e9rieurs qui accueillent les chiens et leurs propri\u00e9taires",
+      "descriptionFr": "Complexe culturel moderne avec des espaces extérieurs qui accueillent les chiens et leurs propriétaires",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -119,18 +203,39 @@
       },
       "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Trendy Daikanyama location likely to be dog-friendly given the area's demographics"
+      "reasoning": "Trendy Daikanyama location likely to be dog-friendly given the area's demographics",
+      "googlePlaceId": "ChIJI3jj2U-LGGARvf7LtrvlGqk",
+      "latitude": 35.6495106,
+      "longitude": 139.7003928,
+      "rating": 4.2,
+      "reviewCount": 151,
+      "photoRefs": [
+        "places/ChIJI3jj2U-LGGARvf7LtrvlGqk/photos/AcnlKN10TArD0eEMwbegUKuwd8zI6KbgwTBeLRsOYj2KNJqaSbjUh5id6kZmWFuEYRpCGtUZzZtiTYIzn9ehxH-t3p5WRvuKVlrrpf8R5JDx6K2RQ3Y4x61ODEdJRGZv4Iv5rzdWEmm-z0WtuykD2HE1Gf8fJfwnjfsFweYLDfW5IQ-3pF3SsNgijRBROOufclZB-LgLToPUCi_R_Gkit7hOscOTW1Erwh7LKlBTRg82jJmddb7Gg67QANMwppDRX62oCGLygY6hyNeYKl1qzpAzlERVel-aub3VPEZJYuh4PNbibw",
+        "places/ChIJI3jj2U-LGGARvf7LtrvlGqk/photos/AcnlKN16_eUiZPQh9Nivze_KuA98Lo1WuiTyXEFRWi0wP69uX8QBASX9i14xULGpTT-8NbQ-ckbdgj3HpEWYdOs9ZfSKhruUf80AhO4j-j1n4Jx4-_H-q67y2E-aS_Si7xQg2e2ZBUJOAObLgt6CZfXujmIxDn8-lG0lTLE_Dpg91TIhG4Zvuj5b_Th-GwEKheciMZkJ-L7cEAKgxR0dPlRVhRPfb9oy8i0TFLKIrrYudbzdkkbP8EjGr6g1TuI3lpI-_7FyxYEpOEZEFSNe92fLeaviEOGZzShhsOLjpUCQm-P7iA",
+        "places/ChIJI3jj2U-LGGARvf7LtrvlGqk/photos/AcnlKN0qGigU6v8g_iMA7IasfMAvgIaqanRozpzNYj5ZUaDWVP-FMcMyUS37BydaFTweYJe9WBCdx7lXQYXXMefvFt4-HfJLxTTacQaQcUOEvWX53VNwIMCIOsvdW35oNRvrWKg0AKrgZU_rbQSNSnRmVoDEm_fzhDKuzZHdsnyQyjwjXTHJbqT3PeJui6h6K9s5-iroW3KG5nwvKl-OdZQ9LLI5T3q5PA8lOx8n7bspVrayqRGWkjM8w58iFZ9kZKNVKlfoLq1IWpyCxwDhaTr_H4Ivplfq0wdB46J4803ep7uw2w"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12185304336192765629&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 8:00 PM",
+        "Tuesday: 9:00 AM – 8:00 PM",
+        "Wednesday: 9:00 AM – 8:00 PM",
+        "Thursday: 9:00 AM – 8:00 PM",
+        "Friday: 9:00 AM – 8:00 PM",
+        "Saturday: 9:00 AM – 8:00 PM",
+        "Sunday: 9:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Jiyugaoka Kumano Shrine Park",
-      "nameLocal": "\u81ea\u7531\u304c\u4e18\u718a\u91ce\u795e\u793e\u516c\u5712",
+      "nameLocal": "自由が丘熊野神社公園",
       "category": "dog park",
       "address": "3-11-11 Jiyugaoka, Meguro City, Tokyo 152-0035",
       "neighborhood": "Jiyugaoka",
-      "phone": "+81-3-3717-0471",
+      "phone": "+81 3-3469-6081",
       "website": "https://www.city.meguro.tokyo.jp/shisetsu/shisetsu/koen_ryokuchi/",
       "description": "Small neighborhood park near Kumano Shrine where local dog owners gather",
-      "descriptionFr": "Petit parc de quartier pr\u00e8s du sanctuaire Kumano o\u00f9 les propri\u00e9taires de chiens locaux se rassemblent",
+      "descriptionFr": "Petit parc de quartier près du sanctuaire Kumano où les propriétaires de chiens locaux se rassemblent",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -143,18 +248,39 @@
       },
       "priceLevel": 1,
       "confidence": 70,
-      "reasoning": "Local neighborhood park in dog-friendly Jiyugaoka area"
+      "reasoning": "Local neighborhood park in dog-friendly Jiyugaoka area",
+      "googlePlaceId": "ChIJN9-qU7SMGGARhCpTp43adx8",
+      "latitude": 35.6729086,
+      "longitude": 139.69443289999998,
+      "rating": 4.2,
+      "reviewCount": 548,
+      "photoRefs": [
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN32TIteXIC0YnvJN3YMpvzmrK-ULNWsBGy5AU3Osxyo_B1RlyVL8jH2B3omDK28tphIxvtJvWGxfjUyV8uGwgEfBIxr1khDbBKBovnQ2sjpwLVycXeROb0RiPLG5W-ij9WpqcNTfvDneIryiHOK2odZgSpOr-aF7BhunFL5-e9kVZ2O3_jC7G_J_eYyEW-WTv9Ks9YUUtVlGXKEKuvGQ1HcEBJ3iJ9z3AZlkH0RBBTJPeZzPVV2RNkJSJswLh-BK2OZdLoc16UMxu9844PbnxyOqsVC85HYg3URNv6uRiHYKM1o53I3hwOTy6k8Z9xzblzVrYhIlILIfdEahtykBALmF7seAKl4Sq8TSUl-8-YN-F5HDsFcSNm0meYaSFpyW7jGcxrBY5subry24Wetd6GKbE-mb7W84oO5X0vS1f88gJhR",
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN2oewd1ux4wWB3UCpYuV2Uq0qpLROjH4jVntPojsWSczbINDZP6c14rEnUduDNFegEtO-Wz843UifYsr-NQq0dQodf4NxmCfaWUGewKHRtryLkFbEM4ne-4PYrx06AzZtyB_mxBUSLEMoFJnIo9d8XBpu6-_sFxedSVdtUXBEmfPsByQwY1U_TCWarui7ZdTUbUkD72R_fZFv30Bz2KD72AuXvFjZ3JwQ_bgFpS2RtfguS2QAKjDjRK6MGXPNqtiX8y8m4Uph9LDzkKF-lf0axrYiROYevPgjLY4kBWfzsHi8CLs4tW42wY_VArKhCWQkz7a5K-7I2pnLWZqhVL36YRtOO3tCaahkMTZstXe6iU0-uyCtfjS5JZD4015ZP_2f21j16fjFuet5SqwtbMYmfZxDRF1F4Gz95TrjewltZzieb0",
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN2NiY6thb5Pz6usW9-NiwHVgpOWh6YUo575vxhBbloCEeFJAY_SCuDFOgGwQzN2zdFRDpbZB_Mnd5m7SqOvGQNqfGN53FbAecJxVQuQwor3ZXbKCVUIhdqScPrlEQtzO02KAU63zhJCb7gjAjJp2osrW9R0o8Xz95eKE3jF769JWUmonsL1kIhYReD2mE7HSimmCyAhBMI9gFEyLB6N81ErBZRao4g0rKqj16bVarngYoxnOTMNMcbcHV99fj9ZyRN1ni0LXz-U0aN3Ewr-z4URNUhWPw4OTFoo0fTSlb3ml5TjwJ2ZM5NvIhDiKiYs8jMHVFgu-B5pkXQi1zdkuyS4yKh3YHGDLFK7GWD4TRYZ0RV-AZS8Te8meJ3LS9Kuv_Wq9IuMn0TkT0SGNliYtzAXmqwhSYnEYX56yJo9n2hCKtsO"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2267521239336823428&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Shibuya Sky Garden",
-      "nameLocal": "\u6e0b\u8c37\u30b9\u30ab\u30a4\u30ac\u30fc\u30c7\u30f3",
+      "nameLocal": "渋谷スカイガーデン",
       "category": "dog park",
       "address": "2-24-12 Shibuya, Shibuya City, Tokyo 150-0002",
       "neighborhood": "Shibuya",
-      "phone": "+81-3-3463-1211",
+      "phone": "+81 3-3469-6081",
       "website": "https://www.shibuya-sky.com/",
       "description": "Urban rooftop garden space with designated areas for small dogs",
-      "descriptionFr": "Espace jardin urbain sur le toit avec des zones d\u00e9sign\u00e9es pour les petits chiens",
+      "descriptionFr": "Espace jardin urbain sur le toit avec des zones désignées pour les petits chiens",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -167,18 +293,39 @@
       },
       "priceLevel": 3,
       "confidence": 65,
-      "reasoning": "Modern Shibuya development likely to have dog-friendly policies"
+      "reasoning": "Modern Shibuya development likely to have dog-friendly policies",
+      "googlePlaceId": "ChIJN9-qU7SMGGARhCpTp43adx8",
+      "latitude": 35.6729086,
+      "longitude": 139.69443289999998,
+      "rating": 4.2,
+      "reviewCount": 548,
+      "photoRefs": [
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN2m9lAXViqd_Ywxmlyzq22aUMVCBSLvaCjgAkQVwv2hNFlBaIT3bn9wf6H-BhaqbL98Vbux2Pr5SwNdX3pUZajVaD6lcZqEcAanNJXSS_khfsHrpNgO3__LYH6vFNio_jtMFGv31yq1ZSBI0dW_QiKUeN8-HY8cvzNFJn-hdy0WsI9ZMEUN1bKXH1eg1FCHk1bqfhdyQcyCUFxKqTWi9AKYFXuk2at5Ss8cr3K7io-ArzkISV6tz6h44Or4vMKryw_LvmM3w60qHI6phkoRpgLbD7NardaKYDlrTTJbIi_Q8Vaz-2ruttQ2ML546RhtHuKwYDXnKOxNmizKIA3XRSIHJGGePOvaU4JexXbVMPzD_l7_gfRxEB0l2JqXu-y8rXzSJD58AdiebGChHZLiTQ-XJB0OwB2u6Nf0oiA2gSSAdk9t",
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN2NtnLfM7mQJA8wKLeO6oeZKdeuqgMEq-D6-iv8WqFHB78uI0Zqnhgu__TonH0YPuOPx_AxNNsA88MWvLbiN49mmBVe8yzzBU93CIgveTs8MpW75q1MDfJmye1FN61NYlgROEhd5O8Rsj4fEOD7IPf3JdIN006ISWCznctiOYuQwCykc1WthOJr43Jm_p6pifzsefSumZmeFpU2CF3MXX-sM0uLsPwC3L5yU0N7WHoFdX5tNWLndhrQvBZCYxlWo0Q-SdOFiufb2NaS1fZxn7aE-wqx7LtunGPRlu8YnZ2XQDpCcX7eqyQva0S7zBRwCtj0Y3MKqQ9lbsBcAvaOsFpWzGcKGv8BVjXA3Z4mAn28-ITbtsgbW-pqvu2UeFU8L-tNVr0wJlhQtRpQHlf2-ssF7sY_JRd3TFyHda2Xp0AEvYR_",
+        "places/ChIJN9-qU7SMGGARhCpTp43adx8/photos/AcnlKN3yCaKaPcegoNEGKzUfL4I8SLt71qLNKA5s0KOSuQuM8FsdS3b6Ok5IHcirhL8HjRsOSlgOXEO_P2aOX3jKdCCVcAHEwijD7_3QVobd2ziqr1XBur4JNWrNIXM36PZZ-5StTvgBYFyi9cbmcVpKCpWic1940wmj1UIev7L_C6C5KerL4a8-fUmhOWWSr-hgfCXyiCkdAt68SBkg7gxIUMkJYuWZozOdgTh6eUTVSDbsGJ5PFPmtoWS3e-yWW6NmOwoWKc4A0co2RwCWjkM5jfV8DpIwJwxhvK0qryaM4pkkQGesXzJNCAAkpogED2JqVgBNZli8GHWJywT0qF8G7-4yGmgzxcXsMmV6rj_UT2hxau-jr2BuX3kaBPtTXgV6q3YrOGKZh_KLCd04Rfa2JYKsoWZWE8yCBY2hYeaYN9ev9qaD"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2267521239336823428&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Aqua City Odaiba Dog Run",
-      "nameLocal": "\u30a2\u30af\u30a2\u30b7\u30c6\u30a3\u304a\u53f0\u5834\u30c9\u30c3\u30b0\u30e9\u30f3",
+      "nameLocal": "アクアシティお台場ドッグラン",
       "category": "dog park",
       "address": "1-7-1 Daiba, Minato City, Tokyo 135-0091",
       "neighborhood": "Odaiba",
-      "phone": "+81-3-3599-4700",
-      "website": "https://www.aquacity.jp/",
+      "phone": "+81 3-3599-4700",
+      "website": "http://www.aquacity.jp/",
       "description": "Indoor shopping mall with dedicated dog run area and pet facilities",
-      "descriptionFr": "Centre commercial int\u00e9rieur avec une zone d\u00e9di\u00e9e aux chiens et des installations pour animaux",
+      "descriptionFr": "Centre commercial intérieur avec une zone dédiée aux chiens et des installations pour animaux",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -191,18 +338,39 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Major Odaiba shopping complex known for pet-friendly facilities"
+      "reasoning": "Major Odaiba shopping complex known for pet-friendly facilities",
+      "googlePlaceId": "ChIJ38lFO_aJGGARc4lgPvxik3g",
+      "latitude": 35.627818999999995,
+      "longitude": 139.77356799999998,
+      "rating": 4.2,
+      "reviewCount": 2397,
+      "photoRefs": [
+        "places/ChIJ38lFO_aJGGARc4lgPvxik3g/photos/AcnlKN14AgA-lmsyAnVczjLHV434QgTWiv1FdTk4qJ7XkPEkaabB78acymlPQauDSoId1XtNb2NPKWuke1r3Cx4P_xuRwRFwKJPG-j5nfWlt41jHAnTiD0daPzU7THPxQGLxBX0pZJkbYHEv_zcEzENBEzBSpD_-WB1uaEDkyiZNPwYy54uFplG6gf9WDaMzgXAxN2DC9cZUj_om_8CH3lVn6cu_-da3hbVIGCdXfQlkCMHvIjwwkEGKc74_HEVnfei3_acjLPMDFZbgnqdsKjZA3rOIw3ZLA7DOq475AYYA17XAPr9o6Y7sfcHoX6b3rWLZ90vt6mhzhvhPw4Lo5bfUwDROnCtJTAzK_qYqu4xHkrlYerliDNupD9N6L1u8fBLEO9TLGkWDZjBxfKHmwbHdfEFpbcj0cZtyksYuG2zQIoFdhg",
+        "places/ChIJ38lFO_aJGGARc4lgPvxik3g/photos/AcnlKN1dYuWy-wqpls2_8mpgE0vBA3VwUQhDoHnCuRIejCi0fLn_tksZT8BspHCXI2f9obrptGCnSvCi5Ub2-Xo9T5foTUfKfNYammT-bFD5fqxUTt5Vjz932lQdDpFMNmNw3plwgnc2K7lSUGIbVyJnJd6fnJdwqPmZMHban2BQI1nNYzlkD7xvlGPJBTcRJtFJNuRvJoUVCUBMtwOm5uCacFaK4AIsKecq89Y89aUtmxFmIYEtsQqm3THO61-mmKdemerS_uQ8P20FJJjitF7YfXVwWp0LdB5BY9V7Ey-XfpREbxU_qYqqAWwGkmKClmATdxzkAmPivuREOfQ15Hw6Z_J4-ofA4QR_QkVXjnYqUJIUKtO9rObbo-hskk_UFBnSyn9Wbvus7HWUVgmFfCbwPCB62HmK8T8F6yeK0SKxkVFK9Q",
+        "places/ChIJ38lFO_aJGGARc4lgPvxik3g/photos/AcnlKN3tSS9S-2z2ZJZ-7K1mC4cXJlBWWBOuwbyHtDPq4t58KduwW3oWh5HC_Kim9MdWhNRhNZSmgLu-PPnpeOfolbYWqIFtd0_4YCTtFUH7-GKtn6F3MP-DcdBlIxD9Bup4tsid0saw0L3sKhuDvAeTTo5IZPxlg_P56ojeHEK3xkLXuTyfBtIyTXt30AMZU3kdn1kEjfq-8yvJmYbiO_oxzj5VxdZYdt_gKfaN7nJq0fl3iiUMFjx5FRD4MLVPqF2yzVnq882yu3WDc1EyuS-aF4L-9N1JEKxpXid1aRvu1AQiTQ7GS6AD6W6SGZQyuTBAF2Adzm1zzKuFRpQ1Ce6HCgKZKyHHqi7uFtS3GyFTBNckb0oQJPl9Ap0jZA42xEd8SZU222Q4bTUuypUQA0wo_AepvEechILy4bM37R1WLWyH-OR0"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8688396941645613427&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 8:00 PM",
+        "Tuesday: 11:00 AM – 8:00 PM",
+        "Wednesday: 11:00 AM – 8:00 PM",
+        "Thursday: 11:00 AM – 8:00 PM",
+        "Friday: 11:00 AM – 8:00 PM",
+        "Saturday: 11:00 AM – 9:00 PM",
+        "Sunday: 11:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Dog Cafe Wanko",
-      "nameLocal": "\u30c9\u30c3\u30b0\u30ab\u30d5\u30a7\u308f\u3093\u3053",
+      "nameLocal": "ドッグカフェわんこ",
       "category": "dog cafe",
       "address": "1-15-3 Shibuya, Shibuya City, Tokyo 150-0002",
       "neighborhood": "Shibuya",
-      "phone": "+81-3-3400-7788",
-      "website": "https://dogcafe-wanko.jp/",
+      "phone": "+81 3-3469-4115",
+      "website": "http://dog-heart.ico.bz/",
       "description": "Popular dog cafe where customers can bring their dogs and interact with resident dogs",
-      "descriptionFr": "Caf\u00e9 pour chiens populaire o\u00f9 les clients peuvent amener leurs chiens et interagir avec les chiens r\u00e9sidents",
+      "descriptionFr": "Café pour chiens populaire où les clients peuvent amener leurs chiens et interagir avec les chiens résidents",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -215,18 +383,39 @@
       },
       "priceLevel": 3,
       "confidence": 90,
-      "reasoning": "Dedicated dog cafe concept is common in Tokyo, especially in Shibuya"
+      "reasoning": "Dedicated dog cafe concept is common in Tokyo, especially in Shibuya",
+      "googlePlaceId": "ChIJY_opwkzzGGARrrphOC2IIH0",
+      "latitude": 35.6677333,
+      "longitude": 139.69017499999998,
+      "rating": 3.6,
+      "reviewCount": 532,
+      "photoRefs": [
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN0AICS19-kP-v4QMusL-NTV0rkrS18H9urpt2f8dt3W0UUJgjRObn1WrW38TqZpIOPjIRCzDNjsXW1ndKI0V7cUS0vEhZ6NSViqFMpyeMC5YFf2SuCZ3dYn6gJI8ctNIHE7AUMtSLszt8CX-vsDZV4XA1YIBJZpuTOVaQFOh4C4JHxE0oRdQH_ju0jLy3t_CU_QjsYwhfl9fky2KgkEZGWr_yEsUXdlVVnFOvl5a4sF4vngqCUaFJyubRhS1gMXC2PeJziCfur4dubwQcuGPy87tP3gwHkDzcdRPD4FxY19mwgs3sqgBgSC-WzYAWz1R3Wr2--JJI2bgx6Pe0hKVwkdMtOYJijc83PS71cK5aWx0RHjTBh82YW5qUaZ5ElSsxUDhf6xkm39MWyXBO4S0A1TxKijqwiR5bf234iYR04",
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN3lbmOPqvlNtckxPVdOHMqvUuJOVusw0c55SvffDVTlQCn7c_orQXcxkyOPT52Ar_vBOK3P4nvpi9GR_f5PqflwtldIMOVTY35F7bDPFD7eeGIrrnJqsKHARvAnLoh1U4Tk1tc4fIHMhJwY2WQi6UrY1OUT8jlQKRBS1fT3i5Sx9VDBnrSSznwpB_s4BPASA6HYYmKFuzD4qBORnADLFxs4bzKa1TGeeopBbWYXTxesSh9XcuCPweX1Udu9pz_ncq_S5CdLeN4XcMh37zUWMeyo2WRfnLGLSUCrBW8oyFKUs8_oO3hK_T7uBxZIlezc1tzs-Kaqhx-QH4BO3LSq3qKVhkq165jM9kpO2gqIkK57zMMs8_A_Kz6WTfbvJSzGkDtwR52EM82DYCW9ltDAlS4J1of8WfwRZ7CSpxRQIb3n60lLpnJbw4ceZTTmuvaE",
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN3UgVGW0YDcLyFGKPlJl40ohAMVkAZElFFFRsM2H4ask030uihhJKU9vqbvHLNINsIehQvBiTffmNuiNTYstdaNr0HndLuVZ7A7PtiNfeWGUSZoZCJkF60WWFI99-nD5Wj7l8Z9eaFAdcMBrTeWOwqw3LgDY2ftTA3GzPK4xWw3Sz0d3YMWUpO0iTIDC0IwddxDXU64nJY27KNsRFS_KnRF-7OB6Stb7RDVyhvfCgrUT_GOXCafopO97wVo3moJ9e8Wr0KRu9kkLonP9GT-m91pYBk24EYJLE2WtwAeCjQzKyp316EZVGTUgUOsqaOP16gpsmCDUJon7U09-KdIBpfyF8cbbBytxoZ2ar1-Zo7H5zr3cS2GQCYPVPjrLhv62nAB6Umj9YPf80RrJRocCaHi2IEXRfop5bSBkxqxeB_VzOcX"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9016356181796567726&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 7:00 PM",
+        "Tuesday: 11:00 AM – 7:00 PM",
+        "Wednesday: 11:00 AM – 7:00 PM",
+        "Thursday: 11:00 AM – 7:00 PM",
+        "Friday: 11:00 AM – 7:00 PM",
+        "Saturday: 11:00 AM – 7:00 PM",
+        "Sunday: 11:00 AM – 7:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Bau Haus Dog Cafe",
-      "nameLocal": "\u30d0\u30a6\u30cf\u30a6\u30b9\u30c9\u30c3\u30b0\u30ab\u30d5\u30a7",
+      "nameLocal": "バウハウスドッグカフェ",
       "category": "dog cafe",
       "address": "3-38-11 Shinjuku, Shinjuku City, Tokyo 160-0022",
       "neighborhood": "Shinjuku",
-      "phone": "+81-3-5367-9001",
-      "website": "https://bauhaus-dogcafe.com/",
+      "phone": "+81 3-6804-5632",
+      "website": "https://samoyedmoffu.com/",
       "description": "German-themed dog cafe with spacious indoor play area and dog-friendly menu",
-      "descriptionFr": "Caf\u00e9 pour chiens \u00e0 th\u00e8me allemand avec une grande aire de jeu int\u00e9rieure et un menu adapt\u00e9 aux chiens",
+      "descriptionFr": "Café pour chiens à thème allemand avec une grande aire de jeu intérieure et un menu adapté aux chiens",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -239,18 +428,39 @@
       },
       "priceLevel": 3,
       "confidence": 85,
-      "reasoning": "Dog cafes are popular in major Tokyo districts like Shinjuku"
+      "reasoning": "Dog cafes are popular in major Tokyo districts like Shinjuku",
+      "googlePlaceId": "ChIJ_3zm0X2NGGARd3jLNTcLxVM",
+      "latitude": 35.6707268,
+      "longitude": 139.7074793,
+      "rating": 4.9,
+      "reviewCount": 8111,
+      "photoRefs": [
+        "places/ChIJ_3zm0X2NGGARd3jLNTcLxVM/photos/AcnlKN3-YTRfyNPcqwcl9cAHRAZc905Y5_B7T1jX1v3CvOo5SFi0H4rMv_g8lAQch_Ne5qAVR31PEk_MWWhx5yWq7riymu1DPlSgQoBT9DcqofbobCVJNeayuV69S3zYNhS7DkuEtbwGB2VwYMAxJlGibaZwx0wAlXj3T9DD0VOGZPL8l7wsAGg16DlgwC5bmh6ulP3ZqqO2v0wnYuyS7ZlYM6C3nE4Q_jZbPTRH2ZI4LncsciA4QMFTyQ6ABBHezAydgVe_jstZeSRDzQ8BflTrvARHnysHqzvKV9o_fJ68xmc38w",
+        "places/ChIJ_3zm0X2NGGARd3jLNTcLxVM/photos/AcnlKN3ZI6jgRW5EGq44xWjJO5R0ID9u_9qSiQqgM7SSgdPa3YM5HoUUJzriAGRGAh3V8TV_TQN59w2vAQTjydEFeftNpuqZnLoyDDeav0eFeofmeTUqGtUgXKPTKwg0h7xFFK-t1bo1cn-3UtLrt6ca88H4v4FFAKbHBhhtdvpO3NHJZcm_kB-iBN5KwrApu2vuPsoWaoIG4HtMqjd5ErGAVfjbB5ND2ByebJYTERx85eGZmhxpGvRwZLWb7DBd5jOtod8qkfXr-9qi3oLU4iJWpwpDRsb6-ZBqnbVd8BbPHWCje0KgSFGMLjCZt3h9TG32JaUuiRPljJlBDltdMK1lsDtUOXQF6uNdCEa90SGNV0I2kI8xDTaMVR-lxsXNH9c1LGgginSx-78H6XAWr7UH16ZM7_ey8WdEuS7OmibSXNsF8QY",
+        "places/ChIJ_3zm0X2NGGARd3jLNTcLxVM/photos/AcnlKN2pk28iN5I5AN3tzLKqR2o1cPJMjUlZlnWjVp-0-_3PHs8ExP4alEXHo_tni9RhHD--HPwBP7yPsYfD5nwVhMvEbxg-_rq-_sMenlvjJTu69mfjTRYw2oc2mAFybGzoXfVH_8kXW2iSSjxunPy45UyDiUg4l07KwZp1om_Auo8m5IAnnPP4wM5h-kdjECzyKtFLumXcHJ1GA6oMqZ4T8-7cjhBrev7MyUInWZow-9E8AaixpxTOQ8ndfGoO_ENv09lx1PPM4fDwnDUmAJZPR9oUEel-negUS70oGynY37qGElUdoozG7bWJTpQDgdfDCVjN7T53XfUZFx2pHuEngXvsO3mH7eDtbw3m73ON2ofVek6f4j1favVHP4WYMZiuLSrfZJMf7UNM6VHxle_x2re_EOFD40HSahW3xly8t790pfut2YnjVDEdt5CMRvGI"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6036243207313651831&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 8:00 PM",
+        "Tuesday: 11:00 AM – 8:00 PM",
+        "Wednesday: 11:00 AM – 8:00 PM",
+        "Thursday: 11:00 AM – 8:00 PM",
+        "Friday: 11:00 AM – 8:00 PM",
+        "Saturday: 10:00 AM – 8:00 PM",
+        "Sunday: 10:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Puppy Paradise Roppongi",
-      "nameLocal": "\u30d1\u30d4\u30fc\u30d1\u30e9\u30c0\u30a4\u30b9\u516d\u672c\u6728",
+      "nameLocal": "パピーパラダイス六本木",
       "category": "dog cafe",
       "address": "4-12-6 Roppongi, Minato City, Tokyo 106-0032",
       "neighborhood": "Roppongi",
       "phone": "+81-3-5775-4646",
-      "website": "https://puppyparadise-roppongi.jp/",
+      "website": "https://huskycafetokyo.com/",
       "description": "Upscale dog cafe featuring various dog breeds and gourmet treats for both dogs and humans",
-      "descriptionFr": "Caf\u00e9 pour chiens haut de gamme proposant diverses races de chiens et des friandises gastronomiques pour les chiens et les humains",
+      "descriptionFr": "Café pour chiens haut de gamme proposant diverses races de chiens et des friandises gastronomiques pour les chiens et les humains",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -263,18 +473,39 @@
       },
       "priceLevel": 4,
       "confidence": 80,
-      "reasoning": "Roppongi's upscale nature supports premium dog cafe concept"
+      "reasoning": "Roppongi's upscale nature supports premium dog cafe concept",
+      "googlePlaceId": "ChIJjX2JWgr1GGARsgt79dmYTjw",
+      "latitude": 35.6453309,
+      "longitude": 139.7302962,
+      "rating": 4.8,
+      "reviewCount": 2736,
+      "photoRefs": [
+        "places/ChIJjX2JWgr1GGARsgt79dmYTjw/photos/AcnlKN1T7EgbaDqdz_OT5eHzHcMfh7sTHL0NBgXn_WJAhxHop0Bk6QlAVIWd4oyyHlqyYQVj_TRsDlnVVVU6nuiAP5bdFfUW2vb_O7zylf6zIwfV2WT0M_yKYg2amSgZYEhtJK2TVtBYLNoDWFt35pCN1Vi63yjsMD3LrioN7dlXZ8eV7R0vzROPpnzaLUQCMmXCZS7yoyMnkzy01IJDNrF8PDUnjlsV8r4VGiNc21KKweIXnZo0PKdWotB0vuuZla4JC6troYvq2L9RG9J2gcYQiNXXAw0KbHa16OC6rjub0rmn1Q",
+        "places/ChIJjX2JWgr1GGARsgt79dmYTjw/photos/AcnlKN2bHUal1nKbfIwUv9-4UQ_dBjMGYSaJxaR2IqFhu4fAdyccqsprJKmKV1M4D0tcdWmN1fjmC-a1Q_N4fuPx6NwsHvnGCOAZCCd3KaJN_CjaMYhsZpiF5PJQZ2PQfuAj9XTi2eG0S9nHHQznwHsTlBXm71DgdKw8yQ50mz7qS7eTfSjppQCc1xVsgRMbQmcdq_tLBP1WICHs2wsk7Fa_C-NefgW_CNJFyieifeD8aetW6aHPDBjFV6TGAU3aqjRg_qQMANzN9LxZkOprJyMberOaZQKlxgzNmVzsSR08UDu3pA",
+        "places/ChIJjX2JWgr1GGARsgt79dmYTjw/photos/AcnlKN3GRhSNfJd7uK0yDnb8CLHG8qn-tq4qp_J_YV9gxo2JkFfcQ-LqpWwm-KZo987WFg0wVdr02A2Br7zI-kuK8UxsuDqJVR-NBPBikK2TjLJqR0t4plA5fFooTYBbRB72ryQkln5IZmSO8CJb6PmKVSdFTwXA_it4T0jEghgLumQWOAWjUDmmo3UgkJFbcg7JA7R69ownfyK2lz4lrKr353yr0ITiqmkripo48MzwW58K6wzq4M7qLxzt85XguE9P823zpQjQnCBSC0xJfgHgTqDz7dL0LSPp2DIMiQVCWoit-RMIub1NmQbV4Q93BHeysZwTjnjgUBuT2mPsHnpfzKnpvlM1H0SnkOJO4-vGwfyeCGWJxQewNDy570oIK0dcYyeHQ7v-C5znsv3ZP5Vevs36niqcAGKk7IMq13nweTFys73gvsAtPhMx9saKiA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4345578752352914354&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 8:00 PM",
+        "Tuesday: 11:00 AM – 8:00 PM",
+        "Wednesday: 11:00 AM – 8:00 PM",
+        "Thursday: 11:00 AM – 8:00 PM",
+        "Friday: 11:00 AM – 8:00 PM",
+        "Saturday: 11:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Dog Heart Cafe Daikanyama",
-      "nameLocal": "\u30c9\u30c3\u30b0\u30cf\u30fc\u30c8\u30ab\u30d5\u30a7\u4ee3\u5b98\u5c71",
+      "nameLocal": "ドッグハートカフェ代官山",
       "category": "dog cafe",
       "address": "20-23 Sarugakucho, Shibuya City, Tokyo 150-0033",
       "neighborhood": "Daikanyama",
-      "phone": "+81-3-3770-0123",
-      "website": "https://dogheart-daikanyama.com/",
+      "phone": "+81 3-3469-4115",
+      "website": "http://dog-heart.ico.bz/",
       "description": "Trendy dog cafe in fashionable Daikanyama with artisanal coffee and dog socializing area",
-      "descriptionFr": "Caf\u00e9 tendance pour chiens dans le quartier branch\u00e9 de Daikanyama avec du caf\u00e9 artisanal et une zone de socialisation pour chiens",
+      "descriptionFr": "Café tendance pour chiens dans le quartier branché de Daikanyama avec du café artisanal et une zone de socialisation pour chiens",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -287,18 +518,39 @@
       },
       "priceLevel": 4,
       "confidence": 85,
-      "reasoning": "Daikanyama is known for trendy, pet-friendly establishments"
+      "reasoning": "Daikanyama is known for trendy, pet-friendly establishments",
+      "googlePlaceId": "ChIJY_opwkzzGGARrrphOC2IIH0",
+      "latitude": 35.6677333,
+      "longitude": 139.69017499999998,
+      "rating": 3.6,
+      "reviewCount": 532,
+      "photoRefs": [
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN1H_EOFVD3vGCitrh-ccn6gGTm-rVHq1-hTObRrW6ltV1h37Wh_NTdi6Kxmfd8u9U5ykuf7XWtkIESxZKvJ6tDwDnENJWj_-cbEwH8iXgM-HllsZEeLuwmNrjf_hnf9p5lecFw2J5nT1nDxnxqvXxXzHT_Hwm_TfHr8jluiVuB0f4vHo7o2h25rDi70bo3iQ88WKc3pSH8jyLPjcW-7XSaLQPT322NbKtDIfLBB5Q5fWuoaCu40dFLRkOXMwXSCmyXNVPYzWagFb_R-iUtdyfN4j8gxkIX0Ne2y9JAdrChk2odgmGwYLKs4AyYDzLSp6FwSc-U7AgadcuhiUdKdlvwrt00TI-D3sNpiTmu4mFHeAYsmJ7LaMTF_Fq7oDDR3gi9EGRy_r-x4SGfY4XhdvuM3n7ay29T-ZGAE2fJfYG8",
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN1ROPceibGIwnTfzsErRxRkz94OBwjY3bdtwHnAEeztws4SPetF2MvY_Qst-ritBZoRJnFMslmm_EnFQNJl4n0WuAI1xLN4x2eEDdlsw79v5HAThfBXoya178z-wtPgdi8v1Kc32-EVS19EKvu6LLqsVVsWQ0d474CR7O42Nx4jwrAoJSB0tAvVkeL90nmbWyhZFnf6PEjek33WbliHtJArOdQ_xgtn55pPR9Y0ykVA0vzW0_RONSloAqBYusTX2P_c2Wfh_NHYWn2rYOI63XA9sEiSZNSdlVqLQFI2peQNVcDbScEJ0_sZg4QtE353lCe51Qn8U6IIX5gP491dfmoZJEh6XWywXczf-OteddcS_wUs-30ownBlkrFIPhVHpTZhTbY7VLeQZgGyQeCtP71xv3F0sTZ9FDDgzvX3qTYgsfiOMan4Jbhtq86Oc7Zq",
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN0GkQ82QLCVvCiMfw1gZSEkCqblkgy4mtZljks1cFvnDJAax9uEIuzQYJ9C6nRGFc-DrvfjI5Z3enP-zYJeTbKSZUu-fggon5kRwk-WIARVjqoybcjS-wpfxABY6Gc20bRaKGyhy5pdGAIKe8-4NLIkcl8YYqjjlCvvWSX8ayrF0JAvw6B3CXrHEY4k13kjrwB5DfBY0ErEef39h9oplNHPhZjHmNRb6LWwDOAXs56Z-AeEN_YV4SEpKc5fIjRu1d7kO6CBuecxJX2X1ttEJafGkv8fOafJU3I-vw9bR4wcekpiO1Pp3wg0aj4YGe1IOpIHiPqraeVw5cAtkCFd2gi8oGWET59E8ENR6XCLwZudAW-zV2ck3qq5vFdXbFztiXaf6yVBwM6VL5T_XlCwHj_Lr-4g-dhrQTurAFkwJE2Ec7IW"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9016356181796567726&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 7:00 PM",
+        "Tuesday: 11:00 AM – 7:00 PM",
+        "Wednesday: 11:00 AM – 7:00 PM",
+        "Thursday: 11:00 AM – 7:00 PM",
+        "Friday: 11:00 AM – 7:00 PM",
+        "Saturday: 11:00 AM – 7:00 PM",
+        "Sunday: 11:00 AM – 7:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Wan Wan Cafe Jiyugaoka",
-      "nameLocal": "\u308f\u3093\u308f\u3093\u30ab\u30d5\u30a7\u81ea\u7531\u304c\u4e18",
+      "nameLocal": "わんわんカフェ自由が丘",
       "category": "dog cafe",
       "address": "2-9-15 Jiyugaoka, Meguro City, Tokyo 152-0035",
       "neighborhood": "Jiyugaoka",
-      "phone": "+81-3-3718-5555",
-      "website": "https://wanwan-jiyugaoka.jp/",
+      "phone": "+81 90-8996-4487",
+      "website": "http://minashigo-joutocenter.com/tokyo",
       "description": "Cozy neighborhood dog cafe popular with local pet owners, featuring homemade dog treats",
-      "descriptionFr": "Caf\u00e9 confortable de quartier pour chiens populaire aupr\u00e8s des propri\u00e9taires d'animaux locaux, proposant des friandises maison pour chiens",
+      "descriptionFr": "Café confortable de quartier pour chiens populaire auprès des propriétaires d'animaux locaux, proposant des friandises maison pour chiens",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -311,18 +563,29 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Jiyugaoka is known as a dog-friendly neighborhood in Tokyo"
+      "reasoning": "Jiyugaoka is known as a dog-friendly neighborhood in Tokyo",
+      "googlePlaceId": "ChIJ2f7z0Rv1GGARuzESAA7TBLQ",
+      "latitude": 35.6021149,
+      "longitude": 139.6650403,
+      "rating": 5,
+      "reviewCount": 2,
+      "photoRefs": [
+        "places/ChIJ2f7z0Rv1GGARuzESAA7TBLQ/photos/AcnlKN3R-tCFL6sy62WlHeuoWI8MHMEE0ey6QVZ_xJpImMDZzfUrtjSXOOqUHyrvmYp602BvzWdUoOCNwFQnpdopcqiugNs6gZsSquXSXbwJ2yMLkcythyBbbGtPzWfHcPchDUu3ffUxuM6JA6yoDtfAu9pYDdGDqZ7jtqbPaH-m2j3qhuJhrTViC13YcJjAw21z7qjSLy1VyRCkfC9v0FupR1CE62YXNzRJXCBYsUyJEUpZjfFKgYR9ZbhtbsvoAkMXIKQHJEQ_yVrgtwUJ4nDyqB_zcDtr7f1ixKg1fSw0wHOJ0RFtS8OK3jaCa2hYxAtNV9hpLW3hKzgTuBGVbj4OfIIB65Tk8HKD3QMQm-RG_m9bNbr1SWm5dkelqSA-nvNW8mwdKUJXHXUcFht9KZxN6RcHa5f8x48_SeItzr9xzfO4YQI_os0Jv5gDypxcrKs8"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12971724883818066363&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Doggy Style Cafe Odaiba",
-      "nameLocal": "\u30c9\u30ae\u30fc\u30b9\u30bf\u30a4\u30eb\u30ab\u30d5\u30a7\u304a\u53f0\u5834",
+      "nameLocal": "ドギースタイルカフェお台場",
       "category": "dog cafe",
       "address": "2-6-1 Aomi, Koto City, Tokyo 135-0064",
       "neighborhood": "Odaiba",
-      "phone": "+81-3-5530-9999",
-      "website": "https://doggystyle-odaiba.com/",
+      "phone": "+81 3-3599-5211",
+      "website": "http://www.dogdept.com/",
       "description": "Modern dog cafe with bay views and spacious play areas for dogs of all sizes",
-      "descriptionFr": "Caf\u00e9 moderne pour chiens avec vue sur la baie et de vastes aires de jeu pour chiens de toutes tailles",
+      "descriptionFr": "Café moderne pour chiens avec vue sur la baie et de vastes aires de jeu pour chiens de toutes tailles",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -333,20 +596,41 @@
         "fenced": true,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Odaiba's modern entertainment district suitable for themed cafes"
+      "reasoning": "Odaiba's modern entertainment district suitable for themed cafes",
+      "googlePlaceId": "ChIJFbk3W_eJGGARlgSyx-46sR4",
+      "latitude": 35.6297348,
+      "longitude": 139.7762994,
+      "rating": 3.9,
+      "reviewCount": 195,
+      "photoRefs": [
+        "places/ChIJFbk3W_eJGGARlgSyx-46sR4/photos/AcnlKN0pGs5-2hYHBlqkrqGbsQ89ZFFoYN2lAGtrSnOfWpEED1OXm0MoG5yb1ruMF57fc90C5I7965Ra7u_wggY2vERchl4pVThuaYwGkh4Dztu8-WpVLCNEDEsb65DNyq0n4Q4bS5H4t0lNbY9qbTe1nw6MDZsYAIOZOmGXJLq3ghPTOkwjsMh3s6okCiONpkJOUU5Soa57P5HaBqw_4MOSUs-6h9GZ1Vv5q25yB5yMgpUUVaHhwyduSrKZwSb1gT9LiyiwqoOhI-FPn2Z2OdBJdH7EkBSX0YDawNNBctgrQuInTDpHXNZ-Ngg-xUAeO_CWbQKKbA80X0Str8Fxt0fauPVx-XrFZk7XLSS8y11-EORhBUo35M7Doj83mT6PwQS2JCRE0x9iSX46Bqq3OiHvP2lJk2lvR2i3K-k2LmuVaSsvEBgz",
+        "places/ChIJFbk3W_eJGGARlgSyx-46sR4/photos/AcnlKN3hOsOJmsoqyeKxPhKsrmGl6yQaBoR0KXpZtTgqT-V72yWBHWVBqvz1bE3Cz8MqbGgTeSEd3o1Je2gY__AJBUL_tJjO9Z89fbViQ2HYC2Nb3ocmqSc85e6XGuNX-vW8HE9hzm-sWq9BfI2y39BOefaVKxJnOxrfKCo5MRfUfy5Ihq0pFqAjtstWqlA9s9ZZ1vAL1ZJefokZilV-SLZCnK7tuSetqBUeBfcxkdivjhhUkvQDrR-08nkdnKYDAoXNbxitIQfwAEpeNFtN5KtKSK4OqFjiCnxGOfDkU8gNz_5-GAPss3IEfzTA4V1rxqQCCTkfITQvqb20MY3kdv2a1JHg4s23DqMs0MrBExXPyWivVkrUG6fVtKfT14FuFRBRFaWYzDBitqgTTI11ar0nsRtFhFkBA-QAZyc1mlyQH-vdvnEN",
+        "places/ChIJFbk3W_eJGGARlgSyx-46sR4/photos/AcnlKN1SgHw6C1jjb3KCoxluaZDb1z0G62wX7MoSOLmzT99nsZvGaHa0G7a84TYxwuHybmnyqAaQDdTZaJlhYsofM-9RJ7U0ULzFDRgWjTrMokPI8Eds3Wr2jx-yIsTKPvyrhoAOw8OHFMOMEbYxhBzdBwDM2RFTJo3VP1Doht4CtbALT2mQ2XA3SldxBm1UwoJC76kamsU5n29k5HuorKlWWoLq2g4IQ7Kyb9XPf8w3dQfIebeMdWtH0UBDUtoXmW10iHcm2cDkooYBpZByBN7yZj32pH_kMAmokwoOhz5A2afSqPGC2TCh7YP9623WAUIy-KWCTbIIaAE9oANDn7mp8gIE7QDXGmHGcCmpVs5wVIzL_QYa6WhV5kWwhm2gmHR-U50HjZChWz_RKhe6tLGwUc0F4sIj7djsGSVfNPN0USyGKA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2211613689242584214&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 6:00 PM",
+        "Tuesday: 11:00 AM – 6:00 PM",
+        "Wednesday: 11:00 AM – 6:00 PM",
+        "Thursday: 11:00 AM – 6:00 PM",
+        "Friday: 11:00 AM – 6:00 PM",
+        "Saturday: 11:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 6:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Paws & Coffee Yoyogi",
-      "nameLocal": "\u30d1\u30fc\u30ba&\u30b3\u30fc\u30d2\u30fc\u4ee3\u3005\u6728",
+      "nameLocal": "パーズ&コーヒー代々木",
       "category": "dog cafe",
       "address": "1-32-15 Yoyogi, Shibuya City, Tokyo 151-0053",
       "neighborhood": "Yoyogi",
-      "phone": "+81-3-3320-1234",
-      "website": "https://pawscoffee-yoyogi.jp/",
+      "phone": "+81 3-3469-4115",
+      "website": "http://dog-heart.ico.bz/",
       "description": "Relaxed dog cafe near Yoyogi Park with outdoor terrace and specialty coffee",
-      "descriptionFr": "Caf\u00e9 d\u00e9contract\u00e9 pour chiens pr\u00e8s du parc Yoyogi avec terrasse ext\u00e9rieure et caf\u00e9 de sp\u00e9cialit\u00e9",
+      "descriptionFr": "Café décontracté pour chiens près du parc Yoyogi avec terrasse extérieure et café de spécialité",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -359,18 +643,39 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Proximity to Yoyogi Park makes this area very dog-friendly"
+      "reasoning": "Proximity to Yoyogi Park makes this area very dog-friendly",
+      "googlePlaceId": "ChIJY_opwkzzGGARrrphOC2IIH0",
+      "latitude": 35.6677333,
+      "longitude": 139.69017499999998,
+      "rating": 3.6,
+      "reviewCount": 532,
+      "photoRefs": [
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN0cwQC8_7AGlo8uW86HAPyXZ89BgA4_gZLJeswsrljNrVToFSDCfEHnMVQcYnQZr41r6tfX3BVDRSrFxlWCxxOl1ldoviL3xrIVKOr70c22M_D5y0At71fy3mM42hxX8BsTyXXubQgsjyDFQYaYbin-XXrkYvUoVaVhV3MLqqAoi0OHzwoaKKPlT6jJTMyZh3DT895nqfOT-tZA-ITHaG1K8NmxYkJ21dfkUV_-prkkxYJQYmnTPLTguwXX6gMAxZ6qaDUaEdYqgNzC3nSpoOdwoENT1oU-KxZ9_g2Ls446ifbLm8Ak3o9DwNWADbYjtYKir0QTjl6QI6dj83-6DMtqwkEHlI4dGUvul7C-qdrYIUPyiJgnprkqAA8PoDtDIEi1Zr5mn6ynA4sNb2iR5wbz90fZlGsx4s6CArf2M5c",
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN2VQYG1xt0ycuo7KYwn3D5ToPou-AAhxAP5xMUy12tjWJFAKymdhf_BHREN0A4z3VWugjd9JeyK0n2w8UOc5RD9sVamnIf18Gi4sevPJRcJqnBpN2sLBeE5bPzGKXUc7-nJtnUT1B6AY-zTWYsTOgMlHbEFnFvdeZIr3Bdk1cUoE-iAeS3npGHARMlNMEqUoeueu4GpJheupm4Cn5UOq_8LaJRYurdQnb-Pnti2QahNAASO-zW77eWge6rsGEgV87BrewhrLhHoqyb2sL3iwAcxcz8Sj4LqcvFYadYw2oIEBhMevMjYuf32mP1WKMz5WdCZc924EZfwwjESXBa4RWbz77cJaFE7ZOd86qb4j3UadnbNfCF4A12Sc559aV_lTMwFnVTSMEStmoHvsxmcXufQEx-ELR0TAt_fHmn98FXb-0UZKRUQYnj5JZgEuxj_",
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN39L0jsYaqUAdxOQvKPQ9arkr5M-kysNRII_UWrNrW6i-VmgX6gYn1G_qkaC2mJk_cU2IRPU_v_hD2fruwo_8WOBsHmKEIhhYCcWD3Thl064r2JkLoC-0ljEeu32IrE6dkiPotCrX31JDrkmJr0gzPCUKHMHRRD7LNk6-TJ2z804fO8oyd4t_nUfgvH-WJiJiH5PNbHhU89Cfo2kb9jv_2CFWpb5uL2iJU0laFXjrNg68t-p-hrJK6qKPc1nnQcr4AXLoUp4foiDcLxKFLVeQbIEnS_qOyd9aIVv4JeWibdpUv06aH0lbfIGE8pdY5_xAID5ys3XQNjb8_KUz-QjNhgfwktNj0kLx_MpC-Fiea8hC8fW64I4t1VEgTIVv8l4OOgzbGSK4PjNkuEisrTb3tUx5udCz3ojoarRd16Q0PVx4aK"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9016356181796567726&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 7:00 PM",
+        "Tuesday: 11:00 AM – 7:00 PM",
+        "Wednesday: 11:00 AM – 7:00 PM",
+        "Thursday: 11:00 AM – 7:00 PM",
+        "Friday: 11:00 AM – 7:00 PM",
+        "Saturday: 11:00 AM – 7:00 PM",
+        "Sunday: 11:00 AM – 7:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Golden Retriever Cafe Shibuya",
-      "nameLocal": "\u30b4\u30fc\u30eb\u30c7\u30f3\u30ec\u30c8\u30ea\u30fc\u30d0\u30fc\u30ab\u30d5\u30a7\u6e0b\u8c37",
+      "nameLocal": "ゴールデンレトリーバーカフェ渋谷",
       "category": "dog cafe",
       "address": "2-29-5 Dogenzaka, Shibuya City, Tokyo 150-0043",
       "neighborhood": "Shibuya",
-      "phone": "+81-3-3461-7777",
-      "website": "https://goldenretriever-shibuya.com/",
+      "phone": "+81 3-3469-4115",
+      "website": "http://dog-heart.ico.bz/",
       "description": "Specialized cafe featuring Golden Retrievers with adoption programs and breed education",
-      "descriptionFr": "Caf\u00e9 sp\u00e9cialis\u00e9 mettant en vedette les Golden Retrievers avec des programmes d'adoption et d'\u00e9ducation sur la race",
+      "descriptionFr": "Café spécialisé mettant en vedette les Golden Retrievers avec des programmes d'adoption et d'éducation sur la race",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -383,18 +688,39 @@
       },
       "priceLevel": 3,
       "confidence": 75,
-      "reasoning": "Breed-specific cafes exist in Tokyo, particularly in busy areas like Shibuya"
+      "reasoning": "Breed-specific cafes exist in Tokyo, particularly in busy areas like Shibuya",
+      "googlePlaceId": "ChIJY_opwkzzGGARrrphOC2IIH0",
+      "latitude": 35.6677333,
+      "longitude": 139.69017499999998,
+      "rating": 3.6,
+      "reviewCount": 532,
+      "photoRefs": [
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN2Nz14MKBW3p4hG-PjM1KB-f_fXOIuowlCXnA_H-F0poxYf_njdmqe0IlO3X4YhenkXt_HpZ14qr8sLa8EHyVAk9nb8U33PArQKeazZ80GVwU_CcrW-dOQqIGIhWrtYjUQSzhVO7J_pPmjQV8t3855cEnU1jtZm7TBkpASOBt41n2Oz2lmPsaIp38kzNx5ATaFNTgAWdcoNYamCDsJ5MZoqtg85yFBEi9xF-v4izZN5JrxBb7Fb0i-im8GUaObZySfh3d6sTdorfdBzmrgqvFqZKgxuEdNBXlab3IVg9DJd7aww-dB2tZDCtFKYGCEzTUmiqxDFg7qLVICUPVmZBu9_r94oAhky-nDI1EKNgi1eUHfxyTqCb6uhZdJa7R6x0qXkj7VuY3S-6z4rt_P4pv-Cc3gHRxGH9Egt8OjCtLc",
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN0CRgixPfRTcUfzy8GIvbq2aSDMK77Bqekf-U5-W7r3zhZvaNZ1XpoNFkwVgAMTR_SVKtZ5QWbOFXdBsb-tlnaNAGontrN3vO6tRelDRouoW-mFFBtYz-E7HpVOXjozVU_UydvQQ09g0Sw3hfhuLcHeorJGFmVU6bY9jBVuSOqIZkT-mQunQ9ZUgnvlH6WqgwFJ5l2ReV4-rro7RDRBkTqO8EXpglDg3cf5XfLdAEyOjmKSs8N0uF4hDqQVls7mbszf8CvTF34h5jaCIWuy8SvWVGYs-cn2S2H_O3NhpF-D8X1k2pSd4UalkHIHJ7maV3O8St2mRiBPqgQXTSM4Qpc1e14tH0SUvTXmdkd46EinPyfptycaqvQnOg0l19knxyMHV8VBDCAo07qU4no-ecFMZb-Jk5vxEx4k8VsC3kLm0VfX0xg2l1PgA77NQ0Eu",
+        "places/ChIJY_opwkzzGGARrrphOC2IIH0/photos/AcnlKN16lfmBg2WAwGhVoVsd0svDnhA-aqfbpNZK1CSxukGEzr3ihXs0hYk-x1TzPrAorlY_2vZc5ZbdGcUChJsADnrcIWqzWu7xNnI9eTwBC1qEqyyD8AbLz-oVHMfuFqJrolzpNQQUPlOcvoJh2LRsN3Dkwsqpj3LPSlStLN8Vw9_aGRN8gegrhsVFXF_ZzqVtMNQXuCfc_PJ-4hhpo5lFSkmL-KOeohcp2x-AqX9IqZNOTVp-f-yWt7RvIRLkgrPwOq41EOUkGT07R5JtGcBN8B76lg8-hGVsAqjeO9OE3AZ09zzwS8_13BEE5KLnoFxNhtclyYoMs9ApDXOfdQHeyV2CS6NcYm_eDMKpYplYt1Lr2abLS0rYY14Oh277YMFPET-bDZHdB2V7qQQglGi9ibWSHtZ-GU0ycu2KW1Ts1MxyUpps"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9016356181796567726&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 7:00 PM",
+        "Tuesday: 11:00 AM – 7:00 PM",
+        "Wednesday: 11:00 AM – 7:00 PM",
+        "Thursday: 11:00 AM – 7:00 PM",
+        "Friday: 11:00 AM – 7:00 PM",
+        "Saturday: 11:00 AM – 7:00 PM",
+        "Sunday: 11:00 AM – 7:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Shiba Inu Cafe Harajuku",
-      "nameLocal": "\u67f4\u72ac\u30ab\u30d5\u30a7\u539f\u5bbf",
+      "nameLocal": "柴犬カフェ原宿",
       "category": "dog cafe",
       "address": "1-19-11 Jingumae, Shibuya City, Tokyo 150-0001",
       "neighborhood": "Shibuya",
       "phone": "+81-3-3408-8888",
-      "website": "https://shibainu-harajuku.jp/",
+      "website": "https://owls-cats-forest.com/",
       "description": "Traditional Japanese dog breed cafe featuring Shiba Inus in Harajuku's quirky atmosphere",
-      "descriptionFr": "Caf\u00e9 de race de chien japonais traditionnel mettant en vedette les Shiba Inus dans l'atmosph\u00e8re excentrique de Harajuku",
+      "descriptionFr": "Café de race de chien japonais traditionnel mettant en vedette les Shiba Inus dans l'atmosphère excentrique de Harajuku",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -405,20 +731,41 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Harajuku/Shibuya area known for unique themed cafes including animal cafes"
+      "reasoning": "Harajuku/Shibuya area known for unique themed cafes including animal cafes",
+      "googlePlaceId": "ChIJE4haZkKNGGARIzHcPdmkEzY",
+      "latitude": 35.67094670000001,
+      "longitude": 139.7055971,
+      "rating": 3.6,
+      "reviewCount": 948,
+      "photoRefs": [
+        "places/ChIJE4haZkKNGGARIzHcPdmkEzY/photos/AcnlKN2sBExSNGDVHREoTo31DeW0SfWG4FYpqdQfzDUp46qLQH8VA4utYFcSWtf71dJOat-hxM-h6anuEImwIVSuoR3PVXdmNMYtdseNbgfMjtjCTjWS3c127xWGqC0iaqfPTfoVnV9n7jjPMxysmkBzs1uqtyki_JCJiyA63Os9iGamJtTsnJVqSnEYJtI4sNxm_WjhRf98YJU3ylwDCUT9H3OsgeBja2YiZurWgDOSFwegPJRY2LL4PA9umBJxiCqfOPhMq-Rvgkvj1gQYSPWGazd69Dq4g5R0Iya6BlH1rvUpuyQ-lZa1gsw4hMy7Xz95jnH-irLzOm_jGZVO1lOptKTi0TR3qHPDjuuG4lNCJ59-NAD-DA8Onu38BXGiAze7-zEiufW6Kv9g9eFbDOJo384uMlUgywvXslOE5jStCab4lraAalT2j_RcM56tF9yW",
+        "places/ChIJE4haZkKNGGARIzHcPdmkEzY/photos/AcnlKN0xZ9jKNlQMf74hjWgK0dFli2P-naBEODIahOV840BwL83Q9CWP7cDiHRpq4QvuXwsZb1Q5n9Y-awZxqlYuikq31EEzEeuHZKpGhg1KTPqvFRu6ky6mlnmAHLQ9DNvJLEHTXW53Yn9EILiCzbgvWHVQlKhDiEMwjvo_Pko1EWM8Pzrq7hMQYyaJhePV46IXit7S3r3AajaYHfcsj8NfEefw1xwR_vHyfvL2Cr4spq9mXyj-TJawr5JwXNb1BknXclikv9j399GmuFfilY0GLezgGYuMnpCtAgjyet7z1Vtf-dEQc6PqGxqIvarG0LaoDYvw_ClZtAxp52fvPGIBwJYhoBm0-YY8ViZaQZkksKza6k4zGgiCAxa2-KP8j8xodu4vhuF_1ZRzAr8oX_29nRyr0F1NScE3_UoEz8MZM_CRdg",
+        "places/ChIJE4haZkKNGGARIzHcPdmkEzY/photos/AcnlKN3NNTOJnL-o6lPLfJltfOfl7b6uccULWv8UZqqAbNEdtbSMGxMO4KbAzpBOZR-qMixMWt5rB1U5pf9A8aHAy581SHTLRIByJda4PFsv2qE7GN6DMOq6Nn8NClRSm9z_zrjLpkY9PApXKtLTA7V5X_ttO8vpSyAkGdsDXxk9KMnAglHcXP_NFxkUSoUnavCpGlkrbXubU-Ab_B-4uTYQRNN-VrH4aHg80hH_2CKduJDnR0ahuEFCWPsSzD3KwThVm9nSmGmwPd8A7unZH31Dd_jpm803PTS9ParYyGdpScBbi0NfzM2y9o55nRYFnvI0bpsyptN5XCvf75wLU6mqarqKDcd2p0bQjMnf9PnlHND5Dywx9ZosYucy3EpWbUN5JWqVSuqlYw34aqfSwOQKuhnhTxMxyoFwt2F6UbdVHPmCqsLmDW0IBZgFnDc1Gg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=3896639355558310179&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 6:00 PM",
+        "Tuesday: 11:00 AM – 6:00 PM",
+        "Wednesday: 11:00 AM – 6:00 PM",
+        "Thursday: 11:00 AM – 6:00 PM",
+        "Friday: 11:00 AM – 6:00 PM",
+        "Saturday: 11:00 AM – 6:40 PM",
+        "Sunday: 11:00 AM – 6:40 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Lucky Dog Cafe Roppongi",
-      "nameLocal": "\u30e9\u30c3\u30ad\u30fc\u30c9\u30c3\u30b0\u30ab\u30d5\u30a7\u516d\u672c\u6728",
+      "nameLocal": "ラッキードッグカフェ六本木",
       "category": "dog cafe",
       "address": "3-15-24 Roppongi, Minato City, Tokyo 106-0032",
       "neighborhood": "Roppongi",
       "phone": "+81-3-5411-2222",
-      "website": "https://luckydog-roppongi.com/",
+      "website": "https://huskycafetokyo.com/",
       "description": "International-style dog cafe catering to expatriate community with rescued dogs",
-      "descriptionFr": "Caf\u00e9 pour chiens de style international s'adressant \u00e0 la communaut\u00e9 expatri\u00e9e avec des chiens de sauvetage",
+      "descriptionFr": "Café pour chiens de style international s'adressant à la communauté expatriée avec des chiens de sauvetage",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -431,18 +778,39 @@
       },
       "priceLevel": 3,
       "confidence": 75,
-      "reasoning": "Roppongi's international community supports dog-friendly businesses"
+      "reasoning": "Roppongi's international community supports dog-friendly businesses",
+      "googlePlaceId": "ChIJjX2JWgr1GGARsgt79dmYTjw",
+      "latitude": 35.6453309,
+      "longitude": 139.7302962,
+      "rating": 4.8,
+      "reviewCount": 2736,
+      "photoRefs": [
+        "places/ChIJjX2JWgr1GGARsgt79dmYTjw/photos/AcnlKN10-AfMVVPuITxcPtjkQ9jUBXrL9eFOAXbKsL3Mwv4ZgQ4z1utFxVW2zgoHR1WP5JReBDHQgx_Vrzp5rzcVquy7KuVN5gLWPj8lK75Tz6P4ApIahUi6ZUHd21q3lCaXMTtwHiyh6TOYPfiFS-uxCGdi7PJDaBiCu14hJHZLAabw0nGVBoXkagPrktiwxEkDzE9H3-Kvu8dNzm5LecbAWlUEYXJ_YDX30h-JAhmmCfGkd3KGLeoM5WfNwNgWXCeW20chEW5rbSn2iUvDlerZJiNjCsnVqXuooMgWJYhdpa2s7w",
+        "places/ChIJjX2JWgr1GGARsgt79dmYTjw/photos/AcnlKN0upvb9LKvSma8VeaBCijO9YdW-yYoZrxcT6qbVDjwdzxaVwg3tAHUpCSMvsXpf2ETKMeyvnRaJrGgrGthpq7A-Vay_B7SWmbpoO9I6d4tvydldmcIMh_yTdKM5oaCC0dAznpfXF9HQRkdRJM2fdQCz0rrE45CciTt76vsyRJzhjJkNvI-2cUkgUKudnn9KbnEJpv7vtW4mHZQpFjOpX7pfjBnfj3u_E0_GU2pnFL3lHMG_zZqm7bE3uPSuHgbe5pR4ALIBP5yZkRYjsy4g43vWpunSe6TgwB5e_NCrW50Zsw",
+        "places/ChIJjX2JWgr1GGARsgt79dmYTjw/photos/AcnlKN0HsQP9-RRvVm2C7v_OruxAGoqxNHxgkB7VO3XuoiG8cRWJvhUR76UQHGFkKFWjvVsG2Bsn6ENgdgSRAB356k_VCEGdV7l05Ndx2bVvHG4Rryhb6RQN-j3Tc8gsUb1u_1UMwI3m7dL4DGBevsZSTqLfA1U_9kBtcJsiYwBMA2ey4NuBcAypNaNjgX-ozmjUj5lSUkkMiqTWnHQcA0c21pvKMn9Nvlu9gc36QZ6J4j8y3vP-GB9m1GYymDOSDyJb5ojGxiz9A7lHcCs_KULiz39t72k4bneeJaBp95MOYlvotO8xobQ89EwaVFnKl8jV4T-TTll36BqSOKXAoTekyJM88eZuW5rKCTPaNbCWMDmG7O8ZBnjHn9ynhedHRi7EUTiQ5-0GFqh-FCj0RcF_9N9jc_LUFAGn_g007POKSC5Fk8wlgykHxHA5q-neGw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4345578752352914354&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 8:00 PM",
+        "Tuesday: 11:00 AM – 8:00 PM",
+        "Wednesday: 11:00 AM – 8:00 PM",
+        "Thursday: 11:00 AM – 8:00 PM",
+        "Friday: 11:00 AM – 8:00 PM",
+        "Saturday: 11:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Tail Waggers Jiyugaoka",
-      "nameLocal": "\u30c6\u30a4\u30eb\u30ef\u30ac\u30fc\u30ba\u81ea\u7531\u304c\u4e18",
+      "nameLocal": "テイルワガーズ自由が丘",
       "category": "dog cafe",
       "address": "1-25-8 Jiyugaoka, Meguro City, Tokyo 152-0035",
       "neighborhood": "Jiyugaoka",
-      "phone": "+81-3-3724-3333",
-      "website": "https://tailwaggers-jiyugaoka.jp/",
+      "phone": "+81 90-8996-4487",
+      "website": "http://minashigo-joutocenter.com/tokyo",
       "description": "Family-friendly dog cafe with play areas for children and dogs, plus training classes",
-      "descriptionFr": "Caf\u00e9 familial pour chiens avec des aires de jeu pour enfants et chiens, plus des cours de dressage",
+      "descriptionFr": "Café familial pour chiens avec des aires de jeu pour enfants et chiens, plus des cours de dressage",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -455,18 +823,29 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Jiyugaoka's family-oriented demographic supports dog-friendly establishments"
+      "reasoning": "Jiyugaoka's family-oriented demographic supports dog-friendly establishments",
+      "googlePlaceId": "ChIJ2f7z0Rv1GGARuzESAA7TBLQ",
+      "latitude": 35.6021149,
+      "longitude": 139.6650403,
+      "rating": 5,
+      "reviewCount": 2,
+      "photoRefs": [
+        "places/ChIJ2f7z0Rv1GGARuzESAA7TBLQ/photos/AcnlKN0kIT03DHLXJIs39gKRl8YMzj3tKKqYlgfgVj9opMn6SGL1btD6aOVBrs9HJzi2MPMOQaCop--BluHuJghrG2Y0aNTNkPrJp1LlTGqbN4escdJiG9CPxAq6X0iHa7um7esj7Mhas6fFnqwyD94p3jhpTvXWAXhIk5EJn9S-vf9n2xKLPdnek9MeUPKlavIujy8JvCx81hDap1E8ZujoUShMzHfb4-gDOi9m55fcSKxNlzhbGNEoMEQntb3a33SU2QLQXF-jvLVR7RG3MUIipkfTwLabNdIapkGrjOt8x6roLtHIsBygRzwO8mqjFIJDKthaSlsSttFMQJx182mNRs6THiPjLVA0ATHvSBh2Ay1bVxIlCCyocQMufUgNmDxY3Im6FmrcKvKDCN3ewP3t1Ihp99-i4chPFC8HcoWfsaYJvOQpDHqPSTPT3H27J0eP"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12971724883818066363&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Blue Seal Coffee Daikanyama",
-      "nameLocal": "\u30d6\u30eb\u30fc\u30b7\u30fc\u30eb\u30b3\u30fc\u30d2\u30fc\u4ee3\u5b98\u5c71",
+      "nameLocal": "ブルーシールコーヒー代官山",
       "category": "regular cafe",
       "address": "11-6 Sarugakucho, Shibuya City, Tokyo 150-0033",
       "neighborhood": "Daikanyama",
       "phone": "+81-3-6455-0018",
-      "website": "https://www.blueseal.co.jp/",
+      "website": "https://store.bluebottlecoffee.jp/pages/daikanyama",
       "description": "Stylish coffee shop with outdoor terrace that welcomes well-behaved dogs",
-      "descriptionFr": "Caf\u00e9 \u00e9l\u00e9gant avec terrasse ext\u00e9rieure qui accueille les chiens bien \u00e9lev\u00e9s",
+      "descriptionFr": "Café élégant avec terrasse extérieure qui accueille les chiens bien élevés",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -477,20 +856,41 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Upscale Daikanyama cafe likely to accommodate dogs on terrace"
+      "reasoning": "Upscale Daikanyama cafe likely to accommodate dogs on terrace",
+      "googlePlaceId": "ChIJPZSXRe-LGGARk33GfABab1Y",
+      "latitude": 35.6487574,
+      "longitude": 139.7023996,
+      "rating": 4.4,
+      "reviewCount": 266,
+      "photoRefs": [
+        "places/ChIJPZSXRe-LGGARk33GfABab1Y/photos/AcnlKN1rCPmeQIri0rUeULQurXg8YOV2fLIBl4usyWR_L-yogtd7Ump83xo-VBzmHYIjbSLGldyJc6V3yJ6rDYGeekfO0o1w4NWGmkB3ZP_eDWRuPGAGxn0YY6OkRxnVjzxTmAAhDEMIxErrJG_WpngihiJcOngrOQO-W8AYpSuaUyN9LLvTGfsnA4vIatHWShkZNzWWmjcNSxkVpNP_sHOmpZEiOuxFljWjWQXKYaUHOSiIDoL3Xr2l3u0dglUwge9tKcmOBTrBMrWaWa0MddfN0eaIoFUQmFeJjuvi9rGCDaUOXnFs2vu-y0PEfTNpTAcj9TgeD8K_xPJw0ZB2n-fDQVJD5cCCBF6wS0KxSAc5tUf3RzNhyANsShAgm1ABBIM_a33VVFIqPms9Up7H_wmW7CIGWkex3oMC83DAsuXS99U",
+        "places/ChIJPZSXRe-LGGARk33GfABab1Y/photos/AcnlKN0HMoFpW8tM4jZiVCLNHfmj-AMapM_Rk3Pm9dTg_8rbFrZjzTtWn4-Xabcvds2_BV0lCP4XyI0OH86oye5f3TiCYqBc1RE2XjEccMq4-kSOxeEjiPD9jwprgem971Ox13gQAwV0f6HXqkxpj5InPG2_9lYZXLXfMdFLgoLRc6WK-K0-Cx6zaQ8La_yNJ3HhpcuJbtiEhITlqQhI-rBil0cQ52X-rU3Q_iVxa9eUwOP5qsfus6WgOpoeCI2X2isj_9tdYjtxOmwiI28XIV68lSYqEXD8th2RHtZw4Wg-_hTuOQ",
+        "places/ChIJPZSXRe-LGGARk33GfABab1Y/photos/AcnlKN26RGiruaW4mSkdwZt2wVo2ZNgTlBzF7VhnBudOPZbg39M5XQP5c5wDTW_xvZwp97cXFqOtfA6ILAR3wTdrCwI_uMQlaTkw9v8s-4JpDI8P8xnLBp2BfvG3uxommfTr7Ih0QXb0V6lw1Ch1AHMsmNRr6LgfTtYNnYv2dihDMVRsTtSo4Zk3kfIV6egBp3R4gaWq2JFLSxRkL_zVo3MPS99rZlSTTelRFEPkhQeG7OafX3b9fbVY28VhNVNHvT_tyzfYbROGntubiRisJwkW9jDO-dRHwzLq-vDG5lePPEqhNIcTHzZpKByEna770QyqdASou5DnY3hfgZQ-vIkdMiaK8w0i8xGhhpSpZez9cQSOGYOn282XcTa-KOb6EQxShIxaLD3AlE8cawsKEsfjdEGjf7kLDRmbGPIcJPAiA9rVDr8hLd87PaTsNnbatI7n"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6228295767816568211&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 8:00 PM",
+        "Tuesday: 8:00 AM – 8:00 PM",
+        "Wednesday: 8:00 AM – 8:00 PM",
+        "Thursday: 8:00 AM – 8:00 PM",
+        "Friday: 8:00 AM – 8:00 PM",
+        "Saturday: 8:00 AM – 8:00 PM",
+        "Sunday: 8:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Starbucks Shibuya Tsutaya",
-      "nameLocal": "\u30b9\u30bf\u30fc\u30d0\u30c3\u30af\u30b9\u6e0b\u8c37TSUTAYA\u5e97",
+      "nameLocal": "スターバックス渋谷TSUTAYA店",
       "category": "regular cafe",
       "address": "24-1 Udagawacho, Shibuya City, Tokyo 150-0042",
       "neighborhood": "Shibuya",
-      "phone": "+81-3-5784-3206",
-      "website": "https://store.starbucks.co.jp/",
+      "phone": "+81 3-6416-3857",
+      "website": "https://store.starbucks.co.jp/detail-2003/?utm_source=GMB&utm_medium=organic&utm_campaign=store&utm_content=2003",
       "description": "International coffee chain with outdoor seating area that allows dogs",
-      "descriptionFr": "Cha\u00eene de caf\u00e9 internationale avec un coin salon ext\u00e9rieur qui autorise les chiens",
+      "descriptionFr": "Chaîne de café internationale avec un coin salon extérieur qui autorise les chiens",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -503,18 +903,39 @@
       },
       "priceLevel": 2,
       "confidence": 70,
-      "reasoning": "Some Starbucks locations in Tokyo allow dogs on outdoor terraces"
+      "reasoning": "Some Starbucks locations in Tokyo allow dogs on outdoor terraces",
+      "googlePlaceId": "ChIJNWJKGaiMGGARZnLm9ZLvLn4",
+      "latitude": 35.6598098,
+      "longitude": 139.7004154,
+      "rating": 4.1,
+      "reviewCount": 2614,
+      "photoRefs": [
+        "places/ChIJNWJKGaiMGGARZnLm9ZLvLn4/photos/AcnlKN051y1Ao9JkM6c9Q9cJe_RsxZ_jBkT85k9xDcKPQhY_kaI2kvexAc-e5h3E2z_cuZfrbOVooGkF40-H5_xN4yOqVtFWaGpR3khP8X2AGv751rF74hY4zdRI9isA4F7xt9V6Z29KbUyVO3yNEvDwMXf3XR1qUQg8WzLw8yJg3MmidSoHthE6Anpz005Mex7SWHUw0EXldQKE0Wd552O6B5OL76sIBNgB4Dg2jeGTnUE4DLSZwv0DYOtBOQb8vGLeS7kc1w5mrxu_4qOiPXdbgLueNjnu0fTs6tC-3nvQ_PV_2_kN4h04Jxl8jXlu6-GtxVUD93aEZxGARDQ7AsJab7GBgBuGdL6Pjwv88tMP9eHB8-Ji7SNbIUBVh57wTzCbfgZmnmAPTZ_STYZs-OVBKcI9Z0geA1zeu8KFKLZOi9Znkne5",
+        "places/ChIJNWJKGaiMGGARZnLm9ZLvLn4/photos/AcnlKN2uMVKVvVQrjC90yaTcUDMgAbzuViQYIwGQLxwUwTeKTB7cX0ERBqA9WmvwGNDHGScgMG0x4DMOR2sS7W5ePrVWT4qsLxxo6I5UtkCvTx0rAJ68Vn6_XkqSH6WmJPtaN_-aPYRgg4cE2aWty-nUl-cUtvR2l9zbdaP-4EAVj14Z_DotiBQiMQb-O5g9T_Hg8L0OaNqT2gkKjn80UQW3Oq6Xq-IYrA-3MILHJ3RoI7JIbB5VjSsBRDkzTSriihJ3a5u4qSwnNGmGS3JlC9WdT4AL0wwvLzjtSi0bW0C9yrjo-9HNCR5DG2hmX4ncehscIqzACyLh8uIR8ESNolGwws8WVxIBP9dUeqp8U3ONe4HvOnGxVgNch24Q3U7rGwDN38Wq-4JdI4dJ2MAXc24fed1rNEBdtoeGAChGmUQ-SXHDgQ",
+        "places/ChIJNWJKGaiMGGARZnLm9ZLvLn4/photos/AcnlKN3miuJbtc_OIapbVCzNIeuZD4MuLoOA2SRhfrEPpIzG_Q0XJljI7ZKuuhIJ8P86KGYa-XnIpOJY6B7zrirq5c43ZSycXd-r50RHrDBI1jEC4vyzXmtbm3qTBcQZf6HLg5SK5A0aCqiDvu667V1BmfA58cOHiiPcstNrfyCgu2qiqHbhw0cbS4yWazid0auxj237Z9X5YjZoXWcJa2Xkp0U-eFQzQfQjpTYZCnLtSiqbSEyW62Btj06wTubRF5RfhBMiJs2J2EafUFd-Dc1lbIlhiwhezwA6cmyS9jqBP8PuA1EphaWGFpVotfRVHN3uVuJ5WKC48McKnDsuTH1oX6ARCvBE8lTFIEDC-tl0osvUXwJPykVMi3sHNarUfTES9vD3d3NNHsPTA8VjEFfxqzPLcCZvVr7yJZT7u90kyT0"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9092468112177394278&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 10:30 PM",
+        "Tuesday: 7:00 AM – 10:30 PM",
+        "Wednesday: 7:00 AM – 10:30 PM",
+        "Thursday: 7:00 AM – 10:30 PM",
+        "Friday: 7:00 AM – 10:30 PM",
+        "Saturday: 7:00 AM – 10:30 PM",
+        "Sunday: 7:00 AM – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Cafe Kaila Jiyugaoka",
-      "nameLocal": "\u30ab\u30d5\u30a7\u30ab\u30a4\u30e9\u81ea\u7531\u304c\u4e18\u5e97",
+      "nameLocal": "カフェカイラ自由が丘店",
       "category": "regular cafe",
       "address": "2-3-15 Jiyugaoka, Meguro City, Tokyo 152-0035",
       "neighborhood": "Jiyugaoka",
-      "phone": "+81-3-6421-3822",
-      "website": "https://www.kaila.jp/",
+      "phone": "+81 3-6421-2242",
+      "website": "https://lattegraphic.co.jp/shoplist/",
       "description": "Hawaiian-style pancake cafe with terrace seating that welcomes dogs",
-      "descriptionFr": "Caf\u00e9 de pancakes de style hawa\u00efen avec terrasse qui accueille les chiens",
+      "descriptionFr": "Café de pancakes de style hawaïen avec terrasse qui accueille les chiens",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -525,20 +946,41 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Jiyugaoka is very dog-friendly and this cafe is known to allow dogs"
+      "reasoning": "Jiyugaoka is very dog-friendly and this cafe is known to allow dogs",
+      "googlePlaceId": "ChIJP1XWGR_1GGARd6ZvvbCyCyk",
+      "latitude": 35.606917700000004,
+      "longitude": 139.66882959999998,
+      "rating": 4.1,
+      "reviewCount": 1055,
+      "photoRefs": [
+        "places/ChIJP1XWGR_1GGARd6ZvvbCyCyk/photos/AcnlKN1Xf9cqQ5DjSiC0JjxRGMuX9GiOQarQ0pBtLKLc0neSB6vkD-jEAN828M5F3-6_rpQsKNWt5rHiurZDK_6Ma2tFBE6HX7KsqIdbWCFb9n29KVuAsGPTYyL0p5hb1tzIZGQcR6PZesYySOmWy5W4m0hwg1IyKCLIorLJ6z7mcc_ItT8pfe9Ej-vtbM0L_Iip_1adGTacq9Ku_LYWfHdsWUprlgoiDUF43YBk39r_d_Robjmn3r82uR_PTZyihT03yB5EDlkS9g7AqKj67JfWFtxhlcQCaN4NUvIGWXpyrGrp4Q",
+        "places/ChIJP1XWGR_1GGARd6ZvvbCyCyk/photos/AcnlKN2CtY3FuUqtVwzloaDbiGSEsaOe0d0XYkYc_kr5tr-3idzBHutE-TEidTCt_ydnizqGVbSrmqNP3t0YXOOoMRMQmVXXpWkEbqxyHdLicHePqQZkIW1e03vAw3LINJF3_PyiVLTPcHya0v5UX4T70sicqXLtD8yWdv9OPeTrly_LutBh3MeuLd9Jwf23tyqElZ3bTQ_dZ7ogHMQrP63rsHBODmAejD3o07Z_ubSshClDN77l-St4Yetv9aszhFiOn11-qlJcyiWGr4xHC3Itc-8kRcys-wj8X6IdzqQnEEgeVg",
+        "places/ChIJP1XWGR_1GGARd6ZvvbCyCyk/photos/AcnlKN0yktrav9phCA5Vpca1Tn5K3RCA0qwmZ3hPSGrqfHSIVY9nQpWsSrcSvxrsvHoZ1WbhfD-LfT5RkmgDHlKauyayR2oZGC-3VFvMkojbKibiPc-I-BWD-vivitqcnO76ZA4Oj8PcmuQNKrGm2WiQeyDYWVuBluE4S9iS_NIbDsG4WpmE3oNznOrXU6v8PGl8ebQX1coCOoUrovjlKbAMLxdPH9HzcirVXEZI39nAHsSCdA4eqPmDCOYMo1kB8-LXB8Y25VKSny8HZ5aU2cufqbr6Hnx9DlNjWSTw-X4ePykCxtUWznAXamumHfjTSuLMFGEGK63jtRgpFpw2xDjaurrXnuRAD1H-ZgONGA94roE58izXtUGfmU1hu7AO68eQJDRqCNGhx1l5SOrzQky1aG1j1D7bwG7nzy9MjYe1wsksNdlvzaYyCwnkJl0S0A"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2957654052461061751&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 10:30 PM",
+        "Tuesday: 7:00 AM – 10:30 PM",
+        "Wednesday: 7:00 AM – 10:30 PM",
+        "Thursday: 7:00 AM – 10:30 PM",
+        "Friday: 7:00 AM – 10:30 PM",
+        "Saturday: 7:00 AM – 10:30 PM",
+        "Sunday: 7:00 AM – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Bills Omotesando",
-      "nameLocal": "\u30d3\u30eb\u30ba\u8868\u53c2\u9053",
+      "nameLocal": "ビルズ表参道",
       "category": "regular cafe",
       "address": "4-30-3 Jingumae, Shibuya City, Tokyo 150-0001",
       "neighborhood": "Shibuya",
-      "phone": "+81-3-5775-5800",
-      "website": "https://bills-jp.net/",
+      "phone": "+81 3-5772-1133",
+      "website": "https://www.billsjapan.com/jp/locations/omotesando",
       "description": "Australian-style cafe famous for ricotta pancakes with dog-friendly outdoor area",
-      "descriptionFr": "Caf\u00e9 de style australien c\u00e9l\u00e8bre pour ses pancakes \u00e0 la ricotta avec un espace ext\u00e9rieur accueillant pour les chiens",
+      "descriptionFr": "Café de style australien célèbre pour ses pancakes à la ricotta avec un espace extérieur accueillant pour les chiens",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -551,18 +993,39 @@
       },
       "priceLevel": 3,
       "confidence": 75,
-      "reasoning": "Upscale international cafe in trendy area likely to accommodate dogs outdoors"
+      "reasoning": "Upscale international cafe in trendy area likely to accommodate dogs outdoors",
+      "googlePlaceId": "ChIJoQC4faSMGGAR1wiDmBUhsAs",
+      "latitude": 35.6685817,
+      "longitude": 139.7057812,
+      "rating": 4,
+      "reviewCount": 3338,
+      "photoRefs": [
+        "places/ChIJoQC4faSMGGAR1wiDmBUhsAs/photos/AcnlKN0lqcaZ14sfBybVFoY_qMtMj8Nxfaxc_pLiRh3nW3G7d4oWvk0Q_vDqczgDkPBpLPi64NHqATR8iA6Nl-EV0Bo3O4BXPuqvS9zreCQW-a0mb8a2EMBNJucpoa5dtqKF5juSKlol2Le7W1MxWnooV0ugk_C-5Cc1wbvYBeYi7aYdYtEFodRFZspMDYKfwmg3Yt_sjY0tuzV0_OzkQa7gqh9kbjEozJE57tQrENsiLU8QUIUCnMPAP2TWhnwpxJiHBKIl-U87Xz3D08a5OXLNXrafdRCQE8db_dtidd0etqGIXg",
+        "places/ChIJoQC4faSMGGAR1wiDmBUhsAs/photos/AcnlKN2hRb6c0RQabzbU_MHyg3Sca0mKjEvtie0N0tURh6_eIHEll4n0o0ewfwP5K5_ic28AtU-oovvPm-lozaclX2G27lKitzjOeoX4nrFcrySafa37-hsLLGWY-twZQxfKY6HybhpWaF1EzO1OBbCnSADepJzpc_27v9X5U_hRmUyIpal3hLerPqk4LXTqpjrUssKm4mb61fshDvtibYkcyz8slkILY17ZIjeDBACeO405MvDHqV0xk-gt3e5kWLQCKtkm6LN3k2Z1_R7Rd-Ir8gBNjSA0mpuwmTH8HGQKG-UmMycUZMrGYvtYuNmgw9wzeIEZtVpNMpfjTshpnN6mjMIPzIpvgDOM9qtvUH_Mw5fys9L-5xz3ASnh_-6zvXNgiiEAEByZSG3W483hsP4rM16ssXPuRlyGb2rPSBJn00I33C-V7eMP9ss_PTu1eycS",
+        "places/ChIJoQC4faSMGGAR1wiDmBUhsAs/photos/AcnlKN1ZBW3dw6G_Pq8HS5ghQf5GN1L5E7_VA78ybJzX1WRi8YqIdqSep5hstfEZBrn3kWieWb8lU1ELKsJ_Ic3DYFCO_Rkk06L7HlwTpl2vAwYgZUqdleo84OXvrYeSWpKPPzFDDjaO_VyAK1MzKC8jw9vpdFRqX_Ssd_nI7IBtB605uy2YmeMVZowXfbceqVhZjcSfhfySbGt272B-DOLgDc3DjMLlpFP184lRdifXQm6G445GSN31oFhulEffQeXfnWtNFRjNEbhEakV450hFSpYudXseWQT451gSb06DGR-pOQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=842209506955036887&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:30 AM – 10:00 PM",
+        "Tuesday: 8:30 AM – 10:00 PM",
+        "Wednesday: 8:30 AM – 10:00 PM",
+        "Thursday: 8:30 AM – 10:00 PM",
+        "Friday: 8:30 AM – 10:00 PM",
+        "Saturday: 8:30 AM – 10:00 PM",
+        "Sunday: 8:30 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Tully's Coffee Roppongi Hills",
-      "nameLocal": "\u30bf\u30ea\u30fc\u30ba\u30b3\u30fc\u30d2\u30fc\u516d\u672c\u6728\u30d2\u30eb\u30ba\u5e97",
+      "nameLocal": "タリーズコーヒー六本木ヒルズ店",
       "category": "regular cafe",
       "address": "6-4-1 Roppongi, Minato City, Tokyo 106-0032",
       "neighborhood": "Roppongi",
-      "phone": "+81-3-5775-1205",
-      "website": "https://www.tullys.co.jp/",
+      "phone": "+81 3-5785-1510",
+      "website": "https://shop.tullys.co.jp/detail/1000675?utm_source=google&utm_medium=gbp&utm_campaign=map",
       "description": "Coffee chain location with outdoor seating that permits dogs in designated area",
-      "descriptionFr": "Emplacement de cha\u00eene de caf\u00e9 avec si\u00e8ges ext\u00e9rieurs qui permet aux chiens dans la zone d\u00e9sign\u00e9e",
+      "descriptionFr": "Emplacement de chaîne de café avec sièges extérieurs qui permet aux chiens dans la zone désignée",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -575,18 +1038,39 @@
       },
       "priceLevel": 2,
       "confidence": 70,
-      "reasoning": "Some Tully's locations in upscale areas allow dogs on terraces"
+      "reasoning": "Some Tully's locations in upscale areas allow dogs on terraces",
+      "googlePlaceId": "ChIJS9ULRJ2LGGARzXtb0cCjmTc",
+      "latitude": 35.6626803,
+      "longitude": 139.7327508,
+      "rating": 3.7,
+      "reviewCount": 650,
+      "photoRefs": [
+        "places/ChIJS9ULRJ2LGGARzXtb0cCjmTc/photos/AcnlKN3Op9UOrAZJV1fmft1OVNE1PMMhocmq9QRNmTAZa2JeuHampZqQrvv_iM9umpxgQIaPrCuYGImv63Ygo_Ckt66elTNeVd-LGkz_Vy2znWE_ycbfkJmAj77AHOY-aZQ9MB8oAqABOpsSHZ4AXQxMv2Wb-guHDHAs98m1iQWqDWvFG_2sHlDr2Ycuq3AsrBKijlmwGgo2baWr08wdUeEjaOb9zgK9-L7djEbzUQlPRWv_MM55RNvZLYtT32bvMOg7_Awcdew-oK52nrM83At4E2inKjH6S9f0NDSLYFhunWrXgw",
+        "places/ChIJS9ULRJ2LGGARzXtb0cCjmTc/photos/AcnlKN0p6PEDZSAwn3kiu-EYGjp3UlfH1Rg9WuQYsAuwWE7HAWGGfN7dcPcXUS6yaaCdXo986raJSx17E_DLRGPpArsXPNdvXGLL_LUrBBe5OvWrCQB_w0SfMsEyMjinHLM3YTSN5TX3TVf0TDIT28ZA2vbVOO5OLnr2IB2l3UT8jsqyM8X3MGOE4D9eNEqDi7XrMAj9oq3FtdD0skQOKUflPIp9mF11tj-tMq-L_NoWM2ovb5J9HruQff6RQWF_IGrWwKpHLv41n9xFTQ8u89IK1KzPcPBKhomrV4tFUmHxTLUlcw",
+        "places/ChIJS9ULRJ2LGGARzXtb0cCjmTc/photos/AcnlKN3BrmFBvfd44gTnk6r3VzjU8C3tqtjw7iEPLNjwKoYyEs1SVMuCyBm_iFxxRSZIOTCP_bvwsIPUUpkdGFJsLClkL7IqyyPnJnM0ZWv7zwH44P6PEMHY9LZWtB5-pkW0Kf6VKQ3kZO0T85NsCNAs1N_anwrpHC17Sv1EG_zqfGiIIYjJtFNePqICOOuM0gVV5P-Lpoyqpl7ApMvhPggFFmGqfS1lOFg3tSCydG51xnOHQQRGYJ6IiIhW5zXMCTpYsGJffpYtO_EKjvn6ayHEaV_ltwROmgUlMjf02wwr_EqSfw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4006413392064248781&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 9:00 PM",
+        "Tuesday: 7:00 AM – 9:00 PM",
+        "Wednesday: 7:00 AM – 9:00 PM",
+        "Thursday: 7:00 AM – 9:00 PM",
+        "Friday: 7:00 AM – 9:00 PM",
+        "Saturday: 8:00 AM – 9:00 PM",
+        "Sunday: 8:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Park Hotel Tokyo",
-      "nameLocal": "\u30d1\u30fc\u30af\u30db\u30c6\u30eb\u6771\u4eac",
+      "nameLocal": "パークホテル東京",
       "category": "hotel",
       "address": "1-7-1 Higashi-Shimbashi, Minato City, Tokyo 105-7227",
       "neighborhood": "Shibuya",
-      "phone": "+81-3-6252-1111",
-      "website": "https://www.parkhoteltokyo.com/",
+      "phone": "+81 3-6252-1111",
+      "website": "https://parkhoteltokyo.com/?utm_campaign=monita2024&utm_medium=googlebusinessprofile&utm_source=Google",
       "description": "Luxury hotel with pet-friendly rooms and services for traveling dog owners",
-      "descriptionFr": "H\u00f4tel de luxe avec des chambres acceptant les animaux et des services pour les propri\u00e9taires de chiens voyageurs",
+      "descriptionFr": "Hôtel de luxe avec des chambres acceptant les animaux et des services pour les propriétaires de chiens voyageurs",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -597,20 +1081,33 @@
         "fenced": false,
         "shadeAvailable": false
       },
-      "priceLevel": 4,
+      "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "High-end Tokyo hotels often offer pet accommodation services"
+      "reasoning": "High-end Tokyo hotels often offer pet accommodation services",
+      "googlePlaceId": "ChIJqbHzUMKLGGAR15DTArzlkgI",
+      "latitude": 35.6630543,
+      "longitude": 139.75945149999998,
+      "rating": 4.4,
+      "reviewCount": 2553,
+      "photoRefs": [
+        "places/ChIJqbHzUMKLGGAR15DTArzlkgI/photos/AcnlKN3WAl2HasCVafwt_QMImBLsA-wCh6exP0_Zl7FNMviTxbxok9PRvFyY6OwrQa0XvwcY4q_YyoT9iOKCYX9ySNjj9bM_3HHqn-JuTskopCRs2D5zbdr37q_h0QhhCtIFhmq20NYAk78-ZL_nv88fUG3H1cjvjKym1md4n0yUcvJdYtp9z4TXtbUIYoynj4J2x36ce6G956ZdVBuY9aceH7dCUz6KcN9jvk4gkRVzo8u2P8AlOiNdDIgO57u4MqVWIFXx6wgB2tlEQ46KnMCcDt6-_zpEXAQbmjGbiOPZCnl-5g",
+        "places/ChIJqbHzUMKLGGAR15DTArzlkgI/photos/AcnlKN3czmApTQsdDGj9nB0Fn8ynxFXEzLWmSJDH0F5TRw-wJ7VceAtyg4Ma0WHnR8iNi_RWAxyJDpxPvZowcAO4yq_t5A3nfzbonI4-4TojgokutQRdjTiAzexpS5-fssF1ii86XIwgbbynJui6Pgc19FkVCr7XpG9ZyzVig73Q6i25XkPdLa1DcLdth1FD7fE9OOjTLe4Uqj06pBmJzmud9maWcy8b4ib7ru67EePLUB7kAh73GlcBdF4chUfnAS34vMm0Y8netkG4d1IedfBqINcc0W12lEG3anQPf4JEKeCfs8XA-l9emzGJp_i1-bbkd218cC0ZdLg7OV-6-d1LqNunsrlll-EEk9VRotdY9BIROuLUXNwRhT1qwlGoa52BlJBzlaNPyNVpxiBqA2bpWJfU7-dNgT1oI2xI9pbgx3M7qg",
+        "places/ChIJqbHzUMKLGGAR15DTArzlkgI/photos/AcnlKN33dfQbpbtMoo_LJpNmQMfQTJwEXI0fgES2oddhOfVkA1AwxmhdWbR9PpbmKmkJvhV3lbhEq7XxUW4YP1D_F3Ry26kX2ERu-03f1yp6adjSO6oPKR0xZvgu76QzdKRNNF9R-S6nBt6GfXKbEKXTEg1HO8y9G0vNuORdXaGVQFxpY3TpX1yiRxpqHA3s8xjHOsMwap1Qg8Qj5IyXrRTo1KA8iunFcdvv0Rt77h4akLhDUkG_1x8YtjLT8QY0xDKfCfwLXewkPWKaJYZ8gFMxXzStSZ_ZWHuKXgRjcEJXXQWIUQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=185463130339643607&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Hotel New Otani Tokyo",
-      "nameLocal": "\u30db\u30c6\u30eb\u30cb\u30e5\u30fc\u30aa\u30fc\u30bf\u30cb\u6771\u4eac",
+      "nameLocal": "ホテルニューオータニ東京",
       "category": "hotel",
       "address": "4-1 Kioi-cho, Chiyoda City, Tokyo 102-8578",
       "neighborhood": "Roppongi",
-      "phone": "+81-3-3265-1111",
-      "website": "https://www.newotani.co.jp/",
+      "phone": "+81 3-3265-1111",
+      "website": "https://www.newotani.co.jp/tokyo/",
       "description": "Historic luxury hotel with comprehensive pet accommodation program and walking services",
-      "descriptionFr": "H\u00f4tel de luxe historique avec un programme complet d'h\u00e9bergement pour animaux et des services de promenade",
+      "descriptionFr": "Hôtel de luxe historique avec un programme complet d'hébergement pour animaux et des services de promenade",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -623,18 +1120,31 @@
       },
       "priceLevel": 4,
       "confidence": 90,
-      "reasoning": "Major luxury Tokyo hotel chain with established pet policies"
+      "reasoning": "Major luxury Tokyo hotel chain with established pet policies",
+      "googlePlaceId": "ChIJrSDdYgCNGGARRwmlQxnCRyo",
+      "latitude": 35.680427099999996,
+      "longitude": 139.7343903,
+      "rating": 4.5,
+      "reviewCount": 695,
+      "photoRefs": [
+        "places/ChIJrSDdYgCNGGARRwmlQxnCRyo/photos/AcnlKN3r1uqOLq2WXff40prsmCQQ083HOBGMTj2xHOqN2ODHzUEW_ASW2sTu3KZMF-j2n22tsnHo6osHhQysbwTGb77Y06rAoSOXATuAiT8QDVGYG66MJ7MDo2JlJ3M0L_gwSuuj1o0OVRf7Y-AU4lKmWRiAYJHVn7wjV5r0i3uJFejJUryaGNVC3iSnBI5CxI5tme4eO9GbLMzu7CR3JtLAwnj-VnVMYJrgqvc3Mr-JjEjzPeSdM3FFG6D1eHwsO0L3dBOcTOj9J05bghIQRcJvkXlXqh16qRk0NvsKTuUMgiaVIJebeeVqvu9cxY5NnPiKIg_1CjR3ZpSPc30D7R3He57dacna4K6x7c4h0s27CdIzJ38j-md2SM7TiHbfkuf7ygOO6K3LGLljkOSKhB2bV9g3w7f6OOGpW8SdbmlkUGBbOQ",
+        "places/ChIJrSDdYgCNGGARRwmlQxnCRyo/photos/AcnlKN3D1Jff6N4MTjFR2Jb90ggHF0RRJ_UwmQdW8pCc0Qlk6OPDjtAENilu1zGgMpu7U462bx8z3FlY7wKTKlJwNIoD7Okp6EKSrDgRk9I3Zn3LE56ORAi2ba_UTWCJ6FlV9JRKLYxctphDT-u1bGdOHmaOK3sFK5vsanNzI7jiMnhpYzmgVP8QLZrj8MK5QHKIV60ub5o2gJaKFE14NLzN3T7xLJdHyzuyKUC5lVl40EnH6GGZjGpv4HpidcpXxhXeK46KB_H7iA_GOWqRDfZJqRsHoRTlohbZFHxEx-9DMTfPVi8b-kS44ajiDXtqBe--LYidmVZo9DEEH0MOAI0pKCQwQtjlhVz1KdEaN1hdCfiKUqq5pmMVK9qlz6hDukpFNe5bzrCfQaAvcjmsNBQZgQmp0r38WBfvLcuqcrIJDKIMWAU85W-X_zYrjY8eXHjk",
+        "places/ChIJrSDdYgCNGGARRwmlQxnCRyo/photos/AcnlKN3dkEqtWJOrL8UGPqXFtumWQqI-AK2fTvPbqdv-jrLelHEBjTTjFPN6PxggUhjnoYt0F7uEHBBfsmrh-l6V0v9Fh_uouF1s4Q4VsSBFATTC5F5RdC1ffeXOTT4TtHPBeIndgtq7UsSZ3ERC8ctUPVoraBlAGtkdsMo6uhvmBdiucByrBPrHI_9mtgO7_fPwyBwh7_kV0WqlvMrorRaAcS81sLwGqZzMdzBuZXOTVVpsM4FqDxDN-wFP3EPVOHGMxHy8yYk9WT6mX2Gd2poLzPxOFut-gyBc-zYOQ_3tmZJdi1KLJ8OaN-GgEiZe7FJOeKyVmr0ZQMnpkucJhdL6UY-MjSFA_hGB7ahftBHA1aRlpN5cQQDYMqQizH5ychLonY9p6oPt6_dzTTUyY9pN7UQvSbaDBZTlmVEoOZcRUpQ9zp8Yy66heXFM7-RQCSXf"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=3046617086704290119&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Shibuya Excel Hotel Tokyu",
-      "nameLocal": "\u6e0b\u8c37\u30a8\u30af\u30bb\u30eb\u30db\u30c6\u30eb\u6771\u6025",
+      "nameLocal": "渋谷エクセルホテル東急",
       "category": "hotel",
       "address": "1-12-2 Dogenzaka, Shibuya City, Tokyo 150-0043",
       "neighborhood": "Shibuya",
-      "phone": "+81-3-5457-0109",
-      "website": "https://www.tokyuhotels.co.jp/shibuya-e/",
+      "phone": "+81 3-5457-0109",
+      "website": "https://www.tokyuhotels.co.jp/shibuya-e/index.html",
       "description": "Central Shibuya hotel offering pet-friendly accommodations with nearby park access",
-      "descriptionFr": "H\u00f4tel central de Shibuya offrant un h\u00e9bergement acceptant les animaux avec acc\u00e8s aux parcs \u00e0 proximit\u00e9",
+      "descriptionFr": "Hôtel central de Shibuya offrant un hébergement acceptant les animaux avec accès aux parcs à proximité",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -645,20 +1155,41 @@
         "fenced": false,
         "shadeAvailable": false
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Tokyu hotel chain in Japan typically accommodates pets"
+      "reasoning": "Tokyu hotel chain in Japan typically accommodates pets",
+      "googlePlaceId": "ChIJTzNfw1eLGGARagCmVhCOmP4",
+      "latitude": 35.6585773,
+      "longitude": 139.6998213,
+      "rating": 4.2,
+      "reviewCount": 3922,
+      "photoRefs": [
+        "places/ChIJTzNfw1eLGGARagCmVhCOmP4/photos/AcnlKN0akCoP27uYop_10oIbwsSZRWmVGfbvTkLZsi_YwYMlh8FUyfZmT_iAKcM420PmS-Av48NlQ7qMCwGVReUh7lH6rKJx0X3GnF90IKI1g1SBvwQXdLuqJ_nfV0vdHAdj102ZLkQ6ZP41apOCZJzoRZPq55FApXna30QmIhFC72RsUlDzEq6Ht-LPqTwElZzzJ1d5jBEup1kNCrYlWklwZD8QmI_YSLBd3dwIq1ilfSWXfPsko19I_jDUHWFHyN0HJiqCmClOBwUCTLrjfS91JSEIUwGy2V80P-xvKywd-SMUcw",
+        "places/ChIJTzNfw1eLGGARagCmVhCOmP4/photos/AcnlKN2CdVDwicN0oRP6Zk-TCQ9TI6Mv0TiLVn_mTQLbOL_33Cfa6GZqtd3AHl6z7dhGTTvQ6ypK0vxur1zav3NakfE6rHlkWtRMZjYyzAH_yAexQ8WV0aOeKvs-Vu1crmIVeRTnVt2Gx3k4BSpZPETn124WpEXdReIug-NDO6OoJf9JhEjgb3mfGwchtJVMGEVxutz5XCnZbdG4xSfVT-FdYQ-XYEc_H0JJiIBA84ZZrtTsol8rMgangomD84xxMxhMUAjDRSpTJBv8Vh9NNqSFxPrtNmXmG3pxz7b5WoBG0hJeeQ",
+        "places/ChIJTzNfw1eLGGARagCmVhCOmP4/photos/AcnlKN3sRPjO583XU0zb1ZnSMAp9GhkBGbalL62Xrj-YSr_blrh8q1mqNrB62BZ-b4_20-7kZO7zxM4mITCCBTlGP6Q8hhz3IF32BBZ5bUPepJVf7n9Vsi5jZB3pQo0gUcZCwJjiKvHVfFNlePjCuuLmkP2P-l7tXnRmgLlYXwewVqjNePxYirJLTU0gdgdhRoKkBCxrz7CZ55jbTVSo_4oVJGdu5c15GQEKU5M6BOdlOmXLjGqoSdY2GCStunAJUdSgMzovDb_b59g0TM35kokmXMA1-yZlVmtzocUBEaDRJmI51A"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=18345569282918056042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Grand Nikko Tokyo Daiba",
-      "nameLocal": "\u30b0\u30e9\u30f3\u30c9\u30cb\u30c3\u30b3\u30fc\u6771\u4eac\u53f0\u5834",
+      "nameLocal": "グランドニッコー東京台場",
       "category": "hotel",
       "address": "2-6-1 Daiba, Minato City, Tokyo 135-8701",
       "neighborhood": "Odaiba",
-      "phone": "+81-3-5500-6711",
-      "website": "https://www.tokyo.grand-nikko.com/",
+      "phone": "+81 3-5500-6711",
+      "website": "https://www.tokyo.grandnikko.com/?utm_source=google&utm_medium=gmbk&utm_campaign=gmbk_hgn",
       "description": "Waterfront luxury hotel in Odaiba with pet concierge services and bay views",
-      "descriptionFr": "H\u00f4tel de luxe au bord de l'eau \u00e0 Odaiba avec services de conciergerie pour animaux et vue sur la baie",
+      "descriptionFr": "Hôtel de luxe au bord de l'eau à Odaiba avec services de conciergerie pour animaux et vue sur la baie",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -671,16 +1202,37 @@
       },
       "priceLevel": 4,
       "confidence": 85,
-      "reasoning": "Luxury hotel chain in tourist area likely to offer pet services"
+      "reasoning": "Luxury hotel chain in tourist area likely to offer pet services",
+      "googlePlaceId": "ChIJq0s44BuMGGAR15wOlfVd2tE",
+      "latitude": 35.6251435,
+      "longitude": 139.7715694,
+      "rating": 4.4,
+      "reviewCount": 8949,
+      "photoRefs": [
+        "places/ChIJq0s44BuMGGAR15wOlfVd2tE/photos/AcnlKN00SlyZW9Io2J8M3fv2vdGhHeF2FK-vNiu5AN7xTV8UygayjBDiA1g8w8JyZWLLF4bH_eCAfvS4fvAo867YktpqwwUF46-CQm8TJYH2t4oq-f7SxJRanPQzItAUAenLSw9mM5W9YKj1MznV0w803ABZwGEul8XH6W7MeooBww__Ik5sx34ovKhO3wUitECW5Vuzq86ZyYbgmBjB_IicaboacGA_CVHaNRk-nsbVdQ6KTU5LWfYa2tN9UC0SPQOynnqkg5HaOeDCqgXw83oY-d94cOdLX4Gfm8sZPi3kBTKU_w",
+        "places/ChIJq0s44BuMGGAR15wOlfVd2tE/photos/AcnlKN0tRDFKfh8BPXyOoubkhHv3-p_Il3dEesay42DBCjeiGwU0tQWRnfZ9lPeR76gxFpJn68hYIn-1VXqjke5kUnSyyF3umiKNlt2YmfJOn0XeZrgm5dnK5oX9IjcKhxyZNqnnxQvtdBVhEIb7_yD5y27P-DmF72UnVMA26KqH0Vr2nnEUzcC7uogXfT_DH8mXjaJKqPHCjwR0vg0DlF28Bheokja_GGr1mxuw5j4Ft_45ZXKP0ycGCG-CUN0xo_pbv0ZPsugUDxxVn3BtRkFkM1i-irr2ClOXCopjkFIt5cJI1KXSwHeylFdngmgXboCSsZiWFO7g9Z1PAGQgcv9KV1VXDljJYKYGbFIWcY8sOG5Z2KLrDDz9yi6vkNucMuaW6oKPrKE3JxYCfTZe8lOtMM_5ckDFkKEUvZGUdYgck5GcIuh4",
+        "places/ChIJq0s44BuMGGAR15wOlfVd2tE/photos/AcnlKN2ow2vmpzs9eYNpFRs_yB8CiDIq4G7iheKecRm_2YL0e0kwKxkBo6L-MMDTfavEpXmXfIJXqyC_IsxaAGAfChrt-dUCwYuH6U9L1ponNk7v8yv7AGnc45rL0_KM3_aYPsMWPkOLbwfX1Dk1ovRgPl9HAagzvQSVTD6W_BisESmhIrpu45U11fJzVIV5ysf63xTPYdcNxgjn9XmfmVOl9p2fVaH3_kam23BZkDUSCDDYvOLpvLAGdxuyImVCYJYax8V5kh7hxsd14J2VGHXFGjawFOXZKOpQ9AL6j96HKUDkMQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15121502008198995159&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Pet Paradise Shibuya",
-      "nameLocal": "\u30da\u30c3\u30c8\u30d1\u30e9\u30c0\u30a4\u30b9\u6e0b\u8c37",
+      "nameLocal": "ペットパラダイス渋谷",
       "category": "pet shop",
       "address": "1-23-16 Shibuya, Shibuya City, Tokyo 150-0002",
       "neighborhood": "Shibuya",
-      "phone": "+81-3-3407-5566",
-      "website": "https://petparadise-shibuya.com/",
+      "phone": "+81 3-6416-5080",
+      "website": "https://petparadisejapan.com/",
       "description": "Large pet store offering premium dog food, accessories, and grooming services",
       "descriptionFr": "Grande animalerie proposant de la nourriture premium pour chiens, des accessoires et des services de toilettage",
       "dogFeatures": {
@@ -695,18 +1247,39 @@
       },
       "priceLevel": 3,
       "confidence": 90,
-      "reasoning": "Pet stores are common in major Tokyo shopping districts"
+      "reasoning": "Pet stores are common in major Tokyo shopping districts",
+      "googlePlaceId": "ChIJtzb7FjyNGGARvJCbWLMve1s",
+      "latitude": 35.661330899999996,
+      "longitude": 139.69897509999998,
+      "rating": 4.6,
+      "reviewCount": 50,
+      "photoRefs": [
+        "places/ChIJtzb7FjyNGGARvJCbWLMve1s/photos/AcnlKN3dpKpHX2xbnWb_1ZS66QiKr8rY_qD_J34epIlTQHKMX2hfT02MXt9xTyy5EWW8j3bUxLbZBE5nTGK6kD6jz9QlVkRA_N1aIFxqhC5Es-eo_3DGfvittnAUWB44ay_j3bymcHLA9Kk2h7eTXQF-6BMks79x14odL9QpBEg1uiGuARzF67HgzUtAxMOoMDGyVi2kqoCpkyll6KJ7WPT7CJMV7PPeXqw1qrSS7vCcQUaNO5q4272pPLLjWJLW5ZBMPLGL_T6fm74y7OeZV48KX7Nas4n2t92AX6tpG4jy-4EYgQ",
+        "places/ChIJtzb7FjyNGGARvJCbWLMve1s/photos/AcnlKN09NCH2KcJMXP4Ow29eU15_AohjfjgJZkRAE3YCkHRBfTdjsLS8WVC4Uh2yhJH37oFs3TFBdlCj62hBo0QXgRnGLK6cLqmVWRokCgT1j9ranLIotmViTHxlFn3Osb_Zb2gin0JNbsH9gxSHUSU6aPN8B_Ly8ttjlP0J14Ywij4s3aYsT-d6pEGgqGuL9-Gu64hbalqfiuEw0v7vJFNSNteahkHAyM9g9a_SWqxr4TOwC0jwhrhAXMJCSP0H7pOoCxP20m6dmBAZaQRsSTaF-0DNhNhicRFpI4AmvWGd47_p7g",
+        "places/ChIJtzb7FjyNGGARvJCbWLMve1s/photos/AcnlKN1A_3oBgtj02r49yQv0RjWYvSyBmgs24rHcjK9QIILLBmSRiwgEpQbNuVCdnwAg1X-G5ObsXaY5ikVJgXO8O0yxY5jKqr7-Wbd3AGv3j4DA-jalowXVW7DRo2TWHaf0R6dwnZpiRGdM89HritaZYuJKS_2clmWy1NbmQPOanS-SaSy5_Pnt8AXX8e-WunjCBHpVxE1GCXgmHjzOlycHA_D2cdnnFv6d66tHzPboXitZ0yy_3DR0sZUEofafkbEPsqYjgAdSYWUudDrXU6cqTjwQ7EyU_YSBVZXovIJH7jIz2Mzdb8ofs-5Wop-cXniLZz7if090vcI_3BBtlulXjd8f35Dqqkfl55e2lfTpgpsOrpbVUzsRnx0G0H1QS_JFvYnREOrJBSrlPyQb7WU4xAFR-Q-g864TaMeD2sR6dKOGmSYZ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6591914926919094460&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 9:00 PM",
+        "Tuesday: 11:00 AM – 9:00 PM",
+        "Wednesday: 11:00 AM – 9:00 PM",
+        "Thursday: 11:00 AM – 9:00 PM",
+        "Friday: 11:00 AM – 9:00 PM",
+        "Saturday: 11:00 AM – 9:00 PM",
+        "Sunday: 11:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Dog Depot Shinjuku",
-      "nameLocal": "\u30c9\u30c3\u30b0\u30c7\u30dd\u65b0\u5bbf",
+      "nameLocal": "ドッグデポ新宿",
       "category": "pet shop",
       "address": "3-27-10 Shinjuku, Shinjuku City, Tokyo 160-0022",
       "neighborhood": "Shinjuku",
-      "phone": "+81-3-5362-7890",
-      "website": "https://dogdepot-shinjuku.jp/",
+      "phone": "+81 3-5269-7218",
+      "website": "https://petparadisejapan.com/",
       "description": "Specialty dog store with wide selection of breeds, supplies, and veterinary partnerships",
-      "descriptionFr": "Magasin sp\u00e9cialis\u00e9 pour chiens avec une large s\u00e9lection de races, de fournitures et des partenariats v\u00e9t\u00e9rinaires",
+      "descriptionFr": "Magasin spécialisé pour chiens avec une large sélection de races, de fournitures et des partenariats vétérinaires",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -719,18 +1292,39 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Shinjuku commercial area supports various pet-related businesses"
+      "reasoning": "Shinjuku commercial area supports various pet-related businesses",
+      "googlePlaceId": "ChIJBe0WgtmMGGARg6e9GaeBmIU",
+      "latitude": 35.693400499999996,
+      "longitude": 139.70378,
+      "rating": 3.9,
+      "reviewCount": 213,
+      "photoRefs": [
+        "places/ChIJBe0WgtmMGGARg6e9GaeBmIU/photos/AcnlKN1YzHuTllqwkvq9bduGpkDd2nbgYujaNDOFbTzMTx4RA3oEXW0ypntl9zCu_sYTcs9vd-_D91A2PLD0lRhOWF_XQnNxafX97wUcjhzC0eKxT5_FpNo5MeYmvvj5gQUfcATjazh4HF9mr8xdAJI1RXLngmBHNNKj_mCVxKbT6Wh2TjYO3iyhnocpU-6-dGSGCJQxBwLrDLkQcpMvL_31MCF3PL9Bo0mB9bbm1CLG8EyjrRDq2O7cZagV0xa6V5_gBopej3SXFHDfXC5R0v36ox9HI7mY9UwKRoYo5muooZjs8yWWo79qhsRFKha4p_dcsIJZtppPs82sZCJCyDjaBiYXERnRNhKkblwbq4dwi7rA81Is0KyDXTOdJ_ITUlWw_Kdp9xJM0hObhPXi_nPiGROy56rbskHqP9mhpoEX14xAvGde",
+        "places/ChIJBe0WgtmMGGARg6e9GaeBmIU/photos/AcnlKN0a85OkJkcRYqibxqLK30IlCxRRvUGOXI8WqAW4h7ruKhlHk9mSRXzxXQ8sQRUJhUqtLKk4euszn1ynFHrr7vOuPfCBJEUyuFqaowBxNeKaQsAgXrAKQBYZwpLHITEjciNYInV381f6LIIL8SoIwAItIN7GtiVlG_rBrFo9yWcprd1Ks1fB5qI1LbsAlV_l5aoSmw02is2ZgNB24GlrqqJbKSUd2_K0d6JfqHkhwty9gSV3QTRJttCQY8NQAps1ScIBcYmhJdibTqSIaMq6KigRhsOFw-f_PDc287CRf1TmBA",
+        "places/ChIJBe0WgtmMGGARg6e9GaeBmIU/photos/AcnlKN0RDAyUYevqZXFJi8oDRKjO8VolNLIi2poN8vM_0vkaaB0oyy3IuzlJkgl4X6l8pzn96NLdVTRLzG0MCi7kAvvqiVTFW1HCYqfP1n--3CrsNlLe2qntr--K23Z0zuXVoUN79shUv_PNO7xPpw6uQlUrEGRvTS6r53qD9WPe2XWsm2YYCtJKJAViQEOU7HdSDGDtZqCyLUcZMmUPiJGnIlJe0mShtIxiUpftb6c8_75ced8pMTRtgiYwGCNvTYDMYFZxT4aqzFLwSLfNyndYd6hrYNHOWYudPMcWgYNMxbHuX8rcRCcElRDSNSfSqQVrdLkRlvXs8tuGirFRroxdwILIsXARim8Y8xWeS_-u0IEI2YFkDmi2dP0hfBN7TD5AEMhf4dymm3S3eCoFY2Y_uM0r1MzkMzhdYElzOhfyG1fu4qA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9626586758195816323&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:30 AM – 9:00 PM",
+        "Tuesday: 10:30 AM – 9:00 PM",
+        "Wednesday: 10:30 AM – 9:00 PM",
+        "Thursday: 10:30 AM – 9:00 PM",
+        "Friday: 10:30 AM – 9:00 PM",
+        "Saturday: 10:30 AM – 9:00 PM",
+        "Sunday: 10:30 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Pawsome Pet Shop Jiyugaoka",
-      "nameLocal": "\u30dd\u30fc\u30b5\u30e0\u30da\u30c3\u30c8\u30b7\u30e7\u30c3\u30d7\u81ea\u7531\u304c\u4e18",
+      "nameLocal": "ポーサムペットショップ自由が丘",
       "category": "pet shop",
       "address": "1-30-9 Jiyugaoka, Meguro City, Tokyo 152-0035",
       "neighborhood": "Jiyugaoka",
-      "phone": "+81-3-3717-4444",
-      "website": "https://pawsome-jiyugaoka.com/",
+      "phone": "+81 3-6421-1027",
+      "website": "https://www.ponodog.com/",
       "description": "Boutique pet shop specializing in designer dog accessories and organic treats",
-      "descriptionFr": "Animalerie boutique sp\u00e9cialis\u00e9e dans les accessoires design pour chiens et les friandises biologiques",
+      "descriptionFr": "Animalerie boutique spécialisée dans les accessoires design pour chiens et les friandises biologiques",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -743,18 +1337,39 @@
       },
       "priceLevel": 4,
       "confidence": 80,
-      "reasoning": "Jiyugaoka's upscale, dog-friendly reputation supports boutique pet stores"
+      "reasoning": "Jiyugaoka's upscale, dog-friendly reputation supports boutique pet stores",
+      "googlePlaceId": "ChIJ08riw6H1GGAR14yBg2JCSBU",
+      "latitude": 35.6088442,
+      "longitude": 139.6665918,
+      "rating": 5,
+      "reviewCount": 3,
+      "photoRefs": [
+        "places/ChIJ08riw6H1GGAR14yBg2JCSBU/photos/AcnlKN1RX2weiytKTigl4JQJTmlpsDryOw3t7XWq9aKKQlf9dXWXDtKMIJM5MmCEgB_-s_Df-hEDxr_fL2AeMucd9UR9Wwkqr66vbUavOzeYTUfrxzss2XPADov2naXFczfs-6LaLCbr7olpMKyDtd_oKcnGmejLKdENth5pDAqbMeZP1pznTBytENOnWgA1ngG5g-5gn4RURuAFQTRNfh3ASzMimdeN6VG0x5t3IEq6ZiGsCcHrVHRAMv9Q_DIUpEWpCzhiSew-E-MVqEV3ZwRRK7SxumTclHky2BduvEwx2A5Jtw",
+        "places/ChIJ08riw6H1GGAR14yBg2JCSBU/photos/AcnlKN3JTEhZ92L_nqfzrsBM6_i2WJOC1zn0vOWg-sDCjdFLRgUJzlD5MWIVqDpl2c6RWOJnAkxdcoov6vUQw_xnynniAcoeNzUSkzjHJyyUyKQniQXQh32S1h5ldWyudb2N_Ch9B8i6SuVaH3yeGcRHLRvQT4C3jZUtt_Cq9jY3oEWm4xJDKIOm-VxSkzAbzK-TyrSvUPXgKNfDVUfbUBdrR_Rm5GKyLRbxff6lViPrGjh9fAE4ptDfuNV6qXmyh9bB4frU7mFyj9k24mTdQpJQx5na-h1wg5FeuNCGL6Kh4qhdyw",
+        "places/ChIJ08riw6H1GGAR14yBg2JCSBU/photos/AcnlKN1bvvCm8GgGEuvfUu3CZgRnKHYXNP__8NeoDl8MYCqzudyTTZXXyknEEja1I0dRRKlWHhDwOaE9PhfEtHUW_n2HRd-2LMETIurzXt3nCQa49Ql-n9poOKGyWYAc7-baDrZW-tFVxrTEtuZeZyY2153F7IkJpxJsZs2r5ULid3TSvcBHfGmNdMgJ6h_xuAmE0XSTdBo66Kaiv5rqJpGXEc6MfexSEUfyJvcAIlOw9exisSlojB0IszO8AXIHqgCY-Iopl4XGX_eziJzzRzTb7MlFlYEmtFGQkJITKK9p3dKNJQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1533548664000187607&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 6:00 PM",
+        "Tuesday: Closed",
+        "Wednesday: Closed",
+        "Thursday: 11:00 AM – 6:00 PM",
+        "Friday: 11:00 AM – 6:00 PM",
+        "Saturday: 11:00 AM – 6:00 PM",
+        "Sunday: 11:00 AM – 6:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Pet City Roppongi",
-      "nameLocal": "\u30da\u30c3\u30c8\u30b7\u30c6\u30a3\u516d\u672c\u6728",
+      "nameLocal": "ペットシティ六本木",
       "category": "pet shop",
       "address": "5-4-20 Roppongi, Minato City, Tokyo 106-0032",
       "neighborhood": "Roppongi",
-      "phone": "+81-3-5413-1111",
-      "website": "https://petcity-roppongi.jp/",
+      "phone": "+81 3-5414-1511",
+      "website": "http://www.1wangroup.com/shop/profile.php?shopId=6",
       "description": "Modern pet megastore with international brands and multi-language staff support",
-      "descriptionFr": "M\u00e9ga-magasin moderne pour animaux avec des marques internationales et un personnel parlant plusieurs langues",
+      "descriptionFr": "Méga-magasin moderne pour animaux avec des marques internationales et un personnel parlant plusieurs langues",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -767,18 +1382,39 @@
       },
       "priceLevel": 3,
       "confidence": 75,
-      "reasoning": "Roppongi's international community creates demand for comprehensive pet stores"
+      "reasoning": "Roppongi's international community creates demand for comprehensive pet stores",
+      "googlePlaceId": "ChIJ5bsIcniLGGAR17sP-aV3VjE",
+      "latitude": 35.6642364,
+      "longitude": 139.73140039999998,
+      "rating": 3.1,
+      "reviewCount": 110,
+      "photoRefs": [
+        "places/ChIJ5bsIcniLGGAR17sP-aV3VjE/photos/AcnlKN3A1ZRanhWwsFGBF09Gf0Esuq4fzk07fDfVwOl4DvtCCrUjSVimC7568ayaDvSf36BLeUueYYRGR-AEPv-sthvjrPG-xXehX8XTPj9x1ELv7rYs5yUgbZSSYjYmZ_L16PbzzZxwApsB4toi8ZYowrCNjC5sdPrw0nKcIQVP3c1cEOtDSi5Mz08Op8IdbkPzRRjj_gcZy_ykhFoMHk3CCF6ZzUw2NXuKlRH-NZBPWrlITnBukODgOVUzrDCRz2_fm85vQ5qRWHhhdJF8G92crY4IsPgIzYJzVRVfvxa24ZBoH050Ou5vPyY5YBQNdInMLtj6iqlq7UlWgk4OQm7HV_wLFsgd7Ssb__tR-bBzNRLNI5csxtHwwokpqDBNfQa6Vk-lCyrEYIM4Cjrnf7Rx7vtTvR4IvV4SxuKgJ8cNFqHBHzM",
+        "places/ChIJ5bsIcniLGGAR17sP-aV3VjE/photos/AcnlKN3Br4eXUOPwbSSazRuup1WdMs-GbcnmdfpmQsFn-xFpwXW3dTxNNq2DYa-fzIQuwCMCqFacQpngOmeiTM7Jl_HDWHM0iq_7ZvRlWn--g2uU8PvZfDx4xLYZtohR4jiMhqetK98rsLGRmffwn7QwUmdbQ0lhwFriRXAgh3uXDBryT-ui8yaqg6osNEFFC-0KXLxevpru-tFkz1jQ6bQkAp5Tp7VuMiR98dcuZKvOt18AFTgq6QRul5g781oVB5iqvN2bYL9Ve4_W33HOVdnd343jecHgT5cEQZZNolR9o1y0tv8JmbFVrkPRfzOdAsGg_K7dIba9lqNYjol4uEGbdXCeUFXzQL5y98q2EhYPgBB8RJbmxgFutjOJzwJL_WLAhfsx7EHggD47P0-z9vBq_qfyeTeCxgrxVFAX-M3htWMnJw",
+        "places/ChIJ5bsIcniLGGAR17sP-aV3VjE/photos/AcnlKN2o3zt5lj3aiLA2_SvcQmOMkc9MPdbAwGrnIrmo-fMMQVwakuxVJhSXV5INc3jemtRNYOLWsAGg1OYVKDdM_OND7_7MufQw2j1_hi_Oo_06J509BA3VW5IasvR_ik2Q662mqxBO-6SFI_1CTp3yMjM5Bq8T3ElDc30L-9eqbV6hGHU4LQ4lJxGbqWz5T0n1QjLjDntWpIkP1Mu6RW0eGsJ40U6gPcy4X1WWzr2FpFLg7VwyMD9SGqMrnv0lop_GtC-Ct6C-K0cpjsAgoykESqUSXUzlQNz-Ykq_n49t443XSTvQ3t4AjIRs2vVDXUqh-6Ubt6ILWVe16XHfK1tEfRRd0qzU58CdkqUe66RA9A8stSrmMxoXJoJAYz5ogwGwVeWC3Hj23Wkk-0jMHTLRQCRkg9cjtSwu9gkjuonVz_kCZsiG"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=3555160510587452375&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 8:00 PM",
+        "Tuesday: 12:00 – 8:00 PM",
+        "Wednesday: 12:00 – 8:00 PM",
+        "Thursday: 12:00 – 8:00 PM",
+        "Friday: 12:00 – 8:00 PM",
+        "Saturday: 12:00 – 8:00 PM",
+        "Sunday: 12:00 – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Kojima Pet Shop Odaiba",
-      "nameLocal": "\u30b3\u30b8\u30de\u30da\u30c3\u30c8\u30b7\u30e7\u30c3\u30d7\u304a\u53f0\u5834",
+      "nameLocal": "コジマペットショップお台場",
       "category": "pet shop",
       "address": "1-6-1 Daiba, Minato City, Tokyo 135-0091",
       "neighborhood": "Odaiba",
-      "phone": "+81-3-3529-8888",
-      "website": "https://pets-kojima.com/",
+      "phone": "+81 3-3599-0560",
+      "website": "https://www.aeonpet.com/shop/aquqcity_odaiba_mi/?utm_source=google&utm_medium=map&utm_campaign=gbp-retail",
       "description": "Chain pet store with puppy adoption center and comprehensive pet care services",
-      "descriptionFr": "Cha\u00eene d'animaleries avec centre d'adoption de chiots et services complets de soins pour animaux",
+      "descriptionFr": "Chaîne d'animaleries avec centre d'adoption de chiots et services complets de soins pour animaux",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -791,7 +1427,28 @@
       },
       "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Kojima is a well-known pet store chain in Japan with multiple locations"
+      "reasoning": "Kojima is a well-known pet store chain in Japan with multiple locations",
+      "googlePlaceId": "ChIJrzogIvaJGGARpjXiY3rxD4k",
+      "latitude": 35.6278903,
+      "longitude": 139.77314859999998,
+      "rating": 4,
+      "reviewCount": 726,
+      "photoRefs": [
+        "places/ChIJrzogIvaJGGARpjXiY3rxD4k/photos/AcnlKN2UfKDGtgGFTDCkU8T51xiRAyccC5tM4KhUsAS4PBcNGaaMpay2kytl3mNS8bt1B9SiIDWlcQhj0SQVatXbB-okjsX_Hj_f1wgNlVodbI4rXzjpIxKzeA1AHFccgnVttl1dhovYFlWAw6kvuY4pbtRolb2zpUq72w86MStCnsQapuq8GJ-a-88q4SGWEZ7d5B3n9hxaaHaAoaXQdXFPilCEb2BMsQQFJJnzlHKw1icW5dTrWN76D2Q_GdvBlnt-aMtrxeH5kM0PNhRPkRgzEPyHZXaJx5Sm6RAz2yDRgmSw1g",
+        "places/ChIJrzogIvaJGGARpjXiY3rxD4k/photos/AcnlKN3q14lMkIeUv8V9kS1hybzuYKPFMXpc4Ui5FxNXR0bwwg2eTm73N1nIIr8rxP3VcWxTX-XGyZDLaVCCIw9mHdalKwTnYLDVhlNLmJ2IFpzbcFHYoby1kXu656Rhe9NZ9dyP9csb2SuK9qBzQxGIcgdieZ3U5xC_ESJRxyEIXkZSoFHzXr8gqYzHrmRh5-IGMi4FSZgXJhMWqTUu26Ui2vOMTJoQKaUCCnggzvn4cvP9psJk5-0xdLuQWm5j5iMTJAwzCQGdY5U9PzPs9WJK23yFpmGm-1g42-uXBQAE1SBwUA",
+        "places/ChIJrzogIvaJGGARpjXiY3rxD4k/photos/AcnlKN0vQxZMSIHLm3NzzismrKcp1OSKbXKrneBEdB-YGOCwqJW38Zi1TbTRzgvWGs7rqE2CL1E0Y3rL0tV2Y-nNKF8R7BbXVgHJiQ4l10HeZwlObMqJ_rDSSmd531FQ3yLwY83BRcG5NuXpiZKDIFaQdne-wkSyiACldR42uTNuyJTCMaYeVORuZNjy_dE87BnM2hXHQbUEHxbd6wbGvfa2RKLRU_n07xdFDSqwSvCtkImFy4vzSU52Yf_J2RZ7IzDKOct3d7Hl7vZZFPsvFw9WYn83flJrLeffyWk9J9zNom73XkBrvbIAv18_7HxX6-Sx-ycZrZcw1fzUb1SEXTSN2UPP_cIaW3Jxz25Dg1ZoZ7oU0N3Kg1z9OD_yj50rV61nktrPEN8TyQHIo7Eks_suMAcOuqmkkhE5DmiX5lSQQrCHsnz6"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9876378015810860454&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 8:00 PM",
+        "Tuesday: 11:00 AM – 8:00 PM",
+        "Wednesday: 11:00 AM – 8:00 PM",
+        "Thursday: 11:00 AM – 8:00 PM",
+        "Friday: 11:00 AM – 8:00 PM",
+        "Saturday: 11:00 AM – 9:00 PM",
+        "Sunday: 11:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     }
   ],
   "count": 33
