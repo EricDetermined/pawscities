@@ -16,28 +16,9 @@ const CITY_DATA_MAP: Record<string, { file: string; cityName: string; lat: numbe
 
 interface RawPlace {
   name: string;
-  nameFr?: string;
   category: string;
   address: string;
-  neighborhood?: string;
-  phone?: string;
-  website?: string;
-  description: string;
-  descriptionFr?: string;
-  dogFeatures: string[] | Record<string, boolean>;
-  priceLevel?: number;
-  confidence?: number;
-  reasoning?: string;
-  latitude?: number;
-  longitude?: number;
-  rating?: number;
-  reviewCount?: number;
-  // New fields from enrichment
-  googlePlaceId?: string;
-  photoRefs?: string[];
-  googleMapsUrl?: string;
-  openingHours?: string[];
-  enriched?: boolean;
+  [key: string]: unknown;
 }
 
 export async function GET(request: NextRequest) {
@@ -56,7 +37,7 @@ export async function GET(request: NextRequest) {
   const cityConfig = CITY_DATA_MAP[city];
 
   try {
-    // Load existing data
+    // Load existing data (read-only on Vercel)
     const filePath = path.join(process.cwd(), 'research-output', `${cityConfig.file}.json`);
     const fileContent = await fs.readFile(filePath, 'utf-8');
     const data = JSON.parse(fileContent);
@@ -71,21 +52,15 @@ export async function GET(request: NextRequest) {
         totalPlaces: places.length,
         offset,
         limit,
-        toEnrich: toEnrich.map(p => ({ name: p.name, category: p.category, enriched: !!p.enriched })),
+        toEnrich: toEnrich.map(p => ({ name: p.name, category: p.category })),
       });
     }
 
-    const results = [];
+    // Enrich each place and return results (don't write to disk - Vercel is read-only)
+    const enrichedPlaces = [];
 
     for (const place of toEnrich) {
-      // Skip already enriched places
-      if (place.enriched) {
-        results.push({ name: place.name, status: 'already_enriched', skipped: true });
-        continue;
-      }
-
       try {
-        // Add a small delay to avoid rate limiting
         await new Promise(resolve => setTimeout(resolve, 200));
 
         const enriched = await enrichPlace(
@@ -96,54 +71,46 @@ export async function GET(request: NextRequest) {
         );
 
         if (enriched && enriched.matched) {
-          // Update the place with real data
-          const placeIndex = places.findIndex(p => p.name === place.name);
-          if (placeIndex !== -1) {
-            places[placeIndex] = {
-              ...places[placeIndex],
-              latitude: enriched.latitude,
-              longitude: enriched.longitude,
-              rating: enriched.rating || places[placeIndex].rating,
-              reviewCount: enriched.reviewCount || places[placeIndex].reviewCount,
-              phone: enriched.phone || places[placeIndex].phone,
-              website: enriched.website || places[placeIndex].website,
-              googlePlaceId: enriched.googlePlaceId,
-              photoRefs: enriched.photoRefs,
-              googleMapsUrl: enriched.googleMapsUrl,
-              openingHours: enriched.openingHours,
-              priceLevel: enriched.priceLevel || places[placeIndex].priceLevel,
-              enriched: true,
-            };
-          }
-
-          results.push({
-            name: place.name,
-            status: 'enriched',
+          enrichedPlaces.push({
+            originalName: place.name,
             googleName: enriched.name,
+            googlePlaceId: enriched.googlePlaceId,
+            address: enriched.address,
+            latitude: enriched.latitude,
+            longitude: enriched.longitude,
             rating: enriched.rating,
             reviewCount: enriched.reviewCount,
-            photos: enriched.photoRefs.length,
-            coordinates: { lat: enriched.latitude, lng: enriched.longitude },
+            phone: enriched.phone,
+            website: enriched.website,
+            priceLevel: enriched.priceLevel,
+            photoRefs: enriched.photoRefs,
+            googleMapsUrl: enriched.googleMapsUrl,
+            openingHours: enriched.openingHours,
+            status: 'matched',
           });
         } else {
-          results.push({ name: place.name, status: 'not_found' });
+          enrichedPlaces.push({
+            originalName: place.name,
+            status: 'not_found',
+          });
         }
       } catch (err) {
-        results.push({ name: place.name, status: 'error', error: String(err) });
+        enrichedPlaces.push({
+          originalName: place.name,
+          status: 'error',
+          error: String(err),
+        });
       }
     }
-
-    // Save enriched data back to file
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
 
     return NextResponse.json({
       city,
       totalPlaces: places.length,
-      enrichedInThisBatch: results.filter(r => r.status === 'enriched').length,
       offset,
       limit,
+      enrichedCount: enrichedPlaces.filter(p => p.status === 'matched').length,
       nextOffset: offset + limit < places.length ? offset + limit : null,
-      results,
+      places: enrichedPlaces,
     });
   } catch (error) {
     console.error('Enrichment error:', error);
