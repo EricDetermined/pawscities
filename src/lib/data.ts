@@ -15,23 +15,35 @@ const CITY_DATA_MAP: Record<string, string> = {
 };
 
 function hashString(str: string): number {
-  let hash = 0;
+  let hash = 0x811c9dc5; // FNV-1a 32-bit offset basis
   for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash |= 0;
+    hash ^= str.charCodeAt(i);
+    hash = (hash * 0x01000193) >>> 0; // FNV-1a 32-bit prime
   }
   return Math.abs(hash);
 }
 
 function seededRandom(seed: string, index: number = 0): number {
-  const hash = hashString(seed + index.toString());
-  return (hash % 10000) / 10000;
+  // Use FNV-1a with better entropy: mix seed, index, and add more variation
+  const combined = `${seed}:${index}`;
+  const hash = hashString(combined);
+  // Use modulo with larger divisor for better distribution
+  return (hash % 100000) / 100000;
 }
 
-function generateCoordinates(cityConfig: CityConfig, placeName: string): { lat: number; lng: number } {
-  const latOffset = (seededRandom(placeName, 0) - 0.5) * 0.06;
-  const lngOffset = (seededRandom(placeName, 1) - 0.5) * 0.06;
+function generateCoordinates(cityConfig: CityConfig, placeName: string, category: string = '', placeIndex: number = 0): { lat: number; lng: number } {
+  // Use category and placeIndex to ensure independently varied offsets
+  // This prevents correlation between latitude and longitude
+  const latSeed = `${placeName}:lat:${category}:${placeIndex}`;
+  const lngSeed = `${placeName}:lng:${category}:${placeIndex}`;
+
+  const latRandom = seededRandom(latSeed, 0);
+  const lngRandom = seededRandom(lngSeed, 1);
+
+  // Use 0.08 degree spread for wider, more realistic distribution
+  const latOffset = (latRandom - 0.5) * 0.08;
+  const lngOffset = (lngRandom - 0.5) * 0.08;
+
   return { lat: cityConfig.latitude + latOffset, lng: cityConfig.longitude + lngOffset };
 }
 
@@ -42,28 +54,39 @@ function slugify(text: string): string {
 
 const CATEGORY_IMAGES: Record<string, string[]> = {
   parks: [
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1588943211346-0908a1fb0b01?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=800&h=600&fit=crop',
   ],
   restaurants: [
-    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=600&fit=crop',
   ],
   cafes: [
-    'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=800&h=600&fit=crop',
   ],
   hotels: [
-    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop',
-    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=600&fit=crop',
   ],
-  vets: ['https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=400&h=300&fit=crop'],
-  groomers: ['https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=400&h=300&fit=crop'],
-  shops: ['https://images.unsplash.com/photo-1583337130417-13571c4e8ee2?w=400&h=300&fit=crop'],
-  activities: ['https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=400&h=300&fit=crop'],
-  beaches: ['https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop'],
+  vets: ['https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=800&h=600&fit=crop'],
+  groomers: ['https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=800&h=600&fit=crop'],
+  shops: ['https://images.unsplash.com/photo-1583337130417-13571c4e8ee2?w=800&h=600&fit=crop'],
+  activities: ['https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&h=600&fit=crop'],
+  beaches: ['https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop'],
 };
 
 function getDefaultImage(category: string, name: string): string {
@@ -130,7 +153,7 @@ function rawToEstablishment(raw: RawPlace, citySlug: string, cityConfig: CityCon
   const category = normalizeCategory(raw.category);
   const coords = raw.latitude && raw.longitude
     ? { lat: raw.latitude, lng: raw.longitude }
-    : generateCoordinates(cityConfig, raw.name);
+    : generateCoordinates(cityConfig, raw.name, raw.category, index);
   const dogFeatures: DogFeatures = {
     waterBowl: raw.dogFeatures?.waterBowl || false,
     treats: raw.dogFeatures?.treats || false,
