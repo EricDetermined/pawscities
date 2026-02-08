@@ -6,7 +6,7 @@
       "address": "Place du Petit-Saconnex 6, 1209 Geneva",
       "neighborhood": "Petit-Saconnex",
       "phone": "+41 22 733 34 17",
-      "website": "https://www.cafedusoleil.ch",
+      "website": "https://www.cafedusoleil.ch/",
       "description": "Historic fondue restaurant with a beautiful terrace welcoming dogs. Famous for their cheese fondue and local wines.",
       "descriptionFr": "Restaurant historique de fondue avec une belle terrasse accueillant les chiens. Célèbre pour leur fondue au fromage et vins locaux.",
       "dogFeatures": [
@@ -15,21 +15,38 @@
         "outdoorSeating",
         "shadeAvailable"
       ],
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2185,
-      "longitude": 6.1242,
-      "rating": 4.6,
-      "reviewCount": 892
+      "latitude": 46.223233199999996,
+      "longitude": 6.1276722,
+      "rating": 4.5,
+      "reviewCount": 3116,
+      "googlePlaceId": "ChIJMwpcEOxkjEcRd_2UofasmUM",
+      "photoRefs": [
+        "places/ChIJMwpcEOxkjEcRd_2UofasmUM/photos/AcnlKN3kelE91iwdNj8e6dtnM8LHLVW6uQM4EBGn_FgHxABpwgL-2AGDMUPGg2Exvj3uuKtZ33aWT1lvnJtGwRbmVOU80pBKjPMCuHUgdnXQv2MFlPBGdezCTmnqGkfiBaIHyAW7j4h63KHDzvdj3Y8aURHs1jF26o19GAa55cyLtvnnGpF9Yio23_QPL-VJMDoP57x-RlpX0y_D-kUptN76dxpOvTktvNKRzLq6Xnr1FWzmL4lynmEUg-3hYagFGLmAJIVKfQveFxdgzHqXl2XtmY5kuwHEzSrPUcYZGlv5G4dZ5h-XHNtdEbgs7gB1LB-_9fBU7T2BheltSC99rSB0LevOdplMr4F80qZwkn6shGvjKwf76EkZzDlGyYT3E0-O6dAXKLk9DO3xHhYaR7ajJyGgHkPKK45h3yCJDRczkNAH66954udUrVNzTfjpmWjE",
+        "places/ChIJMwpcEOxkjEcRd_2UofasmUM/photos/AcnlKN3xl_o_f758VV4bj19ODhLXc7bU1g9-LmxlKapZGScZHT3y9T6WA7i0xxTI__pyK-neM5swnicGkw-wLKuXNH9tJrExrdo7H7bLLRdDK1h1LPuNH2JtOZaPXygiDodd47DstV9KKYHnZsiu5x2vcMyYMZ8SDvEspsMDUj1yFaE5mX9v1LwHddSe2-7YSezILUJA-uEbcIs00IIIMNSA3j00uGTVnt3xefpxog_wtdOYKe3CjFye5RvlMxRVwrE5ij1LLQ3WL5kzZjWmHkl4IOeVZpKby73Gsv5r5t6mhpFVRg",
+        "places/ChIJMwpcEOxkjEcRd_2UofasmUM/photos/AcnlKN0_a8-kKMl3BXDalGcZj1HLvm_qarkb5Xd5zyCBGfsxWNG-G7dFnbxqnn1_ZtHLGGbzXYf6D8EFJRjBL0MCvAgXXaZHcij1j5VviEviUqT2Q9wPyRCqJXH5w3CyuT9JlfKKmZ7g7iUP7XgO1ZXCiwVkKMmSU13OEddfGOangBXIyoNWq5HqsJAXMubtq_rJZObeLxiiSHGIqVywpGH-1O3ZZuu4XKpYdxRacjFwbHG7IVQ1l_IQ69s6U7W7eRywWFUHLvrCpNbOYXMSPq2vrzpfcVf7mHFvT4J6Yme5C8_nhQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4871114647250730359&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:30 AM – 10:30 PM",
+        "Tuesday: 8:30 AM – 11:00 PM",
+        "Wednesday: 8:30 AM – 11:30 PM",
+        "Thursday: 8:30 AM – 11:30 PM",
+        "Friday: 8:30 AM – 11:30 PM",
+        "Saturday: 10:00 AM – 11:30 PM",
+        "Sunday: 10:00 AM – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Bayview Restaurant",
       "category": "restaurant",
       "address": "Quai du Mont-Blanc 13, 1201 Geneva",
       "neighborhood": "Pâquis",
-      "phone": "+41 22 906 52 52",
-      "website": "https://www.bayviewgeneva.ch",
+      "phone": "+41 22 906 65 52",
+      "website": "https://www.restaurantbayview.com/",
       "description": "Michelin-starred restaurant with lake views. Dogs welcome on the terrace for a fine dining experience.",
       "descriptionFr": "Restaurant étoilé Michelin avec vue sur le lac. Chiens bienvenus en terrasse pour une expérience gastronomique.",
       "dogFeatures": [
@@ -42,18 +59,35 @@
       "priceLevel": 4,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2088,
-      "longitude": 6.1481,
+      "latitude": 46.2140278,
+      "longitude": 6.1517523999999995,
       "rating": 4.8,
-      "reviewCount": 456
+      "reviewCount": 384,
+      "googlePlaceId": "ChIJFSXo9yJljEcRJ9pU5VO6_AY",
+      "photoRefs": [
+        "places/ChIJFSXo9yJljEcRJ9pU5VO6_AY/photos/AcnlKN1gT-UJ4IRChro4Rm99nBsy6_CJZKXiUC_Dg8w3uOtqFs16yZYq3oPCLVyFB31OugzLoC4rBus4kLXF8z6JmLydZIKp8FSbSelSG7jdDNgCETTJMXKSMpre-wbeABqfZQE1yfiWbBRD2L_QPt3_zq0MKKnye5ueOI2ApJj4x5JV4se6n8Aaf8s0W20kvtVSZe_U9CdXm955A7yJHI7UnCtGboxgvpies5KJkYtytNTWmTvu6mECC6D_dqVrwMFU9DNWPl-t7qV9eAvLlVYuVddMX93y9e5MW1uWIe6qlkClvQ",
+        "places/ChIJFSXo9yJljEcRJ9pU5VO6_AY/photos/AcnlKN2D7OKI02RgPMMAOK0pnfTb3b2uPZLIuCURhwvcuYNFNeZAetjeHGHmYqpm6dIvgA2FO0Dr2eZYpmmIkIB6snCIJXg4qpj5DSH-jq-88AOzvguUo4COB8gJ4eVlIUvevTuA5CfgsfDvCwZTGRv-RGgMiqoIlyTASHH3Q2nYeFmrWAI6ZFofhil3jsg-nJxZeu8OykJtVyzAnJN9mRSuR4uE4fcy_januMEO26oi7gOgPz4YoRZv6xiyyDWAlLC4z9uIUo4QLdUo6Qlfu1KRt_WPcQhQsrDdINftoHDtv-SBSA",
+        "places/ChIJFSXo9yJljEcRJ9pU5VO6_AY/photos/AcnlKN0xsCcr2amAjvMThWvmM_PdtQ0Ra7v56dv8b6xGhHF_ae7kGZtDKpdtTmuRShnMVLzz88bz3GnAE5vADYl84hLzS7HZ7HkB-0GFOxULXyvloHYYSJdcbKQ2F4w9jxDG_xx_zBKquZDsyMSGHxGUajUHlih3nWwQXM5YF2wDBzQLv_LLlNi6Y5aSz83TNeJ5EGl1q150PVCPz3u7DcZxuiZGwPkootxEUPpuqCLiR1Y7FzIiZqnq9ris8pwp6O0CVRfNlb9MdqS5bI8KbAjJn5QDSL8KYz5JflOPOhlJ66gLfw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=503482127851248167&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Closed",
+        "Tuesday: 7:00 – 9:00 PM",
+        "Wednesday: 12:00 – 1:30 PM, 7:00 – 9:00 PM",
+        "Thursday: 12:00 – 1:30 PM, 7:00 – 9:00 PM",
+        "Friday: 12:00 – 1:30 PM, 7:00 – 9:00 PM",
+        "Saturday: 12:00 – 1:30 PM, 7:00 – 9:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Brasserie Lipp",
       "category": "restaurant",
       "address": "Rue de la Confédération 8, 1204 Geneva",
       "neighborhood": "Centre-Ville",
-      "phone": "+41 22 311 10 11",
-      "website": "https://www.bfrg.ch",
+      "phone": "+41 22 318 80 30",
+      "website": "https://www.brasserie-lipp.com/",
       "description": "Classic Parisian-style brasserie with a large terrace. Dogs are welcome guests alongside their owners.",
       "descriptionFr": "Brasserie de style parisien classique avec une grande terrasse. Les chiens sont les bienvenus avec leurs propriétaires.",
       "dogFeatures": [
@@ -65,18 +99,35 @@
       "priceLevel": 3,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2031,
-      "longitude": 6.1419,
-      "rating": 4.2,
-      "reviewCount": 1234
+      "latitude": 46.203361799999996,
+      "longitude": 6.1450284,
+      "rating": 4.5,
+      "reviewCount": 3763,
+      "googlePlaceId": "ChIJpSAtailljEcRV-WskLeIpv4",
+      "photoRefs": [
+        "places/ChIJpSAtailljEcRV-WskLeIpv4/photos/AcnlKN1NGopaxIzkiKDq4LVisWPCtO36YB5y_iHEChUbvQSQppeAUlH36EISlR62HBoAlpgH4mf-U_p3gWZCjU8Xn4OjAhafD6lqJerTEXDr-3rMApQaooBgHRC7yoVBPyjRwvLbJ2Wq0Iz7wX-9aay4Ifrr9cGJD2BTDoplv3dVd85yNfpLlpgX5SPOyQzLqIBlRYKQXEsJIl9fambRIR9nFaWO3xIwq9MmNngdLZf5xDOjW7GfAp3NTMv0DTTGaIXxuQYfMy6ke8vQaI5pCX-NEqxRqxBMLIDqGMqlqSdCQok-a4yUpxNAyzJkds7K-LSZcc4zhwcgTPjAqXRYLrTm75N32a5vlYQewrKFjSeFhKMU06RfrtxD23Q4O-of2fasWWE0964fYNHEPbyxHrJA6SlKh0XmGZlpqKNi6EYYKYywAo2U",
+        "places/ChIJpSAtailljEcRV-WskLeIpv4/photos/AcnlKN2cLEN53VPQoHUIqDmaH39D4RS8hWVWfhD3tkRw7L6Z0kQR7Ac5C45WQq-WINHaRQeyxlQZk7ad6g2CjBpkhZjaiYoAxaGYtJAXQlqFahF-nVYJKIIFqnOYk8JTgx3v7LqotstEADfO5A8PK6eRBwvAYK2Ku4TZbTEZZA80Gbcsa7lHK18JO-DUalYFTLLuv2mA61VKbElgNw3OzXj0DYHHW84JwVWq8aOMZl_bWgGXb6BXE3AHk8B1zot4x3h4dZPI8OFDnllK8lTlF0rOSw-okrsr0XQiu_VErqhdXISX7sddbLksTTnQEg7gqgs7ukn_YTEAvAh3_rhNdn-_jNX0W7z7-h_RX9yKOCTItzHnULhSVStTrMpcieY9YjqJ2b9z4PFoBBFZN37kk5BUumhKXtbky3yZ61MatbyzEQoiGyJbJrYoOo0wm0oM0w",
+        "places/ChIJpSAtailljEcRV-WskLeIpv4/photos/AcnlKN3B8nxcwrDAaA9qu-yJrqKboGlSoj15JuCWZI1zwN5s0aDONVJYxZyEbhLQvvl03pLPDN7mVDsnbH0ZmZ5LaFJBXoePW75N3jdh_rwdnUKE_Qku-yjfOBgTPYutOE4-Jkzf7SYzegoJ_oKj4jTcZvH1TxM1M4B_RcktqtfFlgFYM4tFhG86qy-3SPowNM6arztUn18o8aIor1cxVOXbjf3VxrA1eK_UG9nfKHiGzzRMPeGaELT5k5CHHU3lZBy2sj4uO5ju1b1bpee33ntrGQPS6xTL9apCCvj2GseNSym6KQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=18349504053755307351&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 1:00 AM",
+        "Tuesday: 8:00 AM – 1:00 AM",
+        "Wednesday: 8:00 AM – 1:00 AM",
+        "Thursday: 8:00 AM – 1:00 AM",
+        "Friday: 8:00 AM – 1:00 AM",
+        "Saturday: 8:00 AM – 1:00 AM",
+        "Sunday: 8:00 AM – 1:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "Les Armures",
       "category": "restaurant",
       "address": "Rue du Puits-Saint-Pierre 1, 1204 Geneva",
       "neighborhood": "Vieille Ville",
-      "phone": "+41 22 310 34 42",
-      "website": "https://www.hotel-les-armures.ch",
+      "phone": "+41 22 818 71 71",
+      "website": "https://www.lesarmures.ch/restaurant",
       "description": "Traditional Swiss restaurant in the Old Town. Dog-friendly terrace with historic atmosphere.",
       "descriptionFr": "Restaurant suisse traditionnel dans la vieille ville. Terrasse acceptant les chiens avec une atmosphère historique.",
       "dogFeatures": [
@@ -88,10 +139,27 @@
       "priceLevel": 3,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2012,
-      "longitude": 6.1476,
-      "rating": 4.4,
-      "reviewCount": 678
+      "latitude": 46.2013286,
+      "longitude": 6.147213,
+      "rating": 4.6,
+      "reviewCount": 3721,
+      "googlePlaceId": "ChIJbSQsbSxljEcRCwq4DNUIkO0",
+      "photoRefs": [
+        "places/ChIJbSQsbSxljEcRCwq4DNUIkO0/photos/AcnlKN3ENIpqfwWi7hJkxwJcvDHbkreo9LuZuc-0bk6jMyHJ4btc20AIBZRI0cR7N459GaD6j2hIk7kIxsDSzMQflaQVh-rEjr8RxF0odztmmWVj9kszS_OOuhOWUc7MdTnKU8lK7ATME13tB4znRORqUaT-Nb5BEKMK2yetj9YO_07JiVyrB5H5nbs5d5kukgKeG93j8jkjwaUuTxSdOCNidPVSOq6AEkGnz5DdDf3iM7HZqpIpa-LCCOlTrWoaEgCx3R9EDxSaCzRYBnwxvJmbPYV7Aec-LpwtRSgLBDY_ozljuw",
+        "places/ChIJbSQsbSxljEcRCwq4DNUIkO0/photos/AcnlKN06yIKGTw6t8jNPVUV4ojdfIYHCiky3Z772v600ecMVzBhpsNoHqnDpFGQrLLYWigu5-GhyOftDgqGzKGa_LrNC5g38MSqGC64pCMzWQgVyp_dHdZLrWJdtaRPLG-j6gDe3POLtWz6KogQ-1Opmm_hDw6EFFSWXCndF8_i2YXtEHGjl_nIL_WIfmSajW2S9HW8e0BK5K18WHpS9_Mj86LZofwkG5SveAvfaG0N004SKcd1SNDpdj90zlUlC34uwaWp3j-BJSeBpN2fOCFfaKZNSbtb2h6Fk2aKkqyUTEBrgBw",
+        "places/ChIJbSQsbSxljEcRCwq4DNUIkO0/photos/AcnlKN18S89rGnmBEbEp4_EjGi3F-zHMZ-1HEZdSb8aEG4Gg_9IJ2hfWOLqHohDYJxDnUg-IxZkWmMSU7h0pLdInmr-4bM-VQbCKV_gZ1-dcVpUg84XYS5VOs-LbqdViCFvG4tRPCLh4amhFun6AHTPX4vmO_oY7Aen1OxRfSgd92LlsL1nfeMQ0z4KkLvf5eTx_387xFQ0i5aGRIrLt0YHkWqezCO5iK8gVge9Uot-quTyy20nKG4QNZ6Q8jObyeaHoRGkM_EMJMkMzeEWwmKDv3OKovgmRZ25HMXqwlk6CPUXgc0_quq8sdtOTHD5mAe-gpyDtRLTNDDiMtDxRSlT2Hr1tDyds_PEchxjIHvool10GAaQjKLtyA3qC6SpRp37kZEb1qD2t339_EWedNaE4xDo5JGIuLFN5shI6J51IWWkC3m-bHajOWFSWbfITbt_x"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=17118191894769699339&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 10:30 PM",
+        "Tuesday: 12:00 – 10:30 PM",
+        "Wednesday: 12:00 – 10:30 PM",
+        "Thursday: 12:00 – 10:30 PM",
+        "Friday: 12:00 – 10:30 PM",
+        "Saturday: 12:00 – 10:30 PM",
+        "Sunday: 12:00 – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Chez Philippe",
@@ -99,7 +167,7 @@
       "address": "Rue du Rhône 8, 1204 Geneva",
       "neighborhood": "Rive",
       "phone": "+41 22 316 16 16",
-      "website": "https://www.chezphilippe.ch",
+      "website": "http://www.chezphilippe.ch/",
       "description": "Upscale steakhouse with a welcoming attitude towards well-behaved dogs on their beautiful terrace.",
       "descriptionFr": "Steakhouse haut de gamme avec une attitude accueillante envers les chiens bien élevés sur leur belle terrasse.",
       "dogFeatures": [
@@ -108,13 +176,30 @@
         "outdoorSeating",
         "shadeAvailable"
       ],
-      "priceLevel": 4,
+      "priceLevel": 3,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2024,
-      "longitude": 6.1445,
-      "rating": 4.5,
-      "reviewCount": 523
+      "latitude": 46.2041239,
+      "longitude": 6.1448287,
+      "rating": 4.3,
+      "reviewCount": 2297,
+      "googlePlaceId": "ChIJ8yFFGSlljEcRm_RqW1MdE9M",
+      "photoRefs": [
+        "places/ChIJ8yFFGSlljEcRm_RqW1MdE9M/photos/AcnlKN1PQRAT6RLnVdwc3jeEVnh2FAI_OW3T6yFa4zghI0Qm25kr-sBHXnhq6AdMV24bwdBkmWLLgB_CKEildGCaC-GmXZoIAjJygEg3EcftaHqJjztwvhQynqPK3l-J2wR6w1A-tbQbKpts1ekFDb5OtBS3g0cFLSm1aFzlNaMwLXye6fqVihuRSxlbEiJApkkyaqzfR8v8wrvp4PCdIsm2RF5L8RWZ6Hpx7RERKBLNYjwlAOdVpbMkUllp56lkJXE0bKQvyYdHgZRp5aS1RbgguCyjqLoTMpvjPu-qDkqj9mdDhw",
+        "places/ChIJ8yFFGSlljEcRm_RqW1MdE9M/photos/AcnlKN00CsfCvTYGLTEPdcTmagSL4o1o_BjrLX344zr6zd7zAK_q1XTFc0fwgnoCNWQPOcF3hE71UB8rYWulcU-rMp86Grk452jWfP9er8Pa8UnlOQo5KKO02EhwriPxmvCW_9S-MIIvS-7-WurWr0grSHpBLySiF-Aqq9Gytrr7HqEKzOrzI6FRdbwVvQYKHbC5k39k2PRylVYIh4hhDEMmt5-vrpZzfB6viWDINag-KwoBeRmK3Maer2hhtUr6qxcXPEJyp6HO1heHBjTi0X4XF2-icUDK_ZVesoPMV9ep4KLn5g",
+        "places/ChIJ8yFFGSlljEcRm_RqW1MdE9M/photos/AcnlKN38uo_JwwXdbiMbwnU0hQ365DypKH2qLitXK_HGjtQHuyoGj3Tl08d8_VOeUWKq22FQVOYcouwU0yYFV7dBRPVyKA2qomoNt5xWQnS0SN9grdO64DobQ_QxiI8Kkq_gTc9fmq68zv5ib51m_jb5PhvZr9WXAqWFxXeSFW35tHHJ5OvPmxY3T51rnls1qKIjU5FhoEuU0mMRG48Uj-8JMHdgCaeGQsmKbY9FTPAZSejkh5nTg1VbCyWG4IrPIUlBOD5cvZP4J-S3IxZ38F93MtagKOCYxVLHJAdH4x8y_dm6eA9R96LQS2J2-oiuVoIYKc0DBmYmKW5iuUxMTvZ4J8V3n1jY_JgDwNqUhm-pB1HYPworKM1cPSfTnDrm4yvmTCs2mvEOisp3uidhq2V8IdM4NOXvbcZf6AxAajidqFp-wtCobaRt6nq3BNa7ISaS"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15209532610413524123&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:30 AM – 10:30 PM",
+        "Tuesday: 11:30 AM – 10:30 PM",
+        "Wednesday: 11:30 AM – 10:30 PM",
+        "Thursday: 11:30 AM – 10:30 PM",
+        "Friday: 11:30 AM – 10:30 PM",
+        "Saturday: 11:30 AM – 10:30 PM",
+        "Sunday: 11:30 AM – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Café des Négociants",
@@ -122,7 +207,7 @@
       "address": "Rue de la Filature 29, 1227 Carouge",
       "neighborhood": "Carouge",
       "phone": "+41 22 300 31 30",
-      "website": "",
+      "website": "http://www.negociants.ch/",
       "description": "Charming neighborhood cafe in Carouge with an excellent coffee selection. Dogs love lounging on the sunny terrace.",
       "descriptionFr": "Charmant café de quartier à Carouge avec une excellente sélection de café. Les chiens adorent se prélasser sur la terrasse ensoleillée.",
       "dogFeatures": [
@@ -132,20 +217,37 @@
         "indoorAllowed",
         "shadeAvailable"
       ],
-      "priceLevel": 2,
+      "priceLevel": 3,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.1833,
-      "longitude": 6.1392,
-      "rating": 4.5,
-      "reviewCount": 412
+      "latitude": 46.185691899999995,
+      "longitude": 6.1405512,
+      "rating": 4.4,
+      "reviewCount": 518,
+      "googlePlaceId": "ChIJxVTEB9l6jEcRYcBSikq_D6Y",
+      "photoRefs": [
+        "places/ChIJxVTEB9l6jEcRYcBSikq_D6Y/photos/AcnlKN1UT7XwGdaYq6TDHMOwY4bh6b0M1v-3cLqIaL_qCm9UnNgK-w9XJr2K04YZQtmg-wx8-MkqyIOryNcPg3eN-ZitxxQcYdPuLl53wNvYkjwLhf5p6rkjhmYS40itFW4ZUcq9DwKnGaFprGHj4KKySAlibv4PFVIkMDw6JUMtZFu4F7ffOA5-EbRmwEXYtqBldpNKazLkSFlX2sw98WeZT7M1b24950Y8ANkQhbzNNmXZRwcnOGPKmKdyoqPA0CjAhmX9vVdwvEAp1vUfZ8g3S_c2zfxTS2pwAw2x7BuiYt4",
+        "places/ChIJxVTEB9l6jEcRYcBSikq_D6Y/photos/AcnlKN0PYyGPd9OoiJ-2yZ2JSnpoFSGxpDfTHafT0s4HnWDtHzDqbEYS0Ka8b9u2Qh5chVDOll3NKyqSZm14OYQnApNQ5KCWGNszsVrkZ20MhggPyLw4b2VGVVtR9AjuIOIp-hSkTD2PnZQjnuzEl3VGLZsumDfGjPDcgjSkCPToos6bBWNHmJIwjvvdRG0XvT79iAUiUvvAllW-V7ebGI3rQ6RIdf_hZz6lwpd5kuWLdepqWhzJQEWWqxqwP_DvEi9iOhNVmj0I-Cyshl1yrBmaDsNKk-nxJMYAK1eAbEjJJIw",
+        "places/ChIJxVTEB9l6jEcRYcBSikq_D6Y/photos/AcnlKN2xj_oTPFj1e0lI7cdk_p44fDtwSmLh9XUI96YQjOf0UyhpKSKLzgx4nt7qQW93L2GMtzmmObG3YPwEXSmMSeDrDH0Nwk50cjTdfJL2eML1mN8GF6i3sWJi-7pEtB8tRaudk4V46OBR8S5l_izzEDwCifeMVYUmi00ZwDDEKIh3lIjk09j8SseofA1nh4O_mAfL4OKRPVbdbHKr0uElZLpt-1bHRxIwf_iLLC2K1j2MAqwXBzPu_JTbSAJxcMZnX-TuIOh0pzrEEA-IEUF_Ic_evEn78s5350bce3f_s-1jF1B9rwIA7Hk1HwneOvqilgjwBv2HBPkWgjOyX4-kfBuJoV4VkM4PVvz03jqu1WVlIaK5yjccaaB4zL8nUrkCTkQfRJQX5X5JtmMGpMzujdfnDpLuBoeVmcxncyY9lUN8zPPWEsSscx6o909ykA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=11965993061815861345&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Closed",
+        "Tuesday: 12:00 – 2:00 PM, 7:00 – 10:00 PM",
+        "Wednesday: 12:00 – 2:00 PM, 7:00 – 10:00 PM",
+        "Thursday: 12:00 – 2:00 PM, 7:00 – 10:00 PM",
+        "Friday: 12:00 – 2:00 PM, 7:00 – 10:00 PM",
+        "Saturday: 12:00 – 2:00 PM, 7:00 – 10:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Blackbird Coffee",
       "category": "cafe",
       "address": "Rue de Carouge 55, 1205 Geneva",
       "neighborhood": "Plainpalais",
-      "phone": "+41 22 329 33 11",
+      "phone": "+41 22 320 29 00",
       "website": "https://www.blackbird.coffee",
       "description": "Specialty coffee roastery with a cozy atmosphere. Your four-legged friend gets treats while you enjoy artisan brews.",
       "descriptionFr": "Torréfacteur de café de spécialité avec une atmosphère chaleureuse. Votre ami à quatre pattes reçoit des friandises pendant que vous dégustez des cafés artisanaux.",
@@ -158,17 +260,34 @@
       "priceLevel": 2,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.1936,
-      "longitude": 6.1389,
-      "rating": 4.7,
-      "reviewCount": 298
+      "latitude": 46.1999825,
+      "longitude": 6.137737899999999,
+      "rating": 4.4,
+      "reviewCount": 832,
+      "googlePlaceId": "ChIJtbLrA9VkjEcR6-Tfyl88Ll4",
+      "photoRefs": [
+        "places/ChIJtbLrA9VkjEcR6-Tfyl88Ll4/photos/AcnlKN0diCuq58Xt3vwnNy_HsZ9N_q6cncrOV271WDGatHof5wyoRLCou-WL43SFFRBQZD5vjI3Y_1QbsntO3sjMl1iLAQkLh9RR17VvfSkXcA1E0ij2SdU8H6mpTA0xRM0rPondFzC7lgHk9FXrFNd5WNKLnRciX5nL9czjlDCG1nW_imZ-7a5mK5CKtM4UCbUjHg2-iAq0VHvXkm8YAvcXqi_OijyBMI3NHFVjOX1JpnRVslBrISoBpTo0ifF1Kk7-iwv5lI7h-ao1u1BL_A_FXinoOVndxEcvqwOG-_40baY",
+        "places/ChIJtbLrA9VkjEcR6-Tfyl88Ll4/photos/AcnlKN0RzmQhKn6a6HOxZvQEVq2QrhgMHIZrXvvQHQhhPZw-T2sSBCyUS72GmIp7WkYpG2GIOhsOYeR91RauzZfUPLn7Ew8xfqX3vtk9jFAaW_RDJjOwUtxN6erxLhzHAKMLCncjQn5rpUNM4FcaX0UhJg_aBedzm3E4RqrV-dwvrzwhZsgn8rzkG84F0R3F9tGarTvDkwDA8cPuxVY4bXKGEeFArI-j8toxNN7Rf2izbQweE4VpTxwYFWRjMRN5jCDXDK3DqptEvWEuLHoelcCqK_1c4S5S7W2LZAOeq932dk8",
+        "places/ChIJtbLrA9VkjEcR6-Tfyl88Ll4/photos/AcnlKN00au3JG8gDHUbLfc0L16NVq4HPkfoDvG4CFx-q-_tAzD_SrhigCIzT2tSZVZeWhNsrbAU8LZ9jsmJRlqm52h2Joefa_oODlnuYKqcQbGvJCY2PTtJWud6R_Anb3mBmTQM-1Ae-vK8Lg7HBIAIp2hcfsb98xre74GwlY7jExce3fubBkZtcdTTb7RtmvOTzcOTHcoLpXQNm9piPx17-ITXGtZC_2boc8qYWYGJ9QCjPXpG-WOloSUJtaSSq1FlTrAFM4dv8wKHb1DpXedCC3lT6Y2_VB0GefF9oLE1yPvU"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6786428070617146603&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 3:00 PM",
+        "Tuesday: 8:00 AM – 3:00 PM",
+        "Wednesday: 8:00 AM – 3:00 PM",
+        "Thursday: 8:00 AM – 3:00 PM",
+        "Friday: 8:00 AM – 3:00 PM",
+        "Saturday: 10:00 AM – 5:00 PM",
+        "Sunday: 10:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Birdie Café",
       "category": "cafe",
       "address": "Rue des Eaux-Vives 40, 1207 Geneva",
       "neighborhood": "Eaux-Vives",
-      "phone": "+41 22 736 66 75",
+      "phone": "+41 22 320 29 00",
       "website": "",
       "description": "Trendy brunch spot near the lake. Known for their avocado toast and welcoming attitude towards dogs.",
       "descriptionFr": "Spot brunch tendance près du lac. Connu pour leur toast à l\\",
@@ -180,10 +299,27 @@
       "priceLevel": 2,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2043,
-      "longitude": 6.1622,
+      "latitude": 46.1999825,
+      "longitude": 6.137737899999999,
       "rating": 4.4,
-      "reviewCount": 367
+      "reviewCount": 832,
+      "googlePlaceId": "ChIJtbLrA9VkjEcR6-Tfyl88Ll4",
+      "photoRefs": [
+        "places/ChIJtbLrA9VkjEcR6-Tfyl88Ll4/photos/AcnlKN19M2MmDbq997tTfimn9yW0OFVNy4rxrSqF59_nk5y-stDGZ8jkXxDuHByJMxKwaomkfvqOpS08rYx-JlgoVY426_GPVhXP9QUiYG76z-D7OvzSatbnfLonUbEThTaqPf3jn6ssE4TV4Dgy5ZCt9W_AkPCS7VspPIdKhGnAC88u7mpbdCIju37vdQ1hEqBgoRX_7kZheKIsXVwaF_cL9btlsONSip-z1VLsXINJ5eXYbcsM4Phi5l-iyoP5ry6NtLC8nXRpZaL9kw1ctDi3UYx7PNvupCyG3z1Yk1PMdhE",
+        "places/ChIJtbLrA9VkjEcR6-Tfyl88Ll4/photos/AcnlKN059Dn9t9FzNkZWZ6h9rkUWM62BpR_Tt5Bw5bFmXaufiABueOJChgE8Xjw9SenmKuO4AOWwnyQwrf-LfHA4iUy3vWauKlJjZJjzZvIAYEldd1Hda52A-QiLuCoOeES9rWW8pCk-uGuZ72WKEVH3D4Ed7T7_JTKxqvqgXvWmnEhI0Yh6wsRuCLSGjmRPa2dIgvL7P9pj4GPErAe3DhARPyYOjcReYtLWcyw5DsxPo2MDi9XXyYPHB13xkwqI_ua3QGVFY2YALGDKGPVuoGdHb_iwjI0YCq8s0OCpG4EeV4s",
+        "places/ChIJtbLrA9VkjEcR6-Tfyl88Ll4/photos/AcnlKN0DfxIoqXGUrgBJsKSropzRZYNUUc8QydAlcaRqDItj8AyQxXQUSNF9h22p29yrsd2lc_K3fFEbu2eMJ_sxXZyMxSS5N7NRYHsNc7A2Bfl9-0MkprSiUpWOBqzRBcz6zkcniFy5F4ylei6r9vGCn8-_-LWWk_bAdeKeO_Qk2myHvyrKb0TjwbtsBkDQhAZ2yK9juagwGVrv0PQlueY0DJfKMB2XKGs6JcS9bjFh8Kr5OOX9S1-eOrBTmtfJqCk5LPXsT2M8UP1xnYmeqsY0UOqXanYgL8KFxjqrUEJIfNA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6786428070617146603&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 3:00 PM",
+        "Tuesday: 8:00 AM – 3:00 PM",
+        "Wednesday: 8:00 AM – 3:00 PM",
+        "Thursday: 8:00 AM – 3:00 PM",
+        "Friday: 8:00 AM – 3:00 PM",
+        "Saturday: 10:00 AM – 5:00 PM",
+        "Sunday: 10:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Parc des Bastions",
@@ -191,7 +327,7 @@
       "address": "Promenade des Bastions, 1204 Geneva",
       "neighborhood": "Vieille Ville",
       "phone": "",
-      "website": "",
+      "website": "https://www.geneve.ch/fr/promenade-bastions",
       "description": "Historic park featuring the famous Reformation Wall. Dogs can enjoy the large green spaces on leash.",
       "descriptionFr": "Parc historique avec le célèbre Mur des Réformateurs. Les chiens peuvent profiter des grands espaces verts en laisse.",
       "dogFeatures": [
@@ -200,18 +336,35 @@
       "priceLevel": 1,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.1989,
-      "longitude": 6.1461,
-      "rating": 4.6,
-      "reviewCount": 2341
+      "latitude": 46.200268799999996,
+      "longitude": 6.1445482,
+      "rating": 4.7,
+      "reviewCount": 332,
+      "googlePlaceId": "ChIJZ5UHU0NljEcRKb5EBFnWdNA",
+      "photoRefs": [
+        "places/ChIJZ5UHU0NljEcRKb5EBFnWdNA/photos/AcnlKN2nIVZra6c2x0j-jeGCIpYZLAe8uHBJ9pWhLkw8LtoPb3Oj3-joj0xWxuD4pKuwnkj1vczyRhEWKQfTgbvZ1qvlLFo_BhHahYXjpDV4H4bmAc2ngnoVskthyEfGv75mk4aIWbhx5NCpFU51y3sqB5WrvXavvvwZJHLCdwoVy4a5eBGT4DIRWM4cBhxXSLUmUstaKCoE2LpL-qn6Vg4BDgJIpd--TdnQvsVS4Ci1Xj6WksURIc--swPHP22Ill_696Y-R3XYGrO5y52KSAl7UNvkka2xs94w5_H1RAYCKJHPGYNv2k8BtwmJedOzEzMoNSIfCJ0tagUpfF_afrcS4KVADCkI2Wchxby31_6NSv-8JPvFMZvekFtnq5ri4PF7LBGLlfvsGpwv6WM4xeZ9X0G-zggwxoRv0XbuA8Hly4k",
+        "places/ChIJZ5UHU0NljEcRKb5EBFnWdNA/photos/AcnlKN32NrF-MkL_pMJPBAik3KyNYtDUyAGMcR0326nMkecydYFC3J-oAkKmzZ0fCZKlT-O2F3fNDjSaF_5ZXTozjkP5s9rc0Ii_NFSFfSozcNX7DJQikgsjSdAQUTR9m5HfZ0anKpgrATCktx9KH5mTqcfrGkVhJ4v-hYMiqrDjbGelsD_mZ1gLkH91-2CMgFwIizD0CBGr6Iv5pXVK-k2Ha-Q2uR3kmK17o61yfUE7PADYv4iVeoH60Ksspxi-yhnU7qzfNM-jhy_dVrjeZhudpB2M44VNU2cjqv1CSNSyHn9kwlyZxna96OmB88hygsq678yhwzjE2zBZSF5ubQge55ekuiMiVVDwjGSeBbrJb8sAAxFDlOGjg0A7szaWtVG5Dwb9ruaRfEdyRZQPlYsiaNmLEKVXB4jSWhEhoonu31HqEWO-",
+        "places/ChIJZ5UHU0NljEcRKb5EBFnWdNA/photos/AcnlKN3H4d70-6roKAzLdT3w9IOxhsIuvpVjZ7NLZ51sgBTAhaTLUzrLYFodwnt97w2n9sRm49roXmvCMlSy6uDa72lOSh9oWt9HjMuRx1B6rZnPw7t2yMcL1aClrUKHe49_v-TV4GG7pjflOl0dFv7Xnj1P6P2GtqC4zMAzIFTw66Lr_DK0Q5kSXSQjjDPZzXys2Y72EIlLW-go61BSsHbYu_EaFn0pBCDROY4q7XYYo3ECXuTbqsv0_DG2SeZ3hiytfZiSSw1P3ZeY4MWq3_GE6f5sfMptnb1rjfm5CsHXC9qJ6reEKx2DBEterBo456Ty03nSRP69TISJ-boRes-ZRXC7tPMDOdgQT2MkOfkXuExVu7tq_I-Mxf3XXcfnXch4V3TjnOZcj45Cjn9AEOwDXAIhzQjkUvMNSCPjda3U1R9wxPQi"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15020866334999494185&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Parc La Grange",
       "category": "park",
       "address": "Quai Gustave-Ador, 1207 Geneva",
       "neighborhood": "Eaux-Vives",
-      "phone": "",
-      "website": "",
+      "phone": "+41 22 418 50 00",
+      "website": "http://www.ville-geneve.ch/plan-ville/parcs-jardins-plages-bains-publics/parc-grange/",
       "description": "Beautiful lakeside park with rose gardens and designated dog areas. Features an off-leash zone.",
       "descriptionFr": "Magnifique parc au bord du lac avec des roseraies et des zones réservées aux chiens. Comprend une zone sans laisse.",
       "dogFeatures": [
@@ -223,18 +376,35 @@
       "priceLevel": 1,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2015,
-      "longitude": 6.1658,
-      "rating": 4.8,
-      "reviewCount": 1876
+      "latitude": 46.2065426,
+      "longitude": 6.1674785,
+      "rating": 4.7,
+      "reviewCount": 5673,
+      "googlePlaceId": "ChIJA2n7K0ZljEcRoUZLdKgwG2I",
+      "photoRefs": [
+        "places/ChIJA2n7K0ZljEcRoUZLdKgwG2I/photos/AcnlKN1KIb5a8nDo-l7fiOEPSCGJaCptDGbax-UWJ7r-6oTRICNEv0JTJ_64RcG3Pegpq4F1qlMGs3unZl1MqnA8CthLSFG-OY3VgljSLt0uJ4PHrTxPXM5d81yrp73tAQ9fyZdeighnwvswDAqpUC3q_xJcs5jjUOd0U8Hyv5vx3crEOvXa8wz_ckuIGDgT7yvjHb-HNIiEz-FpU8W-0y2dhruaLavMn-XgbA419jfJM1Y2896IdOL72vYjQOQcHmTZdFcq5robf_nu3Zvx9VuyQn9rF14E7FUgBKnOWFItrs8RukLjiJByPhe6f4VhEQX6dMSQYbhd-OCAuW6UGi_At4qMcVLFl77gC51_it9Q2hK1yHqX-ph85i7MWvWDBnRlh6QGYbKLNJSsSzwzQG-dOLOqFGAGWRlwWD_yx-dU1tgg_g",
+        "places/ChIJA2n7K0ZljEcRoUZLdKgwG2I/photos/AcnlKN0kQJfiRPOdOEv6U3RwJ512RaSAdEAa93ccuLrPfJLCqrpCJK84U913jYGILTqd1gEL8Xx0DFilPzvUGK-0qISDpAvuz7szhCANrvuaORkkov9x0znkDflePbkAWo9-hprgzXmaNKUIcQi44jgeeAZPF0VPcyzXM2eGDQbh0zlR2_s09cLdPmVWZUTVc6kSe7Wts5KJ8Rz4usz8Gl3iVg6JZfiICezssdPMqYtco8Ok4VRiY4DFJ2KxoDa00GEaDYJBHHgD4mfyfHzjdtsoyG7RWqz-utWcE-IaP1ppdPZhRy12UMyePuRgLFoLeN-jj10oGaIeIo-DmEUtGdEh53XkdASjIM5QiN9zlZQ3c4ofDDcpqgECuoeZYImLmfG11SW3nivRK2e4CVslQTkbvYSNkwOpjE-ekg4c_Ta7aRswO_I_",
+        "places/ChIJA2n7K0ZljEcRoUZLdKgwG2I/photos/AcnlKN3MklehGPojGEWDYCpMpTa-1huA3Gp19UUg-yQxoAj07fx0jLxCvEcuHy0s2eWcYoBcN0bFIEQB7WQzOAIyq_OV5dV1aZa1yq2Ziqw0DAy4SCrYxUjAQpjY6n8uGRn2P-gEeH1sxhjpZnsQbMUPeLteBE7Ie6uB6VsTeJGNCXi8h7aJ4ucNLQLaUj5SfStwWakhshU0gzQhDt3OSoPxp2evhb7gS6FMZdZt1hvULRzP1Bawa4h4BkPipkoPNMDYqXJNGx2anv9SkrkYwYbzUI3kPDRrh-06PXwmjvkb-AOXPWOVUC7b5nbJ8_UbPyVxgy1c-pO8b_oePx63-TYIJvXGGvpkZ2wQuS-gFltRmcYLFSs8jnZ3IEcTEU-moNuowN5I-5969rH5GBehFTHNE0BuXKcsWtcx6B1w1VQNi_-fUA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7069297540151854753&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 10:00 PM",
+        "Tuesday: 6:00 AM – 10:00 PM",
+        "Wednesday: 6:00 AM – 10:00 PM",
+        "Thursday: 6:00 AM – 10:00 PM",
+        "Friday: 6:00 AM – 10:00 PM",
+        "Saturday: 6:00 AM – 10:00 PM",
+        "Sunday: 6:00 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Bois de la Bâtie",
       "category": "park",
       "address": "Chemin de la Bâtie, 1205 Geneva",
       "neighborhood": "Saint-Jean",
-      "phone": "",
-      "website": "",
+      "phone": "+41 22 418 50 00",
+      "website": "http://www.ville-geneve.ch/plan-ville/parcs-jardins-plages-bains-publics/bois-batie/",
       "description": "Large forest park with walking trails, a small zoo, and excellent off-leash areas for dogs.",
       "descriptionFr": "Grand parc forestier avec des sentiers de promenade, un petit zoo et d\\",
       "dogFeatures": [
@@ -244,10 +414,27 @@
       "priceLevel": 1,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.1878,
-      "longitude": 6.1267,
-      "rating": 4.5,
-      "reviewCount": 923
+      "latitude": 46.198027499999995,
+      "longitude": 6.124281,
+      "rating": 4.6,
+      "reviewCount": 2395,
+      "googlePlaceId": "ChIJez1iyR5ljEcRoscZuj57-xs",
+      "photoRefs": [
+        "places/ChIJez1iyR5ljEcRoscZuj57-xs/photos/AcnlKN1swYWBfU8RifimjUlyzmlE6-zq3gwxDe_EwffT33BjG3J0fbvA9o-pntSXVe8_H4b-XqmocOXDgb8HlZ2fLk3Utye77louS5irKr5Ut0LMJhbWfcZfKb29B5hQ3u2DgGedRgV09yOWNwG20fwdxVEiYbHfXv69XYg4QKDlgt1c1b4YvjU3Bq85dKJ26RLqkhxOWe0diPiB-6HlkBMOYijc9JYzpopudShmrGDmB4Mpd-1XAtfWZXXuvO2gDorRpEnEHU-5ydl2TvdhB83ngyQ2nmdMn5RrU7ibbWfEQP_LzCxEpNDXTIJKxwPjUOazpTZVWB7Ag4SOrfm_eUan47MIfMkSWem6w0yf1CGyuex5sMrjUvNUNFK_fbz7jsOb5tvaA7Yrkw-I_0Mjbd48vXejy2LpfYMS6VMSHRdpol855w",
+        "places/ChIJez1iyR5ljEcRoscZuj57-xs/photos/AcnlKN2YepVVjz_YlelSc4paGUf0raG4NKcRjKOf-_qrCJSdr03Nh7eTUksJV5-k6ifg6nHyxfiSq6qYRbJvzKlWlnay4pjlbyPBRSNJ4sK0RhT5ysjhJ4LvgzA7OgNwsaS2fbC2K5GAoCQsGaJDWRBhqUFygU4RzIJLsjLzFk4LlVKynJHH3V83rSAh2oqaNe0vz2jWFnh9RZ9DcCjnzahHzx2rIsaL0hFiS0iUppgnhcFOOp_1jB5baTaKm48b-au-jRU25P7TEjdg6PHFlfzV6RIbsr0fxq0eQvlFmvgpM8O9iotiqRbv8eQW8CLnHAYcf10PMcjeFWtZpHWcuX5N5WUsgmbCVc26Ohr0o_SlijGtYqjmIcUpLAx_OjpAuSHMNnpwssoaV6IqCHhfdwtQlWilMw2P04c-YnChifGtwuy4aQ",
+        "places/ChIJez1iyR5ljEcRoscZuj57-xs/photos/AcnlKN3pGawyaSUZbmIceaPPQEkbOvVgPJK99JMhtS0LGsy5sEG4F8W3bLDb6zIBza3yYmTlxtHBfUxhDyk7nPVyxVO1HtzFdcwzppbTQATTyMRPGPyWAxB_5niuZgwVBcMQAUFh8mg0KODKwHxYsY8EIoeYdrWtj518Dkuj4kMDll1YEZXkVNkrIqUT2dVwVuuBzZ5sGWH1_asDUQpH3493vOtOR1aCyVNQuJOiYZLIp3LUoluldfaQKk7dt9n1bgaed3Tza6gNPRvrW451HCqUmvd8e7LLYZvTDZHbYW0okJIZCzG82teq_KcOdKd694eeVGU_pxuDNlILPint7-jF5u7NSPA9ENSEL5kY2ON2H0pbDT_lO1X9l1Da4Ju-bUyS3Z9zmLkVxRA8tqvIyvYox4Fh32bswyTsOBpChBpMqi3d0aK1"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2016340767518869410&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 6:00 PM",
+        "Tuesday: 8:00 AM – 6:00 PM",
+        "Wednesday: 8:00 AM – 6:00 PM",
+        "Thursday: 8:00 AM – 6:00 PM",
+        "Friday: 8:00 AM – 6:00 PM",
+        "Saturday: 8:00 AM – 6:00 PM",
+        "Sunday: 8:00 AM – 6:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Four Seasons Hotel des Bergues",
@@ -255,7 +442,7 @@
       "address": "Quai des Bergues 33, 1201 Geneva",
       "neighborhood": "Pâquis",
       "phone": "+41 22 908 70 00",
-      "website": "https://www.fourseasons.com/geneva",
+      "website": "https://www.fourseasons.com/geneva/?utm_source=google&utm_medium=organicsearch&utm_campaign=tor-gen-hre-mid-seo-na&utm_content=na-na&utm_term=na",
       "description": "Luxury lakeside hotel with comprehensive pet amenities. Dogs receive their own bed, bowls, and treats.",
       "descriptionFr": "Hôtel de luxe au bord du lac avec des commodités complètes pour les animaux. Les chiens reçoivent leur propre lit, gamelles et friandises.",
       "dogFeatures": [
@@ -269,10 +456,19 @@
       "priceLevel": 4,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2072,
-      "longitude": 6.1456,
-      "rating": 4.9,
-      "reviewCount": 1567
+      "latitude": 46.2069892,
+      "longitude": 6.1471053,
+      "rating": 4.7,
+      "reviewCount": 2880,
+      "googlePlaceId": "ChIJofKpQyhljEcRL6GtxGPru8o",
+      "photoRefs": [
+        "places/ChIJofKpQyhljEcRL6GtxGPru8o/photos/AcnlKN1WlP1vTX8rkkJcY4ZsklSZpVnJPOIUuQuZzYWvb_Tf7fG2RFHW7zS0hzaLlVDd7hRNeN5Drm4cqPxwa5ImN9rHQE61tEFgFUFi_Ae0ryuhes2Um48_y1RQNBwaDrbkROglB2zXRQhH1rKOgZVCEXfQzX0eVJYzelANuwox_MjgzuPXfk_FcU1i3Qi-I0dsB-z0f_PPV1pLcrASSjx1GyJFTLm1xWIZ4BjiLxFa0OcdCrystoT5PxX4Ab1ABOpFbqQyMaSvPcDKpbZlFqCF182-WmqsglN6Mulp5YFDUBgoxw",
+        "places/ChIJofKpQyhljEcRL6GtxGPru8o/photos/AcnlKN1q10AVO1khQzN_uWynCyDLfoBnEhoeSkXQ5Z0NJR2Tr0y9LQRRgDwLyRWoCt0z8XkM3_i_Ql0R2odmPI3kDYsUxO87qiXLhEcs71aA1q3oHpyFMDbD36lB1w77nWm8DKVET_2csyjg4ggktNcb_1zUmHFW3kEc3MP6meDScLkfAYBwhMp8PBY1OoO0rCc3ZuGvG6Hc-bsOe_jzLlkrJtrNVsSr38PxLxSbiTMKIz6JUtNc0DG2g7l-DMzBxlvPVM4C6ryFkBplJV7Jy_eK1U_8uiLtZrMbhL8rspj8yHregw",
+        "places/ChIJofKpQyhljEcRL6GtxGPru8o/photos/AcnlKN0R8mY2w8-C1jGExbwBxaBUW7vb8GMjYXmwCZnFF1vdq2kRfrFOYpUZiXUAE02UEyRKsRbMlIT5pU9kuu0uXekqokzlFjK8IVckjZeImn3HHM6hwwB-EZgSjJnHYDN1QfNdkLNOMMyLB3bmdleu1ag_33MVM4ft9i5ZGmDKSQ2yCKTksV7L683acf_WP0b_lXxlVrzScd-daz256pgU3gczyLHnNHdysE4UkoDpTwogQGfB_87gSEs9ipQyOd7XLlJB1XIHqho9YZUmKtz5wAFpW4O-ieDCEW4cb5GUcGASMg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14608528630040338735&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Mandarin Oriental Geneva",
@@ -280,7 +476,7 @@
       "address": "Quai Turrettini 1, 1201 Geneva",
       "neighborhood": "Centre-Ville",
       "phone": "+41 22 909 00 00",
-      "website": "https://www.mandarinoriental.com/geneva",
+      "website": "https://www.mandarinoriental.com/en/geneva/rhone-river?src=loc.local_listing.mogva.ggl",
       "description": "Sophisticated riverside hotel welcoming dogs under 10kg. Complimentary pet amenities and dog-sitting available.",
       "descriptionFr": "Hôtel sophistiqué au bord du Rhône accueillant les chiens de moins de 10kg. Commodités gratuites pour animaux et garde de chien disponible.",
       "dogFeatures": [
@@ -294,18 +490,27 @@
       "priceLevel": 4,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2055,
-      "longitude": 6.1442,
-      "rating": 4.8,
-      "reviewCount": 1234
+      "latitude": 46.2056106,
+      "longitude": 6.1409613,
+      "rating": 4.5,
+      "reviewCount": 1365,
+      "googlePlaceId": "ChIJU09c2tdkjEcRMF5HHIhkyNc",
+      "photoRefs": [
+        "places/ChIJU09c2tdkjEcRMF5HHIhkyNc/photos/AcnlKN0HRXBHRVMID8FCM4rkTxVjnDCrDfBNvfKhReBfENzBAsAegsvW3JlACvbTR4FmJANMmwV-sLE2mivgFlt_u9_LhQ55IWcs-HYS_EHnuokg5N4KrBOl9n_gJ9rhh_QoQ1P9NA-ar1IBytB5rz_WAwBU3sZLWyBBaThfem2Q8lke0-c54x1_SbCbgwBiBNYCsLW6Rwj5lMqIGTPBedlAn4mAXT7OuYx3vmIovpxgR0z814SuvaEA8ssUuCoE6y3JE7XNPFLZoMjt4pxGwlu2MrLjGLo5arELV2wIyyYa1thRwg",
+        "places/ChIJU09c2tdkjEcRMF5HHIhkyNc/photos/AcnlKN2xpkt9GJRYuOZLWTyHHuTc3cSyp7GVmnEJeR1kkZBsePuNM-5Q4g08Gu4fiF9xWe6xrCB4AFwPOU1W6ZIxNR-jW_fiz0IFFkFsgKMBURsMmmM6yXF7ZBMBxHRZufbFHPo_MB3HWj9vuFDbXDHrEbLaFqGnj40S2GmDvJc4N4jOE6SEluJ-41mfxTFfSlAj12PEzRNdJ0oCOjhi_mrbIzyVX8Ey4xsiH0FJ0U7GePWedKc7Z6zE4C1Y7_cxwp4ORbCdEPKjoeHWdrklM5EZTC_jDgXt_Xi_yt_nyyaRy45AGQ",
+        "places/ChIJU09c2tdkjEcRMF5HHIhkyNc/photos/AcnlKN1J6xLktFA1-1fNZASrV7TXaECl3l8WusNhjILsjPXfJerKk7woABaf2Arzx-3uIcYn-xqoihwXV8-kqF-f05g6qaYfuPiqq0RUhgHp1_KG1XiParRn9RY_kJWiFeLCZY8Jm_wXG3Mvj7ZRFtLfm0UBxblckytXks5z_JJAtHs2F0QDIi9UD2Bc3yBhOw9ABGg1EtFSxZS4oKy-TYIAZn8i5fYaLRflmw-RrQNV0sVkLFSEmmFUOdKg4ZWisy58wENMkx67_8rAUKccqPnlvb7vXui5uGv0zZKbyRxT9-sXYw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15548788249249406512&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Clinique Vétérinaire des Eaux-Vives",
       "category": "vet",
       "address": "Rue du Lac 21, 1207 Geneva",
       "neighborhood": "Eaux-Vives",
-      "phone": "+41 22 786 77 77",
-      "website": "https://www.vetoeviv.ch",
+      "phone": "+41 22 840 08 68",
+      "website": "http://frontenexvet.ch/",
       "description": "Full-service veterinary clinic with emergency care. Highly rated by Geneva dog owners.",
       "descriptionFr": "Clinique vétérinaire complète avec soins d\\",
       "dogFeatures": [
@@ -316,18 +521,35 @@
       "priceLevel": 3,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2052,
-      "longitude": 6.1589,
-      "rating": 4.7,
-      "reviewCount": 456
+      "latitude": 46.2012736,
+      "longitude": 6.1641525999999995,
+      "rating": 4.3,
+      "reviewCount": 167,
+      "googlePlaceId": "ChIJfSBB9UlljEcREjt-1sQjpJU",
+      "photoRefs": [
+        "places/ChIJfSBB9UlljEcREjt-1sQjpJU/photos/AcnlKN0IN-ibO2GxR6eohb4-ohJIy-B9Ftw2okJbRl8_-bBKyPjaBT6fJUL10WQKpnEqYcklYHOUiKQZeGnIAu68pO24flzorJqCmS4oZxc6rJl0U9sGedBRUOkDSHR2JtfezR5zyb2g47YkbJhgl593i6yrbsyRoms4Knt3How1btGgkBKaHP-p-qMQzKGnIT4Z8GmpNi6nFKnptb3Z1H3cPj_eRbdDqU8TsDad4trCnYylhe6FpQiJEoWnhsl3YwN9uhxlBwBQfak2kavwJqS0Vq08VhrL9_OtFYI8e9ktqI2xSglVrVB3vla3xTaWwRu_RpFCe3N15efAvdGdbabGK2o6_iNQM0Qb1DuvGoiu-wZCNtuAsL6ysgS4mILULba1BeyODRk1bHItd1g2xK1qqcaJkQr50mWD_DvKC1hcq5M",
+        "places/ChIJfSBB9UlljEcREjt-1sQjpJU/photos/AcnlKN1RewcNGpVWP_pgSAZ4zoWzC8cS7HWaG_oA3sdFLg428TIUaY-il9OhWxhkrwCJ4z0l63fDCVAamcEd7g2sTqM5_az7wi8oLuOEgS4WiL-5r3ix1E4mRmVEiViT7glWObrhU_QCcUU0LZlvqB9mgvX1zE0fTlJzzzN0z2iAsJ468IIfWIf1vz9MhDVMYNPhB7JYteyobnkBSg969OTFskDDH-52Ny9tic0UMb5HsZTXuYLN5kOTRNl7MiA4furpEQtiA-uuuyd0NeUXeDw2AQ9XrElUlWt9agMWfYkCl7PATYtDowp1ofObJpIVkKHUgw5haorsBgA57OeDnOTBT6oHCslaMXzwzIefkFkftlNWwtUcKNGluPykaXPSuljZnW6Ys8NuGTe55qx6v5L7fjM193RPpbX55e60ywnz1kMTvg",
+        "places/ChIJfSBB9UlljEcREjt-1sQjpJU/photos/AcnlKN1xQ2O1YEZg4M15dwbZQRDhqgmwXTDgSdvvmWWY98cUqxs5jHnoUrQQYKWHe4gyOpStmQLzZAn9JcreqplOXqDYevYsrdESm-ChNYek1x0grMbh9iZmSvyqc3fLFkHFMinM8347blgkCjGzytpaXIzoA7nBl_K3i5Hi9cbHLelSR-7ndhPRYwaq50dJ_JViJPEsfRoqnDk01S-nT4h-Jx5iTHL1WYrTptt_Lbj4dZm31jS2TbK3GgWmmNP6VSIPoFW85A-MyoEbjHksr_t14Ba8xSo4XVnr4kSOMQy8sa3LPk8eyzamwGWoSzl-bXwGy7SvvNhdeG2O7fmqoAtoKm88oHu-RHyu_ouGBRNnHCOJoX6VKliYTkOIgXFjzNjhaI4nZqI9kn5zZe_9-361SgeYi1-iU5f-YmlVbnwElaWAIeyWuyHrFJqo1xTEAFAi"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10782782736150969106&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 7:00 PM",
+        "Tuesday: 8:00 AM – 6:00 PM",
+        "Wednesday: 8:00 AM – 6:00 PM",
+        "Thursday: 9:00 AM – 7:00 PM",
+        "Friday: 8:00 AM – 6:00 PM",
+        "Saturday: 9:00 AM – 1:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Cabinet Vétérinaire de Plainpalais",
       "category": "vet",
       "address": "Boulevard Carl-Vogt 80, 1205 Geneva",
       "neighborhood": "Plainpalais",
-      "phone": "+41 22 321 55 55",
-      "website": "",
+      "phone": "+41 22 596 73 55",
+      "website": "https://mvet.ch/",
       "description": "Neighborhood vet with a gentle approach. Specializes in behavioral consultations and preventive care.",
       "descriptionFr": "Vétérinaire de quartier avec une approche douce. Spécialisé dans les consultations comportementales et les soins préventifs.",
       "dogFeatures": [
@@ -338,18 +560,35 @@
       "priceLevel": 2,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.1967,
-      "longitude": 6.1356,
-      "rating": 4.6,
-      "reviewCount": 289
+      "latitude": 46.191761,
+      "longitude": 6.1431021999999995,
+      "rating": 4.5,
+      "reviewCount": 276,
+      "googlePlaceId": "ChIJqwrN9CN7jEcRQLZ7Js4kFE4",
+      "photoRefs": [
+        "places/ChIJqwrN9CN7jEcRQLZ7Js4kFE4/photos/AcnlKN1bLVSQEfv5xiBTKJwhgCvabhmXF66mKc1mQ-kyz04BtI2l97rwehWR3osfWTUgi_emI1MboW7DpdWs1mtaSUANJGOIoJ0_5Lk_TUQQhT5FHbEjVxsuz9hybLqmsNPTE6VTr9WcTHpzLREC96MhVr_d-JGv9wZF9mJhOkID_N_qVveV36hO2xX8JBmili2QWbkV9neYNns0Zw1mjTGY785KEhNTl3mjgxZkCIHG5Wbx2jCIOf8cE_HaZuzp5rkFHJGZYJ1v6_6404VK3KAQ-tRULEBuroCgrfUsFo6GvU6h5A",
+        "places/ChIJqwrN9CN7jEcRQLZ7Js4kFE4/photos/AcnlKN2Egff3DwfWJBgbKWmwXOvSYx2IMBkZ3Sda8c0jO1ATgQ6gp5R8RKDUdnSg9SFHs3Q3OQXexBh32svchlWdn78oaj_0RMbYV_Q1Gzu0TJvVOuSCvVnd-IPHr7Rsh1aUoh00h5_QqEV-X_pQIiT-smDvFPDAQ6nekzyl3iBtRFsuXTFJ2xn4rjWAvDIvJE5tqBDci6lZzYIwJ9vXhBzWTUARLp-IwgF12ysNHWzUEMjIS7EdCgVL7LzMgfTM6dxbwG7isP57OaZYJiPU73nm1RYg_-UM9qf6I8fqL5e0p2E_wg",
+        "places/ChIJqwrN9CN7jEcRQLZ7Js4kFE4/photos/AcnlKN3TArOdnqOR_vpLuFydlYzh3Z8GC8ZDJvJNmwtEI4kzdwguidZhYoCWEceCZ_5VETRpZCL7xH0fFETdjhgdsigzHQ7_nbm_rZK0n6jZ5hLSNPfyU0UbvZZfv-gP9r_cFNg0B_mePysuHfLVLwFZzLk5nxU0fBTVjNNEH-n3btjqgD0T52Gw0AVVGdWe7gFpTvS5mVszOhUng9m7pl2RfvINxj7TjHg1OVlGyIWiAHCe5E9bY6HrAEEjjSP5XyWrB0ftForiDu8jS1zl1H8bIilcvlnUBoSbX9CbZkVuPz6Y1Q"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=5626162302320096832&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 7:00 PM",
+        "Tuesday: 8:00 AM – 7:00 PM",
+        "Wednesday: 8:00 AM – 7:00 PM",
+        "Thursday: 8:00 AM – 7:00 PM",
+        "Friday: 8:00 AM – 7:00 PM",
+        "Saturday: 8:00 AM – 7:00 PM",
+        "Sunday: 10:00 AM – 6:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Doggy Style Grooming",
       "category": "groomer",
       "address": "Rue de Lyon 77, 1203 Geneva",
       "neighborhood": "Servette",
-      "phone": "+41 22 340 40 40",
-      "website": "https://www.doggystyle-geneva.ch",
+      "phone": "+41 76 215 83 84",
+      "website": "https://www.doggywash.ch/",
       "description": "Premium grooming salon with organic products. Specializes in all breeds with a calming environment.",
       "descriptionFr": "Salon de toilettage premium avec des produits bio. Spécialisé dans toutes les races avec un environnement apaisant.",
       "dogFeatures": [
@@ -360,18 +599,35 @@
       "priceLevel": 3,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2122,
-      "longitude": 6.1234,
-      "rating": 4.8,
-      "reviewCount": 234
+      "latitude": 46.1913743,
+      "longitude": 6.1382254,
+      "rating": 4.7,
+      "reviewCount": 35,
+      "googlePlaceId": "ChIJp1ATKyl7jEcR1a4UtCQDx6o",
+      "photoRefs": [
+        "places/ChIJp1ATKyl7jEcR1a4UtCQDx6o/photos/AcnlKN1EYc6AklUM07MbEAs0kXSy3s8WeRkfdj2a2qDTQ4batc0j_OHRFfN7sGyRPvmwzHhCuxEM90A7nV7snyJH1bxvKAGB6zWPhfMBS4qGHhaSvM7wUdIaJpJZpz9ALISJbFM-ofUD5L7qvPcJPWaFX3x4Td9VrswCPgxm_m7SMF07wc3rXbSNpqusd5BivKwT_iT1AtJgmrjQn1eiPizRZdZ9P5_jf77s-nxEL3vaVHJPT3VTIkBnSPgtF3ttSMPnat8US7vKhstZBRxQ7P-mHcfKelQQpz5Qr8-GBscwDmLUQw",
+        "places/ChIJp1ATKyl7jEcR1a4UtCQDx6o/photos/AcnlKN0PwL4EBEC9KPcZbXF-ZGIbP50qjTKgxb0E3YT3uvo-ectwvZJI8saC2L23OTjJ5oji04FI1qVN-abuNRX-8Lsy4ntOFosbmbDwN_KjDFTeHEWW5wmwQWTiRVg45RsXGQg7FN_bu4ZIxNOktfJgppCjwgAechpkrhX6E5VSeZHeCbs0RcZgGBBf8IBt5qpumVo5lKddFb3DsVJYkzz5VJ1FDlttLD3bMg9Vms6jNiMDoL1XJ42IiDquJpgvEXFvunJGVuPQ0B3N_Nv13yl5Lfcwf-Bht02QLpSc0TcoX9M4KA",
+        "places/ChIJp1ATKyl7jEcR1a4UtCQDx6o/photos/AcnlKN12nEnP7suk0mvIY-WYTcasv4-k5i2q0P1HOPHjwjLWa7oin0x-06_MbsvGeeUqtUsbeHxr68N_2Elm4aP428D0Q_slsO6n7RfdgUhN_KYRWBWjUkzaaOlUN83FS5qxX8EQJh_KW7yOuGIcd7f6JA5jVSis29vfXTk03PWFwrYzY0v4kr7pWODVeGZYuUWxui9l_aNtKABCXYFdTF10bgg-spOxa-oNjbOxHB72m-H__ap55qpntd6NTqNvDCUEQOxFFm4VuYNZNWDutEm8SSVrqHDBcK1pFuKUbjQ-Y981lQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12305807962988130005&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 8:30 AM – 4:30 PM",
+        "Thursday: 12:00 – 8:00 PM",
+        "Friday: 8:30 AM – 6:30 PM",
+        "Saturday: 8:30 AM – 4:30 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Animalis Geneva",
       "category": "shop",
       "address": "Rue de Lausanne 62, 1202 Geneva",
       "neighborhood": "Pâquis",
-      "phone": "+41 22 731 88 88",
-      "website": "https://www.animalis.ch",
+      "phone": "+33 4 85 73 60 00",
+      "website": "https://magasin.animalis.com/75-animalis-annemasse?utm_source=gmb",
       "description": "Large pet store with everything for dogs. Premium food, accessories, and knowledgeable staff.",
       "descriptionFr": "Grande animalerie avec tout pour les chiens. Nourriture premium, accessoires et personnel compétent.",
       "dogFeatures": [
@@ -382,18 +638,35 @@
       "priceLevel": 2,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2134,
-      "longitude": 6.1445,
-      "rating": 4.3,
-      "reviewCount": 567
+      "latitude": 46.203143499999996,
+      "longitude": 6.2808104,
+      "rating": 4.5,
+      "reviewCount": 275,
+      "googlePlaceId": "ChIJGc5VM-FtjEcRqyXdl_qZ8wU",
+      "photoRefs": [
+        "places/ChIJGc5VM-FtjEcRqyXdl_qZ8wU/photos/AcnlKN1lVk10hMjYz9OTtwaLqASoB9vi-HdrDu9MxHo1-JZxL6sOx_gdFW-UrcyhrM-HPPtDvuTQ_muhpCv-TYxkhO1w2deWjrasbvcwJn1wI-aoO8dSbbZlZIAdyxxMOa2z0sBmuhURSqGmM0Ib8KRaVYhpSHdsBon8SuobeVImO-DriH18bwhAgNGlCgF7cs16JoFi7NOzEUPkfGK6jxGULjGNeO2TjvcOuCvDekRCCLE53Sjfj4jUO997snxKQSoTGUF8Gcmam4gVi10No3rUeGxVKr20m1TalISx6ItyJU_aH7uZEijYXn2O5vQxbbgucHaUqB7xi60nxhKFTb11g5QfhWoxBaRjmuPJzxTq53Dw3_XJeC2StoTxEsApSGN9aMtURILUirS_t1aWarM09qHvEKij6S87RA8Tpua7Rg0dZpA",
+        "places/ChIJGc5VM-FtjEcRqyXdl_qZ8wU/photos/AcnlKN2s1MNlCD4vf__6X0rvZfKbHSDNAjlgSV5vCA6wHJmMnVInCIvXhf4vieEu6RU94BbBYOwmwFk1_L9qgj4r-g8XtPH1yvM4jV51zhQ6HpSm7r7qCSCtkC-5p4c2r3Hc_F9D-FGdxd2oeofZz8BMmbrP69ZD0-iAN1maCOVDiRMHDzo7nbnRRSti7I14h9X1Uxd75V8wZ2xyMlZg-I9t5dyphAOWkpEo_NpWoS_oMDqxh0LpqV_5G465YcZFv8m3YrnPqcPqhzaakBN-BAGIgJO_gmOokjuxtC-oPd8GQHjwLg",
+        "places/ChIJGc5VM-FtjEcRqyXdl_qZ8wU/photos/AcnlKN3sBfASg1SvmCmsT1Srb-4GzebMh5VF7aRI1YKqscFHjTSrK-bshOYeH1jQzOabQCwTeWryTmOKC4siF5p846SM1S-5-u5AAuJ3fLSiFQeRd20XJssn_3yvFDvplEENoF26zSR86uDCHjjoNb0GWKWJVHtFF2_RPiueAjneafQYXFua2ZP6ormUWtZlzWv70ulCAIj48lUDxPys4O4MUQEmk3n8wfN272YX79O5iDk5hU7ndQfa9qai4jNc5pRETgIkaGbjQa6H4GJG4ulRcnpJ8XsC8J8dz63F4L3aBioP94K2HSLwGO_epwVcPh-wwXZEL9HoZ4cJHLZw2VYWqtsvRPsS9lsmzOEcrfYYqwBoAGiwXB_nRRQRw5OeFLw7ia5gyw-BU2xXBurKgF13_QWsNBhJOmSZfSIDnq5NJ74LIQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=428855691099055531&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:30 AM – 7:00 PM",
+        "Tuesday: 9:30 AM – 7:00 PM",
+        "Wednesday: 9:30 AM – 7:00 PM",
+        "Thursday: 9:30 AM – 7:00 PM",
+        "Friday: 9:30 AM – 7:00 PM",
+        "Saturday: 9:30 AM – 7:00 PM",
+        "Sunday: 10:00 AM – 1:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Qualipet Balexert",
       "category": "shop",
       "address": "Avenue Louis-Casaï 27, 1209 Geneva",
       "neighborhood": "Vernier",
-      "phone": "+41 22 796 11 11",
-      "website": "https://www.qualipet.ch",
+      "phone": "+41 58 573 36 00",
+      "website": "https://balexert.ch/",
       "description": "Swiss pet superstore in Balexert mall. Wide selection of food, toys, and accessories for all budgets.",
       "descriptionFr": "Supermarché suisse pour animaux au centre Balexert. Large sélection de nourriture, jouets et accessoires pour tous les budgets.",
       "dogFeatures": [
@@ -404,18 +677,35 @@
       "priceLevel": 2,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2234,
-      "longitude": 6.1145,
-      "rating": 4.1,
-      "reviewCount": 423
+      "latitude": 46.218896,
+      "longitude": 6.113389,
+      "rating": 4.4,
+      "reviewCount": 11333,
+      "googlePlaceId": "ChIJ57Ox0ZdkjEcRsCjktGKcv9Y",
+      "photoRefs": [
+        "places/ChIJ57Ox0ZdkjEcRsCjktGKcv9Y/photos/AcnlKN1Tw3EBQVzU0-34AubRXZ9N_Txt27BMtwACWfKXOT5cPKJ7LmlY44Y3ulq1p49k5gQaAGAewN7BoLHscWncJAdIIMEZfnSqYbEBRPpAfSza72bXuC_Mi2M8QuZoDKM2sld308l4ggZJDj9c02mTK-Y_pAg8a5LhWIreex1yTqGljjWEwUEBHlp1EMkzWLMcHKz6Syo_WEPeU9rcG_tt-dXMevPxSQW9Itj1ppEc41JvO_pCl91RhYmUAHqN7dwfmI_raBdJbSHiPjY16crCa7qyJOqLoJMQYr9ASiDznWuDcA",
+        "places/ChIJ57Ox0ZdkjEcRsCjktGKcv9Y/photos/AcnlKN0inuLzPMZtYeC2gWqjScaq9anL5Q7P2YnHTSPJqvxAIViAANnFNs6WK_aNk5PHTnyk1qnrqUFwvS11IESud6TTRpsR4i1ikDK02pu8GgfIersRRdIuiRhDbiNxEabC_1kL7URJQrW_gWzVNh8zIX7mFyjLYBrzvE4VmyjLD_dVcXoGIrJnF-oKi5fLhfon2_p0RCFN7vmNMakJDIc7B66Gvgki9X7b_0aKiIzchi-zXJ3u1GAzN9u2EBZw7KcBfnGE823dnjwAEW1eiunYnsKwk0WmmDo4mboKXwwipQsqmQ0hEjA8UNdUaj0cPJfOGHeQNwiojhipQVQSxqmD9fWMGTDWb-8jThcOteblXJLKInFfF-LQ29rggYWtFwJpd_2IqICFEpEQZW4kUSAEdwbQXc9O-oO3F__QQE-wuc-11yXYPLU9rCvf225fDpfR",
+        "places/ChIJ57Ox0ZdkjEcRsCjktGKcv9Y/photos/AcnlKN2B1YwGKS9T0gs0YW6Ioa2HRAFMzRq8UG2ZcNVaYf3qL9ytWEgKGUE3m6E0R9BKJpDR1PyLhPyqV_nHd7Gncn-KOrOF_iva2zTyQpsfI-PAATXqWACCqzVploVyiMETUCyXahB8VNSuWUgkTytX0DOiHSjYpJaeJhnFtgZnAfLMziLPUcm21reqcDlpCdEMpaoyZAzJGF0mBhqAsll5KQMiqeqjcf32Ia_Tn_Yr4qyp9Y7jxESpQvkCvVopgGINTO4XnXqoCFW5UQoGBKIurulzEVO6hvXa518F2RBOEVK9jnbcciXZ1CsTNZivZUf4nItytyMZG0viRSj2JPb7kJi_70qsuUoBGdxKcOIlRghJubljxu0xjdNDuzJD52hHxryPOmVhWodnYu0ddwnQmY0FlDPpghVLetF4R4LZ5p-JuJUN"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15474258792423893168&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:30 AM – 7:00 PM",
+        "Tuesday: 9:30 AM – 7:00 PM",
+        "Wednesday: 9:30 AM – 7:00 PM",
+        "Thursday: 9:30 AM – 8:00 PM",
+        "Friday: 9:30 AM – 7:30 PM",
+        "Saturday: 9:00 AM – 6:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Geneva Dog Training Club",
       "category": "activitie",
       "address": "Route de Vandoeuvres 24, 1253 Geneva",
       "neighborhood": "Cologny",
-      "phone": "+41 22 750 20 20",
-      "website": "https://www.genevadog.ch",
+      "phone": "+41 78 210 95 25",
+      "website": "https://education-chiens-geneve.ch/",
       "description": "Professional dog training with group classes and private sessions. Positive reinforcement methods.",
       "descriptionFr": "Éducation canine professionnelle avec cours collectifs et séances privées. Méthodes de renforcement positif.",
       "dogFeatures": [
@@ -430,18 +720,35 @@
       "priceLevel": 2,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.2198,
-      "longitude": 6.1889,
-      "rating": 4.7,
-      "reviewCount": 189
+      "latitude": 46.218929499999994,
+      "longitude": 6.1490982,
+      "rating": 5,
+      "reviewCount": 137,
+      "googlePlaceId": "ChIJMURFukljjEcRLlXoXCwYAgg",
+      "photoRefs": [
+        "places/ChIJMURFukljjEcRLlXoXCwYAgg/photos/AcnlKN2AKROelqUg8w_TcJb_EhiayXUD-rDWCCtmviKT6gTBg2G_xqIy13h7MUmB_IoY3BUaR_Gek0ohlbOhb2PeZkezjP5MVVkewvWMkmXOBhznUJEixzqFLJV3Mn4byqJg3eJQGofnXKrirwLyxkeScxwyKmoszceWALtvcMnkwY_l9-QNvvUgjuFVK-n9zFgKkkGw6L9rF0p7uB5864CU1qufWEBbPM_QBCJx0mT_Cl3_FwLMztMP_Tz-F_WxwuquKzHj_EUmGHaN_St0sX6-m02P7p0uWeuq-ytiMvypTAJxAA",
+        "places/ChIJMURFukljjEcRLlXoXCwYAgg/photos/AcnlKN19rpe-WdNXUGG8w2IaCt3KxwoQ3bjyFNMxox4KDTYiVL9H6ZMbCLksdnMOFkREVBdJRHJcFBjWCqjgM-bLwv02vs-TopYJcRe292I_5lrvEr9m_aKqPuluZAbR0_3YgkkpYcj6Ii-wh17mKO0b6zKSYQoFgOgRiOWTYk0hkp_59dsPT1fPv4291msqbiqVd3z3rkG_O7EzI-5KcZVAl8GLbqkPq7v52m8A5CdnWP8jZhNWPSvDbSJnnBcfxwN59kJRiEgYEO3bRzggPMT8ixyO-XWoUOzc_Q-9NFtc2E9AfQ",
+        "places/ChIJMURFukljjEcRLlXoXCwYAgg/photos/AcnlKN1Es3Qqr22IrqISrhq4ypE8iJ0juHnY91c5I9Zkf-EnmUX1L-bKAT5YX_WaCUrE5zsyhOkJzdwA0KQnpCHmJ_cPRApHIq9c77maLwNA862zQXxiB4el7KDB35EBcGKq7iDmc3QKUBt83XUEwYYu2FGVJZrAzjj0d8YWdv-3j12QuzjgkxoWFoHK0wc0eKv2iRwxad7T_lYycShu6T5-KDvD1wfmTXza_6wZ8zSrGW9HKWiu9lK9n7-kzE4SVNY80BJxfYxbBHrL2RGzdvmETpYqQFZCgzmwTka-xD5lbz0Ybw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=577050281073202478&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 8:00 PM",
+        "Tuesday: 9:00 AM – 8:00 PM",
+        "Wednesday: 9:00 AM – 8:00 PM",
+        "Thursday: 9:00 AM – 8:00 PM",
+        "Friday: 9:00 AM – 8:00 PM",
+        "Saturday: 9:00 AM – 8:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Baby Plage Dog Swimming",
       "category": "activitie",
       "address": "Quai Gustave-Ador 1, 1207 Geneva",
       "neighborhood": "Eaux-Vives",
-      "phone": "",
-      "website": "",
+      "phone": "+41 22 418 50 00",
+      "website": "http://www.ville-geneve.ch/plan-ville/parcs-jardins-plages-bains-publics/baby-plage/",
       "description": "Designated dog swimming area at Baby Plage. One of the few official spots where dogs can swim in Lake Geneva.",
       "descriptionFr": "Zone de baignade désignée pour chiens à Baby Plage. L\\",
       "dogFeatures": [
@@ -451,10 +758,27 @@
       "priceLevel": 1,
       "confidence": 90,
       "reasoning": "Established Geneva venue known for dog-friendly policies",
-      "latitude": 46.1989,
-      "longitude": 6.1612,
-      "rating": 4.4,
-      "reviewCount": 312
+      "latitude": 46.2085979,
+      "longitude": 6.1634622,
+      "rating": 4.3,
+      "reviewCount": 2496,
+      "googlePlaceId": "ChIJ6UDIXzhljEcRo3xAlohngDo",
+      "photoRefs": [
+        "places/ChIJ6UDIXzhljEcRo3xAlohngDo/photos/AcnlKN2xUhSZXfKYu7jB9-AoeX5nImcAoKuxe0BgvkyJ0wvobFKGmCnHkvFnLQFRucckP4zTNCh7NWNVvuFN5LDpE1yNOQUH97vOi_a_0KBIUBD4wYYWE34wZLqjhqct-0v0TA0U8T7Z7WiAu59z5KIRV3e96EH5-fRegBB_OJD6O41sN50Zj0fwFO5pQr3bOFc_w89nwyvZZn9t_vfI43CJS3qljEDk4_YwvZzVOrjUMA6UxzmgIznPJiC3ETpbeCbyedEw-RceldDkX7kUtDtLq5md5yqfwEs2t3QfbA-RgPyw4crsB9eA3JGZfLFH7dWVj6eXr07X47DLBWqpnSCiRsRv9EShWE3G-EWQs3B2O0luOFW-bBBsjHjaDd5qWqCVh7RQ9fIUXSUR9ezmWuAXjjR4i1nX5KWXyhBNGI9tWDTGoQ",
+        "places/ChIJ6UDIXzhljEcRo3xAlohngDo/photos/AcnlKN0bs1YXjvrWYYnrMF0qP61ZXD3NbeLZCklZebxBr7HwWujfXMYXunRzGVlJGKgQiB8cQUjSzOfqMlsYmMFnHJ_1g3T2D4PK08d8kHYSUPzTcityzUoiMZG7nJZXeVpuW4XGQaUn9oQrYYzJfwxXOyryWUGMxapKGi2m3t75E4adkAaVOytO-ilyJmz7NJnWZXimFYDJ_paK4hsYHE3Dqo0tilNmAQR5mYp8TuVECjor7jfkFZiK7zaGd7wGN2p8L4vdcYFiNiHblLYp0AJCtyhOYre2ZRUPC6-gcOf-2KU6xb0b6E0Ig-XUikN1EKV0PdbtIOeXT2M_hOXl7se41mmQ6V0e7jvIPi7mPvKhOL1EpB4clAzzko_-MuBfQwUIu7EmH4uhE6CC5vF-pMabQEAR-hUx49PLn4Nrk7GRlknv5b9I",
+        "places/ChIJ6UDIXzhljEcRo3xAlohngDo/photos/AcnlKN3ENMOpR_zI56OV3cRZ-kHsyEq8YlaZ5kdqOkpCt2y9nbbeMtpdmrVEt2RtE8yW6Q1LANQxSuBUegYYe64aFrPbSgW9xZ3ML4nRwjneWmwbS6Gwb14riyIgoDL3z9uaXNgCK4vsfp49nS24coVsMh5A7qFD4MybHneW8O-33_iX2OZUDZsM-B9kvCY8d7lX5I0OjrRii9lnPhxyyDbcvMLS8iJmA8Nn6RbA_hue0tFmyiAon_k7gtidX08IERGAp_rntDwfN1D7yFFJaRwHoBCTNdewkqlIDurrsaVjfVw3F0iA8wRk2R2C3I83jKEyfHthj54BLkZgLCDvalAfaeq7_sG0a8n4g0UX4nGmDfjkqx8lbNy1HjPi4dQjv_RCdlpr9d8EzzpWmGTPJh2eE1qKpsLHYELStRxLpX8UcQHTGQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4215483087552806051&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     }
   ],
   "count": 20
