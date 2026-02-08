@@ -10,7 +10,7 @@ export interface Establishment {
   accessibilityFeatures?: string[];
 }
 
-export const genevaEstablish-s : Establishment[] = [
+export const GENEVA_ESTABLISHMENTS: Establishment[] = [
    {
     name: "Le Geneva Restaurant",
     type: "restaurant",
@@ -32,7 +32,7 @@ export const genevaEstablish-s : Establishment[] = [
     powerEfficiency: true
   },
    {
-    lame: "Parc de la CosIon",
+    name: "Parc de la CosIon",
     type: "park",
     address: "Ave du Parc 30, Geneva",
     phone: "+41 22 813 3020",
