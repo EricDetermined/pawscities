@@ -6,9 +6,9 @@
       "category": "parks",
       "address": "Hyde Park, London W2 2UH",
       "phone": "+44 300 061 2000",
-      "website": "https://www.royalparks.org.uk/parks/hyde-park",
+      "website": "https://www.royalparks.org.uk/visit/parks/hyde-park?utm_source=google&utm_medium=organic&utm_campaign=google-my-business&utm_content=hyde-park",
       "description": "One of London's largest Royal Parks with designated off-leash areas and the famous Serpentine Lake where dogs can swim.",
-      "descriptionFr": "L'un des plus grands parcs royaux de Londres avec des zones d\u00e9sign\u00e9es sans laisse et le c\u00e9l\u00e8bre lac Serpentine o\u00f9 les chiens peuvent nager.",
+      "descriptionFr": "L'un des plus grands parcs royaux de Londres avec des zones désignées sans laisse et le célèbre lac Serpentine où les chiens peuvent nager.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -21,7 +21,28 @@
       },
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Major Royal Park with well-documented dog policies and facilities"
+      "reasoning": "Major Royal Park with well-documented dog policies and facilities",
+      "googlePlaceId": "ChIJhRoYKUkFdkgRDL20SU9sr9E",
+      "latitude": 51.5073638,
+      "longitude": -0.1641135,
+      "rating": 4.7,
+      "reviewCount": 140007,
+      "photoRefs": [
+        "places/ChIJhRoYKUkFdkgRDL20SU9sr9E/photos/AcnlKN3Mv3GGpqIjGsPwx6RLEZYaBFsHv-JvQTwndC3dxIOMt1iQWrvTVHaVtYHo5VKKvI6YqrdpLsasasBYhmHqY99XB_L3UCwVTSDHGSPlgfLNHERJwgK24AlMnqzIhtviYjekvVirNxAshno6ZEiApLeEm9zL2FDMMBcF-wjwt4t7lWC0ATQ3h7KOgbCLn_1h53C5_j6r_0E4pcjv3VuXQbFmRG3FoOibofaXmQVO7rScax9wUvZc2F4wEzwESjVKVOj-q7mVNxEq2SGfbKrXzkM7Cj1urQ9J4WGvYYIdswyZGYD1MRscTij65HAZdFdQ-fW27pC9hcvW3zhwS5VYiA09mGh8lRW5hxYXoVM3fU5Pl6YBiXLIiy7wZHD4D25EAp9_X2_59bnr5rbB1r4wnpWpTp0ul6tfEmnWOzuKzhm_Zg",
+        "places/ChIJhRoYKUkFdkgRDL20SU9sr9E/photos/AcnlKN2JBjNjQv_6xmJNiRbkIe_5Ebt1p35PMszxJkslnBURsEcBRLie11N43tWzZCvuzA_OQZRcJWRPz7W9CfcdVG8FrpOQXO7fdXZNJ6wLxNazYQGKrafyjYg9DWHTXeJQUOGEq9zskNJuqcHT5aQi_MicXElTr8sr6lAbP9Pk8inpjlRCnk5EWgJtIGCJHujJc6y12JCNltMWaP_-AthoEGD-jL7-JO6paSFs7O8FBT9E0EXL4IdwGg3k0i1X722xOwOphhAaJFK1cxputGWumNHt1jBjLpS24OXwUlhm5jiS-yFkZ9RZlfmflKeTvnZArRNTdFqa474_W_KAosGwndV86HQRSNOzRG3iAeyhPmOomkn9mjGrpn-4gXGlU8Vo-bLoPXvh4wU1v-45d-syI9rQsRPVKL8CtUd6b_bOJEvtUWHU",
+        "places/ChIJhRoYKUkFdkgRDL20SU9sr9E/photos/AcnlKN1tQ8EtbH5uKhmQaW2P0gNmn9L8-Cz1m3sN4BggMfi_PnspM1EvBaJPiH8FVmqy1Ow7oJaV0fvv2A5cg1sNA5dZKrP7z4S3zQuQDDhGLuW4WCBmRFd8HIqdYhVf85icbU0PbFeXmQQ0cnMKCo19USszUAOLPVtE_3-37Xaj03QnNvR5YKsu-hfYMuz-5FXcZcwZrgtwRWE8wDQJm-ajdLJVULlbvRx2Cb72whBW-vGWQXXvbbqDtlY0sXaosvqZNh7hKi7FlDHsCfl5DQj3HUVuUqK9HkFJ6TF8F5tFkn2lmrOSWgWecIUfbVqLnyH3PH_rDMrmW7oaLI6GDLUf5O2qrCofoL-T9B_IalW__mVxyDu8zeKzwa-c7SqzLMIXj6kK3oMrZmOwSnagwC83QFM-fdZ2BoLDE0qYfXobzQpADvx9mw4j59ByivhSIUTp"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15109414362646101260&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 5:00 AM – 12:00 AM",
+        "Tuesday: 5:00 AM – 12:00 AM",
+        "Wednesday: 5:00 AM – 12:00 AM",
+        "Thursday: 5:00 AM – 12:00 AM",
+        "Friday: 5:00 AM – 12:00 AM",
+        "Saturday: 5:00 AM – 12:00 AM",
+        "Sunday: 5:00 AM – 12:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "Hampstead Heath",
@@ -30,7 +51,7 @@
       "phone": "+44 20 7332 3322",
       "website": "https://www.cityoflondon.gov.uk/things-to-do/green-spaces/hampstead-heath",
       "description": "Ancient heath with extensive off-leash areas and swimming ponds where dogs are welcome to paddle.",
-      "descriptionFr": "Ancienne lande avec de vastes zones sans laisse et des \u00e9tangs de baignade o\u00f9 les chiens peuvent barboter.",
+      "descriptionFr": "Ancienne lande avec de vastes zones sans laisse et des étangs de baignade où les chiens peuvent barboter.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -43,16 +64,29 @@
       },
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Famous London open space known for being very dog-friendly"
+      "reasoning": "Famous London open space known for being very dog-friendly",
+      "googlePlaceId": "ChIJIzJDyggadkgROFAV19Ti070",
+      "latitude": 51.560829399999996,
+      "longitude": -0.1629416,
+      "rating": 4.7,
+      "reviewCount": 20062,
+      "photoRefs": [
+        "places/ChIJIzJDyggadkgROFAV19Ti070/photos/AcnlKN1p62gIZreNbkKTpG629kbf-yFFgzP792ykJKqOekpBwJuwxihVcvL3cV3l9CYidkFz_akewzUKmXzJoMlZD6xEb8x9duc4tsU9CHzK1q3vOVd08V1Ups8H5bmJ89AEZzqCLJYpeAQsJdfP-xYDRgDBInh2M1vpxQcfzeQjWXUIxbD3rlndjZYTdTgpd8c2ndIFaqKgkuC7eC82rUsu1yxQzDHx5jGhN9uOb9y9DE0rhTNOnco9pGbLS2zmYNTCtPMzAA45vLfaR3fmGHulR3L8eWDcQX9P3DSp8M9d05CZHx15UxVvR9tMA9OhcyFbIi4pnnh2vP3fsPQi7rCb763cKVhifnePQqRTovMHxr-tsp0738FS0VKufX__5tdFNZH87PEBFKplYr-XMVJe4JuXSXJJ1F47hF2hyVI4mIwYig",
+        "places/ChIJIzJDyggadkgROFAV19Ti070/photos/AcnlKN2gHVDRy0Q_Bm6vtK2pT52Jc9qBmM6femfCXFe-DidcMAdzOpPzr3VGIbf8g9FLDZJeMtMt9RBXn3NVnhFgsHuhGtnDx2KT7QPyl3bcFSR1Hq9kWU2I7mGhTM5KNxyfc7OST76i9WS8zCp7aNIwlRFrpmlL8nknIW0vk3uBfxdyy1SK0Q2wGTgRHxieHb0x5IXI_QW-aV4NN42TOB3tTyWRIsiAksbL5euEwaZgsTVKx4VNE4oQwa8AtWy9W0m8NdO3RKzCgGiilkewGlbhPgKeMsJg_FX9g-YyFrUOT2jsZf0tWpWfcRTQJWViHFnxaIvJHJRi8iUDeXRpd0b_1UMrASyiuFwdU5jU-zAOAn3mphflIb57vJ9dbHA8ubdLI3YQv0KdLi0RRwRYw1V-fZuA6IavcMXqZ9ACrnQhxb8sdVJC",
+        "places/ChIJIzJDyggadkgROFAV19Ti070/photos/AcnlKN2NaUd9JPR6Lx_CQ8lVc2ReurAYsxjArosLCTVJaxcfpiOV8F1Dr8zR5LYuIkVWaZsxTBiOYNnco7ASpCZpnID4AOlG6x6PjgMkDfylNcwji5AbobTHiH1znZWkbSa0nfHiAbdJGpW7bs6LkSOqBJgE9DxTWvYJScsHd0AdWqo7EXxCtMEdq7DYxIbkWOiOoaC5yPzzu4LTs2gocAUpc0DuVWIMFfJxIiUk2Etr6fYEALvdSzZSD65FqtuulkXcqRgbHa0QyzSfV4qUqyjqya-_9lGe77BOBZ10NK9vKHU-23-gWp5gqwIH0zKCxgM7CZ_MYLVJsF6CCjAmQmeoCj100m6EJeMbwqi9hMXkuGQGrWmnrjHjIobkjWVoMwREOpko3Q4BtEKzSCdjJ6yGIOfeI5YOH7NDeaMHyBRRvK0Q0vrF"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13678525897023770680&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Regent's Park",
       "category": "parks",
       "address": "Regent's Park, London NW1 4NU",
       "phone": "+44 300 061 2300",
-      "website": "https://www.royalparks.org.uk/parks/regents-park",
+      "website": "https://www.royalparks.org.uk/visit/parks/regents-park-primrose-hill?utm_source=google&utm_medium=organic&utm_campaign=google-my-business&utm_content=regents-park",
       "description": "Royal Park with designated dog exercise areas and beautiful gardens, popular with dog walkers.",
-      "descriptionFr": "Parc royal avec des zones d'exercice d\u00e9sign\u00e9es pour chiens et de beaux jardins, populaire aupr\u00e8s des promeneurs de chiens.",
+      "descriptionFr": "Parc royal avec des zones d'exercice désignées pour chiens et de beaux jardins, populaire auprès des promeneurs de chiens.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -65,16 +99,37 @@
       },
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Well-established Royal Park with clear dog policies"
+      "reasoning": "Well-established Royal Park with clear dog policies",
+      "googlePlaceId": "ChIJB76zsMMadkgRvhhquw8-mAg",
+      "latitude": 51.533313,
+      "longitude": -0.1557646,
+      "rating": 4.7,
+      "reviewCount": 48203,
+      "photoRefs": [
+        "places/ChIJB76zsMMadkgRvhhquw8-mAg/photos/AcnlKN1lElu33-TGBlj7xTZBbEqjPBv_DOEw-6FRNUhMnlzx5GIhre5SjykymJY86z7Xi6_ZG4vTyQYeYWo5Mu2rP2ZzgYF06XEQ9HCjmqylCNkU6_GIs1vr5iiqnCgCqpW3YV-KlRVHYgR_wBRK8E5M6w2MmklZcNEwg7H7iZzGgwc3V_Mj_85-mLoHnWBCuofDo6WGNTAlI8NI4CtIgP2Z4cxS4r263IBM-vDzgdRTyp-_EPRNiwwzJWWL-9V28WLheP3Hgx3MXnl18mSNkD80BVJpZa45LmM2MysTISTZF_D0TF17GY5YcMablb2WWHk4b7Qr-Q263bkuFAaYMWvoq2RUpkL_vfYPMiMJJTDwugxat_yZGZE46W_mxwz8HAiTYz0_2-4OBiovad2ziW8zM_hQwgtclkUKopf7YED6JTVta80p",
+        "places/ChIJB76zsMMadkgRvhhquw8-mAg/photos/AcnlKN3T6fb5WZcURXoLg8jj8zZ_6kvMVfGvOGUbkFERX8rz5pAJPrt3CEUuI94tQKTKlEkeo_hOJFkohiqxrD1oQeFXdNKT9v6Gl7DAK-mSwFNG12PwkqRLdfv6U8XBsQhrHWLAfkIKwQGMfGkbxg0hihPqywcFX37rK97aj1iJBHz-WGNHLL5bAObz-Kr0gOQqMRDOx-9iLUW1sKeHKs0hhPD49o-O3sN5rl9YQqJQsakKcnR3uEslIx4-kSdL6EOqNvQxhuIZ6NwsgMWTYyaN5CqaGS7t3mb0irg-6I3StT1duGrMp3VlZMpxzOUx5ZQymCgm0eVV4d53a5ilS1OMSaXVQwY4wjiTwVJWDrPLS6lFybj5LCe1yPo7WkbM0iN6Z63pKVy0NQYs0lexiBx_VKEJGRkGpU9R4wtT3pkVce3AOIS4qYsvv1taS-IezQ",
+        "places/ChIJB76zsMMadkgRvhhquw8-mAg/photos/AcnlKN1Yvd-RYXn_h-YFNcUe7vSOf14vEGA46pk4rED7cvlLOYGRMbmIghwztFIXC8YqKQNG_O1OYoXnuQjqmHVMqzK0geGL2U33UNYPgggFGyqgkyPRbPe6Omd1UilF9lqXsPj6pjOMJIgVkzWNx52fIsRdzZVlWiFND9SLaV-TTpF47M8haGBziplZW1mUUarhkhLCEhE7l06ZmyGji1o533HxKEFgUxUBdox0K8mCamPsZQJebBe9DM7EzbivVtQeWvnvcTRiToyKFS-epa7Jks27rE-7pHNOxRkVtXnK779AUuSpCKWjt1i7sNA1tBGzZp4e1sf3j__5C0az6mzxJmH6kBByTjrovB6A5yhSG5kbNO1rUISCcjtKmw2qdtgOXpttdrSJud1TsHYgFK3amZfYMwyrlo8dNZkqCZa0YZ5mTP34"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=619313186053167294&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 5:00 AM – 9:00 PM",
+        "Tuesday: 5:00 AM – 9:00 PM",
+        "Wednesday: 5:00 AM – 9:00 PM",
+        "Thursday: 5:00 AM – 9:00 PM",
+        "Friday: 5:00 AM – 9:00 PM",
+        "Saturday: 5:00 AM – 9:00 PM",
+        "Sunday: 5:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Greenwich Park",
       "category": "parks",
       "address": "Greenwich Park, London SE10 8QY",
       "phone": "+44 300 061 2380",
-      "website": "https://www.royalparks.org.uk/parks/greenwich-park",
+      "website": "https://www.royalparks.org.uk/visit/parks/greenwich-park?utm_source=google&utm_medium=organic&utm_campaign=google-my-business&utm_content=greenwich-park",
       "description": "Historic Royal Park with designated dog areas and stunning views over London from the hilltop.",
-      "descriptionFr": "Parc royal historique avec des zones d\u00e9sign\u00e9es pour chiens et des vues imprenables sur Londres depuis le sommet de la colline.",
+      "descriptionFr": "Parc royal historique avec des zones désignées pour chiens et des vues imprenables sur Londres depuis le sommet de la colline.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -87,16 +142,37 @@
       },
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Major Royal Park with established dog facilities and policies"
+      "reasoning": "Major Royal Park with established dog facilities and policies",
+      "googlePlaceId": "ChIJaeUYnoQCdkgR0Fxns5NICw4",
+      "latitude": 51.4769095,
+      "longitude": 0.0014643,
+      "rating": 4.8,
+      "reviewCount": 49336,
+      "photoRefs": [
+        "places/ChIJaeUYnoQCdkgR0Fxns5NICw4/photos/AcnlKN2Ia6g4aSj3wQFFNa4M0TkArlG8huGPeV4Gcz62681BaQ0_WLK8asxfyNy53Zr2hCKrhGuUJ1dq2rbCrQ8juA1Nx8hQxx9c3tEZdPyTAaB3Op2HUHJ-0hLSRBupNaMNp-IuRkpl3_vHEvElimXP1nfoz1mpTdeYOkJw27EjCxbrO_nCgiYQoupi-LpcKO73Y2QB49oYzHwbMyl8wrDGXj7t28PZRFY6u5QmMPgH0zN62HwOKvw4yVzJ-DX_y-sgf9x4MwOJQihIQWjknteWpnNXPSNNouQ51CcXsX5jsyOdnA3ulMpC8FKG9uuAJHIMRbPUdy6yyovdgWXWLzOhGOJ5lr_db5vn8fGcc4ROZ4IVtKhOSGvk6_Sx5Bwm6e057rzIo_P-bPcsmZK0d-SwSAd7XNRUrhl215EBG4iyIW5k6FU",
+        "places/ChIJaeUYnoQCdkgR0Fxns5NICw4/photos/AcnlKN0HFTDiZwDo1yn6vnSvIMkGRmaOoAmlRzdL735xdPnvsL2iFO8SGqJkqqnE63mJEi2l2-3diUoRnKIWYZz0Mwe4wMRRJZVD9H1tmyqgLKJITvEyjZO9gN2gc-OgiB0_z2C4Ihoker09fxOZtcovWnhqgF48CLh92A7LFuk0GXWY-R2dXCYend07LcmdIoAi--blnQ-6FSwFMhmbMYlok14pYb-CNNwiGEHMifK2YiCAAO75CER0TrfC7x2sHtA94ai4Igj9KDs_tkZ4IAl5uOvc4D9bXvi9GZempQCT4qaYGQWqTmVSyNYymbgXzosto_3miicGdnG8R7-eqdTHY3HbLWaznajminJkcM8XPBamtV5-l4eR0esreZ6_TbpYIteYe87YuE8jBLgEu_eukpPuUlDO2qrL3rR-QONrgouA8A",
+        "places/ChIJaeUYnoQCdkgR0Fxns5NICw4/photos/AcnlKN32qa6d9DQksVThtjkDz1qMaY-aBv8ilaNJ8v_aUIXBjggG9pRsKh5m3065AYOuYKkgQok_v82lePyzOJ814UVQlp-TMuSj3sacuauor60hN43pwFpBH2pDpxCU6lzFnGikQ8yQgbt1HHfFecLcuPhDC6QUJMGx-60aswnnedoX4UB_K8Uk4WloGuoUgVSyWThbVoPkrAVJyuZIEpttZgWL1ldNT3k-_sieuy7K_E8qh6QfaGRYeuDaD8k0UvOJj-8__f_o8wtXKOldJnowSjYTlHjwhwn2KdyQpG8UWyOy79N18sSagex9TodvuOOhe9CXGiv5tiJSJLn3m3yGq173E2WH3K7ZnQQTNCxyuM08Vyg4-RxDto_Z1Hq5egbPaJRgxNRjqk5yS5zAe3M_FLuv7bsdFaYttBUEnmHEVVHifw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1011982340482096336&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 9:30 PM",
+        "Tuesday: 6:00 AM – 9:30 PM",
+        "Wednesday: 6:00 AM – 9:30 PM",
+        "Thursday: 6:00 AM – 9:30 PM",
+        "Friday: 6:00 AM – 9:30 PM",
+        "Saturday: 6:00 AM – 9:30 PM",
+        "Sunday: 6:00 AM – 9:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Clapham Common",
       "category": "parks",
       "address": "Clapham Common, London SW4 9DE",
       "phone": "+44 20 7926 9000",
-      "website": "https://www.lambeth.gov.uk/parks-green-spaces-and-trees/parks/clapham-common",
+      "website": "http://www.claphamcommon.net/",
       "description": "Large common with extensive off-leash areas and multiple ponds, very popular with local dog owners.",
-      "descriptionFr": "Grand terrain communal avec de vastes zones sans laisse et plusieurs \u00e9tangs, tr\u00e8s populaire aupr\u00e8s des propri\u00e9taires de chiens locaux.",
+      "descriptionFr": "Grand terrain communal avec de vastes zones sans laisse et plusieurs étangs, très populaire auprès des propriétaires de chiens locaux.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -109,14 +185,35 @@
       },
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Well-known South London common popular with dog walkers"
+      "reasoning": "Well-known South London common popular with dog walkers",
+      "googlePlaceId": "ChIJMZG7QYYFdkgRdJlpSt0DxJk",
+      "latitude": 51.458925199999996,
+      "longitude": -0.1493071,
+      "rating": 4.5,
+      "reviewCount": 8283,
+      "photoRefs": [
+        "places/ChIJMZG7QYYFdkgRdJlpSt0DxJk/photos/AcnlKN0GEQY_LJoVFkwlUN6Ufd-7GLvHx0Wqg2NsvKg272FftFzfnfPhGkHCOu_l_XNq9oINvrXjWiY8DK_wmJ10CTbzXmZA-rmwArH8Vu9gWNs5vRBySfk0SLGolx4jiu1zcOg9sqybHcDBCDL9319beGE9KDHHRn-2tPoFEFTtYBr8m7Vp4rNVOgkkI_ailh4UYiPvJ9_RZnsAMnOvsZMXvfQCHCJeLf4oHaMIPqaCnydFEBC5oR4kn8R4apzbWm4oU17nBI5DrM4QmBrSCJX0S6zXU08hd7gXyjHLRJM1qoO-vod6SioHhyE4HDciFx3e4F09vw3QSI0q4AWozKfeBXySw1rQnYszXBRNETnmxGZaO4IsXaFBtssdUOGDpkNGQRQ-q6d-DsEdu5ho2DBqY4K10jdVPOtSy1uC9DCZAmpM2Q",
+        "places/ChIJMZG7QYYFdkgRdJlpSt0DxJk/photos/AcnlKN2yNGUAsPTnlw6qeNORAMkOSjfPvUyeQ8JM6guN8VgQx3dP1le8Ybz5U5n0xtvVyWmytO90hf72eNIb_2JjgUYgEvdfu5TI6_lkYSklk_ijo3V-LCRtEFo3kJ-qpg2N17DgGXltHZzL5rpr3-B8CUqn4Za-jTYPKirZLQO9IT_OwmtCNkVxXFd_msDIgaTgmmL6_UCocT9a55mrnIhjdXSFQ5es6ylxVabHDqBCRLfIpHBXvSbc7UMc8hx2-EVOGCAZbbktX88f10HvLsHEoof4K39l_JOn4IQGmiVk4h5-juYNYlrcHnHl8Ou0HZnfiP6OAoq0_CvaqdoO8T25POm33WpO6Q4D2bugkUWVGqrRwSJDGoNKHDNszLe5YwhmVrLh1xneZL8i2MJG-N0JM4TJYUYlT2qqC_FVxGqX9YNEUg",
+        "places/ChIJMZG7QYYFdkgRdJlpSt0DxJk/photos/AcnlKN3D8q8MwxHKaifuwcXbuu2cqzvdqMypce750iV6FaytbE1Mt_9SsYeDUXmao3k21Iiurw5Ndt6wBs91MItKDwPDHS_5XIOMiyjAPP9cJJOKC4FN0MgXB0x54BPP61GMV_t6QMxrt5JgpX9NXkDX7a5Yo0OMpZqC31V_IFYX7-gINJo67jFouWaih9ZCv4NvxRbCCJKqIefXds-JhXM0PQO7J0FevtlyZa4L0c8lNS7n_W-x50N11im4GKA7bChf7n9RU7hymztKXRwvPUYYK3RZbFeSMKFdUKX3_2bAalSzvko32fHp0nj4YPX_gckvK61Jmq6JN-M34cgE3YyXQjIQm3uHHDg54EVosTPMOJuv_9CrOnYOgP46ChIUg2mRFun6IEpMI771x6jZxX71OOM331rdkNsNxwS4wdA2zrEFv9Lo"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=11079985232209353076&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Primrose Hill",
       "category": "parks",
       "address": "Primrose Hill, London NW1 4NR",
       "phone": "+44 300 061 2300",
-      "website": "https://www.royalparks.org.uk/parks/the-regents-park/primrose-hill",
+      "website": "https://www.royalparks.org.uk/parks/the-regents-park/things-to-see-and-do/primrose-hill",
       "description": "Small hill park adjacent to Regent's Park offering off-leash exercise and panoramic city views.",
       "descriptionFr": "Petit parc de colline adjacent au Regent's Park offrant de l'exercice sans laisse et des vues panoramiques sur la ville.",
       "dogFeatures": {
@@ -131,16 +228,37 @@
       },
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Part of Royal Parks system with known dog-friendly policies"
+      "reasoning": "Part of Royal Parks system with known dog-friendly policies",
+      "googlePlaceId": "ChIJ2yb0sesadkgRIQOyE6qMxLU",
+      "latitude": 51.5395226,
+      "longitude": -0.16064989999999998,
+      "rating": 4.8,
+      "reviewCount": 14779,
+      "photoRefs": [
+        "places/ChIJ2yb0sesadkgRIQOyE6qMxLU/photos/AcnlKN0QZhL_K6wW1O4PRspwBOMPKw7UBZvgVuUK_J9Vr5g_UBCVZpYOXLBzrkCZINniUQY1rJxJKmrlDKLwUBICK6UWE4dXvHcVEAshwUM1pICEZ8aIPZDxENerVBLeRgQXjZeJ_93aFNZC0VPmOdVgdx7eeUVWx7Hc34vU3Uj_j0uQ0a9hw811D2Ba2a8r6MrhqzgE8DYrV7esUQYSZttSqIEzfgdUEw3GD0cLi8doTcYsz-is8Y8lX3FrWNUgb4w5-jE-g5cmzLt0i1NSMHLxnXQYLjkueiltKPqq9-hJ-u0_P5y6vT5haQYJV7Srk-wuz8y32x7nj-JfBgSnaXfV_8S0XeLuFpGPqcCuS5v7_s502oqYZEUMk6ZDLMJHUY-yRn814TvAWF_TyvJu-u1M4g8HmnR5Z35PicEk_g4G7og",
+        "places/ChIJ2yb0sesadkgRIQOyE6qMxLU/photos/AcnlKN1Em2tdkKN_Nc1cqcRFCBJW-2IJj3VrmSVCFj7thhkxiWkGN26lM6lTA-S_qNU08UQWyRmbvOCeQWOPsrXxMj_R0wdaCDpK_kIE3zIrRgpK5OqJUitXinrZMSfk03bSu6swj1CvfPd_I4yc8INJ_7j30etrGzLBwVvPZfAekI4_o5sbajTaXvrXxfZvwg4a_hbco4PpB0cj4RWauwDE1hFePVqegrNiIxavwmOlw___nSVpa6K97ToCvUKWl4J6CyxXkyIavM-9VlnxDQRuWx6l-Bgef0oMm7bNsNMTRBTXgFhhRxKeknM6Yr_Pw8Ut1i-EXKQ0VJ6-4aod13_14IO0kqO9sUL8sKd1G0Vetu71RgImaKA4vvKOtlzADQhdVqI4Nbjr-t_B3kHIlkZyE2hC5glmfl6IZRXz4QPp700-5g_L",
+        "places/ChIJ2yb0sesadkgRIQOyE6qMxLU/photos/AcnlKN2wyP0DAIxCR9UuVASezim09H2Owkd_UyeLJye8WmR1uqTw00gOTqaKaehpnZZqFs6oNwdreS9PrcDOTlB2kU24JZeH_ZbnGJC_2pxNSlGezNkzfK4g7qe0hOZPVV1RXafde5zsLxFbZdLmpQMc2QE8kIMiErMyxgTP2_GEwzAStOf6la-oKeUJAGntIz6qPJQw1hVza1-pi7hgOWh4h--Rm8jx8NSLEa9y7jzW89aYxYau_W0JUxBmT03D2wpvS_mHG6zeP64mqBQsI8652AdesawqOWVrYXXrjR2-dXnXOJ3M1eIgikj_HPbtFY1iPF1WuB59PkZ22Vm0_CAxU06qv0SZYCBpnMiCxMABhVo4AXPTvmXyPa1slDWKncX8xVNbZAFhO6Qt87v5FxWoR9ZJHe9hTHb6tGWy9VPQQTSqhg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13097748278403007265&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 10:00 PM",
+        "Tuesday: 6:00 AM – 10:00 PM",
+        "Wednesday: 6:00 AM – 10:00 PM",
+        "Thursday: 6:00 AM – 10:00 PM",
+        "Friday: 6:00 AM – 10:00 PM",
+        "Saturday: 6:00 AM – 10:00 PM",
+        "Sunday: 6:00 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Battersea Park",
       "category": "parks",
       "address": "Battersea Park, London SW11 4NJ",
-      "phone": "+44 20 8871 7530",
-      "website": "https://www.wandsworth.gov.uk/parks-and-open-spaces/parks/battersea-park/",
+      "phone": "+44 20 8871 6000",
+      "website": "https://www.wandsworth.gov.uk/batterseapark",
       "description": "Victorian park with designated dog exercise areas, lake access, and adventure playground for dogs.",
-      "descriptionFr": "Parc victorien avec des zones d'exercice d\u00e9sign\u00e9es pour chiens, acc\u00e8s au lac et aire de jeux d'aventure pour chiens.",
+      "descriptionFr": "Parc victorien avec des zones d'exercice désignées pour chiens, accès au lac et aire de jeux d'aventure pour chiens.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -153,16 +271,29 @@
       },
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Well-established park with known dog facilities"
+      "reasoning": "Well-established park with known dog facilities",
+      "googlePlaceId": "ChIJOWBQvA4FdkgRQf5iYYFF1v4",
+      "latitude": 51.4791075,
+      "longitude": -0.1564981,
+      "rating": 4.7,
+      "reviewCount": 22856,
+      "photoRefs": [
+        "places/ChIJOWBQvA4FdkgRQf5iYYFF1v4/photos/AcnlKN1UVCX_ae86EYuVPnTANnbgaNi8oaSGhTSXibFD43J4kdUl63Zx0NACo_v7mU9tjg9sqEwcSfZPFAyjbDIH3LIt8smzsPDMjfU9dyZHb2FMg3clgephGL0wahNP6Nu7Fa_sro76roN5ILsDrj5raKOyHE91fiRh_bFKGge-REgAjvEyZcOgIiT2UAXGxrfc6WhuKmNMjkWG02lvlJg4wgZXJ1s8Y2Izr-UDN8Xqf-z_0tmmEOnpERxFtMFudqRc5TRHRPA-weySfx7XpaaP0SdkuAu9iFHD4Re52xDSrOsexS_ijLvPirsReGKVx4YW_D863B5FVfYemaXzChj3hJp0t-M_uIhaCaOy3KF8_WI5yKfPWFoytwVhN_K51q-_eSgzmGWQgrGsUBArhu0lVluK8CGz13rT9Q93vcUgob98uL8",
+        "places/ChIJOWBQvA4FdkgRQf5iYYFF1v4/photos/AcnlKN05aogzc2zgasEpBKIh9STqYmSUphyX3M5q1ij7kgwUjPB-uUCL8Y6-rySbeHcZm7MrBlCAF8yl1qVYu9hs4oxSQOcfQ31piXC7fXHD73TPqavaPw_cUR2b24CsKHKm1mGIJntg4Y9hiWt2-e1GemaOUMHVz5h3XCmealeRPrL4N_fb3g6SeeTuap0fn2OJTTwuBIEAgL00s1izFVR9HJ89KwFfxeK2lBrz9bppFnMN9dBC7Zfz02o_zG4ZH22TQ1_4dorPGkWpHt8jDt5i_CKkCumNSGCN-LFb6i_MUqlcC84w0JzxCZf2rrK12jAYeTNwHrwoPLNx5km7EPtZjL_GC4w1k1uU2RWluzp1k1goVFooLmXrFIIaWnQCKTvLUuXtchLNdKOrccJ9IjNnpk7iCiDCkMRWzAY37WxyvSC0PTg",
+        "places/ChIJOWBQvA4FdkgRQf5iYYFF1v4/photos/AcnlKN1p8jAlIH4GGR5hDfQ-G6L3Kq3gipsw9bqmldiFEiVGwpUI8lWYB4MKzV9t9ir25NjAc-erwviIdO6eXUBRTSNZrDUZNITyj4HT2U_h_Smdh18oqJ5IW02gN9WjcGzbv6w0-igKPQMb-V1QSxG-xM1SodSvAeU5oqtovxd3jmb4K87xlKP89l7SPjXgt2M02yFKOuN8P9U_CwC600Ce5AD7ru4A7zy1kavLZt_aodLR6AUxPXJtHgbUGo-ftK3jeUCVXA-0biDbCApixyHlJE_WbFHVxY4Y89QLStOBc_1hyrVigFW2shKysb7CDvLOKhrcRdSzcYOXj7UF9_kXd4rWnGv5_jbeK7xS6m_9L9Qq37Qm7nkMg_qNaojjCHmXz4f5SbWCflM6SVNf4V0w_Dl7W11HGKwS8Ibmmf0PRIam0xq2O77v9JQpkmjnxQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=18362940952636751425&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Victoria Park",
       "category": "parks",
       "address": "Victoria Park, London E3 5SN",
       "phone": "+44 20 8980 7954",
-      "website": "https://www.towerhamlets.gov.uk/lgnl/leisure_and_culture/parks_and_open_spaces/victoria_park.aspx",
+      "website": "https://www.towerhamlets.gov.uk/lgnl/leisure_and_culture/parks_and_open_spaces/victoria_park/victoria_park.aspx",
       "description": "East London's largest park with extensive off-leash areas, lakes, and very popular dog walking community.",
-      "descriptionFr": "Le plus grand parc de l'est de Londres avec de vastes zones sans laisse, des lacs et une communaut\u00e9 de promeneurs de chiens tr\u00e8s populaire.",
+      "descriptionFr": "Le plus grand parc de l'est de Londres avec de vastes zones sans laisse, des lacs et une communauté de promeneurs de chiens très populaire.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -175,16 +306,37 @@
       },
       "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Major East London park known for being dog-friendly"
+      "reasoning": "Major East London park known for being dog-friendly",
+      "googlePlaceId": "ChIJHUND2RgddkgRarf7ZQfLCw4",
+      "latitude": 51.5367976,
+      "longitude": -0.0386354,
+      "rating": 4.7,
+      "reviewCount": 16222,
+      "photoRefs": [
+        "places/ChIJHUND2RgddkgRarf7ZQfLCw4/photos/AcnlKN1Q1k5bDKopZichHwyYkSjWIK2YK7eXnC-gJ24INUW93LW8-bfNz49bkxgb1tczJ36PjVgHtQRPozrRYE92aT0YApeS7XfKVLiPMlTEZCIc8jhdQNyfO2eZ9ylcEYRMNaJvbH7zccUI-IH5wqLuaspCLgd0Xl1fXVUuYX_-PeMTgiSJDUHS73raN9HwB79kiGLI6bY9ntKrdcIpQozvhoNo53ChnWzprdlGd4Z8whlVUqE5DAsATaKJ6Xil2gZYAj5LNXaTMEeSCR2AzDj-M_C86al6d2NHwqgNzFzNxRGDRlZdeinlnRzNo74GLMH5zPQSlkqFzOdCDtPRmXyl6cEvf3sm2c-2pioIsf9QakwsZnIL1UtfOPfVpItz2RbIkGLjDIGxhzpCVdx9MhDATXPEAhixfs0JVHW9ctD2t4UpteE7",
+        "places/ChIJHUND2RgddkgRarf7ZQfLCw4/photos/AcnlKN2MqvBc3kI64OezoSw3O6EEQAaJbYkZACBxK6E3P4HVejA17r1Qhq6qqe-TSx3vTisFSC_r3w8DC2FuMjnALs7tsIi_Ba77gnMvuQNFfyCP1qe3cby8kepf4V3a-mALhs9zTZWcim0e47QdggD1TSWsACMOHA_D7q80GaGdLiQSm21zmncg3msLuHpomBAOS1dZmQ4vRFE-xXltGUcupAq-7jjoQ7CUg0f9eJoBIMDdpewHk-mZZeZ4-kNOUfCEq9e9STxevJC5k9NTAnvB_YA0pCFgKv0rKcVkhaxvXK90PwTie4s6TypBvO76CbGwPbAsPPlvOUhT66BcKe9ls1fvHNbVY6Br2SF7kFG5LYhA_P8cefvgIf2w7ged6KBC-CC4zu6qVW8lQTIhufhKdSeBtl1Xa3wBdtyyZGg65EB_DQ",
+        "places/ChIJHUND2RgddkgRarf7ZQfLCw4/photos/AcnlKN2ghhRLSRkYeNPrOlNvrpmQwE0u2BEsnMeBgKNbO9g5PdpIOcd7DcX1ItdUS1Ah8Xg_171Iyon5Gg402r5WWDh5jQJZ5P2v-aXPQh5zIhqEjFRPBTbv8Kj7DSdBCHK7uwRM-GoYzo2sx38LvPUfqrzpeAPTyqgRyz8fCNw-O_qEXGRwZkRWUYs4N-8HTn84kbScNxXIW9NNyTFnRV2pxnwf2BYhuYzB_jCQTOqs2W1Jr4jd-s8NLU6XY4el0D9vRZC7bfcQcL4lH-9rPzZuVsXcNa_oTeXykJBCtzmo6eh0LKqtlR07Wh1hs2r3Nc9WhmRfOFbP8c70r2JuWdRMluGXqMcnbTIeK412So5e2Ui3xwYb95NBEVtcKsPCj1rpgeh6wStCVJ8JiIpz05PYIgsQoqQaBA9pRBtV7ZW5RviMv1IB"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1012125773911013226&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 4:15 PM",
+        "Tuesday: 7:00 AM – 4:15 PM",
+        "Wednesday: 7:00 AM – 4:15 PM",
+        "Thursday: 7:00 AM – 4:15 PM",
+        "Friday: 7:00 AM – 4:15 PM",
+        "Saturday: 7:00 AM – 4:15 PM",
+        "Sunday: 7:00 AM – 4:15 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The George Inn",
       "category": "pubs",
       "address": "77 Borough High Street, London SE1 1NH",
       "phone": "+44 20 7407 2056",
-      "website": "https://www.greeneking.com/pubs/greater-london/george-inn",
+      "website": "https://www.greeneking.co.uk/pubs/greater-london/george-southwark?utm_source=g_places&utm_medium=locations&utm_campaign=HT_pubpage",
       "description": "Historic galleried coaching inn dating from the 17th century, welcomes dogs in the courtyard and bar areas.",
-      "descriptionFr": "Auberge de poste historique \u00e0 galeries datant du 17\u00e8me si\u00e8cle, accueille les chiens dans la cour et les zones de bar.",
+      "descriptionFr": "Auberge de poste historique à galeries datant du 17ème siècle, accueille les chiens dans la cour et les zones de bar.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -197,16 +349,37 @@
       },
       "priceLevel": 2,
       "confidence": 95,
-      "reasoning": "Famous historic pub owned by National Trust, well-documented dog policy"
+      "reasoning": "Famous historic pub owned by National Trust, well-documented dog policy",
+      "googlePlaceId": "ChIJo15e1lkDdkgR-X84Yf2cA0s",
+      "latitude": 51.5042925,
+      "longitude": -0.0904364,
+      "rating": 4.3,
+      "reviewCount": 7096,
+      "photoRefs": [
+        "places/ChIJo15e1lkDdkgR-X84Yf2cA0s/photos/AcnlKN3g4dScXSldjlGoyeT-X4rHKUFfleELqjhH_18pzR-0VjiJe0Cz1Fed5XXZV189UPumn1_nRYePvJIbljekqZhs1qJ0lfrrA0-xsRbQONZXmzVI-MGhLbEO9fiOQ9IEbdGY0azPHKqJxFBVPi_YO0dzfO0_yB_B0adWYJThHeX8ECq8zviZgkqODvWiZs2g5LWNsKRWpzSXb0O3WLejYxhFQehcOr2OtBosc504zDviaZJvwGCjvfjXZBCNpW_-H88hG9SWlJoj7hv74RlEkpKdI9Vp28Hi8RbOeQoOChHu7w",
+        "places/ChIJo15e1lkDdkgR-X84Yf2cA0s/photos/AcnlKN2ZTOTZ_Y0l_DYA1UYO9HvIk2AOnqunecqCFomBrvM-v1yu-GmSK0i4yULsA4FuCjypXkZWFpuj25UgANnw-6xqmeiH_LAgZTR45o6DMA1QfYTxwAcA0F18h1mtVMUsKBTOYXSxSjhE5PN3HF9fqYw6U40ecGSQoZ3vvxvI-pDh4UrSDt4iKYN2h0x7EpfFkfV7LWhcaeTl25f8D9BhfxPkerpMPGPRGAIjVg5bvYtTb_awdZL2OwFqyEcbWH4FQn_DIIXW3Ya-T0zGGDL3hFzZlhQLBKLk8SU8O2Aig-3xjAJlyc5xx_xhBIglsu6rP-4dU2MoGY6SXetbZgmySbaclTf7hMPt_m-RM3-_1ElzsiBKsoEhEtXcuXcoe7rbLGEsMVdacr1F3NdT0CZKXKrxJDIgoZYv-tAtYsR3MTNMI84XLjc9NIZ_t1IUWXG2",
+        "places/ChIJo15e1lkDdkgR-X84Yf2cA0s/photos/AcnlKN3oTPg8Hdg5_zxfIoW3LEVEgqbUd6Pr9VWnEQqykCreVV0n-wps61Hm6d3FAeLBhw_Wg5ZCwn8jAWfyPO7ihrd6VX8htvdzB6xG01ohrngTB10-GR6hg7tIcfaCkqWaW0EMNJQxcUb_bvxvbxKGBtb2Xj-12dVWKRpEIVyu00jocnD3h6vmPbWqH1quMYKTAICCyD5FInVTlFaDHNQeX3jDyJORd9oWXbq_YXAThRCA7oJy7BGPLZMFDX0MmlouxNgj-afD-frzdo7TE8k_xfY-EeFXoBjYbKSe5UdRiEIUMw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=5405336589846478841&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 11:00 PM",
+        "Tuesday: 11:00 AM – 11:00 PM",
+        "Wednesday: 11:00 AM – 11:00 PM",
+        "Thursday: 11:00 AM – 12:00 AM",
+        "Friday: 11:00 AM – 12:00 AM",
+        "Saturday: 11:00 AM – 12:00 AM",
+        "Sunday: 11:00 AM – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Churchill Arms",
       "category": "pubs",
       "address": "119 Kensington Church Street, London W8 7LN",
       "phone": "+44 20 7727 4242",
-      "website": "https://www.greeneking.com/pubs/greater-london/churchill-arms-kensington",
+      "website": "https://www.churchillarmskensington.co.uk/?utm_source=googlemybusiness&utm_medium=organic&utm_campaign=yext&utm_content=P021&y_source=1_MTIyMzcwMzEtNzE1LWxvY2F0aW9uLndlYnNpdGU%3D",
       "description": "Famous flower-covered pub in Notting Hill that welcomes dogs and provides water bowls and treats.",
-      "descriptionFr": "C\u00e9l\u00e8bre pub couvert de fleurs \u00e0 Notting Hill qui accueille les chiens et fournit des bols d'eau et des friandises.",
+      "descriptionFr": "Célèbre pub couvert de fleurs à Notting Hill qui accueille les chiens et fournit des bols d'eau et des friandises.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -217,18 +390,39 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 2,
+      "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Well-known tourist pub with established dog-friendly reputation"
+      "reasoning": "Well-known tourist pub with established dog-friendly reputation",
+      "googlePlaceId": "ChIJGTDVMfoPdkgROs9QO9Kgmjc",
+      "latitude": 51.506911699999996,
+      "longitude": -0.194801,
+      "rating": 4.5,
+      "reviewCount": 8268,
+      "photoRefs": [
+        "places/ChIJGTDVMfoPdkgROs9QO9Kgmjc/photos/AcnlKN0z8UdCwa66VrFPU_tXJhZ_wXR9DNbAEjxz7zN85PSvw1xsZdw8JcoQmKo4VzliCDENQl6jvArp2yWx7B3T-q3WHDbjowzYkp651RFiL734negYMMCkvMUMZ3VTSbHBUnNqpOiRIxKxnf6KfP_W6nAzpNm8mohezlHFnZ1W8F3g3d8faCMkBz0OhVtp4AP_oP1-r22_-v49PVgQab25o5wHtmlUq-N2wJuU2Pv7MbKyPI_MKioBdMbfXuxtp7fLqDGJxx9trpuKHr3o4Exom70ZibeBX93_10DIKLQ0wVDMLQ",
+        "places/ChIJGTDVMfoPdkgROs9QO9Kgmjc/photos/AcnlKN2lAU00MYLqS4x5Hc18hVxBDmSznfTt5WVRs27BcNbJyMGPd0QpNXdtvNNGx2USU48ho7cDuJRnLORrjc-NqxBNnt7P0vrnhxNEw69ivoeXKjDQC2g6iAqsCSXwMYmeAOBfWpPuA7Hs8jBkfZCamdu4IuZIUjPFdtrhDJEnlWumh-MprhaL-WYVU5-cLiXEPwI62ZVsMEg71mOoBsAAV9Y6wu56MdX5VfzW40Zj9yz_ikf7FLgKkpsTCzGE7DY1h32z8fTn3WOIA9rXkKeG4bUfL7uU3YINkpl_0KggGbP14JIeRfOQCA_hKmrf49w4VQhVVwQcLOa8ReVdTVjKUAsgPxUeJJPZjm__0wXExk0mF1j2nz9oVJz69d8UAyA0AIIVBH9UQh2fFk5ibBn-1Hh8NegMOrdY6QDtt5dkLGyBd2oT5dODiq3h4jxAjtt_",
+        "places/ChIJGTDVMfoPdkgROs9QO9Kgmjc/photos/AcnlKN2l2OFVwQrPArWRjEVpxYiZoIcMY9FlsI9a0Th6wa7OT4HGWng-6_C1vatZkfuqe3ykufINnJHUwZ--z4HDWBWQWsujBUmmxHlSkscXCGVGDczZVPUOS3MjwY7WxUyG3UYlPeW-I2PWB1L3WSOfbwHcaPxI_WL9M99nmS3my2GJVq3x44yCisar5gNdpGySLxD77o2MD4SbJh5wW2B8eJq0VsPnvFif7_c6ITa6icKHVf88KtKmgS_4qJfqdraArrjOxIAF4kT8Z1qwZPJf7qIOm6z00LvMecNi4pbgkanApg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4006691643298205498&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 11:00 PM",
+        "Tuesday: 11:00 AM – 11:00 PM",
+        "Wednesday: 11:00 AM – 11:00 PM",
+        "Thursday: 11:00 AM – 11:00 PM",
+        "Friday: 11:00 AM – 11:00 PM",
+        "Saturday: 11:00 AM – 11:00 PM",
+        "Sunday: 12:00 – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Blackfriar",
       "category": "pubs",
       "address": "174 Queen Victoria Street, London EC4V 4EG",
       "phone": "+44 20 7236 5474",
-      "website": "https://www.nicholsonspubs.co.uk/restaurants/london/theblackfriarlondon",
+      "website": "https://www.nicholsonspubs.co.uk/restaurants/london/theblackfriarblackfriarslondon?utm_source=google&utm_medium=organic&utm_campaign=gmb-homepage",
       "description": "Art Nouveau pub with unique wedge shape, welcomes well-behaved dogs throughout the venue.",
-      "descriptionFr": "Pub Art Nouveau avec une forme de coin unique, accueille les chiens bien \u00e9lev\u00e9s dans tout l'\u00e9tablissement.",
+      "descriptionFr": "Pub Art Nouveau avec une forme de coin unique, accueille les chiens bien élevés dans tout l'établissement.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -241,16 +435,37 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Historic Nicholson's pub with typical dog-friendly policy"
+      "reasoning": "Historic Nicholson's pub with typical dog-friendly policy",
+      "googlePlaceId": "ChIJKatbfqUEdkgRDmgIHPcWgBU",
+      "latitude": 51.5121153,
+      "longitude": -0.10371369999999999,
+      "rating": 4.5,
+      "reviewCount": 6795,
+      "photoRefs": [
+        "places/ChIJKatbfqUEdkgRDmgIHPcWgBU/photos/AcnlKN0ACZAS5kX-jNlmoYBEDHeeDDREQEyeMGfZQlYnjvOn3WOLbK5agL0qOT_7TfnEYwn2Wj_BeUExgG8jgJZ5OEjSwJFV3s4NIlE-zvdvnnU-AtZDwXEYOoWkB6VLciOZ4PPpqttBkdw0jOniwpPWz1g6qCp-WK-ppdjJPMfdFU97JdoO4kwOFHTryiq5HXw4YOB0TJEPayGVL_LX3GhSHWPwj8Ee483VZ_yjk-0hWSytzEJqJAFklKJLoym18J3deajnfDLezzpG7n9WQCJMrKqq6BlTCSQlezUSIHvUJpmCpw",
+        "places/ChIJKatbfqUEdkgRDmgIHPcWgBU/photos/AcnlKN0geGfu8Bfxiw9Bhh80HzAwdg-o2dpvKRgl9LF5yz4U4oegFO1OR8WqS1Om1QXDq58sRZlVNSxvNKiBJr37PB4j7V36lKl4JI1qkfPsxC53-l_shj05ijXRlRJNlJ5Wakkp798yZgmUh7xmGcAs1ZHExMpT3Tq_iQ-D77Ac-WrByI3dyFTxUfYrnlIDoN-Nhuekss9lmZ7Hq4Fu4A4RQoz8gz6GfXCFRwkJUDTOQtv6lv3RNzBV57CtRzKwMy0fVSZ_Hve8qu2fja0zEk-Igb_lTyl8UNlbNChHAJOtAPnh0Q",
+        "places/ChIJKatbfqUEdkgRDmgIHPcWgBU/photos/AcnlKN31PamAKg-HsPCDe1krghkMnfB2NNwTmcvZjitGVKCp5dEE3TRG1iuCldLiX9za9lzLXTupl5UIM3Xmmvia2ESB7BNR607csa05C2aCTfKgXpFBTWWeEZW11MXjyIe6bc8f1LVFlZ3MGDBV5luuTiRpjhxD-Oy5AuqLUPKVca3qCJQidotVtqyG6TQwSZtmdVPgYP38sEWkoWK36__n8gSdE9GfDMkqV1YRr8PEZj6EC4PrqSSB7LvH5CtkHN2keK-4SEuMVkehUChzfSTPETPhX0YSXDe-Wxyamkl9Rt2-n1nk64gGelMpCSiuDPzU-7wRRVtK8uz_Apw2H2ybE81WzQEb9Y7kOEAddpcIUU8sFUq84ZwhMZRwcdGg4_t01NFHgPDuhsTu8axnRrNs6wthETcuD8SM3Qo3cA6fiewO7k450EzXra8j0DcVoMiO"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1549263522398496782&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 11:00 PM",
+        "Tuesday: 11:00 AM – 11:00 PM",
+        "Wednesday: 11:00 AM – 11:30 PM",
+        "Thursday: 11:00 AM – 11:30 PM",
+        "Friday: 11:00 AM – 11:30 PM",
+        "Saturday: 11:00 AM – 11:00 PM",
+        "Sunday: 12:00 – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Mayflower",
       "category": "pubs",
       "address": "117 Rotherhithe Street, London SE16 4NF",
       "phone": "+44 20 7237 4088",
-      "website": "https://www.greeneking.com/pubs/greater-london/mayflower",
+      "website": "http://www.mayflowerpub.co.uk/",
       "description": "Historic riverside pub with outdoor terrace overlooking the Thames, dogs welcome throughout.",
-      "descriptionFr": "Pub historique au bord de la rivi\u00e8re avec terrasse ext\u00e9rieure donnant sur la Tamise, chiens bienvenus partout.",
+      "descriptionFr": "Pub historique au bord de la rivière avec terrasse extérieure donnant sur la Tamise, chiens bienvenus partout.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -263,16 +478,37 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Well-known historic riverside pub with outdoor seating"
+      "reasoning": "Well-known historic riverside pub with outdoor seating",
+      "googlePlaceId": "ChIJo3GMMiQDdkgRLEL6Mu4LR8s",
+      "latitude": 51.5018403,
+      "longitude": -0.0536173,
+      "rating": 4.7,
+      "reviewCount": 5578,
+      "photoRefs": [
+        "places/ChIJo3GMMiQDdkgRLEL6Mu4LR8s/photos/AcnlKN1-_NSfGcTqrGAs2Gmn72YWNLBIGR4q_fHbsHbZVyaHXakw-whnJvj2cZAyfzrn7otqjt2eQtm_fRDoXdAMHaw1-ujgiNwzE_LosuRA86vfyBqxPrpsV1U_36B_3Qv-Q_1FkFRkiugTgO3PQjSHCo56dAZs1Zq7zqsWUXZJF6A7X9BnIeF5BmGDETeAi05xNY0DH9rKy3DnYYgbw_rgcCnZpoSvfqLbUy3-3oyyNEFaEvnuYUAmk8qC3kW4tMg1khE1BzxWaUheXighKDxwhx4oUcaGt_bMXfbHJh-5rzVvxMKQu6MM22pG5t55BQa7PY2FbbyOq54PPGvfabPpIpLtH7vPUy7ClV6g3XDNlPb5BwrcRRY3rfYRksEgn6P3UCnM5hGqQNjWyq3T9nifBLvk0My6H2VAH9jtrSkhJD2iDA",
+        "places/ChIJo3GMMiQDdkgRLEL6Mu4LR8s/photos/AcnlKN2vKUsIfFKRMXwbm0ISyZqtGkrBDBq0aH8XLAFo24VjZl9-pDvhfJmp8FNDrJAXq8MZllHes5tDVaUDK1-O8971LfvYuT70_BSkpAUR6J3cxNN6dTKQFB81jeLqu5XlPhhyWLrXRh688wHbvQnejw0Mq3se4xS1nJfsUJ1kR8CqhxpatoZwyePKPh4KjWoP4FhnyRpWK4GziNHFPCoNGUDLE063s4EDsEc53yiBYHem1Q3Ez4QDWL7pax3kG0QLt5T_y13MWZE3p4cDPOz0NjlgKraAXzR2D96XOqWbk9u_onEq0PQfgjtIqBQW5ONQweZAMe2e4-zpY3oPxeQ-LRbaOHqaf3RYlSd-yPHPT-5GY3Jd8P_BsmJV3qKALMMlekedJr5ve7j4iOw92ZDfvyfYVJIK9tw7UixAIzatlF3n9p91",
+        "places/ChIJo3GMMiQDdkgRLEL6Mu4LR8s/photos/AcnlKN3Ys3M7GrWF6jGWfu9kG6-sDsTloyPFDRBOfNGUkcoZmwC6BoWAQH8MD-wLO-r-orY2gsoX-6FxStfkhrlUBROGGiQylXuvr3QkCjrdGrlkpJYQWXW5GrfopwZU4_paPwUyFj7nRfwwZXeu6nf0e7jYUymiEoRlo_O3I7Rujixu9FA5K3mXJYSwrio4ephNUVVAHhS9SPmVkjCSmd020fdN2TsibigPkeLyWkMjwVsarxCODVUbkr-o1aqvH5QSo2rJSl3ZgdIHhuir7h-WVhThJq5440vQxWf3CKKfQnUl5f5-P7-lsbj--7AmnRzeHDs3vtABhdDOdF3OZPL0DvToHNGLKuQpK7pBy-_V4cMNawP3wPSFukXMjNdg6fkDlro-8wM6VSoZxYnY5uxregu3UKAEKz7R_XzG2nICmbNA4hLST7QYSLIpBg5Pr1YU"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14647689430731211308&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 11:00 PM",
+        "Tuesday: 12:00 – 11:00 PM",
+        "Wednesday: 12:00 – 11:00 PM",
+        "Thursday: 12:00 – 11:00 PM",
+        "Friday: 12:00 – 11:00 PM",
+        "Saturday: 12:00 – 11:00 PM",
+        "Sunday: 12:00 – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Holly Bush",
       "category": "pubs",
       "address": "22 Holly Mount, London NW3 6SG",
       "phone": "+44 20 7435 2892",
-      "website": "https://www.hollybushhampstead.co.uk/",
+      "website": "https://www.hollybushhampstead.co.uk/?utm_source=googlemybusiness&utm_medium=organic&utm_campaign=yext&utm_content=P151&y_source=1_MTIyMzcxOTgtNzE1LWxvY2F0aW9uLndlYnNpdGU%3D",
       "description": "Charming historic pub in Hampstead village, dog-friendly with cozy atmosphere and regular four-legged visitors.",
-      "descriptionFr": "Charmant pub historique dans le village de Hampstead, accueillant les chiens avec une atmosph\u00e8re chaleureuse et des visiteurs \u00e0 quatre pattes r\u00e9guliers.",
+      "descriptionFr": "Charmant pub historique dans le village de Hampstead, accueillant les chiens avec une atmosphère chaleureuse et des visiteurs à quatre pattes réguliers.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -283,18 +519,39 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Famous Hampstead pub with established dog-friendly reputation"
+      "reasoning": "Famous Hampstead pub with established dog-friendly reputation",
+      "googlePlaceId": "ChIJLUnmeX0adkgRXNl19ShDnog",
+      "latitude": 51.5578602,
+      "longitude": -0.1793059,
+      "rating": 4.4,
+      "reviewCount": 2353,
+      "photoRefs": [
+        "places/ChIJLUnmeX0adkgRXNl19ShDnog/photos/AcnlKN3Be2rDGwhPY3LRU_llslVqsh1aj0EbAHOzOIxWKTzamQSNO_K32OvtGLnI7WCuYqeA1bmyK6N2Z4avmtx4i-Yhr_N8sAF0bQgatjAT4IdEjlPPntUN_SqYdh2k2iyl3oDD1W-vtojP32sduGkn112b_NcBoyq3sM0quT3pMXC6J3FbbdHXqpGJfq2F-j5Ol2mRi2ljz8wMB1oNVBn5pNSoicjmnZmAADKmoCtXmlP2_oWn0n_pBM7JnRRQ3EIRVrKLMpka6OldN-HOI827sG7jaEhXip2jVcpcxjovAC0Qqg",
+        "places/ChIJLUnmeX0adkgRXNl19ShDnog/photos/AcnlKN2TEDrmZ-38JW-XfarfRkLz54JWjWbS7UeovU4NuW8TO1qU5dUzrVeH_CHFCdYz5TfuUOIdHaVy56xN6ER_bVvazy_LnP2XtlyZ7k9Z6T4Pa7aVXyEJjxcm5pmeVNMoszLf7A0quPDcByzdka7tvvXEfQASJXRBWc99eSQ7PJAZkt8kNcO0W2OV_iC8JSwhaOc24zVxeWMiQa9-jja4IByotd0hZVgTwjG3hvLT9t5htoqRfxO_yB5u3X7iPLi0H1Etl0T3ofQaIMKA6G6FVtCtUN6JVs3rn8-WvNmtXnVOzw",
+        "places/ChIJLUnmeX0adkgRXNl19ShDnog/photos/AcnlKN2b9zI-3aSh9jGRGjH--fjqHVkDuaJPx0-rVYkMnleupYsMIZFy8_GKEGrAtlfgVzrNHNYs85yK9aCwW4soFu_b855_erYGaB8k3Xe5-HQd4em003kDQM_9mlULXSd6HWq0dKuZqLrTsveqBOYjf9CCfA_k6snvgnpdEy6NF83C-Ku5fcqjWoozvIzobDsFSZqleZGje2eQH7S3x0JKfHpJwpELNtB3G_7Z3KiZesFrpxIWLDvO6xa_kNdbwtXDqxaMm0wlq84-NGqp86NKBS795SA6yVB08xWUDIA-gtnIqTDXKAeZTJWaow7c9hxrnmqgsvgaYUdLYelKFfuGEsa-gHJ5inJMCIsr-PgdnwjJkORvTUUojQ-RNT2mlwTnxr1pdHv35ybfB_ylx40Re4FSusnZOrGjEc_DeeeuDczi1mBYDlK4SAChP2hVHhKb"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9844379678674377052&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 11:00 PM",
+        "Tuesday: 12:00 – 11:00 PM",
+        "Wednesday: 12:00 – 11:00 PM",
+        "Thursday: 12:00 – 11:00 PM",
+        "Friday: 12:00 – 11:00 PM",
+        "Saturday: 12:00 – 11:00 PM",
+        "Sunday: 12:00 – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Spaniards Inn",
       "category": "pubs",
       "address": "Spaniards Road, London NW3 7JJ",
       "phone": "+44 20 8731 8406",
-      "website": "https://www.thespaniardshampstead.co.uk/",
+      "website": "https://www.thespaniardshampstead.co.uk/?utm_source=google&utm_medium=organic&utm_campaign=gmb-homepage",
       "description": "Historic 16th century pub on Hampstead Heath with large garden, very welcoming to dogs and their owners.",
-      "descriptionFr": "Pub historique du 16\u00e8me si\u00e8cle sur Hampstead Heath avec grand jardin, tr\u00e8s accueillant pour les chiens et leurs propri\u00e9taires.",
+      "descriptionFr": "Pub historique du 16ème siècle sur Hampstead Heath avec grand jardin, très accueillant pour les chiens et leurs propriétaires.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -305,9 +562,30 @@
         "fenced": true,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Famous historic pub with garden, known for being dog-friendly"
+      "reasoning": "Famous historic pub with garden, known for being dog-friendly",
+      "googlePlaceId": "ChIJix2arm8adkgR6AQ5Md_aF8Y",
+      "latitude": 51.569883999999995,
+      "longitude": -0.17402779999999998,
+      "rating": 4.5,
+      "reviewCount": 6335,
+      "photoRefs": [
+        "places/ChIJix2arm8adkgR6AQ5Md_aF8Y/photos/AcnlKN39_NNIxoX7wtSrVNrHnAJOZO9uS0F23xqsMrXQVx87Lsw9Yr99MEmq7afZMh__iD_9UEXFKuaorgM56VybNY6EvhB-MHi7WycMQCSN2GxaX0TRagM8hBF327y7Esbe4PzOPZLmnyiOakZd4VMXSK4VsBYlfqnGvwln5hIhc2r4SQao6iNzGsP8rFWFFC4DmQlcFk92FHGTZC-8dkyNMSy5AtpFrY3ynm2Jt32zZqwk-Sg1UEdlKLQjsXL5VMiyzna5W5OMruCns465SgCiB9vHlmEJLNyXjnlz_0hSdY-Hqw",
+        "places/ChIJix2arm8adkgR6AQ5Md_aF8Y/photos/AcnlKN23vuDNk71G-GOfOutlT8aO4G3b0AXshfqImMk2TrTW9oWPVzmMjnevg5BumZiF_mBFdZOP5XZW0JX3Rpj1lVTY7-B76ZQnGXbBdaOOl3HaXEPU_Wnlh7Ej7wasogJb0KO5mTbR5Z3m6sidt69phSzcvhX9ZmR3dySWv7ILMmLvgtaM3Z2p1rNMjW9pLvUxWGI-ndikQzFkQ_UJCyDjAXnAcgrPD2l0H-Am7IGxiobUkvPL6Fcjvye88CycvLbFPs97IiZC6zJNmHYzDR1V35Y8nn8BP5WjKPkPG5tSkqbmdg",
+        "places/ChIJix2arm8adkgR6AQ5Md_aF8Y/photos/AcnlKN2TRl57tDgTYkfH5wYAqcw9uOWjt4GwZP4zensDaY6kjXrx3yq9G6lg6dxm0SXevcTWSfae96VmnJaj1o5e-IMGUzuQcregdTyQnXHTMCcty_ufoW7e04MCOdcLb5anPfjXMe1WYPwxXQ9hbynNCe6pHaM91mf0drisMnmFc3jM3u-GWZuHSLKEwqRFd93-kyCrVzcmRKHmugLw5DVrJQKx76j3sXQWYMjJUsrZNlpx0uKj9RKFlMciCouWTaxD-CA1n7ZBe6SIK8ng5ajxDb2m3WwpfAJGZBpaQ4SGovlgQFUt2CRlhgVXKxMu_F8Vo0paKSsjv2llHkMRoedndUX3UMFkvIs2R4KE4Xnq_9H6dSmLU_CPBj0xZcENfi3xgeeHZ6pPIspahJuDHZYaxHeA7FYbT9pA3QB8C73qurak5CXoYRSx8Ru1w-ivwtOe"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14274118196112458984&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 11:00 PM",
+        "Tuesday: 10:00 AM – 11:00 PM",
+        "Wednesday: 10:00 AM – 11:00 PM",
+        "Thursday: 10:00 AM – 11:00 PM",
+        "Friday: 10:00 AM – 11:00 PM",
+        "Saturday: 10:00 AM – 11:00 PM",
+        "Sunday: 11:30 AM – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Founders Arms",
@@ -316,7 +594,7 @@
       "phone": "+44 20 7928 1899",
       "website": "https://www.foundersarms.co.uk/",
       "description": "Modern riverside pub with outdoor terrace facing St Paul's Cathedral, dogs welcome in all areas.",
-      "descriptionFr": "Pub moderne au bord de la rivi\u00e8re avec terrasse ext\u00e9rieure face \u00e0 la cath\u00e9drale Saint-Paul, chiens bienvenus dans toutes les zones.",
+      "descriptionFr": "Pub moderne au bord de la rivière avec terrasse extérieure face à la cathédrale Saint-Paul, chiens bienvenus dans toutes les zones.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -329,16 +607,37 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Riverside location with outdoor seating, typical Young's pub dog policy"
+      "reasoning": "Riverside location with outdoor seating, typical Young's pub dog policy",
+      "googlePlaceId": "ChIJNT7G7K4EdkgRvOFRBYVemfA",
+      "latitude": 51.508518699999996,
+      "longitude": -0.1015827,
+      "rating": 4.3,
+      "reviewCount": 9687,
+      "photoRefs": [
+        "places/ChIJNT7G7K4EdkgRvOFRBYVemfA/photos/AcnlKN2FS3Oswpbk0xPXLRu8R3WAXnnWIliZa7FN2kcWu05eDfcF85Y8oDufpWdd1RYs9FUFTppAIv3XeE7vV3_0qEd85CatqMHvvJkgcT7UtUZW180oHwl5ymbpFh96Vy49O1Dsz1yxoRlHT0EmxL7IaH01-9wlLOuX6Fp1-fjpOzIocrHbw4wcJ5S6RVysZyZdg2HAu_JIp19hlg2pdfGkp5bIbd_x2eqWLhOmvnjXhz-j8QiXCc34W4vo_3M4XEESv9ZX-DCmwB0wNzXe4ZIMJ8bgkvSxhDvNG1S5oCOwAjAetQ",
+        "places/ChIJNT7G7K4EdkgRvOFRBYVemfA/photos/AcnlKN0j7KjEb_0MRlnOKUui4un90nxnvMSRHiDWm4L4xEo71GjF8raXsljDoMAbLRkK5BJ-NW8XD7w_bEgEkD7_IwJZRLQpHM0UZkhTCM-P9ItWP81BPus3Bj1KAr0tLTY4c_Pa2ZYcBuCgeV9JLeObuNZDFV7sCAuvo41YPxx5ZnRO4vMyE7_PndNuJJO_ueE3cHDKY_ufSJtYWeqx0KSRyos6EVnNirm8zvHTk7dn-oaXdCVzsYAK3PePQQjouUYUKRsnAHE7U-EsOlt8_r3hgrvXGp_eyJLUTCP47nvdz4VB8c3VGkBmz4wYwNzRZ2rasL-fhevDeYkGSM3AKBgKGUp4f5AQ4ICFNSF00D8ri8YGvdzYVLSV6clCX30JU72QqmES2b5_V6CzN9-zfTuTa9S7WdMZtUKN9c-dASKN1LHrk5XdCiPK_2uc78DN3XDD",
+        "places/ChIJNT7G7K4EdkgRvOFRBYVemfA/photos/AcnlKN2Gtwqg73WH0xqWDrTk_wdB891PEaJ5q8I5LGEfUMBZYHLmcjtWvM_eLbtKJaF5RrApvQPuOeNTHnS7UhM4eyJhgw0Z8fORrUs3oVqCMjD46JSHvnOxJNP_NvWHPnrK2hD_DgHa1bh-HFXD6SeocjCqj8vQKrHS-A8W6yOrJJBM9rDCeKm70QFbwJguk62uCzGysbSDb8FwHtowbFHSjFFjlxkGTjwNLxtvKS2GkLOwtxt3ae3gCMaOLDSdAI30Nl2D46hfKsFLWUY4naV5T96pqeusSsxvREZAL8zC4882hQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=17336992165952348604&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:00 AM – 11:00 PM",
+        "Tuesday: 10:00 AM – 11:00 PM",
+        "Wednesday: 10:00 AM – 11:00 PM",
+        "Thursday: 10:00 AM – 11:00 PM",
+        "Friday: 10:00 AM – 12:00 AM",
+        "Saturday: 9:00 AM – 12:00 AM",
+        "Sunday: 9:00 AM – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Drayton Arms",
       "category": "pubs",
       "address": "153 Old Brompton Road, London SW5 0LJ",
       "phone": "+44 20 7835 2301",
-      "website": "https://www.thedraytonarms.co.uk/",
+      "website": "https://www.thedraytonarmssw5.co.uk/?utm_source=google&utm_medium=organic&utm_campaign=gmb-homepage",
       "description": "Traditional Victorian pub in South Kensington, known for being dog-friendly with regular canine customers.",
-      "descriptionFr": "Pub victorien traditionnel \u00e0 South Kensington, connu pour \u00eatre accueillant pour les chiens avec des clients canins r\u00e9guliers.",
+      "descriptionFr": "Pub victorien traditionnel à South Kensington, connu pour être accueillant pour les chiens avec des clients canins réguliers.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -351,16 +650,37 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Traditional London pub in affluent area, likely dog-friendly"
+      "reasoning": "Traditional London pub in affluent area, likely dog-friendly",
+      "googlePlaceId": "ChIJn3I-I2EFdkgR_9IwtGOjZbY",
+      "latitude": 51.4906804,
+      "longitude": -0.1832401,
+      "rating": 4.4,
+      "reviewCount": 895,
+      "photoRefs": [
+        "places/ChIJn3I-I2EFdkgR_9IwtGOjZbY/photos/AcnlKN0ifRuqAUoDrcqtdIqM3cZoxZ_afPHCQFpJW6zQjtjkXJ9AM34Yp323sQ79U80jAENKKdKTW5qkphcknHs6ensfd0E1O8odEYthuu66d13wsMeNDqwpJx4YOyXECLnWRZ7PJffOQEa0qz87-dDG6sElas9cl4keUOShxacGT8N3H41KmT91PEI7oDIEi1OaS1zGg9Vj4gNIr3sr3ksBNRzoRgBGiy5Mjj-CCayHGjG8OFY-4dWUOlSmbBOJnQ5OGPfpn80ZB2_tRoxNqKtNZTG29z7-jK6S_gthG21B4kBC0g",
+        "places/ChIJn3I-I2EFdkgR_9IwtGOjZbY/photos/AcnlKN1iKJIO4ky7b8Yxw3E7k-38pItqaaqXKA4WcCAbPwmDa8SVOiz5BkMUud1UnVc372T_tmaQhqLjquBpjEACAlsrXcK6uumcsoJYNI9F0Fn3AeKErDkZgB9UgZ3jL5n-zygyE0XGHuo6P8M7AXfbpul41Y9IaKQtKn1rR3yaELyNSLE6J4Eq6AGrHXpOm_dav0WLR5xuiLNkkD7XjVEhF0THEhOWUDNUgB3dOhidlshO8NgBviY0o7HzuNXg8ZarOE8obNVOhg-UyD6mc22mOuZt1QVAsJtCdHnzmQaIhZs8Pg",
+        "places/ChIJn3I-I2EFdkgR_9IwtGOjZbY/photos/AcnlKN13BGefOCv99caMsXOBiLmD1ASXleCUjkUm4DF0s4Ml_1eS54SDCXbnV3L6VMVo1JvacaGp-EGRRXIkMGHN52btgFWL7wELahECr1fHKOgKr2yODXptUXrTunc3HNpU1kek8lryhRImmw-ZzMMhiOgpznnQItqa15G6YYxTHb6c7ix_OZuFMQmnZjCnPZ-Q-yfBFNOVDkJJeDCn6M1dOWeztImYt_Wcy2uIVeQMe52dU8LS_vCUn3ZFlURFjXoEhhoZ4GYeYdmT5zTxXI_1gTXOn9CVi_SYrEEnoJKO70CQPZxBkASWcoOlxRUQ1XosnL8iLDC9pRboqcCsOUm0nhwp4Wmc53zKOyjRdkLSj3nUwB1wnGI8UWQdKLiv84TGyeDvbQ-l_w7DA1XOww1ANvg_pJZmyyAueEvx27eCqqdADOji9aGiT6ySWiwbpD3V"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13143090736170849023&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 11:00 PM",
+        "Tuesday: 12:00 – 11:00 PM",
+        "Wednesday: 12:00 – 11:00 PM",
+        "Thursday: 12:00 PM – 12:00 AM",
+        "Friday: 12:00 PM – 12:00 AM",
+        "Saturday: 12:00 PM – 12:00 AM",
+        "Sunday: 12:00 – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The French House",
       "category": "pubs",
       "address": "49 Dean Street, London W1D 5BG",
-      "phone": "+44 20 7437 2799",
-      "website": "https://www.frenchhousesoho.com/",
+      "phone": "+44 20 7437 2477",
+      "website": "http://www.frenchhousesoho.com/",
       "description": "Historic Soho pub famous for French resistance meetings in WWII, welcomes dogs in the bar area.",
-      "descriptionFr": "Pub historique de Soho c\u00e9l\u00e8bre pour les r\u00e9unions de la r\u00e9sistance fran\u00e7aise pendant la Seconde Guerre mondiale, accueille les chiens dans la zone du bar.",
+      "descriptionFr": "Pub historique de Soho célèbre pour les réunions de la résistance française pendant la Seconde Guerre mondiale, accueille les chiens dans la zone du bar.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -371,18 +691,39 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Famous historic Soho pub, though small space may limit dog access"
+      "reasoning": "Famous historic Soho pub, though small space may limit dog access",
+      "googlePlaceId": "ChIJBUj2-9IEdkgRmSNxHI1mals",
+      "latitude": 51.5127471,
+      "longitude": -0.13173179999999998,
+      "rating": 4.5,
+      "reviewCount": 1936,
+      "photoRefs": [
+        "places/ChIJBUj2-9IEdkgRmSNxHI1mals/photos/AcnlKN0Q873RdVTFXhizbUbME-ltyHETPylxrK5yepggBV8O4MUXwhyLMq4WJjJzOGbbmpphfDEK1QmJIoFd6g_o1GohAgIw4zF8k8w8trEcj3c-3QlqlyzAd9pAcb8equXls9N4gYFEyGntv3VNpC0PGvgkolFP1IFdL20UiBvihLtwrmk2XgX-q4l1psVRIII30trOXZJTsBE2iH9WgxhuR1_7TtnL-aoTxil0oMUm5K7eUrFvNCQjFFScdT9GW7AryPpnL2st9ysHk57lqvGYDaNkX1hH3vqLJ1kBvfs28S-1sXwcaj17p4pjr37a9DCwwgZZQ3Pj6duJwoGo94Z-6dX5uay0txbQkQPzF5VO8To_O8ywex4mwc3AqS2WRi_VQsRiDTjabesirnJ2BkCejf0svtK_uy3LVhcClNBp-JMPOUh2",
+        "places/ChIJBUj2-9IEdkgRmSNxHI1mals/photos/AcnlKN3xK17vPM9kAqiuiY2CI3QfwWvM-TK8AeJg9MWSDFKvlEvEK3F5u-uOLBkmO5LSzrslgugp0q20tUXQ9sX3LV3Hs_vE26w6NuwNTw92K8uQYUioj1XOWStTtC7KS4DYWyQ7BtPEFzKs99ad-3ZNyem-baL17hDoliqICVPSYW8uZc0JkzIhi5UXZ8Lv7pb4PmCGOsUcGvqwMt1oJe6gGlvzQ0NeeNWwObcAX3n_61S8CpMDfxBAaCrfcJFjuCtQoqVobL6Zmn-jJPNafNNrZ2xv_S2mYm828_T66xdl8WmAR4bDLTSw2BuH4odxa1hPFLvQpa9jcjhU4GiCtacyWQLUl0OWR0CaN6jI1KoOKBuWb4DmULEsqNILQUicfQ_VAuLUwTxh_C_KkP0u0vx5BnnhVW15duDZjF2U7XLqaS3jt2HS",
+        "places/ChIJBUj2-9IEdkgRmSNxHI1mals/photos/AcnlKN3KLpEYml1HhWaTZQCjqyZOEtscO7jhKBbU40jGzMXrcVlguCc8wGKYoIA8MBGmRnff_apBufdO56_qhJqVkYIxdUmJX1eQQVL9DDd-ieLxOGAJalotUjMePdPbhvQ0QNjxHPjO-U0AWjV9bbJ2U0d3--pQgBMg_UJYLvSVlGyddaHH8mlnJaKAyibXzmQBirIkvxNpsJZ-jUKPznC-K-H4gY6ZT0amhJmg_QpL8obD5hXisFL57xUQvIungfF_ps9MAV8BmSzUCZ6AFKqLTBTNRfizxOUTLyrA9u655i3piG92bLGS9Eug0q5T05ie0wM84TBb51hWD5zGDCdBbYsenWdwpBEqXfhkqVtTrirdcUGR2hBlPlzEHK4JA8PFqfIkdeqL5de1dHcna48y79gn1bNoDtWTkoEet8Y0Ogt4tskeaoFY9O_0clXcM1G0"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6587190161236370329&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 11:00 PM",
+        "Tuesday: 12:00 – 11:00 PM",
+        "Wednesday: 12:00 – 11:00 PM",
+        "Thursday: 12:00 – 11:00 PM",
+        "Friday: 12:00 – 11:00 PM",
+        "Saturday: 12:00 – 11:00 PM",
+        "Sunday: 12:00 – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Duke of Cambridge",
       "category": "pubs",
       "address": "30 St Peter's Street, London N1 8JT",
-      "phone": "+44 20 7359 3066",
-      "website": "https://www.dukeorganic.co.uk/",
+      "phone": "+44 20 7223 5662",
+      "website": "https://www.thedukeofcambridge.com/",
       "description": "Organic gastropub in Islington, dog-friendly throughout with water bowls and treats for four-legged guests.",
-      "descriptionFr": "Gastropub biologique \u00e0 Islington, accueillant les chiens partout avec des bols d'eau et des friandises pour les invit\u00e9s \u00e0 quatre pattes.",
+      "descriptionFr": "Gastropub biologique à Islington, accueillant les chiens partout avec des bols d'eau et des friandises pour les invités à quatre pattes.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -393,18 +734,39 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Well-known organic gastropub with established dog-friendly policy"
+      "reasoning": "Well-known organic gastropub with established dog-friendly policy",
+      "googlePlaceId": "ChIJs0CR3p8FdkgR7NFl43Nu2mE",
+      "latitude": 51.472926199999996,
+      "longitude": -0.1660533,
+      "rating": 4.4,
+      "reviewCount": 811,
+      "photoRefs": [
+        "places/ChIJs0CR3p8FdkgR7NFl43Nu2mE/photos/AcnlKN0pneLaFwFU-NStMRTH3Q5pb4b-N2n2-vdueMKiYu5-6t1Ic2lKFOY-vo4aHm1q62JD4B8H41oSJtVyrmiuhPGP0js0tRGaB4Qr3MAShxcnhJdNqpRor9vv-n5z09ZuBCzpqkyyQE4hWVUs3vzpWaqoaI_ILA_bm_10AXtNn0_jg6gQNkKPaKZr7x8b9FxORnheumw72Jvl6ZJiDl4zBnD2gmn3vMdWgWLWxpcXXUFR6dp3LB156MmsrgVNlskGP_XFOPtaxZzbsymh-VKemVNEa6UDo8ruDy6TjGjJkD7BlA",
+        "places/ChIJs0CR3p8FdkgR7NFl43Nu2mE/photos/AcnlKN3u9sxXLUcOdnN3s5sddln4zZxLPw74m0RZWgC8n-e476zOYHhY4QkZpXFAaoHA-dUK7rwpgSR5HBRZJIPi9qt2a6xy_eMyjgvSDFW68OwjSqk_NxqGnR-VAhaB0sh7xb3H9DOnxj-ufFcrhiAYhXZ3kh8pNC43_NR866dj1WlPH9tOY5EDf8OR1GtWqyinYrclK2rn7W9gJRD-lYN_TPgGR-Jl6n1OWPFPgxZGMsI6Spy428qJzf3JPMIvDRvA6CE87HTPuM8hZjQViAVzNjQDqBRKYcJEv78CxXNAfjx1WyV3nCHkyfl0WRuOOdw3BiZRvTPEqt6HXMdkrkBZO64Lr9u_F9XTz0KdHyHhR3OsvqwK2tE5-24vCi1Najbo9-5it2JetVRb8JI0c-qVTVnkJuVyvRPDff9T5vFvVBT6fbIA2VPhSQzCZKqn54Ay",
+        "places/ChIJs0CR3p8FdkgR7NFl43Nu2mE/photos/AcnlKN2KOyPEmppqY73iFIXBfZ6BmxZ6LNCVYj6Wpk5-atN6jubjDKFNEgbU4NK6zkUVWPpR9JUqFLy0LKU6MTdSVxv9ad-OYeQkOU_AA7aQbPt4kGTX-G0o7qWk5lBaXMBbetjy_D0hiQX98HoW4YiEDX0MHcSrRgAa5TY--vknBp3e0qE1LOf6vszzaxhNjPTe08JtM8GacI1W_uy9ZG2c8wmj0LVoJm1U_THWOmexTWcT8bt0amyQUIGwuCi-SslPJ9MipyDS3U7__OqbwqsvO5zkbS4NpDdS4wzUFKHhOujJJkL2hWL-R4Pb8dX5DTK8ofY0A5ZZEX9yf84snupEuC4wF9_FnxXgaH2idHciTChM3Bftn-EN2kAD7pLA_hwx6De8l41K-myCXe44hgJEh1kknZJ6NLlZP3xDLn9DBqoQEQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7051069610617328108&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 11:00 PM",
+        "Tuesday: 11:00 AM – 11:00 PM",
+        "Wednesday: 11:00 AM – 11:00 PM",
+        "Thursday: 11:00 AM – 11:00 PM",
+        "Friday: 11:00 AM – 12:00 AM",
+        "Saturday: 11:00 AM – 12:00 AM",
+        "Sunday: 11:00 AM – 10:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Ivy Chelsea Garden",
       "category": "restaurants",
       "address": "197 King's Road, London SW3 5ED",
       "phone": "+44 20 3301 0300",
-      "website": "https://www.theivy.co.uk/locations/the-ivy-chelsea-garden",
+      "website": "https://ivycollection.com/restaurants-near-me/the-ivy-london/the-ivy-chelsea-garden/?utm_source=LocalGoogle&utm_medium=Organic",
       "description": "Upscale restaurant with beautiful garden terrace where dogs are welcome, offering water bowls and treats.",
-      "descriptionFr": "Restaurant haut de gamme avec belle terrasse de jardin o\u00f9 les chiens sont bienvenus, offrant des bols d'eau et des friandises.",
+      "descriptionFr": "Restaurant haut de gamme avec belle terrasse de jardin où les chiens sont bienvenus, offrant des bols d'eau et des friandises.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -415,18 +777,39 @@
         "fenced": true,
         "shadeAvailable": true
       },
-      "priceLevel": 4,
+      "priceLevel": 3,
       "confidence": 90,
-      "reasoning": "Famous upscale restaurant chain with known dog-friendly outdoor policy"
+      "reasoning": "Famous upscale restaurant chain with known dog-friendly outdoor policy",
+      "googlePlaceId": "ChIJJ-MhPWwFdkgRKVwtA039nU0",
+      "latitude": 51.4869913,
+      "longitude": -0.1693306,
+      "rating": 4.3,
+      "reviewCount": 6542,
+      "photoRefs": [
+        "places/ChIJJ-MhPWwFdkgRKVwtA039nU0/photos/AcnlKN0Q47K_3tb13Y1mWMuXGhB3oYllAj8DFKboBXFYe_RRImD8kVNqhYcAfvZFEYyO5KrWRHCN6JYXjQpXf3IxKx49iTe6LP2mPO64Rb7BoJmINcfYlahaIE03-racZRVuc-HrUohsLDa9AT-1kW_1-ea9qNhBkix5xKIr9E6YsGwLavMu-G_6ue5f40wefF2M1nWJPwpoOgoilVYSBber5Z6i2T3ef3kQKGVU5svFTY1LZw_bIXVcEonxGhQdrb8X7DGNqNBtdtgj4Ei5NNAHsX7LeqP7-08eGZmMPKHppAyJIg",
+        "places/ChIJJ-MhPWwFdkgRKVwtA039nU0/photos/AcnlKN3ac86frZxIAs-NljZ4J73TAwBvsgma5Aj8Geld4C-zTIAXynmKAQDfzQwFHKQOida8GtUtvOSNN7yC9XvFkXmZ23mq4YMYCGhNqyqTcO9ks_7Lny_eV2QUliTlptZjp3fGB-zZ7eXfbyLwhRzkH5d1szMDHFBDho7ND3wqhYBiy4PLt47lH5jE8EH8719RPO78xXOuYz3-jCrDVqpH88-9cE9ZCZI0lrDT3KBbgxbu61TDtA3li0w-eKB4wSNlI-JOsPIBZZRRmi84LoY5kjdng-KkDKQKjWzicaLV0Okry-G2eIRnRKZuPEDIewoXSdkZUN7jjrrKKbr7SjwfL-NIgmEpCz6tC8_a16cruMeUOWegIxRnDQ_yw_mvtcowmk751lQP3g1awVHB3p_W4jqDuhp3eIvRuZMC5RdiasIBgis4j_kmBzJgpJkNOc1s",
+        "places/ChIJJ-MhPWwFdkgRKVwtA039nU0/photos/AcnlKN0ZcjtCAinnri91bZJ9BnRamhWeGPUC4-QkdnyV1bFLPSEq4xpm4AHFGLrEw_FGNrAn97bw7-2wDU7HhuR9Uf8GdtNU_L1oX9PHh7mM4f15Ohs_ueQeSYgx556qwafSbhjyCzbArEoidCikQpPPlmQ3LMh0l5EiQS9F3D29Lc-0WKY-L__KJy86D5Qz4pH9YKYKsRDW2WvlzR4rKPu4AZBDXMTvcGsGou2qCPxWc0rUatWycj0wfDImqucjnIjdgHrwx6Ssf0f698rCiX7mOl_pkP7Ihsv8N0E-7sGZ5ks4MQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=5592904819471637545&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 12:00 AM",
+        "Tuesday: 8:00 AM – 12:00 AM",
+        "Wednesday: 8:00 AM – 12:00 AM",
+        "Thursday: 8:00 AM – 12:00 AM",
+        "Friday: 8:00 AM – 12:00 AM",
+        "Saturday: 8:00 AM – 12:00 AM",
+        "Sunday: 8:00 AM – 12:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "Dishoom",
       "category": "restaurants",
       "address": "7 Boundary Street, London E2 7JE",
-      "phone": "+44 20 7420 9324",
-      "website": "https://www.dishoom.com/shoreditch/",
+      "phone": "+44 20 7420 9320",
+      "website": "https://www.dishoom.com/covent-garden/?utm_source=google&utm_medium=organic&utm_campaign=Yext&utm_content=D1-CoventGarden&y_source=1_MjMwNDkyMDMtNzE1LWxvY2F0aW9uLndlYnNpdGU%3D",
       "description": "Bombay-style cafe that welcomes dogs in outdoor seating areas, providing water and occasional treats.",
-      "descriptionFr": "Caf\u00e9 de style Bombay qui accueille les chiens dans les zones de places assises ext\u00e9rieures, fournissant de l'eau et des friandises occasionnelles.",
+      "descriptionFr": "Café de style Bombay qui accueille les chiens dans les zones de places assises extérieures, fournissant de l'eau et des friandises occasionnelles.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -437,18 +820,39 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Popular restaurant chain, Shoreditch location has outdoor seating"
+      "reasoning": "Popular restaurant chain, Shoreditch location has outdoor seating",
+      "googlePlaceId": "ChIJxZXYx7cEdkgRdgAOZ6OHOJw",
+      "latitude": 51.512517599999995,
+      "longitude": -0.1268291,
+      "rating": 4.7,
+      "reviewCount": 28229,
+      "photoRefs": [
+        "places/ChIJxZXYx7cEdkgRdgAOZ6OHOJw/photos/AcnlKN0u5roFIQKf_A2XoCcT1KxUldFt5_CIiS5guOfKxIzx6vJdTSFzu3K4pu5M4HeGGlI0kokm0WjsdSm-qjc0k4bjYTj-zr2NwWny9Cn4WRXkT4HLWA8oRAjji87WjI9Tx4OpbCCqYBGiavJ2SSpO3aizYRb8h9uJbQb06KgCp6lu5Be7O9hehHymOFESm9P0ibFOr2bT7nF90cBUjz-h3HqhkFoHwZ2QzyEbYtsFGLUxtNT3FsdsqQwUa1sE100M63WzDoS4M9Re4s9-5CSq2Z1Xl8rfJGQthj_tlUECkpwsPA",
+        "places/ChIJxZXYx7cEdkgRdgAOZ6OHOJw/photos/AcnlKN1Z3XQgr5Lt_zoXghgm5kzkRg1fueHkdJ_vcW175xIlZoX2yMTAfl937TJ_1Ak1mtef8Qwm_0MxugFaiX79rNcb5UtUf32wLGp7hTIfhsP1R9mODpk3J7k05qOO_8tdNAT1Kw8wl-u3vOUyOgM9_gBt4ffAYqSVQBbW1zGBHIu_gBzrPH-Q8vU_fGM-uYZixkaoBBd9SX-NK4ZXYiy6KV54RvNzfD4vpaIRwks1cAnBLn0FZGjoX1cpnlx3CZFINzBpAkWwr659bQff_n8hb4NL7cZ6dvsGTkMHr6iK4bsF8A",
+        "places/ChIJxZXYx7cEdkgRdgAOZ6OHOJw/photos/AcnlKN2Bp5h66tUhSXHaACDhGq6HgOdh_5cH3PCj5r3nXVWBT-f4_piVxn24gJNuX3qxGd3fMxBWKB0RTwwAy7hK82Aw4y0mtoshsP2_ZoAE_87ROTgL13gBXNXbw_RnHayXvDhOeuEUqHngp-glI6pbEXGL7D8ACVg318ZFE8mSS-OIBbrzmS1vzzRvEZ_fCPMQJeB1Too8BAqBoHfRJss7XNzMUghW0K5JOS_nxh3dN1M3oHLekf3xnM3y2SzZLsgDy-IPv_IDX4c4BGgmAO47jeLJIgaHuCbBloDKhXGjG0zi1ZTybUfur1Bp7KJfRjerIzlkHQYbmoOCS_EsQb75dJraI6tfIQ3Mx6bQrxGTGbBoh2cdm70jDp7hhCmTB0JJtcZ2lYqkkCHksqXb9X84GjOb87II9NuMtC5V_2DIzP8X67g-l1tGiQVCpf_KNEYn"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=11256896404490944630&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 11:00 PM",
+        "Tuesday: 8:00 AM – 11:00 PM",
+        "Wednesday: 8:00 AM – 11:00 PM",
+        "Thursday: 8:00 AM – 11:00 PM",
+        "Friday: 8:00 AM – 12:00 AM",
+        "Saturday: 8:00 AM – 12:00 AM",
+        "Sunday: 8:00 AM – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Blixen",
       "category": "restaurants",
       "address": "65A Brushfield Street, London E1 6AA",
       "phone": "+44 20 7101 0093",
-      "website": "https://www.blixen.co.uk/",
+      "website": "http://blixen.co.uk/",
       "description": "Modern European restaurant in Spitalfields Market that welcomes dogs and provides water bowls for canine guests.",
-      "descriptionFr": "Restaurant europ\u00e9en moderne au march\u00e9 de Spitalfields qui accueille les chiens et fournit des bols d'eau pour les invit\u00e9s canins.",
+      "descriptionFr": "Restaurant européen moderne au marché de Spitalfields qui accueille les chiens et fournit des bols d'eau pour les invités canins.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -461,16 +865,29 @@
       },
       "priceLevel": 3,
       "confidence": 75,
-      "reasoning": "Modern restaurant in market area, likely accommodating to dogs"
+      "reasoning": "Modern restaurant in market area, likely accommodating to dogs",
+      "googlePlaceId": "ChIJNe2QE7QcdkgRQmIC7xaWV-k",
+      "latitude": 51.519201699999996,
+      "longitude": -0.0752708,
+      "rating": 4.3,
+      "reviewCount": 624,
+      "photoRefs": [
+        "places/ChIJNe2QE7QcdkgRQmIC7xaWV-k/photos/AcnlKN2waQNr1Fx0SmkqAtiZ4wIJKVzJOkarNkxmGUxVxZKRmgmdy9k2fI5_k_aywT2aqfMeaN2R6GSFDPuu6VGtZPvTboIBr2MGdr6Ct1TEsvIspjNJKHowg27iUVt7lDycqj0GKfl7ho_luNa0twF46JWakrywZI0oSk2hHIZCaiBpgD8iqmkkzMT64gtg0Lw003WGlSsv1tMRSPyzbLWOR35EOxh1xinZx4OPnOjcn_3bzpXrMlkoZfMvuP6vs9IYR2H8lRBkYgQTYd-4CutdT4GKf40vVvq6LvEICwXq2KsFmQ",
+        "places/ChIJNe2QE7QcdkgRQmIC7xaWV-k/photos/AcnlKN2jJGJSrwBw1YTuc5NPlrFt5JJzJ34Zoo4nAjot6mQV89JLZWfzTes8v2a7M4s3swhAywQExfsxQWxa-dCuUg0hFWYdKDeqKS-7JwKWKbtf8AE5NF0ma3-6snkiE28CLDSm0nLIZ74S4XlP9P_tPREFQBifSTj_DeD_mmo8C_w9o7w-LdX54xfqWkj1vrjFvg5moVkodt6vl4CFP3Y1qt7ddNLlUTFEN9W74HbYke4lPTQD-9D8IzJuimdvCjotrk5an3HN2ZBaLHqqNvynlkQOKD3-lgs7jdjVTNNOelmIBw",
+        "places/ChIJNe2QE7QcdkgRQmIC7xaWV-k/photos/AcnlKN3jtfgcvjHaniDq85sAjfsgJ1FjvhabU6KDZvOXaqnb-jcDl1hlR8ewqjXIhe25ETuHYt9YCjp2C2aV6lUbCZ9mngSbfl55QINqtrRmKkeZZ9NZPhIGsoAaYpmz-abRlO7K8FJp6-7IHdCiYiv69NUjAueq0sPkLu_ZXkeuR9-RWNShdx-4xrmsR5mFABp3K3uRc9JFE57YD2nc7303VGrd20RIo3j6kMA6m4SSf-XZgk1Z8pYZRP3DWj3STsmaefVGLkiFcBPkeWZh7DDoQ2M6m5dDnjBEtFCjSg1aKxtAvw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=16814072759054393922&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "The Botanist Sloane Square",
       "category": "restaurants",
       "address": "7 Sloane Square, London SW1W 8EE",
       "phone": "+44 20 7730 0077",
-      "website": "https://thebotanist.uk.com/locations/sloane-square/",
+      "website": "http://www.thebotanistonsloanesquare.com/",
       "description": "Contemporary restaurant and bar with outdoor terrace, welcoming to dogs with water bowls available.",
-      "descriptionFr": "Restaurant et bar contemporain avec terrasse ext\u00e9rieure, accueillant pour les chiens avec des bols d'eau disponibles.",
+      "descriptionFr": "Restaurant et bar contemporain avec terrasse extérieure, accueillant pour les chiens avec des bols d'eau disponibles.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -483,16 +900,37 @@
       },
       "priceLevel": 3,
       "confidence": 80,
-      "reasoning": "Chain restaurant with outdoor seating, likely dog-friendly policy"
+      "reasoning": "Chain restaurant with outdoor seating, likely dog-friendly policy",
+      "googlePlaceId": "ChIJrT6qPRYFdkgRIoMRoviZMkQ",
+      "latitude": 51.4929372,
+      "longitude": -0.15710069999999998,
+      "rating": 4.2,
+      "reviewCount": 2003,
+      "photoRefs": [
+        "places/ChIJrT6qPRYFdkgRIoMRoviZMkQ/photos/AcnlKN3C99YaMuNGmrRYxAhANokyVHK7HxsK5lAGOZtXE2OV1PtJRzLzuIDeUQIPhXhW_QK3-l7C7CGzR7i5KvIw7kfEF3bkfU28VHZr0pbeLZ_2O39_WMK6rRSXByIcL0pvuvgDdkQcjSHxAqlTLK2Y3r1Ndg6jyqWPFCk0C7UWQtLtp5yDIMNyi06cJqjLqQ6oe4lMDtFhiEJwuD5kpuk1z2nxjhzQqoKs5-mC7Koo3_Jtu-CDcftk8c_czwHFUAGnuL4A6dyeTl2JHIUOIL_tZEfxwrIt_zjxrAIOfXM6AvW9RA",
+        "places/ChIJrT6qPRYFdkgRIoMRoviZMkQ/photos/AcnlKN0G_rSHHJ-wgYh0_2HB63rMT9ybhKex7oP3S714mtQBB1qd0ob_8C37Unqf4lgOsvvEVw1_8KUvxxvs4fpwPrW0wW02a2fZGCwJbQzD3G__85inowCoY1taoXjmEfpJcfH3TDeaxlFGdrC-5Bl3nnbB0kJLsyE2fWQIxWBoEZ8JCB8tBjsltWqW4P27WgaR_f8NqAAVgU9UAZUVonBWT7ojq4_-S0tgEZ3wNJzYGTR7zP4XudbwJYg4M-SKSkI-iOh3HH9ucpVbMabIbenPWhHkLneieyyO1MHUSn1hoKn1zQ",
+        "places/ChIJrT6qPRYFdkgRIoMRoviZMkQ/photos/AcnlKN2yfeSXzSRi4sBT54VbSBtudCaCMQT77b7u7FV_tMfXVDwzOaElQP0zIzvlnpyxlJIPSlliytPMGdLUGF7A681eFZdatVz8jYzqQvexXOW89AO-uhSKwSs3Cih1UBqVvRG9zYB9MvTfcuxJ16JIqc6E7O1BffHmHdxaXu96cAfCD41rTTvBhDcm4XDncULXpckMLawTcp-x8Hupdaoeu9K0fnC5baAb6DeFQlTlVCIs0l1HFK4rY7PVizkTirCmQBeRuKxUsJgH_Qs6zGUJ87MfN9D7lTuwZOnSrLEY7_QnQA1-WqjD2YGSyM3DK-Ec6hCafL2bWcMV3RRL6KZl0otNBVvOy5uTXjtjjK5TCoFVWW7Dn-WOIMa-EbdiH8ALSK9T4OToJG5smUHF2dBXwMwqBjjC5nhadiv1V44Fx95tiG7C"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4914159436564628258&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 11:00 PM",
+        "Tuesday: 8:00 AM – 11:00 PM",
+        "Wednesday: 8:00 AM – 11:00 PM",
+        "Thursday: 8:00 AM – 12:30 AM",
+        "Friday: 8:00 AM – 1:00 AM",
+        "Saturday: 8:00 AM – 1:00 AM",
+        "Sunday: 9:00 AM – 11:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Canteen",
       "category": "restaurants",
       "address": "2 Crispin Place, London E1 6DW",
       "phone": "+44 20 7426 0927",
-      "website": "https://www.canteen.co.uk/spitalfields",
+      "website": "http://www.canteen310.com/",
       "description": "British restaurant serving modern interpretations of classic dishes, dogs welcome in outdoor seating areas.",
-      "descriptionFr": "Restaurant britannique servant des interpr\u00e9tations modernes de plats classiques, chiens bienvenus dans les zones de places assises ext\u00e9rieures.",
+      "descriptionFr": "Restaurant britannique servant des interprétations modernes de plats classiques, chiens bienvenus dans les zones de places assises extérieures.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -505,16 +943,37 @@
       },
       "priceLevel": 2,
       "confidence": 70,
-      "reasoning": "Casual restaurant chain with outdoor seating areas"
+      "reasoning": "Casual restaurant chain with outdoor seating areas",
+      "googlePlaceId": "ChIJ02QECgkRdkgR_4meeUf8Kws",
+      "latitude": 51.5210022,
+      "longitude": -0.2093261,
+      "rating": 4.2,
+      "reviewCount": 347,
+      "photoRefs": [
+        "places/ChIJ02QECgkRdkgR_4meeUf8Kws/photos/AcnlKN3eVy2D0rHdR2x46Pw5ony3JcPiBsIsSXD3W3InMpiY19thv0rzYDDOButJIShjFifWdw3cj3uKNwBoBR9PYcAzKOYhhSidokQFT8wAsrWlTwKAQRxwKW5f07Nd6nBcObpjUw9wIIRanIJq0_EzSqotkW_NoVlk7eyyIjwWTZTgVTdrtn7edmfI2yMnrtWkG93ySg7g-S-qRPehFf4csWW4Sjz1CojWG27Zac07McUWuJ8jXCzXmhpqKOYs0Sz6ElvAxog85Q3QJMb8L3ls6uyIN7DQhqtT9DA6Ot4bzMXpt2wT-UYrSuiuUSsuS5J40PGAvm-ghOEl7UbC_wqytZEMY0prheyVxG560Jy7b5jI4-LK-r-IDmq0PTtT0y9SSnPbH6DUViziH_qeEDYlTyYxWTHeZG00JEg-FBkZkhDbmxzuFw1knSFEwGRkiFH9",
+        "places/ChIJ02QECgkRdkgR_4meeUf8Kws/photos/AcnlKN3_X5Cm7lNVSq7xCpx53a1j_crTQcdw-SOxRHhTgaojoDPl3olgcIfiVYIdo-IFLcce8YvTCbEdHay6xSU07tbRNVpER89arlCZr4g-QY5FtqygKF__o3afuStR_dXLQ91xtQd0E7s-ge0k96mw7qjHyVaZSa7_Ueu6BYU1g94x0eROVBW0_wQXTMCEQVoGHy_emtabOn5l4AkuvyBEJlXDdnA52ETiKJSSEJaa5FN8rkgXvhNxZ_bJLKi_dBNGU7GIefRhN8FazaKkHQ3yf_EI3Xur19g8wPEUjGGlpkfO_Q",
+        "places/ChIJ02QECgkRdkgR_4meeUf8Kws/photos/AcnlKN1X944PtmCAdNENmqyhYIUOIka62xhKcdx8jQ55KhuxdjX8j5_bBH4758IfFQc1RFDsymTEu2jLb0OxsIWUKXwymUeM_tPfH6ai0i9LPG6OA541eOLDHWGUZJvhEBR3pGWtsMvGMyLUzapfVNezTZ9Ohrpl46l2APXQ_yYayQikEnayxaEUxP8Kp9igc4qKHoJ-ITiMCJb1AhAihJFdMd1ARIeDWDYW4MMb2G8V_Tzzg6Obxx5nt39SPEZIdfGGv1yvGsGHZcqQ4QxTa1xS-3-qs7yo_G3cNWhHV5II0A_F8A"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=805014342329076223&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 3:00 PM, 5:00 – 10:00 PM",
+        "Tuesday: 12:00 – 3:00 PM, 5:00 – 10:00 PM",
+        "Wednesday: 12:00 – 3:00 PM, 5:00 – 10:00 PM",
+        "Thursday: 12:00 – 3:00 PM, 5:00 – 10:00 PM",
+        "Friday: 12:00 – 3:00 PM, 5:00 – 10:00 PM",
+        "Saturday: 12:00 – 3:00 PM, 5:00 – 10:00 PM",
+        "Sunday: 12:00 – 4:00 PM, 6:00 – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Modern Pantry",
       "category": "restaurants",
       "address": "47-48 St John's Square, London EC1V 4JJ",
-      "phone": "+44 20 7553 9210",
-      "website": "https://www.themodernpantry.co.uk/",
+      "phone": "+44 20 8994 1444",
+      "website": "http://www.urby-p.com/",
       "description": "Fusion restaurant in Clerkenwell known for welcoming dogs, especially in their ground floor cafe area.",
-      "descriptionFr": "Restaurant fusion \u00e0 Clerkenwell connu pour accueillir les chiens, surtout dans leur zone caf\u00e9 du rez-de-chauss\u00e9e.",
+      "descriptionFr": "Restaurant fusion à Clerkenwell connu pour accueillir les chiens, surtout dans leur zone café du rez-de-chaussée.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -525,18 +984,39 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Established restaurant with cafe component, likely dog-friendly"
+      "reasoning": "Established restaurant with cafe component, likely dog-friendly",
+      "googlePlaceId": "ChIJWQ5ZV0AOdkgRzzzdnQyF2xY",
+      "latitude": 51.491661799999996,
+      "longitude": -0.2559159,
+      "rating": 4.7,
+      "reviewCount": 810,
+      "photoRefs": [
+        "places/ChIJWQ5ZV0AOdkgRzzzdnQyF2xY/photos/AcnlKN3pG70HWajMCGACWK2uCZ1Mp0zi7FbmtK9nciZpmXdqjCEvtMI0rYwAeutGWGtNu8iKYKefhORz3Cgymvs5dyNU_oilPETmk6wUSdWckdlMy3NnQcicR_Hu9wofX_jTVjK9wwyZE0VlqPkMCo6Oj2G6QmzkxmgyVLW4UvgdQhQkKHBH8hELiL2MkmPJj11n1ajFJC5Fs6vtukWXRPwxBSuTzz3hXzbGqWI7UxDavTtXQH0Mx-Ne_HJSYGyY0jV2xBKq_dFOqFx_OgTVk3MO5TpVRaFwMB6fDI2oIWcWJpn--g",
+        "places/ChIJWQ5ZV0AOdkgRzzzdnQyF2xY/photos/AcnlKN31Qe6Eyx7Lcf5WL59SKTbb0xjUBL_YhX0XpmcbLNWNgwsf8g-xtNH8_uiee1yKrqv_1VttcVmChTV9fmqBdoH5nTo61ZiEZiZu8XlBXjNzvuHkEqzHkr79DmgWwsAin__VR64J66swAFtqLYMhjxMSQZFFQsvAUQ0eOqHjsSslOl6r-y_x9F4BTTIjNHoKOzpeAQY3mHxlW0EU5sxS6xfWbhEajQm9_N4E6vkOTRy2SkSTDkFNKaS-TjnahcXSTU_OlxjbUoWYAxMg_Bd_TaTPz78ZpgDIQur5BCrErSt4gA",
+        "places/ChIJWQ5ZV0AOdkgRzzzdnQyF2xY/photos/AcnlKN3iYiRHRKe_OTNlegoOB-pL2YOCvtKe6P1cF723-rAg8ffGRoEgYr6yb4Ez-oxAZ65bpT9y0nqWN7ETm7B5yCS-vQbh3KbZucgof-Owmi_4biFJUZEgsUtb-wXjTjRnMusz-iXNvk1J8mwlalLxgVwb4Lfe485-sZw3_JAMICTaAB1Wp1104fNzaQoFOe_OiL_xPG1L6O8PneYoEUS3lJ1bS33L8_u71FhZYe5uIXkkAELMjaMOpLtz78LrOH0DwcNNm0O2MCulVm4Exe0Qxz74PcPP4lMfBSlXnA97AtdLuM8WUJXghJ19siD6pNYRg9Qpj0awqgFpwcta3eK7Q32iyhicCIg2OVOoY-7c83T4hRO1QFBjFG8Z5ho_n_aA-KwU8mkLH3y0Vquv7C-KZhAMN0GkJH_KJRfZCyWYmXU2xsVf-gP40uIlXpDL8UJO"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1647056377968671951&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:30 AM – 4:00 PM",
+        "Tuesday: 8:30 AM – 4:00 PM",
+        "Wednesday: 8:30 AM – 4:00 PM",
+        "Thursday: 8:30 AM – 4:00 PM",
+        "Friday: 8:30 AM – 4:00 PM",
+        "Saturday: 8:30 AM – 4:00 PM",
+        "Sunday: 9:00 AM – 4:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Monmouth Coffee Company",
       "category": "cafes",
       "address": "27 Monmouth Street, London WC2H 9EU",
       "phone": "+44 20 7232 3010",
-      "website": "https://www.monmouthcoffee.co.uk/",
+      "website": "http://www.monmouthcoffee.co.uk/",
       "description": "Famous artisan coffee roaster in Covent Garden, dogs welcome inside the shop and water bowls provided.",
-      "descriptionFr": "C\u00e9l\u00e8bre torr\u00e9facteur de caf\u00e9 artisanal \u00e0 Covent Garden, chiens bienvenus \u00e0 l'int\u00e9rieur de la boutique et bols d'eau fournis.",
+      "descriptionFr": "Célèbre torréfacteur de café artisanal à Covent Garden, chiens bienvenus à l'intérieur de la boutique et bols d'eau fournis.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -549,16 +1029,37 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Well-known independent coffee shop with dog-friendly reputation"
+      "reasoning": "Well-known independent coffee shop with dog-friendly reputation",
+      "googlePlaceId": "ChIJa1ukL80EdkgRhI1r9wFYz4g",
+      "latitude": 51.514389099999995,
+      "longitude": -0.1268041,
+      "rating": 4.5,
+      "reviewCount": 3618,
+      "photoRefs": [
+        "places/ChIJa1ukL80EdkgRhI1r9wFYz4g/photos/AcnlKN3hm3X7Ayan_7lttUfYb12_0WPoAxCsLRLKVnd2pJWcejIjCqJhZMdDM4UYP1M1ElXCt-vgI2hp2vc5oI-W-bavZl43RrfxUEEjle7wqcQk8AQ408FuAMLkbte4n1_SpAU5D4apzg0H2WBiPAixyA9OQQx7Beac9m671CSPS0E61NFQzFVK8XV26QiCBfvDGXPsRs5udkeEw8c4bSscIZjQDDETXJQxnsGswXDOjp1iSLV9loGX-453ZvVHIhgySxwTHHZ8DC-P5xmvcyGs0TY_ymyfJuoUI_Z4uUnrkZsHHw",
+        "places/ChIJa1ukL80EdkgRhI1r9wFYz4g/photos/AcnlKN3QuAhTXx4y185X8Tf0nbM3CTi0AQgYT_6FSEFUHKt7hQhNGDLKK2gK_MmJruTnmk6he17qX0-thH-VWz-yeSCJQ-NcHpUtgkCHBtFIU7b9gjFIOVndnaCxiyluCtQz0vrjPfZ-iIybFFtKyd7KT0-NsBv7f0QLforIsOAOGunFE7xmGl8nBYcItx8wEk2WtHkTUy_qnl_pdxfrUYdiRyPuSroQcgOSOHVmF6eJE6xlViECasXyi58dcLZ-Q77rZxOzkqXXPuj1dgGDZJx7ms0HdrZ002gdKrsxxZHikMf0hJHesmohvXdxTgkjbgz3vnuwykey0li1qwdwy5gjFuYJV2pP6fvOIWpY8Et5HZUPfHpq77MrkBPZQncewoYjNX1P6gKOsLvM55306sKTM3lHAub7qNX_dLV84pVUZIk",
+        "places/ChIJa1ukL80EdkgRhI1r9wFYz4g/photos/AcnlKN2NO8_ZVGcXQ97IB0MGG14493228VthiuuUMOQqAQGSoP1r_bmirynrMW5w-QW-QiAwI-CZUHXzTYnsy2H7yWk0dzf2Zy9c5bZl9ay9FNA6lKqC4pPYq_w0l_Zb-ellvMVavLfG_l6JXY809bZ9UNDD1dvjajZbtRS0AoVmPNyvqyO_hDXWuVLjBeowuW9tmqWEWrA6JCNJDBpF3g2ElmiDooMCvPISI1kQIi0HLnfp_SdoVJXMZgwZAJ_jU22X54IgG8J3JGOmRhGzuUqyGg4WYgbVk7aDptI0_xOIJIeszxX-BdEDTNgbgCNm3ckwkv7ZEkhuXzR-XW_Azy1wVPCpfdekwSjGJxi8dk9-mcTJL7MIftxuNSSy-EUN6IGFs-FdfOogPYj1kTPaxxLQEh8In9wRnu1mPVyh4JcS_Fvbl5Xd_U0Oe0U8CQ9O8Z0R"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9858194874806537604&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 7:00 PM",
+        "Tuesday: 8:00 AM – 7:00 PM",
+        "Wednesday: 8:00 AM – 7:00 PM",
+        "Thursday: 8:00 AM – 7:00 PM",
+        "Friday: 8:00 AM – 7:00 PM",
+        "Saturday: 8:00 AM – 7:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "The Breakfast Club",
       "category": "cafes",
       "address": "33 D'Arblay Street, London W1F 8EU",
       "phone": "+44 20 7434 2571",
-      "website": "https://www.thebreakfastclubcafes.com/soho/",
+      "website": "http://www.thebreakfastclubcafes.com/",
       "description": "Popular all-day breakfast cafe that welcomes dogs, providing water bowls and treats for four-legged customers.",
-      "descriptionFr": "Caf\u00e9 populaire de petit-d\u00e9jeuner toute la journ\u00e9e qui accueille les chiens, fournissant des bols d'eau et des friandises pour les clients \u00e0 quatre pattes.",
+      "descriptionFr": "Café populaire de petit-déjeuner toute la journée qui accueille les chiens, fournissant des bols d'eau et des friandises pour les clients à quatre pattes.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -571,16 +1072,37 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Popular cafe chain with casual atmosphere, likely dog-friendly"
+      "reasoning": "Popular cafe chain with casual atmosphere, likely dog-friendly",
+      "googlePlaceId": "ChIJX_OPq9QEdkgRwIpAEYl2RYc",
+      "latitude": 51.5147408,
+      "longitude": -0.135402,
+      "rating": 4.3,
+      "reviewCount": 4170,
+      "photoRefs": [
+        "places/ChIJX_OPq9QEdkgRwIpAEYl2RYc/photos/AcnlKN3a4pFkzUheK7xVJQJ0me9HEU6ATA0mXMVL3de8aCUoHKleFxi5vGKvg6mcgs3d1DsnsspSi8emLUkzcc7dXCPzfy-6mFNh9c291nyNUVmZossjd6kthHS10jK246CNNhYwRiKLhRyziAgSFRZ6Jv3oFf8nKXUcYqMa02bRZPnl3VKobG9WNN8wwsAuMuNFrQohOrmYPOYLEvW-jc_wFK7dkrqdTHT02n6CCqwD8SZUV-W_XjOQ6IEljiVPXHstLLMZco7BVUxilPC1NSklEMa9CL1x4hx1_0JOc69VpZzkNH4xG4sPLlWphyCVrHB8Ml04DkXWH6ImksmRHQE4KKFC9bifUmhOvD48gqmTKifP0V3rmSygBttbrHlDUo7fA-CTk_sm1uXiD0EZbEo2c-RaSs6pMa0UtgvdMgemslMNc4y9BcvIXZGOgpxIyO6m",
+        "places/ChIJX_OPq9QEdkgRwIpAEYl2RYc/photos/AcnlKN3rQ-0WhBIXXNUn8NfefVfgjH2jZe5BRrMeXU2Evc5sePEWOheNCB__W_e5jdFINvGJ_uyIkhjfdIECXyO6t8Bsx9i2qY6vTfN80SSH86ZywtqakQJsqe-VVMX6CGynqrn3CaKxSAvR1Skonz9zqxXUUOZ5HYI8HKActHrRZom6Xa230n4pj24hpfvXsOE_rz6je3LpsiU0arOCkRXv4JiJuHnCMwgx13LM9Pupd3Y0PwR7M8JvHpoQxMpDia7nYUD19QKxEZPwTg9xkxrrbp_W2e6mRWQ3h4JN0p-YVTc3OF8S_bSy99rcfCdzyzb9SeQHGs6ggT2YtqkSmNseo1kpS_V6EDRAU-ve_ymlJlG7begmx8IGIsCD6aHm-_2nUOtBAQxCbF1wZyveygwiDn_mjHZ-_wZlbBCPQAaWfV37KNtjfjKsnRV8881KoU1d",
+        "places/ChIJX_OPq9QEdkgRwIpAEYl2RYc/photos/AcnlKN1bEno5AtdvSalU2vDpNWOYpizsGI-bfmpLL6sHoNW7sIdpzRzgHiAUd28EyrXjoga4KEcW1tIFVcRvBAoOISadSRHPn4UmPnurNbRQwgUhQJMLCEbKzLnIiY-We3fnfkoY36EUPr0N_KVryN2YvWOFFh5AdlcangmfTfhFuQcvy1DUMaeuhMqra-9Jw7ni7LCzft1eZwZbKTdh24vpHJoo0icKJozVDd2nnZpXitkUPE4FUg9pHU6Bc7Sxgvz5qOIw1e7GxvMYJ9HEcV7nTS5SuvFATVex5nxn3orqyadeTu90mVr4-FiXxP03ONyVs97ljs2u23vDp_P1_0H_Y9Wtw_Wf48ogfPeHTtqdgF2bXCYaV4vMjFGOFAhX_TXk80BtBwipARAkv329fm7nSQfJtkOc69ePZHcqlTMrnAOeTSmwDkG7ErDmxzAMssIE"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9747327299585346240&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:30 AM – 3:00 PM",
+        "Tuesday: 7:30 AM – 3:00 PM",
+        "Wednesday: 7:30 AM – 3:00 PM",
+        "Thursday: 7:30 AM – 3:00 PM",
+        "Friday: 7:30 AM – 3:00 PM",
+        "Saturday: 7:30 AM – 4:00 PM",
+        "Sunday: 7:30 AM – 4:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Gail's Bakery",
       "category": "cafes",
       "address": "64 Hampstead High Street, London NW3 1QH",
-      "phone": "+44 20 7794 5700",
-      "website": "https://gails.com/stores/hampstead/",
+      "phone": "+44 20 7287 1324",
+      "website": "https://gails.com/pages/soho",
       "description": "Artisan bakery and cafe chain, this Hampstead location welcomes dogs and provides water bowls.",
-      "descriptionFr": "Cha\u00eene de boulangerie et caf\u00e9 artisanal, cette localisation de Hampstead accueille les chiens et fournit des bols d'eau.",
+      "descriptionFr": "Chaîne de boulangerie et café artisanal, cette localisation de Hampstead accueille les chiens et fournit des bols d'eau.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -593,7 +1115,28 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Popular bakery chain, Hampstead location known for being dog-friendly"
+      "reasoning": "Popular bakery chain, Hampstead location known for being dog-friendly",
+      "googlePlaceId": "ChIJGeN8WtMEdkgRm8DhT1Hvx9k",
+      "latitude": 51.5142981,
+      "longitude": -0.1344713,
+      "rating": 4.2,
+      "reviewCount": 1017,
+      "photoRefs": [
+        "places/ChIJGeN8WtMEdkgRm8DhT1Hvx9k/photos/AcnlKN0GPCLuo0Ol09rr-ZA27Hj_cCD-bhdHktGyCzGbgXwvv7RUJ0AhjD0MBNnEJGncKqO1jNirHYd1WqfxqfDRGl96Aa9FFPZA6vUkdBuHlOe6IHcRxMu6kZfdBQ8x0BF3tW3XFtLLtMLiHZ1qBzugRhE_J1Dbpmf0clEdMj5m1ufEmyTqdaU3EcDB93j0ILvNOrpp7QwiKohKhQ1-DdLRo1Rbq4WbjBzeakqQPCD4tjy4NkWf53EIVIlRQCZl3Ig3gXc_tjWCQUNgHoZhq9YFDHJtFQhtsnwS38aFuVpSgFM",
+        "places/ChIJGeN8WtMEdkgRm8DhT1Hvx9k/photos/AcnlKN20q8ovoxh8KPvucG8oDtrcJOUT3WbdUWsmcHNyY3CA-ArcSotVB_r8R2AxieqwcbwuHz9SKfwh1-M5o2hrPZH4HDQkHUbYKpPAGK7DyJJEZC1x17qj_dQQUZzIFRKd5-uhqxvnUR6q1C3TRRPLwd1_8p5_P2v6zs7qe4ksVnsukMCQ7r5Db6p8u1xrxwBW-9Sfz1crAQ8-G5nKLX_mU8HbTcG8SfXWj2YQdr6WeKwZaXn6lAew84I-hkYZ_7GUtCMyOTPzud58N7y4tr_JcpmW9SvmdEhrCurNcJh260M",
+        "places/ChIJGeN8WtMEdkgRm8DhT1Hvx9k/photos/AcnlKN0RH7u4WScjEbMOluMFKreu3sPMiSOf39fW7TF5zQU6_g8TMdo9xpVDck3NMFf_s6569GnBTNicM4p9Zwv6O-BHmWy76lyNPXfdA2cmNTXnCqAZOgpu4uvws3-6O8Q9wIatr0-RTigtb0suGv772LIrKATCA0VSQor6Dmo14ePeR-nT1pdsU4iyCOROP21EQHEpVdjB_IXHQvR9p-265TWHq7f1f1eMTRo_TQeFao1NZWv4mLqUsNpPYhUDWBI_kagDd3-2dYwnJpOKSYCv_y_Wx0c2fhrv2P0iv4W_iRX5L-myXD_FiX9Z6yXzy8GZINU7XCp_MGpzxzTblOwyRNjzohZaNkhNQo-kC5lAyHeo2gf-Dmy6ehcRDpjtAv4xQRHIWAtIVB7p199gmYHM1UHgU5hnVhz5PT4DIsSXhztrYYw9hCERGuKJl7gns5MM"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15692774559107367067&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 7:00 PM",
+        "Tuesday: 7:00 AM – 7:00 PM",
+        "Wednesday: 7:00 AM – 7:00 PM",
+        "Thursday: 7:00 AM – 7:00 PM",
+        "Friday: 7:00 AM – 7:00 PM",
+        "Saturday: 7:00 AM – 7:00 PM",
+        "Sunday: 7:30 AM – 5:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Pavilion Cafe",
@@ -602,7 +1145,7 @@
       "phone": "+44 20 8980 0030",
       "website": "https://www.pavilion-cafe.com/",
       "description": "Lakeside cafe in Victoria Park serving fresh food, very dog-friendly with outdoor seating overlooking the lake.",
-      "descriptionFr": "Caf\u00e9 au bord du lac dans Victoria Park servant des aliments frais, tr\u00e8s accueillant pour les chiens avec des places assises ext\u00e9rieures donnant sur le lac.",
+      "descriptionFr": "Café au bord du lac dans Victoria Park servant des aliments frais, très accueillant pour les chiens avec des places assises extérieures donnant sur le lac.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -615,16 +1158,37 @@
       },
       "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Park-based cafe with outdoor seating, very likely to be dog-friendly"
+      "reasoning": "Park-based cafe with outdoor seating, very likely to be dog-friendly",
+      "googlePlaceId": "ChIJa71iSSIddkgRjPNFBoYqrKk",
+      "latitude": 51.533406899999996,
+      "longitude": -0.042889899999999995,
+      "rating": 4.3,
+      "reviewCount": 2013,
+      "photoRefs": [
+        "places/ChIJa71iSSIddkgRjPNFBoYqrKk/photos/AcnlKN1oeGjos023DSH0b25vpdL52QJwVE6_A28U3GKxqKPPXS-sR66DTSkgcxCltGMWWmbgTwBzzFMwWoGjiQj3GDhn27PNEaVPFS-_a5-kG_QHpX8yDOc19zZzDrbz33GJGkZHYD3qpWPVhv1ljKbQTOiXwEBStDOTDYFSPchJX-NgymJX_uOvQaiJ6jbV-CtvThTdCvIESOrFn_K5pdb6stFpT7yA9QLzoqwGi01VrHAyP97sLK6zg6gsUJkchNy6jJPaxz-_NhOlJ1BZfQTztdQEnUZc9BoNE1I0nCGonuh4sm_9JdlSrtwCrc5LJ8Cp9TNinwPaVI5JDjLTZtCkXxWchXUnIG0afFar__wt5e_o71GWCmzq1WDPof0EnczYXb39Dh3cLPfM4ptz8Dlk7CaxumCjFfegy42zDp5Q2Tq8INS1sYPkYnTSU2Viw12j",
+        "places/ChIJa71iSSIddkgRjPNFBoYqrKk/photos/AcnlKN1ZF7bRxwm-uxhLRrUOPw5rjP5pVGL_sK1JBU7fTGSf16VSnvi-JC5944AyivKoEzXgwbjhxxA6-UsuP-mYn0PzIYsk7Wg5mYRykBQAfXOGZSnxp1OolVgrWdf8EAgOMFksj1fB6aklKyrOG__A04tfH3VuQ2ONUozVuvdNigCqYdzVd0SAm1bpBQu4uhXNSJNGqxzl4SADeqZIta1iB4r1J2A0rxanbgvqSd5N2Vj0NtgPLmuhirEiiUqm0SA8KYsTdu1AJ4c3P_dQs_u6nbSG3s9-EtKCh-Ulg34JPb5LtA",
+        "places/ChIJa71iSSIddkgRjPNFBoYqrKk/photos/AcnlKN3hC8DuUo7LGhbhkB9vNHkTogI_mv2gVpNKmEDy1ggPr3i2RLmWBj33d-JgYW3oj0h7lLdqv4Bun6vnK0SRgsbCWNwwOFZrmu33BraUmEQ_XSiI7cbYdjNGnpI8FbXh-PaxbK8UgVdorcz6Tn0utcSUdLe_n2rz2ziKObyhuAnu4Se-PGF8wTrUVuzPK992PM855haMjqCO3MmWmLDhgoHZ5qFTmoiF8lIrelmhEgm8tzWnS2_ogkLh-c1RAI0vRy-LSJdZioxuGxTaUkysTgK1b9AZ2Cr8p2sm3u-33DBucw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12226193843523285900&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 3:30 PM",
+        "Tuesday: 7:00 AM – 3:30 PM",
+        "Wednesday: 7:00 AM – 3:30 PM",
+        "Thursday: 7:00 AM – 3:30 PM",
+        "Friday: 7:00 AM – 3:30 PM",
+        "Saturday: 7:00 AM – 5:00 PM",
+        "Sunday: 7:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Antipodea",
       "category": "cafes",
       "address": "61 Shoreditch High Street, London E1 6JJ",
-      "phone": "+44 20 7247 8777",
-      "website": "https://www.antipodea.com.au/",
+      "phone": "+44 20 8741 7525",
+      "website": "http://www.instagram.com/antipodelondon",
       "description": "Australian-style cafe in Shoreditch known for excellent coffee and dog-friendly atmosphere with treats available.",
-      "descriptionFr": "Caf\u00e9 de style australien \u00e0 Shoreditch connu pour son excellent caf\u00e9 et son atmosph\u00e8re accueillante pour les chiens avec des friandises disponibles.",
+      "descriptionFr": "Café de style australien à Shoreditch connu pour son excellent café et son atmosphère accueillante pour les chiens avec des friandises disponibles.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -637,16 +1201,37 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Australian-style cafe in trendy area, likely dog-friendly culture"
+      "reasoning": "Australian-style cafe in trendy area, likely dog-friendly culture",
+      "googlePlaceId": "ChIJE1x2d7cPdkgRTjzqutZa-U8",
+      "latitude": 51.4910194,
+      "longitude": -0.22390779999999996,
+      "rating": 4.2,
+      "reviewCount": 654,
+      "photoRefs": [
+        "places/ChIJE1x2d7cPdkgRTjzqutZa-U8/photos/AcnlKN2uUweekeuXZbQpYHNLuEOWdtgwKLr7MMmqAJCRzR4NGVu8yh-RMYJUoNKuVB2f0JunMinRjVZOeDF5zlIE6ubUUikg1hPySPYDcYj4LeK9ajn-1bs3NijBmCZl-nClhTLnzbTwPZWRHLV0QkIy-Cmv9eEo_mzVXbUWuf4WRjqsrd_8keLTU5gASF2FXQ3nXd-1IvKLoMDcQNntsZ1_Z6rXxKGKHFyD-9Lv9SIRl-oBRXfAlPVCxUIuAB-SrI7lKTKg9_YmPoxwIg3X2zV763ARReSsRx3X-35H6FMNy0ry7w",
+        "places/ChIJE1x2d7cPdkgRTjzqutZa-U8/photos/AcnlKN1aXlFvjKdD5-k578sTeTDkFCq9FJIpYnFw_WenFcsMEs7DqxovwOagsOfD6e_6oXqciLOtSoEpwpr0cLwQyQy2hPuLU6nuA5swwZukZQo3_8yfzXNlVvR-eHUMwhzQ76jT3CF1XZ8rB31vfJe64YYgrvyzeADHc7U3v00SWM7AecZnW7FhGtZ3qdL6JlbLbAc6qgtXhPr2bekY5Kr7pDgsfa1yKjlTAagiMC6VPYNx_YBrFSluoIVgC3HchVLR1gTCD43Bf5dXeoY-e7vxustXx7-sFijqtqeavxpdOmVasg",
+        "places/ChIJE1x2d7cPdkgRTjzqutZa-U8/photos/AcnlKN247bSV3G-OiceAs8CnNeBNcTizOTu-Xjv0jNHK_MdNPPZeRfm6VBCQn1iu55PL6CgQRVUHICjN1wcwm2eEPR4sEmiGFMXiQHKnlGRwPsvBDac-v2sXJWhfZk3Tf5x5nbhePV4vM4MZ-3yAR48diYyfukyTTt2sEr63THIjIDwCQpl1MO6GuZMHybh93kuK_7WQ3nHDzDP3WZhFCmHwcjdEx125Pf5kc880tbktdlx-4FjUJWNIVHNgQMwRsbTnSneplVDvzNLpRKBJYx5EY2f_S1JhPg22OK2pfgyl6I063PdETEstPeZ32F8dNycYZyVXFpASOOgzYssNzzcGYuFLL-1eoibRTKk_rjTtd1_a7rgAGKKsTw6q6J4YSqE8AzRKzQ22coQapzCqi5KXTrhbo1GRggOYDfuQa7w0bieHAgzLdnGmLKt-q1fAcw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=5762737076502674510&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 4:00 PM",
+        "Tuesday: 7:00 AM – 4:00 PM",
+        "Wednesday: 7:00 AM – 11:00 PM",
+        "Thursday: 7:00 AM – 11:00 PM",
+        "Friday: 7:00 AM – 11:00 PM",
+        "Saturday: 8:00 AM – 11:00 PM",
+        "Sunday: 9:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Farm Girl Cafe",
       "category": "cafes",
       "address": "59A Portobello Road, London W11 3DB",
-      "phone": "+44 20 7221 3559",
-      "website": "https://www.farmgirl.cafe/",
+      "phone": "+44 20 7229 4678",
+      "website": "http://www.thefarmgirl.co.uk/",
       "description": "Health-focused cafe in Notting Hill with outdoor seating, welcomes dogs and provides water bowls.",
-      "descriptionFr": "Caf\u00e9 ax\u00e9 sur la sant\u00e9 \u00e0 Notting Hill avec des places assises ext\u00e9rieures, accueille les chiens et fournit des bols d'eau.",
+      "descriptionFr": "Café axé sur la santé à Notting Hill avec des places assises extérieures, accueille les chiens et fournit des bols d'eau.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -657,18 +1242,39 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Trendy health cafe with outdoor seating in dog-friendly area"
+      "reasoning": "Trendy health cafe with outdoor seating in dog-friendly area",
+      "googlePlaceId": "ChIJR_W2JuMPdkgRyJM3RwBG_jg",
+      "latitude": 51.5119884,
+      "longitude": -0.20083710000000002,
+      "rating": 4.3,
+      "reviewCount": 3837,
+      "photoRefs": [
+        "places/ChIJR_W2JuMPdkgRyJM3RwBG_jg/photos/AcnlKN2InQjsnMUvbw9FtRmfk8wKj5gZ0rL0hAaCzpR7BpXsqsEODV4Sm4gfQL98nJqTBb13D-R8ozbXM2SMqcSOR8SdnUo7Qy_z9HYICBJu32e41pbQShyuB2szMH0nW8qqDNji9hzVdiG5utB0gnMB8QIvcL1Azpr_iwOqdEllPTACcGpYvaonYQGarXdcnfQfey-CGgqKYBoqwle5ZUqnb3kYX-yJHIouiFCzHlaSD-tbQy-JD3UdUKsBfmk2VJ-HMScgWcB3lOV55hHSgLPkWKA1S4Vvq3xxzH9cMescx81u4g",
+        "places/ChIJR_W2JuMPdkgRyJM3RwBG_jg/photos/AcnlKN0lzzMW_9jXtlz_LYQhkx8TYRSa9-SkHbwQLS0VVtTLJkqCW4MvhGnmKLTEChR1LXulnnC8zff5NaPyCN1-4dMyssDkJLkjyk8wTEqC6ms8NE_CArt2--RxjpZlaCddFFwkceIc6Tq_jWA9yENf1hhnnbCMRvqYaoEuRwAKabUigFcoX65ng2p9JV4-rzVtz7m-a3UThUM-VQNuJoG-i5Ez1jBLibDPN0A0xKM9_H3PBI9c7RlQrn1ylipxq3dWUnLOxCaAWhhRHyd4czxmn_1d3NlprH_zf4n-SuWa7Nlnjw",
+        "places/ChIJR_W2JuMPdkgRyJM3RwBG_jg/photos/AcnlKN1rVZuWPU90XWoxafwKlzBmoeatB_-ida7GJhvNbl3yn5mDcEz99uLvxAQTcFxZ3b4QRYu7GN_qmG6xAY0V8wOEpxRbDxxQGXMwznybU_GdrfskgEJWsotZlXFnRThAlKAp2WFXDOSV2Iz8q0slerX7IPQY8ue9HM7DTatqQjuEH-LaLe0oEPBHNMfzu1Qm_dg4M7LTBiPKd11M2j8usfwKlWIY9anTkojrvrQe7TexnPW_eK1VVOf3wEnI2zQy91UszHtNGu8DjyAA3oKzhKTmo2fVH8US5IyaRGooE9_XL5oWWhmd9MxRnTBMXlbZ02P4en4e-K0ktUBMMNSEecE-4UMrh6IAcyHqTtw1gzB-AVU_gUolfE2CzS9Bb1gBVDPdKRdwaWhsiMPUG2raU6Um3gUFvVdux7ssk1tEo3kZ_aZQWd1o1NhcxsDKpMH1"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4106796877217240008&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:30 AM – 5:00 PM",
+        "Tuesday: 8:30 AM – 5:00 PM",
+        "Wednesday: 8:30 AM – 5:00 PM",
+        "Thursday: 8:30 AM – 5:00 PM",
+        "Friday: 8:30 AM – 5:00 PM",
+        "Saturday: 9:00 AM – 5:00 PM",
+        "Sunday: 9:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Workshop Coffee",
       "category": "cafes",
       "address": "27 Clerkenwell Road, London EC1M 5RN",
       "phone": "+44 20 7253 5754",
-      "website": "https://www.workshopcoffee.com/pages/clerkenwell",
+      "website": "https://www.workshopcoffee.com/",
       "description": "Specialty coffee roaster with industrial-chic interior, dogs welcome throughout with water bowls available.",
-      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 sp\u00e9cialis\u00e9 avec int\u00e9rieur industriel-chic, chiens bienvenus partout avec des bols d'eau disponibles.",
+      "descriptionFr": "Torréfacteur de café spécialisé avec intérieur industriel-chic, chiens bienvenus partout avec des bols d'eau disponibles.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -681,16 +1287,37 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Independent coffee roaster with casual atmosphere"
+      "reasoning": "Independent coffee roaster with casual atmosphere",
+      "googlePlaceId": "ChIJB4XG6x8FdkgRYgd8lvPLV4E",
+      "latitude": 51.4947532,
+      "longitude": -0.14828439999999998,
+      "rating": 5,
+      "reviewCount": 21,
+      "photoRefs": [
+        "places/ChIJB4XG6x8FdkgRYgd8lvPLV4E/photos/AcnlKN1EUpvxihBLKVYtU1R5ooIq8wnsN2ca26KMABjjK-4h96pr0aT_SgLtFOfkPpJWtEqBvPCpLrN8lIORdxJe6dggNhso2PkyxPQrKfu60TgHUKHmSoPoWQnH9EMBQ2yQAHFzY9z36kigibW29uCoR32unX1gZr4XypwlzQg8nHPRegrHDkUJ58KhFAg1T1lDttDtdVfOxGKhxuNC7beUSa5ruBuWhG9PJu6rsX9ame98pUETwtgQWNWDmwLsdNVsXhL_Ym1-1VFLFoyYqjKW9iqekJLCwOmYb08svlSetUdI1dv2zmUjEgSsNvGES-xnWgNlbnlQVZ_DU8DSfCDEuhcfum-uAy9ed3_2QIzblvGE-6kXPC7LJpWXq7IoZE2mVzzRH3juMC0LpbpdeihdZou0uNk0GCoDr_Vc2cjAKjm70510rQmjv-tnvMqYJ4BN",
+        "places/ChIJB4XG6x8FdkgRYgd8lvPLV4E/photos/AcnlKN1Tq5EWs3TItMYOZ5wObChtJBve7EN-kTCRJe7hNZRkwXHcJjWnt6Z2KVwPic1Bh2vy8afPDV4YX6Duhs6pykYvom__L6KSg5vc-i4SfrZZ_u0rbTA81PdQJ5OEA4BQLFdMf9L5wE4B4rpw2yJfd7b_3Y9uS2DRlMYlERIFeCCSCRltpWl-gxBEeTcQmHLuhn1iDsyrQjdIcOzVWEZ55-14MyHiAhPRUyTW_a87QRHgp2GjOGq9Spal27d77c7u6io2XbMUB161k1tgxYRaMC_9Ss6KP8TP1HV6cGoEa9qeV1UDzkenwT2WPQfh2sKWQ8AB788crVWrIoeS_BZr95wGlsT-78Ouf_SJOr3JzjV4ZYGyf6H_ga81Vwie4IwKv9GE9K_-ffqdtFpQUc9Jr-wItnuYDbfU6b5p6fUHhO4vuHiJGH5AKb81OTPIu5K2",
+        "places/ChIJB4XG6x8FdkgRYgd8lvPLV4E/photos/AcnlKN1aSFitg3MsqlecJkJzoerPVCrHnccfa7gAR8Qb0ieEp6u9h-JSB9kmxKCirIqhFZf1VrK88uA9tFchxa80bUzXAI16NNjpvwq3zEOLj-fn3vygy6JFgfZ_OAMypPBJgjOE3V1e6UDQdnXTCpIlesgSMGE1xSy078z0EPUptntjR74YK-ngvjSFPCJqloboy7AzTArJgX2-UMohQKfYSdhYc_UO3ZVCXoPd4rbEv4oA-0XwhVpwGDW5Y3xbkFMfntS6Q_OnwtyyWu_YUZktOHLaVqXS9AZJPS23_mw3_gzm9gqy-ccnexsuY0AQUEy7f0HpKg4nMa5ANy3EuIL9HDo9UKvGujVilsTqwnNcK0d9Skq0G1i-kKM0BBqaWpiilt02wCiw0nb6XoPY9X9x9YECc9ZaEC9bzHe_dxY3hOwJUQQuP2vAcZf3LF7rT0YU"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9320142200928733026&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 5:00 PM",
+        "Tuesday: 7:00 AM – 5:00 PM",
+        "Wednesday: 7:00 AM – 5:00 PM",
+        "Thursday: 7:00 AM – 5:00 PM",
+        "Friday: 7:00 AM – 5:00 PM",
+        "Saturday: 9:00 AM – 5:00 PM",
+        "Sunday: 9:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Zetter Townhouse",
       "category": "hotels",
       "address": "49-50 Seymour Street, London W1H 7JH",
-      "phone": "+44 20 7324 4544",
-      "website": "https://www.thezettertownhouse.com/marylebone/",
+      "phone": "+44 20 7324 4444",
+      "website": "https://thezetter.com/clerkenwell/",
       "description": "Boutique hotel in Marylebone that welcomes dogs with special amenities including dog beds, bowls, and treats.",
-      "descriptionFr": "H\u00f4tel boutique \u00e0 Marylebone qui accueille les chiens avec des commodit\u00e9s sp\u00e9ciales incluant des lits pour chiens, des bols et des friandises.",
+      "descriptionFr": "Hôtel boutique à Marylebone qui accueille les chiens avec des commodités spéciales incluant des lits pour chiens, des bols et des friandises.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -703,16 +1330,37 @@
       },
       "priceLevel": 4,
       "confidence": 85,
-      "reasoning": "Upscale boutique hotel chain with known pet-friendly policies"
+      "reasoning": "Upscale boutique hotel chain with known pet-friendly policies",
+      "googlePlaceId": "ChIJr6-6s1EbdkgRwChbpZiwqqA",
+      "latitude": 51.5230962,
+      "longitude": -0.1038718,
+      "rating": 4.4,
+      "reviewCount": 1034,
+      "photoRefs": [
+        "places/ChIJr6-6s1EbdkgRwChbpZiwqqA/photos/AcnlKN2WTjztNqeISSuFUqmuU8oCAyaVPjoEPNb-AFLoSxOVX6Rwzegazxl1hbMVjfNGNfjD9mFZCzQ_PO9EbMXJF1hzDN-Hd0h1lgbCttn2BnuKd-pqn4c_GUirLFtfOPbRF1B6ji5Ehk4GzeRQPcS8RIP620P1me90uGyzrlLMw88bWLBRadpQnvIOXzFksADjXvWrdy8Zt_0Snq_yRI1JFg55onQpXMYeRFhoBz19hv75WCfa2Qq5Lixh-dv4fpW4fbqXwPpM7ZJQSeX56D8423ypQtba0t4E1IRbImS-CZJRegY6Ddlz_EgL8Se8fyqgYIQUYVT03HglqiPkOab6TUQI_JEmk1LLQMWwjOice6jRUHpAEIbSvkkafuJTyHe4dIcaYrUpLNPOUvkQn_E2s2-lswnIJ1kQItIfUosEE_N0txGg",
+        "places/ChIJr6-6s1EbdkgRwChbpZiwqqA/photos/AcnlKN2y6sMwaytg8FDFvEAY24zmv00aCZZv94H3atW6ZeP1B-I3CuMLmfBLRMvopKxmJ7DjUok1wgM0GqeWpPYYX42FgEdbCxO0mjgWN9Mjid0CsC-pks-YCu8LLEM2pnBflu5z74ObUlz9izykhDhM364IcMS5c9SZL4za8_npraHCU3oJy3N0TO_ojIuVkh5Znh8dpKPhnYHHM6q05k1wPgqo5jAhNeWwBqC4kKxK1HxG_vo3e1RnLfPW-8gg4VsAgFBAR4qrefDGncEijCnaKZPPGMtjzy2U5m2DJe8nN5Q",
+        "places/ChIJr6-6s1EbdkgRwChbpZiwqqA/photos/AcnlKN0Ey51jjX4UzlSTbFGnS4NCy4g_FjjV7I2YbqDh6OEPgRfcNDTawFHqeND21oYc4HdnwyuzC_8KTb82SvHOSQEnE4iJlaWOuHvCuUj1v7v88llYWDE_Hv4-2bxovngh0tWSMNqrvsviHhh0GaS1xWTueLUH03ez24C-aYe9FD77h2-o7W1fC_saCRFZlBP3KxdCSZTrINKyEjxUAfsSMUaMGVjmfQw5cAoElkZlMxArA82ZFfi9KXKuePBLHgvh0WIpGps9OGSFNR33RMIUgflUTFiyG76K5kNSWHCpCeDp8w"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=11577259961765013696&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 10:00 PM",
+        "Tuesday: 12:00 – 10:00 PM",
+        "Wednesday: 12:00 – 10:00 PM",
+        "Thursday: 12:00 – 11:00 PM",
+        "Friday: 12:00 – 11:00 PM",
+        "Saturday: 12:00 PM – 12:00 AM",
+        "Sunday: 12:00 – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Hoxton",
       "category": "hotels",
       "address": "199-206 High Holborn, London WC1V 7BD",
       "phone": "+44 20 7661 3000",
-      "website": "https://thehoxton.com/london/holborn/",
+      "website": "https://thehoxton.com/london/holborn/?utm_source=google&utm_medium=local&utm_campaign=hotel-thehoxtonholborn",
       "description": "Modern boutique hotel in Holborn with dog-friendly rooms and amenities, including dog beds and welcome treats.",
-      "descriptionFr": "H\u00f4tel boutique moderne \u00e0 Holborn avec des chambres et des commodit\u00e9s accueillantes pour les chiens, incluant des lits pour chiens et des friandises de bienvenue.",
+      "descriptionFr": "Hôtel boutique moderne à Holborn avec des chambres et des commodités accueillantes pour les chiens, incluant des lits pour chiens et des friandises de bienvenue.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -725,16 +1373,37 @@
       },
       "priceLevel": 3,
       "confidence": 90,
-      "reasoning": "Well-known boutique hotel chain with established pet policies"
+      "reasoning": "Well-known boutique hotel chain with established pet policies",
+      "googlePlaceId": "ChIJq--bjDQbdkgR6P4fcGkOnGI",
+      "latitude": 51.517229099999994,
+      "longitude": -0.12200189999999998,
+      "rating": 4.5,
+      "reviewCount": 3638,
+      "photoRefs": [
+        "places/ChIJq--bjDQbdkgR6P4fcGkOnGI/photos/AcnlKN10ux6SGXwJ4IF76TuDD0XPJ0xPfVFP2IyGLnJ2tGA6g_aXFZCyBDPyaGkb7BWY1OQaFMl_v9c8yX2Hzm2D3fn5DMTCayj08uQCvXZN-o-7dwj12zjPlID_b-weRxy4ftrZihxOToDXMk9VVvJHl2c_IqpNlLptq8WMRs8Zeq7lmaWHJVfj4GU6_v7n_lkwyrA_a9Uj_N3CSZzURb8aIjEL6dR8LWiokc7tpeQ_JENyvPQZQT74HO3vSvLEJrBVqpQ2pQ-tWzatP1Kn_zIIOEeZUBTltll0YE5HD4Z_zYSewj_uLKwce2_qJuDPjoRUAkrBTEggNn1EDMIGz-fxQ5IWPtvHM5PW8O-2GRaHMvEuWh-HdabpJlSALlF8SZJWQQeQ3nBk6Yril34Nj6gHJ6dvmvSNWM5qkDAnrMN4Yuc",
+        "places/ChIJq--bjDQbdkgR6P4fcGkOnGI/photos/AcnlKN3QgHIZ7gGHzHOfhnLCHmduaEHIt1SAOWnGgR7ost9pcaOt3OSDsHqFxZdWCnEN8CQkRgOh01e3lx2HzVQm3wAodsGEsFYdtI3F4PCRP6DVFCPOR_XaAeO3V2GiXwHHtMawNLLs87giCY9-KjBYSB2aEDiFnuGOzvZV6ixwmSN5Eob7hjpgmxi38VABaQyNz2YAbXmmPRij0x_s-JAj5XonE0Qr28uUK8Gtk_H_Nmq8_F84Nv-Ar2KQuSprMfNRY4s50LJM2khMiAtO3ci9-EVWWrgP9EvU86Zcz2ZgU1kKrA",
+        "places/ChIJq--bjDQbdkgR6P4fcGkOnGI/photos/AcnlKN2PtTb4I9Pnv8yLMWs8MrjXic2NBNMU-LYbsP3RwfX49fMxJuF1UxX3tw9QatZrqOmm1rmpzYAFqj32ySoQmFCD8BbdaK8AxI0_ZEvW0gBK1ckAVKYd0SK2K1Sdro4XZsKA1IbtTuoC8xu7choj3dGpH10v6G17ZlDVDZneNiaV1XYNQriultCJ-IoAN_vcqkmiaH2RMjMAxH20V-iNHr7J3dL7jK-EEBR6C2PnJkVdDHmEhLKoIcdS6MUocaSesW5CNjDsbQwCCJYcyar31iJJQsnnLdfQLNbfkmQO_hdl0g"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7105570158099300072&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Claridge's",
       "category": "hotels",
       "address": "Brook Street, London W1K 4HR",
       "phone": "+44 20 7629 8860",
-      "website": "https://www.claridges.co.uk/",
+      "website": "https://www.claridges.co.uk/?utm_source=google&utm_medium=organic&utm_campaign=local",
       "description": "Luxury Art Deco hotel in Mayfair that offers comprehensive pet services including dog walking, grooming, and gourmet pet menu.",
-      "descriptionFr": "H\u00f4tel de luxe Art D\u00e9co \u00e0 Mayfair qui offre des services complets pour animaux incluant promenade de chiens, toilettage et menu gastronomique pour animaux.",
+      "descriptionFr": "Hôtel de luxe Art Déco à Mayfair qui offre des services complets pour animaux incluant promenade de chiens, toilettage et menu gastronomique pour animaux.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -747,16 +1416,29 @@
       },
       "priceLevel": 4,
       "confidence": 95,
-      "reasoning": "World-famous luxury hotel with well-documented extensive pet services"
+      "reasoning": "World-famous luxury hotel with well-documented extensive pet services",
+      "googlePlaceId": "ChIJcZY1XAAFdkgRieYQg6UqpzQ",
+      "latitude": 51.5124212,
+      "longitude": -0.1478613,
+      "rating": 4.7,
+      "reviewCount": 4014,
+      "photoRefs": [
+        "places/ChIJcZY1XAAFdkgRieYQg6UqpzQ/photos/AcnlKN0vFmJniJsU98KhreHBjn68Qs4mR9V0g6O2IxD6HBT4sstvQdZMHbFvAg6SSzFC1rdvUAYJvGNRRJWt6sT3LlWOylVCk9BkrVOklq_XQ0to-GjSzTlMlA2fc1S_Q2hJjbdzTe1dSBxlPGuAVyO1nHOGzVe0DYJ_Co599vBvIl6YfxZfbm0BySSprj5EqbrHRWuo-RCcJv9IDU4WvheZXVg8aKs9WzPFP_M8YEe16orQZzXWzcH4VTNfyf5qzeCZYj9urUZ0aqAnn0uddHn94KFdObqFdfvuEHD8fgy1jKEsNA",
+        "places/ChIJcZY1XAAFdkgRieYQg6UqpzQ/photos/AcnlKN1ZNmf-9d5YdTrnmrqnJPkpboHXPCsErfyd1i6Ce5xrOV7Cj9D6YGnFTkDtj7WANrRr0PAijEIrPRLwn1cSnQ59bzbOQaBJcI0Rp1Ij3WuFxdsdNZPnwQXjX5SfOQpRSOQMzEVZHNxxcCo8B3N_5_AP58WGlmS5KkfIUxpEr8M-rxBMyJQF8nSdLpgqSi8C8tRY3qL6htjj3_FUF46r-dH-m_54RPUoE2HHboAI7vFfrXEvP3FmaLfCwVUHA7-NL28YeenisczkDYh66RdZVRtTk63NA0Z60TltbFSphSlfHQ",
+        "places/ChIJcZY1XAAFdkgRieYQg6UqpzQ/photos/AcnlKN1WxbrISuyJNTzZ8CheDhaKD_KlOivVvpeirfvFHzmw7LlcJwJyc5OH2KQZqvtrdABf1wQY8iU2YYAFIdGgr3ZmzkBGWIunYJzQ7XVy3TcxGY3BNWLYzh97qPWk6x1QtM7FeNhPsX2EqxnAJ-P_QcuSdgJ20-Mg-xNAAAtHhFYdRJ7aF8R33PsXX6pVOeznrfoDKDklIJjaIWgKLMsqpGGZwZxcqwNvpd58RiNggpL0Assy6W4mMxlyzpSxlA2NkoV7bmEmTJHdrOZyMa5gx6TZmkwub7bP8Kt5XTvo5V8_-A"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=3794048101439825545&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Premier Inn London County Hall",
       "category": "hotels",
       "address": "Belvedere Road, London SE1 7PB",
-      "phone": "+44 871 527 8648",
-      "website": "https://www.premierinn.com/gb/en/hotels/england/greater-london/london/london-county-hall.html",
+      "phone": "+44 333 321 1246",
+      "website": "https://www.premierinn.com/gb/en/hotels/england/greater-london/london/london-county-hall.html?cid=GLBC_LONCOU",
       "description": "Budget-friendly hotel near the Thames that allows dogs in rooms for a small fee, with nearby parks for walks.",
-      "descriptionFr": "H\u00f4tel \u00e9conomique pr\u00e8s de la Tamise qui permet les chiens dans les chambres pour un petit suppl\u00e9ment, avec des parcs \u00e0 proximit\u00e9 pour les promenades.",
+      "descriptionFr": "Hôtel économique près de la Tamise qui permet les chiens dans les chambres pour un petit supplément, avec des parcs à proximité pour les promenades.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -769,7 +1451,20 @@
       },
       "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Major hotel chain with clear pet policies and central location"
+      "reasoning": "Major hotel chain with clear pet policies and central location",
+      "googlePlaceId": "ChIJLTMzFXqv2EcRJVvr2rP600M",
+      "latitude": 51.502499699999994,
+      "longitude": -0.11807089999999999,
+      "rating": 4.3,
+      "reviewCount": 3487,
+      "photoRefs": [
+        "places/ChIJLTMzFXqv2EcRJVvr2rP600M/photos/AcnlKN3TNccaCHS2VTqDNqDlDW_lYyamoBAHJvKEIDCFpVybR_1reXMrX_YTAgcUIh7-v7zacUCxtGYuAT2_a7qdulkFQ4cz-F4va-3GcuBqlAjJJmhV7DdAFSMzxu8BqiHvzOpUH-TeEMjc-pI2zP8d9Lhm1NU1sk6vCAw1JbYr14fTZNjLUjDJ7tj6aZFFrf1amUD8jjV5NjZ1pp6Zj_GC6bTtNhF4-pu-0f-0yIDRdjTnepDRlXz3eNgid451TfN7-ptNK5wtzC3QBByElhno-L4RwjZD2DserZ6Cg1nOfNoKVQ",
+        "places/ChIJLTMzFXqv2EcRJVvr2rP600M/photos/AcnlKN13mdrx_8ZkJJJMyxKle-_O_3uUdKbVyQx0UX4WtcS0YmTKN4wyLSWmN2ZB7fvI2A0F4ATl0_ADZbOE7ESQNlC96q67vxomdNj73Sx2aJNq9ovraBo9UIBAcMRPTpiU1EbEndDH_pVivYe2_p25jIG5Nk8loydkzQ61KCVM-1OeP99bAN38dOf9LqqwzTpwK9xE491Sm7BhzLB44qv_L-2CCMbrDu3ezFZNwknCTdsfo6FzGBpdnLQ_a25IOiUjGMzh_auQ7Zm5wEXDZ6LMO0uDBhey54dys5-9oE9_WbcrnQ",
+        "places/ChIJLTMzFXqv2EcRJVvr2rP600M/photos/AcnlKN2tlSwF-G7G9Fr2o_XEqzgqh6XiCYjI-MLPWPa-_gKH9Lc_8WIGQStGozTI_3MgsB1tDPbCmHlnIFvgMbqBu83FCEDN9Zr2nmXFugD6gQAhUkE7Ij9dF11AKPT5iDd-6ixzvkGpJ7Ya8I41AtK5nafFR55rymdWn0y7Y7arfYfPPFdzTmXUXysqPxz53fxzbUW6pKTJjQN92IloRL_-c-D1b93jLNyCoqIW3fRry2T7yA3cjq-gu_8S3xldAixDTMO0Z5IBJFspSPImE9Yxb41CppOfR1QSWE1rrQ9fB5v0mg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4887525671006067493&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     }
   ],
   "count": 35
