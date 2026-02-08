@@ -18,64 +18,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const GALLERY_IMAGES: Record<string, string[]> = {
-  restaurants: [
-    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=500&fit=crop',
-  ],
-  cafes: [
-    'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=800&h=500&fit=crop',
-  ],
-  parks: [
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&h=500&fit=crop',
-  ],
-  hotels: [
-    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=500&fit=crop',
-  ],
-  vets: [
-    'https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1612531386530-97286d97c2d2?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=800&h=500&fit=crop',
-  ],
-  groomers: [
-    'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1591946614720-90a587da4a36?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1587560699334-bea93391dcef?w=800&h=500&fit=crop',
-  ],
-  shops: [
-    'https://images.unsplash.com/photo-1583337130417-13571c4e8ee2?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1548767797-d8c844163c4c?w=800&h=500&fit=crop',
-  ],
-  activities: [
-    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=500&fit=crop',
-  ],
-  beaches: [
-    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800&h=500&fit=crop',
-    'https://images.unsplash.com/photo-1520454974749-611b7248ffdb?w=800&h=500&fit=crop',
-  ],
-};
-
-function getGalleryImages(category: string, mainImage: string): string[] {
-  const extras = GALLERY_IMAGES[category] || GALLERY_IMAGES['parks'];
-  const all = [mainImage, ...extras.filter(img => img !== mainImage)];
-  return all.slice(0, 4);
-}
-
 const DAY_NAMES = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -122,7 +64,6 @@ export default async function EstablishmentPage({ params }: Props) {
     .slice(0, 3);
 
   const category = CATEGORIES.find(c => c.slug === place.categorySlug);
-  const galleryImages = getGalleryImages(place.categorySlug, place.images[0]);
   const reviews = generateSampleReviews(place.name, place.rating);
 
   const featureList = [
@@ -163,7 +104,7 @@ export default async function EstablishmentPage({ params }: Props) {
       {/* Hero Image */}
       <div className="relative h-72 md:h-[420px] overflow-hidden bg-gray-200">
         <img
-          src={galleryImages[0]}
+          src={place.images[0]}
           alt={place.name}
           className="w-full h-full object-cover"
         />
@@ -189,19 +130,6 @@ export default async function EstablishmentPage({ params }: Props) {
           </div>
         </div>
       </div>
-
-      {/* Image Gallery */}
-      {galleryImages.length > 1 && (
-        <div className="container mx-auto px-4 -mt-4 relative z-10">
-          <div className="grid grid-cols-4 gap-2 rounded-xl overflow-hidden shadow-lg">
-            {galleryImages.slice(1).map((img, i) => (
-              <div key={i} className="relative h-24 md:h-32 overflow-hidden bg-gray-200">
-                <img src={img} alt={`${place.name} photo ${i + 2}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Content */}
       <div className="container mx-auto px-4 py-8">
@@ -509,17 +437,14 @@ export default async function EstablishmentPage({ params }: Props) {
           <section className="mt-12">
             <h2 className="font-display text-2xl font-bold mb-6">More {category?.name} in {city.name}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {similar.map(s => {
-                const sImages = GALLERY_IMAGES[s.categorySlug] || GALLERY_IMAGES['parks'];
-                const sImg = s.images[0] || sImages[0];
-                return (
+              {similar.map(s => (
                   <Link
                     key={s.id}
                     href={`/${city.slug}/${s.slug}`}
                     className="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all"
                   >
                     <div className="relative h-44 overflow-hidden bg-gray-200">
-                      <img src={sImg} alt={s.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                      <img src={s.images[0]} alt={s.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                       <div className="absolute top-3 left-3">
                         <span className="bg-white/90 backdrop-blur-sm text-xs font-medium px-2 py-1 rounded-full">
                           {category?.icon} {category?.name}
@@ -547,8 +472,7 @@ export default async function EstablishmentPage({ params }: Props) {
                       <p className="text-sm text-gray-500 mt-2 line-clamp-2">{s.description}</p>
                     </div>
                   </Link>
-                );
-              })}
+              ))}
             </div>
           </section>
         )}
