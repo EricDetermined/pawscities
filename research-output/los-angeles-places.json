@@ -6,10 +6,10 @@
       "category": "parks",
       "address": "2000 N Fuller Ave, Los Angeles, CA 90046",
       "neighborhood": "Hollywood Hills",
-      "phone": "+1 323-666-5046",
-      "website": "https://www.laparks.org/runyon-canyon",
+      "phone": "+1 818-243-1145",
+      "website": "http://www.laparks.org/park/runyon-canyon",
       "description": "Famous off-leash hiking area with three designated off-leash zones and stunning city views. Popular with celebrities and locals alike.",
-      "descriptionFr": "Zone de randonn\u00e9e c\u00e9l\u00e8bre sans laisse avec trois zones d\u00e9sign\u00e9es sans laisse et des vues imprenables sur la ville. Populaire aupr\u00e8s des c\u00e9l\u00e9brit\u00e9s et des habitants.",
+      "descriptionFr": "Zone de randonnée célèbre sans laisse avec trois zones désignées sans laisse et des vues imprenables sur la ville. Populaire auprès des célébrités et des habitants.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -22,17 +22,30 @@
       },
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Iconic LA dog park, well-documented and extremely popular"
+      "reasoning": "Iconic LA dog park, well-documented and extremely popular",
+      "googlePlaceId": "ChIJhX1uVuC-woARQNzq4-b1Prk",
+      "latitude": 34.1125932,
+      "longitude": -118.3511659,
+      "rating": 4.8,
+      "reviewCount": 5573,
+      "photoRefs": [
+        "places/ChIJhX1uVuC-woARQNzq4-b1Prk/photos/AcnlKN1Hl6BvWqeaEcIfD0zd4HUZh7WoAeu0Vlx0gMDJgLopChtQjZVfpN1WvDagrvBytF0a6UnSluy2FtRomJJI890piNUJYx0wkx_YYiaxAfEaTX1P2L4IH3cP7FZJwR5m22ttc7skK74vUsSgeTjqJ763tsg4xcJfPeI_ODjuvcwp0uvF-gpLK8FpVl1qgzViLtj6ZA3ynHz66Vr5dkiJ10OaNccmco5Oz0wGJE1cjWVjIhzkgBLsAcJD7Nn_yQYypbdvjFv7Jgbom8LXooEJf-Hmat0UsD9mQOuFZe_8Ad9rJHQovVq5NYvTKDZptugHFjbwqLIdd9ymOUTAzePjdoDqdSbzGTr1kMKoQDIJN54rKwZYdeSdKCfSamQE5oPxxmRltWeHfhI9rUKmwc-vvt7UJ0SOECgqrXS6nRJUMv2Mig",
+        "places/ChIJhX1uVuC-woARQNzq4-b1Prk/photos/AcnlKN083FIDqAIDmCRM1bAfPv8IN7GgNjtXF7NgTpwJIFDRLVI0dg5Mns3fY5slSBNoUUEFThJ9jlZe3v7NQVbFlfIL5V8VVmdrpg_ya0kqYjIa3lCphnfMhecm4AQEUu8mXo9QDnFxFobI-ztu0n-whO1Q163AIlr7chZDmCjkLWJ_OHabBGgxDaJpEeom9Gux8R3LYtCU2gPSbSUQUXdh3kSkuu1Ye5sET-yf3SqYBJkjqme1QZeeP24Z_-irbMmTCDY71orwJ7yoJQhvqmqCGOc_XxZ0Z6zK8pOXyEGArKl3lQ2zoYuOX83OIupPseQip_fCeQvrqvSy1bakzdtrqJfDO8YCo5duYeqKupNn-tKwDHfZjf40D4AgQgkZnLU4EwGcCGdCp0JeMEkoZEbyVNwF_Awryss3wfzjWU6hOQs",
+        "places/ChIJhX1uVuC-woARQNzq4-b1Prk/photos/AcnlKN3_hNd2Yb_akm9ePZcdwNtutjqslGCVFySMO-rFDfsnO8s5BG297N7QjDmx7Ey7X9oPHKSbD0M2TL3gqAAwrCW4E5TQY5DxwXYiqWlHRJWEmySJvUUWglYEwa5SSGFoxOXxISRoDa_tkMdWrNNg39OQEXbXgohT_949RbVRXNgv-eux04pd_njb66_53dNH8eusau2p_xufTuAiHVSNLDG1F9N73WfeWej1ynBa7OFRiC8q_jh_3-7NxCJYYcLyWV5h2-xbStiR2cENId6bYGhguh6oJ60qKF00VohR3RgvWBoEk1uq8Fkat8CSbchLXoUqXUhEG0Wp9zs3bOQ0Os2FLtz_h4s4oV1Vc3Oh0-xPztjYO1um60R7WfCKsy0qxDuoe-ASH2e9OzT0NacArPJ1ScMlOs4yKXzDP3ZRQth9PeNu"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13348376717587831872&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Rosie's Dog Beach",
       "category": "parks",
       "address": "100 W Dockweiler State Beach, El Segundo, CA 90245",
       "neighborhood": "El Segundo",
-      "phone": "+1 310-322-4951",
-      "website": "https://www.parks.ca.gov",
+      "phone": "+1 562-570-3100",
+      "website": "http://www.longbeach.gov/park/park-and-facilities/directory/rosies-dog-beach/",
       "description": "LA County's only official off-leash dog beach where dogs can run freely in the sand and surf. Open 6am-8pm daily.",
-      "descriptionFr": "La seule plage officielle sans laisse du comt\u00e9 de LA o\u00f9 les chiens peuvent courir librement dans le sable et les vagues. Ouvert de 6h \u00e0 20h tous les jours.",
+      "descriptionFr": "La seule plage officielle sans laisse du comté de LA où les chiens peuvent courir librement dans le sable et les vagues. Ouvert de 6h à 20h tous les jours.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -45,17 +58,38 @@
       },
       "priceLevel": 1,
       "confidence": 92,
-      "reasoning": "Official county dog beach, well-established"
+      "reasoning": "Official county dog beach, well-established",
+      "googlePlaceId": "ChIJMV5M_U4w3YAR_icBoHviVX0",
+      "latitude": 33.755441,
+      "longitude": -118.139697,
+      "rating": 4.7,
+      "reviewCount": 8224,
+      "photoRefs": [
+        "places/ChIJMV5M_U4w3YAR_icBoHviVX0/photos/AcnlKN2gjSqC2qxIDQIktBHrtQXZ8e9ck22wefNI0indx-S3AA6t4sbIHM05w0yf2qctyyPmxBhePAYt420W-2JBWAvN3VU3sEfwtHSsUtHtf6SQ1Np9VoVRji-zLfdFvVGslj0CUDROEJ2231wYSEtlIwcqXGtRHT8LigwbUcwmWbE9H_kxWX0cV0dqtAf1lo62UH-MYslFvYC2yQDFLqkfJoRy1YB7_JlMmXhYrxBhjlh9Rqt-BFUXRUED3pEjpSXeM1xgNUqDqfjNgu1Jndz3K4y-jQJhcVg2R33eW8gybxr1EzXlpVLt0LmmtTTDf2b_0ecJIXrOXyQtqpozHXYNRZgbBSVCR5sTM9cP0SAWEaUYuy2cqbKE7mssoKZ8HqCD_01v4g4JLiphKanrLOB60zdsKDoSoFkAq_HeO2SkzyHingFMHAM28KBN2jiTW7I0",
+        "places/ChIJMV5M_U4w3YAR_icBoHviVX0/photos/AcnlKN0gyv5cPejqMDZTLdUdtz2ZahcV5-NTwuQaDhOn-EBfpeAl75f1_oMRVuOm6jMs8w6r-Xxd7w5X2mTLsHmDeZlGkLxarm2CxG-NVpSGpb1gUT2d4x9BNRGFFJv48YoKAfz6ILXdihW3MmgXqQ3fyRIR9wicv-C26AfWnpUS6vkwJbUCQ_jZq_Rq1VvgEJofoSmeAWPEmHD9QsnuR8wQkYl8ScK4eRy73fjRW_lJFWfNgOduYMnpJP8za4IrqfXFj_claqNa550y2rBm8k_j-GfIs2RnsPy_ZWYQnurvXN15G_lnHkvVvSOUo-9GxeqhF2GTGQUvoa8_4FzNmi1M9OFVIU-anTvGwbFTuD90scPIBw_buzax6Zkxn8oRh6ibu4z_3E09Wb5FvXwXsvcKtuD_dlQjc8WfYb6mooAHQE0Bm54",
+        "places/ChIJMV5M_U4w3YAR_icBoHviVX0/photos/AcnlKN1ZVVVBMCROIpX2cWkLDk1ktpIgn6ong-C1TeUMBGjV-GkEz4rjRUFQxUurZwrybMMu7lG4U_x-0eSD_atoZJITzPMuK7_KGbu33-zUSyEJEkImKPqedEW9W1OjoMaJP-DBBlGVSgCa2736-RUKOAxzXqlGhkukKLynxNv1l80YTI1wBRUYg_GllX50Qwdegdesz-JbAHZ4axeLbEiIUkyvYBZOhpKsqwEBGMyGJic1gVEKanpXcjIaHWSCps3jCYGys1q6_Hn2kB-cOdw5Lrgo7Bkug0NdUPN2IRcbMGg2g9S0yOA8bKD7njS-irT5M5ppEHJGJaZsWPnagwa94qzWPUBcTd3BHZqsUszD-VI9G8ft3KNr8X2mijEWeAnehaAJGWf3CMeRYQllsocTmPNDsoBtVvI-YVtMhDlxtxWVwg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9031373648354682878&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 8:00 PM",
+        "Tuesday: 6:00 AM – 8:00 PM",
+        "Wednesday: 6:00 AM – 8:00 PM",
+        "Thursday: 6:00 AM – 8:00 PM",
+        "Friday: 6:00 AM – 8:00 PM",
+        "Saturday: 6:00 AM – 8:00 PM",
+        "Sunday: 6:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Laurel Canyon Dog Park",
       "category": "parks",
       "address": "8260 Mulholland Dr, Los Angeles, CA 90046",
       "neighborhood": "Laurel Canyon",
-      "phone": "+1 323-913-4688",
-      "website": "https://www.laparks.org",
+      "phone": "+1 818-766-8445",
+      "website": "http://www.laparks.org/dos/parks/facility/dogparks/laurelcyndogpk.htmm",
       "description": "Large fenced off-leash park with separate areas for large and small dogs, plus agility equipment and plenty of shade.",
-      "descriptionFr": "Grand parc sans laisse cl\u00f4tur\u00e9 avec des zones s\u00e9par\u00e9es pour les grands et petits chiens, plus \u00e9quipement d'agilit\u00e9 et beaucoup d'ombre.",
+      "descriptionFr": "Grand parc sans laisse clôturé avec des zones séparées pour les grands et petits chiens, plus équipement d'agilité et beaucoup d'ombre.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -68,17 +102,38 @@
       },
       "priceLevel": 1,
       "confidence": 88,
-      "reasoning": "Popular LA Parks & Recreation dog park"
+      "reasoning": "Popular LA Parks & Recreation dog park",
+      "googlePlaceId": "ChIJzTEzomS-woARCmLL3rbzDWU",
+      "latitude": 34.121367,
+      "longitude": -118.3799781,
+      "rating": 4.4,
+      "reviewCount": 449,
+      "photoRefs": [
+        "places/ChIJzTEzomS-woARCmLL3rbzDWU/photos/AcnlKN2FmCDIOpDy_FPhc5-t-h9JAsyqoTQwAiHDZsbMuKiGuWCcexhLkP66OAkXsQYHEKAA9MniODMFboIEP9hyQDSKvEUr3AtuwEoEWhWLxZmrAfw5wtup2P0d2b7j9Msq49NACFIKmfPT6OPS7fZYKxK6ZFCD8U1q2qc3l21ovxvpw8dTeesNgVDiUN_YyZwBRpqSQFcELN_xk_q5MmIimjnIHZMYize92xMs1Ecsn_TNLwiXLa6fDyDGddjyFBSewJR5-nXAtP6MoDzN65ZW_iH7ryuxxgdEyG-IJ1JJXsvtxAfxSsL_aTFDORraMv9s1Nvv-83RhOchWCx8ts3PUmimfkFm8aE1ib5fkHY5NUL4TiuO19BW9agW2RyIwY7VNCS1Jc2mJnN_fH6kCr_u5FSQu-8bm-CfMttU6b1vFWE",
+        "places/ChIJzTEzomS-woARCmLL3rbzDWU/photos/AcnlKN10BImz_G4aJNNhr4h8m6Um8NhxsGO1ZV5g65cHXwMcAJJ-z2okZGD5mverBG91KSpWzQbG-G3JX3AXTl3xeXQaJyOmu7M7ukYB_vVwBiW0NKenYveeylVMlyY9gib7LinMN4imPEcOam1L6tHXhL9n_dXJ33q7ExxHe93pvpiBKDIMSIstM1KsXlwwNSOqy6udpJCxSPW6nw8Zt-perezTB7h50w_aYNb2HHxVx0fRfVD0JyrJk_nRSaH5vPooPZfzMWaGVdj-g54moekVXEVJ5RQ5XBEbCf69T84SJ6mRVYBc1gsE5N4QKwOBhdzb61eZAz3J8l4meXkkDi5ib2wEBflaPd1vK0eM64XX-28AkaGC32FcF1y3yb1QkMm284bZWhESs7cD2eVqkXlngxJ3ABCvPuzoACNjYqn7YPsWT-Yp",
+        "places/ChIJzTEzomS-woARCmLL3rbzDWU/photos/AcnlKN3oiSmSrhnbgp4BR5wBhDAjj0GGZ_qwPvy5J5WmKFjnV2VzImscvw4gdYWH-nvBF7AUSg0V9LQo-1XfMNycUiq20ShY_NzKnpwkSWPmTV0TObW2l61OBVRrwLkoGWkoWZKD2kypr91twhrchvkc54rXDUfrNJZEZN9xCxuIOtuN0f3nWJ-RQ7qbkeYtPkj8H9Eg-T_nUbLgt1qhkOBF1fOpHwqL9cW_WptAweO0G4RKoL2qzWXKJQh8AIjNL_O50V64nGJfyp6i9IZ8aRWHii3aaENtscIIucB2aUQtZdxVgyimm-v62KwiRZnnWkQPfCB1iXshnfZY4myRYdqUpYXDJb879ZGRzWbLC06apzSmj0FlZNS05zD-IwbJGVBpMXGYZN9bnMpbJXjCqvbo9AuJTjdV50O_oG_LrbaaVsz6cQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7281744139275428362&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:30 AM – 8:30 PM",
+        "Tuesday: 6:30 AM – 8:30 PM",
+        "Wednesday: 6:30 AM – 8:30 PM",
+        "Thursday: 6:30 AM – 8:30 PM",
+        "Friday: 6:30 AM – 8:30 PM",
+        "Saturday: 6:30 AM – 8:30 PM",
+        "Sunday: 6:30 AM – 8:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Silver Lake Dog Park",
       "category": "parks",
       "address": "1850 W Silver Lake Dr, Los Angeles, CA 90026",
       "neighborhood": "Silver Lake",
-      "phone": "+1 323-913-4688",
-      "website": "https://www.laparks.org",
+      "phone": "+1 323-644-3946",
+      "website": "http://www.laparks.org/dogpark/silverlake",
       "description": "Community dog park with separate areas for large and small dogs, water fountains, and benches for owners.",
-      "descriptionFr": "Parc pour chiens communautaire avec des zones s\u00e9par\u00e9es pour grands et petits chiens, fontaines d'eau et bancs pour les propri\u00e9taires.",
+      "descriptionFr": "Parc pour chiens communautaire avec des zones séparées pour grands et petits chiens, fontaines d'eau et bancs pour les propriétaires.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -91,17 +146,38 @@
       },
       "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Established neighborhood dog park"
+      "reasoning": "Established neighborhood dog park",
+      "googlePlaceId": "ChIJYxtCNSXHwoARTk9UST-kkno",
+      "latitude": 34.0922039,
+      "longitude": -118.26426869999999,
+      "rating": 4.5,
+      "reviewCount": 1017,
+      "photoRefs": [
+        "places/ChIJYxtCNSXHwoARTk9UST-kkno/photos/AcnlKN3spZSDv8dwXCsaOVk5m7gaYrLNd1RzklgLCh8IAQE5dqq_ryRedNnG-hEUgCjbxEC6_l9BqGeYWOeDO9wfJ3lz7b9bZncsC6025ApMDpD1zoIA9Tzf8BSguGlEe1_nO97lGfG3iKuh1or83528wpMstz-PDbZuGSzVGTzZY6qIhy9XUb3l9q0ADCug_fP5yT8dcdHuYvW_5pQpLdY1Dd0gdOMuADD1AIOOqPveM52muhx2glR_lhRWmmDzrZa__4wzEIlyFuvz3ilN52-lq9osOUrvnuLxmpnFHgmLsJp3AzO7R1YpgUy0zYhx3S4m8hGrI7uzLz5WGUuMpQhlR7nqDF9jJ8QfvS4nHJSLKy6hticdnscaN5ZnZjP8JQaKnJ_heHvD14sfPLwzlyuVoF-7TR71-_GF0ADHYVNsZ7xZgykZ",
+        "places/ChIJYxtCNSXHwoARTk9UST-kkno/photos/AcnlKN145SnMr5jFr0abo-VFJ-FRYyVIxJiJc2U5m7K37SGa6k88vd_Cbv3IDbHMd36G7SC-Sb6XKO9ElpjLOsYnOX6QyKXrYYw2iOTeRtCwC7HFOcQJBls5SRLwMuRtASd-DxN6HSMDc3rRFt0b4Jx3cGSkbvIjmycEZKOI1uNBTWvyYkVCrmX7-g1agnqjxBk6x3611dnjtuMAjp1if7RPWw_1F1Q5mp_AO3O-5sHQkQe77F5WagXaaMCsiV_fAzv9la6BMerl0jZqNZNCLh-HrSiEla136re1thpP6AFIlSiZE_JxhgBfHysjaa-C90virTwOt2J1WDWTAqqbazu_j636nC0CRDpEILSkSKQSXT1AXPfwVLiA3OAnateoHN7Vk2R2R_XvCTicK3wyWmX3sj1CuOXQItX7hdrkbSp28rTMDFU",
+        "places/ChIJYxtCNSXHwoARTk9UST-kkno/photos/AcnlKN3sI4PplxxRtbrKwvmEtCT8s4SnLStHAB2G16YAfQMop6n2ggOoD97dqlAB_lCx7z8nncBH8y_a_ek7-qeryXHDkrsr68mMw5wBdKynJlbGjmz4scy-agzrbSWYVpnmWawPFnXlbBXfeY6Fo20Kvte58MJb0gnNs0bJVr_LbqFMQV1ym-IETHD1QS367bLKh_a3LMlYOAF0ZjgKwUgeKVpuPDvNzI4VzDhdv-Jvr5gJVrBcTEmscnKnTgpzyNaslvSsJrSvJAB40r9HSN5q6hkRQhb_u_HJ4vPlcWQp_LkTLL3gne-v0vUiaP8ARvrWM7V-pbeUV_S-1km24LDGCdDb7VoVS33PTVlyziEh_NqnXQcn59VvP0wPLv19uY-m8oQQrmaVmb4Zs8vZFZsb2-yaFuZS3T2yLk9XM-FQldg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8832302410947120974&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 10:00 PM",
+        "Tuesday: 6:00 AM – 10:00 PM",
+        "Wednesday: 6:00 AM – 10:00 PM",
+        "Thursday: 6:00 AM – 10:00 PM",
+        "Friday: 6:00 AM – 10:00 PM",
+        "Saturday: 6:00 AM – 10:00 PM",
+        "Sunday: 6:00 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Westminster Dog Park",
       "category": "parks",
       "address": "1234 Pacific Ave, Venice, CA 90291",
       "neighborhood": "Venice",
-      "phone": "+1 310-399-2775",
-      "website": "https://www.laparks.org",
+      "phone": "+1 310-396-1615",
+      "website": "http://www.laparks.org/dos/parks/facility/vistaDelMarPk.htm",
       "description": "Large fenced dog park near Venice Beach with sand surface and separate areas for different sized dogs.",
-      "descriptionFr": "Grand parc pour chiens cl\u00f4tur\u00e9 pr\u00e8s de Venice Beach avec surface sablonneuse et zones s\u00e9par\u00e9es pour chiens de diff\u00e9rentes tailles.",
+      "descriptionFr": "Grand parc pour chiens clôturé près de Venice Beach avec surface sablonneuse et zones séparées pour chiens de différentes tailles.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -114,7 +190,28 @@
       },
       "priceLevel": 1,
       "confidence": 82,
-      "reasoning": "Well-known Venice area dog park"
+      "reasoning": "Well-known Venice area dog park",
+      "googlePlaceId": "ChIJF9wDCri6woARhKowRqI0eK0",
+      "latitude": 33.9898848,
+      "longitude": -118.47360639999998,
+      "rating": 4.2,
+      "reviewCount": 433,
+      "photoRefs": [
+        "places/ChIJF9wDCri6woARhKowRqI0eK0/photos/AcnlKN2t3eqrn2MuuUPn3PJoQIQZswkK0Soo0DFrMSvG3MuPxfPSWb5AEdFet7MI05jnBXNtNH59Nf_jwkQ15GkMhD2EaG_Ds2BxQyWRbI4UWLrIQkdGXyxwzdwA5i0kqUyJ27-l0XOj5P2AkzP7KEtmBZzu8tsDWJd4eGPiWbnoSU2XpzuoafMM1Sv5dJv4jDDY6a_pxl6CB-vz2WhijkuFJvfVWCgKwVc7MLAaHQqymVKb3WiH9z-_aOyCV-dgfdl3HwnjelvDiupYmB-v0dFLSXpb2Gc2rGWATwsn-0QgVEgQNlRUiC8kB3hEMFwWgfidFxbBTnGlsbhqTkAXiYT7cfVk8deElaI0l9D1LUYtuGszsrZbQN_18tyxevrcQUgfn5p4hjZEnT1YgPiDwVDVmzHe9umQm9c8RQd0OElPIFb5E69s",
+        "places/ChIJF9wDCri6woARhKowRqI0eK0/photos/AcnlKN0-ZOegraPgkrtK9RBgLcKRP5eu86EZ3mlDxBff7ymjiEn4pRhTdiwYoTSW3DqWux8lkOF6EWALTXP1aOKDOITfJWw_p3DtPIdXfC5hFzC1an2kA87jaLU6zeMWF_BpFZjVodHrmF9c8FAlw_hPggluZIlRDV9vhcx5duBgEvfgyqHehDru_TyI7KMP9plnY6Tz02H1d4xnu5E5T-jzgxS2P1BW_vB2-9PJF8zaUEQJfvcJhq8k_WK5qsQljw75NNf7HQeZL8r353Aw0aQgLYkFi9SKKeEeNz5IyxRD5-AxFy5y_ZkdTIm3qVzqiCsFOzTquG52yRNDqq2ePKSTSeWmqY0Yq2GUwFpeQ1ZHoeCzh7wUIR2oi1st0d0Yx_nBrZFYIDIAZwCZz6k9vvA9l79O8XFwjLKErQSyma-Xl1PqdHrY",
+        "places/ChIJF9wDCri6woARhKowRqI0eK0/photos/AcnlKN3i7W9hbAUcUO4obm7vwQleBWrqzCeMeFcBCnWsjenDGK4voM4o1kanAy9Wda_iFsJDiFod_rjOl8S-yLC3ENMB2Z_Qr8rQn9DwdNLqNvKQH_G80qcHd3Ol3WNiwVzcXphOMZ8L0gpNyjbtcqbQmpvZV1MDJx98PbZ9zYchtEGJ1jcQ-fbVMZiV2tNy7Dpj-3FhjWCHPLiMgGGmwEOjj46rnaYnPlOMP61cQ78c15X-GqB7zlPit2lLJ1_qoxIwG_m5nGhFLP-pheVE7_P_HCcPpDb9LWt-4zcZBeNhxpXt4qdhNN4quJgQjrsKx4PXQv7sMFF_fiPo5qassb7yVPpty4oFwevvlqOIU-qqrFyiZ9CHXykmZ43pntGcy1n7Hcex_FwNBvbGaOgwCoonDpHm1DiHranWDn1yR4CMowI"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12499798637333752452&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 9:00 PM",
+        "Tuesday: 7:00 AM – 9:00 PM",
+        "Wednesday: 7:00 AM – 9:00 PM",
+        "Thursday: 7:00 AM – 9:00 PM",
+        "Friday: 7:00 AM – 9:00 PM",
+        "Saturday: 7:00 AM – 9:00 PM",
+        "Sunday: 7:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Hermon Dog Park",
@@ -124,7 +221,7 @@
       "phone": "+1 323-913-4688",
       "website": "https://www.laparks.org",
       "description": "Spacious hillside dog park with great views, separate areas for large and small dogs, and natural terrain.",
-      "descriptionFr": "Parc pour chiens spacieux \u00e0 flanc de colline avec de superbes vues, zones s\u00e9par\u00e9es pour grands et petits chiens, et terrain naturel.",
+      "descriptionFr": "Parc pour chiens spacieux à flanc de colline avec de superbes vues, zones séparées pour grands et petits chiens, et terrain naturel.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -137,7 +234,28 @@
       },
       "priceLevel": 1,
       "confidence": 80,
-      "reasoning": "Popular eastside dog park"
+      "reasoning": "Popular eastside dog park",
+      "googlePlaceId": "ChIJ9_TV7erFwoARRmViqc5Wijs",
+      "latitude": 34.107428899999995,
+      "longitude": -118.18525059999999,
+      "rating": 4.3,
+      "reviewCount": 110,
+      "photoRefs": [
+        "places/ChIJ9_TV7erFwoARRmViqc5Wijs/photos/AcnlKN3bWDS_ovJ4RnpzTz3xvrfJvi2KESi9RnpQ1DordbDcySsDTxY_hq6KrNRMsAGGo0U8dGLdwtYqMDcmC9EEh6F9RAYjo_HKgrRuwVv-8bFrIuR8On-J-MMdHZZr7k_vpKNn1Rv2icccqbcMfdYlM7JegE64e2lNGE9qae9dE-4DJNeeMBwVSz0SDjiwmFD3LJG9wevZKi1PsonMC0Qa65ZZeTuzVbtCCvzXl0EUAEBBcPz4HwhrU676hGWjbzlqS7hGjTdKwbJ0_zXQmUt20WAl6p6kP0DS-Lx7p257n2kQCjIn6VftbNxh4KAPm0E3SYeK84fqVMahGRTUItIDtc6o_hthlZjZ9VdqDoF1tsfxqCTBagDICdZ3SEII6vsbn5c7m1OLCEQ9ktl_ohy52sIPU7Ow1CIWsrfxloXq8BoMRsyO",
+        "places/ChIJ9_TV7erFwoARRmViqc5Wijs/photos/AcnlKN0Lsg5xTsqh6fvubSCMD_Ky-8cX3_6LsqsQAuwEnzVmLGU5gbE-sz7dFhh-MGltCeDtNNjDyh1Kn5xaAJfCCt7Hbx9bjHrKmJsyerBNFJJzEYE-gCH-Tk1TvmD8c00EWw83EPUq5K2c73d_874KSZ1n2UEfOBL8xV0di02xknCq7Uf5gjM-DCVad1PFtPkgd2hC87n5DJ8sJCrkdpEV_80odCsH2bHGy4GYHLCrVxFTrb1m35vip35w_9A_o3vmf3Q6mw_cuNj9WV93q0WNW6LSAwOVCefDrA8NBk4OZrCuAGD1-smK3OV7ZhNGSDAqlq3BwPcPOc9u2wFnsjV1BfYm1RnMQNrIYsq49APbWDalWa8fLIE86A-94HwtmVbEHLFubHcYqa7W8vH2ugGkqJCoajB_iZI3f6KVHI2h_AFQaVzG",
+        "places/ChIJ9_TV7erFwoARRmViqc5Wijs/photos/AcnlKN1slO58Yr72PVdbwAk_rOBd6IvhVnTqN7uiRFfVX5NjeyUmFvyv36hhJdjmelnJGxC4qnz-5AAV8FURLtbHCJ8SB5yhRVl3isacf30gI2Qp1XAxFkBQ8ItJwsAdtlBWbne8pa6pn609vIsncTdgUEQDlMueeN8lcZjVeWwooO0PGrS-TxHCWa6UnZlztdjnsNt4zWy_7kJQLsFL8Oi5OxFShNnX56CvNpdoD-xaLSCVRzY2Kx4tjtDZc3hOFRkxfDj18a-0BmMmUxA8jGOxZYcCw5JmyjY1QdOa3dfotj5mSzx1GznBdGuroTrb9Fl8qSHljJYFx6_COJytbTuT0Re8I2svnBqrBDR3epzFg0qfwS0w9JCjWvp6OhYxKloqvqRxbkV2kYLqMHnAZvvCmQCSgFFSZawAlB3Qyt2N4jLMcw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4290337040628868422&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Griffith Park Dog Park",
@@ -145,9 +263,9 @@
       "address": "3300 Riverside Dr, Los Angeles, CA 90027",
       "neighborhood": "Los Feliz",
       "phone": "+1 323-913-4688",
-      "website": "https://www.laparks.org",
+      "website": "http://www.laparks.org/dos/parks/facility/dogparks/griffithParkDogPk.htm",
       "description": "Large off-leash area within Griffith Park featuring separate sections for large and small dogs with mountain views.",
-      "descriptionFr": "Grande zone sans laisse dans Griffith Park avec sections s\u00e9par\u00e9es pour grands et petits chiens avec vues sur les montagnes.",
+      "descriptionFr": "Grande zone sans laisse dans Griffith Park avec sections séparées pour grands et petits chiens avec vues sur les montagnes.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -160,17 +278,38 @@
       },
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Major park within famous Griffith Park system"
+      "reasoning": "Major park within famous Griffith Park system",
+      "googlePlaceId": "ChIJrSr85m3AwoAR07Ei56odD5E",
+      "latitude": 34.155110799999996,
+      "longitude": -118.28609879999999,
+      "rating": 4.3,
+      "reviewCount": 418,
+      "photoRefs": [
+        "places/ChIJrSr85m3AwoAR07Ei56odD5E/photos/AcnlKN3D2hTlAcgFtK9KipP70z-uHZdD283janZZhTf3yyuU9HjkYi55reb_REDFm0Lj6mA6hUJmuYgUiPr6VJiLc0EDElXgqcwBz8INtbyO5oEd4fCqyMaa-Ap5PFhy-C_F-geAl4GygN0gjTuSYCVf8Tsv47hKvf2C6cdOWv2jGMPdtiBrwyWP2S_iNqgFOBQvAyXwvlqQqA49KWp5_GBiR4kIDXeXcO2gIagAL7bmDbno2liE2rmwc7sbgicWDAgmxTZ8AwezaEaLae3k8qv2rOdmt3Nq2eLS3-FfxnQhmXMSm42njHlOarN0Tkv4NDtsyVdyoa-dpFMlzA9bS1Rgl6KhOaFan0ZsdHgDI2_fMROc6I2_OLuoZwb4_jMlDaetNog0cbPmnljsy_a49xsMPgw6AnhwadcvoBJiddMhezpRPw",
+        "places/ChIJrSr85m3AwoAR07Ei56odD5E/photos/AcnlKN13ugizs1rOrAxQywCPSTn0Mlg28PFKdC_LD_wJBc-pat5O6XhN3DnTWIErriasQqFWoCB29P1OOP7Fd7_JSI1xW8IhIO6eWGCJ3lTw7J4jZoLLiNc_eLd8e_EKpc3KkEePMV2SWvkbnaXhLvTlMZwGmumUQSUBBtB4V8sSZmEkXdTpzOcgy__DB4XyfClnRSaqXE4qvwGQJEBdYF2NzdxwTJ4T1zD6ufIpS5rlwzY9kPDv0bW0bkBLxzzX47t_CYCW63GZrWEoCr3NztIEeIhAtf8z44cYqCF-B81vx13V-x0Xv2YRHLcNZ0wfVcV8j-yETyAweUI52OS1EZUUsnELI3rEyPutDEstQ1-tyFAs5WgmOIWsIOvrLC-Xy0eGj3oofly7ggO_PP_xjgs16grIiWPOfetES_klkuq1HN-DXoRa",
+        "places/ChIJrSr85m3AwoAR07Ei56odD5E/photos/AcnlKN2wK_tKr2NdgW8kglOq4zhh_EAe7gl-7VszJJd3NY8jxSprIxYr8QMdQ1WrVwPubSFpedOXtfHMjCJf6YrTSIedCxYG0mZTIfxWN882OZOXQkXp68zoXbbR3V4PgV2WZuzGtm-QoMXjW4I3UqKk8LoPXouNvXmQIdGXwcuNj535-x_qZF7BL46ddV_Fc3b2Yc-NhYk0eLipbSPsAEmyJkK74tytcypToGGiNVbij__TWmWu9al62glxypij72zmtz_787EY4rX_NJ0Hvefh8qEiOfR46Ymavzv7suTwEPjHL9KQpJFNsBNSdyRl0jvTMQ3ICUv9tWG-ThJ-VvP01uX28oU_EZzCfpiMBcFlAJG4fzvz4IR8XJyjNU9A6F1Xbh37xowu1v1K-Bad_bN6XWPfYvqDbyTc-aqg0_dz2vzwzNRS"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10452605880009667027&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 8:30 PM",
+        "Tuesday: 12:00 – 8:30 PM",
+        "Wednesday: 7:00 AM – 8:30 PM",
+        "Thursday: 7:00 AM – 8:30 PM",
+        "Friday: 7:00 AM – 8:30 PM",
+        "Saturday: 7:00 AM – 8:30 PM",
+        "Sunday: 7:00 AM – 8:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Culver City Dog Park",
       "category": "parks",
       "address": "4117 Overland Ave, Culver City, CA 90230",
       "neighborhood": "Culver City",
-      "phone": "+1 310-253-6650",
-      "website": "https://www.culvercity.org",
+      "phone": "+1 310-390-9114",
+      "website": "https://www.culvercity.org/Parks/The-Boneyard-Dog-Park",
       "description": "Well-maintained municipal dog park with agility equipment, water stations, and separate areas for different dog sizes.",
-      "descriptionFr": "Parc municipal pour chiens bien entretenu avec \u00e9quipement d'agilit\u00e9, stations d'eau et zones s\u00e9par\u00e9es pour diff\u00e9rentes tailles de chiens.",
+      "descriptionFr": "Parc municipal pour chiens bien entretenu avec équipement d'agilité, stations d'eau et zones séparées pour différentes tailles de chiens.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -183,7 +322,28 @@
       },
       "priceLevel": 1,
       "confidence": 87,
-      "reasoning": "Official Culver City municipal dog park"
+      "reasoning": "Official Culver City municipal dog park",
+      "googlePlaceId": "ChIJpWHnkPW5woARUjgCLvidJ5o",
+      "latitude": 34.0138244,
+      "longitude": -118.38620759999999,
+      "rating": 4.5,
+      "reviewCount": 728,
+      "photoRefs": [
+        "places/ChIJpWHnkPW5woARUjgCLvidJ5o/photos/AcnlKN194Oh6k0sIkyfP4emuvub0pjjiqFEbCuCQBi7DxH-gWkaMYbM6nzFu7kzxf6RWw6kFaWGBmp3LzX_0XvT9ryE0LECvL5DWmDXn7dzfAu8ZC4lou6so8fcGv_Kj3s3FT-PGvCc-cqDVkVjb5SKbNT8b49iS3bviV7LqPtM_pTsYSTGFX4DRr-SDB4PQjZbGDTYJAKL-XrQW0Gqj9GSIEurBan8wkmJynpEKBkDX8HZ-51uawPLGoWnx8p5zMgBc1-VSZ8E-ayvgQ67ujNB1HMzgKkEzmcVHRpcGc7PcCd86w_eHNB3VZfbg4Uz41m3rtxLyBWqvqVeOTys9GcMPegU7FK6bopGKfEkln8x3CDupjCBBYkyFSdO5SRk6fSAGgwlbm9Y-5rV4hRp11j80Ou-N38GNiz7gf_n1wnPuR47Bbg",
+        "places/ChIJpWHnkPW5woARUjgCLvidJ5o/photos/AcnlKN2UFtebO1k3xsNKE6rODVqgCKc3cKbojb_cYy4W6jhBIQU3ZEMuy1oA3kM_UtDZZ_SNS0D3UBc0x8G2KWmUOpw95xngXX8LyAJ8FOM2Ay4Vp6xdRHKAkE_NStDuv7l-kRj9REOUcB0iFP9nX-r48ZwGQKr13uEUS060seli6z-eLAogHxdPapdQ2AyCDXYforjatmYhJHrbZmdH68IZdy9IEeMEybjCySgw6jC0fm5F4fPCPNlXMCDUFSxUiBdat80-6rKDeqbtkfZo1IF815GAp__0pnW2000wJ7rWFuZPyYUT0pUPL2smw1sgM08zO6y3gauQS5EEAFYKzozNmvEmGGXu6nfnZhZO8lpSSpr8-id9acG-h8AARTGLRgbIDfLH7xSdu66XmA1ClzDIrpxF9edHiHPJHuVCWcjO8f8",
+        "places/ChIJpWHnkPW5woARUjgCLvidJ5o/photos/AcnlKN2-m5AH4HH8ecZ8dmUDpATvht190QHoCedzu1Y9LzR6tc6eTsH8n4La4RfhJUuDAQHz7oBnwaIUbp57hCiHTJPPw9a5uHcSo8Yp-M7ZduCOb74Mve1Z1fnspKon45Z90xzmnRUuTe6Yqki2ZB7h2xEvs7b--5geIzUpIPesXL_m1vlpoliQwDWGJEQ54kXURh6ztsN0mxS0UriGgMrIE3qCPG5sIn-PxYrqhTmNEc8WIfc6Mp5y3kjCj-7SfFEHyRdkePCb0rw2JkSRDR-l3iFiXbX0YhHVp4G5YqUpkY-GoWfVzV1nthxSDEA0MwjFEtuGkonHpsFsoeKlRH-BYDvDXN_rW3NFH77m2ODONXo5IknyNaP_CP-6LzNbPagKhrRaBTqYQZgRP1aivl_tCVOnuqU01S1h-6evChiDAyd0nRxX"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=11108020695181965394&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 5:30 AM – 10:00 PM",
+        "Tuesday: 5:30 AM – 10:00 PM",
+        "Wednesday: 5:30 AM – 10:00 PM",
+        "Thursday: 5:30 AM – 10:00 PM",
+        "Friday: 5:30 AM – 10:00 PM",
+        "Saturday: 5:30 AM – 10:00 PM",
+        "Sunday: 5:30 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Republique",
@@ -191,9 +351,9 @@
       "address": "624 S La Brea Ave, Los Angeles, CA 90036",
       "neighborhood": "Mid-City",
       "phone": "+1 310-362-6115",
-      "website": "https://republiquela.com",
+      "website": "http://www.republiquela.com/",
       "description": "Acclaimed French bistro with a spacious dog-friendly patio where well-behaved dogs are welcomed with water bowls.",
-      "descriptionFr": "Bistrot fran\u00e7ais acclam\u00e9 avec une terrasse spacieuse accueillante pour chiens o\u00f9 les chiens bien \u00e9lev\u00e9s sont accueillis avec des bols d'eau.",
+      "descriptionFr": "Bistrot français acclamé avec une terrasse spacieuse accueillante pour chiens où les chiens bien élevés sont accueillis avec des bols d'eau.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -206,7 +366,28 @@
       },
       "priceLevel": 3,
       "confidence": 88,
-      "reasoning": "Well-known upscale restaurant with documented dog policy"
+      "reasoning": "Well-known upscale restaurant with documented dog policy",
+      "googlePlaceId": "ChIJqaA5zt-4woARHGIEp3XlsZo",
+      "latitude": 34.064158899999995,
+      "longitude": -118.343697,
+      "rating": 4.5,
+      "reviewCount": 6903,
+      "photoRefs": [
+        "places/ChIJqaA5zt-4woARHGIEp3XlsZo/photos/AcnlKN3Rsi9x33y8K0RWVHyWVcecrWbERkgQSQ3rS7UDnBB7vr78p7jl9oIPPXpKcZBy9Jcf7L780DVJuVVs5Kn_3hF4boVwbQVmjdN7XlTK8RrO7_VDTCfwn-ihtnVVg0Y5XQuwy05c8uLRXl8JR3WPT4Cxyj366L462nDC74WZP5RVSAOyT3kk4p4lnaliZuEnZ2KBdQ6x7QaNh5EWIUt9GNsQVaX2HFe2rx_5gEKMHkDFyfgBMlRpcBseaukrSzWf3_s9WH-X-JCinxMRt9knHwGr66Cu4f7cPb0SGxcHWcEcQw",
+        "places/ChIJqaA5zt-4woARHGIEp3XlsZo/photos/AcnlKN0zKnSzz2IwaQzZdDWhcuMAvmeyjKRlO1whOmLIrLpL8bBJA2u1ofviywkJTxQ6PMeWkHvUeBvn2aqtqXSQj_KxN2W-KzmegIrKHvTtPxEuKt1oIY8FvRvKUJFcZ0jRSzOWZLvnqNFoAZGZVkmTWA9illoryt9LNHes_kP91nzYURgrS1M56HZzEXIW9J9hR2dwuXcrmgE76O3pIxicpGdvQpWf4cQMSbYWXmQ_oiARonaRk8koeXlVXew8Xg57SjAHEYRN5DdCdBeerrjzat8hk6acEwW6VLrSVjHfBvXWhA",
+        "places/ChIJqaA5zt-4woARHGIEp3XlsZo/photos/AcnlKN1w1LgQZmLvoc2cChvRSdGILcVMlWrip7DpdNZ5TlJKkp8kNsEvt9JWbRN5jjpP4d6sdIOAcuDFRCElW8oPlHbukCMFjVv2CosEc9xeIE8agUk4UxppnH0PFSFBFRfyRzC4bYcexp9ae8BXpO5-RTuXdYhudPx8rBNTlAhxodY7nS6ntwxVtEwMIMoTynGQeuXAmhtliQ8y-Gycq2gsgumFbc0RXjimDSt4ID1tM-zMzerthauWYlRQWjMDZnMn658uU3I_w--IQHZnex9I_zuyHuDfdYW6Q5lic6P7Gs330rdT16gG9-m3n_GHW0BSPQs7ZXdrRW-GRFZpQb_c_rGN08dEseNmsGjspT52OvSxMrWkUtiOwn_aZCBNSrOgoRYhLSBw58_HGOkl0nvJCB_kgWP8rh3t_QpPxjxZeVWmCMD8clV_6csPNSeKa9gD"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=11146942846194704924&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 2:00 PM",
+        "Tuesday: 8:00 AM – 2:00 PM, 5:30 – 10:00 PM",
+        "Wednesday: 8:00 AM – 2:00 PM, 5:30 – 10:00 PM",
+        "Thursday: 8:00 AM – 2:00 PM, 5:30 – 10:00 PM",
+        "Friday: 8:00 AM – 2:00 PM, 5:30 – 10:00 PM",
+        "Saturday: 8:00 AM – 2:00 PM, 5:00 – 10:00 PM",
+        "Sunday: 8:00 AM – 2:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Ivy",
@@ -214,9 +395,9 @@
       "address": "113 N Robertson Blvd, West Hollywood, CA 90048",
       "neighborhood": "West Hollywood",
       "phone": "+1 310-274-8303",
-      "website": "https://theivyla.com",
+      "website": "http://www.theivyrestaurants.com/",
       "description": "Celebrity hotspot with a charming garden patio where dogs are welcome and often spotted alongside famous patrons.",
-      "descriptionFr": "Lieu de rendez-vous des c\u00e9l\u00e9brit\u00e9s avec une charmante terrasse de jardin o\u00f9 les chiens sont les bienvenus et souvent aper\u00e7us aux c\u00f4t\u00e9s de clients c\u00e9l\u00e8bres.",
+      "descriptionFr": "Lieu de rendez-vous des célébrités avec une charmante terrasse de jardin où les chiens sont les bienvenus et souvent aperçus aux côtés de clients célèbres.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -229,7 +410,28 @@
       },
       "priceLevel": 4,
       "confidence": 90,
-      "reasoning": "Famous LA restaurant known for welcoming celebrity dogs"
+      "reasoning": "Famous LA restaurant known for welcoming celebrity dogs",
+      "googlePlaceId": "ChIJCWhMHa2-woAR5xjOgff0Afs",
+      "latitude": 34.07571,
+      "longitude": -118.3841187,
+      "rating": 4.2,
+      "reviewCount": 2305,
+      "photoRefs": [
+        "places/ChIJCWhMHa2-woAR5xjOgff0Afs/photos/AcnlKN3W1Y81bLNdr3m_VK6lURJts-nBslvllR1yfxoPx0C8-7hkcrlOKOpRtV73FIumuXTL4bIvxtmuG3ppNJjL_x4eIcLIDe3PKRwKMf3N8y5Xke_hUPDrmmwkceihd49GRmPzHuYQoRKAFw79DlnGUsaYyBFPTiBX27JcpY_lBrAMwQA1uXSuUQs3mlPh8pJYq8x-yyynzg98_J0N4CmtYeNJV62H2Cfuj7jgmsVBv1tdnu63qrPR0Uw3SizShRBLKsLInXKduS39ugBLP5iADzIKdAmZzMG7KmNTifS7Yq5f9aoh0OrTUT9oAno6oLdqpoSg9Uvp-Bw5t_bNK7DGqgmy0jH_68MDGwK0Y9231ptPUTPXVZVqRqT9MKD3zv0ZiqgEgNP-lsAqjyM02JliVyBGA8tXuZLwXRftARgtemLh4Q",
+        "places/ChIJCWhMHa2-woAR5xjOgff0Afs/photos/AcnlKN0Musd9urfIXpb_rX6gWQHZShwW4-6Hm7vrG_velm8RphQcckQNFKsQry2EcLeqt-Qoyee-0lzzyThTdbC4BePmEj7-K7du-98JSpNUnugKVq9DYwq_QDUD-pLS5qnStozcoN0dKL5Er8f3eYfiD_0A60CuxM8xYJofgRyiAG4AhFA1zik_6FTI2DreMkwyvAUn0r6qEfFFMY3W1UrgMwCxV03ugXKbpF0_VkbAY0vIPTfaj17UHlz-vSfn-F-vR2y11xQbk_5XOcuCpqT0H5_XnTLODyZCPDsUiD1htwqA3Q",
+        "places/ChIJCWhMHa2-woAR5xjOgff0Afs/photos/AcnlKN3dj4c8_1awBdyvAZEjrHeBoGW5xacRyohnQmUlmcrNWJYZLOsD5PTXLLdVXil2Vaa4PJ-4kmuY_p00Cba8uNZo1YIrU5B3lSSPTMEEEHyXtciTuAIWl7kATspki9KBLabHIX2PWJtakRZwOJhh3D_7sDLf1T1Jhqy3TrgGVi6-wzO5kk0uL5tXXjGWSEMQMP0OHy06uMHUPWCQSo5jjIPlw5_eRPrz4qio0aOWFPkoNHGHigpz1016pNxcneQnoT3SO7MtjhNTJUKdVzzFipbOFJzgAwPhbD_bTG8TCNwR0bb2F60S_146u6jmUkuIrc3k374hQlBZUEX9CuJ_y3Bm6kDTMcentwNc3KtEXhFv47rJw0feqpxMIytNQ_1jetJzFIvQaShFxt6Bxjpli6-tRUwH8gmlqS4UpG9X5iBYme-Lxd1hdv4Xg0NJcw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=18087006922368489703&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Closed",
+        "Tuesday: 9:30 AM – 9:00 PM",
+        "Wednesday: 9:30 AM – 9:00 PM",
+        "Thursday: 9:30 AM – 9:00 PM",
+        "Friday: 9:30 AM – 9:30 PM",
+        "Saturday: 9:30 AM – 9:30 PM",
+        "Sunday: 9:30 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Gracias Madre",
@@ -237,9 +439,9 @@
       "address": "8905 Melrose Ave, West Hollywood, CA 90069",
       "neighborhood": "West Hollywood",
       "phone": "+1 323-978-2170",
-      "website": "https://graciasmadreweho.com",
+      "website": "https://graciasmadre.com/",
       "description": "Upscale vegan Mexican restaurant with a beautiful patio where dogs are welcome and provided with water bowls.",
-      "descriptionFr": "Restaurant mexicain v\u00e9g\u00e9talien haut de gamme avec une belle terrasse o\u00f9 les chiens sont les bienvenus et re\u00e7oivent des bols d'eau.",
+      "descriptionFr": "Restaurant mexicain végétalien haut de gamme avec une belle terrasse où les chiens sont les bienvenus et reçoivent des bols d'eau.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -252,7 +454,28 @@
       },
       "priceLevel": 3,
       "confidence": 85,
-      "reasoning": "Popular upscale restaurant with known dog-friendly patio"
+      "reasoning": "Popular upscale restaurant with known dog-friendly patio",
+      "googlePlaceId": "ChIJxYyaKq--woARHpeKzYN9mt4",
+      "latitude": 34.0810234,
+      "longitude": -118.38696649999999,
+      "rating": 4.6,
+      "reviewCount": 4793,
+      "photoRefs": [
+        "places/ChIJxYyaKq--woARHpeKzYN9mt4/photos/AcnlKN0rgu95CXIZDwKg9Fx2E4-50nwNU8qNry84xLsNOkN_j5F1Sj6A98wPVHFWq0voDOnguDGm2ECfdlycTj6O_kLMkTkhf3ZGVXOY0Nz32C6oYVwx8rxVTIqpQcej4XSPL-1FSiHV2iatQt5KSt9zKtWb0fg_0UGfb-nQJlUOn9NCG--kpRZl6WYyfSpVaX1Qn6Vm823n1m2_RBhbM08GmaJmM3l72nRKTBqlbZUlFCmJ5uN9CFw7T3OTotfMhGpwk1DlmerOBHUC3fKDzH3LfjRj4wE1_iqNYkTctF8ZgVrKUQ",
+        "places/ChIJxYyaKq--woARHpeKzYN9mt4/photos/AcnlKN2oC5p7nsxdo2QhnUKytZCAnxsB8KVUkg30cUEYM1TvP4qSym3azYCTvEsnhs3Zrmq8-YEBQxo_cpUx2sk9wHnhqK1WJ8qlbWRVkvR__4kZDG7k6veHYFp1jnqsjuj3HDfK8Ai7EWZ6xQEmXesVAUwWR3YLs87RL5gwv3WXLySt5koCLJofg90zrRqFRa9_p46wCZ1yAHEkmz5CMGW9l3JVpOhql10PZzmtszwQbR1yi_91TBwDdhcGS28ARDDty2o3LwIgxYJs1SRGrMB4vV8-NFVOZe1WO3zAtO5cjmPkvg",
+        "places/ChIJxYyaKq--woARHpeKzYN9mt4/photos/AcnlKN31Lyw9jYIu1x-zUvCge7ZGpeBUnqbasdxfUCXBQZWOn6kmiavlRF7Uo56MNZsHMR_ZwNerKWNwbwfSRovUa2pGylrogZjFqLwyaBwIAvQetNM8d4JdtxY9TmxTw1OquYZGS0DdqxYJqB0AVzyiMr8o6lF2BD2YmAHxx07SKGFpLRrUM0eYvtg3piMVXeWeI5-Euis0sgKTmAyYgL8Qxa4z6HwHe2oE6yzbf6C5wCcm7PmQQudefZ8p3o9v48XMQT7iyRCDk2Pu_lU0z9t9pKDc5r7A8LXJjsVzp0jHJSOBXnzH8NJyF0tpMTBWXJtGnTenwdZdeu-UUF0DupCFCtzXtV_ig-U_3lhe7t6Bpv0spnmZxMN5HqkOQkoXOrW5Uy7je3fBuLYzFxZa4a-VVf0U_v8ERhu3BsjU-sQfh-rWWsSf_BZOwnyxlpnX6_CU"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=16040271027876042526&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:30 AM – 9:00 PM",
+        "Tuesday: 11:30 AM – 9:00 PM",
+        "Wednesday: 11:30 AM – 9:00 PM",
+        "Thursday: 11:30 AM – 9:00 PM",
+        "Friday: 11:30 AM – 10:00 PM",
+        "Saturday: 10:00 AM – 10:00 PM",
+        "Sunday: 10:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Guelaguetza",
@@ -260,9 +483,9 @@
       "address": "3014 W Olympic Blvd, Los Angeles, CA 90006",
       "neighborhood": "Koreatown",
       "phone": "+1 213-427-0608",
-      "website": "https://ilovemole.com",
+      "website": "http://www.ilovemole.com/",
       "description": "Authentic Oaxacan restaurant with outdoor seating where dogs are welcome to join families for traditional Mexican meals.",
-      "descriptionFr": "Restaurant oaxacan authentique avec terrasse ext\u00e9rieure o\u00f9 les chiens peuvent rejoindre les familles pour des repas mexicains traditionnels.",
+      "descriptionFr": "Restaurant oaxacan authentique avec terrasse extérieure où les chiens peuvent rejoindre les familles pour des repas mexicains traditionnels.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -275,7 +498,28 @@
       },
       "priceLevel": 2,
       "confidence": 82,
-      "reasoning": "Well-established family restaurant with outdoor seating"
+      "reasoning": "Well-established family restaurant with outdoor seating",
+      "googlePlaceId": "ChIJKSPWlH-4woARrKJ5thvMBeY",
+      "latitude": 34.0524074,
+      "longitude": -118.30066809999998,
+      "rating": 4.3,
+      "reviewCount": 6391,
+      "photoRefs": [
+        "places/ChIJKSPWlH-4woARrKJ5thvMBeY/photos/AcnlKN1irb8DUenLL1e_eC8imkbmqctrWzd3rjzwP3ZC6K3p45zKMA5964FaHgS2d7dsOHe_UXowIpeOxUOlKK-wnqkYzelrJ6UTauXgD00cmq6xdDseORechJjto9jk9NQ0a4GLE6mZsSs5PXZ15Sqcwo9RvolYPij4-aAFM1cOTn5M7dou33YJBOj_9lOMR4yQKvgh80hclvpgAIIf2Gmt2HN13SJ8uH3XZbaf_r-aZdKSSxMR5YGsUJlSVQK0c7Op_8CZHxXsrLTPmylHZAxFwNfwOKNCRQ-EW8-cqxpnSmtqoA",
+        "places/ChIJKSPWlH-4woARrKJ5thvMBeY/photos/AcnlKN2sZwR9y3JoRVhwtFzHGD3t5gZZ2JgC3XFWPfJrS86uEXqzJIHINyrh1_lvWsa8I3hbgm8yPlwG-39UBFeyXmwm2363zblXcGdnn8Q0njuzvyHeZc6_t3_PWNGLG2yfuvuy7i6qwYWzQzBoltaWnIOwe9H76mfqwngTn36SPSR1esngoMpGZgBV10TJpEFwmGMiy530tNcCQIsKpIrz22hapPcO_tOm3TGTzHqKYoj_wg_jbqMjLdzVsl8DMCsOk6qB4QXYcRjXO5BOCCLHEimYzo04D-_vhMoGPmpP8xjXCg",
+        "places/ChIJKSPWlH-4woARrKJ5thvMBeY/photos/AcnlKN1FFyjFCYI7JjM6jSiEthHc1J0-Sg46ZAYfOGVOHAEqhQG8PrmF31YHw_Y7slOZgPms_vVYy8R9QtULf42Evx6U32Y3cXWbInIZn3k35hejSq15_djDV1U7AZ-Y2FYHcFlhYgAXq76khb8tXJ9KCfIYKxhWqoTQs_D2Mu9c4_x6Jav7fdfhn5SJQYPf2Ral2n0Ik9swrLtF0vuh6ePKNy58WAF4FZ8tLJQrFCjWxtWvKsdzFLoF2f3t41UobJePLfP_9Ol9zFcE0PMyQjEi4NR0MFpZpBmlAivNN5OQyLbfbxdWTof3Rlb8AoWTEnrP1ek7rt_4ZXQg6fUrwuggH0pCWDcg0KjOGxjNjdlv-PIKTgXtva1nMcq_Anp5BsPfpn91vjKJa7xUY05pK53zRXM0eyOGDZE904Xoi1I_4G6p_kN07aWXlzH7xK70q51f"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=16574878423004586668&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Closed",
+        "Tuesday: 11:00 AM – 9:00 PM",
+        "Wednesday: 11:00 AM – 9:00 PM",
+        "Thursday: 11:00 AM – 9:00 PM",
+        "Friday: 9:00 AM – 10:00 PM",
+        "Saturday: 9:00 AM – 10:00 PM",
+        "Sunday: 9:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Catch LA",
@@ -283,9 +527,9 @@
       "address": "8715 Melrose Ave, West Hollywood, CA 90069",
       "neighborhood": "West Hollywood",
       "phone": "+1 323-347-6060",
-      "website": "https://catchrestaurants.com/catchla",
+      "website": "https://www.catchrestaurants.com/location/catch-la/",
       "description": "Trendy rooftop seafood restaurant with outdoor terrace dining where well-behaved dogs are welcomed.",
-      "descriptionFr": "Restaurant de fruits de mer branch\u00e9 sur le toit avec terrasse ext\u00e9rieure o\u00f9 les chiens bien \u00e9lev\u00e9s sont les bienvenus.",
+      "descriptionFr": "Restaurant de fruits de mer branché sur le toit avec terrasse extérieure où les chiens bien élevés sont les bienvenus.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -298,7 +542,28 @@
       },
       "priceLevel": 4,
       "confidence": 80,
-      "reasoning": "High-end restaurant chain with outdoor seating areas"
+      "reasoning": "High-end restaurant chain with outdoor seating areas",
+      "googlePlaceId": "ChIJx7bgU66-woARVapEo_hs2YQ",
+      "latitude": 34.081445699999996,
+      "longitude": -118.38367780000002,
+      "rating": 4.1,
+      "reviewCount": 3322,
+      "photoRefs": [
+        "places/ChIJx7bgU66-woARVapEo_hs2YQ/photos/AcnlKN1BUNi_nYLLHwuaXZfHq2Q-kVXikjZ7EZ7ljnfTZjzy02YPL3m-bLIqeAztKhqoUBHLuwc76Qvbk7odb8_8g-OI7i5JvHv6ZmneHGiTDzBEliUB-jiK3C_407rwSqANePhy9DAmdkuXKC42btjPDwPjEp2qjXCD-j3bAGlUhFMVljqU6cRISSvR_wb9p_NaWsDNm2X27FTUyo6JPjZmK7fyak96YeCjrGdtrVMDd4BI6Hl_oLKcayTTdZbO7hulIOVPqm-RtzNSodK3noS9UjJFqQR1WeuI9WPQM0gAc18O-w",
+        "places/ChIJx7bgU66-woARVapEo_hs2YQ/photos/AcnlKN2xYVjul2r1ClkWiW1ihWsukIvYx4kv0-mSbqdfxxHRVAzPF9-DcyKs4Q0UsYitXhyWuIZrSB-RJY7o3I-shWxnZhOq7wja_QX2hIHe3yefqLol1NGHWaj4D8XVjc6qpMfyZ5gjyKv4uJQdsm4sPQ7jn-cbHcN6HMq-8XEQMZRuJ1sv8iFx9dDpAI2xPmT42ErIbxjor8xMe-0xtivtuum1AB3LLQ54zlCaAFqkLC29ghspax7jXakKJ6pHWCtqoJV3aVMaOTzHNiv0CqlyhOtdKx_l1Qc3O1r_3sW9LnaRow",
+        "places/ChIJx7bgU66-woARVapEo_hs2YQ/photos/AcnlKN03aoqGx_Sb5gqcJ7B4OW8yG-5lh0yncbxAiUIyGUyBbYi8vSC2GA1LqwMi4ke19iArw6QUSeI_dtaBRu5ahUz7ukHtjKx6nzCqTLlIpyounBVbTTvqlcqJuYvHbiB_BhQB-wpmohugVWK1yXD3MkCYGvKiiqaxGCwq-m1FXz_KyL82fPnO8ED4IWRGqRpLzRnQDSmTAysWtQbMknRofcUQbF0KYVwnf6aLAq7a5hOul-RD-IA-zMg6iOItX80h1G7rl2AydfFBAXlRUL6YUuLfLZdUubgkzIejpjnKXMcJCD2U8ZCG4l4xuLcYu80ul_QFCdJkpbQIPSJNxYeE2Q_tlrs7KPoFowQrQWx1J7ilme3pgTY36jnU7Z5DLau83A_u1JVeGGk2GlO4wdXIjfEHzG-5ZFx6Vv_0mGCfc1xRLDFIWKzlOd0UeLBJdQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9572802298099575381&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 – 10:00 PM",
+        "Tuesday: 6:00 – 10:00 PM",
+        "Wednesday: 6:00 – 10:00 PM",
+        "Thursday: 6:00 – 10:00 PM",
+        "Friday: 5:30 – 10:30 PM",
+        "Saturday: 5:30 – 11:00 PM",
+        "Sunday: 11:30 AM – 2:30 PM, 5:30 – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Bottega Louie",
@@ -306,9 +571,9 @@
       "address": "700 S Grand Ave, Los Angeles, CA 90017",
       "neighborhood": "Downtown",
       "phone": "+1 213-802-1470",
-      "website": "https://bottegalouie.com",
+      "website": "http://www.bottegalouie.com/",
       "description": "Upscale Italian restaurant and patisserie with sidewalk patio seating where dogs are welcome with their owners.",
-      "descriptionFr": "Restaurant italien haut de gamme et p\u00e2tisserie avec terrasse sur trottoir o\u00f9 les chiens sont les bienvenus avec leurs propri\u00e9taires.",
+      "descriptionFr": "Restaurant italien haut de gamme et pâtisserie avec terrasse sur trottoir où les chiens sont les bienvenus avec leurs propriétaires.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -321,7 +586,28 @@
       },
       "priceLevel": 3,
       "confidence": 83,
-      "reasoning": "Popular downtown restaurant with street-side patio"
+      "reasoning": "Popular downtown restaurant with street-side patio",
+      "googlePlaceId": "ChIJ_yXhTrTHwoARU36hVDFInhg",
+      "latitude": 34.0470524,
+      "longitude": -118.2565439,
+      "rating": 4.5,
+      "reviewCount": 7566,
+      "photoRefs": [
+        "places/ChIJ_yXhTrTHwoARU36hVDFInhg/photos/AcnlKN38koUPWqBYPlTHIMYDk_-aWt6nGfKZ2PBWnTdp59rIYJWaLR9Gu2WbIsvyJELsQiLLiyteXw3rvXY-4bYa8_a5O0UXI_jHS6y2ZmB_IbPT2IkoIkGZpVJa7fNVo1BG0WPOLZryCrzMAs3ZFh3MoBIKj5SOuoOrcZYHZWAg5uGYYJbL4YwiFEIe3FaoXHv6dwPZWusm6h8Txk0NTD4QdZ6zJxVj-8P950Q7_Xp12UBdtJfe_rzvN1XIn9lLZAbH1y1ziai-JCUFUi8SuFjL4WDQ0h9FWo4yFBgyC8nW70OqUA",
+        "places/ChIJ_yXhTrTHwoARU36hVDFInhg/photos/AcnlKN2000zd67nReQawxj66nJzDsZFYj2gSU0yXbXE1irvAWEqzD4uisn7yd88jGGkKPwPnC-Xw8CHSWlIkh2yXzql6-yKzcCZGw9rNoObYAWwxn3N8Q808dRfUqwVfCuJLtzYa13QCOtr4CvtHbql6eoSDArbmFzN7pTacrwx6Cu0RFbG5GMJGGzgLjf89CLS0ImBcAjQHI2i1BWvrCsOe3zOYDeal2pRHWIsI4I-JRbDIgVZZRep0g1mynUghaue085aSY77miyUfQoPGEELU2l6qfE8RGlO4y_jozYkpVRvjzThOSguZ3jFlubVRZ_PjTrn69uVqDp9tfsQhMWfnabkSBliCJoTLJZsv7rKABpMcDj8phzd35JezT1xjqX-EU75l4HWoHmw3ovLikqPO5_E5IL0UNdnyUqzAfy9qCDv8Q5DjNg0AvBKyS1DfUw",
+        "places/ChIJ_yXhTrTHwoARU36hVDFInhg/photos/AcnlKN2rmRih_pKj7eW4Vak4VNvpBcvosaDf6qQTVNQ3AkqwsyUX9sQX1dFRUtAo9XALunSRLZtgvNQvIyTTNhte8-OAOlLWyMiaPQ1lRWK-YXVPZnmjjswyjjO8PNyOE8TST8C4fr8YQ7SCcz6gZ1zXj4ox9-mmhuUz9jm2H7Kd0EAnFcbboh_-oC1GztbGf4LHcmOJgnKHLVN7yHqsDjxHKMsoycrw1MFItbYbmUBy2uGWgld4dbiSzoN9YuyJPqZxMkcvzav1zvueWvkF322jGJ4EQH_GGB6d5TM0UGRw8WOHQw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1773934679941021267&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 10:00 PM",
+        "Tuesday: 7:00 AM – 10:00 PM",
+        "Wednesday: 7:00 AM – 10:00 PM",
+        "Thursday: 7:00 AM – 10:00 PM",
+        "Friday: 7:00 AM – 11:00 PM",
+        "Saturday: 7:00 AM – 11:00 PM",
+        "Sunday: 7:00 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Gjusta",
@@ -329,9 +615,9 @@
       "address": "320 Sunset Ave, Venice, CA 90291",
       "neighborhood": "Venice",
       "phone": "+1 310-314-0320",
-      "website": "https://gjusta.com",
+      "website": "http://www.gjusta.com/",
       "description": "Trendy deli and bakery with outdoor picnic tables where dogs are welcome to join their owners for artisanal fare.",
-      "descriptionFr": "Deli et boulangerie tendance avec tables de pique-nique ext\u00e9rieures o\u00f9 les chiens peuvent rejoindre leurs propri\u00e9taires pour de la nourriture artisanale.",
+      "descriptionFr": "Deli et boulangerie tendance avec tables de pique-nique extérieures où les chiens peuvent rejoindre leurs propriétaires pour de la nourriture artisanale.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -344,17 +630,38 @@
       },
       "priceLevel": 2,
       "confidence": 87,
-      "reasoning": "Popular Venice eatery with well-known outdoor seating"
+      "reasoning": "Popular Venice eatery with well-known outdoor seating",
+      "googlePlaceId": "ChIJIb5F-cW6woARd4CTt6yz_pg",
+      "latitude": 33.9952076,
+      "longitude": -118.47448229999999,
+      "rating": 4.4,
+      "reviewCount": 3408,
+      "photoRefs": [
+        "places/ChIJIb5F-cW6woARd4CTt6yz_pg/photos/AcnlKN3rav0oiScZH0XojcvDUOoUcX6HH4IaNihqTNLHUSq1mp0wEM0pZWOKKIiTaB7atCf6Gp2XdTKy_ZcGr4n9rsKd5tubHnh3IWiYsAFAkMqo8Ez-UFtZNC_8EZSUJWy-t9lQ-KzHacDQsKHyzWaUf5rFFZTu5xtjpCHAjIQQopJ4n9pJGMtEqQBbimSIshmkCUViXsBbj23pvpJDQOUAXciy78DObfYoKjz-aNzD6GHjR9rbPc4hz83c_ic8BdrGyksZTqWe3jNtaFw6AIiv4MV3ZDMjzjyOEU9_oTW6NbVBAA",
+        "places/ChIJIb5F-cW6woARd4CTt6yz_pg/photos/AcnlKN3TXqzpz2nyeSO4edlqco-dAChouhjWhO4QvZ7tW9iaGaFFpYuifbV_a24bue0qG4a92fAODfY7sNdEBFcD20VXtbYoGKdEDB87LgH_rNoDCGNhyZ9bRUl3-LAIP--sxt5ic-YblzbxoTVN9YzOSpk5v4plfUDMr2vQs59ZrVWQzj9xQ07FCJcr_xzM9DfvLkysdl_nHgddqAvmjQ4PPW57PomAZovf5z3aUFaY3FQrxz1pUp0WxCPLdfM-aQGB8eVG5nEIc2SdZ8-gJmlsHXo9btZ6iSqcfrRgxYzpdrSZkQ05qoFovzD2_e0spxIJ45BnkM01LSTVFRL4qp7PhE-Jk74UgOhbKXMRL-6c5Vl5140JFfrTtIRCV0mcUuurjkw90_AqMGD_uJapUgDE1J4RIB-dZIAntJGV6v3p1K_O3ecoqmcYIzop2pVgo7Lw",
+        "places/ChIJIb5F-cW6woARd4CTt6yz_pg/photos/AcnlKN2fJnL8CSTIa4rz-v1f6mePdYWgbVW1JJABVOP81CVYLZoDvNQBIo-WKXFAvXUKt919vd-RE4BEP4JgHHfGDu0w0Nkl4cQMA6Nt1kbx1PGetI4nCFBLtjaGLQtXe6pNMZuxzVVmWOwvQZA95qppQDrwP2cH7ZeHz8SeA8SKsJxipMQFzDYz3jsULOOBi6RrHvXGcIUNOOf9BpxNVl7z6ogZwQAwZr69Cd7oJUtGsSPAtZRLtDRuO9HeyPvzG5B0Gil-1rsoXjNFplSirBh2kBVF5fKPQbDS7DHOX5A7LnNZ_w"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=11024446492245196919&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 4:00 PM",
+        "Tuesday: 7:00 AM – 4:00 PM",
+        "Wednesday: 7:00 AM – 4:00 PM",
+        "Thursday: 7:00 AM – 4:00 PM",
+        "Friday: 7:00 AM – 4:00 PM",
+        "Saturday: 7:00 AM – 4:00 PM",
+        "Sunday: 7:00 AM – 4:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Terrine",
       "category": "restaurants",
       "address": "8265 Beverly Blvd, Los Angeles, CA 90048",
       "neighborhood": "Beverly Grove",
-      "phone": "+1 323-746-3501",
-      "website": "https://terrinela.com",
+      "phone": "+1 310-360-6900",
+      "website": "https://www.bbcmcafe.com/",
       "description": "French-California restaurant with a lovely garden patio where dogs are welcomed and provided with water bowls by attentive staff.",
-      "descriptionFr": "Restaurant franco-californien avec une belle terrasse de jardin o\u00f9 les chiens sont accueillis et re\u00e7oivent des bols d'eau par un personnel attentionn\u00e9.",
+      "descriptionFr": "Restaurant franco-californien avec une belle terrasse de jardin où les chiens sont accueillis et reçoivent des bols d'eau par un personnel attentionné.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -365,9 +672,30 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 81,
-      "reasoning": "Upscale restaurant with garden seating area"
+      "reasoning": "Upscale restaurant with garden seating area",
+      "googlePlaceId": "ChIJOd2I0Ly-woAR_hEFYtqTFiQ",
+      "latitude": 34.0921328,
+      "longitude": -118.38058029999999,
+      "rating": 4.6,
+      "reviewCount": 3321,
+      "photoRefs": [
+        "places/ChIJOd2I0Ly-woAR_hEFYtqTFiQ/photos/AcnlKN35H63KFJAPbMGdWk2NwJUWyidQIoh5g_rmPxqUq1gsBiYDEZeuoNbxxI7HWZ7tK8d3KUQjRrvqSalTQUW8RB7PCPGWdFvl5RO8BCAyBnmFU2mAxsgynMhDs1no3uqSsButa51UhzsbtUUg3MIlkPafMhfjYNlUJbE4dxdRvRRJpKSAjJNXLCgwqF1Bq8ylApaX6BwNTou5JJOIbfOtFfa4nTYIFAdUw21wJYrgM-XqoMlPkuSQGn05cVVGuYkzaXpV-_znp3hkQUCRWqz5-CwO0BgHqdESQF3qWtVZuntUng",
+        "places/ChIJOd2I0Ly-woAR_hEFYtqTFiQ/photos/AcnlKN34U_ryxeM5AukidHFom-T3YdL73h4LAJkYoGR_RZ4XFemEfokCY1uSfcr3Lct2IAteBkhGd3NJfl6DIYEBaOJBYrDG0R5Yv11ehkXc5SJedOf8JxhGM89AlGFRiYM4N0RlfIP99orFdYUgTPgSZ2GJ2ejIF2_Bb_GkjNUK2GJ3OBzLQMn6IkE9V5RsXpIgYPD7zi3GpbFqKk_YG6ct5I-v01D6tmeHiLV3ggJyiRDhxvo0r0fANhaGG1GK0EoybvAhdn7u4UZCH7P86OkHOcLBikALmO7Z883iw1IPr_XhAg",
+        "places/ChIJOd2I0Ly-woAR_hEFYtqTFiQ/photos/AcnlKN1RkRC3_o2251C1uChEq7v5mEbXiKx4A5f8LZRQwUoBZ0tXL-wPNIUQVKr1Q3yWEXnlFzXs_FwI5ewE2nR-hvAHPJes8Jr5VIFV7YKJ5RlWJNMLCsH4vukLGtn3UaDmvqxupUtbxOUcB5typO08M5ufsacgU3-iQIIzScyTsQGSmrbkBG2KsJZPvVifTKZT5F2SOKbVJ5TfVkHiqhH2LX-IQAE2SNWFxM_8QZW1JK50XEG7HbikLFFK2fnX18iu0Ctsmm3hFtMmDD6T-t-AyqqOuiZi_6zJ_buU_1qrFXaepiWyXxDgYMrjkk7OXGBWttq0jTbNS32tA0dLnF15iaO5zjtMZ0jM8M0Y3x7QPudqQh84SHxbv3AwgYKNdDlIpUc8cvgBdN3dEblc5qRneHaHxBRsdjbztC2leG1eQISlRt2G_M7CGl0a1lKnUn_y"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2600428401009693182&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 5:00 PM",
+        "Tuesday: 8:00 AM – 5:00 PM",
+        "Wednesday: 8:00 AM – 5:00 PM",
+        "Thursday: 8:00 AM – 5:00 PM",
+        "Friday: 8:00 AM – 5:00 PM",
+        "Saturday: 8:00 AM – 5:00 PM",
+        "Sunday: 8:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Bestia",
@@ -375,9 +703,9 @@
       "address": "2121 E 7th Pl, Los Angeles, CA 90021",
       "neighborhood": "Arts District",
       "phone": "+1 213-514-5724",
-      "website": "https://bestiala.com",
+      "website": "http://www.bestiala.com/",
       "description": "Industrial-chic Italian restaurant with outdoor patio seating where well-behaved dogs can accompany diners.",
-      "descriptionFr": "Restaurant italien industriel-chic avec terrasse ext\u00e9rieure o\u00f9 les chiens bien \u00e9lev\u00e9s peuvent accompagner les convives.",
+      "descriptionFr": "Restaurant italien industriel-chic avec terrasse extérieure où les chiens bien élevés peuvent accompagner les convives.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -390,7 +718,28 @@
       },
       "priceLevel": 3,
       "confidence": 85,
-      "reasoning": "Acclaimed restaurant with documented patio seating"
+      "reasoning": "Acclaimed restaurant with documented patio seating",
+      "googlePlaceId": "ChIJSRvZ1yHGwoARcLrfvc-APl4",
+      "latitude": 34.033679899999996,
+      "longitude": -118.22923589999998,
+      "rating": 4.6,
+      "reviewCount": 3953,
+      "photoRefs": [
+        "places/ChIJSRvZ1yHGwoARcLrfvc-APl4/photos/AcnlKN2isZbyEp4DwjuboOY3DBJSV-bXGEUkQfdfBV_iEk2114S4N8vYrBmKo2EL3gxJm24bymw7ssrN9TWHAGlXWItFKKkEPSGBPsMbs_Z1VV45YocCA19yV7yjbqPRHKdgmR_epilyVpEYMuxqsm2hx8rYed3iXhMv_R6gyEmVuDYd-6vrUubmYwhqLf0IjDoLjOtNu6jqIeoBJLHuG9Io6UmlWdXowxSNTEpUFU6wuhdkiqV6G1cOlX4XHzivYDkM5kcUTJy8GKyYtvV-4PcFpNL1jX3CF5-vsbfQiTzuJe5M1w",
+        "places/ChIJSRvZ1yHGwoARcLrfvc-APl4/photos/AcnlKN3V1U0fEYs7kNdGwT4LWYm0GMhemjVR_fwdkpB3iDrMvk_cazEYZqkSrIr1nk4RazissyN2-lbaljORNYI6gxTeV0al_JLubGlb8HV7V2UrM9hFdZHoH13PuXuaTKl79bDfjdjLP_AzWxXKspUNe_WeKS7TQStke3nXRl3exoT6ELnXiJhUsKHuW8fD96ZG63xBPUgFWvAfoHqGZZmaQ7Vi4XDcrrFmM6eR8BWPfwsUaifnrYzk10jDdnVQjFV2Ip-VlwhWAOquCsbrmaxgJydGk7KVVfZX0jdDzCi6Kl5G8A",
+        "places/ChIJSRvZ1yHGwoARcLrfvc-APl4/photos/AcnlKN3FJA60By3oiqx4bmXG6y2axL2EWHQxS-2ASJOR4xELRwNinVAvXE4i29t8LU76gxvPLEnM7FVayPFjprYr0-gIX14c48K97QbcDXdbx2rSaCpWPCry_lp7Z2VZ2NCnyzNUp3PiQCqi0OhAV2tE7Ba7JNxqmyWFx2kZbYEDAd-lm85p3QrYCUfHnQz6xoysODm_yBjXFfV4HKrkxi6E6RpjjA0ukihp9S6YpDQ5gMNG2dqYHuogUEoQQWP9GaJ0lWbmb_8G6B-rYDdW12J_2C3yGP3du7Z8XASBzteTx7m8T4OWWO8Ok-0Q6VXZRICvyC0nEd9u9M2e5TlL7mbGa5Wmnwz3c6d79vJ2ojZanNoD95mtGuoZIuaxGflaHiWQM7PJkZnsypS1BedkQjLMTtAuO7fGaDOscD0NKO6JIQY75Qmi4_o4Q5-aH7NR8nbN"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6791006917853428336&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 5:00 – 11:00 PM",
+        "Tuesday: 5:00 – 11:00 PM",
+        "Wednesday: 5:00 – 11:00 PM",
+        "Thursday: 5:00 – 11:00 PM",
+        "Friday: 5:00 – 11:00 PM",
+        "Saturday: 5:00 – 11:00 PM",
+        "Sunday: 5:00 – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Joan's on Third",
@@ -398,9 +747,9 @@
       "address": "8350 W Third St, Los Angeles, CA 90048",
       "neighborhood": "Beverly Grove",
       "phone": "+1 323-655-2285",
-      "website": "https://joansonthird.com",
+      "website": "http://www.joansonthird.com/",
       "description": "Popular gourmet market and cafe with sidewalk tables where dogs are welcome and often seen with local regulars.",
-      "descriptionFr": "March\u00e9 gastronomique populaire et caf\u00e9 avec tables sur trottoir o\u00f9 les chiens sont les bienvenus et souvent vus avec les habitu\u00e9s locaux.",
+      "descriptionFr": "Marché gastronomique populaire et café avec tables sur trottoir où les chiens sont les bienvenus et souvent vus avec les habitués locaux.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -413,17 +762,38 @@
       },
       "priceLevel": 2,
       "confidence": 88,
-      "reasoning": "Well-known local institution with street-side seating"
+      "reasoning": "Well-known local institution with street-side seating",
+      "googlePlaceId": "ChIJN8EXOkq5woARB3-gElbHC5I",
+      "latitude": 34.072635,
+      "longitude": -118.37183309999999,
+      "rating": 4.4,
+      "reviewCount": 1509,
+      "photoRefs": [
+        "places/ChIJN8EXOkq5woARB3-gElbHC5I/photos/AcnlKN1WaUN-AkTlnVUstdYeKXhPRMtDzaeo7pUliMI92TMpBO_bXryeFd7HMZj7uKUH-yPFH1MydHGTBNthvKLXdu-D0YzYyx5tzSdktybaH_EfnFmhPbzqTOE7Pywt1sprEBjg_2ynXOyscnhffk3XAAwI2Pe7vdZ_a8lQOcZ-RLvxL2jwiykXR1793JwiJpw34UUaoDUgaZuF2_7KQgNl-VK2rRew9FhUUAC8f9YFLp8e9FBDgYehpV3SusTKg74PMMq-Ffrti5t4hAcihcZF_NHcymVn8JZfBKe1oGXf_L8UfpNaaaloDYHOKk67NDwu4e-aXfn9WbYfQbm4rCsln3pVzwkLdg5fVFdwQl3VhHAU4LnvS39_GV0_k4Ai1i3dqYQMbOeRreOY33Fo005zxyWj5d42c40iv1kxop10rEAY9hRb",
+        "places/ChIJN8EXOkq5woARB3-gElbHC5I/photos/AcnlKN1RSPQ1IeTAhXSNyilmMpvkCmlUetygm4xzPSvWK7V879c64yNPg1_EnrHRflm3YOjSM53DUjadsZ69ru5nA7g9ipdlgd014eFelaUOpxdPmKK2BHywMRlqv-9j4zwOeUf79SOgVoupH-Kr4cIJtKIgNQvIEngr-4NXeFprw8IIcF2EKfpC31LFYl3VzGW07a49Rl72ag2iiuNkBuouUqp3k2U_haosjoLH0ER4TYY013uEY1iBT0Tx3evfLL51EyL7AfjMfLBttebpf_GtnFQOD-dURanqa_ZauqB4hsyzDzgue4XvHq0GEUezr_BylDwlaS4qlHBPrD1GyHAD_VjqO8R5ZvDcL8Zp_HBPVSISMm1dfcVBZ32Thoen5RmD4SvIG0YlyR1qX-lbhWqMDnpkj4pcY2Ec7NH2WbboIWILws3hTPe2RQyyXg8DG_DF",
+        "places/ChIJN8EXOkq5woARB3-gElbHC5I/photos/AcnlKN2gs3SZvBkWAB6k3VcCLd0n-AVxP5FOe75c6AbE53aNNqdw5frMwDsByonl4lVXR5-nyunElvuHK1q7zWJVyTFuFzcKradRbZifSlMNadrYGyQQDAkdbr0ItjooL-CgQIL5j3YNXbZQ4oFbXBdqGWNR6EXEaf1bjnYRZBdRHUN1pE64y5EMTbUOfMG_8vpxgRCGSAuQXbkO0OXk0oJFyENiev1P6mpJ3xLisxGVBCZC1KF8Nbo4I3pU1AODQJVPVCpUJ6meXQdvTPIteNhVOGqZGLpDPRIveGaNePFDXgMOUZr07krvayJQI4I2xyfjAL9RWRndBxT-Iz4Xd38jDEMRAvbR-93hiMGMSI-tPv_Tl5M9kBag6idqYm6rgeYFgbNDdJWozKJfjopQ21oLiomU_gimXFFu_3f6p6Tbzws6POJP"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10523724126774918919&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 8:00 PM",
+        "Tuesday: 8:00 AM – 8:00 PM",
+        "Wednesday: 8:00 AM – 8:00 PM",
+        "Thursday: 8:00 AM – 8:00 PM",
+        "Friday: 8:00 AM – 8:00 PM",
+        "Saturday: 8:00 AM – 8:00 PM",
+        "Sunday: 8:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Mustard Seed Cafe",
       "category": "restaurants",
       "address": "3405 W 6th St, Los Angeles, CA 90020",
       "neighborhood": "Koreatown",
-      "phone": "+1 213-384-3352",
+      "phone": "+1 323-660-0670",
       "website": "https://mustardseedcafe.com",
       "description": "Cozy vegetarian cafe with outdoor patio seating where dogs are welcome to relax while owners enjoy healthy meals.",
-      "descriptionFr": "Caf\u00e9 v\u00e9g\u00e9tarien confortable avec terrasse ext\u00e9rieure o\u00f9 les chiens peuvent se d\u00e9tendre pendant que les propri\u00e9taires savourent des repas sains.",
+      "descriptionFr": "Café végétarien confortable avec terrasse extérieure où les chiens peuvent se détendre pendant que les propriétaires savourent des repas sains.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -436,17 +806,38 @@
       },
       "priceLevel": 2,
       "confidence": 78,
-      "reasoning": "Local vegetarian restaurant with patio"
+      "reasoning": "Local vegetarian restaurant with patio",
+      "googlePlaceId": "ChIJX9aHIbDAwoARA8Ab0YYqoVY",
+      "latitude": 34.1067232,
+      "longitude": -118.2872337,
+      "rating": 4.5,
+      "reviewCount": 285,
+      "photoRefs": [
+        "places/ChIJX9aHIbDAwoARA8Ab0YYqoVY/photos/AcnlKN2f7CHBKJ9HQ-vet3A4SRoRQs-Qe12UPGD_nLgpUYqfm13bV34rMhCOrJCUAWqwPhhmqJqqe2TrAz2xDTuoZ49wO_uJv3VB37cqb6CRxKgjpM10zgR3rftdoAzO2BCgurbLdsuidus9WGSw2WzAQKyA2o-SLXCWNl0PH9FCzJgWZvSZVR54wjffIvDEUDamNQangioj6KNPqZUWYNe6rlXkjkJFEM4cSxkTmF96nOh6Xnj27t94Ewi3dEVGk2wnt8-84UbWbqhNd-j8EwQBtKiFCEo1HJyULg7kEe3Px7gG0bo7VCSOOndptLE1UrbvQTekXYsWLTWIk3r9ld4gwo-5zoY2Ze43FHjjE8u_Oom_0q3vcvKNnPMLDpG9LmCKG0U2hr7X3TaeRCrgKhG225uY1LEKvWK254-RrlGfQMWq-DtI",
+        "places/ChIJX9aHIbDAwoARA8Ab0YYqoVY/photos/AcnlKN2_X0zm7xzxCQarbW3hsrFG52UCOkuIVRqf5ecrOI1T9IlvG--VSgWWXEnsplDvHShLxp4Gt6mPtCwL-sU8WjjMGqPrsaNMrTYYOLAq6UjiD6bkCovR8l1KUplZFSND5zmPhahViBoGRca8vjz4jJdrF8GntJ8ogi_gWJFJzZ3tqGRYoT4VaewJqQ7AodMSgNqRmjv4xCmJP10qv6eIGCw8vGppR3UQL38XhOayjctbHLGQIxGlj4magbj8zYD005vgwuD9-4C731CWqD1jB2FSa-CtIFuLml5s0i47iSf4vA",
+        "places/ChIJX9aHIbDAwoARA8Ab0YYqoVY/photos/AcnlKN2kba3THnuJIUR9FXo1BZWuQDv5MAfOZR7naKYF1VOKXsfg7BwHbt9phsApPQ3ltZ6P4I05Zt8snT6Sf22P7sUAa_qPkYa-FaUVWjUKvwSeAbaIlE_9WBzdzWaqB5kbMM1kEPDCbUh4NRTP68Qco8vlxCFqXsJJgqcZ5oZEGEVET4sv5E_50SYtJ8Vd9qmdoMIlHW4QaVEkpKRSw5q89-zZbtwUJyf6Tb1ZjSp6WTkCvFRlJO7e8NPk4mCym-BZW8Dgt2Qrtjjy6oDW2Q-rTFgqU4S27lwEYqwlIafJXJqAbQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6242317317034459139&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 4:00 PM",
+        "Tuesday: 8:00 AM – 4:00 PM",
+        "Wednesday: 8:00 AM – 4:00 PM",
+        "Thursday: 8:00 AM – 4:00 PM",
+        "Friday: 8:00 AM – 4:00 PM",
+        "Saturday: 8:00 AM – 4:00 PM",
+        "Sunday: 8:00 AM – 4:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Blue Bottle Coffee",
       "category": "cafes",
       "address": "582 Mateo St, Los Angeles, CA 90013",
       "neighborhood": "Arts District",
-      "phone": "+1 510-653-3394",
-      "website": "https://bluebottlecoffee.com",
+      "phone": "+1 510-661-3510",
+      "website": "https://bluebottlecoffee.com/us/eng/southern-california-cafes?utm_source=google&utm_medium=organic&utm_campaign=cafe_business_listing_socal",
       "description": "Artisanal coffee roaster with minimalist cafe featuring outdoor seating where dogs are welcomed with water bowls.",
-      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 artisanal avec caf\u00e9 minimaliste avec terrasse ext\u00e9rieure o\u00f9 les chiens sont accueillis avec des bols d'eau.",
+      "descriptionFr": "Torréfacteur de café artisanal avec café minimaliste avec terrasse extérieure où les chiens sont accueillis avec des bols d'eau.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -459,7 +850,28 @@
       },
       "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Major coffee chain with multiple LA locations, known dog policy"
+      "reasoning": "Major coffee chain with multiple LA locations, known dog policy",
+      "googlePlaceId": "ChIJzzDv7UvGwoARrswkrwOHU9I",
+      "latitude": 34.050785999999995,
+      "longitude": -118.247916,
+      "rating": 4.3,
+      "reviewCount": 1068,
+      "photoRefs": [
+        "places/ChIJzzDv7UvGwoARrswkrwOHU9I/photos/AcnlKN2KDr28P9m0v-Ra1nL9HSxemXZSODBRRfZXBDSztWJ0kRxEZgRvKmz5wPe4dwUhtv79iZ6Opkaj29ZB7RqkJODSOCiawj2paGAx0hxCD_8GvxX_CL-sKt3TZ8_-TOrXUEzNcCV7uuTkJXaHCkqfdsGy5AYJQ-A6Ab53GJqLwADQDSzS3OwGcH-mdSah1VOVLXOiWnJNihVxmVtpyux4JAQSMzBI6CrNEsgIWTnCG3a1kouLVMTpoVVBDKZ7CFIL3hZyU8m9nZWgiDjZM-WECr_9zFZxCbDtXyPSWX2PfRHehjPAI3wvbzbh8Rf5llYzAKh7YESRSAhHgIuWtHKc9VCWi2dd4AhRvSPjNB-3w6Y2Ftgx5SY5NLqDLTX5TL5gZItkdklQz4lTtkKTUCxT3XtN24L5ZzwLzdk-oY70wChJcQ",
+        "places/ChIJzzDv7UvGwoARrswkrwOHU9I/photos/AcnlKN3DDiL5cEBKNQlVrrOfH3Gw9j43ZP724kzlBv2cPtM8nsHN_Md8WcdNb2t7wDrpyXROh92q1nNk7acC5QSjDoK6SAyH8tG9kkUTRnCe02a9H6IptSnWAE7F2jgaxbf9xEaEBLVbHZj0t89TkqI9FuXmJMP9xUjl1tscTa_fOxF_CfoegH-9P2Pa7k4xyh7NdQyix4q-XvizEHNEj9O4v7DLXbZgBmhDKw1JlFh7zhnA4sD50XD49nn1ViznMXOjIezBUgmUNfdrq8q677XYjoIxkv7axY1dE-M_W4jRM4FawllIbV_kvHTu4q4oLl3uz8MjzpdkNZjvnObkR8Cn27ma2_LCa9X5KztKFS-RYEPVF2lhzCOB2IA_Ah_s0A8R0V8JZ8SefwI2lFkpVysNLCwC8IPobh7olmaRTErzdg8bjgma74sz8BPOgqxt4w",
+        "places/ChIJzzDv7UvGwoARrswkrwOHU9I/photos/AcnlKN0wtPd0HnLIe20zihyRf9B32COza_gULI-l03-kF0MNECnQVcYFefKFWFRsb3VJGsJS_Bj819p_g6JX0zTvJR8E7ewZ4R5C3MaqGGo5v5UUBXyPjdVcFUcKR0cBUIS55Zvenm8-sXyBSjmo2knpjQE_XRz02082xrrs60en1MWjKSp8vxRwyerhORA8b4sFpcS4_Zmy_gZAcf3krCJvGqy6FlXlSxnpY5TDDRxOF72RCsqYVgxB9J288n24dQFsvk3Hk7Yf_IuaI6XiU4T-7inl8ERbE__EpHWaJbx8Kp1RGxECEmRp2e4moJWzdQd7tzx7zgRLLCLz04VuXEH6dQlCLtJ2NDenKQYaSkJHTFgzLc5WVgtTLhDljR_qsaiWo60ABmmFhr_K5_MIhsWAdQKl9HJlq-cfeUvkpeXyNWykYGkN"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15155605620924927150&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:30 AM – 5:30 PM",
+        "Tuesday: 6:30 AM – 5:30 PM",
+        "Wednesday: 6:30 AM – 5:30 PM",
+        "Thursday: 6:30 AM – 5:30 PM",
+        "Friday: 6:30 AM – 5:30 PM",
+        "Saturday: 7:00 AM – 6:00 PM",
+        "Sunday: 7:00 AM – 6:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Intelligentsia Coffee",
@@ -467,9 +879,9 @@
       "address": "3922 W Sunset Blvd, Los Angeles, CA 90029",
       "neighborhood": "Silver Lake",
       "phone": "+1 323-663-6173",
-      "website": "https://intelligentsia.com",
+      "website": "https://www.intelligentsia.com/pages/silver-lake-coffeebar",
       "description": "Third-wave coffee pioneer with outdoor patio seating where dogs are welcome and often provided treats by baristas.",
-      "descriptionFr": "Pionnier du caf\u00e9 de troisi\u00e8me vague avec terrasse ext\u00e9rieure o\u00f9 les chiens sont les bienvenus et souvent offerts des friandises par les baristas.",
+      "descriptionFr": "Pionnier du café de troisième vague avec terrasse extérieure où les chiens sont les bienvenus et souvent offerts des friandises par les baristas.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -482,17 +894,38 @@
       },
       "priceLevel": 2,
       "confidence": 92,
-      "reasoning": "Well-established coffee chain with documented dog-friendly policies"
+      "reasoning": "Well-established coffee chain with documented dog-friendly policies",
+      "googlePlaceId": "ChIJ763W4UjHwoARhP2LIuCn2dU",
+      "latitude": 34.092064199999996,
+      "longitude": -118.28024769999999,
+      "rating": 4.4,
+      "reviewCount": 1101,
+      "photoRefs": [
+        "places/ChIJ763W4UjHwoARhP2LIuCn2dU/photos/AcnlKN1WV8RTL-LMfG0qAF5qdNogp7Re9RZW83O7xfikJhL9NnMLAF5wsfCkWEomdFnzYNChSrreiehbdBL7kSxyTTu6l91aTkyRCJCRG6mHnoSmvHKXy8pIztVrnAL_wH9XHkC0rDZvOWw6BHGGlDOvocBpLn5PZh3-Fiu-DECd2PoeEdv71G38GnIcz0-iZtfPmLPGhsdfnkXMNCfvgGSyqLVmFNxbPkp1nDjn8RKlgcoh_EExRaDYM_Lr9MLwSAZjg062fLMPJezKrJcTe5tOAZbqDIVTekyA8mpA2nEVA0KnYg",
+        "places/ChIJ763W4UjHwoARhP2LIuCn2dU/photos/AcnlKN2iOh4dYn6v53CXHQe9by7ZcgAuNYy719jhjzypWnY8e5SobejqES7dfgbkKE4D2ixNyaLFg01HNHMumIxHCOWe6qZF-jhLnL8hZ1YWBTo2lHp2Qj9EpeZiBgsXrqcmZ2-OYhwTi57bQqIXxQI-TO0fXMsR_OFYY29z-a9h4nAz-uhc2Jqc8U8H7HNpEXP8cWFpq8-JQDGj8Pn51EpdcuAoziSGzAECvJiU9_Uob1h2YmRuuiD4opQaXn4YvCW1mThyzYBVVdcBW3Vz-nZjn94xObepVwmAwQWSodQhWewGRlBj0RUbz77Oy17lzs0c9ASPhP1TNuEsJ6OnwAyZZv8RR5eUF5sS9SMzC8xfsDxFMics0KzE9ofREUQNHlC8atGwK_XDyBNIodEMY0dsm3PkQK7TviGFWVQezfBcwAus_DI",
+        "places/ChIJ763W4UjHwoARhP2LIuCn2dU/photos/AcnlKN1XAcSz3M2Q_CA8aY2FGexefjaUyMBZmBhrqs4fGGeCI533dNGf900bX98U7nXVcVZDrUmS0O_cQViNEx2Q2cgnDq0xOscn-vjKTH9DY8eS6dRWTEM2-c7qdvN6QUBYDxcXfL0z6xGX3tr47dbppnwgPGcwRhLxTuPu3uQRehJ_A07flGfILRwj3r5CqCXWn9xPL-QRl6VtIzERpLmPPYNwikcYHBeiKTi3qAFo5hQuLkdE_MFFaCszI0rmzmVYCkoJo2gjP8pPSRUDuQJwEOlos75IN5Xv5jhympnkEOa1G-i8wXLd7Rv7ZoDnVjMpq-G5ZLFtT0w8QEfzPYDVJbRr82Y1Cw1aCZAlL8_e27zdNtLBASCGG3S4Ml4b_STGPUKxYxxjSoQ-7Tn83--L4RRbbjRpL5z6TsNNBqOtizhJIemjFBqqaxCf5Mzk_Rdh"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15409532181118975364&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 6:00 PM",
+        "Tuesday: 6:00 AM – 6:00 PM",
+        "Wednesday: 6:00 AM – 6:00 PM",
+        "Thursday: 6:00 AM – 6:00 PM",
+        "Friday: 6:00 AM – 7:00 PM",
+        "Saturday: 6:00 AM – 7:00 PM",
+        "Sunday: 6:00 AM – 7:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Stumptown Coffee Roasters",
       "category": "cafes",
       "address": "806 S Santa Fe Ave, Los Angeles, CA 90021",
       "neighborhood": "Arts District",
-      "phone": "+1 855-711-3385",
-      "website": "https://stumptowncoffee.com",
+      "phone": "+1 213-337-0936",
+      "website": "https://www.stumptowncoffee.com/pages/locations",
       "description": "Portland-based coffee roaster with industrial-style LA location featuring dog-friendly outdoor seating and water bowls.",
-      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 bas\u00e9 \u00e0 Portland avec emplacement LA de style industriel avec terrasse ext\u00e9rieure accueillante pour chiens et bols d'eau.",
+      "descriptionFr": "Torréfacteur de café basé à Portland avec emplacement LA de style industriel avec terrasse extérieure accueillante pour chiens et bols d'eau.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -505,17 +938,30 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "National coffee chain with Arts District location"
+      "reasoning": "National coffee chain with Arts District location",
+      "googlePlaceId": "ChIJ7_CA0SHGwoAReG-WAhF5ms8",
+      "latitude": 34.0333038,
+      "longitude": -118.2298615,
+      "rating": 4.6,
+      "reviewCount": 812,
+      "photoRefs": [
+        "places/ChIJ7_CA0SHGwoAReG-WAhF5ms8/photos/AcnlKN1JTTf5Kz-U2tnLhib18ODMeJwk0YnDBq8agWoCRzz4aVdakRcfFxsY9-mcbv88Yd7XEkobPgvJoWFZcUFVjeIsqj4Xn419or0CU_Cmrs1EzvjZachfC9fiZM1sLBXcqRXN2mz2Vwe05V2uFa8AJs4LmZNCH8S3HtXyo-kJ8rBCu09vBU6Wx0C8i_kp7Y4t5BVzMQXumJAfA2B33fSYNO7gzRhRGM_PcFWpssHAoLibRJrQptAVFRVM7DBPujv72EDYVAudvzS6BD6n-H_gF3hySNAev9q8MCW6RBJzMqcP2_H0sZgXReZ6by9YIAflfjjs6CZlS9lhQDcXtotYDARBuDFr7Ge6LG05aJqUwVi8NNaJA9kD3uArxb57OAPpvpngxVs8MXRFQwMH_oM0UoKo0M55NCQBIIkCccshlyxhahvM",
+        "places/ChIJ7_CA0SHGwoAReG-WAhF5ms8/photos/AcnlKN3NmG8O0Hy8fXy27uFE5uJor_hKtI0YWIaDSzBf19Em8g8Y45prub6K2lz1jbTQ4AdjuGV_HdbvbgrXQHYSizCwqdO_Ct89xterOkgiFpJTOtNhcSpwq-bCK8-Gg4TzY4YkVnG3ItFa1ZvmrOk1dHfqUXjOKBYqpcv7TZlbMQjADdybEmeL-kjk9fS32L4ZILsvzXguwEOdLDRrt8B6NFeCHP8E04sP7ncrMVpjSUYD9U2rSMAMjBmiud2HhD55L0CW3MwGJnk8toTYru5YT8TTyHq_6fpaJe-YQUjeuobpVVElowFmr4VDeYxR2sJlsvBcTbcAXgG1v8VgXx2dB5F_U6fwe2wKxljiNAktaPQ2GE6aX3ymX-PmVkUMeae9E01BfTpbXNZAVbXmlbI5IciuEZgpuUPJDbbfMIr5ni4",
+        "places/ChIJ7_CA0SHGwoAReG-WAhF5ms8/photos/AcnlKN1LvK5VfprXiD10UHg45BYFAAWOai19OFWS-PtlEAlLI691O6_gav-aqynmTgpUcdiwBHnWLEEewX0xVMCgomeAQk_U5ZbzidkXvh8s4bATrBv_DKZ_GPTwegXknTBaQ8UHthKYvctJNEpCGbptMwrMO1uUoiIgGsyKfYKZmI7KlgnBPoOdrJWSUF777qNVMlR6ugZZPmcOUOLlxsTzbVTl8k_TYHjprXqKuWrCUlimuTkkxHrcwizWI8IEVytFKJh597GOIYGEqlyUCCuQ1JmVpYS2MgfT7iP9u72CrOhe7awgIpd3y-X8qEmb3TN_2DlNrLmSGaC3dUAiRRt1mZSORnv6SzlcgNGknPQ76U98OnDh4GlnDlo5OZh8obtC6UI3izi_-_AUUwKn2B9PWxyF6L6vuHTJt9n2Pvfays58qmoc"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14959402226229342072&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Go Get Em Tiger",
       "category": "cafes",
       "address": "230 N Larchmont Blvd, Los Angeles, CA 90004",
       "neighborhood": "Larchmont",
-      "phone": "+1 323-592-8753",
-      "website": "https://ggetstiger.com",
+      "phone": "+1 213-261-0622",
+      "website": "https://www.gget.com/",
       "description": "Local coffee chain with sidewalk seating where dogs are welcomed and baristas often keep dog treats behind the counter.",
-      "descriptionFr": "Cha\u00eene de caf\u00e9 locale avec terrasse sur trottoir o\u00f9 les chiens sont les bienvenus et les baristas gardent souvent des friandises pour chiens derri\u00e8re le comptoir.",
+      "descriptionFr": "Chaîne de café locale avec terrasse sur trottoir où les chiens sont les bienvenus et les baristas gardent souvent des friandises pour chiens derrière le comptoir.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -526,19 +972,40 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 2,
+      "priceLevel": 1,
       "confidence": 87,
-      "reasoning": "Popular local LA coffee chain with multiple locations"
+      "reasoning": "Popular local LA coffee chain with multiple locations",
+      "googlePlaceId": "ChIJy4RMgUvGwoARxcVCshVZCwk",
+      "latitude": 34.051052,
+      "longitude": -118.2493274,
+      "rating": 4.3,
+      "reviewCount": 648,
+      "photoRefs": [
+        "places/ChIJy4RMgUvGwoARxcVCshVZCwk/photos/AcnlKN1thNeWgau-oe8rQ1B5ElMloeJrrH56wq2AiAZJrDsWh6rdgPQQ6DJY2Lr6OXZyrbzvB9UEPakCGAxWXs7mC2meeYl6yDiwI63SCRqyzBOvz3sWaFn6_XF29wGpq-cr3T9J0tVFmozAXvy-T4BDKcYj4kKoDfZkuevEpWrRjFRUIG9VATxM_PX99My1dLF5ogRqOFsEqosMnaq3LyWoh49MT80SOtbpSGTZIIyLDkyQ7k06XJuCjbDsm3MKsVQtJq6LhPyZ9EpXApIQXF_iVeDaPURHy7j80T-wh6l3y1Ftfw",
+        "places/ChIJy4RMgUvGwoARxcVCshVZCwk/photos/AcnlKN2PDhHoXz4-5LyCrgn4AvgOPQL0NhiCXJAEC1x7pO9XyJvAm96-HU0VDd27eKvgrGXWXvGs6IBxgR7PeTehUVPuxhMooXVW9WunMDMXCfk64Z9-B6qOiC5f4UcbfxLTHrys1p8r5_rV8ry2UcCQJkvE6dtqszrnmOKJPecVd_UmxjY9LKoJjy5bohWb0wZJhfannRIDc2qXzgRukKn34qrXUlFX88SS5lMK2ptD7-TcxVmJUX3JQYTTWIGX4kBhkSAOR2RdtF0uW26KB7B9IUoS1xlxwkpeFE0ifzhPiFmd3g",
+        "places/ChIJy4RMgUvGwoARxcVCshVZCwk/photos/AcnlKN20FY2O44Q_CUtN2998wNukQRDj99mjYCo-G1_-qHczf_MA_bNPSx9nOaNa-krVcXPNhg13BXt_hJavgqWbqXX3MBzo0J-6cmB_ERFdbQkMi1QYmTvcsDZHmHlphdAkjTOIcMIdyE6DZdS-QYPYXiXYQ5sFVkP2Lg9LMKdh-JiTE58saQmrQW2Y34EfPtk7n8efNNiMq6x1pKx7bcWrkl65pm1TwfGS0-4eD1pb-cO6qWrjShDlh5BjaMiIxNDHVHY-poNFIAVkW049iLyeOvh5_9KF7Dan31jFXhb3ScH08Q"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=651712520805074373&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 4:00 PM",
+        "Tuesday: 8:00 AM – 4:00 PM",
+        "Wednesday: 8:00 AM – 4:00 PM",
+        "Thursday: 8:00 AM – 4:00 PM",
+        "Friday: 8:00 AM – 4:00 PM",
+        "Saturday: 8:00 AM – 4:00 PM",
+        "Sunday: 8:00 AM – 4:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Groundwork Coffee",
       "category": "cafes",
       "address": "671 Rose Ave, Venice, CA 90291",
       "neighborhood": "Venice",
-      "phone": "+1 310-399-2334",
-      "website": "https://groundworkcoffee.com",
+      "phone": "+1 213-626-6060",
+      "website": "https://www.groundworkcoffee.com/pages/arts-district-on-traction-ave",
       "description": "Organic coffee roaster with Venice location featuring dog-friendly patio where pets are welcomed with water and treats.",
-      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 biologique avec emplacement Venice avec terrasse accueillante pour chiens o\u00f9 les animaux sont accueillis avec eau et friandises.",
+      "descriptionFr": "Torréfacteur de café biologique avec emplacement Venice avec terrasse accueillante pour chiens où les animaux sont accueillis avec eau et friandises.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -551,17 +1018,38 @@
       },
       "priceLevel": 2,
       "confidence": 84,
-      "reasoning": "Established LA coffee roaster with multiple locations"
+      "reasoning": "Established LA coffee roaster with multiple locations",
+      "googlePlaceId": "ChIJ43O2TTnGwoARHhsm3wwttnA",
+      "latitude": 34.045179,
+      "longitude": -118.23551429999999,
+      "rating": 4.5,
+      "reviewCount": 561,
+      "photoRefs": [
+        "places/ChIJ43O2TTnGwoARHhsm3wwttnA/photos/AcnlKN3oaPsZshd1wsc7w1l2t2pr99_i9uLa0uaYAd5f6fIWdEkf9nTMFCyAEBxXYXcqo4_N8g4xHfmX-Rbgy6RC9LdI9DjDtTeERMNFs0xkBA5EvxUx84q__QctlFhgyWxddZ1gcOraXSyo9uMhHWQnAtcXXh8weeVLeR7b7pTaupFN1y35LluW_5aFBQwgIX8UWtLJ7vL0YX1W1H1kWp4qKnXy3BS4XXR32gE0CLczzPeEb4785OAAGlRLcjpiZdF4gZYi-e3Qhwib55K2iOcCkmD15HhlzyfsuOwx3NWW3nE",
+        "places/ChIJ43O2TTnGwoARHhsm3wwttnA/photos/AcnlKN34l82-3Mbo6F-shTaEteNZtK31iKoogop96SILeBQaLxg-c2h-pZ2ZY5WaBGZV_AtddbkEY2e1k1isvM5FB2nFz1u3eZ_IXlqzIKTjZ7C34YUiJ-HlK1sRLd0POjJ4zuRYfD2kKqfDWzcGHPyZX7dhFOr3zg1uhoUzaUObeB7rYlKgjqbfXTzvnTzbTKtbP3QggSyob_7wF6LP3cofXy-X2RkYE82LUiGunjeppMwh6Fr3p4tLyrGllslmFk1p23wM35WZQBseHW95doq70-aRZH6QjjltDLW0ubHBKoA",
+        "places/ChIJ43O2TTnGwoARHhsm3wwttnA/photos/AcnlKN3TILWQdhUmRxwaQPVjUK_rrsm0Um1pRu8NeR9b3g6ZuSCmZLJXodiczdhf60QNqc3E-S9D_BPBo9dqjl5hiu9pfk5JbfZ1408inzhWAnNZHxna_NquCxJ4Io1AmPeaq9vV0PS5hBlgpyBlbVLf4DRRL8nqp6JtoB6mJvLNRp7v8Wm2n-dzDbUsVL6HwhJ4ghg497xQ7s33CggyhohzKIHINJBdREC7l9j8QDhyazUq6a6k405Jw7zDMtcWko_Mgo8KKTlaoXvT6G9gDabI58jA12nxnANZJzmQws512jd4-X05dV9_drGoqCUo_a9hL-aUK-KK20GdBl-wbqG0C2BeZghxUkAPZjdUWBftA0NZjRBw--kA7Agz2JvoXHwzBleTPC6l3iOd35GVQ4xZHDTGlyCw2_iGwUaajJMNcrilr1fPtjKAN_mdzHcPSlBX"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8121728511315942174&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 3:00 PM",
+        "Tuesday: 6:00 AM – 3:00 PM",
+        "Wednesday: 6:00 AM – 3:00 PM",
+        "Thursday: 6:00 AM – 3:00 PM",
+        "Friday: 6:00 AM – 4:00 PM",
+        "Saturday: 6:00 AM – 4:00 PM",
+        "Sunday: 6:00 AM – 4:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Alfred Coffee",
       "category": "cafes",
       "address": "8428 Melrose Pl, Los Angeles, CA 90069",
       "neighborhood": "West Hollywood",
-      "phone": "+1 323-944-0811",
-      "website": "https://alfredcoffee.com",
+      "phone": "+1 213-770-5006",
+      "website": "https://alfred.la/",
       "description": "Instagram-famous coffee shop with stylish outdoor seating where dogs are welcome and often featured in social media posts.",
-      "descriptionFr": "Caf\u00e9 c\u00e9l\u00e8bre sur Instagram avec terrasse ext\u00e9rieure \u00e9l\u00e9gante o\u00f9 les chiens sont les bienvenus et souvent pr\u00e9sent\u00e9s dans les publications sur les r\u00e9seaux sociaux.",
+      "descriptionFr": "Café célèbre sur Instagram avec terrasse extérieure élégante où les chiens sont les bienvenus et souvent présentés dans les publications sur les réseaux sociaux.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -574,17 +1062,38 @@
       },
       "priceLevel": 2,
       "confidence": 89,
-      "reasoning": "Popular LA coffee chain with strong social media presence"
+      "reasoning": "Popular LA coffee chain with strong social media presence",
+      "googlePlaceId": "ChIJHQ_JJQDHwoARjRA0TCqLQEk",
+      "latitude": 34.0453212,
+      "longitude": -118.2363191,
+      "rating": 4.2,
+      "reviewCount": 33,
+      "photoRefs": [
+        "places/ChIJHQ_JJQDHwoARjRA0TCqLQEk/photos/AcnlKN3a3fMaTWwUF8ee6NVnt7l2SdcEb9B4WqgXbciwoU2Iedt_0oDvzeKRZmdYu2x9BMEgIlBDtap55eZzz4Z-SH9-wttZ3wwdlEWk6zCnHYpVN2nuHNt4QlMLKA_a_hD6TdbU_oaTlvg59s84xxXWxyUiZ4CMlTW2wOKo_cHKmnavAXWWH7qEMzVCwBYZ2lriV6A3cBjPdBcnxnytBghv45ELb6oJtcWn9ruxw9N2PY_U-dVpB6VJ4SaxJdw-HwGBryQC2kxiUvhKJP-ppz66kJwG1w5aWV0PDszt_1v-ioGrWoUtfHVg0YWXfF5NLDAjx456TYzEamZakXKK3y88_VTSL8fF2Lhraui2K6acTMZshrS9K0AMHaqKvlN79eRgPySltXPfsw39TxXZM0UQscJON0O3CTSTckJvhHfGTfXqzpra3E02PpG-Vn_pZO00",
+        "places/ChIJHQ_JJQDHwoARjRA0TCqLQEk/photos/AcnlKN0-HX8qkexC0EZPf6bkdSgNE_cD7dgsUUmHFZMWdcjJYEwSzWzbbY8yswh9_KTM6rjRnHduG537dOAPgNMIl-p8h-J-CCxT5CUtsJybOa3NFW7m4r59zGIzqjKH8WzuqwSNffCQzSN8MlIMVHn7NgGnRI5IdUW3GqTV-zDYu8lSXrFNwdKHfs8c79gIt-ouv8PTglPjRroIKEoGBOUolKwd6IUHR1_TgJoWz0XkzZ8uDSArrcIr72sl03QCOadLt7JXJq1pKcIKgw_Bz5fLzSZm2na2WGL7P-E11PoMcalbf-a3i9EAdXPI0c1v78WQ-fSiszZTuqY4WO4kC8ycrX5JvEZFDtXFoS1c-UGvzwLLH59V1LFHHgtDW9uM8FWqAUj9fw_MGUM--XyvR6aeAOD-8JcIVlBWc1UQHdctyu8K86G9-jfoTxKog_cOBBOZ",
+        "places/ChIJHQ_JJQDHwoARjRA0TCqLQEk/photos/AcnlKN07ZAt1dnYuEwam-zILQHNxIBLxAgSjhRwdT6FkM1ftXYcRvbVHBEZzqetfoljSIL9q1KYxFsjcAHbK8mqyU7zw5orcr8-Ue1MXUjkHo6rRug_-qrocT5KofS7aPwkZtB-9QhEjE_0s9pC1nIVPA2C3d2EjRbi0CR-RBFoE2rMxTnInv5UT73RPvAE00XMHsy4cEQ0HHYMBJi8-7Xqx9nf95lF1OMoCkQEUqNU6qmQ72Q-UkgQ_pmETUqmao3gg3SLvX5mFzRp5N5sLWIt9X3bpA926cp_8C391N4l3scAYtqDRUx8G6dYnKTHYaOs_eDrIldXkLs2oA4qCiIN2buHSNM7KwLaMsnNNcl92OaREK2gBY23q3Uj4wN1lTXFXk7ppkwf_FJFxJFWkOaleR3K3aeaOkwDiB65yGftlIfqrIl6mmxZrjg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=5278371777061589133&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:30 AM – 4:00 PM",
+        "Tuesday: 6:30 AM – 4:00 PM",
+        "Wednesday: 6:30 AM – 4:00 PM",
+        "Thursday: 6:30 AM – 4:00 PM",
+        "Friday: 6:30 AM – 4:00 PM",
+        "Saturday: 7:00 AM – 5:00 PM",
+        "Sunday: 7:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Stories Cafe",
       "category": "cafes",
       "address": "1716 Sunset Blvd, Los Angeles, CA 90026",
       "neighborhood": "Echo Park",
-      "phone": "+1 213-413-4191",
-      "website": "https://storiescafe.com",
+      "phone": "+1 213-413-3733",
+      "website": "http://www.storiesla.com/",
       "description": "Neighborhood bookstore cafe with cozy patio where dogs are welcomed and locals often bring their pets for coffee dates.",
-      "descriptionFr": "Caf\u00e9 librairie de quartier avec terrasse confortable o\u00f9 les chiens sont les bienvenus et les habitants am\u00e8nent souvent leurs animaux pour des rendez-vous caf\u00e9.",
+      "descriptionFr": "Café librairie de quartier avec terrasse confortable où les chiens sont les bienvenus et les habitants amènent souvent leurs animaux pour des rendez-vous café.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -597,7 +1106,28 @@
       },
       "priceLevel": 1,
       "confidence": 80,
-      "reasoning": "Local neighborhood cafe with known community focus"
+      "reasoning": "Local neighborhood cafe with known community focus",
+      "googlePlaceId": "ChIJnQlpgxvHwoAR5W9jeEAKcWo",
+      "latitude": 34.0773434,
+      "longitude": -118.25909129999998,
+      "rating": 4.5,
+      "reviewCount": 747,
+      "photoRefs": [
+        "places/ChIJnQlpgxvHwoAR5W9jeEAKcWo/photos/AcnlKN08I_YK3ayv0i6fOg_i0qsezVDHxCoi0dL5Eg7tR0qISe_G_dL0W7H9EXmHP4GysSqEJYLqw_cW2z5ELYx00j3aloIeRfjfEuXl8feupmlrm-xp2Hw0hxjEsiSplIwRU_s2AB1S5I8iHJmWr3hKBmKK4QVjKGbTRh2g5ldL9u9wpcjjYb-QHm7sWwVW-UmliyRFh6wlKCWe9pjiHRSIN8ULzDS1EjJ2fzLXSGyi0t47EBbaocBeihY-BpRBa1zaVA6v0HBULmfCnbUgP0-fD8FX2t50OQAGcbikNkOdxyfyfqxvO6s4C5EurA2jg5w1ZBr2vFDSp2YegZvJz36UUjmyl34KS17fvqbaDZXq4UF3y9E4VjdkfBQt2eQVIRcHqwJlZbTOF9hU2rdReimilIPQP7J4pf7CBHepcg11c2lBk0CA",
+        "places/ChIJnQlpgxvHwoAR5W9jeEAKcWo/photos/AcnlKN0nOT_PR2ZvVOPb-0buVD9QxzCilFgWoSF4QiElMDYlYFAlifvo647WwxBHuIK_jgJ0ixxl0ASkghhRc3LxDaIPmtof-wlVQa1AZ6eP2K0mAsFtxuvOpDCIn2z-1m9MkTBgF6WCOfkVTfL5ZCx4YawKmbieKAvX5p36lu4rBWaNEKqie3pWj1Q5b-2WUVbht0x17Q_QFLMy08bxBhFyIX70R0u56gR5RbVVn6i-JPVP4ZOaJl4uA1ZDSAj9O22gNF5Z6yh4R5q-VCDqyxUJ_tKrsE1zM2D38AFib7UApJcsyxNNu-XaKh7yv17mx125h5uiNXx-AVksPj_JZ9sTDbhg7nl8f84T-7UyedWqCJSKjB5GgBXvqMfMeZ-yQcnK4WrIBgc-mc4gd6fJhrU3hBEQt5Al63NLW0w6p3yi39c5Ug",
+        "places/ChIJnQlpgxvHwoAR5W9jeEAKcWo/photos/AcnlKN0wCQBrY6YINPbTxEaw-GeLUpukyAdi1D59T989eu9NPWdgRKvHC_AEBB1_rxES8_q73-uVj6x1j9PsnmEnx76hEIPQwsZn2uOwKhEdD6Qadv74pfSueb-UVhVR1kZ7FMvrzlR5Xti5Ze7lW8-UFTsA9tSkmzAIKTgNQ-t47nrR-0hRTUAPHF-CmSRTY1uUY6-i14URUkTr8fSR_wrZt1cIJagUHSm2w9In9H8ts77Dqz-TkMGK3kfiByTH6-LmskOxSk0eYdH5LggIYSS2Gh-sF7yGeCIMGXunb4zQzJS9WSMir68XeHX1K7-4cwLCuJ5BQ9kkNBPJnrqiT8nxA5oXlo9zafdZxqXt2bzaNomfiL-exmPBnqKnoH25YZd29xtA3gkiy5S0KyEg_uhZ0FR-OjB26vyrRE_w9EkULSbCMkH9BzbL8TFcjT5imlwo"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7669922912402632677&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 9:00 PM",
+        "Tuesday: 9:00 AM – 9:00 PM",
+        "Wednesday: 9:00 AM – 9:00 PM",
+        "Thursday: 9:00 AM – 9:00 PM",
+        "Friday: 9:00 AM – 9:00 PM",
+        "Saturday: 9:00 AM – 9:00 PM",
+        "Sunday: 9:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Proper Hotel Los Angeles",
@@ -605,9 +1135,9 @@
       "address": "1100 S Broadway, Los Angeles, CA 90015",
       "neighborhood": "Downtown",
       "phone": "+1 213-806-1010",
-      "website": "https://properhotel.com/los-angeles",
+      "website": "https://www.properhotel.com/downtown-la/?utm_source=local-listings&utm_medium=organic&utm_campaign=local-listings",
       "description": "Boutique hotel welcoming dogs up to 40 lbs with no additional fee, providing dog beds, bowls, and treats upon arrival.",
-      "descriptionFr": "H\u00f4tel boutique accueillant les chiens jusqu'\u00e0 18 kg sans frais suppl\u00e9mentaires, fournissant lits pour chiens, bols et friandises \u00e0 l'arriv\u00e9e.",
+      "descriptionFr": "Hôtel boutique accueillant les chiens jusqu'à 18 kg sans frais supplémentaires, fournissant lits pour chiens, bols et friandises à l'arrivée.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -620,7 +1150,20 @@
       },
       "priceLevel": 4,
       "confidence": 92,
-      "reasoning": "Major hotel chain with documented pet policies"
+      "reasoning": "Major hotel chain with documented pet policies",
+      "googlePlaceId": "ChIJPVoyBWbHwoAREu--ZMmvEpA",
+      "latitude": 34.0393757,
+      "longitude": -118.2589819,
+      "rating": 4.5,
+      "reviewCount": 544,
+      "photoRefs": [
+        "places/ChIJPVoyBWbHwoAREu--ZMmvEpA/photos/AcnlKN3ez08X5sQ8M5ehbvNIU-HfsUKpTz33aJbzh53X8wmZ4hKLDFr8GmiDE5s32sd1EMi6QmKUN5omGrFeKCTxEFfSpeHF0jZzgf9qh_Ey_2pwGZQskSnv3oRV2LlUiPS4f1ZPfS8tO9xA8sc9p_E3ilx5KAXgiy9i4j2h8gJgUQxmU1tybf9j6Bcl99aJKCwcctvDnfcSEHanFv6rNaP1a4tVB336drQuOYYoIvCdexO_EnIEhvUpxF6vquGIMsmXuMER9iBk0SvptOaRt_bBl_uc5BlvqFwX7EfSftvAjFZvug",
+        "places/ChIJPVoyBWbHwoAREu--ZMmvEpA/photos/AcnlKN33MpqKsrc8VC6H-aF1PgoEIjfXjvq1D6qtiz2Y8yJxWGEfjrPuPLNB24CuZsziBxCkKZNutk8z_5ycEJsel_eF6by0FwE-_eAJDMQhD89qqEcIhAudVT7ujfPb6n9Efe5hgeIkd8YazcQtptGQUDMZ0XQUoCREgUMkay-hWk_DO5jWyL-jSgvBqDAbqgdNia3WzN5VfwaUKrH3P7W8wCRoONtyub94X252rqBPWLCwXywtsLrZ2xHQRCKID3Aax1DU_b0gH9k5A6wu-cDGiXiKxUePzLQnvUlXx7nnO1-Agg",
+        "places/ChIJPVoyBWbHwoAREu--ZMmvEpA/photos/AcnlKN2iOSk5wAvYuts9s2FdYq_xc7dHkq3MJB-Ilq9YhSfiYvu3YQrRKQHD4_OHkWpspGIMp1WQ4Y650ENwth5nUl0mSE6a8HG7AauKuuIRzKkJD3ddDncIdGDWlMMhG6YJ9cQgiYbAOuQMhthuY5EXw9vk0T7cYpQAKDbp2XyWKeu0TrKimq4dVUsPUHjYtJfb-iDW63jlWFDbad3wsShlfSi3Wrup5GmYOfxQoD5UqIbYncUk9zA6NO709WmB9tYq59cLyyDxwdIU_tuPHPJk5w49iUIt7olcD1yN3iPItXsOiw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10381553370555936530&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Hotel Erwin",
@@ -628,9 +1171,9 @@
       "address": "1697 Pacific Ave, Venice, CA 90291",
       "neighborhood": "Venice",
       "phone": "+1 310-452-1111",
-      "website": "https://hotelerwin.com",
+      "website": "https://www.hotelerwin.com/?utm_source=GMB&utm_medium=listing&utm_campaign=GMB",
       "description": "Beachfront boutique hotel welcoming pets with special amenities including dog beds, food bowls, and welcome treats.",
-      "descriptionFr": "H\u00f4tel boutique en bord de mer accueillant les animaux avec des \u00e9quipements sp\u00e9ciaux incluant lits pour chiens, bols de nourriture et friandises de bienvenue.",
+      "descriptionFr": "Hôtel boutique en bord de mer accueillant les animaux avec des équipements spéciaux incluant lits pour chiens, bols de nourriture et friandises de bienvenue.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -643,7 +1186,20 @@
       },
       "priceLevel": 3,
       "confidence": 88,
-      "reasoning": "Well-known Venice Beach hotel with pet-friendly reputation"
+      "reasoning": "Well-known Venice Beach hotel with pet-friendly reputation",
+      "googlePlaceId": "ChIJ2y1Dpbm6woARP3MtcSoZ8OI",
+      "latitude": 33.987196499999996,
+      "longitude": -118.47212479999999,
+      "rating": 4.3,
+      "reviewCount": 2217,
+      "photoRefs": [
+        "places/ChIJ2y1Dpbm6woARP3MtcSoZ8OI/photos/AcnlKN0FfaTuxlsejqDnfgCMChy-LXF8F03rcONJLOB7iI54OHv-GAZwIDlv-ARCQJa2rLd-xQkj-4vCxBIZSEI5763EuW4O-1yYw5vwmXCJes_2p2XeyyxeX5vfFXhwNc1QxODeNvvINl_fDWEmOZpft1ANNPUNRAEHRzzxoYzl94j_gzP6WbP2dIkE-MXf4d1jQErFTAe4-_HBaq1pS-WNeJXI1sNTNBUfvdDSA2R7vWNMyOHFIlCqEUYsYAxBy3g6UjnOol7Fj0zsbkVXsOnJJEJNYHlSTIPnCUQ-QC8NoKyTRQ",
+        "places/ChIJ2y1Dpbm6woARP3MtcSoZ8OI/photos/AcnlKN37JWq8Nuz_oAaxLRemSz7afT5jURmMk-e7baZ5seRDgp59XbpEsbnje9g-2xlMJd_2N3Qj5jDy7RI2PBYN2lqsaSaxCWtmvLLvMJmD6SuaSgTwsVBs2D0Yt-QxXmYxQo5YInG5bhraHA3QKi2rtObntGmQ7rk8KOnDnsLbFudpCXAY3pETooTBpSalr-uXa20gc_sV1HYc2Ux3EDNeYv9axwcH2x0WEu_sCK0Sa9OZjWv1ap06zNV2oN1pPlvu8DyulMLhVhmam7XctCh02HJhFB60LxZmB7XXcaDZKjZTQg",
+        "places/ChIJ2y1Dpbm6woARP3MtcSoZ8OI/photos/AcnlKN2pYPALVJUu1fJT_WQ6tZz6W1IRr69RPfswj8n4Fj57JyKkYYsok4qCNwUSR0m7NMd99E1lymudiCYGpx65c6-XuPZn8XNWE6pEsalWzizKU_et4_fJH4_UR90OztAhr2EBFvu5DKACO_ePzmFNQbMRDFdrE5qacc-ex7uFbYtuvKyWlHSBKx-E9WJoPwgsT8rg-LdVqt37XZpKun8ZCDBTFs10d3sTXS1bADJbJbAfFBFnEsbcJiuq9CTVVRls5bJOttULAXMSjlSgyn_kdJvQZxLjt8CESXP0z1yREMnsWj5wlVjpKH2mL6bdM4qIDRruTh0NDqTD7oHWn03oGupMmVo0cccp3HocP3-KIorSh_gy4KWK3lDYCeVnqsEywTKQx4lKJJ8QsaJ7ECbiVEvhNg61elp2Zpsz5neMclqlZwOW"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=16352597917060395839&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "The Beverly Hills Hotel",
@@ -651,9 +1207,9 @@
       "address": "9641 Sunset Blvd, Beverly Hills, CA 90210",
       "neighborhood": "Beverly Hills",
       "phone": "+1 310-276-2251",
-      "website": "https://dorchestercollection.com/beverly-hills",
+      "website": "https://www.dorchestercollection.com/los-angeles/the-beverly-hills-hotel",
       "description": "Legendary pink palace hotel offering luxury pet services including dog walking, pet sitting, and gourmet pet dining options.",
-      "descriptionFr": "H\u00f4tel l\u00e9gendaire palais rose offrant des services de luxe pour animaux incluant promenade de chiens, garde d'animaux et options de restauration gastronomique pour animaux.",
+      "descriptionFr": "Hôtel légendaire palais rose offrant des services de luxe pour animaux incluant promenade de chiens, garde d'animaux et options de restauration gastronomique pour animaux.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -666,17 +1222,30 @@
       },
       "priceLevel": 4,
       "confidence": 95,
-      "reasoning": "Iconic luxury hotel with well-documented pet services"
+      "reasoning": "Iconic luxury hotel with well-documented pet services",
+      "googlePlaceId": "ChIJXVs5lQa8woARSWRNqYGVUNo",
+      "latitude": 34.081231599999995,
+      "longitude": -118.41399559999999,
+      "rating": 4.6,
+      "reviewCount": 1169,
+      "photoRefs": [
+        "places/ChIJXVs5lQa8woARSWRNqYGVUNo/photos/AcnlKN3EaD_f5mDYzTLnWRHnb-f3VUu4Y4rRSAKNpRqSZL20LwQ88zhNjXS2gEY7rxTpJrwuyEKMgUI8FDneDsZdOfPG7lQ5Pvk3XQwN5D3046tbqsFIy8dauzRGjT9-DOoL7-zhMUA4eW7z6rC3E9D7RuY3F5TrthHjW3jDdgbgDCfql-oWOy0PROGDYHOQAlCoL5n-3L_BDdDae9STLeI1VY7xKiTqDBGg1V0kSebelRD0oJOgjbq3rKJo2ExKQTGQ00FN7Q2cXguLaSHHx94FdSqC5RC4Hf9IopmgUsIdTbYWAQ",
+        "places/ChIJXVs5lQa8woARSWRNqYGVUNo/photos/AcnlKN2Gt41rvAGSTpRgt7owClz3Xujr6qqDra9BjqI_Fo850ai_5sjYUvDVb3F9CF2HtlDdsdW77U0O8Mzjjw1DUIb4rcf64J8GYzYPQc75Ip7d5wpN43uFfUrZmWlUzeloDsq0muoVMunYg6L1WicD94r96_a__-qxgT-L0bTxdb_Vi9wFvE9aZtHf8TSDyyk-gCMRIMp4_daRXgHf65S3hEPgNV-arCApPjyHwzUNJDu7KljICUaGxyImOmaAmgdP4ediFYen8igrwBw0s7jpXA3Lj_QIBb6qaporT8K6zX6j0w",
+        "places/ChIJXVs5lQa8woARSWRNqYGVUNo/photos/AcnlKN3zMrNmO-jnnsfoI4Lo7oJAVzPA8PGPwgF_nv95oXZ_eCv_mfWl9KEZvnoIhQQBr1y5270AMi-XRcLiEC-H4WNcB0ab2qK0NEzc19w6jzUubZ7mW4MBf1lZFXBYKSPGUecGuKNdVP9h3o6t6MpywsXUsEM0R856-XnoR7PDYjJApxkA-1tzYhYDXuKVX6bDa6MKtx07yKk60qF_-ccKfcdW_EcfBJAjrfhc_ctDRBQpCxKerQEsFZACIJ0xtMU6WQK3Ep9_EZbLUeM6ilzqloOAPvOxWEv5VdpGOOwFvRNZoO__-ukpJKvkOC_dqBsrxh3_aifwGE0TE0RF5gKTRDsi2dwMIvKcE9hlg2d8LePpp-3eCTV-K_RYyO_6M6kpPTggwUemw7XfT6JCXeC6RexmaWxIjrfmw7lyDNeQ7d7eXJ-t"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=15731237882528883785&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Kimpton La Peer Hotel",
       "category": "hotels",
       "address": "627 N La Peer Dr, West Hollywood, CA 90069",
       "neighborhood": "West Hollywood",
-      "phone": "+1 310-855-8888",
-      "website": "https://lapeerhotel.com",
+      "phone": "+1 213-296-3038",
+      "website": "https://www.lapeerhotel.com/?cm_mmc=WEB-_-KI-_-AMER-_-EN-_-EV-_-Google%20Business%20Profile-_-DD-_-lapeer",
       "description": "Boutique hotel with no-fee pet policy, providing dog beds, food bowls, and treats, plus pet-friendly room service menu.",
-      "descriptionFr": "H\u00f4tel boutique avec politique sans frais pour animaux, fournissant lits pour chiens, bols de nourriture et friandises, plus menu de service en chambre adapt\u00e9 aux animaux.",
+      "descriptionFr": "Hôtel boutique avec politique sans frais pour animaux, fournissant lits pour chiens, bols de nourriture et friandises, plus menu de service en chambre adapté aux animaux.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -689,17 +1258,38 @@
       },
       "priceLevel": 4,
       "confidence": 90,
-      "reasoning": "Kimpton chain known for pet-friendly policies across all properties"
+      "reasoning": "Kimpton chain known for pet-friendly policies across all properties",
+      "googlePlaceId": "ChIJvUcBM6--woARvd2ldI0E_4g",
+      "latitude": 34.0815209,
+      "longitude": -118.3869441,
+      "rating": 4.2,
+      "reviewCount": 616,
+      "photoRefs": [
+        "places/ChIJvUcBM6--woARvd2ldI0E_4g/photos/AcnlKN2v2VbWqGt7b7zp5toRSVzNZ0pmLA4Fhhvy1CBdP2uylihQDessYvrvm8efBtJq8DLdejRuooSfcvR08G5EkRjgJnS9ZqPypjlN6eTyjohuxgQVNJDwpv7LgRtH5J0kAMqL6_5f4pfT9woJmch_Zloqd4_mTCHVsCHrgUNu_hMg6_abz_YkbURmgM6ZtS72QaUzV7vnfNmzp-Ld3c2-hLcRTHN39LXOZ_3Dimk2OHr26lf_P3Znvlbv67xfX9b2gJ9I7RmlNdTWBK6IeZE39lhfM6s-124joStNVD3kRnuLNA",
+        "places/ChIJvUcBM6--woARvd2ldI0E_4g/photos/AcnlKN3uz_G4hicJJrtBllG6zxyghmRsOxGlh5Ubi9mIinpPRP-FPJbtu8w3f3zu4CPgdzSgm6vPyP3dsWlFGGsmI25pudvvILcla23RK-bqwxX1bqxSgTkAKM31c9PL9ZjZ70NYpNMpEYd3ajts1Gwk_DIjImDiYbNKrql7XzijnOeYj1QNeq-T8iwCaCQBGW65R5BOjnnHZBPN89_4VTFrgMADLgKRuqnixmn0fbnKt-weh127_SXVYWMWmR26usv9gwCCsVJCyJUmETdRLuoexDihIm7a9tMfg7gXl66EtvJvoA",
+        "places/ChIJvUcBM6--woARvd2ldI0E_4g/photos/AcnlKN1M2dO0-EjcRYdxsBeXibWmxjZy2kqWZkwwoNO1dTZNqJrnGA_FUbg2rB-hYpxBWcge2rKdOfl47WK3sk34QKL7nkpYNiJVAbk46eGd3e3TY5VYk1ndTZsOMbQtv3EQNINEfl79anuyUB7nAwwUb6II7r0F8xO-T4zihwc0MDNTxZnIMiKIh-q0RlP8QFzgsZFQLzutLDvKE5biFTCkEaRxd7lxD-M8PrqJHbcrh9oiegd7wShKgtY_M_b3E_xd2Q7zfKRBvw-yOOwCXicI8GJSuLQqmPZvI4nHKDFlO86Fp7YrXBe084j1x8CGGFGy217JVm_OB8oM_GKm2cT_qnaH020Zt2bce6qkVSlrYdM3CZdwVGFdRGR0uS6yWiWjrYqIxjRryfXzdM9QnTRW0PP0UaoO9EOS1oQdvJm3s0f8uA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9871613913813343677&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Petco",
       "category": "shopping",
       "address": "1280 S La Brea Ave, Los Angeles, CA 90019",
       "neighborhood": "Mid-City",
-      "phone": "+1 323-692-0950",
-      "website": "https://petco.com",
+      "phone": "+1 213-372-1390",
+      "website": "https://stores.petco.com/ca/losangeles/pet-supplies-losangeles-ca-5125.html",
       "description": "Major pet retailer welcoming leashed dogs throughout the store, offering grooming services, veterinary care, and extensive pet supplies.",
-      "descriptionFr": "Grand d\u00e9taillant d'animaux accueillant les chiens en laisse dans tout le magasin, offrant services de toilettage, soins v\u00e9t\u00e9rinaires et fournitures \u00e9tendues pour animaux.",
+      "descriptionFr": "Grand détaillant d'animaux accueillant les chiens en laisse dans tout le magasin, offrant services de toilettage, soins vétérinaires et fournitures étendues pour animaux.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -712,17 +1302,38 @@
       },
       "priceLevel": 2,
       "confidence": 95,
-      "reasoning": "Major chain pet store with standard dog-welcoming policy"
+      "reasoning": "Major chain pet store with standard dog-welcoming policy",
+      "googlePlaceId": "ChIJ__fbWk3GwoARvYFMJgQl12I",
+      "latitude": 34.0455514,
+      "longitude": -118.2597311,
+      "rating": 4.3,
+      "reviewCount": 1076,
+      "photoRefs": [
+        "places/ChIJ__fbWk3GwoARvYFMJgQl12I/photos/AcnlKN3ITEOUnhkiDHOtdPYeUonEcsJfx62wOSCj3MaFpfHxNqohs3u5glGYo5zPhwvTJwbT4s_5yfa3v0dtyen8OeB6qhQYg6TEtPCz120g41WbyEqFolu0qAUI5hd1uLFISjnnXPQJ7P-h1QTFQv0RUhKuIENWLbO3-5iJU9DYVZOaZ4z18C3_QAihQ_qH4_4uffwdEjAX5PWsSAGGOc88R0KhMvPxxKBhttvLkpABfB5PSDlmCuSvHIi0qzzX0le4qdkHRPfhXYdV8myNOkQKIDNKtKVc6kyis990EOBReVWbu0XzxFBou82P_jk4EdadgEvmFahrUJRXn2rpa4dWt7p0LM_cU5Zr0d4pm26qTscnYiPagUScm09FuBKnXSLyjlKrC7sm68X5eLIMldb8T8nAmvheUygoSX2yGMMMzfXH7SkL",
+        "places/ChIJ__fbWk3GwoARvYFMJgQl12I/photos/AcnlKN3g_X48_OJC6svlEc76qomH5t-CsLyTDFlM4Bsb6Egam5ahdVgrqqaAPj4D2VDqaxy2Egpf8EytaCXNW1EQzZahg8E0wJnZiDCZ3HuXZVwReT9l5xwL5vX3x4MUd0s9JzD0J8bLxHiMDYsoPi_Jh8tn1CICUPvIb7ahu9W4i7cu4Ap_MTLCD3MKNsIO3ptKklpC5B1CrFl7_cEC1Q-MDwLquoNGQHoAE3SKwEC0ME4CTnFvZf1K3_G7vEiw7lsbG9Pb_i3cdTn8hH478_JolXl5lJVJhgBI8_9XeA4QbE1ebopSq6aIJP5oslAbdZAE3klAs5slMg9Oyzt5XhIFb8F91E9-Qj7PjripSgVkNHzOvlj33dERbk3vk7cPfok1yQfwygzl19HeiIaUsKcYSZH-ASUvAQz3LX5alskV4sf3qkdF",
+        "places/ChIJ__fbWk3GwoARvYFMJgQl12I/photos/AcnlKN0ARQfwcm4D_G7435Q0pvVvAALKKM4ra20hVWAJrVol4faeKpDuXdk5QyKGJ0SMiSthJiKzn_i9lvgPBAfVbEPj5JSj9Juy6WhWAmk5sL2BRTS_bVj5JXC14ksgzfqq5Lqavc8WGVSW8sg81ITTsJ1eMTatVqPZqPsXAX8oCKrnxdppmjMhW4pg2o_kGEB6X5PzEjRd-EZVhzkRe-wtNnYlC5jibfPFKcoo6IFIhFCdUzeQdFR0bpVoM4frx5ykWh1rMrItswtUdyZOWkPufMGSOk-UkPLgpPXvnMeB6lmpvmZWbV7pkqotZpwnkPf_Y7iPbu_cDkJnZJy9CrOwPRZzDT9kTjvgce0uW7rA1a3Ktv8YRONWkaI8l-PjN6XnlziUISYrq25PsgpojyRu15_EeUWqYtt_zcZDds6rHY4rJnP7"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7122202035462373821&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 8:00 PM",
+        "Tuesday: 8:00 AM – 8:00 PM",
+        "Wednesday: 8:00 AM – 8:00 PM",
+        "Thursday: 8:00 AM – 8:00 PM",
+        "Friday: 8:00 AM – 8:00 PM",
+        "Saturday: 8:00 AM – 8:00 PM",
+        "Sunday: 9:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "HomeGoods",
       "category": "shopping",
       "address": "7100 Santa Monica Blvd, West Hollywood, CA 90046",
       "neighborhood": "West Hollywood",
-      "phone": "+1 323-512-7015",
-      "website": "https://homegoods.com",
+      "phone": "+1 310-231-9382",
+      "website": "http://www.homegoods.com/",
       "description": "Home decor discount retailer that welcomes well-behaved leashed dogs to browse with their owners throughout the store.",
-      "descriptionFr": "D\u00e9taillant discount de d\u00e9coration int\u00e9rieure qui accueille les chiens bien \u00e9lev\u00e9s en laisse pour parcourir avec leurs propri\u00e9taires dans tout le magasin.",
+      "descriptionFr": "Détaillant discount de décoration intérieure qui accueille les chiens bien élevés en laisse pour parcourir avec leurs propriétaires dans tout le magasin.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -735,17 +1346,38 @@
       },
       "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Chain store with generally dog-friendly policies"
+      "reasoning": "Chain store with generally dog-friendly policies",
+      "googlePlaceId": "ChIJX1Ev2nS7woAReiC_GlhnacI",
+      "latitude": 34.0384591,
+      "longitude": -118.44030769999999,
+      "rating": 4.1,
+      "reviewCount": 126,
+      "photoRefs": [
+        "places/ChIJX1Ev2nS7woAReiC_GlhnacI/photos/AcnlKN1j8y3CdVb19n0L5ipuI_OfJCAi7S7bceVYPcW5_D6D8m9yukNnEE-Z5mgU7MFqGAilNzWs1kHm6-bIyN9BMjRRQf0LuFglnRC1YNN9M6JGmbwUVxPN4QfZ5ihX5CQxOEt6Mx4u0cvjca9PycN6YTbg1vCfkNz1kRy3X0bfjfAPuXVM517_0XuTYKdQjwuCQK4teMg5K2KMVhgGLne7f-Mlw98rc8IApZMAnFNK0n8CCumldE2q3uoOzQ3EL2X4zCfn9hVQ1s9tADUcuOnMudNCMMKOqNVNe4mEe_UUSTZhMIUs1JJ4t8K6t88EO6wGFPQFT7SOVeBMGf85kDeaUHUyHW4vUdwlP-aPPiJRDTPOPjOXQBtYTTlylf27yJddTh4qd2ObYrGD90hr4dxo7jclpIOFyzaRtsNwcvmXnireTneL",
+        "places/ChIJX1Ev2nS7woAReiC_GlhnacI/photos/AcnlKN0nRml_mwu_DgXoWj_3IuDs7wi9kILmzZJJ6bCabjbXj14Z-cXlNf5GCsbgkcSwtZyT1zCCLqR3L5C0RgUMVow-P15tuOp3xkHrGRjiOszukzlh3DUhrtvs2IJCpAB5Oa4VkMIpt1UeHawpvMxd5i7c6IK6exOTSQiVHAAlo8f-ifzHxxiB3vDh1_-cEGuXo3-xsjkb4mYpfe8bpG1bbOgNXfeA1h84hKem_KJXDvjKKPxGF4EBC4GY2nmkGrxObDozKJ4v0p76GUilbs8oQU9rZx5eMxLUVgW3FawqibZfRGJqfz-x_McfZrls693alUI5bGIRmhmT-nY7xnKTDE5mQP3YravPJ9aChCix_ZMgbJwUqDuizzmW5LaSyMBhXqcDIluSJgfSa6C0NmNW8GrqS4ECzuGEF3Aigx-DmySzq4f1",
+        "places/ChIJX1Ev2nS7woAReiC_GlhnacI/photos/AcnlKN3ZtTZEB5yG8j-2CIu8CiiDY0jZegs-3PWh3uWpiSB1IR05cDwMs6HBHaqP1vcZk702VN6pP5HTxnxj68DoP8BVavyECf9_HmimzH1avhRxtxJwKCwV3N0ySw2a38i6zXulZTlDMPwUaq7Bzk3eOnvStyZtdMhAayKZKh212nfghYWmjbkBDuCnkOP4NOEMTpmpUTLUrUeJeIzfdTeSXJrlL9FP0Q9uqq7wUG4V4REBccHt-GmrcbHJazHKmD0Q55WAKluef1DLED4sIU17rTx9UdsGg4equLWNEzuz__drBKmmEdf7Y3WV_wKVJzjOcSH-tcFhyS_6MYEEEO0sX9CvXi1Ef6OQoQgAw2OQg53AW4hKSGsz6kSptDIyF42n37UXjgTMIsfTGa5dGG4d1ek4XzrfcXn6W0HYdnl9PBoFUec"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14008841744016154746&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:30 AM – 9:30 PM",
+        "Tuesday: 9:30 AM – 9:30 PM",
+        "Wednesday: 9:30 AM – 9:30 PM",
+        "Thursday: 9:30 AM – 9:30 PM",
+        "Friday: 9:30 AM – 9:30 PM",
+        "Saturday: 9:30 AM – 9:30 PM",
+        "Sunday: 9:30 AM – 9:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "West Elm",
       "category": "shopping",
       "address": "8490 Melrose Ave, West Hollywood, CA 90069",
       "neighborhood": "West Hollywood",
-      "phone": "+1 323-951-4114",
-      "website": "https://westelm.com",
+      "phone": "+1 323-782-9672",
+      "website": "https://www.westelm.com/stores/us-ca-los-angeles/",
       "description": "Modern furniture retailer welcoming leashed dogs in their showroom, often featuring dog-friendly furniture and accessories.",
-      "descriptionFr": "D\u00e9taillant de meubles modernes accueillant les chiens en laisse dans leur salle d'exposition, pr\u00e9sentant souvent des meubles et accessoires adapt\u00e9s aux chiens.",
+      "descriptionFr": "Détaillant de meubles modernes accueillant les chiens en laisse dans leur salle d'exposition, présentant souvent des meubles et accessoires adaptés aux chiens.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -758,17 +1390,38 @@
       },
       "priceLevel": 3,
       "confidence": 82,
-      "reasoning": "Furniture chain with dog-friendly retail policies"
+      "reasoning": "Furniture chain with dog-friendly retail policies",
+      "googlePlaceId": "ChIJU-uG2Eq5woARV3ADm7HaWGk",
+      "latitude": 34.0758061,
+      "longitude": -118.3724494,
+      "rating": 3.4,
+      "reviewCount": 175,
+      "photoRefs": [
+        "places/ChIJU-uG2Eq5woARV3ADm7HaWGk/photos/AcnlKN2BiptN9llLogkRLUSkcXgDAm-WgqXfG1w6KH_hKeTBbDrja1LNI9GYZZvkVTLjE1lXXUuCSzilbgHr6Tzs9Sq4nezr52sF_sVPLzz67DAwsBxJifteMnBAHD1WLgkpG8PIRJjCE-o-hKVzQVyvM_rMvPZbPp1mVozhrCqTU4DGiP-3kGftUd6WyHvNBbUrTqRdYaFP1rDiIUv3o72jurigKx4IH2hm8FPnKChXEVBqe83Cqb2L42fkVp8Id96s4WeXZs4MJBajVE4bGg3V7x4_FZPkJnkdKekfrAridbRZKmoFnfqJ3SFYF_9Q01MEFXJ_fub4HbvcyggZ_0IQMcPUXq-bsY-lLFd3uyJvxx17uD-FbdSs-VDB2iJvDpY6yY9KN7NQm9mdkZ-exmF1QeND1VIBWudcmiBXZ7W-5_fIvD8",
+        "places/ChIJU-uG2Eq5woARV3ADm7HaWGk/photos/AcnlKN27unA_QS4q5odTc3AJfOtaW6_jGzsY_B0LDry1BvuwqYcF8hyDafJ9-O9GLlYOtmXmDev88QEOQutWys1jQNd0TfE2yC3-xUvReP95iPYzoXhhZkRA7AGz0ysk2dbgfbTm71E5AlqrtmnLCuigNlu5AvapQ25ghfypPm-fyzhqNPVLKyvLYDt3ZqmmP9IrWec_SM8wxK1L8YoZWUb0VkrJDYidnC3JR1qVsuoFrsC2AC0rPH7GyRHNRmGs--HPvpY0p6PLdcIOYcDAV_7IhdGXsxhoQuqqbmFXv7-8K3ZlrQ",
+        "places/ChIJU-uG2Eq5woARV3ADm7HaWGk/photos/AcnlKN3HwX1B1KhXeRLUWZx_kihwCh1HAjRmcx-FYvZUUZrssh62PtAVjE1orKOnOU1aHbrjz9J-h3qxDKL6eTEaxuZNzbT6Rj3bFA9GmHdYb2f-_2f68kEXtnG55T6S9hb-AlQIVumQ4ZoehNnY-35dsDz8YLw1sCzM9T3O3fbUzWe_waFjCTrY9Wa6ZFv2XVSbWDZUpxkhe4XPKs05LHLDcxUlalVISg-GLkIMKytkaFBQ4yY0FoQ6jx_1i91rUD6ML0HJebTYfiF1ENGBPUe0YPWDjSyjIJ0PF03AnDP2GMrpf_-HUhgofN5bpRMMEeWt_lUTO0Yh5nucAn8UdZv_SXfnTwOWYdr9ZHpFh2KzpnJYlZE_y4JCq5PN1BkyAInUDiglGEupWpqtOARtCjtGFZYCEVz70NY3a5NTiWFZaaiJkc9o"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7591057628277731415&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:00 AM – 8:00 PM",
+        "Tuesday: 10:00 AM – 8:00 PM",
+        "Wednesday: 10:00 AM – 6:00 PM",
+        "Thursday: 10:00 AM – 7:00 PM",
+        "Friday: 9:00 AM – 8:00 PM",
+        "Saturday: 10:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 6:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Lowe's",
       "category": "shopping",
       "address": "13200 Cross Creek Blvd, Playa Vista, CA 90094",
       "neighborhood": "Playa Vista",
-      "phone": "+1 310-862-0658",
-      "website": "https://lowes.com",
+      "phone": "+1 323-617-9570",
+      "website": "https://www.lowes.com/store/CA-Los-Angeles/2714?cm_mmc=lod-_-c-_-lcl-_-awr-_-yxt-_-go-_-2714-_-na-_-0-_-0&y_source=1_MTE4MzEzNy03MTUtbG9jYXRpb24ud2Vic2l0ZQ%3D%3D",
       "description": "Home improvement retailer with official dog-friendly policy welcoming leashed pets throughout the store for shopping trips.",
-      "descriptionFr": "D\u00e9taillant d'am\u00e9lioration de l'habitat avec politique officielle accueillante pour chiens, accueillant les animaux en laisse dans tout le magasin pour les achats.",
+      "descriptionFr": "Détaillant d'amélioration de l'habitat avec politique officielle accueillante pour chiens, accueillant les animaux en laisse dans tout le magasin pour les achats.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -779,9 +1432,30 @@
         "fenced": false,
         "shadeAvailable": false
       },
-      "priceLevel": 2,
+      "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Major home improvement chain with corporate dog-friendly policy"
+      "reasoning": "Major home improvement chain with corporate dog-friendly policy",
+      "googlePlaceId": "ChIJK8LU0_m4woARXkTg0-P9-sw",
+      "latitude": 34.047785999999995,
+      "longitude": -118.335716,
+      "rating": 3.9,
+      "reviewCount": 3515,
+      "photoRefs": [
+        "places/ChIJK8LU0_m4woARXkTg0-P9-sw/photos/AcnlKN3cKW3Jn_ebmOHip_PiR5Jdyb6dljvuG3f99C_HAvnXoCFQCapRTeoTKaUMV8j6BaNMR2HXtBwiEHiB4pE6j4mugGiXLxTMpB6-kXYKu3UpLIQNpOQ9qY_-JnXTNokEWWHqfAS2tvBSsxBOyK1TpG6tw4z990-EFWxfsrX5L5D-QVhbp0X9jLp4fFjmReP1e6T_mspFd0EQZyVuOQrqc_UdAuIs_LKUnrtNZ85cH-Gf-zEZNc5maPoMq8LjDlKXIDBgozkex_hcdhHhxm6LrlrRYPI54JGgjQrLT2I4vb7X8g",
+        "places/ChIJK8LU0_m4woARXkTg0-P9-sw/photos/AcnlKN3zGXU8vBJbNlXzQlqNfoTiBkYjxjtx6BgOhzl8k3iUYNvLehpVH5ZuftVANkrQOqW1Rm4NR_T_USBVJnXuyuDAsrituIm2LYIvIzesBoY0mifiKMLL2JplX9AHV6ZQMN2Z2jvHyR2J2RZj6kfPtT_PiLc5m4T-ApS9XqTXjgrs99nsjFhIo1JwHc1iVvBGKtkC3kb3WgbYK4oQQI4kSSJgUvWMxTPSgry5pJe_YONQWLcXMg_A2wFKtBkUfbvTg29fk0dza1eGG7-ZR0annijpdFAepUVV9LHd-iP47pDvLdSCcAz7_RQMr4boJDBsbhPydnY_5DJK5n8zH4aU2cClX1nZI5QRwYR-UWmXZ7xYNVkNhCbCgRJXCSdrjCIdMyIBmMb4HTQGmsImA-vH7mGsQuGFiMdUxDqu_Rbbc6p2Cw",
+        "places/ChIJK8LU0_m4woARXkTg0-P9-sw/photos/AcnlKN3K22m2r_CG8kYGVfI8Y-7h5qwEmfjQiNlB8oQGcyWhW6NqcTOHEQr0nnvvAVOMkr2LvD5OIfBfqm5FSg8oJVtpeTvOEJ1tPEe7XuLgz8HW49Me4B1oWp3UpcdSM9c2p254cxtk6Qy9aUrU0mJKIPStUbjfH005QEvqCwoo3ueV_k0qcaCFaMTdslzhtK_yv1Vx_gXBwQ7j7gaR-nstTbhtRS7T8EDZIFb3bCTxygSL9oLN6KO3wz3w2kSV4_c6BxN4lOg3aJJTi0wvkexuq3LBeHhqBKjG9lHRQoSUwqqnu_Sb2Ze7VkIonXiSHWDBTxbne83kSdtB-uY1WCKZE5znnqiYvt8fslQ4q3-P9lVJK9-Akjl0JfqSeuqkdejSRegm00ZyOYRFRbU0R48Cn0vtZdNGw9Pgl_z8aOvge5I"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14770397082869056606&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 10:00 PM",
+        "Tuesday: 6:00 AM – 10:00 PM",
+        "Wednesday: 6:00 AM – 10:00 PM",
+        "Thursday: 6:00 AM – 10:00 PM",
+        "Friday: 6:00 AM – 10:00 PM",
+        "Saturday: 6:00 AM – 10:00 PM",
+        "Sunday: 7:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     }
   ],
   "count": 34
