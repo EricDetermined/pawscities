@@ -7,9 +7,9 @@
       "address": "Queen Elizabeth Drive, Bondi Beach NSW 2026",
       "neighborhood": "Bondi",
       "phone": "+61 2 9083 8000",
-      "website": "https://www.waverley.nsw.gov.au/",
+      "website": "http://waverley.nsw.gov.au/",
       "description": "Famous off-leash dog area at the southern end of iconic Bondi Beach where dogs can run free on sand and swim in the ocean.",
-      "descriptionFr": "Zone c\u00e9l\u00e8bre pour chiens sans laisse \u00e0 l'extr\u00e9mit\u00e9 sud de la plage embl\u00e9matique de Bondi o\u00f9 les chiens peuvent courir librement sur le sable et nager dans l'oc\u00e9an.",
+      "descriptionFr": "Zone célèbre pour chiens sans laisse à l'extrémité sud de la plage emblématique de Bondi où les chiens peuvent courir librement sur le sable et nager dans l'océan.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -22,7 +22,28 @@
       },
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Official council-managed off-leash area at one of Sydney's most famous beaches"
+      "reasoning": "Official council-managed off-leash area at one of Sydney's most famous beaches",
+      "googlePlaceId": "ChIJ5VrGmKKtEmsRAAPy-Wh9AQ8",
+      "latitude": -33.8836802,
+      "longitude": 151.2698136,
+      "rating": 4.1,
+      "reviewCount": 123,
+      "photoRefs": [
+        "places/ChIJ5VrGmKKtEmsRAAPy-Wh9AQ8/photos/AcnlKN1r0s931J2lSkRoKD_hCbgLlPS32qvrANCzFRL1aqKdJHyX1-efPugAd7ox1NM-66OWLXieIXja0x0Zs7a4yFTYTauTX9nned9UihOOCCbTYWLCumr1Ru3n8MCNVdb2qlWRFuCDyaVAjjTMTNoFVR6WhFmzlosALAdQae_3BWq1nrxiDO6VEI2-ikaRIOfugOHYbcQT0ZVtbpAvgAugjx2B4Pvkcsju5VmnLXgprHRDagtItjPe_R03j-QgDfsfOoZzlIiquJcLA5GvG3syhFrMzdv5NcjU7zmPHIP9ZnIw611cAkW99ex8171xO0bS5Gs6S5YgsaDgoz3z8eCCWBmWdghUMzCGuOo2RaPe20ZyZaSusFweFpo1U37bTeGHhnjL5-nAQ2n8NwGE9Hk9R6G0WohgzpesSP4loRWcwd0jkxw",
+        "places/ChIJ5VrGmKKtEmsRAAPy-Wh9AQ8/photos/AcnlKN359JdPtnVpGDnWzWFWGvqwWIrKrNd64WqZIHHr-bdbvn_fy56ZOTPaC13_TbxEwEEHHnA4wRoj6jUxcmPAp5h775zof9nx_jsUgT46v_KIPbI-hEFF5it4f-ICHZgDGi3T1tY3XUhS8S3fPX64RxilNptj5ixGmHYVwwyzfyz2LOXYM1AsE0F_CAoV2Esmsra7EWbmMdmjxWMttYzpi3AHTkr1OSAdXDpSG3sr39dp9yFZbX4Lg65yJyjoeb8MZ55Y2RqYoN6Xl2LBdbS8gIBTVVqCovBX95W-9Qzp5MsLVEGrSjyedpCjTexwacYNPBeM8UUvpQQ0EBO3q5zhZE23Kx8oGo8Gk-9oMGzOhMpdh3m61thfu2zljbWWxg0um1zQ3_57R9Qc0BirNwWqoN-ft8vNG0_vhARIyH-eu_2wgGcy",
+        "places/ChIJ5VrGmKKtEmsRAAPy-Wh9AQ8/photos/AcnlKN2aWl4jXeM2lU3lctJ-9yXvo0tslvPu7-ZrtrN_diHebt3QwiiBl9crrEKdDsyew70h97pOUNMDodayyzMCiNUnzmZfTCbSuCoyWhA9iWT5PaE-ja339tdlHkGwEMsDaB7h6QYh_eJyreUAq6U-KcGW1-jIs8-klFN7p-LynPK9OP97mvZUpOR9BDSv5ZLPPgSnAZ461-SCPc5nxlfbk2D0rgsjr5JnGnPXqGsMRBn7B5vud-Llq2qx0De_SBsK0FnVqWyrut7-Z2dB305q2Nvqn-X4n0IO_fHof0O2NNYmluIvdjUsWYFNofd1bqQ9BS9dxPh2wgWsAgn59BGWKlpcuzeNjTa_waCcwGcSD5T3DTwvimA4p7HHg9Aoe3jWrfdvHHVGEG3CaYr9c7uojDGBNOPxVe1F1k2Xw4aRH__9Bw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1081283275369087744&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Manly Beach North Steyne",
@@ -30,9 +51,9 @@
       "address": "North Steyne, Manly NSW 2095",
       "neighborhood": "Manly",
       "phone": "+61 2 9976 1500",
-      "website": "https://www.northernbeaches.nsw.gov.au/",
+      "website": "http://www.hellomanly.com.au/",
       "description": "Off-leash dog beach area at the northern end of Manly Beach, perfect for dogs who love swimming and beach walks.",
-      "descriptionFr": "Zone de plage pour chiens sans laisse \u00e0 l'extr\u00e9mit\u00e9 nord de Manly Beach, parfaite pour les chiens qui aiment nager et se promener sur la plage.",
+      "descriptionFr": "Zone de plage pour chiens sans laisse à l'extrémité nord de Manly Beach, parfaite pour les chiens qui aiment nager et se promener sur la plage.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -45,7 +66,28 @@
       },
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Well-known off-leash beach area managed by Northern Beaches Council"
+      "reasoning": "Well-known off-leash beach area managed by Northern Beaches Council",
+      "googlePlaceId": "ChIJQyYU8QOrEmsRFno4dKGQTYo",
+      "latitude": -33.79645980000001,
+      "longitude": 151.2883992,
+      "rating": 4.7,
+      "reviewCount": 6428,
+      "photoRefs": [
+        "places/ChIJQyYU8QOrEmsRFno4dKGQTYo/photos/AcnlKN1cNXPuF5tHIEWfaXfhOykZWqIO-CQrERGYTo8ekSrhBHfpw59kAjQNZD7Cq-zWDwIZKAZc3L7rWnr9e34cFzL7vPtVJfQA5bFoZZZJ_BELZTf-nQLYKJRESNuOMRcnigvJXxQKELYO-hHTI4l7hKgUYHjNte4dTfdAZZw3hLnwitlBgJtu-VXGh0gMRHyi1R3FtW5GWPePH9ijLJkWzcXc3Cr2mV4e9B4G0xei9AyvQcUILPdl3Pu3KtXwCVzyl0F9yNT4GHB4HoT9WyduBXREXrchlXUIun3DvPGPaQw6G2iHmcGDy-8oKxlotSdMQJ_JuOCIlm3G1s_YndmHxok_Yk0YvsrQ_Z0k_VmSK1NGWXEf6wMK1OGM7rSULqUU9lYoMbOebKrKF7vwnkw5lSVwgR90w7Xqi7keq6q-FAjZ0A",
+        "places/ChIJQyYU8QOrEmsRFno4dKGQTYo/photos/AcnlKN3UQMwcbc_ONYXiAwnfFJY7Cep0cPBByaMQXvwiWt7ksYKqREJaHvMar5XEFMDLQCEHqQQ9amNdVUrLc-6fgoFTo2cEI9r6yO0jp-iMCz0BvwwmvAGxvrym-XAaBdtArSXIbu_doliCYqkKcqGYKrym7ACQk0gon5R-ODJaCQ-65ZcSMytnjzb3DDb4ZubnwRW8RCqTR3_lvvDV-Hq05lZTPelYxU2KFZBukGW3E6_yAazJdxZuZjVYfGobx0DpCjPOQE0DUL4FG4T_tCWGsYmDj6S_TEVddM5zHtB4tgvlv3-A7uHxBr2ZSx9enqpKQAXbynvBvW2VeSnS9Q25k2EZWsFkCaWCrZ4asXzJWUbTukAl9WV3kluUjj2GmhVe_UM_Jxj5latzItTRsK1lZMcmLnckyuHCkbVRqNTeUXq5rQ",
+        "places/ChIJQyYU8QOrEmsRFno4dKGQTYo/photos/AcnlKN1Wj4u52SxUI_24k9b8-K980gOMaUgNEjHbFH30T8vdasob4npGnkRmuYPE-gCQdRSVmve2WEtupnqvtMSa251GEIIWviD3dlaHMXkQ980oeI9oFRTAU--W-9NoT1o5JIycKHdDPvLdQzOgNbsnCvryEGAM-l4wos9JItyQeZh1GTKYI-aroxSS5-OuYyO_Si1wu7TrtJALS-cYuSWoIZ7X-i4lmXzCjlIYl0Zu76UQoMaCsKCb95xYy9MF0mJJg2Ab_C8ljPclPUNt6EGoiSbrCd4PbRYKBpDJsh6LL9bPDvCBRwUmGayBX1ynNywyRU4oQpLo5PD4sHcyea8SdxnAP4fclu4ZrWwsgMJnDdqvscXz4TArkz5JouZA_iXWvvO8iwiTtmZ_XSce46DgBOg2an-6hg9jh-hYXPpJJJU"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9965780573554768406&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Centennial Park",
@@ -53,9 +95,9 @@
       "address": "Grand Drive, Centennial Park NSW 2021",
       "neighborhood": "Paddington",
       "phone": "+61 2 9339 6699",
-      "website": "https://www.centennialparklands.com.au/",
+      "website": "http://www.centennialparklands.com.au/",
       "description": "Large heritage park with designated off-leash areas, walking trails, and open spaces for dogs to exercise and socialize.",
-      "descriptionFr": "Grand parc patrimonial avec zones d\u00e9sign\u00e9es sans laisse, sentiers de randonn\u00e9e et espaces ouverts pour que les chiens puissent faire de l'exercice et socialiser.",
+      "descriptionFr": "Grand parc patrimonial avec zones désignées sans laisse, sentiers de randonnée et espaces ouverts pour que les chiens puissent faire de l'exercice et socialiser.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -68,7 +110,28 @@
       },
       "priceLevel": 1,
       "confidence": 95,
-      "reasoning": "Major Sydney park with established dog facilities and official off-leash areas"
+      "reasoning": "Major Sydney park with established dog facilities and official off-leash areas",
+      "googlePlaceId": "ChIJa8DJ1PyxEmsRApdIJiwwWbY",
+      "latitude": -33.90160900000001,
+      "longitude": 151.24297629999998,
+      "rating": 4.7,
+      "reviewCount": 1173,
+      "photoRefs": [
+        "places/ChIJa8DJ1PyxEmsRApdIJiwwWbY/photos/AcnlKN3JixriJQVDWmbWYSjgnYCjwoGXPfDOroBe-_yTRHuL79fvomFscEjzafDgXbq11tjhMP2aDh26FJXPSTrGRtFb5Zd5CyF7EOBIHKM3n47RvMEU_iKjKCYzggUy7VLEfdj3gBGAT0SX3yaaZgyA_MKrQCNqAnMWn4jlquPlyYCLhVRnIKnrc98qFCcDXLFNSt2vA4hV4_MTbnnp6jCY-8Dm6Mwhd-jH_4XYTJ5Sp_RtQ4_qDFNwBuAFqdun9ZTlNW2T7FPWExpCpqJsWeZP_gnKtfS0B6B_JTpRbB_lLQeHbkTWXO2V7n5amm1wDR79wd7rGekqIut9WkWlA3EzwIGBMv9DoHjGkjDIOjjVNXnszhC2rP7_HR1oqvaI_31ZBHwx2tMjBwOHvUqXv1F5eldcJe8h9lJOmXsXjWv8n38vmqGv",
+        "places/ChIJa8DJ1PyxEmsRApdIJiwwWbY/photos/AcnlKN1ThM-0gSzAr1uhOezimxeKFR32r45mgcGno8iEFuauoM18Aoda_J-2_HBCjzFI7dYSNKpvPAtli4yDrhSqFktqWYtsKn2kV2wFX8dj95-zxamIBB457tCxU5SRvwN9I4lDPUvVT1WFHjfOk5UJQlTRa56a3d10tARtgXN6QNNqzVil8t5SbREOOiQG411CC2lIGifT3TrJS0SdQBdP6MfnAsMibQuKuQxcIzZid3yP34BRM8jGqAOWyPqVpl8GnjxBL_QJZ96VbGnR7NnXONW7IWPtjzdelGh_8mOY8fWMVVUoUX93uh4qs9T0mxW0weINDkFfCswE4fZ9hBHvIP2So9gydg-7gSTgqqinCtQ8KU_t2X-UhvVou8iCEg4rXOQmLv8mMESS-HXWLgd_W7ZSsh18aSP34c_4iGLf3YEi724",
+        "places/ChIJa8DJ1PyxEmsRApdIJiwwWbY/photos/AcnlKN21p-D5zujOmF8yjpqrzw6V_GLkAVt_4p0-7gB6QssH8UBp5y-PLehXdSEh9j-YHMWneyCzbZJ0doJRXwAkpvSHhVkqOSIX3caDhzNPFPxeRvTJtzpeD3CIGzQvwQhTlkgqMpox4gjKjzdE3GFoYYm8qnRUgmEzojVZvTuJtgYwVOIzPblXzbnSe1_YWGthQt4zqHRIjxj-A_SxjoXLc4OJqghlO03JyQe-VhhNz8NkeqXaXxkeQAvRWszEVa97Y3LxHKgrzQDjHIonaM0Icokv8yE7AP7O8ftBKR9kXnW5f2fZ1T7MGM-mr-xZdUNdFFW1Bs7R66jwoam1CaahVtkPsoYmnndfPIQ-bwh-PwrGKPeLFWfpdIYEBtmOz6V0pw2u4YP4t4woHXMlF5At43waVuBJnVSE6-MKpjaOnyvgiRc"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13139586354009118466&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 8:00 PM",
+        "Tuesday: 6:00 AM – 8:00 PM",
+        "Wednesday: 6:00 AM – 8:00 PM",
+        "Thursday: 6:00 AM – 8:00 PM",
+        "Friday: 6:00 AM – 8:00 PM",
+        "Saturday: 6:00 AM – 8:00 PM",
+        "Sunday: 6:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Leichhardt Park",
@@ -76,9 +139,9 @@
       "address": "Lilyfield Road, Leichhardt NSW 2040",
       "neighborhood": "Balmain",
       "phone": "+61 2 9367 9222",
-      "website": "https://www.innerwest.nsw.gov.au/",
+      "website": "https://www.innerwest.nsw.gov.au/live/information-for-residents/dogs-and-cats/dogs/dog-exercise-areas",
       "description": "Spacious park with fenced off-leash dog area, agility equipment, and water features for dogs to cool off.",
-      "descriptionFr": "Parc spacieux avec zone cl\u00f4tur\u00e9e sans laisse pour chiens, \u00e9quipement d'agilit\u00e9 et points d'eau pour que les chiens se rafra\u00eechissent.",
+      "descriptionFr": "Parc spacieux avec zone clôturée sans laisse pour chiens, équipement d'agilité et points d'eau pour que les chiens se rafraîchissent.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -91,17 +154,38 @@
       },
       "priceLevel": 1,
       "confidence": 90,
-      "reasoning": "Council-managed park with dedicated dog facilities in Inner West area"
+      "reasoning": "Council-managed park with dedicated dog facilities in Inner West area",
+      "googlePlaceId": "ChIJWwW3jyuxEmsRpkTrTFpjRgw",
+      "latitude": -33.879450399999996,
+      "longitude": 151.1467782,
+      "rating": 4.5,
+      "reviewCount": 232,
+      "photoRefs": [
+        "places/ChIJWwW3jyuxEmsRpkTrTFpjRgw/photos/AcnlKN3jsIjLv1oONpcOfVQgv_QN4FjASUoMFYV5CQiV2Cxo3s_WxdLlxTgaG8cJZiauWIw4pY4yyKZKyh2bdQ_Y14qDez5K0hBtWR8nKm6weRGI-RwAoveIhnHCETxeFg-ncBIGR1XUpToeCnZA47sBSo2NPettQvhE3ZekuJkdz82yClOj--N0i6UxAQTEw7r_yZJr2C9yjgdonRip2UhLmpyebxBXpG_sA1oXu-B_8VqTpDcBVJbgwT8iP2fLDBWP_Cybj06AYuUZVrQs7yPO0W2HAgu0-lISXNZTeWkdheXTmZF5MqyGC4IJ62NtU5gVq8NaMfz3O_JUdw4Vdf6pVxl9eJI6eIwLqTam_soGZRhn-fLfCbF3pSHiQolDnGZpUjD7VoJWvwsjibpA14phYTquq6KEDTRFHnQTYekyHVvfAg",
+        "places/ChIJWwW3jyuxEmsRpkTrTFpjRgw/photos/AcnlKN3nAk4HOJYJZAIBnPbfYFJWlW55KSfIWbEbOY36JNhCPr7knqsTp6zyZ2BADxd3KQcdzxqYEZ9-7XEiXIq-d0RVUGFNvmfwMnBJw9Si3TImm93SwA7kxLj_OTZ0vi8SyTYXccwgtktJ4Fom29BEPa_RQAW0gOe6WWDo0zHUNwYOVksR7WGMTzTIT8Idhc-KEewWXVyo0wFiEQz1meNyQod5No8_o44w4z1XcBiF3LkuSJ4tMQ2WemOV_0L_sZA2pitFtk_GTvAw4UY4GpfF8xysQgjoHJiNwaQLoeWZA9vxzLSPsZChFMxilPs99GMvBv7bMtIw5rwe1k_RN2l_wGvtR0mqta3LDymSHHM2_rtlVUpnmbjMIwnmyvaybtSf2lrel1dHxJ3NLy8hrGrqFm2tFStel3nHfhkXkUXjfWM",
+        "places/ChIJWwW3jyuxEmsRpkTrTFpjRgw/photos/AcnlKN2DSB9Uswmqfe8jikS534md0CiaYyF6dmju6-4E0-3eJhvqsEqPOyA08duIKMttBcJLuLiLaNgFgNqXJuWrcetiF3t9P_vbxfnjbhm_iK-wTliYVDoVvKRi6doKFR7vrTw438sujYnyoajqNnkkLRD8cZ755K2JK_ySXdCm45DEAafaTPmsYAa-cfTKGhtzR0u4JAtEsUnlsgqxN9eZ5iWJeRbQckjeKdVr03xcT8CGE4vXAbXF5080iS10-eY4xhL1NiBZTid_0VIVwNtyw3Gc8WHQsaj9ijheaAn0k0mLpHhK-yT7ZqYlg5WY-mEh3ViEGqoMxXZKXd6Goo_UkH2sZq3EdhqGktW6GpmTYaA8C2p4doi18Apr7ixWVdoASY7wKYR69cjzZngPMawNRSgPnsx9q2Cud8R9sy00neSWVbnJ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=884503616313574566&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Enmore Park",
       "category": "Dog Beach/Park",
       "address": "Edgeware Road, Enmore NSW 2042",
       "neighborhood": "Newtown",
-      "phone": "+61 2 9367 9222",
-      "website": "https://www.innerwest.nsw.gov.au/",
+      "phone": "+61 2 9335 2222",
+      "website": "https://www.innerwest.nsw.gov.au/explore/parks-sport-and-recreation/parks-and-playgrounds/parks-by-suburb/enmore-parks/enmore-tafe-park",
       "description": "Popular local park with off-leash area featuring agility equipment and plenty of space for dogs to run and play.",
-      "descriptionFr": "Parc local populaire avec zone sans laisse comprenant \u00e9quipement d'agilit\u00e9 et beaucoup d'espace pour que les chiens courent et jouent.",
+      "descriptionFr": "Parc local populaire avec zone sans laisse comprenant équipement d'agilité et beaucoup d'espace pour que les chiens courent et jouent.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -114,7 +198,28 @@
       },
       "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Known local park in Newtown area with dog exercise facilities"
+      "reasoning": "Known local park in Newtown area with dog exercise facilities",
+      "googlePlaceId": "ChIJHap4xEewEmsR2kIT4WbJjXA",
+      "latitude": -33.9024056,
+      "longitude": 151.1743434,
+      "rating": 4.3,
+      "reviewCount": 135,
+      "photoRefs": [
+        "places/ChIJHap4xEewEmsR2kIT4WbJjXA/photos/AcnlKN1gRLszwz4U6Vul5P3DFfPwyennj66I1TbAhLfaQzQBe-0pZ-GDNCyEp-v3iRExZyrkjs7FxWkxX_0KCFxjihDr2Rxlc-C5YgLIGmt7b6_0bcZaWS7WFbq__QNsLsXCKCTD-zXXlllfIiIu-9qQA1yJDy2U0DcHXcptHjKKUEnrY08BWLlqONrDM59aGr21IaFnQSTBarOxYAxe3w285OhBkDU1r78RegI6tG2aVe5EVYFRex1vdOkoTp8gdcBz_dla2jIk0-BjiBuOsMU9w3XryvB-RjZmM3Erok3WDGkYWeXXSlK2mBiHjOLOGMEs_XhHrITyfGhCCf8ZnONs_sQeg4B_rRNPqZPhfTL_vQ50cvOEyIEUxhikA_HzTHaw7ku8_VwYcGkwo5rKJkl-otfZXOOx0wOJJ0_vM0i5LSlImQ",
+        "places/ChIJHap4xEewEmsR2kIT4WbJjXA/photos/AcnlKN0dwRKC8qCAFPaQBrKlJ8hvIyRoYKQ84zVfHn7KuPUrEQ2b7sT3lIceuKJVHKq-3dhaL24vtbOmYnCjLGs7NonaiMNOThmfzIVUkikxeHKEMORduxqrYgQdDVIaM3oZ_sDKnngEUZqqmHQIjsABtWEw3yuW7AlINb2B9crTI2826mtVar079FFPySb4SrZPFF-u1SSPsfJRYWJolKvgcKxZ18Gggh_DVlj51n57G6xcvkWMWBCnMLgTAM6uHfwq6zo2NwrY1RCcRPxgxUCEMXc1v_HkZL67VQb_84Mf8L_Om_Fd7GM8ZURPlFvBgfNE7S07NzWFp21epsu-sOxOpwPayRgq4h1Sa_-ViDDgyRba_eSiEX5Acy9AVifKTf3Mdb9MHP1xz6iYxlala2G6MqCdxMa8Rsm_e0KRQoJjCS623l79",
+        "places/ChIJHap4xEewEmsR2kIT4WbJjXA/photos/AcnlKN10CQKld7MHIg0fZzJJioMV7pfSm9w2HomWnq01h7xfi698O9p5iuPNL1dv3EjMbigaD_skSkiQrgqaJfBJRuC9rtN6D8l-B7jypB2wusgHvm0xhGrJEKnVgsn1rR7g4RQlcaquSl8kiyZ4SJBsQsecx9Y8XF5MB3om1LNW9Z_lYRILheTHA3XzJWBLu5N8NlX_mxU2q1DXCYMBE-cUW1kKWtr9Glk7FuWo2tMaJvqn5_wuKcfgQE1HlwcB-jllxayldTYq7eJ6JR8dVWt_biKxflfqfuT7kIyGsFni_C4FqP9WBq70bsoEHDuSrs0vU-ygayfiZnG15XZXdPBvorMm7lz6QLHnuZlHiKxtNHw7ZkGApzFy0G0y4ZgwTO09AQ2AfZOReWcYNpZ0ZTXRwUYg5hnN2RW4AFBeSura9255TLI"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8110359947664114394&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Sirius Cove Reserve",
@@ -122,9 +227,9 @@
       "address": "Sirius Cove Reserve, Mosman NSW 2088",
       "neighborhood": "Northern Beaches",
       "phone": "+61 2 9978 4000",
-      "website": "https://www.mosman.nsw.gov.au/",
+      "website": "http://mosman.nsw.gov.au/recreation/parks-and-reserves#sirius-park",
       "description": "Scenic harbourside reserve with off-leash area offering stunning views and beach access for dogs to swim.",
-      "descriptionFr": "R\u00e9serve pittoresque au bord du port avec zone sans laisse offrant des vues magnifiques et acc\u00e8s \u00e0 la plage pour que les chiens puissent nager.",
+      "descriptionFr": "Réserve pittoresque au bord du port avec zone sans laisse offrant des vues magnifiques et accès à la plage pour que les chiens puissent nager.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -137,17 +242,38 @@
       },
       "priceLevel": 1,
       "confidence": 80,
-      "reasoning": "Mosman Council reserve known for dog-friendly beach access"
+      "reasoning": "Mosman Council reserve known for dog-friendly beach access",
+      "googlePlaceId": "ChIJcT250yasEmsRQODx-Wh9AQ8",
+      "latitude": -33.839591399999996,
+      "longitude": 151.2379388,
+      "rating": 4.6,
+      "reviewCount": 794,
+      "photoRefs": [
+        "places/ChIJcT250yasEmsRQODx-Wh9AQ8/photos/AcnlKN3fJ-7SVsC8OdtpnagBG81M2CsuVd8qg4THcBcIWwq0wdrF68CjhZIR1HvcW1IKRlzhnGs7tKI59J3DhbIiTYAuQTOa1PCGzReTGWi1u7Q9TUtOUzreKFoZRw17bRC9fYxBh43KjAOjyKXwMmDkWAnZH-6lXYVcfYm5Ukm3xnI0rYXh9MvmAmv6kQVm3jh1TzizrbtvsefjB9ia6XEet2MST_mXEqeslyuG1N0olqf_vYLvY_XioYHRvErvmuYHK4Td55YxTVncP-x4gVznJ4cXe_rOTtxlSxbQGVFKtjrO3EkicaM0lzqxipJlPA6w6NGcbjUhum_xu7FNV_uoONtHomnkHWQufy35zVD0HGjprFMFKBwwFFwHZ9ilMJ6RZY35X6iM6brB0WuwL6HQ0X1U73Rz4NIytjrLHM1XZZW8Wg",
+        "places/ChIJcT250yasEmsRQODx-Wh9AQ8/photos/AcnlKN3uqSeoaW5Wq63VCfvVWWM7gG8H18Ci0RnthDgCVaY6KbbRSP5rSLrNp684astCVTkMnnSwxGZ6KdQvRfk68OvO7T5JygCI3GMSXC_3oEF8K6ZNLCmcvITS9Iw-qjXrH8n5dmYiaZ-nPB65thL1k_Bssl8CguqEij9SRcJpt7YzhrGduziUiG_nMpYlUZ8ikzAFUA7k44C9X6BsdxUdQPnktp7B3zKmn2gmkI-uhTxYic9PDGWEk4zypFo_5VOT3Mv9J6mHqChBJk8f-oISTnXymztT_yqfYtw5qSmceWSik_OFs1c39Ma10DV28MyMQoaa8F5DibvYWiZkwIZGed2_xcHJONCQFCZ4GNRd5gnDRNWq5EFAdzNrGph6-4RkQVhg82OHjm5j7YHKUQ_Y6TFYv8qUg9b-5jfpmuMC1kLl6y1U",
+        "places/ChIJcT250yasEmsRQODx-Wh9AQ8/photos/AcnlKN0ys2G-ssFXhaO119ODEeeVXWOHheXAwyXIonP7dU5LqBy9rAa5fVNbWxRv3yJp6UxygMiTQfV-WpWFTtKBnZPvDzsIzZB0fyBAfrqTbrX3pHmALPSIOT_il8oZtCgxILIRUZITvJyrQZybevBGu4oWv-F1FGPdSxSqfY2YSzjWoGpKHZX_tT_rbE4hcS8vrVbIgeYsNtGuEdhzV1318y6R6pywCRQyW9YEar8GdozPRpjY_lt7ly96I9xWdvXutCF1LicA-Mk-7wOCxEydAUrD21JqiYJCkjebRKf4QhsDZfkmXLxudIqTA2zxSTHTLBD-pDiJ1JXphu3so_X3dCpXh7KF1w1mJ6P-0m89aki5iiqHVwdDKii-yqekmJPJ5YGuLcw93ngYvLk_OvLyBAyxONKBOZGGhsjbXedeovhBxQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1081283275369078848&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Henson Park",
       "category": "Dog Beach/Park",
       "address": "Centennial Street, Marrickville NSW 2204",
       "neighborhood": "Newtown",
-      "phone": "+61 2 9367 9222",
-      "website": "https://www.innerwest.nsw.gov.au/",
+      "phone": "+61 2 9392 5000",
+      "website": "https://www.innerwest.nsw.gov.au/explore/parks-sport-and-recreation/sporting-grounds/henson-park",
       "description": "Large community park with designated off-leash areas and sports fields where dogs can exercise freely.",
-      "descriptionFr": "Grand parc communautaire avec zones d\u00e9sign\u00e9es sans laisse et terrains de sport o\u00f9 les chiens peuvent faire de l'exercice librement.",
+      "descriptionFr": "Grand parc communautaire avec zones désignées sans laisse et terrains de sport où les chiens peuvent faire de l'exercice librement.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -160,17 +286,38 @@
       },
       "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Well-established park with known dog exercise areas in Inner West"
+      "reasoning": "Well-established park with known dog exercise areas in Inner West",
+      "googlePlaceId": "ChIJSxdjKGmwEmsRwBby-Wh9AQ8",
+      "latitude": -33.904485,
+      "longitude": 151.1583636,
+      "rating": 4.6,
+      "reviewCount": 556,
+      "photoRefs": [
+        "places/ChIJSxdjKGmwEmsRwBby-Wh9AQ8/photos/AcnlKN3gHqfadaGG7IMABbgCqgziTsdb72l0eHT0jYV0tVhkJW8TJsMCAlCkU-tnKZKQswbFsEnmC91QuomBi-vPprnod9zwmEHOtPMbtZt5FoUKw1shCV-Yom1uV1Vifgsw2tRf7_cfOILV5zvNxRydNtKHx82FSjvV7AF8iSMQfuOtWs8Y5WIjEWap9_sb7UccPhrGMDPhINCAnP0SusdKxzTr4bBcWoKO8QcPZD0_H7CsHj830aR_NicOKoGyXtdwCad2WKn1gTi7ILx1Symt2nWoKuKCgvoQ_foNgzhlaYpzt1ZVG-h9vBS8y31m4XcXxPEYG6Qamjr2ktP1DvNQBjOSjT70QlcQWp76TqUKxwz6oGEiBz6SMI0QwOgzhUBEmP_UE0oaV74NMcFYwZATkywcEOf5Twm94i_lJvgcum121A",
+        "places/ChIJSxdjKGmwEmsRwBby-Wh9AQ8/photos/AcnlKN2PwrlFGXw6TRKnBQ8F8QiTzgKjmSDnQvpob-QhR_s1FPBuNiWJBJBj2GTSiOCv9NMQzeJlhqxF9UEPVfk4VPNlKMG1fINUFs3dhRhYySmA7I4vlSIvzdlUpIGDeL2CkwabQ3YBW9PdE2qEB7tkJ3Z1ZDCmQJAYBNCX271Dd0l1QlBP7uLv1SQ8Bai6-BFdccF5knfAD3Sj8fNiO-oFkfUbGqjJZSaEdzSFjGlGwlJ9HbYKK3zRiDzPwAxQySuqe5_XnsX8G5IPsPR9fbQrIX5LI52QKyNtddCFc8podPSK53Cdl-YZgzjrg-_85RBWTiSDzkS1suJR-5Nue5x75xalzlZzZvgYSMrIBQSAHIbgofgFjiX6t9lvXUhs_2aB3njEHqHf5u4RdfETkHF7FT799q2Q6y9Z4IOGFnzobpTGJwsg",
+        "places/ChIJSxdjKGmwEmsRwBby-Wh9AQ8/photos/AcnlKN1yRPLdBKSAYyu1stBo0DKYYeC2uON63IlArRKNrpfp-4zN1y2ssY_zow-kjs_RMfDTDDMjj2lTSSaVN9Ls0DLfuyIh5hH9lh4fMKOJxo7eC-scob8iG5lr5HN0p1KtI_f7ZhzmwrDJ06UxLN6NquTX_Kw18lSAP8Ne9Do_j4QISmr2hiwF5CmwsjTgi9aERB2hAHOwRwgdHlJel5n3c9kUH3-bOEUFYMNXr6aafFng6VlvOG4FYGI635VRClQ41UfJXdRAQ_vipHRQjjSXC4OeP6UlPYyQa7kQI_nIN_HHDf8-Deu_ub3ofVRm6bfHlypR2IjaRByGiHjA2rfdoob6bz9B95hB3pEGT-CxKLlNQEQGDIiYYO2-l1MYc8UOTRpJ5nVAzrcLS7bznQ1f61xiUvQgNNea-yFWGkSjO1EtlnlASPKJSW3MfypriA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1081283275369092800&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 9:00 PM",
+        "Tuesday: 7:00 AM – 9:00 PM",
+        "Wednesday: 7:00 AM – 9:00 PM",
+        "Thursday: 7:00 AM – 9:00 PM",
+        "Friday: 7:00 AM – 9:00 PM",
+        "Saturday: 7:00 AM – 9:00 PM",
+        "Sunday: 7:00 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Rowland Reserve",
       "category": "Dog Beach/Park",
       "address": "Birchgrove Road, Balmain NSW 2041",
       "neighborhood": "Balmain",
-      "phone": "+61 2 9367 9222",
-      "website": "https://www.innerwest.nsw.gov.au/",
+      "phone": "+61 1300 434 434",
+      "website": "https://www.northernbeaches.nsw.gov.au/things-to-do/recreation-area/rowland-reserve-dog-park",
       "description": "Harbourfront park with off-leash area featuring spectacular views of Sydney Harbour and plenty of space for dogs to roam.",
-      "descriptionFr": "Parc en bord de port avec zone sans laisse offrant des vues spectaculaires sur le port de Sydney et beaucoup d'espace pour que les chiens se prom\u00e8nent.",
+      "descriptionFr": "Parc en bord de port avec zone sans laisse offrant des vues spectaculaires sur le port de Sydney et beaucoup d'espace pour que les chiens se promènent.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -183,7 +330,28 @@
       },
       "priceLevel": 1,
       "confidence": 80,
-      "reasoning": "Balmain harbourside reserve with established off-leash areas"
+      "reasoning": "Balmain harbourside reserve with established off-leash areas",
+      "googlePlaceId": "ChIJQ1iiaGBTDWsR0Cjx-Wh9AQ8",
+      "latitude": -33.6635018,
+      "longitude": 151.302505,
+      "rating": 4.5,
+      "reviewCount": 285,
+      "photoRefs": [
+        "places/ChIJQ1iiaGBTDWsR0Cjx-Wh9AQ8/photos/AcnlKN3YjrF_hrZY3sWfpndxlq80k0S2I-CPL4j-hbn1fWGkaXHKQG9BULxgax0JDqPbDU2E6EWxhOpIKFS3n40KVwu3-7nYV3Kvf73F9mot0qx8XropmdgD2fOBxxGJw0kEfhAePr-V04WtzDFBsMU1XLTZC3KYSsCBG3F5WtHrarR01R-YzwM5UdWZAYMw4W5MHugFS-VP70Hx15p3NGh_TCU7nI0p_iKjOERjYJSfJze4UseTeOPW1vOm5tGya7e4ytmUUYpI3G66Zg-ln-Zwxs8UBv7_E6NggnVN2-cgzRfyi3czKcMDjmM5Yh4CvlIwyqD_iHjaVHaeU2yNGH77eL0C_e4iSEl6KWOuDutAMME9PW5cji7JCMmDaylk_Gic0WAWM0wTnezUGSHq4_nyI_oJThrV_DzcYkeQBrDFa-OxY3gW",
+        "places/ChIJQ1iiaGBTDWsR0Cjx-Wh9AQ8/photos/AcnlKN2sSnN5mkKAxPZ-WgTyhwHHeLdXJwZAdqNepJqrG2PEXKBVpk-qozWSJ5ekUyS_ahEskAlgrF7fMfDQwfvVFYPxKoorIA2hq2I2D8KkYJSZl3sI8O6uYBadLqNhAKYceTEPA6osOh5mS0Vurg4JEKNg5txtZNulUkI9W3u_u4sTkcH79mj2rEXzFnE1K7czuBrNoF9ZZM10tAcdgXwG7jhxtwGCjKKJ1MhwVsKrJ3LCKf0TVe0Dxh6_60wLGRu_vUPiIs_VAgcN9lso-NC2Z0jSZEoUnVr7zGPklH14RUTIINWuc8A4_CUJtXfoDkgYPPSUmQ_fGgyFH2vB1q3bLVbAAW0KZ9-Ecc9_HyG_IKNFKmei-m_a0tdiZCdmc_9Z_Asm_6XZCHM9dOqtoYPjvO9IMQb1n6Nl976dD1tZNXomVOk",
+        "places/ChIJQ1iiaGBTDWsR0Cjx-Wh9AQ8/photos/AcnlKN2TkKJ_2iDCua7vk4e4crnwyL3V-pUCFeMbM9zBEeTOG9e0dKWqy8liecAsehNfVcnDRVuDB2wAvQsKgAQLpRYejYzfhXI4E7XATp8QmXrpd2j2r7KsBo_6fBWcco894YsPwSz-gU3ontFHILqw0s8WW-BY9yjK2fC7olwbxs7H478q8hyySVkh-t8lwLIM-_2YpTF0qgyvFNmtPb8g1XSeG8pkPLTu25eZvDo39v32mYQrixA-djpiB4YBI0Mjv8HUjI7pNoWGULWa9J7jo3ip4l7ttnHYIa4uZw6dLRDE0_d0kDWwwWssQnFuNaymEcc5M5mbBWhL2PB50aXpl_aa-rreVfLeJO97KpW-YAF_8ds0G_tQLBqEE62cL58JEcwCZLSwuhMXGDFKwTDfiAlwJ4ncHDBnophuQzyryEANyw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1081283275369031888&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Paddington Reservoir Gardens",
@@ -191,9 +359,9 @@
       "address": "251 Oxford Street, Paddington NSW 2021",
       "neighborhood": "Paddington",
       "phone": "+61 2 9265 9333",
-      "website": "https://www.cityofsydney.nsw.gov.au/",
+      "website": "https://www.cityofsydney.nsw.gov.au/parks/paddington-reservoir-gardens?utm_source=google&utm_medium=organic&utm_content=paddington-reservoir-gardens&utm_campaign=googlemybusiness&utm_term=plcid_14617245817363687504",
       "description": "Historic gardens built over old reservoir ruins, offering unique architecture and leashed dog walking areas.",
-      "descriptionFr": "Jardins historiques construits sur d'anciennes ruines de r\u00e9servoir, offrant une architecture unique et des zones de promenade pour chiens en laisse.",
+      "descriptionFr": "Jardins historiques construits sur d'anciennes ruines de réservoir, offrant une architecture unique et des zones de promenade pour chiens en laisse.",
       "dogFeatures": {
         "waterBowl": false,
         "treats": false,
@@ -206,7 +374,28 @@
       },
       "priceLevel": 1,
       "confidence": 75,
-      "reasoning": "City of Sydney managed gardens with known dog access policies"
+      "reasoning": "City of Sydney managed gardens with known dog access policies",
+      "googlePlaceId": "ChIJf7YO2wWuEmsRcFbGzHJFumo",
+      "latitude": -33.8852757,
+      "longitude": 151.2267383,
+      "rating": 4.5,
+      "reviewCount": 1184,
+      "photoRefs": [
+        "places/ChIJf7YO2wWuEmsRcFbGzHJFumo/photos/AcnlKN2-0PWYzUP2Msf0od1Aq55ob5MjjN5El1v-Ubl1okahVa8w7RxGKl7fvEXxm08MkgYZimbfs9fG51SuCCUqWKEs_NMDTpUSnEyZMhcnP7U46EUH4AmkicjRcU4WvFUlIsg7YdphZKD_AD4a4K9Ka60md5uRryAwTpD5C9WD2qZZHC4EPwhkSBIqIdh9ORjXmElx6wrrgQ8zEynN_od3hZL7Pn9WyE9AB2WC3cjxTcUhCla_jYKTL1uaJCjgl6L3XQO_mCZ0aT8srxhak4pymrcVxvwU2MdidTf2tIRlgviFhA",
+        "places/ChIJf7YO2wWuEmsRcFbGzHJFumo/photos/AcnlKN2r8ztYZW4GKqkEdgq8XOW7V2qL6WO_JOgoh2R8Jfzm_8NbkYjzfsZeFKlsCsP7Xhq4doGZwKxjui0bAr9TZ20lM8V9Bo1k-UrPyO4k8vEfbZlUkb9hyzkpI5CWQ866YTFI2_rYQR6FVh5OZI4GLC_8G2tFQ3vmGI7oJHkqacyFKOaXGKKicgsCQvRaw-_-NyGXBulcUWKvEJTE9bPXC2cBx943hfd07SwyMpdTa9PCQ17ROZYzFD2WyAfaNmvTqSgoX3UTvEnTtppBXFpihjoNBiAdxfGS5hNEEbd_94UbICOrXpjtB2mupemXL8gZuXdgzBaHVxtvexyvmkfF7TMiqUWrfWf2ADZDk3leV3DiIRt_dA5pQAUXklWNFqq7CJ5tq6qflu4udYs1iMEVkD4gdKdOKgFYw5G4M5xa6iK22g",
+        "places/ChIJf7YO2wWuEmsRcFbGzHJFumo/photos/AcnlKN22FfTUxHrS1YbxOF7ypeanhxaZZUMC82B97Lq8vG2Cf4yVAsqE9OVAaEmwl2gzotx55Sm3MesbPuto2k-8mJVacZAY6ncZlJ9SgrzNETRqzyQcHHlx-NkfQwZUm2sxXS3_iEDA13iZ6KvUwpMNKAtK5Eh43fZE-RDfEzRNoqWzTOJfdLkM4423Oq4ipoiGRXaHNYdcwzInWzYXdVmPfbSHWsCExY8R7FnbL3v-ejlV7sJcLM88nlj18VxC6JWITtwC8R0NksjFTHqPNDBSgagtbaNLJSTqhCi0AQZRoAIjjHJjxDuJYcislVL1YekBMFS35NcOV0imy2kOevz9GQMhVaDvYkEHEw0GYfMaWObnfl5AFspG0C1anXmNWRHHAnsPj5emXNLrUtf8Wo0jzR995OUsVtXd4hG4CqjIU5fGWgKE_W6-aQTQVUbb4VxY"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7690535673052681840&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 8:00 PM",
+        "Tuesday: 8:00 AM – 8:00 PM",
+        "Wednesday: 8:00 AM – 8:00 PM",
+        "Thursday: 8:00 AM – 8:00 PM",
+        "Friday: 8:00 AM – 8:00 PM",
+        "Saturday: 8:00 AM – 8:00 PM",
+        "Sunday: 8:00 AM – 8:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Grounds of Alexandria",
@@ -214,9 +403,9 @@
       "address": "2 Huntley Street, Alexandria NSW 2015",
       "neighborhood": "Surry Hills",
       "phone": "+61 2 9699 2225",
-      "website": "https://www.thegrounds.com.au/",
+      "website": "http://www.thegrounds.com.au/",
       "description": "Famous industrial-style cafe with expansive outdoor gardens, farm animals, and dog-friendly dining areas serving artisan coffee and brunch.",
-      "descriptionFr": "C\u00e9l\u00e8bre caf\u00e9 de style industriel avec de vastes jardins ext\u00e9rieurs, animaux de ferme et zones de restauration accueillant les chiens, servant du caf\u00e9 artisanal et des brunchs.",
+      "descriptionFr": "Célèbre café de style industriel avec de vastes jardins extérieurs, animaux de ferme et zones de restauration accueillant les chiens, servant du café artisanal et des brunchs.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -227,9 +416,30 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 95,
-      "reasoning": "Well-known dog-friendly establishment with documented pet policies and facilities"
+      "reasoning": "Well-known dog-friendly establishment with documented pet policies and facilities",
+      "googlePlaceId": "ChIJFbIJpLaxEmsRSrzMZif-DK8",
+      "latitude": -33.9106777,
+      "longitude": 151.19413760000003,
+      "rating": 4,
+      "reviewCount": 6355,
+      "photoRefs": [
+        "places/ChIJFbIJpLaxEmsRSrzMZif-DK8/photos/AcnlKN3EdzIpHeiYimw3bIyJQTahb0JkHuXDmZIicr0rpiVE_fXJOqbDkkqci7eofPrTZiZPgToJlBuC7q2idg-mvKQapNE2Faomte7NYpMSPdzwXOWgbevwACQpSrqAw71dKDi7d5wrZ4SDCR89VHKgGLivt1S-E075huKSqFPl2uJBetQbjq1W6QKml3bgTwl8cVnIccoxB_ECom3zlmZyid84eDwsVSADegoFG1X1xol1BGM-CQiMY9r1mXV_EEiOeNWAA60U23cNCrbtnukujCmkqCBAEw3Ocdgh7ZSYQL_WkQ",
+        "places/ChIJFbIJpLaxEmsRSrzMZif-DK8/photos/AcnlKN0J2J8BuONTw-ibnKVEaho_7fc5mj9g-AtCoFRCKKfMZaONZegMeLf-b9X3q8lW1zyLS5bvHW8lMlmNagMLN7cXezWOcSYFpDlVS-FzYtDur0KfPj2I8iCzvvk0TsCo__KFZ76QihhU1uG0-kS-2COCcjYmavfS3LjjGY4FtCaPOxvnmjs-KmXfiPzxuixpGje8UsVwp_WGYEeSV40Ua4cDSh3dSgUB-gKeP1RdKWFYwfa8tk3brDW-gGtPq-ClR2FBN_y85ntrJ4dKuJY6ku0kPLalN0odHJm-fF4fmnc480BcqxrZDeLeolZoTOmmd4YE82z8WjJWlxIahD41frZOfZcUq8mz12rxWwOgqi25ZIcBkqRDZSgUB994FG01Gi7LZNuVky76ROo50lYhHSgES4kPQAhf3yhedKg43u4X44AtvHlgBMAkIc4vOyyM",
+        "places/ChIJFbIJpLaxEmsRSrzMZif-DK8/photos/AcnlKN2mcfXNEvu__7V4ssbn2-WxBaLsdwR3HIQt-QD55yf2ttBVqdYWwBtrPwvhmZVahx6QCjZAPDWuX5_eB6XCMP3SqeleIXCA_HFb1675tUdCX12WaJqR0C66wd0O9ftXg9muRkyi0JiqbmrcQzNmLtQ0fnHI8ab7-9z_9mvk-gfh7oE5J58_Ou-p5e9YiH3dUawSIGOBu-4TRUpsrAtK6DPK2TAZvj0akjoAqW-gZhP0vlynY6BWh7v_rA5EWeXWcBWK5oJHYBLrYFQImbY96C4-a0Lmw-NpgMq3F_nAf4mlfA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12613736101539789898&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:30 AM – 9:00 PM",
+        "Tuesday: 7:30 AM – 9:00 PM",
+        "Wednesday: 7:30 AM – 9:00 PM",
+        "Thursday: 7:30 AM – 9:00 PM",
+        "Friday: 7:30 AM – 9:00 PM",
+        "Saturday: 7:30 AM – 9:30 PM",
+        "Sunday: 7:30 AM – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Bourke Street Bakery Surry Hills",
@@ -237,9 +447,9 @@
       "address": "633 Bourke Street, Surry Hills NSW 2010",
       "neighborhood": "Surry Hills",
       "phone": "+61 2 9699 1011",
-      "website": "https://www.bourkestreetbakery.com.au/",
+      "website": "http://www.bourkestreetbakery.com.au/",
       "description": "Iconic Sydney bakery with outdoor seating where dogs are welcome, famous for their sourdough and pastries.",
-      "descriptionFr": "Boulangerie embl\u00e9matique de Sydney avec terrasse ext\u00e9rieure o\u00f9 les chiens sont les bienvenus, c\u00e9l\u00e8bre pour leur pain au levain et p\u00e2tisseries.",
+      "descriptionFr": "Boulangerie emblématique de Sydney avec terrasse extérieure où les chiens sont les bienvenus, célèbre pour leur pain au levain et pâtisseries.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -252,17 +462,38 @@
       },
       "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Popular Sydney institution known for dog-friendly outdoor dining"
+      "reasoning": "Popular Sydney institution known for dog-friendly outdoor dining",
+      "googlePlaceId": "ChIJx-faFB6uEmsRevjOprb650A",
+      "latitude": -33.8894017,
+      "longitude": 151.2148985,
+      "rating": 4.5,
+      "reviewCount": 2077,
+      "photoRefs": [
+        "places/ChIJx-faFB6uEmsRevjOprb650A/photos/AcnlKN2-hhVQgbS5NGlfS9FbH86DBvRr5ZKIicDxC9ZXexgfPcCi2GpSwvi8e3wETMuyxWmmqTayJ7BhPmNSLMuhMtmH5zky7EtVPekD0aOvVlMk5jOpZO1uLay9tx6qk4XAGh5Po9SynoYax_dD2GqDsLvezcZ8CJ569XNfOr4Japyt0BCQEQbU1iRUgjn54HvbeHfAN0hL250pBqLBgdZFd2la5NjoEcpuNnHRYXEm8majqUIpLUa8PNT7JXswrk57uC2GJienDDUkrUC9XmqlVSTzd3NodEDHJB7sX_CJx-E7Hg",
+        "places/ChIJx-faFB6uEmsRevjOprb650A/photos/AcnlKN1itjurWZ0owYyGGUE4hLHrg8hbcnT6vaw1ufNzUxh6z_9QA4AMIUN2i2yLt_QfPp4SjmUInzATPOvMdhMIyeJMrAeX8n3vychImYRZ6l1TP4Ba21shG0gHyXP6m_Mw34c8rheJdCfTZPmYZYVNPdWAbZaCixELQZcNbYKgD_v-XdfZkDrogY0fynoJt1SUV4OrM9TgxpHv2DFMnZIRohi7n4oKAtOvDPM7_0vpoLT7pbPkdK5aVKdFsCe3I5kQq4dX-MLDP7SQ5SnAG_OjBtfOX9CtR6SChAHYYdGOzXYLnnpQTmIciGlGB5q520Fzvm0WnQB-zWMDyWtpFSO6QG1vbCziw5aDYZSQ6Ky9vuVTMp8lnBud9G9CXhgH2AxE9rChXs0YKk730IN3g2Lg5ulfFWF-z3LTfDur_ehNCbjLLQ",
+        "places/ChIJx-faFB6uEmsRevjOprb650A/photos/AcnlKN0mRzfqekrE2TRm6OOLmGbAZZ07IeH69OZSnPSEXRJTWF6Ixf4K5I2oH7KRhn9Xz3PsLjG72QU65eBJGrkiiT0w14XF6vst9dZvHCPt_yC4xNoyQ2edr9VXLeZjAOGPwifH9eQvPwUH8mKtOer7QuiDvW0RMoh85niuj2XyHReM9hNuzL945X8TTmkOTlouOF85hTblGLEX1BcS9wpsb4jp45aVKE1M8GXwJPnPhVPew_sSO59SZ2voN0lFHkGRV_6H8CfpmBw_iiXUUri_lhNXI_qohpRLr9-v-PZIXzc3MBw7SmpTimt-CyoqqOLwtXLDSxG1QuST2R1FYESshh3721ndihvnZOi_NirIkcPFV8BYX8_5LoGRPKfcnVBVCrdmBo_lb1r1Dg3PkXcXCDJapNip_f6SFUDcsvPSxBDBmuoA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4676982400437123194&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 6:00 PM",
+        "Tuesday: 7:00 AM – 6:00 PM",
+        "Wednesday: 7:00 AM – 6:00 PM",
+        "Thursday: 7:00 AM – 6:00 PM",
+        "Friday: 7:00 AM – 6:00 PM",
+        "Saturday: 7:00 AM – 5:00 PM",
+        "Sunday: 7:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Speedos Cafe",
       "category": "Cafe/Brunch",
       "address": "2 Notts Avenue, Bondi Beach NSW 2026",
       "neighborhood": "Bondi",
-      "phone": "+61 2 9365 4924",
-      "website": "https://www.speedoscafe.com.au/",
+      "phone": "+61 2 9365 3622",
+      "website": "http://www.speedoscafe.com.au/",
       "description": "Beachfront cafe with outdoor tables overlooking Bondi Beach, welcoming dogs and offering fresh breakfast and coffee.",
-      "descriptionFr": "Caf\u00e9 en bord de plage avec tables ext\u00e9rieures donnant sur Bondi Beach, accueillant les chiens et offrant des petits d\u00e9jeuners frais et du caf\u00e9.",
+      "descriptionFr": "Café en bord de plage avec tables extérieures donnant sur Bondi Beach, accueillant les chiens et offrant des petits déjeuners frais et du café.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -273,19 +504,40 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Beachfront location with outdoor seating typically accommodates dogs"
+      "reasoning": "Beachfront location with outdoor seating typically accommodates dogs",
+      "googlePlaceId": "ChIJVYkIsnWtEmsRIXo93_GVPnk",
+      "latitude": -33.890538,
+      "longitude": 151.282926,
+      "rating": 4.1,
+      "reviewCount": 1091,
+      "photoRefs": [
+        "places/ChIJVYkIsnWtEmsRIXo93_GVPnk/photos/AcnlKN1pMXXr3_JySJAGrgAAs-c9O1W7jqgJQdo6RVvHbQmMJwJiitZTbejgbrGP6ZKHDGmPtyTuUGD6UL7WQNDjj6g04XMLuj3wz0XFYvFyT8TND26IcZ22R5Hc5wot3gbbF5Mdmj4uz9eoIGX-u5sR3dS-IXDw-bhslzOJ_VC8H6DMSP7Fy3pC_ub2gZO8rg-gEXDGuHgMt-XB3T7vONYnRxVulDYvd6he7UBLFeAyxhWtnLiNJYky3h08p5WQrl2H_tqYqpl2O23d8IhUgMdnK1UdkdxqoBCGIX9Zmckpq3CRXA",
+        "places/ChIJVYkIsnWtEmsRIXo93_GVPnk/photos/AcnlKN1O1KCvYhyWcipc0ns0S_Qmz2Qi9a6IAet_k0Fiz4jaX3wQtxK1HqkMhhS_UQWSZ6Q1y1iaq3FmvseqLZ7KCXySYwjfMvBIyuF-rGmqBoEXMMdwgZzOUbVeexPVsp9XpL_QrMkDwUw1kPM4NkjEHgQxauMsdtVSnWgOhXaEhZcTobvs1fw-If-whNzNacour7X904adB0LaOrcmqs4TvKgPzp06HLEvdAoxIvh47mwZ4wXExv7YbeeakBT2mdxFDMJ7Bws843p17kgcM5yiOiwtU4guMiT9OQGuYiTClfk91g",
+        "places/ChIJVYkIsnWtEmsRIXo93_GVPnk/photos/AcnlKN31ZaRmLMEyU4UXwuDYuNMK3jHvsQoRbbJVQh3d1s-rNPH-7gx2Tc8mys6HgMC1eHMOiVuQDZNxq2Vlm-GTuavYWr2TScrHs1UwPWY1TouiOd5ZRNZnKumgB4NWVKqsprRkBcjJ381f5uFI1RaakKWcYxF8zKdPmOQ6Ut6KtjzWyOPGm65Ym6qGtt7lAJmkadtqfJCGUrcWeMioI8Gx1C5ZOPoD2dndC1yE_mSwFQQ3mH2lr4iIhSvUDjFmJd3TJKmyPnx8PDCbZtHU_qrYoKX5EU_s8j5_D30_JpXPbcGjSU3ykV49pLmh-zP-oedJALDCVHKiR8UZKyyXycXvOq3f76RLZQb1615eeHb7qFFurhaR1VXqpP_tS_PYvyvxFBTOCJ6__lhXZEQiN7zdLIYMUX17DU-3raIdxrcIu-vcvJD9NNoppXJEHB0lngbW"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8736585193210346017&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:00 AM – 3:00 PM",
+        "Tuesday: 6:00 AM – 3:00 PM",
+        "Wednesday: 6:00 AM – 3:00 PM",
+        "Thursday: 6:00 AM – 3:00 PM",
+        "Friday: 6:00 AM – 3:00 PM",
+        "Saturday: 6:00 AM – 3:00 PM",
+        "Sunday: 6:00 AM – 3:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Gumption by Coffee Alchemy",
       "category": "Cafe/Brunch",
       "address": "2/21 Military Road, Neutral Bay NSW 2089",
       "neighborhood": "Northern Beaches",
-      "phone": "+61 2 9953 8750",
-      "website": "https://www.gumptionbycoffeealchemy.com.au/",
+      "phone": "+61 2 9516 1997",
+      "website": "https://coffeealchemy.com.au/pages/gumption",
       "description": "Specialty coffee roaster with dog-friendly outdoor seating and high-quality brunch options in a relaxed atmosphere.",
-      "descriptionFr": "Torr\u00e9facteur de caf\u00e9 de sp\u00e9cialit\u00e9 avec terrasse ext\u00e9rieure accueillant les chiens et options de brunch de haute qualit\u00e9 dans une atmosph\u00e8re d\u00e9tendue.",
+      "descriptionFr": "Torréfacteur de café de spécialité avec terrasse extérieure accueillant les chiens et options de brunch de haute qualité dans une atmosphère détendue.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -296,19 +548,40 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 2,
+      "priceLevel": 1,
       "confidence": 80,
-      "reasoning": "Specialty coffee venue likely to be dog-friendly with outdoor seating"
+      "reasoning": "Specialty coffee venue likely to be dog-friendly with outdoor seating",
+      "googlePlaceId": "ChIJDycznj-uEmsRCrYS0ALQByk",
+      "latitude": -33.869369,
+      "longitude": 151.2075243,
+      "rating": 4.3,
+      "reviewCount": 1303,
+      "photoRefs": [
+        "places/ChIJDycznj-uEmsRCrYS0ALQByk/photos/AcnlKN14LKpoM5BgiubieMLQSTfvyTu2CDqWAOdwF2Ng_3ELVfZcvMYf-A1qUr4I_2UewVWuvP8PS1q9zrgSFtDba46YWxRPgvLdqdus9o7_xNrIhq42jRHDr0-9MhxbSwUBCRzVitHbbkQHTggy6xXw3999kg_l4Knd3b0fwHRECiWuOlKS7Dlaq3WSoBC5ONlvvUjId82QxVObwrmvOc8Zcp-IbCKyWhuSPKSa8eK4ldzj6MdN7ofvpXAwTqkomhMzoQel_-F2R1seZl2C6_Xu1_LWf4d2aailNCFYGQuek-toxA",
+        "places/ChIJDycznj-uEmsRCrYS0ALQByk/photos/AcnlKN0lkDohM9-31xcnrWihlfi1DX09TBiUC7hdorLR1YupAPffGdU_mqIpczkcG48L332ApOHE8SfGtGQpbgG-9QYmlcrK0gczRvneJBPMIQx2MqqXMK13KIVVapNPle7Ed54TTef-5c4ve6hzg-8cdM8WncfDrGNIOd64ODenmRBWkXXm7bm48Mr1KNNOIKy4MEXH4KyyM7BbjZqZdGP7q48BpT9OY6rVvp09nmaVe4nQrnSA3xZIl0GR6K09__s3pysx54oEk2xBAArhAFoJC3yWtsaW33Sax1-uynNCf68Hkpp4phWMzEREUjHVKL70_CLM-nQh_bsu7OMlnhliMe3iC3p8ii6bLNuSSI1bm8vVdcF3xZh19r--33PD1al0vhmbgQE6XITmrp4FP9xrmQNOV6dGarjSAq7kn-iCNwFJB93bPfP3UYXGGKTLZYMs",
+        "places/ChIJDycznj-uEmsRCrYS0ALQByk/photos/AcnlKN3DcVcEGnKbxShRUejeLDE4cL8nwumj2htTFjsIODB0GzuQIRi4wsr8I4RVis0V5hb3HjD2DRlPzyaAzuvt3YsQH1Rqih2vn26zsQ4NPd_ojTu5vowj4HyMakRFjZmXY1XKR3oKbnoutpX80mUxc5cBhX503mL79uu6htJ0xxpk8JUhT3AlZxavmJ7FzXeqwvgB_zx_3nkbqn2KW8qh0qjih2iy70oHeQ31enkeK3DsTw-brJSds9wRvBzjT12pT2bxkX_UUzVdbUaON4gt_hbtZ1BuznlrHrjabzqsauT7dA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2956560390891419146&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 4:30 PM",
+        "Tuesday: 8:00 AM – 4:30 PM",
+        "Wednesday: 8:00 AM – 4:30 PM",
+        "Thursday: 8:00 AM – 4:30 PM",
+        "Friday: 8:00 AM – 4:30 PM",
+        "Saturday: 10:00 AM – 3:45 PM",
+        "Sunday: 10:00 AM – 2:45 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Bills Surry Hills",
       "category": "Cafe/Brunch",
       "address": "433 Liverpool Street, Surry Hills NSW 2010",
       "neighborhood": "Surry Hills",
-      "phone": "+61 2 9360 9631",
+      "phone": "+61 2 9360 4762",
       "website": "https://www.bills.com.au/",
       "description": "Original Bills restaurant famous for ricotta hotcakes, with dog-friendly outdoor terrace and excellent brunch menu.",
-      "descriptionFr": "Restaurant Bills original c\u00e9l\u00e8bre pour ses pancakes \u00e0 la ricotta, avec terrasse ext\u00e9rieure accueillant les chiens et excellent menu brunch.",
+      "descriptionFr": "Restaurant Bills original célèbre pour ses pancakes à la ricotta, avec terrasse extérieure accueillant les chiens et excellent menu brunch.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -319,9 +592,30 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Famous Sydney restaurant with outdoor dining likely accommodates dogs"
+      "reasoning": "Famous Sydney restaurant with outdoor dining likely accommodates dogs",
+      "googlePlaceId": "ChIJfVRIFhmuEmsRPIxaZiroMMg",
+      "latitude": -33.884060999999996,
+      "longitude": 151.2140736,
+      "rating": 4,
+      "reviewCount": 2267,
+      "photoRefs": [
+        "places/ChIJfVRIFhmuEmsRPIxaZiroMMg/photos/AcnlKN2HmdJCyX6wGBa_ETJKHFtb9AC0DtNdis_OTmc6mn5ZT3nakD41ThFJ5qprKPCZaett4ZCeAiKVmHC-a4tUWirKtSKonM7_qqmcaLU_S7wQHJhMnyy4NPUB2o2tx6lpIjdwKJJm0cZzWcctRcfcn9F2Fpg4rdbNm59INRidgvf_qa4JmpoKlxRKGi7XoTsb3joPfuVwo3htkKOYnM7X4nilNd7o8pL9lyTbxshJcESUJwcocdoK3DwE5qUtyS0CR3mPtaVY9-EioZIHUxJBsjQzk5PEU0LXU5UAQraOjiHt-cZWJLFz1kokqYeO5ocZav_iRSZZQPbHWYEa1xhJv8OMIDK2ocLmr6DnDe0mzybuhqbmYplGdCN5IO0PYGu6myIt0h2Sl8fLY33cBTLXscr-s1nxfLnX7OHdxvhHb1HmjqmU",
+        "places/ChIJfVRIFhmuEmsRPIxaZiroMMg/photos/AcnlKN0LQJiklGpdpmjxIDuzNogOv4Ugb1cWmN4BoyFQnDoCFf5HvQ_RImvtisLRXAAu6BJ0GhUXpDFBeYjNdcSI_cdRcn1lDaneCM56CvV5SC-Vrnlv0kypBMBYmZ2iSaw-geT2USzYRJvRobN51XcpY-7GK1XGEdD7UOkDTPu6QxtWou-OgHq5ce-KTMeVkzHNlkcjrAckBcdfNllRdlZsjwQ_9AMmytB59RNtdPMh_qRc3mTqEmR7C2cm-bj1DRPKtW-7OrUL7MRyH4PQfDnku7OEztRkNTY0PVoUQmjmTIL9QGkKrX1HZtGxVxGBxyYvF1YyD2RBIrUpNMRw-68i9UKW7AV1genWgDYH6YsuRyzzeEIsrNX1MeyriIwVWf7-PKnVO5P0faJXk8zDb6vKKSRUg07jczS18n6vcYabitQeS-QmQpDgVle2SMJQkzCP",
+        "places/ChIJfVRIFhmuEmsRPIxaZiroMMg/photos/AcnlKN368mL5Sqx4KWlGe2U49yjpoOfv2SnM07qlYAbAnIx6r4128bw6e7dUU3x97DfCMTpbTPcyQF0OannU1rt-_aKCcR66e4B8SKrBR2ECCne50Nn9AmQw7W18whgDqpXI0zy6TfY1N7qsrvplmqe4T2ZGMtqn1bG893_QrI-oYErtp1Fok2ZT6oS74xF1hvC20fPZ9pPzVu9JLGqIiLGGILYIuefTaX8PzO428mU2UZM-VV9Dkd8VddpfWzUrn4CnLetZvPo3OVkWcCSsqbfB264cjMgAQzy5UmeTuwKVgGzlzMy1oqeTD7b2AbEThMaYotCS3HjFExT00NXSMWSCQWCsGSGFHvbxie9GKPW431Y7_p7lTWjsIhtdeYM5ctaOGwcWSqydj6bUmg155gTNWziHBzchc_NXZWqPLJ8dpWpNQrBioQCLb0jkc37CKe7I"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14425284875271179324&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 10:00 PM",
+        "Tuesday: 7:00 AM – 10:00 PM",
+        "Wednesday: 7:00 AM – 10:00 PM",
+        "Thursday: 7:00 AM – 10:00 PM",
+        "Friday: 7:00 AM – 10:00 PM",
+        "Saturday: 7:00 AM – 10:00 PM",
+        "Sunday: 7:00 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Yellow Cafe",
@@ -329,9 +623,9 @@
       "address": "57 Macleay Street, Potts Point NSW 2011",
       "neighborhood": "Paddington",
       "phone": "+61 2 9357 3400",
-      "website": "https://www.yellowsydney.com.au/",
+      "website": "https://yellowcoffee.com.au/",
       "description": "Bright modern cafe with street-side dining and dog-friendly policy, known for excellent coffee and healthy breakfast options.",
-      "descriptionFr": "Caf\u00e9 moderne lumineux avec restauration en terrasse et politique accueillant les chiens, connu pour son excellent caf\u00e9 et ses options de petit-d\u00e9jeuner saines.",
+      "descriptionFr": "Café moderne lumineux avec restauration en terrasse et politique accueillant les chiens, connu pour son excellent café et ses options de petit-déjeuner saines.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -344,7 +638,28 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Modern cafe with street dining typically accommodates dogs"
+      "reasoning": "Modern cafe with street dining typically accommodates dogs",
+      "googlePlaceId": "ChIJAedgM-ivEmsR3G9j5O-AN6o",
+      "latitude": -33.878358399999996,
+      "longitude": 151.2135328,
+      "rating": 4.4,
+      "reviewCount": 13,
+      "photoRefs": [
+        "places/ChIJAedgM-ivEmsR3G9j5O-AN6o/photos/AcnlKN1gPrMAqbTkSNdUHOSGSLLeBgNQNaBL-jBy7oHgcm7xpkzf0DzMc89lNHjDanlqVS-uybO9vUENYWmcWdbOsUqMQvHl2KSh5ffMwmPnr_El58AZjsWEfaNIKaYwWjxgR8l9IME_WM9n0fQz_MOAiiA9yrQWG9R4GeMbCNS4HaZkNojfREnLX5HJMsGZRxVx4OHfdZhNQDclG22qziMxsYOx4ikZW-Lm0ZhQ8iWcDXDfvpH4py-qjj5MIDRmf2aC2pIXWB4SuYccgFb4SBxCDcRdaVHz8yXvzVbItsYoxsnOnQ",
+        "places/ChIJAedgM-ivEmsR3G9j5O-AN6o/photos/AcnlKN21SAHT8OEPZaWofTN1fL2iV-qrecbg0T71oICnUy6Eoh7XGl3IA90iF1hUnYaf1q0mLbPlmRLbL0KQAEoPcbf_MxpOI1rRgZK53oDP2Yy7uGXxgDBVyMpkGnflw6Bj8ju3xRmS_w4FtCJoIWXrfg5giTPdIm7-qbBX3mnFFJN5x-zUZ6aH9El588-IgVbE27JwyY7LCm3jwwEETQXc2IyYzRolK8oruxWw54qDiObdeXaYBP4SQneu_l0VF8OdUrIAzaG3htLh8AhoIxynZ4awSG3T-lfHmOePc_LhEuO0zg",
+        "places/ChIJAedgM-ivEmsR3G9j5O-AN6o/photos/AcnlKN3iZzzcBnyqVtXyiJDe_0sbCFnw_JXP0jGhjEORyOZR3rB1-bHPkVtPeeH9bhodeIX7bq7yO79-hB00eSCXwfLqtLzx9D215iKYyrvKVcCKXRrzXTMF711cLrp_YU_cM9KEyMy9Tyo1F2WpzqwrCLnD1vzCg8V_BruU4xfdrCJ5FYnskY2x_21k-0scaKnM7k8DrgexI8O5WpTkpiZSb8LwEs9gCToAJP1xmqHQNthvpaXrDiGTbzJGpikpz8MakHj8ZXTj3rolqi7_8arbENl_MAHptJlHGaClg15YtdysRQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12265413877984096220&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 6:30 AM – 4:00 PM",
+        "Tuesday: 6:30 AM – 4:00 PM",
+        "Wednesday: 6:30 AM – 4:00 PM",
+        "Thursday: 6:30 AM – 4:00 PM",
+        "Friday: 6:30 AM – 4:00 PM",
+        "Saturday: 7:30 AM – 3:00 PM",
+        "Sunday: 7:30 AM – 4:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Black Star Pastry",
@@ -352,9 +667,9 @@
       "address": "277 Australia Street, Newtown NSW 2042",
       "neighborhood": "Newtown",
       "phone": "+61 2 9557 8656",
-      "website": "https://www.blackstarpastry.com.au/",
+      "website": "http://blackstarpastry.com/",
       "description": "Trendy pastry shop famous for strawberry watermelon cake, with outdoor seating where dogs are welcome.",
-      "descriptionFr": "P\u00e2tisserie tendance c\u00e9l\u00e8bre pour son g\u00e2teau fraise past\u00e8que, avec terrasse ext\u00e9rieure o\u00f9 les chiens sont les bienvenus.",
+      "descriptionFr": "Pâtisserie tendance célèbre pour son gâteau fraise pastèque, avec terrasse extérieure où les chiens sont les bienvenus.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -367,17 +682,38 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Popular Newtown establishment with outdoor seating likely dog-friendly"
+      "reasoning": "Popular Newtown establishment with outdoor seating likely dog-friendly",
+      "googlePlaceId": "ChIJ2bEibiWuEmsR_4QkLTUVnJc",
+      "latitude": -33.8724566,
+      "longitude": 151.2078496,
+      "rating": 4.2,
+      "reviewCount": 1508,
+      "photoRefs": [
+        "places/ChIJ2bEibiWuEmsR_4QkLTUVnJc/photos/AcnlKN2ux5-6jD-Weuuf8sNWv-lmxUxoSVOD7Gqv2-QXex9_7Oc6L0nQex9ALhwh0d93a5akQ_miqxohNlDenoTX1R8WvwUwFHXu68Gk6SsedtrduHxz5rsT1KnSP6OLWgobAba6qPaE5Ndjt4q2p17owiO4X11K9dnodOQXgBF3qT7j40NumRYPVmFESpql2bGAjMKb8H7JVShZ4mK1SWVERbVPpKoS_WyJv5ItlhogrArsueniTpw0pTPOHJ92s2Aau-dhDipTZSH5Q0MtRHdJzHfLLpQlg3RskM_NlVKiXhlpUTBXTFvsppZUunwLK3fy1sL-Gr7c7A-tpJJYfhM1_Pu7e8dqFUEOk1e-hm2ixf3UpL3LWnAnO5NOhWTkLn1w4l4JnFf3S3acvxHG20Z_QRziE5x2fAtUSifWF8Fq4gmnSXA",
+        "places/ChIJ2bEibiWuEmsR_4QkLTUVnJc/photos/AcnlKN0riQmS0zQA3luMtkkLYydu6tZMMI-uNl4VW0Z_T45a_3vSjjmO_Ksh94f-fyytwUu5eNkJLhDsVSBxgVWz3We23BdU5DCfqFaD1xOY81qXhrxnpOBgHV73jeTeTVjsjxacroq0ZUw5w0iTxz_dENQulA3Rlcar-J7guuMMAaYAfDM-y1x12EZCtngKMUdvj-orVGxcgseL8urnXrFmbpVCN3-0t82BNl1f2mJ2rAy2DjdIbmAjMmuyGzEsx1QCO3C3_EIxmhGgx2ElMOfeNoExIESovvEWLdGHLyBoMmPuew",
+        "places/ChIJ2bEibiWuEmsR_4QkLTUVnJc/photos/AcnlKN2jGOOGunKbUxEyxjGR0wRtkhJdBXdZ9dD7TpX-WuMfAwwhged0Oiwh0dvqVqTd866ogwYPoDlLhLe0cF_Kc5rIX6UfSRxfR0t0NfTF7zXBs8vFaRGVBToCm8IWdNarLa8Uqrpp82xDcvWQznM1pLg-miehlWnv-sFGNj69EbnLhwXMeQWLHe1h-WIvTcx1eOhbp3xwDPITILDBx5CiQ4ASoOpU55qSyBC-X6TNgOycWXly3BIAZew38Xos0VUfZnQE4zhaRHI6GSSgHqoEkst4slQ19MlFY7MDbfhz8VvfIQEsDYUlqgm0Ac7TmZANqOcBLcFYjDOoIgMBPCDpZjM-vTbI5g-z-los9l_JleAofr3w4sTtxk4lQWIwBLDBOamUrjK4jOWy4u7FJoWY_y16S-cd7qoDwlfifEVHid932K8JzZmk8w6JWQF6sLEQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10924630114228798719&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 6:00 PM",
+        "Tuesday: 8:00 AM – 6:00 PM",
+        "Wednesday: 8:00 AM – 6:00 PM",
+        "Thursday: 8:00 AM – 6:00 PM",
+        "Friday: 8:00 AM – 6:00 PM",
+        "Saturday: 9:00 AM – 6:00 PM",
+        "Sunday: 9:00 AM – 6:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Cafe Bones",
       "category": "Cafe/Brunch",
       "address": "338 Darling Street, Balmain NSW 2041",
       "neighborhood": "Balmain",
-      "phone": "+61 2 9818 4113",
-      "website": "https://www.cafebones.com.au/",
+      "phone": "+61 434 041 855",
+      "website": "http://cafebones.com.au/",
       "description": "Quirky local cafe with dog-friendly outdoor area, serving specialty coffee and hearty breakfast dishes with a relaxed vibe.",
-      "descriptionFr": "Caf\u00e9 local original avec zone ext\u00e9rieure accueillant les chiens, servant du caf\u00e9 de sp\u00e9cialit\u00e9 et des plats de petit-d\u00e9jeuner copieux dans une ambiance d\u00e9tendue.",
+      "descriptionFr": "Café local original avec zone extérieure accueillant les chiens, servant du café de spécialité et des plats de petit-déjeuner copieux dans une ambiance détendue.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -388,9 +724,30 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 2,
+      "priceLevel": 1,
       "confidence": 75,
-      "reasoning": "Local Balmain cafe with name suggesting dog-friendly atmosphere"
+      "reasoning": "Local Balmain cafe with name suggesting dog-friendly atmosphere",
+      "googlePlaceId": "ChIJ782W8wOwEmsRZhQGWnAhE94",
+      "latitude": -33.878366,
+      "longitude": 151.14748849999998,
+      "rating": 4.3,
+      "reviewCount": 502,
+      "photoRefs": [
+        "places/ChIJ782W8wOwEmsRZhQGWnAhE94/photos/AcnlKN0KLT_0O2dZh-A4gA0Lw6Mm3JEGDrXRnFUUWwEKXLjJlz7YPn_C26VI8BgdxDHBHrhZhYlA5txpqogCDtyU43eWEmm4t_LdADICpFgDzVTCQdDgeFlVJJv9gChiRNQi5xyfIC8BcyL6Hl3K45BJdqxTpf1NbFqDdPoAKOAexcUbnyQoqTmaHwqjPCiTkO_xNB9yfiJZX2uB_CBzJ1BtF4p3dd6ZIhrxhu13RMAicq1FHeN1VEm9vDLjgR1Ag4uLbnUl36O6U_QBv6zkeJ6tJP_7my74KPnsxckBEVA82uS3d94kC-Fw2-fMutsAMbkmpQ_6JsjORHIJxXQg-8_oYxj793TdwHaIRc1n-F1s-7SAtX0MOOS9husTJCpEnQXHEjegcf3DpT8cTxAZmgw9n2KDHU34B5JjIuCRv_GvVLqNOOJi",
+        "places/ChIJ782W8wOwEmsRZhQGWnAhE94/photos/AcnlKN3J6gCKkANfTozTOUnNM-hXYWGRTnjnrPDRj47vzjyMkXNJyjPh_0k-x7ZNBg9znv0dunVlidFRPqwdIJcjxZUhzwbkEOdSLMaIuM7jdjqgIcrbYQoesGHoeeDhLQGeEQYaM4CULEekLI-OOPWZsQTLOjvnjQwX8tNnJwGsUko_UdLKYDVoe39ZFWKJ4WXUVzehk4r4YoHS-G2d47cb-uZMcorKPFRAjqaV2_lOOHAOPwiewWKgVEzOYt6uYApAOTvsYPsuGV5BNYX9Iz8aajr4zj6eWAIH5xGl2fnWBxL0ELsRW4PJddoaKcIPhiEkpcNtQkP_Sxu5mocmMjxAY7lRbv5sfcoNfZBX4vw8y3w1PBmVia7hk9D7U1MGV5M3ltdKSs_nl3ovMY_eO37fcOEFGpvSLsMSW_wfF0l3-yd7Mp0",
+        "places/ChIJ782W8wOwEmsRZhQGWnAhE94/photos/AcnlKN2W4otRIavS-cQLdKO6J_5tKgqmxHdKWvNwpRlU_csv4ILxB_I0-9p-0W5yahtREnZX_mKzq8R9XLMv7g3veDN6IM8AI-qYs-qLln2GqYZ548hYfFqLoJW9KftHv9vp6riky05UNJJGSXh7CCN6d3-zaVuDlkez9WMecm38V0q_skzCd3JuYfmDf80brMQ2T8DqGtOFDf-21uYMklmq_gObOZPvf8tAr3-GS5QedN4dJLJRhaHWANsThsB5rL1Vv3aA6hMEu6sXA8YD0GndVgou8L2iL65RKKkBhaYbA77z_ojhIjrehgRPs90-RlkVZr_AO6zuQ0pg3TQ4Q8m_5to470C2Xciwp8RGElUljqarWoEKj7XFH1-p0o9eDaeNgJBdOFNFvSK7IoAHdw3HuSUR-b4Dg-fU-V5N5oYxdVkW6Pw8"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=16002170667407905894&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 2:00 PM",
+        "Tuesday: 8:00 AM – 2:00 PM",
+        "Wednesday: 8:00 AM – 2:00 PM",
+        "Thursday: 8:00 AM – 2:00 PM",
+        "Friday: 8:00 AM – 2:00 PM",
+        "Saturday: 8:00 AM – 5:00 PM",
+        "Sunday: 8:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Porch and Parlour",
@@ -398,9 +755,9 @@
       "address": "23A The Corso, Manly NSW 2095",
       "neighborhood": "Manly",
       "phone": "+61 2 9976 2325",
-      "website": "https://www.porchandparlour.com.au/",
+      "website": "http://www.porchandparlour.com/",
       "description": "All-day dining spot near Manly Beach with dog-friendly outdoor seating and New York-inspired menu.",
-      "descriptionFr": "Lieu de restauration toute la journ\u00e9e pr\u00e8s de Manly Beach avec terrasse ext\u00e9rieure accueillant les chiens et menu inspir\u00e9 de New York.",
+      "descriptionFr": "Lieu de restauration toute la journée près de Manly Beach avec terrasse extérieure accueillant les chiens et menu inspiré de New York.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -411,19 +768,40 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Manly dining establishment with outdoor seating near dog beach"
+      "reasoning": "Manly dining establishment with outdoor seating near dog beach",
+      "googlePlaceId": "ChIJO88o-XStEmsRr-dq7nBuyQE",
+      "latitude": -33.8895756,
+      "longitude": 151.2810958,
+      "rating": 4.2,
+      "reviewCount": 515,
+      "photoRefs": [
+        "places/ChIJO88o-XStEmsRr-dq7nBuyQE/photos/AcnlKN1f_LW8HCRFhBgSyoIqQWVEpDEgM0UYL1QdUksE7gcqwsfq2R09EgDp6n2dwRqbtTS9idvdnajCEbFBH_Ne2AQ3XC4Kqa5Q295p6DV3Q97xu6EBXlRI0Yft6dMWKdYHzjHsf7OnX84UnI-V6JXjIvl9RaOMduAQuS9vSFJXOJUOvoGW6GOppkpucEzJPNcU7HXfUgQNYKZ7cboPpaPCQsIeLrgtC74IeYVJ2bsnZ4RBb4yzFPSOEqAMzuI3fs4NjdvfhwKMrPMfANHRQz4PpNF4LYsr-GgUBqxCaAP4eD8",
+        "places/ChIJO88o-XStEmsRr-dq7nBuyQE/photos/AcnlKN1SPVWBSOQmcx6vBxznyKdsi2vcxNV_t2V3vqqe0jKyh0HgqPJ8zx-ahrGgQtHcfW0-O2E1FfXmnMX2TZxbOwBVOyUH7zHS9bODZtnJefcR1Xfm_7i07L4xAuLXs3IvLMfniv5F9iMg41DmuBskRmsO9opT-_uCQ2lvG7D9Gms287H8CE-ywEJL2SsqptI5ne7yVH5pAFmaAb6B19a_9VnKR0DB5ySLcVeYrLM7Er8ofPT1MiMVP4xPc1pGeeKwmITL5NCHps9mTUUI-GTWFtpPrmF_3fEhopcsMHrdxno",
+        "places/ChIJO88o-XStEmsRr-dq7nBuyQE/photos/AcnlKN3Thikrv4oV8m1qMo7wcc31ooGm1qbLKXtM_b-jX0SqnRbc7deBbg8m9_iPp5VaoHJITMCSVwi3lIXeSmwJ0LtQD8M6uHtmQxEVUBPne0RqFLHxp0VAIvN2qdDSltxBL7vDw3Npju3mKhe2A6EAvwG0iBAqsNh5LW-aMjwRRHq7wFyTcrxJ58XDrwIa0nAxiLIJuuRM25Vn8CTbrSDvAzsr_WrSXxZB_T8vE5Le4QmaaArPMuiB0QkzoaDhxFfBcjxVari8pBWboU37v1k9eptpePTKpGrwRlEU3JKaXCE"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=128755495672145839&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 2:00 PM",
+        "Tuesday: 7:00 AM – 2:00 PM",
+        "Wednesday: 7:00 AM – 2:00 PM",
+        "Thursday: 7:00 AM – 2:00 PM",
+        "Friday: 7:00 AM – 2:00 PM",
+        "Saturday: 7:00 AM – 2:00 PM",
+        "Sunday: 7:00 AM – 2:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The London Hotel",
       "category": "Pub/Restaurant",
       "address": "234 Darling Street, Balmain NSW 2041",
       "neighborhood": "Balmain",
-      "phone": "+61 2 9555 1377",
-      "website": "https://www.thelondonhotel.com.au/",
+      "phone": "+61 2 9810 1128",
+      "website": "http://www.thelondonhotel.com.au/",
       "description": "Historic pub with large beer garden where dogs are welcome, serving modern Australian cuisine and craft beers.",
-      "descriptionFr": "Pub historique avec grand jardin \u00e0 bi\u00e8re o\u00f9 les chiens sont les bienvenus, servant une cuisine australienne moderne et des bi\u00e8res artisanales.",
+      "descriptionFr": "Pub historique avec grand jardin à bière où les chiens sont les bienvenus, servant une cuisine australienne moderne et des bières artisanales.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -434,9 +812,30 @@
         "fenced": true,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Traditional pub with beer garden typically welcomes dogs in outdoor areas"
+      "reasoning": "Traditional pub with beer garden typically welcomes dogs in outdoor areas",
+      "googlePlaceId": "ChIJWapAjLSvEmsRD_UqkZN5OEg",
+      "latitude": -33.858405999999995,
+      "longitude": 151.184537,
+      "rating": 4.4,
+      "reviewCount": 1029,
+      "photoRefs": [
+        "places/ChIJWapAjLSvEmsRD_UqkZN5OEg/photos/AcnlKN3_B-UF8eS1gxfPchZbGShb113HRGxthUcT8w0-oWrFKVrzCZdn52Ibl_qyfg-lkyYX4k4oPxkYwa1qjijZalrClA_ieAsFn-X94wGwtNynYdArvQeEtVqPdcZLorBFafHlCzsrLSJJS1yF5XTiFSR9riJAbM2ptekUsBXcTOeSvB6vkbpaUp77iTrIy55WC3ifE5E6qWRLV3llQL1mEOzhJwI-jo9AlYnqC753pFK09NOVRasWDZZis6jD0enjgCHXwR17QvpGjEU9knmf2THovfbLcaIfxGqDKG1AEJ1xhQ",
+        "places/ChIJWapAjLSvEmsRD_UqkZN5OEg/photos/AcnlKN3NubtY9uxiZPVevrBV4ePUk87qEM015BxcywYGXzntfbZVDvQcLwa4Q4Af9brxg4-covjcu5YuSStp6eaPzydw4-jICmxEykQf2ucElU3PIpixS2YyGOvIF7TyHbPVWpTlkkBXAp3goKKiOzvQcQl2iZvW_hB0HaG9-SOrvTNZYp4NsZERsmoocXcjDxTDJVjSSapJ4RZ66xkyJSH-Uf8w2snDdlwrdZKhAHCsw3FGGIQ_6DRklK8eSBwTeAEz5NCNWdZQzamptplq9Q_YV-t-T7XPWPRCjDVO9ZcvMgm9-Q",
+        "places/ChIJWapAjLSvEmsRD_UqkZN5OEg/photos/AcnlKN2mUhHyK4woG6d3aHENARA5vdcCW2FiQamOZexvFKyO7SCqJuVGtCfbAEG3PDAdHY0NMBfmlaZ0DUdJko5Wncuwx8k4VoLJOfj-A5RxjAQC9qR1_cbORHKukUDnTfNCGYykG7bUZACveWgVT59q8mY88xSIe-5CuwJiGAwcJYs07mERfXLDcfXSHpiwJAnDBVsshUxrTuHPKJxhxzVk6k55zhmEXBBWF-3axzLkdqcyUgiB7k_s7Lhlr-iHDoexd8P6usUWO4NI6HRk61O_Dcqm8nKMtw9eUKSHeqSGGiHGcQ"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=5204043044129273103&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:00 AM – 11:00 PM",
+        "Tuesday: 11:00 AM – 11:00 PM",
+        "Wednesday: 11:00 AM – 11:00 PM",
+        "Thursday: 11:00 AM – 11:00 PM",
+        "Friday: 11:00 AM – 11:00 PM",
+        "Saturday: 11:00 AM – 11:00 PM",
+        "Sunday: 12:00 – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Oaks Hotel",
@@ -444,9 +843,9 @@
       "address": "118 Military Road, Neutral Bay NSW 2089",
       "neighborhood": "Northern Beaches",
       "phone": "+61 2 9953 5515",
-      "website": "https://www.oakshotel.com.au/",
+      "website": "http://www.oakshotel.com.au/",
       "description": "Family-friendly pub with spacious outdoor areas and bistro dining, welcoming dogs in the beer garden.",
-      "descriptionFr": "Pub familial avec vastes espaces ext\u00e9rieurs et restauration bistrot, accueillant les chiens dans le jardin \u00e0 bi\u00e8re.",
+      "descriptionFr": "Pub familial avec vastes espaces extérieurs et restauration bistrot, accueillant les chiens dans le jardin à bière.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -459,17 +858,38 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Family pub with outdoor dining areas typically dog-friendly"
+      "reasoning": "Family pub with outdoor dining areas typically dog-friendly",
+      "googlePlaceId": "ChIJL_bxfr2uEmsRvnwircDtLBI",
+      "latitude": -33.8301527,
+      "longitude": 151.21931619999998,
+      "rating": 4.3,
+      "reviewCount": 4638,
+      "photoRefs": [
+        "places/ChIJL_bxfr2uEmsRvnwircDtLBI/photos/AcnlKN1VEEAtEzqcv7OJWqMYPKWXadQowl7UIKZrsV5mdg7sBZyknT5uvJmrCVE9RyB3zppigk-2GmieN6Qz6PN_kP6UNq-nExGOOKyTYkIubyImpy9PVQ5JLLMjri-HvbexY-4lnlG3kGFIL19satQXsVVYkoVp-3E2AhJTTKoPaViCL996ucAU5w8Xq_hO1FhFRGho92N0Yoi6Cw2_BvzDHT9IrOxK3ult-AVof0yFNNjlUkFVUIcWvcwSojGXNAABfcXxhH32sniotLTP8SU_ir-4g3QJWlaRo92AFMmOUS8wMw",
+        "places/ChIJL_bxfr2uEmsRvnwircDtLBI/photos/AcnlKN0Mg-91740b4VLTc4aTX7hIQRLltTdyZoSNMHLilN_5XmVcD6VL2ceOGc68zGs7NAeHl9gph8SJ79nnPSoMdfTu2l7Y4oAdf3GQZz8Yrn_TrG-oZY54n3LZnuZ4J6UWlFxbUyCEebxpKgMmVI0ifQX9HYSWj_Y8M6YIY4LaSIlNDHtYOOu81cBqbx1hgsXpPluB68G5hDWqOpBFlPIKMadxGTivHDInbGe9pfah9ArQGkt9GgmnQl_Jsu9eqnZAs87zfZ49FJ6vsZPXc37ZoV9BJGBepbqDuYADC8s1wJ2kxoNTCfH1uPMUsoBFKYTwBu6_JRxEF9JXe6jk_yK1hzIWiq43VfFSNquK5E8lK1a2YgB-a7J3-amUqFbU81ezz6SstqyJgzwE8to279pEu9pYdeXUaGafvGKwsaVx8ptrzKlmZ66wim6XEmeupf4U",
+        "places/ChIJL_bxfr2uEmsRvnwircDtLBI/photos/AcnlKN2QAjJpnHsJCqZIv302HEG5x4zqRu-lXbf0Dsn3hyBSfWCUOZPbuXW3KUQaBbOGETR4tn88tIvH12oIVE6K3RxgTvwK0MPFkrtxbNctwFiG6tVizwbFR7sSnDsVQ_A7m9A3hgazGsOxgGT83KGBRSlApTNBDIiD-L2u83sgkNYWWtnb_o821uWfIZ69rpm79uLkTQtMMZysv3ZsTKH9bXd0dbgySlbJqasBG2GGlu-pHYCYFX5BEbkIg92jbyY3s6DzKWUcy_Z8b-Q1pcywJbhgx1qkOhjQQUgvnx8Kj8IW9A"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1309683003452193982&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:00 AM – 1:30 AM",
+        "Tuesday: 10:00 AM – 1:30 AM",
+        "Wednesday: 10:00 AM – 1:30 AM",
+        "Thursday: 10:00 AM – 1:30 AM",
+        "Friday: 10:00 AM – 1:30 AM",
+        "Saturday: 10:00 AM – 1:30 AM",
+        "Sunday: 10:00 AM – 11:30 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Courthouse Hotel",
       "category": "Pub/Restaurant",
       "address": "202 Australia Street, Newtown NSW 2042",
       "neighborhood": "Newtown",
-      "phone": "+61 2 9519 8273",
+      "phone": "+61 2 9360 4831",
       "website": "https://www.courthousehotel.com.au/",
       "description": "Popular Newtown pub with outdoor courtyard dining and live music, known for being dog-friendly in outdoor areas.",
-      "descriptionFr": "Pub populaire de Newtown avec restauration en cour ext\u00e9rieure et musique live, connu pour \u00eatre accueillant aux chiens dans les zones ext\u00e9rieures.",
+      "descriptionFr": "Pub populaire de Newtown avec restauration en cour extérieure et musique live, connu pour être accueillant aux chiens dans les zones extérieures.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -480,9 +900,30 @@
         "fenced": true,
         "shadeAvailable": true
       },
-      "priceLevel": 2,
+      "priceLevel": 1,
       "confidence": 85,
-      "reasoning": "Newtown pub known for alternative culture and dog-friendly policies"
+      "reasoning": "Newtown pub known for alternative culture and dog-friendly policies",
+      "googlePlaceId": "ChIJeTTZqBCuEmsReniFW-xJ8pM",
+      "latitude": -33.8806558,
+      "longitude": 151.2166346,
+      "rating": 4,
+      "reviewCount": 385,
+      "photoRefs": [
+        "places/ChIJeTTZqBCuEmsReniFW-xJ8pM/photos/AcnlKN2UIYcOVRdxguZTw2uUDarHcmdr_6PEMMIH_SSOPxB-T9DvJHRJ9vtVETR9hkj-Pf4aAV2s7XFcFH8ktzeUUqOxEP1qRBkai-TOLaCvj1vByB9Db1DnAzOP3wHlxEQIrN23dZO3BWcH8lxLihHTmvAtNx6NB2JO9Ne6lUPgF7FDjcAXWFVXVgfv89r-3sRAcn56Vsis_8NCSm7eHBd2qqVk1yZzztGJl6sY5nAzf75kIBi388WjcxxD0zHUW7v1YliGCNnpay1HhCqhXIZpzIlbEEY2D8lYG8bYxGXqfEYqqA",
+        "places/ChIJeTTZqBCuEmsReniFW-xJ8pM/photos/AcnlKN2kb1cTcAoVwaYdZ0XfN0u4AgZP8wdwI3-T4aDm4V9LxKh5grguq3T5Z8d8-2UL-uRLpMo0iM7moFJRQxuolJKi08022IO0htw1eRkwU5kSXYQwsLATRjqwLx0Wjc96u0fvzX8SASyk3AFkRGKOhMldUmKlhIBHvDgyLvt5ZpQgQ2Evu6C20X5wR9EirY3GDEPZGTxqTMWp0Azm3Vcpd7PXyThHOKjB6MyTLnf4bA8SzEtDt0GiHNw9ASK7hW_kNuCwaeEhJQIrt9olAfS5WSDvG1639kCpOFmIo3P7kuc53w",
+        "places/ChIJeTTZqBCuEmsReniFW-xJ8pM/photos/AcnlKN1y5lFfC0rxwwheDczHMXitOmziiIVO-94dMCaf9EIJTYSI7rhM8TBIpeRAq5Z_2fKrLW4x71cTxmm-zvD3VPtHsy6ftIcvHgbNDpYFRNm1a3ov_nbVmTTdEjAyFR7t3Z9jFJK6aaGachKvFj6oQbwqswp9ez-GSVn2EvnTMVqxIhFtQ8r1AMQF1MjBl4ufrWJZ9V5I5HBK9xNIqwJKaqZ8xbSKiiZO61Dtpxutc6nY5RxOvHxbsn0-KMXFX8r2vAjkAwNIwAGzo_kVHx80ExLwuqXCHC8QbRMH96HCjqKRgoHJl5e4UypeE6M29Q6Eey2niR128koNMiDwpa5MZ_hhrxrkP3u5s7XyQSovMuhNJ1eL3knROWhl3kAPOUz8o9PJ207fuoqq2EMalMezyWik0wNGw7eglFZ4HntmlEwSsr03DY_rrzC0Lf84ZLWy"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10660664547435968634&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:00 AM – 2:00 AM",
+        "Tuesday: 10:00 AM – 2:00 AM",
+        "Wednesday: 10:00 AM – 2:00 AM",
+        "Thursday: 10:00 AM – 2:00 AM",
+        "Friday: 10:00 AM – 4:00 AM",
+        "Saturday: 10:00 AM – 4:00 AM",
+        "Sunday: 10:00 AM – 2:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "North Bondi RSL",
@@ -490,9 +931,9 @@
       "address": "120 Ramsgate Avenue, North Bondi NSW 2026",
       "neighborhood": "Bondi",
       "phone": "+61 2 9130 3152",
-      "website": "https://www.northbondirsl.com.au/",
+      "website": "http://www.northbondirsl.com.au/",
       "description": "Beachside club with ocean views and outdoor dining areas where dogs are permitted, serving pub food and drinks.",
-      "descriptionFr": "Club en bord de plage avec vues sur l'oc\u00e9an et zones de restauration ext\u00e9rieures o\u00f9 les chiens sont autoris\u00e9s, servant nourriture de pub et boissons.",
+      "descriptionFr": "Club en bord de plage avec vues sur l'océan et zones de restauration extérieures où les chiens sont autorisés, servant nourriture de pub et boissons.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -505,7 +946,28 @@
       },
       "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "RSL club with outdoor areas near dog beach likely accommodates pets"
+      "reasoning": "RSL club with outdoor areas near dog beach likely accommodates pets",
+      "googlePlaceId": "ChIJLxrILwqtEmsRJATamQhhzFM",
+      "latitude": -33.8903508,
+      "longitude": 151.2826328,
+      "rating": 4.1,
+      "reviewCount": 1102,
+      "photoRefs": [
+        "places/ChIJLxrILwqtEmsRJATamQhhzFM/photos/AcnlKN1glrDjizT7FEnaTCwTVhGAuWrIVyMW32XgHU6GAexlB4ZE_irJAAu9LpLbrSWFGg8D6T564dfcotDsgKPSHjvvIn_YQDWlLSU2I1fe5-VnvolHdmPU_MeajGaGPcgs2Z7W_3SmdpDmMHZpzRT5FRR7E2PcVGxzdCMF2zzrC4TnkGFe8xxdkSwLf54cjmeMRMZQtuOwyWp3oshIm6xAxdWTYv2dyivAnVGA-rS_r8UqT9HobBBCHBmCZYYwzKGdX88vpYjAtu8qPNxpPuLxPdEbIC3toDNWzZWeCGLRlUrhNg",
+        "places/ChIJLxrILwqtEmsRJATamQhhzFM/photos/AcnlKN12FGi7dauzYrFHFjcju25HopIYiocxplVzJTT-l3hOm4gIyi1Dzepg_t2XXM6N5gB1B8KSR1VDN8rcZhgAr2g5l18egOi8xYhdhDgEe0JTwfmRQUllGMiyxwK2yVG8rWqJ9KVZBjby3E85ZJn7KVqtnodZhgFqvWJ5aFdBeK6qgoJ7OctKifYJdUXJeg8ipv7ksqLhTjM6XE3i5NRnOg-I4tTqJ0jnJ06LcQ9G-VAfy-wWSExt7K_yjLBVh7ObILZ-czSDe_jekTqMnOQIcy7ANxs85emyuKO8iNdZW6DD9VSzPfT3s6VvO6STvJwyD6lQGGLJtvUilGsM_Wt7FKooOx-Oypz5LJPKmf7SbkuYXJ4U_7qBj1DTGuQppnzYv14ZZ7JT75Tz8GKd7ZUDGhyA5YxQgTRKtgsk0REdv4D1VmSX0m4R4_Z6KkeEtl9c",
+        "places/ChIJLxrILwqtEmsRJATamQhhzFM/photos/AcnlKN0H-8wZ_56LysjJxeRunG-SOtg_RdaFfbe3fxeE9PO0dd5kcads3cLkN4IIu8vX8t962Ljlx9OVItLacgGB3bOSXyRZ4LOcdwOmbCaBPB1j6-EV9kTWfFDPkxDmj7Cyo2PrHs6-ZPhDX4TUmDyJZu56CwgunuAe5-Qp_HiUfTtapnLjE-DdB6WJMD7UoMHgxSskmCZE2YfngHkHBzhrzIGyprPBWC3fje9t_Mf5NjDcpkQVvyq4RAZ3w1BNCXxsqSN3u-Qlyquec5so1qp38NK6kVQTHqv3HUgqun0Wk4ZBSeRgdeZUMKJtRAJHq6XmhePmchoJIkP5PrPT_mdZIhe9fjugUhySaZds-7z4jdS1tY9D278lVQgDjftuv5QlwGZc2EgQO4sPHS45LMc_EdhfU3hK0nHfPl65zMNYAO-glHuLto8JEyeNc9J9xm7B"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6038307889965827108&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 10:00 PM",
+        "Tuesday: 8:00 AM – 10:00 PM",
+        "Wednesday: 8:00 AM – 10:00 PM",
+        "Thursday: 8:00 AM – 10:00 PM",
+        "Friday: 8:00 AM – 12:00 AM",
+        "Saturday: 8:00 AM – 12:00 AM",
+        "Sunday: 8:00 AM – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Steyne Hotel",
@@ -513,9 +975,9 @@
       "address": "75 The Corso, Manly NSW 2095",
       "neighborhood": "Manly",
       "phone": "+61 2 9977 4977",
-      "website": "https://www.steynehotel.com.au/",
+      "website": "http://www.hotelsteyne.com.au/",
       "description": "Beachfront pub with multiple levels and outdoor terraces, dog-friendly with views of Manly Beach and good pub fare.",
-      "descriptionFr": "Pub en bord de plage avec plusieurs niveaux et terrasses ext\u00e9rieures, accueillant les chiens avec vues sur Manly Beach et bonne nourriture de pub.",
+      "descriptionFr": "Pub en bord de plage avec plusieurs niveaux et terrasses extérieures, accueillant les chiens avec vues sur Manly Beach et bonne nourriture de pub.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -528,7 +990,28 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Beachfront pub near off-leash dog area with outdoor dining"
+      "reasoning": "Beachfront pub near off-leash dog area with outdoor dining",
+      "googlePlaceId": "ChIJ0SobZw-rEmsR8XKo0XEZCPE",
+      "latitude": -33.797083799999996,
+      "longitude": 151.28781160000003,
+      "rating": 3.7,
+      "reviewCount": 3328,
+      "photoRefs": [
+        "places/ChIJ0SobZw-rEmsR8XKo0XEZCPE/photos/AcnlKN2er0FiDUWweGuyJ5T1s8iN59HHEqmfHtpgasOD3rcAcQ_ugcJfZKaCJRAlXV9Ep1QBBxO0AJRIwhsteG9tLQDTos549j0wkOt5ZUJcPvSSCBmDyQD_7PXPGs8cVCwTz43iBFbB3PeDHmRdlWnfGO9T3wsTaClFqpUBIWGd_6ZSX_Kd8DbhyCKmVd32O_fT1EKkB5s1dhwgeRZNcQ9x0h91JYiDhp5HfKLytgkiCFQqe7S8ChLn22yhp5mu8Y562tDiPfwMeT0ZyW8VIR1qmVR8YqPJxKmN_T58EfCmlyyczw",
+        "places/ChIJ0SobZw-rEmsR8XKo0XEZCPE/photos/AcnlKN0VQZBE5vD0ZoNo9FzCHV-Mex_WJWhow1H5XI9_U6BxJeRJpqb8RWQesro_TcQqjQPIt0gowEPzxqDGB_4vkCPgDBdHOOoQlQzDk5f2P6X06z97TzQ-KqtwuKwyc5ecxfvXq_t0_rM6D3w4Hlccjp8sljFSE9dfPVMGs3Vm_i_PyyXLzoWZYsfsAEcMyFQbqfYpa_vRXe3-BzSZkF6CIaTX1LvYKQo1T-_2F9cJ86FCO0KsfSXn-thPeUNMPR2WkaCITbJeA8OOazk_JATt4y75CHP1jh4cNhRe2LPegD-NTA",
+        "places/ChIJ0SobZw-rEmsR8XKo0XEZCPE/photos/AcnlKN0-49vkoA06G6IMv5uJK75pfs0lGVzDwZC3JUK8KWQwXg2m_bAB73yhvxshx9I8UKGGNlZNsDongMmBP9Q57Tcua85Q_Zgca_9BLTTpVa9Wo_b_ZFQdnXt8gp0mTxIs0tOI1Yu5mTu7w69Y08A2QbiCrZSnrXeMjZQnA3EuuvUlseYP9Awp-pR417RYM5KvXcFOWUur1mBlZ-1eDLgiK8cgF4LTtAEhEKbLY0iHVVo3E2qhmlTeBYK2IdiyEBs-bjPlIj8gA9YLYKlq9S1R6xmgzJnptg6hlzPJf2yfp9JCTbykbeQsde2koZh38mtch9SuSkWA4AkGd5MA6m0ZXMJOjYYa56LVnfwmQAasquTZdPnz1FmhGs1zBwQvCINYZd_8Lm_GNT-sjtb7uDDs3wNagCSQWOnuhoWZQr6SqDVbOTMB"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=17368159939593794289&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 9:00 AM – 3:00 AM",
+        "Tuesday: 9:00 AM – 3:00 AM",
+        "Wednesday: 9:00 AM – 3:00 AM",
+        "Thursday: 9:00 AM – 3:00 AM",
+        "Friday: 9:00 AM – 6:00 AM",
+        "Saturday: 9:00 AM – 6:00 AM",
+        "Sunday: 9:00 AM – 12:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "The Unicorn Hotel",
@@ -536,9 +1019,9 @@
       "address": "106 Oxford Street, Paddington NSW 2021",
       "neighborhood": "Paddington",
       "phone": "+61 2 9360 3554",
-      "website": "https://www.theunicornpaddington.com.au/",
+      "website": "https://www.theunicornhotel.com.au/",
       "description": "Trendy gastropub in Paddington with courtyard dining area welcoming dogs, serving modern Australian cuisine and craft beers.",
-      "descriptionFr": "Gastropub tendance \u00e0 Paddington avec cour de restauration accueillant les chiens, servant une cuisine australienne moderne et des bi\u00e8res artisanales.",
+      "descriptionFr": "Gastropub tendance à Paddington avec cour de restauration accueillant les chiens, servant une cuisine australienne moderne et des bières artisanales.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -549,19 +1032,32 @@
         "fenced": true,
         "shadeAvailable": true
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 80,
-      "reasoning": "Modern gastropub with courtyard typically accommodates dogs"
+      "reasoning": "Modern gastropub with courtyard typically accommodates dogs",
+      "googlePlaceId": "ChIJ3c-0yxquEmsRnlB96_PVTHY",
+      "latitude": -33.8833869,
+      "longitude": 151.2216153,
+      "rating": 4.1,
+      "reviewCount": 813,
+      "photoRefs": [
+        "places/ChIJ3c-0yxquEmsRnlB96_PVTHY/photos/AcnlKN1d6BRZwhIxF7r_p8vvWQSJJiqkrO3G_luG_XHZ8Sk9vNLCuQNxoyosNqAQhwaIQyH9NfrhGEvLWl85HGxb4zXcLya8ksgB-v8ghpvpq6GKuEOSGMmIqnWjKAksGYZfX-iIz9Iw0KM176XIM3krcNAX89xlLGt9AsZ-5GpdN6L3YBW44MM361HZMvlS_fzh2Q5FaYv5hiCh6SUPVFS0bf3F0uLGbeb3PXpIvbvamqk7yLkomG24-TTyOxTFn_SfCcqZf3WDjIRnB8whYYaoJKgUrg4kiUGjCxt-ES55TXh8_w",
+        "places/ChIJ3c-0yxquEmsRnlB96_PVTHY/photos/AcnlKN2wdk7ETb8rq7dmB0jkOZVJSds5vfxHaa88l3UJqx1iVNdliSjhe9ps1aovDRTT6d4u6MLdDNBBaSgPUYppWMxeTxmhF5egqOKfawOe2Q73_KsNKDqmaWh5xADbkHI2134ZF3CMbgulGjvmZ2egvdz4NYsobMtj5A6jwWZn8vcB6P_pm2e7k0_107ef5ehjUkJS1074vydS6v6jGbzXMiLV-rO5_nhTyjIYk694A2I3Mf293XiCOlphc2XeXumtTyZfWChrobtUimYM3oLEZMG-WhcWfEZ6JU-nYB6VAun1Zg",
+        "places/ChIJ3c-0yxquEmsRnlB96_PVTHY/photos/AcnlKN0_2jVCeQjQXK-_5Suqb73jU2sN35ivsa1rVpONA-q8Il0-jAxi0tFlMKdeshR80hEgyqVFoQpGaF2M_XkWtvPAqxYiXFgNVEbXbiu40-4tTCfcHxKRbnpzHcwlocaeQE6l4gUQ6G-qDr7goc_JuHqYLUkQOQT4jnXfZ1vBztbYX-au4dmO03zYejpuiFpVAWQs48dYHcbweJIqwjfbCXYpci7rIO4Ty3AaEC4EjTPIbBonHB2FX-6a7Ifb8Xj_5FcNgpyE5SWjHB-bcoebaU3KFNEHEDIf8UIUSucUvlu89Ru0vskMhu5GP6WgsKOILWspwwAYnnrwIRQis7f5YMV-hOB5B7yc6MpHybVJag5wtnniAN3gNQ_SwjZU9cnFOEm7pmTVSOHIPYU3O6-7kEsuUlg4A-w41QhYfERD6ThL0oA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=8524423438310133918&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "The Dock Hotel",
       "category": "Pub/Restaurant",
       "address": "1 Ferry Road, Balmain NSW 2041",
       "neighborhood": "Balmain",
-      "phone": "+61 2 9810 1550",
-      "website": "https://www.thedockhotel.com.au/",
+      "phone": "+61 2 9555 1306",
+      "website": "https://www.thedrydock.com.au/",
       "description": "Harbourside pub with outdoor dining areas and water views, dog-friendly with quality food and drinks in scenic location.",
-      "descriptionFr": "Pub au bord du port avec zones de restauration ext\u00e9rieures et vues sur l'eau, accueillant les chiens avec nourriture et boissons de qualit\u00e9 dans un lieu pittoresque.",
+      "descriptionFr": "Pub au bord du port avec zones de restauration extérieures et vues sur l'eau, accueillant les chiens avec nourriture et boissons de qualité dans un lieu pittoresque.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -574,17 +1070,38 @@
       },
       "priceLevel": 3,
       "confidence": 80,
-      "reasoning": "Waterfront pub with outdoor dining areas likely dog-friendly"
+      "reasoning": "Waterfront pub with outdoor dining areas likely dog-friendly",
+      "googlePlaceId": "ChIJLZs8yLOvEmsRYCrcSyaoTGU",
+      "latitude": -33.8548209,
+      "longitude": 151.1826556,
+      "rating": 4.5,
+      "reviewCount": 893,
+      "photoRefs": [
+        "places/ChIJLZs8yLOvEmsRYCrcSyaoTGU/photos/AcnlKN3lnp7vFP3d2mN8hh7DB5N-7iAO_JRW3kwmJji5bIYkKTzKIuO3yWMTOSdOew4Jg0JRvAzwPQqgNrJYOhHcSyvkDvamskCMBmBGgYm8Pl8zsz9hctvEaaZix9ruiuP_2Hpu0jqIhMAwyGk4ENFTxcIiyavhmHGp12DYTImVZ-1yOVzc7TqpfqBEU62IYBOEZ0JbiM0xjKqTDn9HMK2zU6f7G6lESN6FmQoBwTmvdLbz5dn5wuQDiyGLlSXbyrCfvimrN_N6s-OmRW_j2tJSv6QGn2JzzFxjL8BVMqrpyJ7eBHD2Mb0dFxLqbD2O5SXbOXXmI2zh1lWLDvu6Gs_CizIeF2SADH1ZQzouagXa64CBIBNyQqa_3RaNi-SuyFgX0NDUH5AgDehU1UXdlHL9eky-dNcgFCC6pCm9v98YjNRFVDAnjaJwb19S03WYRGlx",
+        "places/ChIJLZs8yLOvEmsRYCrcSyaoTGU/photos/AcnlKN22icGgZV28xbIx4Yg02k_wFio9oi4a_iZUW-UFirUzNGTXbEp0EdhbSDA3_9KUg6b48NaE3mqxGk0Uzyw43HAI_k8lc7cYvYWoyu3SpyL74R5zzEyYGHpYAKQsGE5OqlYaiKnK7SmXSrYNwpuQdrDQusUd0wCPSzLyg7-Q7xIX3K7TrxNF-SBbzVToqwTaTP5ZHKXl8RaSGCLZOfDcN_3DbgBIlF5hUxGCYBIBFFC7Djo4WX8E6TWKw6MK8M4eCFpopx6bdgkLxJlavjVEWi9RMbSzOzdCjCfCiWk2G28NmiqcAQNzS6O8dkqObRqXNSw97s4WMkctwikBGzyLNF4LtBSyaBk6_4e5HXZcqJj-wwxXvnWwJJckvkeR9C6QxlZ65KuW3AMrcfJYei5KJf6uGdnU1rKFOyUVryJOpIyQLLZ7FtY9cKGHpPc4gw",
+        "places/ChIJLZs8yLOvEmsRYCrcSyaoTGU/photos/AcnlKN3pkAETv74jB15i8lIGpMy0-d0W5jUYOpfI10ryqSvCh_5yUTu0Y3Li6c_gGSVXPNmUcZvbH2BgIJvRSfNYbLDqe1QBQy5h7HWokG1VdLToEhXup9ZQoj8lIlgUOSZyuoqIQUrLn_-a-AERqK-w9Ypyzi04YVejyEGgU_R37BVHz3vcavhAMSLLaSTn8-FJyzKIyzZvAhLaFNfaYZ3_Ucnpvc5lZ0OaDiJWUOL0ITx4U74E7GURIFwjLXG-q_sOpzfIhm5HeQ1qtpGAoGqWJw0AS5l1joarizQpFgtqG0i-chdeUvsaHjUGFXnw77VSM0DuKrpMov8HVxRfKz9XQ_534l7VhYoUQWMt5vBFDLljlOqd4qUj2RI_vD35ODNLwY8F0lYiRiHHJzmgLZ3lABQNupYHk3rMmMm8IrDq290HuVGQZ7__Bn7hHalPOWB1"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7299393978495674976&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 11:30 AM – 12:00 AM",
+        "Tuesday: 11:30 AM – 12:00 AM",
+        "Wednesday: 11:30 AM – 12:00 AM",
+        "Thursday: 11:30 AM – 12:00 AM",
+        "Friday: 11:30 AM – 12:00 AM",
+        "Saturday: 11:00 AM – 12:00 AM",
+        "Sunday: 11:00 AM – 12:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "Fonda Mexican",
       "category": "Pub/Restaurant",
       "address": "2/70 Jonson Street, Byron Bay NSW 2481",
       "neighborhood": "Surry Hills",
-      "phone": "+61 2 9699 3060",
-      "website": "https://www.fonda.rest/",
+      "phone": "+61 2 8105 0777",
+      "website": "https://www.fondamexican.com.au/restaurants/surry-hills/?utm_source=google&utm_medium=organic&utm_campaign=gmb-website",
       "description": "Casual Mexican restaurant with outdoor seating areas where dogs are welcome, serving fresh tacos and margaritas.",
-      "descriptionFr": "Restaurant mexicain d\u00e9contract\u00e9 avec zones d'assise ext\u00e9rieures o\u00f9 les chiens sont les bienvenus, servant tacos frais et margaritas.",
+      "descriptionFr": "Restaurant mexicain décontracté avec zones d'assise extérieures où les chiens sont les bienvenus, servant tacos frais et margaritas.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -597,17 +1114,38 @@
       },
       "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Casual dining chain with outdoor seating typically dog-friendly"
+      "reasoning": "Casual dining chain with outdoor seating typically dog-friendly",
+      "googlePlaceId": "ChIJz2U_0TOvEmsRTMF1st99vLg",
+      "latitude": -33.8853169,
+      "longitude": 151.21383730000002,
+      "rating": 4.1,
+      "reviewCount": 494,
+      "photoRefs": [
+        "places/ChIJz2U_0TOvEmsRTMF1st99vLg/photos/AcnlKN3KaEMCLzsjGOYW6ER909cbHkPHSupUFK6iTS8ziUxWxDrWkQvvJwAvnaZRR_gv-hEEVcVC9t5snEBUWSJPYiwyIIxNH7HTaKcdUbFMZvmeOFw_P5Q_UTiHG_G0x7PTuTcCYgicOEyCS1A4GKMuSuLiASA0CZqk9BZIUQZhAlpFar7NHOh46JAPbfLDdlGdxy4SK5lgZtCus5iMtRYhTJmmFwDGc76GeFivWIHLoQUNbtmjUp_U12L4OQlWJUzWPm1P6uUQ-vuUCFRDzdyM20Yn0d-EtPQsJo535mOnbu8zLQ",
+        "places/ChIJz2U_0TOvEmsRTMF1st99vLg/photos/AcnlKN0cv8OcfcukvBdJ51etYxS0I2Lk3qI57TQ95RxzhOP5sNxfpyARwF7TdXBAF7zWKFbyoR760NJxHl5hfiC07zVoNQAv2z7GCZqUGK3n7jYMTAi3IQfIoPwhYjJGkYnVSvme1De9-hvhvYBOxRrqVhzhwvTmKvmogfaMfEZ3isbc_O2qyLpb76EpY75XFIa69GANo_MwugeJMhdJI1bQjpbu61RUqTkSaBc7H4HPRqub2dYWn332bo7xBxYyQVhWyDYr5ShRn-kffVZ3pWc_T-8cJT5C5MM4aYtL3ss6NpsWVw",
+        "places/ChIJz2U_0TOvEmsRTMF1st99vLg/photos/AcnlKN1D-E3LruwVB6_RIL3Y-iMWzhPOwXa_GWjHAe-cCaB00s9Up2MP_gywfsqlQ9Mbc3ECW-prdKBYZKQWXQqWIQhbWjPUY3w5bMrImBMFzWDz-0QTpTt-VUIalhwMKc1T8J0CE_BY1wGvvN02U0FE-ZTKS_yJ4tBesTmcmyvutXCBu_gJBeDTOqnRRNh1rfHFKy7HwiFDSIcQBvSv4L2hNAew3tXo5RFm8zR08uhsBxoyfGIzEqmaz9x-SRUhy5HSLQse9sjkKITRltZ1ttz3smxx8mmB2FJgiE2GBbnKiig1hw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13311652998325584204&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 9:00 PM",
+        "Tuesday: 12:00 – 9:00 PM",
+        "Wednesday: 12:00 – 9:00 PM",
+        "Thursday: 12:00 – 9:00 PM",
+        "Friday: 12:00 – 10:00 PM",
+        "Saturday: 12:00 – 10:00 PM",
+        "Sunday: 12:00 – 9:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Continental Deli Bar & Bistro",
       "category": "Pub/Restaurant",
       "address": "210 Australia Street, Newtown NSW 2042",
       "neighborhood": "Newtown",
-      "phone": "+61 2 9519 7734",
-      "website": "https://www.continentaldeli.com.au/",
+      "phone": "+61 2 8624 3131",
+      "website": "http://www.continentaldelicatessen.com.au/",
       "description": "European-style bistro with sidewalk dining where dogs are welcome, offering continental cuisine and wine selection.",
-      "descriptionFr": "Bistrot de style europ\u00e9en avec restauration sur trottoir o\u00f9 les chiens sont les bienvenus, offrant une cuisine continentale et s\u00e9lection de vins.",
+      "descriptionFr": "Bistrot de style européen avec restauration sur trottoir où les chiens sont les bienvenus, offrant une cuisine continentale et sélection de vins.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -620,7 +1158,28 @@
       },
       "priceLevel": 3,
       "confidence": 80,
-      "reasoning": "European-style bistro with street dining in dog-friendly Newtown"
+      "reasoning": "European-style bistro with street dining in dog-friendly Newtown",
+      "googlePlaceId": "ChIJ-wMzqt-xEmsRbT8L4biV4VU",
+      "latitude": -33.8963062,
+      "longitude": 151.1784181,
+      "rating": 4.5,
+      "reviewCount": 1021,
+      "photoRefs": [
+        "places/ChIJ-wMzqt-xEmsRbT8L4biV4VU/photos/AcnlKN1EfDCYkWvvQsYpAsvhIxoUuMseVFFUTEWn_dVzAKoDv2Vgp_Nbx8Ax4xH-_sxcYUvzkSQW_VMBvQbURmOhpJgmb8bo42tvQxmRi_TCf1OLE8ZE0XAeJCICIMLXpatjCVAa6H0JMxqy_jbPl1iDYwbHeEtQvybD3QLeQK0p23hjHggfdE0f_grGvw-5p5MDu9P9XWRDkkOXIplMBqQ450DwdfDByP2PLgQnhPXFGcr9jElfQAghF7BBZonKPVRruTXUx2W9O1li74Q0xCp-fZ_w_DvU-QnDtzg_m9iLoDZ3ZW6LeNpQITRhkAhZRia4PzWQDGSkkkS1hzaWJMtc3XqEnn23rpAEa8pKga74BevqTDeMf6epSQe-uzrN_jqEWWdcK9P7gIpTrQwTHRS-0Ii6vsANXWBER3JOiMN6OD8pmg",
+        "places/ChIJ-wMzqt-xEmsRbT8L4biV4VU/photos/AcnlKN3ymdIHa4OV6XVihiEml_9uxEJlA8oc3JPg4VkX8KH_WrcrzC6Qvtqs4olhNDaIqPlv_fuAYAFjjL0bWCtuaJLjWH279S2qk0sjl2JPkb4IXgCBgP8HHgyHLr1e9cuC5Og_T3Ot-RnvTWHvheI-ixXA-GKrpYy7TNy2LTL1N4w3y9Poh2kBttms0_4ZwmgBhmFdcdWOU7UsR2-TcDBH8rKtYVSrJR7A9DH8XGxPErEZysNFloQeztq3GGe9Mc-bVEnCDZN1hHaM-cS3KemAfDmfO95LdfyvjQNY1qiniwDgi31TYMQWSzMXPwOVxvDc6emrK74GDLav2z7fFSeU53GPdRSUSN4vgC7zu-6jVmf8XX5EQDUKbWLjgM_8ENJumiqk8Umov2yChKK8xCXo7ygxWGCZs-EnVy7jAh0sN_lXgQ",
+        "places/ChIJ-wMzqt-xEmsRbT8L4biV4VU/photos/AcnlKN29ZsQ4vFD_AkoDAhKyY7RxSMF4oca2Hps37zO6OZ9aUj4Dvp0o9-120xRkNXN2Wdu0BBsTSxPk3aymkI7YR7A4w8vlgkfb_Ll0tm7bZLbpuASrfDU0JOEUycoSuvwsC_54yOH7xW8Dfgtf-NhDqwJDK7bKU7Ab0gelsD1WFvIxiE90KEYukDX3B-emKzgDldQQrvjrObKZH8Lrw-8x-5eRF5qgjmpOsoCFbajzEghvC0za9pxCvikdfPg5njtZ4l1fGsQ6dkSV5aeL4onil2g0JrzGQHx32Bl9-2TQiEnK6m7W5PfvDO0eZuHFYLL7ML49W3v_T24zM8dsHzY5vejBybx8BnYquVo4Ppd3Jm5A2dsszLIm2vSIriSQ3xr255w2OCQqOlplLslTjO773fl9ECD0FmL0HjtOcMaYJdzToUwHIpXIO4N5Ni9pBhOE"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=6188391984265903981&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 – 11:00 PM",
+        "Tuesday: 12:00 – 11:00 PM",
+        "Wednesday: 12:00 – 11:00 PM",
+        "Thursday: 12:00 – 11:00 PM",
+        "Friday: 12:00 – 11:00 PM",
+        "Saturday: 12:00 – 11:00 PM",
+        "Sunday: 12:00 – 11:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Hotel Bondi",
@@ -628,9 +1187,9 @@
       "address": "178 Campbell Parade, Bondi Beach NSW 2026",
       "neighborhood": "Bondi",
       "phone": "+61 2 9130 3271",
-      "website": "https://www.hotelbondi.com.au/",
+      "website": "https://www.maloneyhotels.com.au/hotelbondi",
       "description": "Iconic beachfront pub with multiple outdoor areas and balconies overlooking Bondi Beach, welcoming dogs in outdoor spaces.",
-      "descriptionFr": "Pub embl\u00e9matique en bord de plage avec plusieurs zones ext\u00e9rieures et balcons donnant sur Bondi Beach, accueillant les chiens dans les espaces ext\u00e9rieurs.",
+      "descriptionFr": "Pub emblématique en bord de plage avec plusieurs zones extérieures et balcons donnant sur Bondi Beach, accueillant les chiens dans les espaces extérieurs.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -643,7 +1202,28 @@
       },
       "priceLevel": 3,
       "confidence": 85,
-      "reasoning": "Beachfront pub with extensive outdoor areas near dog-friendly beach"
+      "reasoning": "Beachfront pub with extensive outdoor areas near dog-friendly beach",
+      "googlePlaceId": "ChIJ_UHCsZ6tEmsRv7VoMBTS-B8",
+      "latitude": -33.889860399999996,
+      "longitude": 151.27519340000003,
+      "rating": 3.8,
+      "reviewCount": 1355,
+      "photoRefs": [
+        "places/ChIJ_UHCsZ6tEmsRv7VoMBTS-B8/photos/AcnlKN3tSpxKovGwu1dZXZF3ucnrCN4kJkYSuhp02pfEd9tJAIVgzaJaciTQfWk99xxfMRuqeMqRy_YXMIWhR8ILvohTrAj5u2YC_PZUCbR3homM54SikJXDN68nUUlu2x4zG7jKOhNmy67T1yKtgs0VULh4b3EsuIcpKnY5vKOpvQCqGh6idojyLPQkWCID7CzquAqxOlZzzHETka2PzEKQQMzftPKLsQ8nvIfT9SYsNau4Qqiz_HP0l5Tq4pMXm1RXdLlcLDhheCYRbjOLw8J1qmlo-HCKs1BuTOPARETALIPIKg",
+        "places/ChIJ_UHCsZ6tEmsRv7VoMBTS-B8/photos/AcnlKN1bhc6Nip5f9Kv6kxDuj7Inr9kuWwmE5B9zXxeWX1-rgunxjkrxnnHA_NmHizqovPyb3difP1mzHT5illjdMYtYFhCkevb3QZoYqMBx2GvWqo77YZ7_rH3U4HJTDOlL76FQH7yeL2VzyazongR6xH_Jht1hjqHhX7R3-M14odx32D5RdQoH3s45sLh_dmUZwUE-Q4vKjQXM41HHSg-uFpchUyuBXMpQJG8ab17L_VwKR_pIB-4u5aHQEPU8G_q8JSm7n9euWj7nRgI9_eqTZQlOOK-s6qstCaWg5RNwGWiw4Q",
+        "places/ChIJ_UHCsZ6tEmsRv7VoMBTS-B8/photos/AcnlKN2Hx41kTKo6QUo1qXqisJjkcqTVTWr-mQo7dDMixAWwiZ5gJkFQ0grP3ZY5elCpmzJaKz3Lwv-F5H3S5ODsmOC3-eFsNDlw4TWDjBgtRKxCZCxK7nISD92WbHl50dlDVK4tnZ5BGSTmFpRDoCRRwqb7hhAn-7me-GEEhFcH690oqYalXyaWQgA0mZWclJwxJOlyYD4mNqdxCePPq-MM3ajnrhVjC6NJyAquYW573jktqtGPhL-8bRZFXC-5z0uyIeTC23N5bJqoI6vM-8Az4sIUStVhy8Bx-hVO1KCYaGIAYw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2303822193553356223&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 10:00 AM – 4:00 AM",
+        "Tuesday: 10:00 AM – 4:00 AM",
+        "Wednesday: 10:00 AM – 4:00 AM",
+        "Thursday: 10:00 AM – 4:00 AM",
+        "Friday: 10:00 AM – 4:00 AM",
+        "Saturday: 10:00 AM – 4:00 AM",
+        "Sunday: 10:00 AM – 12:00 AM"
+      ],
+      "enriched": true
     },
     {
       "name": "QT Sydney",
@@ -651,9 +1231,9 @@
       "address": "49 Market Street, Sydney NSW 2000",
       "neighborhood": "Sydney CBD",
       "phone": "+61 2 8262 0000",
-      "website": "https://www.qtsydney.com.au/",
+      "website": "https://www.qthotels.com/sydney-cbd/?utm_source=google&utm_medium=organic&utm_campaign=gmb",
       "description": "Boutique luxury hotel with pet-friendly rooms and services, including dog beds, bowls, and walking services in the heart of Sydney.",
-      "descriptionFr": "H\u00f4tel de luxe boutique avec chambres et services accueillant les animaux, incluant lits pour chiens, bols et services de promenade au c\u0153ur de Sydney.",
+      "descriptionFr": "Hôtel de luxe boutique avec chambres et services accueillant les animaux, incluant lits pour chiens, bols et services de promenade au cœur de Sydney.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -666,7 +1246,28 @@
       },
       "priceLevel": 4,
       "confidence": 90,
-      "reasoning": "Luxury hotel chain known for comprehensive pet-friendly services"
+      "reasoning": "Luxury hotel chain known for comprehensive pet-friendly services",
+      "googlePlaceId": "ChIJK6RwVT6uEmsRQ447JSUTGGI",
+      "latitude": -33.8709065,
+      "longitude": 151.2075485,
+      "rating": 4.6,
+      "reviewCount": 2047,
+      "photoRefs": [
+        "places/ChIJK6RwVT6uEmsRQ447JSUTGGI/photos/AcnlKN0JG3sYAMV8U0WvRGcHHsBolZKS4VVHW1rYzdeVTO7m6ByK98fhCsVCA7gbzTjJ3wiRg-TGsZhxI3dYhjqrXD-vwUbRO3pXtG9d4Eb9FR4ycAPiGndzRXzgA9Adz1L-gbyOWhtjXyIrtiwtxAnVjOEOsQgGKPaqag_pqGfUCsUTD0imKvWh9yDwyyh1cyJywKy-3GWJGgiiAuZECX-fCuUOxaSzSk9QQ5fkWxW3RjUVjCiIlBpJDVbX_EJAgJclsfH2_honXe-FgYy3b2uCZRB9QQYg03FET04d7UCUGakrNQ",
+        "places/ChIJK6RwVT6uEmsRQ447JSUTGGI/photos/AcnlKN3ob9jigzwycbefZqg0jQY2y-il0xNgPEFH4zir70Zo85YlFVkTLMl-wsGWpUMvijkyxMX0L5x8LOwpZcH72EC825YDTTi90ZhrnaWpLxaQQzkHywaNwYu7usbMcxTS-W6S_5Sn2CCih3caLDyy6bMfTix2fMLFLfvUGEwY4-hHMfuBqRetJofJhkfS-6a1rovb5y2B9K1tSbLWEh9NavxLakH7h54nHKnmFfKS9OoonM0Vi0MjCZ6BpiUeg70wQQCYEGDIuZnk1t2TBNviF-JIX80CBMm3Zl7jN7CC-9iC7g",
+        "places/ChIJK6RwVT6uEmsRQ447JSUTGGI/photos/AcnlKN2F5OBduRxmXdShK1p-zTXXdDatpofzGAHy-YKX8ujIcTdBMjDkQFIQ9i58qRXe6ohpL0EnUebqqt8kvADwDIz0sCaINizbJ9gEjqVakp85gdVC4Fs1j-i6aFPdjjOQu2h387ecOmXQMrF5rugYZDRSQ8zJ0Zezncy8CXtofWZAznCxPxRYyAOXv_hgCgvQUoZG_xBsNaP3XRhky9h2DMVjv-XBhyqr9L0deGgsCNwVFkikxV6KfbcPI8W7-qXbIOfZpoR3UzfRM2HYoMku4QgWgTRKcxv7JCreZqNEKRrgVw"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=7068420665417371203&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Ovolo Woolloomooloo",
@@ -674,9 +1275,9 @@
       "address": "6 Cowper Wharf Roadway, Woolloomooloo NSW 2011",
       "neighborhood": "Paddington",
       "phone": "+61 2 9331 9000",
-      "website": "https://www.ovolohotels.com/",
+      "website": "https://ovolohotels.com/ovolo/woolloomooloo/?utm_source=local&utm_medium=organic&utm_campaign=gmb",
       "description": "Waterfront boutique hotel offering pet-friendly accommodations with harbour views, dog amenities, and nearby walking areas.",
-      "descriptionFr": "H\u00f4tel boutique en bord d'eau offrant h\u00e9bergement accueillant les animaux avec vues sur le port, commodit\u00e9s pour chiens et zones de promenade \u00e0 proximit\u00e9.",
+      "descriptionFr": "Hôtel boutique en bord d'eau offrant hébergement accueillant les animaux avec vues sur le port, commodités pour chiens et zones de promenade à proximité.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -687,9 +1288,30 @@
         "fenced": false,
         "shadeAvailable": true
       },
-      "priceLevel": 4,
+      "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Ovolo hotel chain has documented pet-friendly policies across properties"
+      "reasoning": "Ovolo hotel chain has documented pet-friendly policies across properties",
+      "googlePlaceId": "ChIJRy5QoG2uEmsRHd7ei8FFwB0",
+      "latitude": -33.8689927,
+      "longitude": 151.22027409999998,
+      "rating": 4.4,
+      "reviewCount": 1884,
+      "photoRefs": [
+        "places/ChIJRy5QoG2uEmsRHd7ei8FFwB0/photos/AcnlKN3KmMYnlqClTjP138jQHhWFIXm3yvRGXJEhKZZgU5AlUoFK0U9YlETXyWVp-rT2RsdKmkBMwj7OqeYjBhLlCYHUMKwd3VjB1b-YAkQpYtIb5kLRrYGYWLTF1PNnTPuUoEr91ApD26dBBGlrbQLUazkv-fFdB2g-9OaEFrPnkllro9DWmciSN1Uebhpsh_m5AON4aI9dn4Z0BwNzmrr9jgrqCte-_zm1c0NS2b0nEpeijnwtH2uHWPQSYcP8i81JR1rK9Kkm5BVbXGLozcxyDMAwgtJu9nMmSSVgwvg62deKGw",
+        "places/ChIJRy5QoG2uEmsRHd7ei8FFwB0/photos/AcnlKN0-0uB5esUE3RXjyXvCP9dHW2FZEfUHIDPkae7ECuzk-H8x_1qKX5hjYubKIjFvs3OiwTtZRMGf6uOf7RAAZgF5HDE3x2U3mnLulhmeK6ems-MT59tPJj8_QUmARRpevFDRYVOCiTTk1cKVNVeemYnxlH92J_AArX38lXvLpGNwIf4ZMVUVNerIcOY0fBiZKh37dp1Dtleb4NnJfDvappfRHchvbMVX1esEt4EpalM6ZI9uvXjdsu0DGdiCIcLOupXqiZmJ1FNSwIk-klgO57f9x6mRCzbN9UMkK5-Y-28VFg",
+        "places/ChIJRy5QoG2uEmsRHd7ei8FFwB0/photos/AcnlKN3G4tqZDJE1JBLT6O9pj8L5O_UOkoSlltV6xXkRsGVG5y1F4__IhWVJdtl6SGPnUsWR6hkAvY1wcJR9-kOkRvVTECj1UktXk491eMtlJp_kd0JIsFjcyU7-8qb4rmxWtwntppAkzdRv1UTrsvImvJH_Xi0d-6vLYtlyIxfZQF46ffY_0qNDO49Qq7cTd7DA56o-izgxoZWacjSKmP6WHlj1o1bKxzlDyGlduG7D0KPKy79pDsZS6NnOsdO0brP981lX06imV_d4wbSqpMfHWlfb6nzF00nHSfgfXomkd9XkGjYhnGbOZifPxvXtlbdjW_G0KEu06aILSNyl_ghCmRGAK4NUXhhHBro2nCrx--X5PjtrlvD4JWJnX4TLS3XCCQqzSx7l546Hth0M8Rc9BgyiufDlB_7-4qwLHHUu9FbY39yG"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=2143790120205999645&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Adina Apartment Hotel Bondi Beach",
@@ -697,9 +1319,9 @@
       "address": "69-73 Hall Street, Bondi Beach NSW 2026",
       "neighborhood": "Bondi",
       "phone": "+61 2 9300 4800",
-      "website": "https://www.adinahotels.com/",
+      "website": "https://www.adinahotels.com/en/apartments/bondi-beach-sydney/?utm_source=googleplaces&utm_medium=organic&utm_campaign=googleplaces&utm_content=adina-bondi-beach-sydney&utm_term=plcid_18234845472359651218",
       "description": "Modern apartment hotel near Bondi Beach with pet-friendly studio and one-bedroom apartments, perfect for beach holidays with dogs.",
-      "descriptionFr": "H\u00f4tel d'appartements moderne pr\u00e8s de Bondi Beach avec studios et appartements d'une chambre accueillant les animaux, parfait pour des vacances \u00e0 la plage avec des chiens.",
+      "descriptionFr": "Hôtel d'appartements moderne près de Bondi Beach avec studios et appartements d'une chambre accueillant les animaux, parfait pour des vacances à la plage avec des chiens.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -712,7 +1334,28 @@
       },
       "priceLevel": 3,
       "confidence": 80,
-      "reasoning": "Apartment hotel chain with pet policies near dog-friendly beach"
+      "reasoning": "Apartment hotel chain with pet policies near dog-friendly beach",
+      "googlePlaceId": "ChIJhd2ifpmtEmsR_ku11jWWMLQ",
+      "latitude": -33.8897151,
+      "longitude": 151.2718051,
+      "rating": 4.2,
+      "reviewCount": 325,
+      "photoRefs": [
+        "places/ChIJhd2ifpmtEmsR_ku11jWWMLQ/photos/AcnlKN1o_p0Hv60W6Fnd9Ss7_PU0dmg8dFTDk_ZAa4UaIZnzGw0KbVsI72S105Njn4hYvcN6SNBznBTU9zzyYglZuke6F-XXUO70paBK9HsRqRb5KCXqPlmIf804PJIQKyas7ksdXXpCZAd0v6FKdAeGL7KAVOg4x8O4V-kfIHQgtHcRMbeEqzRVrBwzuWHmk2Sd6q05OP34kTxz5xGZh4rJngOCwANCbuTiYa8SWOQpKCl06GSYD2g6RNDBjEP_cajk9Tk3n4oyynQQW7M9GGOPMi8NPLzjuNd7SXASHhn3WnQV1w",
+        "places/ChIJhd2ifpmtEmsR_ku11jWWMLQ/photos/AcnlKN3QzzEKOEGoqrjf816XIkRdciKZQspgWsEiWdJGR0IbaULsO-dfwAEuXliTbMxiSGDSF11vlWPHPoasaoZABjvd_8JxuTq53iaXMH20sbSua93nJn4dOV6UPNXqEapLVhGDjpMYVxnYUmVZIb0DRyOsivs-np84iq9X62uUSWgLnJpQ_jIYr6hRu2w3TDhgg19U2SMInmyVPUjRIX3kAvteWYC-hytwVfCOae97CzUiMcuNLspVss9FXxL3_1_8U5bLygu2BFK70AEIphIRY_bV1FcpvIDE_JgqjRr6JVxCrw",
+        "places/ChIJhd2ifpmtEmsR_ku11jWWMLQ/photos/AcnlKN2wWtjUjfeT7aeqUai3yVjxWafWTpXuRrinJDFyhLZ3QTXdC_ywkMaFzfS-uXUfqTZg7xGwFhjcP3EzE_7qqAMT3qHpVZvSWkQVdPGZqvhFbpEC34vjaMzPlbmzWa0tVgvdaOEKN5Aw-fJDDhMo1U7wcL4X0C0vaUP8YqFyU27jtJjLaukrrZKgV0R2W3dOX54kqSaQWWkNcG2K6Z0h448JQDgf3ZNfTEbs-8zK0MafBui0JKgtx1bKN7rvNGJ0uLgCB1RxFW3UbU95pgYQqMJ1w3IJ4ik0oF4seKPxfSncAyEiQPtwIyF2ZPe00s5GlNRDzgxiZqny-BuUfQ9KkO4hPPRonMWc66QP-g3P3FhKL1gLjNuviCqaFmJvlrW7QqXIrgtNqKv2IkeEbwH7nwIlZohDsR-uqDsEvlm12BJhabDwkKn3qiofBaGCxg"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=12984042883688778750&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "enriched": true
     },
     {
       "name": "Manly Pacific Hotel",
@@ -720,9 +1363,9 @@
       "address": "55 North Steyne, Manly NSW 2095",
       "neighborhood": "Manly",
       "phone": "+61 2 9977 7666",
-      "website": "https://www.manlypacific.com.au/",
+      "website": "https://mgallery.accor.com/hotels/5462?merchantid=seo-maps-AU-5462&sourceid=aw-cen&utm_source=google+Maps&utm_medium=seo+maps&utm_campaign=seo+maps&utm_term=MGallery-Launch",
       "description": "Beachfront hotel with pet-friendly rooms offering direct beach access and ocean views, ideal for guests traveling with dogs.",
-      "descriptionFr": "H\u00f4tel en bord de plage avec chambres accueillant les animaux offrant acc\u00e8s direct \u00e0 la plage et vues sur l'oc\u00e9an, id\u00e9al pour les clients voyageant avec des chiens.",
+      "descriptionFr": "Hôtel en bord de plage avec chambres accueillant les animaux offrant accès direct à la plage et vues sur l'océan, idéal pour les clients voyageant avec des chiens.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -735,7 +1378,20 @@
       },
       "priceLevel": 4,
       "confidence": 85,
-      "reasoning": "Beachfront hotel in dog-friendly Manly area with outdoor access"
+      "reasoning": "Beachfront hotel in dog-friendly Manly area with outdoor access",
+      "googlePlaceId": "ChIJa3Sq6wWrEmsRI563phABpX4",
+      "latitude": -33.795277899999995,
+      "longitude": 151.28714739999998,
+      "rating": 4.2,
+      "reviewCount": 1945,
+      "photoRefs": [
+        "places/ChIJa3Sq6wWrEmsRI563phABpX4/photos/AcnlKN3hbF9WqJ4ecMTxYDACHwuSXtuoBQjoqGfLLAHDP3yh6gMj5b3SJ--uSw4mlgnP89NBgAAIJxfOywG2v1iBTj232YYZF6ucwEiV5yIi3YX_aceXZvTr6I6_jOm7vHXiMk6n3SClvSjLJBJQFkzIdkWtUVyN1fDfaMliohGm7Mc92X1o-LkxrFgO_VFFWeqzJLzty_URPYxXkbpziKEKJ0adOL7RZP6WfKMLVvgioWESV6EGSh7xgKKulDW11xYrkkhAIaXQNTNjwip_2CHERUv3mFy78b6dSAsj96PR6eQNTA",
+        "places/ChIJa3Sq6wWrEmsRI563phABpX4/photos/AcnlKN1mo0uPTUhqiu7PgdEHGEnEI2G8_Lg02pRtOMIrO6JOW4TbLvVwh9cFsNJnqq4Y9CwXrq3WscK4LAlKWml2WfMdqcfUai_BaO3f-gdfhG15tWhCiUhR94fJdOJcP068Qk_Fob-pv98wevev--fJ2aKc7dU6tTdaZYN-LxZ7SvRO0zGe64NLWJjVLkmWFIpzCaF1-0CIM33y0FfmVjjjjWGSRXvXHoo0gTAR5gI5HAAmqDLwtYTcz__8m1sZqU0UQl2ptZKqcNmeZV5gxyxSENxHtzR9tGNOFZhqpAS4DKouqdAwbHhETa2_9WsWyzIhcFw7K-jGpdHqAXrOwlgqZVrGzYwbOQ7wetr23rI-6dAd9yrV_NGpvXSgIx-WLqErU4XzLe-BQJXFOOBZjGZ6jTRARVorZC4C0bYHrNE6DDXODQ",
+        "places/ChIJa3Sq6wWrEmsRI563phABpX4/photos/AcnlKN34nUhSih6NboR_2EwQiClTgMUN_edbaGce113LYUxyfcXaecG2WMm64cMqneuwOFbUij0k4Pt8rpa3QmyXsECHzLHJnxunEHbegP5XgTy3-Po7h8TtfMSI_whLllivBap3Y5_oNjc0_SRfsJyhUVODkygHKDXRYN6xcfj_ikvl0n4h3PMFOCHfXJZmymUJit5sdviQODpT3qKxQsUmK58Or1Svcbt64W_xctn7UUL6ZPgUvVgSk5QGHp4O83QRNWuumWYNrnesGGA1cOipm03wy1pf_q9Wl-PqzpqC230U35SuGJZD4KSWCl5_cdNerDFUp1YGficUbwEbiDF0ZwOj5ZLVaeKLYS_L_PX1Qg1RyJUihyAHkzscf76GtUcgOP4MoxEdAdv-8gLQjtnzKVFHfkMbLjvCpwd-h_wSWKu8ew"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=9125701390964334115&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "Paddington Inn",
@@ -743,9 +1399,9 @@
       "address": "338 Oxford Street, Paddington NSW 2021",
       "neighborhood": "Paddington",
       "phone": "+61 2 9380 5913",
-      "website": "https://www.paddingtoninn.com.au/",
+      "website": "https://www.paddoinn.com.au/?utm_source=google&utm_medium=organic&utm_campaign=gbp&utm_content=Paddo_Inn_-_Paddington&utm_term=plcid_13083565039621970458",
       "description": "Historic boutique hotel in trendy Paddington with pet-friendly rooms and easy access to parks and dog-walking areas.",
-      "descriptionFr": "H\u00f4tel boutique historique dans le quartier tendance de Paddington avec chambres accueillant les animaux et acc\u00e8s facile aux parcs et zones de promenade pour chiens.",
+      "descriptionFr": "Hôtel boutique historique dans le quartier tendance de Paddington avec chambres accueillant les animaux et accès facile aux parcs et zones de promenade pour chiens.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": false,
@@ -756,19 +1412,40 @@
         "fenced": false,
         "shadeAvailable": false
       },
-      "priceLevel": 3,
+      "priceLevel": 2,
       "confidence": 75,
-      "reasoning": "Boutique hotel in area known for dog-friendly establishments"
+      "reasoning": "Boutique hotel in area known for dog-friendly establishments",
+      "googlePlaceId": "ChIJ4fFRXQauEmsRIIegRnMANs4",
+      "latitude": -33.8860745,
+      "longitude": 151.2291171,
+      "rating": 4.2,
+      "reviewCount": 633,
+      "photoRefs": [
+        "places/ChIJ4fFRXQauEmsRIIegRnMANs4/photos/AcnlKN1E0XXdUbuo5g6EXw_ZLSXUmXLvSMnmFu8FCXiKlxvjVd9R0iGun5Z2CYEX3V_cK90-sY_zMZvBGr-fPJlCCa29uKCxmR_uPRUJEklWwbMPtaM_YuE2Pp265nb7hHLgcD2KqpiPVU3bWhiuYePR6MudPvGlBEa3fRpmkUvMSPbUUayKK_tCpv6Y37A0OaTY1S8ooTJD1HI_IxwUwtxdDlrYQ4ZR3XnUWR5sU3zY1NxQAQ7ECjFNMKlojoypMDzUVq1ahcwsSOYng46IsbkYBWgjCS3_TyBXv1CgoTqrn2h6ng",
+        "places/ChIJ4fFRXQauEmsRIIegRnMANs4/photos/AcnlKN3x2kHlCljBHVlVZvbcWbTEap_VsddVqjdf7vv8MkMCi7wzhjvfksDsYrVrUlu8S0_aO5BmvqBcW70X3TIFpPmf-IJpsvwVnwKeogAb96eIEsjmQBejem2D8tKtJRBQQMRcyAmQ5dCaRfyT3Tg3K9LBwpk_ehB9cpN91_LKbfsa5A1eHsl324az8OCqBEOHfKvgyGq50nnW-knwayT2UPxe6HrUMLxFGs0GcIxEg2rRVug1QtrNyjjXdAxK1T-6xPSUAJGoDRCpY8fY7ZY2RZVnRLcCN88V71xdiyDyUGXnEg",
+        "places/ChIJ4fFRXQauEmsRIIegRnMANs4/photos/AcnlKN0XtYfVa4fuqp8Jth595EJqUKq3L31aB0LYzzzhEGpp1uQMYk_0t3dWXGzDtL4R3tzfcIS_ZDAiSmmMxtzwVMYN0F-pQiLiSEY5Ddi6MaYlGt20jAke628mpGSIIL1gQt_k4bZ7fEnDo_P5TebMfAJjdOoHMTPexa3hwY-wfRcFLG_Fom6gLjmdGNmpfoc5HBW7Vgf2cVmSTgOeWA88O-xYfF1dOtG2409pRm6VIKEw37mEeErGI92G3cODXF6TJ84ifT9FdM2A75pM64BdpcVKrLNr75KBl9aQ9JP7thXpaC-ioKwervqsBPMi_rAuAnXDdCdOgPrIBKnRLqis6BSQBX0_AB6SdjvqJL5QDsFGeBHgO8BCLRZI8xX4RbIQsUj2QRSx0GQkBRf-ZWxa9wa8V2t4qGbzmZqAj7k0lZA"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=14859064515661694752&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 12:00 PM – 12:00 AM",
+        "Tuesday: 12:00 PM – 12:00 AM",
+        "Wednesday: 12:00 PM – 12:00 AM",
+        "Thursday: 12:00 PM – 12:00 AM",
+        "Friday: 12:00 PM – 1:00 AM",
+        "Saturday: 12:00 PM – 1:00 AM",
+        "Sunday: 12:00 – 10:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Paws & Claws Pet Shop",
       "category": "Shop",
       "address": "152 Oxford Street, Paddington NSW 2021",
       "neighborhood": "Paddington",
-      "phone": "+61 2 9331 2898",
-      "website": "https://www.pawsandclaws.com.au/",
+      "phone": "+61 432 902 875",
+      "website": "https://paw4friends.com/",
       "description": "Comprehensive pet store offering premium dog food, toys, accessories, and grooming services with knowledgeable staff.",
-      "descriptionFr": "Animalerie compl\u00e8te offrant nourriture premium pour chiens, jouets, accessoires et services de toilettage avec personnel comp\u00e9tent.",
+      "descriptionFr": "Animalerie complète offrant nourriture premium pour chiens, jouets, accessoires et services de toilettage avec personnel compétent.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -781,17 +1458,38 @@
       },
       "priceLevel": 3,
       "confidence": 80,
-      "reasoning": "Pet store specializing in dog supplies and services"
+      "reasoning": "Pet store specializing in dog supplies and services",
+      "googlePlaceId": "ChIJATrpLhGuEmsROZiYfKBXabc",
+      "latitude": -33.8746423,
+      "longitude": 151.21604979999998,
+      "rating": 4.9,
+      "reviewCount": 112,
+      "photoRefs": [
+        "places/ChIJATrpLhGuEmsROZiYfKBXabc/photos/AcnlKN2DHi2CH6_fEVELYrBKIMvQ4YvQV5Hla9r_TX7TIwDsoofPpu7jS0G7u9TmVOurcOC9w67FO90lcXA98an_isiii4pblV9E_w6lmQWW-fiTSxzBBNL_06QyfJ2sOXiWl9tQ0rQwkGT3ttmhc8qiZr2W9ks-mcLJQGNsqfLlrah0uRVLA9MnWYCFA0113ngsGhLAJaWMCKFNKmoWifYyM-UvMbNrnywfObLfUXWR7m5TOVsDe8jYLSHZSC2Hf3614FkcXSw-StTQvjoa-BAzQkHpizwzbvILJfd1NDnL7D0oKw",
+        "places/ChIJATrpLhGuEmsROZiYfKBXabc/photos/AcnlKN2V6mrDkx1htjHE7JvY0vBSvvazHykdVv7QDK_nifBDM8Gi2aYyAD92K9nqdRdDM7EfWvq_cxwTimwyRMdlFKDmJdNJakCPgD6XVoI1UoBCugbemIicEi13crlW3eYmiILQ6vGSLzAHhgz5tjdwB4n5OtcqaoyfYexi8Xatq6pBEmgu2BpDJGU4xurnPVFYBm6VENpzlQCVZe8gW7aAfWUkE9kogiuZl32SkIo6H16teQg_rrWPzr0l11r61hmy9CdLg-A2JmUruFENNdA7jfj8NE5j1rG_tnBNqYtwDTgh3Q",
+        "places/ChIJATrpLhGuEmsROZiYfKBXabc/photos/AcnlKN0oc8HAktncCtSlgOcUtBiy5t11XcySyo-rexpLGPVCLLxfsKnnF0yWSojRM9EgFh0v_3NoMxGiBkIb5tfU86i09BiJ1yLRuv25ZhfATcOJe0g2IUvTPsdLqb2usfjHW3Sl7mmb33_9CsVOSyHUcV7LBOHoi6s52UwuKlNqPzhLcwHJgsKk19syX4JwwhMbGT7Ug22rtOayniO_bZdngStOQEexCz-5F1ryK8fyuGP1XDN_O1kNCjzXCcSWFlnDsEvtSLyMzJnCJpz8i2Yi227z7pbmP0VGrp2A6uLIyRIMSQilk2f3RQT2oH1mKKmVJt_rl_9wEcbYV7w_tyW9fuiYshNu_xr_YsxqqnGT61UdevvcKXAk2vUIa0VtEjw-1xQged82F1WVIub7Ot-oIZrmQZi5k09FzXm1e-xdKxY"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=13216190928292190265&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:00 AM – 6:30 PM",
+        "Tuesday: 8:00 AM – 6:30 PM",
+        "Wednesday: 8:00 AM – 6:30 PM",
+        "Thursday: 8:00 AM – 6:30 PM",
+        "Friday: 8:00 AM – 6:30 PM",
+        "Saturday: 11:00 AM – 3:00 PM",
+        "Sunday: Closed"
+      ],
+      "enriched": true
     },
     {
       "name": "Petbarn Bondi Junction",
       "category": "Shop",
       "address": "Level 1, Westfield Bondi Junction, 500 Oxford Street, Bondi Junction NSW 2022",
       "neighborhood": "Bondi",
-      "phone": "+61 2 9389 0355",
-      "website": "https://www.petbarn.com.au/",
+      "phone": "+61 2 9389 5059",
+      "website": "https://www.petbarn.com.au/store-finder/bondi-junction?utm_content=local_seo",
       "description": "Large pet retail chain store with extensive range of dog supplies, food, toys, and accessories plus grooming services.",
-      "descriptionFr": "Grande cha\u00eene d'animalerie avec vaste gamme de fournitures pour chiens, nourriture, jouets et accessoires plus services de toilettage.",
+      "descriptionFr": "Grande chaîne d'animalerie avec vaste gamme de fournitures pour chiens, nourriture, jouets et accessoires plus services de toilettage.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -804,17 +1502,38 @@
       },
       "priceLevel": 2,
       "confidence": 90,
-      "reasoning": "Major pet retail chain with documented dog-friendly policies"
+      "reasoning": "Major pet retail chain with documented dog-friendly policies",
+      "googlePlaceId": "ChIJqbB8s_atEmsRL6pv-DANlA8",
+      "latitude": -33.8946335,
+      "longitude": 151.2499767,
+      "rating": 4.5,
+      "reviewCount": 522,
+      "photoRefs": [
+        "places/ChIJqbB8s_atEmsRL6pv-DANlA8/photos/AcnlKN23zmNPmlfFD6YHgjm3-3aum-zvBGoWfkceFouJxgvT_hZcJss_A0q0vJYqjx5coSJHMNAbT3JuvzN8PVN-T0cyczS97rJPxtWfJWUF59AwdzBpqoI8D5TuUcGuGIlIWMNHfsfe-b-dACpMGVCkk9e9fHLJOug947y2FxwGxUe1vaSzLM21jW_XuUBRBQY_hiXC5qzscLfV2lTTVNYIDOheD7TTVARCuausj8vzqUpLYlxKHY0jUhrbeefXqID7sHQVPG-kfuofZaTT2kV6cG4tfEyI4NWxF7FVTFctKcE0fynr_rx-CYe2dzmP4EVe9J7UZzBrX6w3RNx3k5xXQdWcQXLhBcAV0yi_08sAtHbTJQgjFMng8an52yBELNaMqzEnl2dXu0ATqXPLBtQNhnWx5s4t8jxmPFEWbYNEfoJhiA",
+        "places/ChIJqbB8s_atEmsRL6pv-DANlA8/photos/AcnlKN1XL78NsCTMTTHJST58M2manUrtxWzVE34YQtRc0WoMfbqxdKwVyQgY4pqFtDVCTv2jiCCYzltNPClCBXHWZU1G5awSRdipQTmV4sgxVmYOFhXmZm3sBTN734f9pjwNGA73NyX_YKWZTUbCmBQ2GOujS1ZmcqXbNsl3EEB1pZTRxd0jWhEv-EUZifxBzgdOX19duSPX143ESxUWzKDenaK-A4IZ9L0ZR_nfHxo4S1uD3Rnl8twBTH-GvIlcOkppw0ZuQ9Ox0JK3CyX9tJmYn4KqXCPC4Jn5XMBvKnohfAKY5yZ7vAUZwUf7oD9oLt5GHbOZKTKkVrrTin__KE1FeZpENzdOMGzKiv_BtUM7Du9UwkyHPG5SAm7qvWyaZ4sAz6EZFi8XYQOKCKhDQxslvvC_-LmhilrUtfHGBPHvGjeBbg",
+        "places/ChIJqbB8s_atEmsRL6pv-DANlA8/photos/AcnlKN1FfrVovQnXhhKR4FDuikk_cL0OHA-X2e5tQXUTY3WRkEv8WX9eh7UwkUKxEu92KyFNpjI_V2yyxP0B6cXOtliiCZE1uJxYixJ8rXYBkia_JTB8ja714s3fCqnh_JY9sp9msj5AgOAzOmaeqmvItun1Lqo2eX78hOK9PI9CmVCGJ2nUkQtqfAmV9F5uD1HA9VvK18isHkpkms_CgJ_rVL7D5Y8vJx1Wfe1yOqiU0AEc1mm6JKDUdsGZbf8-ong1keHCO-VkwQDxBnA0t6KQZpNzrCp871MaORmoljYrCN_fkpsSNFvI84ycgcCF2iTmB0ZOeDGhXl4KZ4ib3R9KuRjpeNLbsZ-94jRf0Tss1e37cRlVQjYA1Awsf66lLnFSUxupM5TTRcZ9BtFjy07oBkY0s65sxhn7m9--DzQoSGICj3Pe"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=1122536711099755055&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 8:30 AM – 8:00 PM",
+        "Tuesday: 8:30 AM – 8:00 PM",
+        "Wednesday: 8:30 AM – 8:00 PM",
+        "Thursday: 8:30 AM – 8:00 PM",
+        "Friday: 8:30 AM – 8:00 PM",
+        "Saturday: 8:30 AM – 6:00 PM",
+        "Sunday: 9:00 AM – 5:00 PM"
+      ],
+      "enriched": true
     },
     {
       "name": "Peach Blossom Pet Boutique",
       "category": "Shop",
       "address": "45 Glebe Point Road, Glebe NSW 2037",
       "neighborhood": "Surry Hills",
-      "phone": "+61 2 9552 1847",
-      "website": "https://www.peachblossompet.com.au/",
+      "phone": "+61 2 9630 0300",
+      "website": "https://smoochingthepooch.com.au/",
       "description": "Boutique pet store specializing in luxury dog accessories, organic treats, designer collars, and premium grooming products.",
-      "descriptionFr": "Animalerie boutique sp\u00e9cialis\u00e9e dans les accessoires de luxe pour chiens, friandises biologiques, colliers design et produits de toilettage premium.",
+      "descriptionFr": "Animalerie boutique spécialisée dans les accessoires de luxe pour chiens, friandises biologiques, colliers design et produits de toilettage premium.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -827,17 +1546,28 @@
       },
       "priceLevel": 4,
       "confidence": 75,
-      "reasoning": "Boutique pet store would naturally welcome dogs and offer premium services"
+      "reasoning": "Boutique pet store would naturally welcome dogs and offer premium services",
+      "googlePlaceId": "ChIJpc98DgavEmsRXLDP4E4oFpI",
+      "latitude": -33.880301599999996,
+      "longitude": 151.2099309,
+      "rating": 5,
+      "reviewCount": 9,
+      "photoRefs": [
+        "places/ChIJpc98DgavEmsRXLDP4E4oFpI/photos/AcnlKN1NND2wkaVQC72vEkYo1RGUQpxMFvBDc357-Uhx1zFggVxk8XJnC0IQmFGFRH8-9Vb7VjTZiTmVwTPlOeQRU1KcMGVXhBmjm8_KCIVQAjmgj7Y-E-3sPAtzCZv0L3zsWwky2ji55becBCxyieSofnwq4nGAxvr3bSoFbL5y2r_i8OMNhTu357wnwO3nwk6W2bPf1es8yTkJGjhbDAhi_j3ECvCs24ARtTYPMrH3cr8QFUfw7dDjDStBevfruK7_lDGS1VWjJiRmAs4Q7SEiY3XUHiIOPW-k2Nj5rxi9p3ud7g"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=10526645498269380700&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": null,
+      "enriched": true
     },
     {
       "name": "City Farmers Balmain",
       "category": "Shop",
       "address": "6-8 Darling Street, Balmain NSW 2041",
       "neighborhood": "Balmain",
-      "phone": "+61 2 9555 1194",
-      "website": "https://www.cityfarmers.com.au/",
+      "phone": "+61 466 349 077",
+      "website": "https://papajoe.com.au/",
       "description": "Pet and garden supply store with wide selection of dog food, toys, and accessories, plus knowledgeable staff for pet advice.",
-      "descriptionFr": "Magasin de fournitures pour animaux et jardinage avec large s\u00e9lection de nourriture pour chiens, jouets et accessoires, plus personnel comp\u00e9tent pour conseils sur animaux.",
+      "descriptionFr": "Magasin de fournitures pour animaux et jardinage avec large sélection de nourriture pour chiens, jouets et accessoires, plus personnel compétent pour conseils sur animaux.",
       "dogFeatures": {
         "waterBowl": true,
         "treats": true,
@@ -850,7 +1580,28 @@
       },
       "priceLevel": 2,
       "confidence": 85,
-      "reasoning": "Pet supply store chain with established dog-friendly policies"
+      "reasoning": "Pet supply store chain with established dog-friendly policies",
+      "googlePlaceId": "ChIJi6fFurSvEmsRkCHGsfTfuzs",
+      "latitude": -33.8583494,
+      "longitude": 151.1860656,
+      "rating": 4.3,
+      "reviewCount": 34,
+      "photoRefs": [
+        "places/ChIJi6fFurSvEmsRkCHGsfTfuzs/photos/AcnlKN3prS2mXSYIJOWEhSSrhu_1z1lliNlh35rdcF76WZyPf4cWEuDXM08iNyip_L0jaiheqGnFidk_TBibIUFKVy_quQhxUeicXnl30Et3h2pJC4Sax4BqgLkVwI8Hua6YzFmGTyl179EQoRZU-RhhIkXdDkjfTvrrnldHd87-pZVSdK0CTsuwXdmQQzjdpg0oIeZ88q2hvX2KQ-6kO7JEFqqNzi0EYxV71qtR4tcEVx1XCXjveL9wtWjSzh0JCiLazLLIETsCj7ININ3OxRj_lmoV01yWaFJ5G04x3ZtOX_-1PQ",
+        "places/ChIJi6fFurSvEmsRkCHGsfTfuzs/photos/AcnlKN0OPZ1HVJyOwbXNMVtTEVuAuAMvUEy8K2fJO5d6b1sU2Q3ylB5SmuWeIPlurPWUOCFbxGe5qdXb0k0Oo3OzHO85q2bcFq09YNtrw_-1iJhlKYG-bz80hgHP324leiXkBTvCi6Ab1gKn2bMTcN03KYRCfSBuyvph8RdUilFWYWjjR3vbdmG7Cn8LvQ9KapXo884xSO-lwLuJ2HGkCvGmluKYEZuV2gCJao1Uj0H6p_VqxJaSNqgDh99O6oKtbAx0A9HtOaWP3Ith293kTqbNrASD6K1p3DT5H_AP7J9m28krM1kunbuWkz_QXn_FxA_pRvou42fPWFikZhuKjGX9h7mPKrnQMUZ0o4O_gfe2yfx-krCE8xA-_IYleUcjsxAmQgik8dJRR2XQOyQ1BZrVz-c79VZemOEuTpBrNQ8DjWYXhyXuYEl7mYDCWAqKJ32C",
+        "places/ChIJi6fFurSvEmsRkCHGsfTfuzs/photos/AcnlKN0t_FXv2RH2afRVed-70SUOFMqnLUXvb8TbDEiHkOHxqwWPJnwnbewnWUN8kfz91jpiiq4-LYXZURoflRtulfd0FfR1Eh79KIUAa68tpiJhixYHI2pscCC14yBKE1cfO5l7WrfykahZnbD40HS7pZ8GN8Ah5HDfcEk4uKYXS-5a65atWn6uxnV7rjvZweMHjK22ImZIcA902dpKXcSz4jcdSHAl6ls6QXCvTCS0ePfMzYZmJU7vipOvDqUZVH7D67T26rhdMog8vyrpUt6IjOALjkPzmc2-dyO9bDE7dWY71QRgNFfy6kZnCQ1f5K-t2f3cssu0yPwUM2wKAGZ01XvRFNGdJlxlvltl7_RVr_ec1V-WUJWNU3jA4mQX_hwoeOm8hymO9fLLcVtQZ0EoGFBVO59PeYTHke8lO6oLoQ7KsOKH"
+      ],
+      "googleMapsUrl": "https://maps.google.com/?cid=4304280110930207120&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "openingHours": [
+        "Monday: 7:00 AM – 7:00 PM",
+        "Tuesday: 7:00 AM – 7:00 PM",
+        "Wednesday: 7:00 AM – 7:00 PM",
+        "Thursday: 7:00 AM – 7:00 PM",
+        "Friday: 7:00 AM – 8:00 PM",
+        "Saturday: 7:00 AM – 8:00 PM",
+        "Sunday: 7:00 AM – 7:00 PM"
+      ],
+      "enriched": true
     }
   ],
   "count": 37
