@@ -129,6 +129,12 @@ interface RawPlace {
   dogFeatures: Partial<DogFeatures>; priceLevel?: number;
   confidence?: number; reasoning?: string;
   latitude?: number; longitude?: number; rating?: number; reviewCount?: number;
+  // Google Places enrichment fields
+  googlePlaceId?: string;
+  photoRefs?: string[];
+  googleMapsUrl?: string;
+  openingHours?: string[];
+  enriched?: boolean;
 }
 
 async function loadCityJson(citySlug: string): Promise<RawPlace[]> {
@@ -176,7 +182,9 @@ function rawToEstablishment(raw: RawPlace, citySlug: string, cityConfig: CityCon
     phone: raw.phone, website: raw.website,
     priceLevel: (raw.priceLevel || 2) as 1 | 2 | 3 | 4,
     rating, reviewCount: raw.reviewCount || Math.floor(seededRandom(raw.name, 3) * 80 + 5),
-    images: [getDefaultImage(category, raw.name)],
+    images: raw.photoRefs && raw.photoRefs.length > 0
+      ? raw.photoRefs.map(ref => `/api/places/photo?name=${encodeURIComponent(ref)}&maxWidth=800`)
+      : [getDefaultImage(category, raw.name)],
     hours: {}, dogFeatures, amenities: [],
     neighborhood: raw.neighborhood,
     tier: 'free' as const,
