@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
   await supabase
     .from('User')
     .update({
-      email: `deleted-${dbUser.id}@deleted.pawscities.com`,
+      email: `deleted-${dbUser.id}@deleted.pawcities.com`,
       name: 'Deleted User',
       avatar: null,
       homeCity: null,
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({
     message: 'Account deletion initiated',
-    details: 'Your personal data has been anonymized. Reviews are retained in anonymized form per our data retention policy. You may contact support@pawscities.com for complete erasure.',
+    details: 'Your personal data has been anonymized. Reviews are retained in anonymized form per our data retention policy. You may contact support@pawcities.com for complete erasure.',
     gdprArticle: 'Article 17 - Right to Erasure',
   });
 }

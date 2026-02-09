@@ -88,7 +88,7 @@ export default function AdminLayout({
             <Link href="/admin" className="flex items-center gap-2">
               <span className="text-2xl">🐾</span>
               <span className="font-display text-xl font-bold text-primary-600">
-                PawsCities
+                Paw Cities
               </span>
               <span className="px-2 py-0.5 text-xs font-medium bg-primary-100 text-primary-700 rounded-full">
                 Admin
@@ -160,7 +160,7 @@ export default function AdminLayout({
         {sidebarOpen && (
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t">
             <div className="text-xs text-gray-500">
-              <p>PawsCities Admin v1.0</p>
+              <p>Paw Cities Admin v1.0</p>
               <p>Phase 2 - Database & Management</p>
             </div>
           </div>

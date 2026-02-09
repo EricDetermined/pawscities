@@ -1,4 +1,4 @@
-// City configurations for PawsCities platform
+// City configurations for Paw Cities platform
 
 export interface CityConfig {
   slug: string;

@@ -15,18 +15,18 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    default: 'PawsCities - Dog-Friendly Places Worldwide',
-    template: '%s | PawsCities',
+    default: 'Paw Cities - Dog-Friendly Places Worldwide',
+    template: '%s | Paw Cities',
   },
   description: 'Discover dog-friendly restaurants, cafes, parks, hotels and more in Geneva, Paris, London, and beyond.',
   keywords: ['dog-friendly', 'pet-friendly', 'restaurants', 'cafes', 'parks', 'hotels'],
-  authors: [{ name: 'PawsCities' }],
+  authors: [{ name: 'Paw Cities' }],
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://pawscities.com',
-    siteName: 'PawsCities',
-    title: 'PawsCities - Dog-Friendly Places Worldwide',
+    url: 'https://pawcities.com',
+    siteName: 'Paw Cities',
+    title: 'Paw Cities - Dog-Friendly Places Worldwide',
     description: 'Discover dog-friendly restaurants, cafes, parks, hotels and more.',
   },
 };

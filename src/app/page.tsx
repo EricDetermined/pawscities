@@ -13,7 +13,7 @@ export default function HomePage() {
           <div className="flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <span className="text-2xl">🐾</span>
-              <span className="font-display text-xl font-bold text-primary-600">PawsCities</span>
+              <span className="font-display text-xl font-bold text-primary-600">Paw Cities</span>
             </Link>
             <nav className="hidden md:flex items-center gap-8">
               <Link href="/" className="nav-link active">Home</Link>
@@ -82,7 +82,7 @@ export default function HomePage() {
       {/* Features */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="container mx-auto">
-          <h2 className="font-display text-3xl font-bold mb-8 text-center">Why PawsCities?</h2>
+          <h2 className="font-display text-3xl font-bold mb-8 text-center">Why Paw Cities?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
               <div className="text-4xl mb-4">🗺️</div>
@@ -109,13 +109,13 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="text-2xl">🐾</span>
-              <span className="font-display text-xl font-bold text-white">PawsCities</span>
+              <span className="font-display text-xl font-bold text-white">Paw Cities</span>
             </div>
             <div className="flex items-center gap-6 text-sm">
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
               <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
             </div>
-            <p className="text-sm text-gray-500">&copy; 2026 PawsCities. Made with love for dogs and their humans.</p>
+            <p className="text-sm text-gray-500">&copy; 2026 Paw Cities. Made with love for dogs and their humans.</p>
           </div>
         </div>
       </footer>

@@ -11,24 +11,24 @@ export default function TermsPage() {
       title: 'Terms of Service',
       lastUpdated: 'Last updated: February 2026',
       introduction:
-        'These Terms of Service ("Terms") govern your use of the PawsCities website and services (collectively, the "Service"). By accessing or using PawsCities, you agree to be bound by these Terms. If you do not agree to any part of these Terms, you may not use our Service.',
+        'These Terms of Service ("Terms") govern your use of the Paw Cities website and services (collectively, the "Service"). By accessing or using Paw Cities, you agree to be bound by these Terms. If you do not agree to any part of these Terms, you may not use our Service.',
       sections: [
         {
           title: '1. Acceptance of Terms',
           content:
-            'By using PawsCities, you represent that you are at least 13 years of age and have the authority to enter into these Terms. If you are using PawsCities on behalf of a company or organization, you represent that you have the authority to bind that entity to these Terms.',
+            'By using Paw Cities, you represent that you are at least 13 years of age and have the authority to enter into these Terms. If you are using Paw Cities on behalf of a company or organization, you represent that you have the authority to bind that entity to these Terms.',
         },
         {
           title: '2. Use License',
           content:
-            'We grant you a limited, non-exclusive, non-transferable, revocable license to access and use PawsCities for personal, non-commercial purposes. You may not:',
+            'We grant you a limited, non-exclusive, non-transferable, revocable license to access and use Paw Cities for personal, non-commercial purposes. You may not:',
           list: [
-            'Reproduce, distribute, or transmit any content from PawsCities without permission',
-            'Modify, adapt, or create derivative works based on PawsCities',
+            'Reproduce, distribute, or transmit any content from Paw Cities without permission',
+            'Modify, adapt, or create derivative works based on Paw Cities',
             'Decompile, reverse engineer, or attempt to discover source code',
-            'Rent, lease, or lend access to PawsCities',
+            'Rent, lease, or lend access to Paw Cities',
             'Transfer your rights or obligations under this license to any third party',
-            'Use PawsCities in a manner that violates any applicable laws',
+            'Use Paw Cities in a manner that violates any applicable laws',
           ],
         },
         {
@@ -47,7 +47,7 @@ export default function TermsPage() {
         {
           title: '4. Acceptable Use Policy',
           content:
-            'You agree not to use PawsCities in any manner that:',
+            'You agree not to use Paw Cities in any manner that:',
           list: [
             'Violates any applicable laws, regulations, or third-party rights',
             'Is abusive, threatening, defamatory, obscene, or otherwise offensive',
@@ -66,19 +66,19 @@ export default function TermsPage() {
         {
           title: '5. Intellectual Property Rights',
           content:
-            'All content on PawsCities, including text, graphics, logos, images, and software, is the property of PawsCities or its content providers and is protected by international copyright and intellectual property laws. You may not use our intellectual property without express written permission.',
+            'All content on Paw Cities, including text, graphics, logos, images, and software, is the property of Paw Cities or its content providers and is protected by international copyright and intellectual property laws. You may not use our intellectual property without express written permission.',
           subsections: [
             {
               subtitle: 'Your Content',
               content:
-                'When you submit content to PawsCities (including reviews, dog profiles, photos, check-ins), you retain ownership of that content. However, you grant PawsCities a worldwide, royalty-free, perpetual license to use, display, reproduce, modify, and distribute your content within our Service. You represent that your content does not infringe any third-party rights.',
+                'When you submit content to Paw Cities (including reviews, dog profiles, photos, check-ins), you retain ownership of that content. However, you grant Paw Cities a worldwide, royalty-free, perpetual license to use, display, reproduce, modify, and distribute your content within our Service. You represent that your content does not infringe any third-party rights.',
             },
           ],
         },
         {
           title: '6. Business Listings and Establishment Information',
           content:
-            'PawsCities provides information about dog-friendly businesses and establishments. We do not verify or guarantee the accuracy of this information. Business owners and operators may:',
+            'Paw Cities provides information about dog-friendly businesses and establishments. We do not verify or guarantee the accuracy of this information. Business owners and operators may:',
           list: [
             'Claim and manage their establishment listing',
             'Update establishment information and hours',
@@ -94,7 +94,7 @@ export default function TermsPage() {
             {
               subtitle: 'No Endorsement',
               content:
-                'PawsCities does not endorse any business or establishment. Inclusion on our platform does not constitute any warranty or recommendation.',
+                'Paw Cities does not endorse any business or establishment. Inclusion on our platform does not constitute any warranty or recommendation.',
             },
           ],
         },
@@ -118,19 +118,19 @@ export default function TermsPage() {
             {
               subtitle: 'Review Liability',
               content:
-                'PawsCities is not responsible for the accuracy or validity of user reviews. We do not verify reviewers\' experiences or endorse their opinions.',
+                'Paw Cities is not responsible for the accuracy or validity of user reviews. We do not verify reviewers\' experiences or endorse their opinions.',
             },
           ],
         },
         {
           title: '8. Check-ins and Location Data',
           content:
-            'When you check in to an establishment on PawsCities, the check-in may be visible to other users (based on your privacy settings). You are responsible for ensuring you have permission to check in and that your check-in does not violate any third-party rights.',
+            'When you check in to an establishment on Paw Cities, the check-in may be visible to other users (based on your privacy settings). You are responsible for ensuring you have permission to check in and that your check-in does not violate any third-party rights.',
         },
         {
           title: '9. Disclaimer of Warranties',
           content:
-            'PawsCities is provided on an "AS IS" and "AS AVAILABLE" basis. To the fullest extent permitted by law, we disclaim all warranties, whether express or implied, including but not limited to:',
+            'Paw Cities is provided on an "AS IS" and "AS AVAILABLE" basis. To the fullest extent permitted by law, we disclaim all warranties, whether express or implied, including but not limited to:',
           list: [
             'Implied warranties of merchantability, fitness for a particular purpose, and non-infringement',
             'Warranties regarding the accuracy, completeness, or timeliness of information',
@@ -141,36 +141,36 @@ export default function TermsPage() {
         {
           title: '10. Limitation of Liability',
           content:
-            'To the fullest extent permitted by law, PawsCities and its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to damages for lost profits, loss of data, or interruption of business, arising from or related to your use of PawsCities, even if we have been advised of the possibility of such damages.',
+            'To the fullest extent permitted by law, Paw Cities and its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to damages for lost profits, loss of data, or interruption of business, arising from or related to your use of Paw Cities, even if we have been advised of the possibility of such damages.',
           subsections: [
             {
               subtitle: 'Liability Cap',
               content:
-                'Our total liability arising from or relating to these Terms shall not exceed the amount you have paid to PawsCities in the 12 months preceding the claim, or $100 USD, whichever is greater.',
+                'Our total liability arising from or relating to these Terms shall not exceed the amount you have paid to Paw Cities in the 12 months preceding the claim, or $100 USD, whichever is greater.',
             },
           ],
         },
         {
           title: '11. Indemnification',
           content:
-            'You agree to indemnify, defend, and hold harmless PawsCities and its officers, directors, employees, and agents from and against any and all claims, damages, losses, liabilities, and expenses (including reasonable attorneys\' fees) arising from or related to:',
+            'You agree to indemnify, defend, and hold harmless Paw Cities and its officers, directors, employees, and agents from and against any and all claims, damages, losses, liabilities, and expenses (including reasonable attorneys\' fees) arising from or related to:',
           list: [
-            'Your use of PawsCities or violation of these Terms',
+            'Your use of Paw Cities or violation of these Terms',
             'Your violation of any applicable laws or regulations',
             'Your infringement of any third-party intellectual property rights',
-            'Your content or submissions to PawsCities',
+            'Your content or submissions to Paw Cities',
             'Your violation of any third-party rights',
           ],
         },
         {
           title: '12. Modification and Termination',
           content:
-            'We reserve the right to modify, suspend, or discontinue PawsCities at any time, with or without notice. We may also modify these Terms at any time. Changes become effective when posted on our website. Your continued use of PawsCities after modifications constitutes acceptance of the updated Terms.',
+            'We reserve the right to modify, suspend, or discontinue Paw Cities at any time, with or without notice. We may also modify these Terms at any time. Changes become effective when posted on our website. Your continued use of Paw Cities after modifications constitutes acceptance of the updated Terms.',
           subsections: [
             {
               subtitle: 'Account Termination',
               content:
-                'We reserve the right to terminate your account and access to PawsCities if you violate these Terms or engage in behavior we determine to be harmful to PawsCities or other users.',
+                'We reserve the right to terminate your account and access to Paw Cities if you violate these Terms or engage in behavior we determine to be harmful to Paw Cities or other users.',
             },
             {
               subtitle: 'Survival',
@@ -187,7 +187,7 @@ export default function TermsPage() {
             {
               subtitle: 'Binding Arbitration',
               content:
-                'By using PawsCities, you agree that any dispute shall be resolved by binding arbitration administered by arbitration authorities in Geneva, Switzerland, rather than in court, except that you may pursue claims in small claims court if eligible.',
+                'By using Paw Cities, you agree that any dispute shall be resolved by binding arbitration administered by arbitration authorities in Geneva, Switzerland, rather than in court, except that you may pursue claims in small claims court if eligible.',
             },
             {
               subtitle: 'Class Action Waiver',
@@ -199,12 +199,12 @@ export default function TermsPage() {
         {
           title: '14. Third-Party Links and Services',
           content:
-            'PawsCities may contain links to third-party websites and services. We do not control, endorse, or assume responsibility for the content, accuracy, or practices of these third-party sites. Your use of third-party services is subject to their own terms of service and privacy policies.',
+            'Paw Cities may contain links to third-party websites and services. We do not control, endorse, or assume responsibility for the content, accuracy, or practices of these third-party sites. Your use of third-party services is subject to their own terms of service and privacy policies.',
         },
         {
           title: '15. Geographic Restrictions',
           content:
-            'PawsCities is operated primarily for users in Europe, particularly Switzerland, France, and the United Kingdom. We make no representation that PawsCities is accessible or appropriate for use in other locations. If you access PawsCities from outside these regions, you do so at your own risk and are responsible for compliance with local laws.',
+            'Paw Cities is operated primarily for users in Europe, particularly Switzerland, France, and the United Kingdom. We make no representation that Paw Cities is accessible or appropriate for use in other locations. If you access Paw Cities from outside these regions, you do so at your own risk and are responsible for compliance with local laws.',
         },
         {
           title: '16. Severability',
@@ -214,7 +214,7 @@ export default function TermsPage() {
         {
           title: '17. Entire Agreement',
           content:
-            'These Terms, together with our Privacy Policy, constitute the entire agreement between you and PawsCities regarding your use of our Service and supersede all prior agreements, understandings, and negotiations.',
+            'These Terms, together with our Privacy Policy, constitute the entire agreement between you and Paw Cities regarding your use of our Service and supersede all prior agreements, understandings, and negotiations.',
         },
         {
           title: '18. Contact Information',
@@ -231,24 +231,24 @@ export default function TermsPage() {
       title: 'Conditions d\'Utilisation',
       lastUpdated: 'Dernière mise à jour : février 2026',
       introduction:
-        'Ces Conditions d\'Utilisation régissent votre utilisation du site web et des services de PawsCities (collectivement, le « Service »). En accédant ou en utilisant PawsCities, vous acceptez d\'être lié par ces Conditions. Si vous n\'acceptez pas une partie quelconque de ces Conditions, vous ne pouvez pas utiliser notre Service.',
+        'Ces Conditions d\'Utilisation régissent votre utilisation du site web et des services de Paw Cities (collectivement, le « Service »). En accédant ou en utilisant Paw Cities, vous acceptez d\'être lié par ces Conditions. Si vous n\'acceptez pas une partie quelconque de ces Conditions, vous ne pouvez pas utiliser notre Service.',
       sections: [
         {
           title: '1. Acceptation des Conditions',
           content:
-            'En utilisant PawsCities, vous déclarez être âgé d\'au moins 13 ans et avoir le pouvoir de conclure ces Conditions. Si vous utilisez PawsCities au nom d\'une entreprise ou d\'une organisation, vous déclarez avoir le pouvoir de lier cette entité à ces Conditions.',
+            'En utilisant Paw Cities, vous déclarez être âgé d\'au moins 13 ans et avoir le pouvoir de conclure ces Conditions. Si vous utilisez Paw Cities au nom d\'une entreprise ou d\'une organisation, vous déclarez avoir le pouvoir de lier cette entité à ces Conditions.',
         },
         {
           title: '2. Licence d\'utilisation',
           content:
-            'Nous vous accordons une licence limitée, non-exclusive, incessible et révocable pour accéder et utiliser PawsCities à des fins personnelles et non commerciales. Vous ne pouvez pas :',
+            'Nous vous accordons une licence limitée, non-exclusive, incessible et révocable pour accéder et utiliser Paw Cities à des fins personnelles et non commerciales. Vous ne pouvez pas :',
           list: [
-            'Reproduire, distribuer ou transmettre le contenu de PawsCities sans permission',
-            'Modifier, adapter ou créer des travaux dérivés basés sur PawsCities',
+            'Reproduire, distribuer ou transmettre le contenu de Paw Cities sans permission',
+            'Modifier, adapter ou créer des travaux dérivés basés sur Paw Cities',
             'Décompiler, procéder à de l\'ingénierie inverse ou tenter de découvrir le code source',
-            'Louer, affermer ou prêter l\'accès à PawsCities',
+            'Louer, affermer ou prêter l\'accès à Paw Cities',
             'Transférer vos droits ou obligations en vertu de cette licence à un tiers',
-            'Utiliser PawsCities d\'une manière qui viole toute loi applicable',
+            'Utiliser Paw Cities d\'une manière qui viole toute loi applicable',
           ],
         },
         {
@@ -267,7 +267,7 @@ export default function TermsPage() {
         {
           title: '4. Politique d\'utilisation acceptable',
           content:
-            'Vous acceptez de ne pas utiliser PawsCities de manière à :',
+            'Vous acceptez de ne pas utiliser Paw Cities de manière à :',
           list: [
             'Violer toute loi, réglementation ou droit de tiers applicable',
             'Être abusif, menaçant, diffamatoire, obscène ou autrement offensant',
@@ -286,19 +286,19 @@ export default function TermsPage() {
         {
           title: '5. Droits de propriété intellectuelle',
           content:
-            'Tout contenu sur PawsCities, y compris le texte, les graphiques, les logos, les images et les logiciels, est la propriété de PawsCities ou de ses fournisseurs de contenu et est protégé par les lois internationales sur les droits d\'auteur et la propriété intellectuelle.',
+            'Tout contenu sur Paw Cities, y compris le texte, les graphiques, les logos, les images et les logiciels, est la propriété de Paw Cities ou de ses fournisseurs de contenu et est protégé par les lois internationales sur les droits d\'auteur et la propriété intellectuelle.',
           subsections: [
             {
               subtitle: 'Votre contenu',
               content:
-                'Lorsque vous soumettez du contenu à PawsCities, vous conservez la propriété de ce contenu. Cependant, vous accordez à PawsCities une licence mondiale, gratuite, perpétuelle pour utiliser, afficher, reproduire, modifier et distribuer votre contenu.',
+                'Lorsque vous soumettez du contenu à Paw Cities, vous conservez la propriété de ce contenu. Cependant, vous accordez à Paw Cities une licence mondiale, gratuite, perpétuelle pour utiliser, afficher, reproduire, modifier et distribuer votre contenu.',
             },
           ],
         },
         {
           title: '6. Annonces commerciales et informations d\'établissement',
           content:
-            'PawsCities fournit des informations sur les entreprises et établissements accueillant les chiens. Nous ne vérifions ni ne garantissons l\'exactitude de ces informations.',
+            'Paw Cities fournit des informations sur les entreprises et établissements accueillant les chiens. Nous ne vérifions ni ne garantissons l\'exactitude de ces informations.',
           list: [
             'Les propriétaires d\'entreprises peuvent réclamer et gérer leurs annonces',
             'Mettre à jour les informations et heures d\'établissement',
@@ -321,12 +321,12 @@ export default function TermsPage() {
         {
           title: '8. Enregistrements et données de localisation',
           content:
-            'Lorsque vous vous enregistrez dans un établissement sur PawsCities, l\'enregistrement peut être visible pour d\'autres utilisateurs. Vous êtes responsable de veiller à avoir la permission de vous enregistrer.',
+            'Lorsque vous vous enregistrez dans un établissement sur Paw Cities, l\'enregistrement peut être visible pour d\'autres utilisateurs. Vous êtes responsable de veiller à avoir la permission de vous enregistrer.',
         },
         {
           title: '9. Exclusion de garanties',
           content:
-            'PawsCities est fourni en l\'état (« AS IS ») et selon la disponibilité (« AS AVAILABLE »). Dans la mesure maximale permise par la loi, nous déclinons toutes les garanties, explicites ou implicites.',
+            'Paw Cities est fourni en l\'état (« AS IS ») et selon la disponibilité (« AS AVAILABLE »). Dans la mesure maximale permise par la loi, nous déclinons toutes les garanties, explicites ou implicites.',
           list: [
             'Garanties implicites de commercialité et d\'adaptation à un usage particulier',
             'Garanties concernant l\'exactitude ou l\'intégralité des informations',
@@ -337,23 +337,23 @@ export default function TermsPage() {
         {
           title: '10. Limitation de responsabilité',
           content:
-            'Dans la mesure maximale permise par la loi, PawsCities et ses dirigeants, administrateurs, employés et agents ne seront pas responsables des dommages indirects, accessoires, spéciaux ou consécutifs, y compris les dommages liés à la perte de profits ou de données.',
+            'Dans la mesure maximale permise par la loi, Paw Cities et ses dirigeants, administrateurs, employés et agents ne seront pas responsables des dommages indirects, accessoires, spéciaux ou consécutifs, y compris les dommages liés à la perte de profits ou de données.',
         },
         {
           title: '11. Indemnisation',
           content:
-            'Vous acceptez d\'indemniser et de tenir inoffensif PawsCities de tous les réclamations, dommages, pertes et responsabilités découlant de :',
+            'Vous acceptez d\'indemniser et de tenir inoffensif Paw Cities de tous les réclamations, dommages, pertes et responsabilités découlant de :',
           list: [
-            'Votre utilisation de PawsCities ou violation de ces Conditions',
+            'Votre utilisation de Paw Cities ou violation de ces Conditions',
             'Votre violation de lois ou réglementations applicables',
             'Votre violation des droits de propriété intellectuelle de tiers',
-            'Votre contenu ou soumissions à PawsCities',
+            'Votre contenu ou soumissions à Paw Cities',
           ],
         },
         {
           title: '12. Modification et résiliation',
           content:
-            'Nous nous réservons le droit de modifier, suspendre ou interrompre PawsCities à tout moment. Les modifications prennent effet lors de leur publication sur notre site web.',
+            'Nous nous réservons le droit de modifier, suspendre ou interrompre Paw Cities à tout moment. Les modifications prennent effet lors de leur publication sur notre site web.',
           subsections: [
             {
               subtitle: 'Résiliation du compte',
@@ -370,12 +370,12 @@ export default function TermsPage() {
         {
           title: '14. Liens vers des tiers',
           content:
-            'PawsCities peut contenir des liens vers des sites web et services tiers. Nous ne contrôlons pas, n\'endossons pas et n\'assumons pas la responsabilité du contenu ou des pratiques de ces sites tiers.',
+            'Paw Cities peut contenir des liens vers des sites web et services tiers. Nous ne contrôlons pas, n\'endossons pas et n\'assumons pas la responsabilité du contenu ou des pratiques de ces sites tiers.',
         },
         {
           title: '15. Restrictions géographiques',
           content:
-            'PawsCities est exploité principalement pour les utilisateurs en Europe, notamment en Suisse, en France et au Royaume-Uni. Si vous accédez à PawsCities en dehors de ces régions, vous le faites à vos risques et périls.',
+            'Paw Cities est exploité principalement pour les utilisateurs en Europe, notamment en Suisse, en France et au Royaume-Uni. Si vous accédez à Paw Cities en dehors de ces régions, vous le faites à vos risques et périls.',
         },
         {
           title: '16. Divisibilité',
@@ -385,7 +385,7 @@ export default function TermsPage() {
         {
           title: '17. Accord intégral',
           content:
-            'Ces Conditions, ainsi que notre Politique de Confidentialité, constituent l\'accord intégral entre vous et PawsCities et remplacent tous les accords, ententes et négociations antérieurs.',
+            'Ces Conditions, ainsi que notre Politique de Confidentialité, constituent l\'accord intégral entre vous et Paw Cities et remplacent tous les accords, ententes et négociations antérieurs.',
         },
         {
           title: '18. Informations de contact',
@@ -411,7 +411,7 @@ export default function TermsPage() {
             <Link href="/" className="flex items-center gap-2">
               <span className="text-2xl">🐾</span>
               <span className="font-display text-xl font-bold text-primary-600">
-                PawsCities
+                Paw Cities
               </span>
             </Link>
             <nav className="flex items-center gap-8">
@@ -544,8 +544,8 @@ export default function TermsPage() {
           <div className="max-w-4xl mx-auto text-center text-gray-600 text-sm">
             <p>
               {language === 'en'
-                ? '© 2026 PawsCities. All rights reserved. | '
-                : '© 2026 PawsCities. Tous droits réservés. | '}
+                ? '© 2026 Paw Cities. All rights reserved. | '
+                : '© 2026 Paw Cities. Tous droits réservés. | '}
               <Link href="/privacy" className="hover:text-gray-900">
                 {language === 'en' ? 'Privacy' : 'Confidentialité'}
               </Link>

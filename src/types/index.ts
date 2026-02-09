@@ -1,5 +1,5 @@
 // ============================================
-// Core Types for PawsCities Multi-City Platform
+// Core Types for Paw Cities Multi-City Platform
 // ============================================
 
 // City Types

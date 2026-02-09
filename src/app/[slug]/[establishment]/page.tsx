@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const place = await getEstablishment(params.slug, params.establishment);
   if (!city || !place) return {};
   return {
-    title: `${place.name} - Dog-Friendly in ${city.name} | PawsCities`,
+    title: `${place.name} - Dog-Friendly in ${city.name} | Paw Cities`,
     description: place.description,
   };
 }
@@ -87,7 +87,7 @@ export default async function EstablishmentPage({ params }: Props) {
           <div className="flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <span className="text-2xl">🐾</span>
-              <span className="font-display text-xl font-bold text-primary-600">PawsCities</span>
+              <span className="font-display text-xl font-bold text-primary-600">Paw Cities</span>
             </Link>
             <nav className="flex items-center gap-4 text-sm">
               <Link href={`/${city.slug}`} className="flex items-center gap-1 text-gray-600 hover:text-primary-600 transition-colors">
@@ -421,8 +421,8 @@ export default async function EstablishmentPage({ params }: Props) {
                 <button className="flex-1 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
                   Facebook
                 </button>
-                <button className="flex-1 py-2 bg-sky-400 text-white rounded-lg text-sm font-medium hover:bg-sky-500 transition-colors">
-                  Twitter
+                <button className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg text-sm font-medium hover:from-purple-600 hover:to-pink-600 transition-colors">
+                  Instagram
                 </button>
                 <button className="flex-1 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
                   Copy Link
@@ -483,13 +483,13 @@ export default async function EstablishmentPage({ params }: Props) {
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🐾</span>
-            <span className="font-display text-xl font-bold text-white">PawsCities</span>
+            <span className="font-display text-xl font-bold text-white">Paw Cities</span>
           </div>
           <div className="flex items-center gap-6 text-sm">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
           </div>
-          <p className="text-sm text-gray-500">2026 PawsCities. Made with love for dogs and their humans.</p>
+          <p className="text-sm text-gray-500">© 2026 Paw Cities. Made with love for dogs and their humans.</p>
         </div>
       </footer>
     </div>

@@ -11,7 +11,7 @@ export default function PrivacyPage() {
       title: 'Privacy Policy',
       lastUpdated: 'Last updated: February 2026',
       introduction:
-        'PawsCities ("we," "our," or "the Company") is committed to protecting your privacy and ensuring you have a positive experience on our website and services. This Privacy Policy explains how we collect, use, disclose, and safeguard your information in accordance with the General Data Protection Regulation (GDPR) and other applicable privacy laws.',
+        'Paw Cities ("we," "our," or "the Company") is committed to protecting your privacy and ensuring you have a positive experience on our website and services. This Privacy Policy explains how we collect, use, disclose, and safeguard your information in accordance with the General Data Protection Regulation (GDPR) and other applicable privacy laws.',
       sections: [
         {
           title: '1. Information We Collect',
@@ -203,12 +203,12 @@ export default function PrivacyPage() {
         {
           title: '10. Children\'s Privacy',
           content:
-            'PawsCities is not intended for children under 13 years of age, and we do not knowingly collect personal data from children under 13. If we become aware that we have collected data from a child under 13, we will delete it immediately. Parents or guardians who believe we have collected information about their child may contact us at the email below.',
+            'Paw Cities is not intended for children under 13 years of age, and we do not knowingly collect personal data from children under 13. If we become aware that we have collected data from a child under 13, we will delete it immediately. Parents or guardians who believe we have collected information about their child may contact us at the email below.',
         },
         {
           title: '11. Changes to This Privacy Policy',
           content:
-            'We may update this Privacy Policy periodically to reflect changes in our practices, technology, regulations, or other factors. We will notify you of material changes by updating the "Last Updated" date and prominently displaying changes on our website. Your continued use of PawsCities after changes constitutes your acceptance of the updated Privacy Policy.',
+            'We may update this Privacy Policy periodically to reflect changes in our practices, technology, regulations, or other factors. We will notify you of material changes by updating the "Last Updated" date and prominently displaying changes on our website. Your continued use of Paw Cities after changes constitutes your acceptance of the updated Privacy Policy.',
         },
         {
           title: '12. Contact Information & Data Protection Officer',
@@ -230,7 +230,7 @@ export default function PrivacyPage() {
       title: 'Politique de Confidentialité',
       lastUpdated: 'Dernière mise à jour : février 2026',
       introduction:
-        'PawsCities (« nous », « notre » ou « la Société ») s\'engage à protéger votre vie privée et à vous offrir une expérience positive sur notre site web et nos services. Cette Politique de Confidentialité explique comment nous collectons, utilisons, divulguons et protégeons vos informations conformément au Règlement Général sur la Protection des Données (RGPD) et à d\'autres lois applicables sur la protection de la vie privée.',
+        'Paw Cities (« nous », « notre » ou « la Société ») s\'engage à protéger votre vie privée et à vous offrir une expérience positive sur notre site web et nos services. Cette Politique de Confidentialité explique comment nous collectons, utilisons, divulguons et protégeons vos informations conformément au Règlement Général sur la Protection des Données (RGPD) et à d\'autres lois applicables sur la protection de la vie privée.',
       sections: [
         {
           title: '1. Informations que nous collectons',
@@ -422,12 +422,12 @@ export default function PrivacyPage() {
         {
           title: '10. Confidentialité des enfants',
           content:
-            'PawsCities n\'est pas destiné aux enfants de moins de 13 ans. Si nous découvrons que nous avons collecté des données d\'un enfant de moins de 13 ans, nous les supprimerons immédiatement.',
+            'Paw Cities n\'est pas destiné aux enfants de moins de 13 ans. Si nous découvrons que nous avons collecté des données d\'un enfant de moins de 13 ans, nous les supprimerons immédiatement.',
         },
         {
           title: '11. Modifications de cette politique de confidentialité',
           content:
-            'Nous pouvons mettre à jour cette Politique de Confidentialité régulièrement pour refléter les changements dans nos pratiques et réglementations. Votre utilisation continue de PawsCities après les modifications constitue votre acceptation de la Politique de Confidentialité mise à jour.',
+            'Nous pouvons mettre à jour cette Politique de Confidentialité régulièrement pour refléter les changements dans nos pratiques et réglementations. Votre utilisation continue de Paw Cities après les modifications constitue votre acceptation de la Politique de Confidentialité mise à jour.',
         },
         {
           title: '12. Informations de contact & Délégué à la Protection des Données',
@@ -458,7 +458,7 @@ export default function PrivacyPage() {
             <Link href="/" className="flex items-center gap-2">
               <span className="text-2xl">🐾</span>
               <span className="font-display text-xl font-bold text-primary-600">
-                PawsCities
+                Paw Cities
               </span>
             </Link>
             <nav className="flex items-center gap-8">
@@ -596,8 +596,8 @@ export default function PrivacyPage() {
           <div className="max-w-4xl mx-auto text-center text-gray-600 text-sm">
             <p>
               {language === 'en'
-                ? '© 2026 PawsCities. All rights reserved. | '
-                : '© 2026 PawsCities. Tous droits réservés. | '}
+                ? '© 2026 Paw Cities. All rights reserved. | '
+                : '© 2026 Paw Cities. Tous droits réservés. | '}
               <Link href="/privacy" className="hover:text-gray-900">
                 {language === 'en' ? 'Privacy' : 'Confidentialité'}
               </Link>

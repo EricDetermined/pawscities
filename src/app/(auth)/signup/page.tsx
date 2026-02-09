@@ -73,7 +73,7 @@ export default function SignUpPage() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2">
             <span className="text-4xl">🐾</span>
-            <span className="text-2xl font-bold text-orange-600">PawsCities</span>
+            <span className="text-2xl font-bold text-orange-600">Paw Cities</span>
           </Link>
           <p className="text-gray-600 mt-2">Create your account and join the pack!</p>
         </div>

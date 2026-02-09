@@ -1,4 +1,4 @@
-// Google Places API (New) client for PawsCities
+// Google Places API (New) client for Paw Cities
 // Uses the newer places.googleapis.com endpoint
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY || '';

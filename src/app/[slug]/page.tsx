@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   const city = getCityConfig(params.slug);
   if (!city) return {};
   return {
-    title: `Dog-Friendly Places in ${city.name} | PawsCities`,
+    title: `Dog-Friendly Places in ${city.name} | Paw Cities`,
     description: city.description,
   };
 }

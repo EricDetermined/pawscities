@@ -52,7 +52,7 @@ export async function GET() {
     },
   };
 
-  const filename = `pawscities-data-export-${new Date().toISOString().split('T')[0]}.json`;
+  const filename = `pawcities-data-export-${new Date().toISOString().split('T')[0]}.json`;
 
   return new NextResponse(JSON.stringify(exportData, null, 2), {
     status: 200,

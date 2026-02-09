@@ -31,7 +31,7 @@ export function CookieConsent() {
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="text-sm text-gray-600">
           <p>
-            We use cookies to improve your experience. By continuing to use PawsCities, you agree to our{' '}
+            We use cookies to improve your experience. By continuing to use Paw Cities, you agree to our{' '}
             <Link href="/privacy" className="text-orange-600 hover:underline">Privacy Policy</Link>.
           </p>
         </div>
