@@ -1,12 +1,28 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CITIES } from '@/lib/cities-config';
 
 export default function CitiesPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [cityCounts, setCityCounts] = useState<Record<string, number>>({});
   const cities = Object.values(CITIES);
+
+  useEffect(() => {
+    async function fetchCityCounts() {
+      try {
+        const resp = await fetch('/api/admin/city-stats');
+        if (resp.ok) {
+          const data = await resp.json();
+          setCityCounts(data.counts || {});
+        }
+      } catch (err) {
+        console.error('Failed to fetch city counts:', err);
+      }
+    }
+    fetchCityCounts();
+  }, []);
 
   const filteredCities = cities.filter(
     (city) =>
@@ -103,7 +119,7 @@ export default function CitiesPage() {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {filteredCities.map((city) => (
-              <CityRow key={city.slug} city={city} />
+              <CityRow key={city.slug} city={city} establishmentCount={cityCounts[city.slug] ?? null} />
             ))}
           </tbody>
         </table>
@@ -139,11 +155,8 @@ export default function CitiesPage() {
   );
 }
 
-function CityRow({ city }: { city: (typeof CITIES)[keyof typeof CITIES] }) {
+function CityRow({ city, establishmentCount }: { city: (typeof CITIES)[keyof typeof CITIES]; establishmentCount: number | null }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // Mock data - will come from database
-  const establishmentCount = city.slug === 'geneva' ? 24 : 0;
 
   const countryFlags: Record<string, string> = {
     Switzerland: '🇨🇭',
@@ -174,7 +187,7 @@ function CityRow({ city }: { city: (typeof CITIES)[keyof typeof CITIES] }) {
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
-        <span className="text-gray-900">{establishmentCount}</span>
+        <span className="text-gray-900">{establishmentCount !== null ? establishmentCount : '...'}</span>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <span

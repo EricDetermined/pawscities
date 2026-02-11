@@ -6,16 +6,27 @@ import Link from 'next/link';
 interface Establishment {
   id: string;
   name: string;
-  category: string;
+  slug: string;
+  category_id: string;
   city_id: string;
   status: string;
   tier: string;
   rating: number;
-  reviews_count: number;
+  review_count: number;
   claimed_by?: string;
+  is_verified: boolean;
+  is_featured: boolean;
+  address?: string;
+  neighborhood?: string;
   cities?: {
     id: string;
     name: string;
+    slug: string;
+  };
+  categories?: {
+    id: string;
+    name: string;
+    slug: string;
   };
 }
 
@@ -177,6 +188,10 @@ export default function EstablishmentsPage() {
             <option value="paris">Paris</option>
             <option value="london">London</option>
             <option value="losangeles">Los Angeles</option>
+            <option value="newyork">New York City</option>
+            <option value="barcelona">Barcelona</option>
+            <option value="sydney">Sydney</option>
+            <option value="tokyo">Tokyo</option>
           </select>
 
           {/* Category Filter */}
@@ -333,14 +348,14 @@ function EstablishmentRow({
         <div>
           <p className="font-medium text-gray-900">{establishment.name}</p>
           <p className="text-sm text-gray-500">
-            ID: {establishment.id.slice(0, 8)}
+            {establishment.address ? establishment.address.slice(0, 30) + (establishment.address.length > 30 ? '...' : '') : establishment.id.slice(0, 8)}
           </p>
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full text-sm">
-          {categoryIcons[establishment.category] || '📍'}
-          <span className="capitalize">{establishment.category}</span>
+          {categoryIcons[establishment.categories?.slug || ''] || '📍'}
+          <span className="capitalize">{establishment.categories?.name || 'Unknown'}</span>
         </span>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
@@ -351,8 +366,8 @@ function EstablishmentRow({
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex items-center gap-1">
           <span className="text-yellow-500">★</span>
-          <span className="font-medium">{establishment.rating.toFixed(1)}</span>
-          <span className="text-gray-400">({establishment.reviews_count})</span>
+          <span className="font-medium">{Number(establishment.rating).toFixed(1)}</span>
+          <span className="text-gray-400">({establishment.review_count})</span>
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">

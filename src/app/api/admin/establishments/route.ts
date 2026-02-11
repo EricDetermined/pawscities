@@ -26,32 +26,65 @@ export async function GET(request: NextRequest) {
     const sortOrder = searchParams.get('sortOrder') === 'asc' ? 'asc' : 'desc';
 
     // Validate sortBy
-    const validSortFields = ['rating', 'name', 'created_at', 'reviews_count'];
+    const validSortFields = ['rating', 'name', 'created_at', 'review_count'];
     const sortField = validSortFields.includes(sortBy) ? sortBy : 'created_at';
 
-    // Build query
+    // Build query with correct column names
     let query = supabase.from('establishments').select(`
       id,
       name,
-      category,
+      slug,
+      category_id,
       city_id,
       status,
       tier,
       rating,
-      reviews_count,
+      review_count,
       claimed_by,
+      is_verified,
+      is_featured,
+      address,
+      neighborhood,
       created_at,
       updated_at,
-      cities(id, name)
+      cities(id, name, slug),
+      categories(id, name, slug)
     `, { count: 'exact' });
 
     // Apply filters
     if (city) {
-      query = query.eq('city_id', city);
+      // Support both city slug and city UUID
+      const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(city);
+      if (isUUID) {
+        query = query.eq('city_id', city);
+      } else {
+        // Look up city ID from slug
+        const { data: cityData } = await supabase
+          .from('cities')
+          .select('id')
+          .eq('slug', city)
+          .single();
+        if (cityData) {
+          query = query.eq('city_id', cityData.id);
+        }
+      }
     }
 
     if (category) {
-      query = query.eq('category', category);
+      // Support both category slug and category UUID
+      const isCatUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(category);
+      if (isCatUUID) {
+        query = query.eq('category_id', category);
+      } else {
+        const { data: catData } = await supabase
+          .from('categories')
+          .select('id')
+          .eq('slug', category)
+          .single();
+        if (catData) {
+          query = query.eq('category_id', catData.id);
+        }
+      }
     }
 
     if (status) {
@@ -132,20 +165,17 @@ export async function POST(request: NextRequest) {
         {
           name,
           description: description || null,
-          category,
+          category_id: category,
           city_id,
-          address: address || null,
+          address: address || '',
           phone: phone || null,
           email: email || null,
           website: website || null,
-          hours: hours || null,
-          image_url: image_url || null,
+          slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
           status: 'ACTIVE',
           tier: 'free',
           rating: 0,
-          reviews_count: 0,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
+          review_count: 0,
         },
       ])
       .select();

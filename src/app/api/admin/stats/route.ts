@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     const { count: usersCount } = await supabase
       .from('users')
       .select('*', { count: 'exact', head: true })
-      .eq('suspended', false);
+      .eq('is_suspended', false);
 
     // Get pending claims count
     const { count: pendingClaimsCount } = await supabase
