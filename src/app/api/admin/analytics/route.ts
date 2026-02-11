@@ -1,4 +1,3 @@
-import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/admin';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -34,11 +33,12 @@ export async function GET(request: NextRequest) {
       pageViewsByDay[date] = (pageViewsByDay[date] || 0) + 1;
     });
 
-    // Get top establishments by views
+    // Get top establishments by views (page_view events with establishment_id set)
     const { data: topEstablishmentsData, error: topEstError } = await supabase
       .from('analytics_events')
       .select('establishment_id')
-      .eq('event_type', 'establishment_view')
+      .eq('event_type', 'page_view')
+      .not('establishment_id', 'is', null)
       .gte('created_at', thirtyDaysAgo);
 
     if (topEstError) {
@@ -59,37 +59,44 @@ export async function GET(request: NextRequest) {
       .slice(0, 10)
       .map(([id]) => id);
 
-    const { data: topEstablishments, error: estDetailsError } = await supabase
-      .from('establishments')
-      .select('id, name, category')
-      .in('id', topEstIds);
+    let topEstablishmentsWithCounts: any[] = [];
+    if (topEstIds.length > 0) {
+      const { data: topEstablishments, error: estDetailsError } = await supabase
+        .from('establishments')
+        .select('id, name, category_id, categories(name)')
+        .in('id', topEstIds);
 
-    if (estDetailsError) {
-      throw new Error(`Failed to fetch establishment details: ${estDetailsError.message}`);
+      if (estDetailsError) {
+        throw new Error(`Failed to fetch establishment details: ${estDetailsError.message}`);
+      }
+
+      topEstablishmentsWithCounts = (topEstablishments || [])
+        .map((est: any) => ({
+          id: est.id,
+          name: est.name,
+          category: est.categories?.name || 'Unknown',
+          views: establishmentViewCounts[est.id],
+        }))
+        .sort((a: any, b: any) => b.views - a.views);
     }
-
-    const topEstablishmentsWithCounts = topEstablishments?.map((est) => ({
-      ...est,
-      views: establishmentViewCounts[est.id],
-    })) || [];
 
     // Get top search queries
     const { data: searchEventsData, error: searchError } = await supabase
       .from('analytics_events')
-      .select('query_string')
+      .select('search_query')
       .eq('event_type', 'search')
       .gte('created_at', thirtyDaysAgo)
-      .not('query_string', 'is', null);
+      .not('search_query', 'is', null);
 
     if (searchError) {
       throw new Error(`Failed to fetch search queries: ${searchError.message}`);
     }
 
     const searchQueryCounts: Record<string, number> = {};
-    searchEventsData?.forEach((event) => {
-      if (event.query_string) {
-        searchQueryCounts[event.query_string] =
-          (searchQueryCounts[event.query_string] || 0) + 1;
+    searchEventsData?.forEach((event: any) => {
+      if (event.search_query) {
+        searchQueryCounts[event.search_query] =
+          (searchQueryCounts[event.search_query] || 0) + 1;
       }
     });
 

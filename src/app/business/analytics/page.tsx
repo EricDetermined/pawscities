@@ -4,6 +4,19 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { TierBadge } from '@/components/business/TierBadge';
 import { PremiumFeature } from '@/components/business/PremiumFeature';
+import {
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from 'recharts';
 
 interface AnalyticsData {
   summary: {
@@ -138,10 +151,25 @@ export default function AnalyticsPage() {
     );
   }
 
-  const maxViewsPerDay = Math.max(
-    ...analytics.daily.map((d) => d.views),
-    10
-  );
+  // Prepare chart data with formatted labels
+  const chartData = analytics.daily.map((d) => ({
+    ...d,
+    label: new Date(d.date + 'T12:00:00').toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+    }),
+  }));
+
+  // Click breakdown data for bar chart
+  const clickBreakdownData = [
+    { name: 'Phone', value: analytics.clicks.phone, fill: '#3b82f6' },
+    { name: 'Website', value: analytics.clicks.website, fill: '#10b981' },
+    { name: 'Directions', value: analytics.clicks.directions, fill: '#f97316' },
+  ];
+
+  const clickRate = analytics.summary.totalViews > 0
+    ? ((analytics.summary.totalClicks / analytics.summary.totalViews) * 100).toFixed(1)
+    : '0';
 
   return (
     <div>
@@ -160,7 +188,7 @@ export default function AnalyticsPage() {
         <div className="bg-white rounded-lg p-6 border border-gray-200">
           <p className="text-gray-600 text-sm mb-1">Total Views</p>
           <p className="text-3xl font-bold text-gray-900">
-            {analytics.summary.totalViews}
+            {analytics.summary.totalViews.toLocaleString()}
           </p>
           <p className="text-xs text-gray-500 mt-2">
             ~{analytics.summary.avgViewsPerDay} per day
@@ -170,17 +198,10 @@ export default function AnalyticsPage() {
         <div className="bg-white rounded-lg p-6 border border-gray-200">
           <p className="text-gray-600 text-sm mb-1">Total Clicks</p>
           <p className="text-3xl font-bold text-gray-900">
-            {analytics.summary.totalClicks}
+            {analytics.summary.totalClicks.toLocaleString()}
           </p>
           <p className="text-xs text-gray-500 mt-2">
-            {analytics.summary.totalViews > 0
-              ? (
-                  (analytics.summary.totalClicks /
-                    analytics.summary.totalViews) *
-                  100
-                ).toFixed(1)
-              : 0}
-            % click rate
+            {clickRate}% click rate
           </p>
         </div>
 
@@ -188,11 +209,8 @@ export default function AnalyticsPage() {
           <p className="text-gray-600 text-sm mb-1">Engagement</p>
           <p className="text-3xl font-bold text-gray-900">
             {analytics.summary.totalViews > 0
-              ? ((analytics.summary.totalClicks /
-                  analytics.summary.totalViews) *
-                  100).toFixed(0)
-              : 0}
-            %
+              ? ((analytics.summary.totalClicks / analytics.summary.totalViews) * 100).toFixed(0)
+              : 0}%
           </p>
           <p className="text-xs text-gray-500 mt-2">Click-through rate</p>
         </div>
@@ -203,110 +221,137 @@ export default function AnalyticsPage() {
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
           Interaction Breakdown
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="flex items-center gap-4 p-4 rounded-lg bg-gray-50">
-            <div className="text-3xl">📞</div>
-            <div>
-              <p className="text-gray-600 text-sm">Phone Clicks</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {analytics.clicks.phone}
-              </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-4">
+            <div className="flex items-center gap-4 p-4 rounded-lg bg-gray-50">
+              <div className="text-3xl">📞</div>
+              <div>
+                <p className="text-gray-600 text-sm">Phone Clicks</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {analytics.clicks.phone}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 p-4 rounded-lg bg-gray-50">
+              <div className="text-3xl">🌐</div>
+              <div>
+                <p className="text-gray-600 text-sm">Website Clicks</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {analytics.clicks.website}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 p-4 rounded-lg bg-gray-50">
+              <div className="text-3xl">🗺️</div>
+              <div>
+                <p className="text-gray-600 text-sm">Direction Clicks</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {analytics.clicks.directions}
+                </p>
+              </div>
             </div>
           </div>
-
-          <div className="flex items-center gap-4 p-4 rounded-lg bg-gray-50">
-            <div className="text-3xl">🌐</div>
-            <div>
-              <p className="text-gray-600 text-sm">Website Clicks</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {analytics.clicks.website}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 p-4 rounded-lg bg-gray-50">
-            <div className="text-3xl">🗺️</div>
-            <div>
-              <p className="text-gray-600 text-sm">Direction Clicks</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {analytics.clicks.directions}
-              </p>
-            </div>
+          <div>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={clickBreakdownData} layout="vertical">
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis type="number" tick={{ fontSize: 12 }} stroke="#9ca3af" />
+                <YAxis type="category" dataKey="name" tick={{ fontSize: 12 }} stroke="#9ca3af" width={80} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#fff',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '13px',
+                  }}
+                />
+                <Bar dataKey="value" name="Clicks" radius={[0, 4, 4, 0]}>
+                  {clickBreakdownData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
 
-      {/* Daily Chart */}
-      <div className="bg-white rounded-lg p-6 border border-gray-200">
+      {/* Views & Clicks Trend Chart */}
+      <div className="bg-white rounded-lg p-6 border border-gray-200 mb-8">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
-          Views Trend
+          Views & Clicks Trend
         </h2>
-        <div className="space-y-4">
-          {/* Mini Bar Chart */}
-          <div className="h-64 flex items-end gap-1 px-2">
-            {analytics.daily.map((day) => (
-              <div
-                key={day.date}
-                className="flex-1 flex flex-col items-center gap-1"
-              >
-                <div
-                  className="w-full bg-orange-500 rounded-t"
-                  style={{
-                    height: `${(day.views / maxViewsPerDay) * 240}px`,
-                    minHeight: day.views > 0 ? '4px' : '1px',
-                  }}
-                  title={`${day.date}: ${day.views} views`}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="text-xs text-gray-500 text-center">
-            Each bar represents one day of views
-          </div>
-        </div>
+        <ResponsiveContainer width="100%" height={300}>
+          <AreaChart data={chartData}>
+            <defs>
+              <linearGradient id="viewsGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#f97316" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="clicksGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <XAxis dataKey="label" tick={{ fontSize: 11 }} stroke="#9ca3af" />
+            <YAxis tick={{ fontSize: 12 }} stroke="#9ca3af" />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: '#fff',
+                border: '1px solid #e5e7eb',
+                borderRadius: '8px',
+                fontSize: '13px',
+              }}
+            />
+            <Legend wrapperStyle={{ fontSize: '13px' }} />
+            <Area
+              type="monotone"
+              dataKey="views"
+              stroke="#f97316"
+              strokeWidth={2}
+              fill="url(#viewsGrad)"
+              name="Views"
+            />
+            <Area
+              type="monotone"
+              dataKey="clicks"
+              stroke="#3b82f6"
+              strokeWidth={2}
+              fill="url(#clicksGrad)"
+              name="Clicks"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
       </div>
 
       {/* Daily Details Table */}
-      <div className="bg-white rounded-lg p-6 border border-gray-200 mt-8">
+      <div className="bg-white rounded-lg p-6 border border-gray-200">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Daily Details</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
               <tr>
-                <th className="px-4 py-2 text-left font-medium text-gray-700">
-                  Date
-                </th>
-                <th className="px-4 py-2 text-right font-medium text-gray-700">
-                  Views
-                </th>
-                <th className="px-4 py-2 text-right font-medium text-gray-700">
-                  Clicks
-                </th>
-                <th className="px-4 py-2 text-right font-medium text-gray-700">
-                  CTR
-                </th>
+                <th className="px-4 py-2 text-left font-medium text-gray-700">Date</th>
+                <th className="px-4 py-2 text-right font-medium text-gray-700">Views</th>
+                <th className="px-4 py-2 text-right font-medium text-gray-700">Clicks</th>
+                <th className="px-4 py-2 text-right font-medium text-gray-700">CTR</th>
               </tr>
             </thead>
             <tbody>
-              {analytics.daily.map((day) => (
+              {analytics.daily.slice().reverse().slice(0, 14).map((day) => (
                 <tr key={day.date} className="border-b hover:bg-gray-50">
                   <td className="px-4 py-2 text-gray-900">
-                    {new Date(day.date).toLocaleDateString('en-US', {
+                    {new Date(day.date + 'T12:00:00').toLocaleDateString('en-US', {
+                      weekday: 'short',
                       month: 'short',
                       day: 'numeric',
                     })}
                   </td>
+                  <td className="px-4 py-2 text-right text-gray-900">{day.views}</td>
+                  <td className="px-4 py-2 text-right text-gray-900">{day.clicks}</td>
                   <td className="px-4 py-2 text-right text-gray-900">
-                    {day.views}
-                  </td>
-                  <td className="px-4 py-2 text-right text-gray-900">
-                    {day.clicks}
-                  </td>
-                  <td className="px-4 py-2 text-right text-gray-900">
-                    {day.views > 0
-                      ? ((day.clicks / day.views) * 100).toFixed(1)
-                      : 0}
-                    %
+                    {day.views > 0 ? ((day.clicks / day.views) * 100).toFixed(1) : 0}%
                   </td>
                 </tr>
               ))}

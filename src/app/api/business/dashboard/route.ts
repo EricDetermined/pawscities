@@ -1,5 +1,4 @@
 import { requireBusinessOrAdmin } from '@/lib/admin';
-import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -11,12 +10,12 @@ export async function GET() {
   }
 
   try {
-    // Get the business's approved claim
+    // Get the business's approved claim with establishment details
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('*, Establishment:establishmentId(*)')
-      .eq('userId', dbUser.id)
-      .eq('status', 'APPROVED')
+      .from('business_claims')
+      .select('*, establishments:establishment_id(*)')
+      .eq('user_id', dbUser.id)
+      .eq('status', 'approved')
       .single();
 
     if (claimError && claimError.code !== 'PGRST116') {
@@ -34,24 +33,25 @@ export async function GET() {
       });
     }
 
-    const establishment = claim.Establishment;
+    const establishment = claim.establishments;
 
     // Get analytics for this month
     const now = new Date();
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    const { data: views, error: viewsError } = await supabase
-      .from('PageView')
+    const { data: views } = await supabase
+      .from('analytics_events')
       .select('id', { count: 'exact' })
-      .eq('establishmentId', establishment.id)
-      .gte('createdAt', monthStart.toISOString())
-      .lte('createdAt', now.toISOString());
+      .eq('establishment_id', establishment.id)
+      .eq('event_type', 'page_view')
+      .gte('created_at', monthStart.toISOString())
+      .lte('created_at', now.toISOString());
 
-    const { data: reviews, error: reviewsError } = await supabase
-      .from('Review')
+    const { data: reviews } = await supabase
+      .from('reviews')
       .select('rating', { count: 'exact' })
-      .eq('establishmentId', establishment.id)
-      .eq('status', 'APPROVED');
+      .eq('establishment_id', establishment.id)
+      .eq('status', 'approved');
 
     const totalViews = views?.length || 0;
     const totalReviews = reviews?.length || 0;
@@ -62,12 +62,12 @@ export async function GET() {
 
     // Get subscription tier
     const { data: subscription } = await supabase
-      .from('Subscription')
+      .from('subscriptions')
       .select('*')
-      .eq('establishmentId', establishment.id)
+      .eq('establishment_id', establishment.id)
       .single();
 
-    const tier = subscription?.tier || 'free';
+    const tier = subscription?.plan || 'free';
 
     return NextResponse.json({
       status: 'approved',
@@ -77,7 +77,7 @@ export async function GET() {
         address: establishment.address,
         phone: establishment.phone,
         website: establishment.website,
-        image: establishment.primaryImage,
+        image: establishment.image_url,
       },
       analytics: {
         viewsThisMonth: totalViews,
