@@ -102,6 +102,7 @@ export default function ReviewsPage() {
       }
 
       // Update the review with the response
+      const responseData = await response.json();
       if (reviews) {
         setReviews({
           ...reviews,
@@ -109,7 +110,7 @@ export default function ReviewsPage() {
             r.id === reviewId
               ? {
                   ...r,
-                  businessResponse: await response.json(),
+                  businessResponse: responseData,
                 }
               : r
           ),
