@@ -5,7 +5,7 @@ export interface AdminAuthResult {
   error: NextResponse | null;
   supabase: ReturnType<typeof createClient> | null;
   user: { id: string; email?: string } | null;
-  dbUser: { id: string; supabase_id: string; email: string; role: string; suspended: boolean } | null;
+  dbUser: { id: string; supabase_id: string; email: string; role: string; is_suspended: boolean } | null;
 }
 
 /**
@@ -31,7 +31,7 @@ export async function requireAdmin(): Promise<AdminAuthResult> {
 
     const { data: dbUser, error: dbError } = await supabase
       .from('users')
-      .select('id, supabase_id, email, role, suspended')
+      .select('id, supabase_id, email, role, is_suspended')
       .eq('supabase_id', user.id)
       .single();
 
@@ -47,7 +47,7 @@ export async function requireAdmin(): Promise<AdminAuthResult> {
       };
     }
 
-    if (dbUser.suspended) {
+    if (dbUser.is_suspended) {
       return {
         error: NextResponse.json(
           { error: 'Account is suspended' },
@@ -114,7 +114,7 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
 
     const { data: dbUser, error: dbError } = await supabase
       .from('users')
-      .select('id, supabase_id, email, role, suspended')
+      .select('id, supabase_id, email, role, is_suspended')
       .eq('supabase_id', user.id)
       .single();
 
@@ -130,7 +130,7 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
       };
     }
 
-    if (dbUser.suspended) {
+    if (dbUser.is_suspended) {
       return {
         error: NextResponse.json(
           { error: 'Account is suspended' },
