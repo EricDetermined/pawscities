@@ -1,29 +1,100 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-// Mock data - will be replaced with real database queries
-const stats = {
-  totalCities: 4,
-  activeCities: 1,
-  totalEstablishments: 24,
-  pendingReview: 3,
-  totalUsers: 0,
-  researchTasks: 0,
-};
+interface Stats {
+  totalCities: number;
+  totalEstablishments: number;
+  totalUsers: number;
+  pendingClaims: number;
+  newUsersThisWeek: number;
+  premiumListings: number;
+}
 
-const recentActivity = [
-  { id: 1, action: 'City activated', target: 'Geneva', time: '2 hours ago', icon: '🏙️' },
-  { id: 2, action: 'Establishment added', target: 'Café du Soleil', time: '3 hours ago', icon: '📍' },
-  { id: 3, action: 'Research completed', target: 'Geneva Parks', time: '1 day ago', icon: '🤖' },
-];
+interface Activity {
+  id: string;
+  event_type: string;
+  created_at: string;
+  user_id?: string;
+  establishment_id?: string;
+}
+
+interface DashboardData {
+  stats: Stats;
+  recentActivities: Activity[];
+}
 
 const quickActions = [
-  { title: 'Add City', href: '/admin/cities/new', icon: '🏙️', color: 'bg-blue-500' },
-  { title: 'Add Establishment', href: '/admin/establishments/new', icon: '📍', color: 'bg-green-500' },
-  { title: 'Run Research', href: '/admin/research/new', icon: '🤖', color: 'bg-purple-500' },
+  { title: 'View Claims', href: '/admin/claims', icon: '✅', color: 'bg-blue-500' },
+  { title: 'Manage Users', href: '/admin/users', icon: '👥', color: 'bg-green-500' },
   { title: 'View Analytics', href: '/admin/analytics', icon: '📈', color: 'bg-orange-500' },
+  { title: 'Establishments', href: '/admin/establishments', icon: '📍', color: 'bg-purple-500' },
 ];
 
 export default function AdminDashboard() {
+  const [data, setData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const response = await fetch('/api/admin/stats');
+        if (!response.ok) {
+          throw new Error('Failed to fetch stats');
+        }
+        const json = await response.json();
+        setData(json);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching stats:', err);
+        setError('Failed to load dashboard data');
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchStats();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-600">Loading dashboard data...</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white rounded-xl border p-6 animate-pulse">
+              <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
+              <div className="h-8 bg-gray-200 rounded w-16 mb-2"></div>
+              <div className="h-3 bg-gray-100 rounded w-32"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-600">Welcome to the Paw Cities admin dashboard</p>
+        </div>
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6">
+          <p className="text-red-800">
+            {error || 'Failed to load dashboard data'}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -38,30 +109,30 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Cities"
-          value={stats.totalCities}
-          subtitle={`${stats.activeCities} active`}
+          value={data.stats.totalCities}
+          subtitle={`${data.stats.totalCities} active`}
           icon="🏙️"
           color="bg-blue-500"
         />
         <StatCard
           title="Establishments"
-          value={stats.totalEstablishments}
-          subtitle={`${stats.pendingReview} pending review`}
+          value={data.stats.totalEstablishments}
+          subtitle={`${data.stats.premiumListings} premium`}
           icon="📍"
           color="bg-green-500"
         />
         <StatCard
           title="Users"
-          value={stats.totalUsers}
-          subtitle="0 new this week"
+          value={data.stats.totalUsers}
+          subtitle={`${data.stats.newUsersThisWeek} new this week`}
           icon="👥"
           color="bg-purple-500"
         />
         <StatCard
-          title="Research Tasks"
-          value={stats.researchTasks}
-          subtitle="0 in progress"
-          icon="🤖"
+          title="Pending Claims"
+          value={data.stats.pendingClaims}
+          subtitle="awaiting review"
+          icon="✅"
           color="bg-orange-500"
         />
       </div>
@@ -83,7 +154,9 @@ export default function AdminDashboard() {
               >
                 {action.icon}
               </div>
-              <span className="font-medium text-gray-900">{action.title}</span>
+              <span className="font-medium text-gray-900 text-center text-sm">
+                {action.title}
+              </span>
             </Link>
           ))}
         </div>
@@ -91,14 +164,14 @@ export default function AdminDashboard() {
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Cities Overview */}
+        {/* Recent Activity */}
         <div className="lg:col-span-2 bg-white rounded-xl border p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900">
-              Cities Overview
+              Recent Activity
             </h2>
             <Link
-              href="/admin/cities"
+              href="/admin/analytics"
               className="text-sm text-primary-600 hover:text-primary-700"
             >
               View all →
@@ -106,86 +179,51 @@ export default function AdminDashboard() {
           </div>
 
           <div className="space-y-4">
-            <CityRow
-              name="Geneva"
-              country="Switzerland"
-              establishments={24}
-              status="active"
-              flag="🇨🇭"
-            />
-            <CityRow
-              name="Paris"
-              country="France"
-              establishments={0}
-              status="pending"
-              flag="🇫🇷"
-            />
-            <CityRow
-              name="London"
-              country="United Kingdom"
-              establishments={0}
-              status="pending"
-              flag="🇬🇧"
-            />
-            <CityRow
-              name="Los Angeles"
-              country="United States"
-              establishments={0}
-              status="pending"
-              flag="🇺🇸"
-            />
+            {data.recentActivities && data.recentActivities.length > 0 ? (
+              data.recentActivities.slice(0, 6).map((activity) => (
+                <ActivityRow key={activity.id} activity={activity} />
+              ))
+            ) : (
+              <p className="text-sm text-gray-500 text-center py-4">
+                No recent activity
+              </p>
+            )}
           </div>
         </div>
 
-        {/* Recent Activity */}
+        {/* Quick Stats */}
         <div className="bg-white rounded-xl border p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Recent Activity
+            System Overview
           </h2>
 
           <div className="space-y-4">
-            {recentActivity.map((activity) => (
-              <div key={activity.id} className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-lg">
-                  {activity.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900">
-                    {activity.action}
-                  </p>
-                  <p className="text-sm text-gray-600 truncate">
-                    {activity.target}
-                  </p>
-                  <p className="text-xs text-gray-400">{activity.time}</p>
-                </div>
-              </div>
-            ))}
+            <OverviewItem
+              label="Active Cities"
+              value={data.stats.totalCities}
+              icon="🏙️"
+            />
+            <OverviewItem
+              label="Verified Establishments"
+              value={data.stats.totalEstablishments}
+              icon="✔️"
+            />
+            <OverviewItem
+              label="Premium Listings"
+              value={data.stats.premiumListings}
+              icon="⭐"
+            />
+            <OverviewItem
+              label="Active Users"
+              value={data.stats.totalUsers}
+              icon="👤"
+            />
+            <OverviewItem
+              label="Pending Claims"
+              value={data.stats.pendingClaims}
+              icon="🔔"
+            />
           </div>
-
-          {recentActivity.length === 0 && (
-            <p className="text-sm text-gray-500 text-center py-4">
-              No recent activity
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Database Status */}
-      <div className="bg-white rounded-xl border p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
-          Database Status
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <DatabaseTable name="Cities" count={4} icon="🏙️" />
-          <DatabaseTable name="Establishments" count={24} icon="📍" />
-          <DatabaseTable name="Categories" count={9} icon="🏷️" />
-          <DatabaseTable name="Reviews" count={0} icon="⭐" />
-        </div>
-        <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <p className="text-sm text-yellow-800">
-            <strong>Note:</strong> Currently using mock data. Connect to Supabase
-            to enable full database functionality.
-          </p>
         </div>
       </div>
     </div>
@@ -221,64 +259,73 @@ function StatCard({
   );
 }
 
-function CityRow({
-  name,
-  country,
-  establishments,
-  status,
-  flag,
-}: {
-  name: string;
-  country: string;
-  establishments: number;
-  status: 'active' | 'pending' | 'inactive';
-  flag: string;
-}) {
-  const statusColors = {
-    active: 'bg-green-100 text-green-700',
-    pending: 'bg-yellow-100 text-yellow-700',
-    inactive: 'bg-gray-100 text-gray-700',
+function ActivityRow({ activity }: { activity: Activity }) {
+  const getActivityIcon = (eventType: string) => {
+    const icons: Record<string, string> = {
+      page_view: '👁️',
+      establishment_view: '📍',
+      search: '🔍',
+      claim_submitted: '✅',
+      user_signup: '👤',
+      review_added: '⭐',
+    };
+    return icons[eventType] || '📝';
+  };
+
+  const getActivityLabel = (eventType: string) => {
+    const labels: Record<string, string> = {
+      page_view: 'Page viewed',
+      establishment_view: 'Establishment viewed',
+      search: 'Search performed',
+      claim_submitted: 'Claim submitted',
+      user_signup: 'User signed up',
+      review_added: 'Review added',
+    };
+    return labels[eventType] || 'Activity';
+  };
+
+  const timeAgo = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    if (seconds < 60) return 'just now';
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    return `${Math.floor(seconds / 86400)}d ago`;
   };
 
   return (
-    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-      <div className="flex items-center gap-3">
-        <span className="text-2xl">{flag}</span>
-        <div>
-          <p className="font-medium text-gray-900">{name}</p>
-          <p className="text-sm text-gray-500">{country}</p>
-        </div>
+    <div className="flex items-start gap-3">
+      <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-lg">
+        {getActivityIcon(activity.event_type)}
       </div>
-      <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-600">
-          {establishments} establishments
-        </span>
-        <span
-          className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[status]}`}
-        >
-          {status}
-        </span>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-medium text-gray-900">
+          {getActivityLabel(activity.event_type)}
+        </p>
+        <p className="text-xs text-gray-400">{timeAgo(activity.created_at)}</p>
       </div>
     </div>
   );
 }
 
-function DatabaseTable({
-  name,
-  count,
+function OverviewItem({
+  label,
+  value,
   icon,
 }: {
-  name: string;
-  count: number;
+  label: string;
+  value: number;
   icon: string;
 }) {
   return (
-    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-      <span className="text-xl">{icon}</span>
-      <div>
-        <p className="text-sm font-medium text-gray-900">{name}</p>
-        <p className="text-lg font-bold text-gray-700">{count}</p>
+    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+      <div className="flex items-center gap-2">
+        <span className="text-lg">{icon}</span>
+        <span className="text-sm font-medium text-gray-700">{label}</span>
       </div>
+      <span className="text-lg font-bold text-gray-900">{value}</span>
     </div>
   );
 }
