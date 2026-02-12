@@ -17,6 +17,7 @@ export default function HomePage() {
             </Link>
             <nav className="hidden md:flex items-center gap-8">
               <Link href="/" className="nav-link active">Home</Link>
+              <Link href="/for-business" className="nav-link">For Business</Link>
               <Link href="/admin" className="nav-link">Admin</Link>
             </nav>
             <div className="flex items-center gap-4">
@@ -33,8 +34,7 @@ export default function HomePage() {
             Find Dog-Friendly Places
           </h1>
           <p className="text-xl opacity-90 max-w-2xl mx-auto mb-8">
-            Discover the best restaurants, cafes, parks, and more that welcome
-            your furry friend in cities around the world.
+            Discover the best restaurants, cafes, parks, and more that welcome your furry friend in cities around the world.
           </p>
           <div className="flex flex-wrap justify-center gap-3 text-sm">
             <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">🌳 Parks</span>
@@ -52,7 +52,6 @@ export default function HomePage() {
         <div className="container mx-auto">
           <h2 className="font-display text-3xl font-bold mb-2">Explore Cities</h2>
           <p className="text-gray-600 mb-8">Find dog-friendly places in {cities.length} amazing destinations</p>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {cities.map((city) => (
               <Link
@@ -95,11 +94,27 @@ export default function HomePage() {
               <p className="text-gray-600">From Paris to Tokyo, discover dog-friendly spots wherever you travel.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
-              <div className="text-4xl mb-4">🐾</div>
+              <div className="text-4xl mb-4">🐾</span>
               <h3 className="font-semibold text-lg mb-2">Dog-Specific Features</h3>
               <p className="text-gray-600">Filter by water bowls, off-leash areas, dog menus, and more.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Business CTA */}
+      <section className="py-16 px-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white">
+        <div className="container mx-auto text-center">
+          <h2 className="font-display text-3xl font-bold mb-4">Own a Dog-Friendly Business?</h2>
+          <p className="text-lg opacity-90 max-w-xl mx-auto mb-8">
+            Claim your free listing, manage your profile, and reach thousands of dog owners looking for places like yours.
+          </p>
+          <Link
+            href="/for-business"
+            className="inline-block px-8 py-3 bg-white text-orange-600 rounded-xl font-bold hover:bg-orange-50 transition-colors shadow-lg"
+          >
+            Learn More
+          </Link>
         </div>
       </section>
 
@@ -112,6 +127,7 @@ export default function HomePage() {
               <span className="font-display text-xl font-bold text-white">Paw Cities</span>
             </div>
             <div className="flex items-center gap-6 text-sm">
+              <Link href="/for-business" className="hover:text-white transition-colors">For Business</Link>
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
               <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
             </div>
