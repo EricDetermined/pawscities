@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   const supabase = await createClient();
+
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
@@ -10,9 +11,9 @@ export async function GET(request: NextRequest) {
   }
 
   const { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
@@ -20,10 +21,10 @@ export async function GET(request: NextRequest) {
   }
 
   const { data: claims, error } = await supabase
-    .from('BusinessClaim')
-    .select('*, Establishment:establishmentId(name, slug, cityId, address, primaryImage)')
-    .eq('userId', dbUser.id)
-    .order('createdAt', { ascending: false });
+    .from('business_claims')
+    .select('*, establishments:establishment_id(name, slug, city_id, address, primary_image)')
+    .eq('user_id', dbUser.id)
+    .order('created_at', { ascending: false });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -34,6 +35,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient();
+
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
@@ -43,41 +45,51 @@ export async function POST(request: NextRequest) {
   const { establishmentId, businessName, contactName, contactEmail, contactPhone } = await request.json();
 
   if (!establishmentId || !businessName || !contactName || !contactEmail) {
-    return NextResponse.json({ error: 'Establishment ID, business name, contact name, and email are required' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Establishment ID, business name, contact name, and email are required' },
+      { status: 400 }
+    );
   }
 
   // Check if already claimed
   const { data: existingClaim } = await supabase
-    .from('BusinessClaim')
+    .from('business_claims')
     .select('id, status')
-    .eq('establishmentId', establishmentId)
+    .eq('establishment_id', establishmentId)
     .single();
 
   if (existingClaim) {
-    if (existingClaim.status === 'APPROVED') {
-      return NextResponse.json({ error: 'This business has already been claimed' }, { status: 409 });
+    if (existingClaim.status === 'approved') {
+      return NextResponse.json(
+        { error: 'This business has already been claimed' },
+        { status: 409 }
+      );
     }
-    if (existingClaim.status === 'PENDING') {
-      return NextResponse.json({ error: 'A claim for this business is already pending review' }, { status: 409 });
+    if (existingClaim.status === 'pending') {
+      return NextResponse.json(
+        { error: 'A claim for this business is already pending review' },
+        { status: 409 }
+      );
     }
   }
 
   let { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
     const { data: newUser } = await supabase
-      .from('User')
+      .from('users')
       .insert({
-        supabaseId: user.id,
+        supabase_id: user.id,
         email: user.email || '',
         name: user.user_metadata?.name || contactName,
       })
       .select('id')
       .single();
+
     dbUser = newUser;
   }
 
@@ -86,15 +98,15 @@ export async function POST(request: NextRequest) {
   }
 
   const { data: claim, error } = await supabase
-    .from('BusinessClaim')
+    .from('business_claims')
     .insert({
-      userId: dbUser.id,
-      establishmentId,
-      businessName,
-      contactName,
-      contactEmail,
-      contactPhone: contactPhone || null,
-      status: 'PENDING',
+      user_id: dbUser.id,
+      establishment_id: establishmentId,
+      business_name: businessName,
+      contact_name: contactName,
+      contact_email: contactEmail,
+      contact_phone: contactPhone || null,
+      status: 'pending',
     })
     .select()
     .single();
@@ -104,7 +116,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Update user role to BUSINESS
-  await supabase.from('User').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
+  await supabase.from('users').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
 
   return NextResponse.json({ claim }, { status: 201 });
 }
