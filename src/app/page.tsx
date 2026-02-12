@@ -94,7 +94,7 @@ export default function HomePage() {
               <p className="text-gray-600">From Paris to Tokyo, discover dog-friendly spots wherever you travel.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
-              <div className="text-4xl mb-4">🐾</span>
+              <div className="text-4xl mb-4">🐾</div>
               <h3 className="font-semibold text-lg mb-2">Dog-Specific Features</h3>
               <p className="text-gray-600">Filter by water bowls, off-leash areas, dog menus, and more.</p>
             </div>
