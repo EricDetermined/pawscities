@@ -3,10 +3,12 @@ import { createClient } from '@supabase/supabase-js';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getSupabaseAdmin() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
 
 function generateSlug(name: string): string {
   return name
@@ -17,9 +19,10 @@ function generateSlug(name: string): string {
     .trim();
 }
 
-// GET: Return cities and categories for the form dropdowns
 export async function GET() {
   try {
+    const supabaseAdmin = getSupabaseAdmin();
+
     const [citiesRes, categoriesRes] = await Promise.all([
       supabaseAdmin.from('cities').select('id, name, slug').order('name'),
       supabaseAdmin.from('categories').select('id, name, slug').order('name'),
@@ -29,88 +32,65 @@ export async function GET() {
       cities: citiesRes.data || [],
       categories: categoriesRes.data || [],
     });
-  } catch {
+  } catch (error) {
+    console.error('Error fetching form data:', error);
     return NextResponse.json({ error: 'Failed to load form data' }, { status: 500 });
   }
 }
 
-// POST: Create a new establishment + claim
 export async function POST(request: Request) {
   try {
+    const supabaseAdmin = getSupabaseAdmin();
     const cookieStore = cookies();
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const { data: { session } } = await supabase.auth.getSession();
 
-    if (!user) {
+    if (!session) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
     const body = await request.json();
-    const {
-      name,
-      address,
-      city_id,
-      category_id,
-      description,
-      phone,
-      website,
-      contactName,
-      contactEmail,
-    } = body;
+    const { name, address, city_id, category_id, description, phone, website, contactName, contactEmail } = body;
 
-    // Validate required fields
-    if (!name || !address || !city_id || !category_id) {
-      return NextResponse.json(
-        { error: 'Business name, address, city, and category are required' },
-        { status: 400 }
-      );
+    if (!name || !address || !city_id || !category_id || !contactName || !contactEmail) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    if (!contactName || !contactEmail) {
-      return NextResponse.json(
-        { error: 'Contact name and email are required' },
-        { status: 400 }
-      );
-    }
-
-    // Generate a unique slug
+    // Generate unique slug
     let slug = generateSlug(name);
     const { data: existingSlugs } = await supabaseAdmin
       .from('establishments')
       .select('slug')
-      .ilike('slug', `${slug}%`);
+      .like('slug', `${slug}%`);
 
     if (existingSlugs && existingSlugs.length > 0) {
       slug = `${slug}-${existingSlugs.length + 1}`;
     }
 
-    // Ensure user exists in users table
-    const { data: existingUser } = await supabaseAdmin
+    // Check if user exists in users table
+    let { data: existingUser } = await supabaseAdmin
       .from('users')
       .select('id')
-      .eq('supabase_id', user.id)
+      .eq('supabase_id', session.user.id)
       .single();
 
-    let userId = existingUser?.id;
-
-    if (!userId) {
+    if (!existingUser) {
       const { data: newUser, error: userError } = await supabaseAdmin
         .from('users')
         .insert({
-          supabase_id: user.id,
-          email: user.email,
+          supabase_id: session.user.id,
+          email: session.user.email,
           role: 'BUSINESS',
         })
         .select('id')
         .single();
 
       if (userError) {
-        return NextResponse.json({ error: 'Failed to create user record' }, { status: 500 });
+        console.error('Error creating user:', userError);
+        return NextResponse.json({ error: 'Failed to create user profile' }, { status: 500 });
       }
-      userId = newUser.id;
+      existingUser = newUser;
     }
 
     // Create the establishment
@@ -126,28 +106,24 @@ export async function POST(request: Request) {
         phone: phone || null,
         website: website || null,
         status: 'pending_review',
-        tier: 'free',
+        tier: 'FREE',
         is_verified: false,
-        is_featured: false,
         source: 'business_submission',
-        confidence: 1.0,
+        confidence: 100,
       })
-      .select('id, name, slug, address')
+      .select('id')
       .single();
 
     if (estError) {
-      console.error('Establishment creation error:', estError);
-      return NextResponse.json(
-        { error: 'Failed to create establishment: ' + estError.message },
-        { status: 500 }
-      );
+      console.error('Error creating establishment:', estError);
+      return NextResponse.json({ error: 'Failed to create establishment' }, { status: 500 });
     }
 
     // Create the claim
     const { error: claimError } = await supabaseAdmin
       .from('business_claims')
       .insert({
-        user_id: userId,
+        user_id: existingUser.id,
         establishment_id: establishment.id,
         business_name: name,
         contact_name: contactName,
@@ -156,28 +132,25 @@ export async function POST(request: Request) {
       });
 
     if (claimError) {
-      console.error('Claim creation error:', claimError);
-      // Clean up the establishment if claim fails
+      console.error('Error creating claim:', claimError);
+      // Clean up: delete the establishment we just created
       await supabaseAdmin.from('establishments').delete().eq('id', establishment.id);
-      return NextResponse.json(
-        { error: 'Failed to create claim: ' + claimError.message },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Failed to create claim' }, { status: 500 });
     }
 
-    // Update user role to BUSINESS if needed
+    // Update user role to BUSINESS if not already
     await supabaseAdmin
       .from('users')
       .update({ role: 'BUSINESS' })
-      .eq('id', userId);
+      .eq('id', existingUser.id);
 
     return NextResponse.json({
       success: true,
       message: 'Your business has been submitted! We will review it and get back to you within 1-2 business days.',
-      establishment,
+      establishmentId: establishment.id,
     });
   } catch (error) {
-    console.error('Submit error:', error);
+    console.error('Error submitting business:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
