@@ -7,6 +7,7 @@ import { UserMenu } from '@/components/auth/UserMenu';
 const navigation = [
   { name: 'Explore', href: '/explore' },
   { name: 'Cities', href: '/#cities' },
+  { name: 'For Business', href: '/for-business' },
 ];
 
 export function Header() {
