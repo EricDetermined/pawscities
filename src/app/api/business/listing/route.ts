@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
   const { error, supabase, dbUser } = await requireBusinessOrAdmin();
-
   if (error) return error;
   if (!supabase || !dbUser) {
     return NextResponse.json({ error: 'Authentication failed' }, { status: 401 });
@@ -13,10 +12,10 @@ export async function GET() {
   try {
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('establishmentId')
-      .eq('userId', dbUser.id)
-      .eq('status', 'APPROVED')
+      .from('business_claims')
+      .select('establishment_id')
+      .eq('user_id', dbUser.id)
+      .eq('status', 'approved')
       .single();
 
     if (claimError || !claim) {
@@ -25,9 +24,9 @@ export async function GET() {
 
     // Get the establishment
     const { data: establishment, error: estError } = await supabase
-      .from('Establishment')
+      .from('establishments')
       .select('*')
-      .eq('id', claim.establishmentId)
+      .eq('id', claim.establishment_id)
       .single();
 
     if (estError || !establishment) {
@@ -43,7 +42,6 @@ export async function GET() {
 
 export async function PUT(request: NextRequest) {
   const { error, supabase, dbUser } = await requireBusinessOrAdmin();
-
   if (error) return error;
   if (!supabase || !dbUser) {
     return NextResponse.json({ error: 'Authentication failed' }, { status: 401 });
@@ -55,10 +53,10 @@ export async function PUT(request: NextRequest) {
 
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('establishmentId')
-      .eq('userId', dbUser.id)
-      .eq('status', 'APPROVED')
+      .from('business_claims')
+      .select('establishment_id')
+      .eq('user_id', dbUser.id)
+      .eq('status', 'approved')
       .single();
 
     if (claimError || !claim) {
@@ -66,17 +64,17 @@ export async function PUT(request: NextRequest) {
     }
 
     // Update the establishment
-    const updateData: any = {};
+    const updateData: Record<string, unknown> = {};
     if (description !== undefined) updateData.description = description;
     if (phone !== undefined) updateData.phone = phone;
     if (website !== undefined) updateData.website = website;
-    if (dogFeatures !== undefined) updateData.dogFeatures = dogFeatures;
+    if (dogFeatures !== undefined) updateData.dog_features = dogFeatures;
     if (openingHours !== undefined) updateData.hours = openingHours;
 
     const { data: updated, error: updateError } = await supabase
-      .from('Establishment')
+      .from('establishments')
       .update(updateData)
-      .eq('id', claim.establishmentId)
+      .eq('id', claim.establishment_id)
       .select()
       .single();
 
