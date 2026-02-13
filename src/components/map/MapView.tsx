@@ -117,21 +117,36 @@ export function MapView({
       const marker = L.marker([place.latitude, place.longitude], { icon: customIcon })
         .addTo(map);
 
-      // Create popup content
+      // Create popup content with Get Directions button
       const displayName = lang === 'fr' && place.nameFr ? place.nameFr : place.name;
+      const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${place.latitude},${place.longitude}&destination_place_id=&travelmode=walking`;
+      const appleMapsUrl = `https://maps.apple.com/?daddr=${place.latitude},${place.longitude}&dirflg=w`;
+
       const popupContent = `
-        <div class="map-popup" style="min-width: 200px;">
+        <div class="map-popup" style="min-width: 220px;">
           <h3 style="font-weight: 600; margin-bottom: 4px;">${displayName}</h3>
           <div style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #666;">
-            <span>★ ${place.rating.toFixed(1)}</span>
-            <span>•</span>
-            <span>${'€'.repeat(place.priceLevel)}</span>
+            <span>\u2605 ${place.rating.toFixed(1)}</span>
+            <span>\u2022</span>
+            <span>${'\u20AC'.repeat(place.priceLevel)}</span>
           </div>
           <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px;">
-            ${place.dogFeatures.waterBowl ? '<span title="Water Bowl">💧</span>' : ''}
-            ${place.dogFeatures.treats ? '<span title="Treats">🦴</span>' : ''}
-            ${place.dogFeatures.outdoorSeating ? '<span title="Outdoor Seating">☀️</span>' : ''}
-            ${place.dogFeatures.indoorAllowed ? '<span title="Dogs Inside">🏠</span>' : ''}
+            ${place.dogFeatures.waterBowl ? '<span title="Water Bowl">\uD83D\uDCA7</span>' : ''}
+            ${place.dogFeatures.treats ? '<span title="Treats">\uD83E\uDDB4</span>' : ''}
+            ${place.dogFeatures.outdoorSeating ? '<span title="Outdoor Seating">\u2600\uFE0F</span>' : ''}
+            ${place.dogFeatures.indoorAllowed ? '<span title="Dogs Inside">\uD83C\uDFE0</span>' : ''}
+          </div>
+          <div style="margin-top: 10px; display: flex; gap: 6px;">
+            <a href="${directionsUrl}" target="_blank" rel="noopener noreferrer"
+               style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 10px; background: #3b82f6; color: white; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 500; transition: background 0.2s;"
+               onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">
+              \uD83D\uDCCD Directions
+            </a>
+            <a href="${appleMapsUrl}" target="_blank" rel="noopener noreferrer"
+               style="display: inline-flex; align-items: center; justify-content: center; padding: 6px 10px; background: #f3f4f6; color: #374151; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 500; border: 1px solid #e5e7eb; transition: background 0.2s;"
+               onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+              \uD83C\uDF0D Maps
+            </a>
           </div>
         </div>
       `;
@@ -172,7 +187,6 @@ export function MapView({
   return (
     <div className={cn('relative', className)}>
       <div ref={mapRef} className="w-full h-full rounded-xl" />
-
       {/* Custom marker styles */}
       <style jsx global>{`
         .custom-marker {
