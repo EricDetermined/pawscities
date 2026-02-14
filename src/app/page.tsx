@@ -1,31 +1,11 @@
 import Link from 'next/link';
 import { CITIES } from '@/lib/cities-config';
-import { UserMenu } from '@/components/auth/UserMenu';
 
 export default function HomePage() {
   const cities = Object.values(CITIES);
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl">🐾</span>
-              <span className="font-display text-xl font-bold text-primary-600">Paw Cities</span>
-            </Link>
-            <nav className="hidden md:flex items-center gap-8">
-              <Link href="/" className="nav-link active">Home</Link>
-              <Link href="/for-business" className="nav-link">For Business</Link>
-            </nav>
-            <div className="flex items-center gap-4">
-              <UserMenu />
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Hero — Split Layout */}
       <section className="relative flex flex-col md:flex-row min-h-[480px]">
         {/* Left: Content Panel */}
