@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { LogoLink } from '@/components/Logo';
 import { usePathname } from 'next/navigation';
 import { UserMenu } from '@/components/auth/UserMenu';
 
@@ -18,10 +19,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">🐾</span>
-            <span className="text-xl font-bold text-orange-600">Paw Cities</span>
-          </Link>
+          <LogoLink variant="horizontal" size="md" />
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center gap-6">
