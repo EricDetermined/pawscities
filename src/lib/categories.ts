@@ -68,6 +68,18 @@ export const CATEGORIES: Record<CategorySlug, Category> = {
 
 export const CATEGORY_LIST = Object.values(CATEGORIES);
 
+// Categories that represent public spaces — these cannot be claimed by businesses
+export const NON_CLAIMABLE_CATEGORIES: CategorySlug[] = ['parks', 'beaches'];
+
+// Categories available for business claiming/listing
+export const CLAIMABLE_CATEGORIES = CATEGORY_LIST.filter(
+  (c) => !NON_CLAIMABLE_CATEGORIES.includes(c.slug)
+);
+
+export function isCategoryClaimable(slug: string): boolean {
+  return !NON_CLAIMABLE_CATEGORIES.includes(slug as CategorySlug);
+}
+
 export function getCategoryBySlug(slug: CategorySlug): Category | undefined {
   return CATEGORIES[slug];
 }
