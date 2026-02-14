@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { isCategoryClaimable } from '@/lib/categories';
+
+// Slugs for non-claimable public space categories
+const NON_CLAIMABLE_SLUGS = ['parks', 'beaches'];
 
 function getSupabaseAdmin() {
   return createClient(
@@ -28,9 +32,14 @@ export async function GET() {
       supabaseAdmin.from('categories').select('id, name, slug').order('name'),
     ]);
 
+    // Filter out non-claimable categories (parks, beaches) from the dropdown
+    const claimableCategories = (categoriesRes.data || []).filter(
+      (cat: { slug: string }) => !NON_CLAIMABLE_SLUGS.includes(cat.slug)
+    );
+
     return NextResponse.json({
       cities: citiesRes.data || [],
-      categories: categoriesRes.data || [],
+      categories: claimableCategories,
     });
   } catch (error) {
     console.error('Error fetching form data:', error);
@@ -55,6 +64,24 @@ export async function POST(request: Request) {
 
     if (!name || !address || !city_id || !category_id || !contactName || !contactEmail) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    // Validate that the category is claimable (not a public space like parks/beaches)
+    const { data: category } = await supabaseAdmin
+      .from('categories')
+      .select('slug')
+      .eq('id', category_id)
+      .single();
+
+    if (!category) {
+      return NextResponse.json({ error: 'Invalid category selected' }, { status: 400 });
+    }
+
+    if (!isCategoryClaimable(category.slug)) {
+      return NextResponse.json(
+        { error: 'Public spaces like parks and beaches cannot be claimed. These are community-maintained listings.' },
+        { status: 400 }
+      );
     }
 
     // Generate unique slug
