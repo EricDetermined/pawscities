@@ -41,6 +41,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <body className="min-h-screen bg-background font-sans antialiased">
         <AuthProvider>
+          <Header />
           {children}
         </AuthProvider>
       </body>
