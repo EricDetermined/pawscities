@@ -82,25 +82,15 @@ export default async function EstablishmentPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl">🐾</span>
-              <span className="font-display text-xl font-bold text-primary-600">Paw Cities</span>
-            </Link>
-            <nav className="flex items-center gap-4 text-sm">
-              <Link href={`/${city.slug}`} className="flex items-center gap-1 text-gray-600 hover:text-primary-600 transition-colors">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                Back to {city.name}
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      {/* Breadcrumb */}
+      <nav className="container mx-auto px-4 py-3">
+        <Link href={`/${city.slug}`} className="flex items-center gap-1 text-sm text-gray-600 hover:text-primary-600 transition-colors">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to {city.name}
+        </Link>
+      </nav>
 
       {/* Hero Image */}
       <div className="relative h-72 md:h-[420px] overflow-hidden bg-gray-200">
