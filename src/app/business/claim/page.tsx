@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface Establishment {
   id: string;
@@ -37,6 +38,7 @@ interface SelectOption {
 const NON_CLAIMABLE_SLUGS = ['parks', 'beaches'];
 
 export default function ClaimBusinessPage() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Establishment[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -166,10 +168,8 @@ export default function ClaimBusinessPage() {
       });
       const data = await res.json();
       if (res.ok) {
-        setSubmitResult({
-          success: true,
-          message: 'Your claim has been submitted! We will verify your information and get back to you within 1-2 business days.',
-        });
+        router.push('/business/claim/success');
+        return;
         setSelectedEstablishment(null);
         setClaimForm({ businessName: '', contactName: '', contactEmail: '', contactPhone: '', verificationMethod: 'business_license', verificationDoc: '' });
         const claimsRes = await fetch('/api/business/claim');
@@ -197,7 +197,8 @@ export default function ClaimBusinessPage() {
       });
       const data = await res.json();
       if (res.ok) {
-        setSubmitResult({ success: true, message: data.message || 'Your business has been submitted for review!' });
+        router.push('/business/claim/success');
+        return;
         setShowNewForm(false);
         setNewForm({ name: '', address: '', city_id: '', category_id: '', description: '', phone: '', website: '', contactName: '', contactEmail: '' });
         const claimsRes = await fetch('/api/business/claim');
