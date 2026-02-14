@@ -18,7 +18,6 @@ export default function HomePage() {
             <nav className="hidden md:flex items-center gap-8">
               <Link href="/" className="nav-link active">Home</Link>
               <Link href="/for-business" className="nav-link">For Business</Link>
-              <Link href="/admin" className="nav-link">Admin</Link>
             </nav>
             <div className="flex items-center gap-4">
               <UserMenu />
