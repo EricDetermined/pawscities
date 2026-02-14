@@ -52,21 +52,6 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl">🐾</span>
-              <span className="font-display text-xl font-bold text-primary-600">Paw Cities</span>
-            </Link>
-            <nav className="hidden md:flex items-center gap-6">
-              <Link href="/" className="nav-link">Home</Link>
-              <Link href="/admin" className="px-4 py-2 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-colors">Admin</Link>
-            </nav>
-          </div>
-        </div>
-      </header>
 
       {/* Hero */}
       <section className="relative h-64 md:h-80 overflow-hidden">
