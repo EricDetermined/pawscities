@@ -79,7 +79,30 @@ export default function UpgradePage() {
   }, []);
 
   if (loading) {
-    return (
+    const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  const handleCheckout = async (plan: string) => {
+    setCheckoutLoading(true);
+    try {
+      const res = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, establishmentId: subscription?.establishmentId }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error || 'Failed to start checkout');
+      }
+    } catch {
+      alert('Network error. Please try again.');
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
+
+  return (
       <div className="flex items-center justify-center h-96">
         <div className="text-gray-600">Loading...</div>
       </div>
@@ -158,8 +181,8 @@ export default function UpgradePage() {
           </div>
 
           <button
-            onClick={() => alert('Upgrade feature coming soon!')}
-            disabled={tier === 'premium'}
+            onClick={() => handleCheckout('bronze')}
+            disabled={tier === 'premium' || checkoutLoading}
             className="w-full px-4 py-2 mb-8 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-600 transition-colors disabled:opacity-75"
           >
             {tier === 'premium'
