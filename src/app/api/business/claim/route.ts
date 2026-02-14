@@ -1,9 +1,9 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
+import { isCategoryClaimable } from '@/lib/categories';
 
 export async function GET(request: NextRequest) {
   const supabase = await createClient();
-
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
@@ -35,7 +35,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient();
-
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
@@ -47,6 +46,25 @@ export async function POST(request: NextRequest) {
   if (!establishmentId || !businessName || !contactName || !contactEmail) {
     return NextResponse.json(
       { error: 'Establishment ID, business name, contact name, and email are required' },
+      { status: 400 }
+    );
+  }
+
+  // Check if the establishment exists and its category is claimable
+  const { data: establishment } = await supabase
+    .from('establishments')
+    .select('id, categories:category_id(slug)')
+    .eq('id', establishmentId)
+    .single();
+
+  if (!establishment) {
+    return NextResponse.json({ error: 'Establishment not found' }, { status: 404 });
+  }
+
+  const categorySlug = (establishment as any).categories?.slug;
+  if (categorySlug && !isCategoryClaimable(categorySlug)) {
+    return NextResponse.json(
+      { error: 'Public spaces like parks and beaches cannot be claimed. These are community-maintained listings.' },
       { status: 400 }
     );
   }
@@ -89,7 +107,6 @@ export async function POST(request: NextRequest) {
       })
       .select('id')
       .single();
-
     dbUser = newUser;
   }
 
