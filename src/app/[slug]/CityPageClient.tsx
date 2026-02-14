@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import { Badge } from '@/components/ui';
 import type { CityConfig } from '@/lib/cities-config';
 import type { Establishment, CategorySlug } from '@/types';
+import { PremiumCard } from '@/components/ListingBadges';
 
 // Dynamic import for MapView to avoid SSR issues with Leaflet
 const MapView = dynamic(() => import('@/components/map/MapView').then(mod => ({ default: mod.MapView })), {
@@ -202,6 +203,8 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                       </svg>
                     </button>
+                    {/* Premium/Verified overlay */}
+                    <PremiumCard tier={(establishment as any).tier || 'FREE'} />
                     {/* Category badge */}
                     <div className="absolute top-3 left-3">
                       <Badge variant="category">
