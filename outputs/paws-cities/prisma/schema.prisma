@@ -1,0 +1,772 @@
+// PawsCities Database Schema
+// Multi-city dog-friendly platform with agentic capabilities
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================
+// CORE: Cities & Locations
+// ============================================
+
+model City {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  nameFr        String
+  country       String
+  countryCode   String
+  timezone      String
+  currency      String
+  latitude      Float
+  longitude     Float
+  zoomLevel     Int      @default(12)
+  isActive      Boolean  @default(false)
+  isLaunched    Boolean  @default(false)
+  launchDate    DateTime?
+  description   String?  @db.Text
+  descriptionFr String?  @db.Text
+  heroImage     String?
+  metaTitle     String?
+  metaTitleFr   String?
+  metaDesc      String?  @db.Text
+  metaDescFr    String?  @db.Text
+  placeCount    Int      @default(0)
+  parkCount     Int      @default(0)
+  restaurantCount Int    @default(0)
+  hotelCount    Int      @default(0)
+  neighborhoods Neighborhood[]
+  establishments Establishment[]
+  researchTasks ResearchTask[]
+  stories       Story[]
+  packs         Pack[]
+  events        Event[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@index([slug])
+  @@index([isActive, isLaunched])
+}
+
+model Neighborhood {
+  id            String   @id @default(cuid())
+  cityId        String
+  city          City     @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  slug          String
+  name          String
+  nameFr        String?
+  latitude      Float?
+  longitude     Float?
+  description   String?  @db.Text
+  descriptionFr String?  @db.Text
+  placeCount    Int      @default(0)
+  establishments Establishment[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@unique([cityId, slug])
+  @@index([cityId])
+}
+
+model Category {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  nameFr        String
+  icon          String
+  color         String
+  sortOrder     Int      @default(0)
+  establishments Establishment[]
+  createdAt     DateTime @default(now())
+}
+
+model Establishment {
+  id            String   @id @default(cuid())
+  cityId        String
+  city          City     @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  neighborhoodId String?
+  neighborhood  Neighborhood? @relation(fields: [neighborhoodId], references: [id])
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  slug          String
+  name          String
+  nameFr        String?
+  address       String
+  latitude      Float
+  longitude     Float
+  phone         String?
+  email         String?
+  website       String?
+  hours         Json?
+  hoursNote     String?
+  hoursNoteFr   String?
+  description   String   @db.Text
+  descriptionFr String?  @db.Text
+  tips          String?  @db.Text
+  tipsFr        String?  @db.Text
+  dogFeatures   Json?
+  primaryImage  String?
+  images        String[]
+  rating        Float?
+  reviewCount   Int      @default(0)
+  status        EstablishmentStatus @default(PENDING)
+  isVerified    Boolean  @default(false)
+  verifiedAt    DateTime?
+  isFeatured    Boolean  @default(false)
+  featuredUntil DateTime?
+  tier          ListingTier @default(FREE)
+  affiliateUrl  String?
+  source        String?
+  sourceId      String?
+  reviews       Review[]
+  favorites     Favorite[]
+  photos        Photo[]
+  leads         Lead[]
+  businessClaim BusinessClaim?
+  checkIns      CheckIn[]
+  storyStops    StoryStop[]
+  events        Event[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@unique([cityId, slug])
+  @@index([cityId, categoryId])
+  @@index([cityId, neighborhoodId])
+  @@index([status])
+  @@index([isFeatured])
+  @@index([latitude, longitude])
+}
+
+enum EstablishmentStatus {
+  PENDING
+  ACTIVE
+  INACTIVE
+  REJECTED
+  CLOSED
+}
+
+enum ListingTier {
+  FREE
+  BRONZE
+  SILVER
+  GOLD
+}
+
+model User {
+  id            String   @id @default(cuid())
+  supabaseId    String?  @unique
+  email         String   @unique
+  emailVerified DateTime?
+  name          String?
+  avatar        String?
+  language      String   @default("en")
+  homeCity      String?
+  role          UserRole @default(USER)
+  favorites     Favorite[]
+  reviews       Review[]
+  photos        Photo[]
+  businessClaims BusinessClaim[]
+  dogs          DogProfile[]
+  checkIns      CheckIn[]
+  stories       Story[]
+  storyLikes    StoryLike[]
+  storyComments StoryComment[]
+  reviewHelpfuls ReviewHelpful[]
+  reviewReplies  ReviewReply[]
+  packMemberships PackMember[]
+  packPosts     PackPost[]
+  events        Event[]
+  eventAttendances EventAttendee[]
+  activities    Activity[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@index([email])
+  @@index([supabaseId])
+}
+
+enum UserRole {
+  USER
+  BUSINESS
+  MODERATOR
+  ADMIN
+}
+
+model Favorite {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  establishmentId String
+  establishment   Establishment @relation(fields: [establishmentId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+  @@unique([userId, establishmentId])
+  @@index([userId])
+}
+
+model Review {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  establishmentId String
+  establishment   Establishment @relation(fields: [establishmentId], references: [id], onDelete: Cascade)
+  rating          Int
+  title           String?
+  content         String?  @db.Text
+  dogFriendliness Int?
+  serviceRating   Int?
+  valueRating     Int?
+  reviewPhotos    String[]
+  visitDate       DateTime?
+  dogNames        String?
+  helpfulCount    Int      @default(0)
+  replyCount      Int      @default(0)
+  helpfuls        ReviewHelpful[]
+  replies         ReviewReply[]
+  status          ReviewStatus @default(PENDING)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  @@unique([userId, establishmentId])
+  @@index([establishmentId])
+  @@index([status])
+  @@index([helpfulCount])
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Photo {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  establishmentId String
+  establishment   Establishment @relation(fields: [establishmentId], references: [id], onDelete: Cascade)
+  url             String
+  caption         String?
+  status          PhotoStatus @default(PENDING)
+  createdAt       DateTime @default(now())
+  @@index([establishmentId])
+}
+
+enum PhotoStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model BusinessClaim {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  establishmentId String   @unique
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  businessName    String
+  contactName     String
+  contactEmail    String
+  contactPhone    String?
+  verificationDoc String?
+  status          ClaimStatus @default(PENDING)
+  reviewedAt      DateTime?
+  reviewedBy      String?
+  rejectionReason String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  @@index([status])
+}
+
+enum ClaimStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Subscription {
+  id              String   @id @default(cuid())
+  establishmentId String
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  stripePriceId        String?
+  tier            ListingTier
+  status          SubscriptionStatus @default(ACTIVE)
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  cancelAtPeriodEnd  Boolean @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  @@index([establishmentId])
+  @@index([status])
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+}
+
+model Lead {
+  id              String   @id @default(cuid())
+  establishmentId String
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  name            String
+  email           String
+  phone           String?
+  message         String?  @db.Text
+  source          String?
+  isContacted     Boolean  @default(false)
+  contactedAt     DateTime?
+  createdAt       DateTime @default(now())
+  @@index([establishmentId])
+  @@index([createdAt])
+}
+
+model PageView {
+  id          String   @id @default(cuid())
+  path        String
+  citySlug    String?
+  establishmentId String?
+  sessionId   String?
+  userId      String?
+  referrer    String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  @@index([citySlug, createdAt])
+  @@index([establishmentId, createdAt])
+  @@index([createdAt])
+}
+
+model SearchQuery {
+  id          String   @id @default(cuid())
+  query       String
+  citySlug    String?
+  category    String?
+  resultCount Int      @default(0)
+  sessionId   String?
+  userId      String?
+  createdAt   DateTime @default(now())
+  @@index([citySlug, createdAt])
+  @@index([query])
+  @@index([createdAt])
+}
+
+model ClickEvent {
+  id              String   @id @default(cuid())
+  eventType       String
+  establishmentId String?
+  sessionId       String?
+  userId          String?
+  metadata        Json?
+  createdAt       DateTime @default(now())
+  @@index([establishmentId, createdAt])
+  @@index([eventType, createdAt])
+}
+
+model ResearchTask {
+  id          String   @id @default(cuid())
+  cityId      String
+  city        City     @relation(fields: [cityId], references: [id])
+  type        ResearchTaskType
+  status      ResearchTaskStatus @default(PENDING)
+  priority    Int      @default(0)
+  query       String?
+  parameters  Json?
+  results     Json?
+  resultCount Int      @default(0)
+  startedAt   DateTime?
+  completedAt DateTime?
+  error       String?
+  scheduledFor DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([cityId, status])
+  @@index([status, priority])
+  @@index([scheduledFor])
+}
+
+enum ResearchTaskType {
+  DISCOVER_NEW
+  VERIFY_EXISTING
+  UPDATE_DETAILS
+  CHECK_POLICY
+  MONITOR_REVIEWS
+}
+
+enum ResearchTaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+model ValidationQueue {
+  id              String   @id @default(cuid())
+  establishmentId String?
+  rawData         Json
+  source          String
+  status          ValidationStatus @default(PENDING)
+  isValid         Boolean?
+  confidence      Float?
+  issues          String[]
+  reviewedBy      String?
+  reviewedAt      DateTime?
+  reviewNotes     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum ValidationStatus {
+  PENDING
+  AUTO_APPROVED
+  NEEDS_REVIEW
+  AUTO_REJECTED
+  MANUALLY_APPROVED
+  MANUALLY_REJECTED
+}
+
+model AgentLog {
+  id          String   @id @default(cuid())
+  agentType   String
+  action      String
+  taskId      String?
+  establishmentId String?
+  cityId      String?
+  input       Json?
+  output      Json?
+  durationMs  Int?
+  tokensUsed  Int?
+  cost        Float?
+  success     Boolean
+  error       String?
+  createdAt   DateTime @default(now())
+  @@index([agentType, createdAt])
+  @@index([cityId, createdAt])
+}
+
+model Setting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  description String?
+  updatedAt   DateTime @updatedAt
+}
+
+model DataProcessingLog {
+  id              String   @id @default(cuid())
+  userId          String
+  eventType       String
+  ipAddress       String?
+  userAgent       String?
+  details         Json?
+  timestamp       DateTime @default(now())
+  @@index([userId, timestamp])
+  @@index([eventType, timestamp])
+  @@index([timestamp])
+}
+
+model DogProfile {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  breed         String?
+  birthDate     DateTime?
+  size          DogSize  @default(MEDIUM)
+  personality   String?  @db.Text
+  photo         String?
+  photos        String[]
+  checkInCount  Int      @default(0)
+  reviewCount   Int      @default(0)
+  photoCount    Int      @default(0)
+  checkIns      CheckIn[]
+  storyAppearances StoryStop[]
+  followers     DogFollow[] @relation("following")
+  following     DogFollow[] @relation("followers")
+  badges        DogBadge[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@index([userId])
+}
+
+enum DogSize {
+  TINY
+  SMALL
+  MEDIUM
+  LARGE
+  GIANT
+}
+
+model DogFollow {
+  id          String   @id @default(cuid())
+  followerId  String
+  follower    DogProfile @relation("followers", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId String
+  following   DogProfile @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  @@unique([followerId, followingId])
+}
+
+model DogBadge {
+  id          String   @id @default(cuid())
+  dogId       String
+  dog         DogProfile @relation(fields: [dogId], references: [id], onDelete: Cascade)
+  type        BadgeType
+  earnedAt    DateTime @default(now())
+  @@unique([dogId, type])
+  @@index([dogId])
+}
+
+enum BadgeType {
+  FIRST_PAWPRINT
+  STORYTELLER
+  PAWTOGRAPHER
+  CITY_EXPLORER
+  LOCAL_LEGEND
+  TOP_DOG
+  TRENDSETTER
+  HELPFUL_PUP
+  SOCIAL_BUTTERFLY
+  ADVENTURER
+}
+
+model CheckIn {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dogId           String?
+  dog             DogProfile? @relation(fields: [dogId], references: [id])
+  establishmentId String
+  establishment   Establishment @relation(fields: [establishmentId], references: [id], onDelete: Cascade)
+  note            String?  @db.Text
+  photos          String[]
+  rating          Int?
+  createdAt       DateTime @default(now())
+  @@index([userId])
+  @@index([dogId])
+  @@index([establishmentId])
+  @@index([createdAt])
+}
+
+model ReviewHelpful {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reviewId    String
+  review      Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  @@unique([userId, reviewId])
+}
+
+model ReviewReply {
+  id          String   @id @default(cuid())
+  reviewId    String
+  review      Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  isBusinessReply Boolean @default(false)
+  content     String   @db.Text
+  createdAt   DateTime @default(now())
+  @@index([reviewId])
+}
+
+model Story {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String?  @db.Text
+  coverImage  String?
+  cityId      String?
+  city        City?    @relation(fields: [cityId], references: [id])
+  stops       StoryStop[]
+  likes       StoryLike[]
+  comments    StoryComment[]
+  viewCount   Int      @default(0)
+  likeCount   Int      @default(0)
+  commentCount Int     @default(0)
+  isPublished Boolean  @default(false)
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([userId])
+  @@index([cityId])
+  @@index([isPublished, isFeatured])
+  @@index([createdAt])
+}
+
+model StoryStop {
+  id              String   @id @default(cuid())
+  storyId         String
+  story           Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  establishmentId String
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  dogId           String?
+  dog             DogProfile? @relation(fields: [dogId], references: [id])
+  order           Int
+  arrivalTime     String?
+  note            String?  @db.Text
+  photos          String[]
+  rating          Int?
+  @@index([storyId])
+  @@index([establishmentId])
+}
+
+model StoryLike {
+  id          String   @id @default(cuid())
+  storyId     String
+  story       Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  @@unique([storyId, userId])
+}
+
+model StoryComment {
+  id          String   @id @default(cuid())
+  storyId     String
+  story       Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content     String   @db.Text
+  createdAt   DateTime @default(now())
+  @@index([storyId])
+}
+
+model Pack {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String
+  description String?  @db.Text
+  photo       String?
+  cityId      String
+  city        City     @relation(fields: [cityId], references: [id])
+  isPublic    Boolean  @default(true)
+  memberCount Int      @default(0)
+  members     PackMember[]
+  events      Event[]
+  posts       PackPost[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@unique([cityId, slug])
+  @@index([cityId])
+}
+
+model PackMember {
+  id          String   @id @default(cuid())
+  packId      String
+  pack        Pack     @relation(fields: [packId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        PackRole @default(MEMBER)
+  joinedAt    DateTime @default(now())
+  @@unique([packId, userId])
+}
+
+enum PackRole {
+  ADMIN
+  MODERATOR
+  MEMBER
+}
+
+model PackPost {
+  id          String   @id @default(cuid())
+  packId      String
+  pack        Pack     @relation(fields: [packId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content     String   @db.Text
+  photos      String[]
+  createdAt   DateTime @default(now())
+  @@index([packId, createdAt])
+}
+
+model Event {
+  id              String   @id @default(cuid())
+  packId          String?
+  pack            Pack?    @relation(fields: [packId], references: [id])
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  establishmentId String?
+  establishment   Establishment? @relation(fields: [establishmentId], references: [id])
+  cityId          String
+  city            City     @relation(fields: [cityId], references: [id])
+  customLocation  String?
+  title           String
+  description     String?  @db.Text
+  coverImage      String?
+  startDate       DateTime
+  endDate         DateTime?
+  isRecurring     Boolean  @default(false)
+  maxAttendees    Int?
+  attendeeCount   Int      @default(0)
+  status          EventStatus @default(UPCOMING)
+  attendees       EventAttendee[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  @@index([cityId, startDate])
+  @@index([status])
+}
+
+enum EventStatus {
+  DRAFT
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+model EventAttendee {
+  id          String   @id @default(cuid())
+  eventId     String
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status      AttendeeStatus @default(GOING)
+  dogCount    Int      @default(1)
+  createdAt   DateTime @default(now())
+  @@unique([eventId, userId])
+}
+
+enum AttendeeStatus {
+  GOING
+  MAYBE
+  NOT_GOING
+}
+
+model Activity {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        ActivityType
+  reviewId    String?
+  storyId     String?
+  checkInId   String?
+  eventId     String?
+  establishmentId String?
+  dogId       String?
+  cityId      String?
+  summary     String?
+  createdAt   DateTime @default(now())
+  @@index([userId, createdAt])
+  @@index([cityId, createdAt])
+  @@index([type, createdAt])
+}
+
+enum ActivityType {
+  REVIEW_POSTED
+  REVIEW_HELPFUL
+  CHECKIN
+  STORY_PUBLISHED
+  STORY_LIKED
+  BADGE_EARNED
+  DOG_FOLLOWED
+  PACK_JOINED
+  EVENT_CREATED
+  EVENT_ATTENDING
+}
