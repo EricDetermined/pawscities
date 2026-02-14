@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 24 95% 50%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .hero-gradient {
+    background: linear-gradient(135deg, #ed7410 0%, #f19132 50%, #f6b86d 100%);
+  }
+
+  .nav-link {
+    @apply text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors;
+  }
+
+  .nav-link.active {
+    @apply text-primary-600;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  .btn-primary {
+    @apply bg-primary-500 text-white px-6 py-3 rounded-lg font-medium 
+           hover:bg-primary-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-gray-700 px-6 py-3 rounded-lg font-medium border border-gray-200
+           hover:bg-gray-50 transition-colors;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-lg
+           focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-100 text-primary-700;
+  }
+
+  .badge-success {
+    @apply badge bg-green-100 text-green-700;
+  }
+
+  .badge-warning {
+    @apply badge bg-yellow-100 text-yellow-700;
+  }
+}
