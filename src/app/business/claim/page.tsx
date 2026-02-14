@@ -11,8 +11,9 @@ interface Establishment {
   city_id: string;
   primary_image: string | null;
   category_id: string | null;
-  categories: { name: string } | null;
+  categories: { name: string; slug: string } | null;
   isClaimed: boolean;
+  website: string | null;
 }
 
 interface Claim {
@@ -33,6 +34,8 @@ interface SelectOption {
   slug: string;
 }
 
+const NON_CLAIMABLE_SLUGS = ['parks', 'beaches'];
+
 export default function ClaimBusinessPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Establishment[]>([]);
@@ -48,9 +51,12 @@ export default function ClaimBusinessPage() {
     contactName: '',
     contactEmail: '',
     contactPhone: '',
+    verificationMethod: 'business_license',
+    verificationDoc: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [emailDomainMatch, setEmailDomainMatch] = useState<'match' | 'mismatch' | 'none'>('none');
 
   // New business form state
   const [showNewForm, setShowNewForm] = useState(false);
@@ -93,9 +99,31 @@ export default function ClaimBusinessPage() {
     }
   }, [showNewForm, cities.length]);
 
+  // Email domain matching
+  useEffect(() => {
+    if (selectedEstablishment?.website && claimForm.contactEmail) {
+      try {
+        const websiteDomain = new URL(
+          selectedEstablishment.website.startsWith('http')
+            ? selectedEstablishment.website
+            : `https://${selectedEstablishment.website}`
+        ).hostname.replace('www.', '');
+        const emailDomain = claimForm.contactEmail.split('@')[1]?.toLowerCase();
+        if (emailDomain && websiteDomain) {
+          setEmailDomainMatch(emailDomain === websiteDomain ? 'match' : 'mismatch');
+        } else {
+          setEmailDomainMatch('none');
+        }
+      } catch {
+        setEmailDomainMatch('none');
+      }
+    } else {
+      setEmailDomainMatch('none');
+    }
+  }, [selectedEstablishment?.website, claimForm.contactEmail]);
+
   const handleSearch = async () => {
     if (searchQuery.trim().length < 2) return;
-
     setIsSearching(true);
     setHasSearched(true);
     setShowNewForm(false);
@@ -120,7 +148,6 @@ export default function ClaimBusinessPage() {
   const handleSubmitClaim = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedEstablishment) return;
-
     setIsSubmitting(true);
     setSubmitResult(null);
     try {
@@ -133,19 +160,18 @@ export default function ClaimBusinessPage() {
           contactName: claimForm.contactName,
           contactEmail: claimForm.contactEmail,
           contactPhone: claimForm.contactPhone,
+          verificationMethod: claimForm.verificationMethod,
+          verificationDoc: claimForm.verificationDoc || null,
         }),
       });
-
       const data = await res.json();
-
       if (res.ok) {
         setSubmitResult({
           success: true,
-          message: 'Your claim has been submitted! We will review it and get back to you within 1-2 business days.',
+          message: 'Your claim has been submitted! We will verify your information and get back to you within 1-2 business days.',
         });
         setSelectedEstablishment(null);
-        setClaimForm({ businessName: '', contactName: '', contactEmail: '', contactPhone: '' });
-        // Refresh claims
+        setClaimForm({ businessName: '', contactName: '', contactEmail: '', contactPhone: '', verificationMethod: 'business_license', verificationDoc: '' });
         const claimsRes = await fetch('/api/business/claim');
         const claimsData = await claimsRes.json();
         setExistingClaims(claimsData.claims || []);
@@ -169,14 +195,9 @@ export default function ClaimBusinessPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newForm),
       });
-
       const data = await res.json();
-
       if (res.ok) {
-        setSubmitResult({
-          success: true,
-          message: data.message || 'Your business has been submitted for review!',
-        });
+        setSubmitResult({ success: true, message: data.message || 'Your business has been submitted for review!' });
         setShowNewForm(false);
         setNewForm({ name: '', address: '', city_id: '', category_id: '', description: '', phone: '', website: '', contactName: '', contactEmail: '' });
         const claimsRes = await fetch('/api/business/claim');
@@ -196,10 +217,13 @@ export default function ClaimBusinessPage() {
     setShowNewForm(true);
     setSelectedEstablishment(null);
     setSubmitResult(null);
-    // Pre-fill search query as business name
     if (searchQuery.trim()) {
       setNewForm(prev => ({ ...prev, name: searchQuery.trim() }));
     }
+  };
+
+  const isNonClaimable = (est: Establishment) => {
+    return est.categories?.slug ? NON_CLAIMABLE_SLUGS.includes(est.categories.slug) : false;
   };
 
   return (
@@ -225,10 +249,8 @@ export default function ClaimBusinessPage() {
                   )}
                 </div>
                 <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                  claim.status === 'approved'
-                    ? 'bg-green-100 text-green-700'
-                    : claim.status === 'pending'
-                    ? 'bg-yellow-100 text-yellow-700'
+                  claim.status === 'approved' ? 'bg-green-100 text-green-700'
+                    : claim.status === 'pending' ? 'bg-yellow-100 text-yellow-700'
                     : 'bg-red-100 text-red-700'
                 }`}>
                   {claim.status === 'approved' ? 'Approved' : claim.status === 'pending' ? 'Pending Review' : 'Rejected'}
@@ -237,10 +259,7 @@ export default function ClaimBusinessPage() {
             ))}
           </div>
           {existingClaims.some(c => c.status === 'approved') && (
-            <Link
-              href="/business"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700"
-            >
+            <Link href="/business" className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700">
               Go to Business Dashboard &rarr;
             </Link>
           )}
@@ -249,9 +268,7 @@ export default function ClaimBusinessPage() {
 
       {/* Success/Error Message */}
       {submitResult && (
-        <div className={`mb-6 p-4 rounded-lg ${
-          submitResult.success ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'
-        }`}>
+        <div className={`mb-6 p-4 rounded-lg ${submitResult.success ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
           <p className="font-medium">{submitResult.success ? 'Submitted Successfully!' : 'Error'}</p>
           <p className="text-sm mt-1">{submitResult.message}</p>
         </div>
@@ -261,86 +278,55 @@ export default function ClaimBusinessPage() {
       <div className="bg-white rounded-xl border p-6 mb-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Find Your Establishment</h2>
         <div className="flex gap-3">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            placeholder="Search by business name..."
-            className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-          />
-          <button
-            onClick={handleSearch}
-            disabled={isSearching || searchQuery.trim().length < 2}
-            className="px-6 py-2.5 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 disabled:opacity-50 transition-colors"
-          >
+          <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSearch()} placeholder="Search by business name..." className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" />
+          <button onClick={handleSearch} disabled={isSearching || searchQuery.trim().length < 2} className="px-6 py-2.5 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 disabled:opacity-50 transition-colors">
             {isSearching ? 'Searching...' : 'Search'}
           </button>
         </div>
-
-        {/* Always-visible "Add a New Business" link */}
         <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
           <p className="text-sm text-gray-500">Don&apos;t see your business listed?</p>
-          <button
-            onClick={openNewForm}
-            className="text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
-          >
-            + Add a New Business
-          </button>
+          <button onClick={openNewForm} className="text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors">+ Add a New Business</button>
         </div>
       </div>
 
       {/* Search Results */}
       {hasSearched && !isSearching && !selectedEstablishment && !showNewForm && (
         <div className="bg-white rounded-xl border p-6 mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Search Results ({searchResults.length})
-          </h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Search Results ({searchResults.length})</h3>
           {searchResults.length > 0 ? (
             <>
               <div className="space-y-3">
-                {searchResults.map(est => (
-                  <div
-                    key={est.id}
-                    className="flex items-center justify-between p-4 border rounded-lg hover:border-orange-300 hover:bg-orange-50 transition-colors cursor-pointer"
-                    onClick={() => handleSelectEstablishment(est)}
-                  >
-                    <div>
-                      <p className="font-medium text-gray-900">{est.name}</p>
-                      <p className="text-sm text-gray-500">{est.address}</p>
-                      {est.categories && (
-                        <span className="text-xs text-gray-400">{est.categories.name}</span>
-                      )}
+                {searchResults.map(est => {
+                  const nonClaimable = isNonClaimable(est);
+                  return (
+                    <div key={est.id} className={`flex items-center justify-between p-4 border rounded-lg transition-colors ${nonClaimable ? 'bg-gray-50 border-gray-200 cursor-default' : 'hover:border-orange-300 hover:bg-orange-50 cursor-pointer'}`} onClick={() => !nonClaimable && !est.isClaimed && handleSelectEstablishment(est)}>
+                      <div>
+                        <p className="font-medium text-gray-900">{est.name}</p>
+                        <p className="text-sm text-gray-500">{est.address}</p>
+                        {est.categories && <span className="text-xs text-gray-400">{est.categories.name}</span>}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        {nonClaimable ? (
+                          <span className="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded">Community Listing</span>
+                        ) : est.isClaimed ? (
+                          <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">Already Claimed</span>
+                        ) : (
+                          <span className="text-orange-600 text-sm font-medium">Select &rarr;</span>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      {est.isClaimed && (
-                        <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">Already Claimed</span>
-                      )}
-                      <span className="text-orange-600 text-sm font-medium">Select &rarr;</span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
-              {/* CTA after results */}
               <div className="mt-6 pt-4 border-t border-gray-100 text-center">
                 <p className="text-sm text-gray-500 mb-2">Can&apos;t find your business in the results?</p>
-                <button
-                  onClick={openNewForm}
-                  className="text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors"
-                >
-                  + Add Your Business to Paw Cities
-                </button>
+                <button onClick={openNewForm} className="text-sm font-medium text-orange-600 hover:text-orange-700 transition-colors">+ Add Your Business to Paw Cities</button>
               </div>
             </>
           ) : (
             <div className="text-center py-8">
               <p className="text-gray-500 mb-4">No establishments found matching &quot;{searchQuery}&quot;</p>
-              <button
-                onClick={openNewForm}
-                className="px-6 py-2.5 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors"
-              >
-                + Add Your Business to Paw Cities
-              </button>
+              <button onClick={openNewForm} className="px-6 py-2.5 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors">+ Add Your Business to Paw Cities</button>
             </div>
           )}
         </div>
@@ -351,72 +337,61 @@ export default function ClaimBusinessPage() {
         <div className="bg-white rounded-xl border p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-gray-900">Claim: {selectedEstablishment.name}</h3>
-            <button
-              onClick={() => setSelectedEstablishment(null)}
-              className="text-sm text-gray-500 hover:text-gray-700"
-            >
-              &larr; Back to results
-            </button>
+            <button onClick={() => setSelectedEstablishment(null)} className="text-sm text-gray-500 hover:text-gray-700">&larr; Back to results</button>
           </div>
           <p className="text-sm text-gray-500 mb-6">{selectedEstablishment.address}</p>
 
           <form onSubmit={handleSubmitClaim} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
-              <input
-                type="text"
-                value={claimForm.businessName}
-                onChange={(e) => setClaimForm(prev => ({ ...prev, businessName: e.target.value }))}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                required
-              />
+              <input type="text" value={claimForm.businessName} onChange={(e) => setClaimForm(prev => ({ ...prev, businessName: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
-                <input
-                  type="text"
-                  value={claimForm.contactName}
-                  onChange={(e) => setClaimForm(prev => ({ ...prev, contactName: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                  required
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-1">Your Name *</label>
+                <input type="text" value={claimForm.contactName} onChange={(e) => setClaimForm(prev => ({ ...prev, contactName: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input
-                  type="email"
-                  value={claimForm.contactEmail}
-                  onChange={(e) => setClaimForm(prev => ({ ...prev, contactEmail: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                  required
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                <input type="email" value={claimForm.contactEmail} onChange={(e) => setClaimForm(prev => ({ ...prev, contactEmail: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
+                {emailDomainMatch === 'match' && (
+                  <p className="mt-1 text-xs text-green-600 flex items-center gap-1"><span>&#10003;</span> Email domain matches business website — faster verification</p>
+                )}
+                {emailDomainMatch === 'mismatch' && selectedEstablishment?.website && (
+                  <p className="mt-1 text-xs text-amber-600">Tip: Using an email from your business domain speeds up verification</p>
+                )}
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Phone (optional)</label>
-              <input
-                type="tel"
-                value={claimForm.contactPhone}
-                onChange={(e) => setClaimForm(prev => ({ ...prev, contactPhone: e.target.value }))}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-              />
+              <input type="tel" value={claimForm.contactPhone} onChange={(e) => setClaimForm(prev => ({ ...prev, contactPhone: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" />
             </div>
+
+            {/* Verification Section */}
+            <div className="border-t border-gray-100 pt-4 mt-4">
+              <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2"><span>&#128274;</span> Ownership Verification</h4>
+              <p className="text-xs text-gray-500 mb-3">To protect businesses from unauthorized claims, we verify ownership before approving your claim. Providing verification information speeds up the review process.</p>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Verification Method</label>
+                <select value={claimForm.verificationMethod} onChange={(e) => setClaimForm(prev => ({ ...prev, verificationMethod: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none">
+                  <option value="business_license">Business License / Registration</option>
+                  <option value="domain_email">Business Domain Email Verification</option>
+                  <option value="google_business">Google Business Profile</option>
+                  <option value="utility_bill">Utility Bill / Lease Agreement</option>
+                  <option value="phone_verification">Phone Verification (call to listed number)</option>
+                  <option value="other">Other Documentation</option>
+                </select>
+              </div>
+              <div className="mt-3">
+                <label className="block text-sm font-medium text-gray-700 mb-1">Supporting Link or Reference (optional)</label>
+                <input type="url" value={claimForm.verificationDoc} onChange={(e) => setClaimForm(prev => ({ ...prev, verificationDoc: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" placeholder="e.g., Google Business URL, company website, or verification document link" />
+                <p className="mt-1 text-xs text-gray-400">Provide a link to your Google Business Profile, company website, or any supporting documentation.</p>
+              </div>
+            </div>
+
             <div className="flex gap-3 pt-2">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="px-6 py-2.5 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 disabled:opacity-50 transition-colors"
-              >
-                {isSubmitting ? 'Submitting...' : 'Submit Claim'}
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedEstablishment(null)}
-                className="px-6 py-2.5 text-gray-600 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
+              <button type="submit" disabled={isSubmitting} className="px-6 py-2.5 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 disabled:opacity-50 transition-colors">{isSubmitting ? 'Submitting...' : 'Submit Claim'}</button>
+              <button type="button" onClick={() => setSelectedEstablishment(null)} className="px-6 py-2.5 text-gray-600 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors">Cancel</button>
             </div>
           </form>
         </div>
@@ -427,138 +402,63 @@ export default function ClaimBusinessPage() {
         <div className="bg-white rounded-xl border p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-gray-900">Add New Business</h3>
-            <button
-              onClick={() => setShowNewForm(false)}
-              className="text-sm text-gray-500 hover:text-gray-700"
-            >
-              &larr; Back to search
-            </button>
+            <button onClick={() => setShowNewForm(false)} className="text-sm text-gray-500 hover:text-gray-700">&larr; Back to search</button>
           </div>
-          <p className="text-sm text-gray-500 mb-6">
-            Submit your business to be listed on Paw Cities. We&apos;ll review your submission and get back to you within 1-2 business days.
-          </p>
-
+          <p className="text-sm text-gray-500 mb-6">Submit your business to be listed on Paw Cities. We&apos;ll review your submission and get back to you within 1-2 business days.</p>
           <form onSubmit={handleSubmitNew} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Business Name *</label>
-                <input
-                  type="text"
-                  value={newForm.name}
-                  onChange={(e) => setNewForm(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                  required
-                />
+                <input type="text" value={newForm.name} onChange={(e) => setNewForm(prev => ({ ...prev, name: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Address *</label>
-                <input
-                  type="text"
-                  value={newForm.address}
-                  onChange={(e) => setNewForm(prev => ({ ...prev, address: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                  required
-                />
+                <input type="text" value={newForm.address} onChange={(e) => setNewForm(prev => ({ ...prev, address: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
-                <select
-                  value={newForm.city_id}
-                  onChange={(e) => setNewForm(prev => ({ ...prev, city_id: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                  required
-                >
+                <select value={newForm.city_id} onChange={(e) => setNewForm(prev => ({ ...prev, city_id: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required>
                   <option value="">Select a city</option>
-                  {cities.map(city => (
-                    <option key={city.id} value={city.id}>{city.name}</option>
-                  ))}
+                  {cities.map(city => (<option key={city.id} value={city.id}>{city.name}</option>))}
                 </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
-                <select
-                  value={newForm.category_id}
-                  onChange={(e) => setNewForm(prev => ({ ...prev, category_id: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                  required
-                >
+                <select value={newForm.category_id} onChange={(e) => setNewForm(prev => ({ ...prev, category_id: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required>
                   <option value="">Select a category</option>
-                  {categories.map(cat => (
-                    <option key={cat.id} value={cat.id}>{cat.name}</option>
-                  ))}
+                  {categories.map(cat => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
                 </select>
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-              <textarea
-                value={newForm.description}
-                onChange={(e) => setNewForm(prev => ({ ...prev, description: e.target.value }))}
-                rows={3}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                placeholder="Describe your business and how it's dog-friendly..."
-              />
+              <textarea value={newForm.description} onChange={(e) => setNewForm(prev => ({ ...prev, description: e.target.value }))} rows={3} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" placeholder="Describe your business and how it's dog-friendly..." />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                <input
-                  type="tel"
-                  value={newForm.phone}
-                  onChange={(e) => setNewForm(prev => ({ ...prev, phone: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                />
+                <input type="tel" value={newForm.phone} onChange={(e) => setNewForm(prev => ({ ...prev, phone: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Website</label>
-                <input
-                  type="url"
-                  value={newForm.website}
-                  onChange={(e) => setNewForm(prev => ({ ...prev, website: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                  placeholder="https://..."
-                />
+                <input type="url" value={newForm.website} onChange={(e) => setNewForm(prev => ({ ...prev, website: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" placeholder="https://..." />
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Your Name *</label>
-                <input
-                  type="text"
-                  value={newForm.contactName}
-                  onChange={(e) => setNewForm(prev => ({ ...prev, contactName: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                  required
-                />
+                <input type="text" value={newForm.contactName} onChange={(e) => setNewForm(prev => ({ ...prev, contactName: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Your Email *</label>
-                <input
-                  type="email"
-                  value={newForm.contactEmail}
-                  onChange={(e) => setNewForm(prev => ({ ...prev, contactEmail: e.target.value }))}
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
-                  required
-                />
+                <input type="email" value={newForm.contactEmail} onChange={(e) => setNewForm(prev => ({ ...prev, contactEmail: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
               </div>
             </div>
             <div className="flex gap-3 pt-2">
-              <button
-                type="submit"
-                disabled={isSubmittingNew}
-                className="px-6 py-2.5 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 disabled:opacity-50 transition-colors"
-              >
-                {isSubmittingNew ? 'Submitting...' : 'Submit New Business'}
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowNewForm(false)}
-                className="px-6 py-2.5 text-gray-600 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
+              <button type="submit" disabled={isSubmittingNew} className="px-6 py-2.5 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 disabled:opacity-50 transition-colors">{isSubmittingNew ? 'Submitting...' : 'Submit New Business'}</button>
+              <button type="button" onClick={() => setShowNewForm(false)} className="px-6 py-2.5 text-gray-600 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors">Cancel</button>
             </div>
           </form>
         </div>
@@ -573,14 +473,28 @@ export default function ClaimBusinessPage() {
             <p className="text-sm text-gray-600">Search for your establishment or add a new one</p>
           </div>
           <div className="bg-white rounded-xl border p-6 text-center">
-            <div className="text-3xl mb-3">&#128221;</div>
-            <h3 className="font-semibold text-gray-900 mb-1">2. Submit Your Claim</h3>
-            <p className="text-sm text-gray-600">Claim an existing listing or create a new one</p>
+            <div className="text-3xl mb-3">&#128274;</div>
+            <h3 className="font-semibold text-gray-900 mb-1">2. Verify Ownership</h3>
+            <p className="text-sm text-gray-600">Provide your business details and verification to prove ownership</p>
           </div>
           <div className="bg-white rounded-xl border p-6 text-center">
             <div className="text-3xl mb-3">&#128640;</div>
             <h3 className="font-semibold text-gray-900 mb-1">3. Start Managing</h3>
-            <p className="text-sm text-gray-600">Once approved, manage your listing and grow your business</p>
+            <p className="text-sm text-gray-600">Once verified, manage your listing, respond to reviews, and grow</p>
+          </div>
+        </div>
+      )}
+
+      {/* Verification Info */}
+      {!selectedEstablishment && !showNewForm && (
+        <div className="mt-6 bg-blue-50 rounded-xl border border-blue-100 p-6">
+          <h3 className="font-semibold text-blue-900 mb-2">How We Verify Business Ownership</h3>
+          <p className="text-sm text-blue-800 mb-3">We take business verification seriously to protect both business owners and our community.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-blue-800">
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Business domain email</strong> — Using an email matching your website domain is the fastest way to verify</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Business license</strong> — Upload or link to your business registration</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Google Business Profile</strong> — Link to your verified Google Business listing</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Phone verification</strong> — We may call the business number on file to confirm</span></div>
           </div>
         </div>
       )}
