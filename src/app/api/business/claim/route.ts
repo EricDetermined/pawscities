@@ -41,7 +41,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
 
-  const { establishmentId, businessName, contactName, contactEmail, contactPhone } = await request.json();
+  const {
+    establishmentId,
+    businessName,
+    contactName,
+    contactEmail,
+    contactPhone,
+    verificationMethod,
+    verificationDoc,
+  } = await request.json();
 
   if (!establishmentId || !businessName || !contactName || !contactEmail) {
     return NextResponse.json(
@@ -53,7 +61,7 @@ export async function POST(request: NextRequest) {
   // Check if the establishment exists and its category is claimable
   const { data: establishment } = await supabase
     .from('establishments')
-    .select('id, categories:category_id(slug)')
+    .select('id, website, categories:category_id(slug)')
     .eq('id', establishmentId)
     .single();
 
@@ -114,6 +122,23 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to create user record' }, { status: 500 });
   }
 
+  // Determine verification method based on email domain match
+  let effectiveVerificationMethod = verificationMethod || 'other';
+  if (contactEmail && (establishment as any).website) {
+    try {
+      const websiteUrl = (establishment as any).website.startsWith('http')
+        ? (establishment as any).website
+        : `https://${(establishment as any).website}`;
+      const websiteDomain = new URL(websiteUrl).hostname.replace('www.', '');
+      const emailDomain = contactEmail.split('@')[1]?.toLowerCase();
+      if (emailDomain === websiteDomain) {
+        effectiveVerificationMethod = 'domain_email_match';
+      }
+    } catch {
+      // Invalid URL, continue with provided method
+    }
+  }
+
   const { data: claim, error } = await supabase
     .from('business_claims')
     .insert({
@@ -123,6 +148,8 @@ export async function POST(request: NextRequest) {
       contact_name: contactName,
       contact_email: contactEmail,
       contact_phone: contactPhone || null,
+      verification_method: effectiveVerificationMethod,
+      verification_doc: verificationDoc || null,
       status: 'pending',
     })
     .select()
