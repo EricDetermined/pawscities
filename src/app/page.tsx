@@ -27,23 +27,35 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="hero-gradient text-white py-20 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="font-display text-4xl md:text-6xl font-bold mb-4">
-            Find Dog-Friendly Places
+      {/* Hero — Split Layout */}
+      <section className="relative flex flex-col md:flex-row min-h-[480px]">
+        {/* Left: Content Panel */}
+        <div className="flex-1 bg-gradient-to-br from-[#1a1a2e] to-[#16213e] flex flex-col justify-center px-8 md:px-14 py-16 md:py-20">
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-5">
+            Find Dog-Friendly<br />Places
           </h1>
-          <p className="text-xl opacity-90 max-w-2xl mx-auto mb-8">
-            Discover the best restaurants, cafes, parks, and more that welcome your furry friend in cities around the world.
+          <p className="text-base md:text-lg text-white/90 max-w-md mb-8 leading-relaxed">
+            Discover the best restaurants, cafes, parks, and more that welcome
+            your furry friend in cities around the world.
           </p>
-          <div className="flex flex-wrap justify-center gap-3 text-sm">
-            <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">🌳 Parks</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">🍽️ Restaurants</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">☕ Cafes</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">🏨 Hotels</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">🏖️ Beaches</span>
-            <span className="bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">🏥 Vets</span>
+          <div className="flex flex-wrap gap-2 text-sm">
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">🌳 Parks</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">🍽️ Restaurants</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">☕ Cafes</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">🏨 Hotels</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">🏖️ Beaches</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">🏥 Vets</span>
           </div>
+        </div>
+        {/* Right: Dog Photo */}
+        <div className="flex-1 relative overflow-hidden min-h-[280px] md:min-h-0">
+          <img
+            src="/images/hero-dogs.jpg"
+            alt="Two adorable dogs — the Paw Cities mascots"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Gradient blend from left panel into image */}
+          <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#16213e] to-transparent w-24" />
         </div>
       </section>
 
