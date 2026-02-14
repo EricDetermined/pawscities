@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { UserMenu } from '@/components/auth/UserMenu';
 
 export const metadata = {
   title: 'For Business - Grow Your Dog-Friendly Business',
@@ -9,25 +8,6 @@ export const metadata = {
 export default function ForBusinessPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl">🐾</span>
-              <span className="font-display text-xl font-bold text-orange-600">Paw Cities</span>
-            </Link>
-            <nav className="hidden md:flex items-center gap-8">
-              <Link href="/" className="text-sm font-medium text-gray-600 hover:text-gray-900">Home</Link>
-              <Link href="/explore" className="text-sm font-medium text-gray-600 hover:text-gray-900">Explore</Link>
-              <Link href="/for-business" className="text-sm font-medium text-orange-600">For Business</Link>
-            </nav>
-            <div className="flex items-center gap-4">
-              <UserMenu />
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-orange-600 via-orange-500 to-amber-500 text-white py-24 px-4">
@@ -302,25 +282,6 @@ export default function ForBusinessPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-12 px-4">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🐾</span>
-              <span className="font-display text-xl font-bold text-white">Paw Cities</span>
-            </div>
-            <div className="flex items-center gap-6 text-sm">
-              <Link href="/" className="hover:text-white transition-colors">Home</Link>
-              <Link href="/explore" className="hover:text-white transition-colors">Explore</Link>
-              <Link href="/for-business" className="hover:text-white transition-colors">For Business</Link>
-              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-            </div>
-            <p className="text-sm text-gray-500">&copy; 2026 Paw Cities. Made with love for dogs and their humans.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
