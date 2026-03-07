@@ -53,6 +53,14 @@ const nextConfig = {
     ];
   },
 
+  // Rewrites for SEO files
+  async rewrites() {
+    return [
+      { source: '/robots.txt', destination: '/api/robots' },
+      { source: '/sitemap.xml', destination: '/api/sitemap' },
+    ];
+  },
+
   // Environment variables exposed to browser
   env: {
     NEXT_PUBLIC_APP_NAME: 'Paw Cities',
