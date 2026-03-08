@@ -1,5 +1,6 @@
 import { requireAdmin } from '@/lib/admin';
 import { NextRequest, NextResponse } from 'next/server';
+import { sendClaimApproved, sendClaimRejected } from '@/lib/email';
 
 export async function GET(
   request: NextRequest,
@@ -84,7 +85,7 @@ export async function PATCH(
     // Get the claim first
     const { data: claim, error: claimError } = await supabase
       .from('BusinessClaim')
-      .select('establishmentId, userId, status')
+      .select('establishmentId, userId, status, contactEmail, businessName')
       .eq('id', claimId)
       .single();
 
@@ -131,6 +132,11 @@ export async function PATCH(
         throw new Error(`Failed to update establishment: ${updateEstError.message}`);
       }
 
+      // Notify business owner (non-blocking)
+      if (claim.contactEmail) {
+        sendClaimApproved(claim.contactEmail, claim.businessName || 'your business').catch(() => {});
+      }
+
       return NextResponse.json({
         id: claimId,
         status: 'APPROVED',
@@ -149,6 +155,11 @@ export async function PATCH(
 
       if (updateClaimError) {
         throw new Error(`Failed to update claim: ${updateClaimError.message}`);
+      }
+
+      // Notify business owner (non-blocking)
+      if (claim.contactEmail) {
+        sendClaimRejected(claim.contactEmail, claim.businessName || 'your business', reviewNotes).catch(() => {});
       }
 
       return NextResponse.json({
