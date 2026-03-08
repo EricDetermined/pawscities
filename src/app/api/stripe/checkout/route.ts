@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '@/lib/supabase/server';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -15,7 +14,7 @@ const PRICE_MAP: Record<string, string> = {
 
 export async function POST(request: Request) {
   try {
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
@@ -32,13 +31,24 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Establishment ID required' }, { status: 400 });
     }
 
+    // Look up user in our User table
+    const { data: dbUser } = await supabase
+      .from('User')
+      .select('id, email')
+      .eq('supabaseId', user.id)
+      .single();
+
+    if (!dbUser) {
+      return NextResponse.json({ error: 'User record not found' }, { status: 404 });
+    }
+
     // Verify the user owns this establishment (has approved claim)
     const { data: claim } = await supabase
-      .from('business_claims')
-      .select('id, establishment_id')
-      .eq('user_id', user.id)
-      .eq('establishment_id', establishmentId)
-      .eq('status', 'approved')
+      .from('BusinessClaim')
+      .select('id, establishmentId')
+      .eq('userId', dbUser.id)
+      .eq('establishmentId', establishmentId)
+      .eq('status', 'APPROVED')
       .single();
 
     if (!claim) {
@@ -46,28 +56,22 @@ export async function POST(request: Request) {
     }
 
     // Check for existing Stripe customer
-    const { data: profile } = await supabase
-      .from('users')
-      .select('stripe_customer_id, email')
-      .eq('id', user.id)
+    const { data: subscription } = await supabase
+      .from('Subscription')
+      .select('stripeCustomerId')
+      .eq('establishmentId', establishmentId)
       .single();
 
-    let customerId = profile?.stripe_customer_id;
+    let customerId = subscription?.stripeCustomerId;
 
     if (!customerId) {
       const customer = await stripe.customers.create({
-        email: profile?.email || user.email,
+        email: dbUser.email || user.email,
         metadata: {
-          supabase_user_id: user.id,
+          supabase_user_id: dbUser.id,
         },
       });
       customerId = customer.id;
-
-      // Save Stripe customer ID
-      await supabase
-        .from('users')
-        .update({ stripe_customer_id: customerId })
-        .eq('id', user.id);
     }
 
     // Create Stripe Checkout session
@@ -84,13 +88,13 @@ export async function POST(request: Request) {
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/business/upgrade/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/business/upgrade?canceled=true`,
       metadata: {
-        supabase_user_id: user.id,
+        supabase_user_id: dbUser.id,
         establishment_id: establishmentId,
         plan: plan,
       },
       subscription_data: {
         metadata: {
-          supabase_user_id: user.id,
+          supabase_user_id: dbUser.id,
           establishment_id: establishmentId,
           plan: plan,
         },
