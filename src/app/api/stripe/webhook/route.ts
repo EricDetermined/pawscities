@@ -45,25 +45,25 @@ export async function POST(request: Request) {
 
           // Update establishment tier
           await supabaseAdmin
-            .from('establishments')
+            .from('Establishment')
             .update({ tier: tier })
             .eq('id', establishment_id);
 
           // Create or update subscription record
           await supabaseAdmin
-            .from('subscriptions')
+            .from('Subscription')
             .upsert({
-              user_id: supabase_user_id,
-              establishment_id: establishment_id,
-              stripe_subscription_id: session.subscription as string,
-              stripe_customer_id: session.customer as string,
+              userId: supabase_user_id,
+              establishmentId: establishment_id,
+              stripeSubscriptionId: session.subscription as string,
+              stripeCustomerId: session.customer as string,
               plan: plan,
               tier: tier,
-              status: 'active',
-              current_period_start: new Date().toISOString(),
-              current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+              status: 'ACTIVE',
+              currentPeriodStart: new Date().toISOString(),
+              currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
             }, {
-              onConflict: 'establishment_id',
+              onConflict: 'establishmentId',
             });
         }
         break;
@@ -74,22 +74,22 @@ export async function POST(request: Request) {
         const { supabase_user_id, establishment_id, plan } = subscription.metadata || {};
 
         if (establishment_id) {
-          const status = subscription.status === 'active' ? 'active' : 'past_due';
+          const status = subscription.status === 'active' ? 'ACTIVE' : 'PAST_DUE';
           const tier = subscription.status === 'active' ? (PLAN_TO_TIER[plan] || 'BRONZE') : 'FREE';
 
           await supabaseAdmin
-            .from('subscriptions')
+            .from('Subscription')
             .update({
               status: status,
               tier: tier,
-              current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-              current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+              currentPeriodStart: new Date(subscription.current_period_start * 1000).toISOString(),
+              currentPeriodEnd: new Date(subscription.current_period_end * 1000).toISOString(),
             })
-            .eq('stripe_subscription_id', subscription.id);
+            .eq('stripeSubscriptionId', subscription.id);
 
           // Update establishment tier
           await supabaseAdmin
-            .from('establishments')
+            .from('Establishment')
             .update({ tier: tier })
             .eq('id', establishment_id);
         }
@@ -102,13 +102,13 @@ export async function POST(request: Request) {
 
         // Downgrade to free
         await supabaseAdmin
-          .from('subscriptions')
-          .update({ status: 'canceled', tier: 'FREE' })
-          .eq('stripe_subscription_id', subscription.id);
+          .from('Subscription')
+          .update({ status: 'CANCELED', tier: 'FREE' })
+          .eq('stripeSubscriptionId', subscription.id);
 
         if (establishment_id) {
           await supabaseAdmin
-            .from('establishments')
+            .from('Establishment')
             .update({ tier: 'FREE' })
             .eq('id', establishment_id);
         }
@@ -121,9 +121,9 @@ export async function POST(request: Request) {
 
         if (subscriptionId) {
           await supabaseAdmin
-            .from('subscriptions')
-            .update({ status: 'past_due' })
-            .eq('stripe_subscription_id', subscriptionId);
+            .from('Subscription')
+            .update({ status: 'PAST_DUE' })
+            .eq('stripeSubscriptionId', subscriptionId);
         }
         break;
       }
