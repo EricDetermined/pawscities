@@ -20,9 +20,9 @@ interface Establishment {
 interface Claim {
   id: string;
   status: string;
-  business_name: string;
-  created_at: string;
-  establishments: {
+  businessName: string;
+  createdAt: string;
+  establishment: {
     name: string;
     slug: string;
     address: string;
@@ -67,8 +67,8 @@ export default function ClaimBusinessPage() {
   const [newForm, setNewForm] = useState({
     name: '',
     address: '',
-    city_id: '',
-    category_id: '',
+    cityId: '',
+    categoryId: '',
     description: '',
     phone: '',
     website: '',
@@ -200,7 +200,7 @@ export default function ClaimBusinessPage() {
         router.push('/business/claim/success');
         return;
         setShowNewForm(false);
-        setNewForm({ name: '', address: '', city_id: '', category_id: '', description: '', phone: '', website: '', contactName: '', contactEmail: '' });
+        setNewForm({ name: '', address: '', cityId: '', categoryId: '', description: '', phone: '', website: '', contactName: '', contactEmail: '' });
         const claimsRes = await fetch('/api/business/claim');
         const claimsData = await claimsRes.json();
         setExistingClaims(claimsData.claims || []);
@@ -244,22 +244,22 @@ export default function ClaimBusinessPage() {
             {existingClaims.map(claim => (
               <div key={claim.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
-                  <p className="font-medium text-gray-900">{claim.business_name}</p>
-                  {claim.establishments && (
-                    <p className="text-sm text-gray-500">{claim.establishments.address}</p>
+                  <p className="font-medium text-gray-900">{claim.businessName}</p>
+                  {claim.establishment && (
+                    <p className="text-sm text-gray-500">{claim.establishment.address}</p>
                   )}
                 </div>
                 <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                  claim.status === 'approved' ? 'bg-green-100 text-green-700'
-                    : claim.status === 'pending' ? 'bg-yellow-100 text-yellow-700'
+                  claim.status === 'APPROVED' ? 'bg-green-100 text-green-700'
+                    : claim.status === 'PENDING' ? 'bg-yellow-100 text-yellow-700'
                     : 'bg-red-100 text-red-700'
                 }`}>
-                  {claim.status === 'approved' ? 'Approved' : claim.status === 'pending' ? 'Pending Review' : 'Rejected'}
+                  {claim.status === 'APPROVED' ? 'Approved' : claim.status === 'PENDING' ? 'Pending Review' : 'Rejected'}
                 </span>
               </div>
             ))}
           </div>
-          {existingClaims.some(c => c.status === 'approved') && (
+          {existingClaims.some(c => c.status === 'APPROVED') && (
             <Link href="/business" className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700">
               Go to Business Dashboard &rarr;
             </Link>
@@ -356,7 +356,7 @@ export default function ClaimBusinessPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                 <input type="email" value={claimForm.contactEmail} onChange={(e) => setClaimForm(prev => ({ ...prev, contactEmail: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
                 {emailDomainMatch === 'match' && (
-                  <p className="mt-1 text-xs text-green-600 flex items-center gap-1"><span>&#10003;</span> Email domain matches business website — faster verification</p>
+                  <p className="mt-1 text-xs text-green-600 flex items-center gap-1"><span>&#10003;</span> Email domain matches business website â faster verification</p>
                 )}
                 {emailDomainMatch === 'mismatch' && selectedEstablishment?.website && (
                   <p className="mt-1 text-xs text-amber-600">Tip: Using an email from your business domain speeds up verification</p>
@@ -420,14 +420,14 @@ export default function ClaimBusinessPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
-                <select value={newForm.city_id} onChange={(e) => setNewForm(prev => ({ ...prev, city_id: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required>
+                <select value={newForm.cityId} onChange={(e) => setNewForm(prev => ({ ...prev, cityId: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required>
                   <option value="">Select a city</option>
                   {cities.map(city => (<option key={city.id} value={city.id}>{city.name}</option>))}
                 </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
-                <select value={newForm.category_id} onChange={(e) => setNewForm(prev => ({ ...prev, category_id: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required>
+                <select value={newForm.categoryId} onChange={(e) => setNewForm(prev => ({ ...prev, categoryId: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required>
                   <option value="">Select a category</option>
                   {categories.map(cat => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
                 </select>
@@ -492,10 +492,10 @@ export default function ClaimBusinessPage() {
           <h3 className="font-semibold text-blue-900 mb-2">How We Verify Business Ownership</h3>
           <p className="text-sm text-blue-800 mb-3">We take business verification seriously to protect both business owners and our community.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-blue-800">
-            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Business domain email</strong> — Using an email matching your website domain is the fastest way to verify</span></div>
-            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Business license</strong> — Upload or link to your business registration</span></div>
-            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Google Business Profile</strong> — Link to your verified Google Business listing</span></div>
-            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Phone verification</strong> — We may call the business number on file to confirm</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Business domain email</strong> â Using an email matching your website domain is the fastest way to verify</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Business license</strong> â Upload or link to your business registration</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Google Business Profile</strong> â Link to your verified Google Business listing</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Phone verification</strong> â We may call the business number on file to confirm</span></div>
           </div>
         </div>
       )}
