@@ -3,9 +3,9 @@ import { NextResponse } from 'next/server';
 
 export interface AdminAuthResult {
   error: NextResponse | null;
-  supabase: ReturnType<typeof createClient> | null;
+  supabase: Awaited<ReturnType<typeof createClient>> | null;
   user: { id: string; email?: string } | null;
-  dbUser: { id: string; supabase_id: string; email: string; role: string; is_suspended: boolean } | null;
+  dbUser: { id: string; supabaseId: string; email: string; role: string } | null;
 }
 
 /**
@@ -30,9 +30,9 @@ export async function requireAdmin(): Promise<AdminAuthResult> {
     }
 
     const { data: dbUser, error: dbError } = await supabase
-      .from('users')
-      .select('id, supabase_id, email, role, is_suspended')
-      .eq('supabase_id', user.id)
+      .from('User')
+      .select('id, supabaseId, email, role')
+      .eq('supabaseId', user.id)
       .single();
 
     if (dbError || !dbUser) {
@@ -40,18 +40,6 @@ export async function requireAdmin(): Promise<AdminAuthResult> {
         error: NextResponse.json(
           { error: 'User record not found' },
           { status: 404 }
-        ),
-        supabase: null,
-        user: null,
-        dbUser: null,
-      };
-    }
-
-    if (dbUser.is_suspended) {
-      return {
-        error: NextResponse.json(
-          { error: 'Account is suspended' },
-          { status: 403 }
         ),
         supabase: null,
         user: null,
@@ -113,9 +101,9 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
     }
 
     const { data: dbUser, error: dbError } = await supabase
-      .from('users')
-      .select('id, supabase_id, email, role, is_suspended')
-      .eq('supabase_id', user.id)
+      .from('User')
+      .select('id, supabaseId, email, role')
+      .eq('supabaseId', user.id)
       .single();
 
     if (dbError || !dbUser) {
@@ -123,18 +111,6 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
         error: NextResponse.json(
           { error: 'User record not found' },
           { status: 404 }
-        ),
-        supabase: null,
-        user: null,
-        dbUser: null,
-      };
-    }
-
-    if (dbUser.is_suspended) {
-      return {
-        error: NextResponse.json(
-          { error: 'Account is suspended' },
-          { status: 403 }
         ),
         supabase: null,
         user: null,

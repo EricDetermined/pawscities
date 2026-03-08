@@ -1,5 +1,4 @@
 import { requireBusinessOrAdmin } from '@/lib/admin';
-import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
@@ -12,10 +11,10 @@ export async function GET() {
   try {
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('establishment_id')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'approved')
+      .from('BusinessClaim')
+      .select('establishmentId')
+      .eq('userId', dbUser.id)
+      .eq('status', 'APPROVED')
       .single();
 
     if (claimError || !claim) {
@@ -24,9 +23,9 @@ export async function GET() {
 
     // Get the establishment
     const { data: establishment, error: estError } = await supabase
-      .from('establishments')
+      .from('Establishment')
       .select('*')
-      .eq('id', claim.establishment_id)
+      .eq('id', claim.establishmentId)
       .single();
 
     if (estError || !establishment) {
@@ -53,10 +52,10 @@ export async function PUT(request: NextRequest) {
 
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('establishment_id')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'approved')
+      .from('BusinessClaim')
+      .select('establishmentId')
+      .eq('userId', dbUser.id)
+      .eq('status', 'APPROVED')
       .single();
 
     if (claimError || !claim) {
@@ -68,13 +67,14 @@ export async function PUT(request: NextRequest) {
     if (description !== undefined) updateData.description = description;
     if (phone !== undefined) updateData.phone = phone;
     if (website !== undefined) updateData.website = website;
-    if (dogFeatures !== undefined) updateData.dog_features = dogFeatures;
-    if (openingHours !== undefined) updateData.hours = openingHours;
+    if (dogFeatures !== undefined) updateData.dogFeatures = dogFeatures;
+    if (openingHours !== undefined) updateData.openingHours = openingHours;
+    updateData.updatedAt = new Date().toISOString();
 
     const { data: updated, error: updateError } = await supabase
-      .from('establishments')
+      .from('Establishment')
       .update(updateData)
-      .eq('id', claim.establishment_id)
+      .eq('id', claim.establishmentId)
       .select()
       .single();
 

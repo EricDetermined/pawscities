@@ -22,16 +22,16 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * limit;
 
     // Build query
-    let query = supabase.from('users').select(`
+    let query = supabase.from('User').select(`
       id,
-      supabase_id,
+      supabaseId,
       email,
-      display_name,
+      name,
       role,
-      suspended,
-      avatar_url,
-      created_at,
-      updated_at
+      isSuspended,
+      avatarUrl,
+      createdAt,
+      updatedAt
     `, { count: 'exact' });
 
     // Apply filters
@@ -40,16 +40,16 @@ export async function GET(request: NextRequest) {
     }
 
     if (suspended !== null && suspended !== undefined) {
-      query = query.eq('suspended', suspended === 'true');
+      query = query.eq('isSuspended', suspended === 'true');
     }
 
     if (search) {
-      query = query.or(`email.ilike.%${search}%,display_name.ilike.%${search}%`);
+      query = query.or(`email.ilike.%${search}%,name.ilike.%${search}%`);
     }
 
     // Apply sorting and pagination
     const { data: users, count: totalCount, error: usersError } = await query
-      .order('created_at', { ascending: false })
+      .order('createdAt', { ascending: false })
       .range(offset, offset + limit - 1);
 
     if (usersError) {

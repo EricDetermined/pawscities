@@ -12,10 +12,10 @@ export async function GET() {
   try {
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('establishment_id')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'approved')
+      .from('BusinessClaim')
+      .select('establishmentId')
+      .eq('userId', dbUser.id)
+      .eq('status', 'APPROVED')
       .single();
 
     if (claimError || !claim) {
@@ -25,36 +25,34 @@ export async function GET() {
     const now = new Date();
     const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-    // Get page views over last 30 days
-    const { data: views } = await supabase
-      .from('analytics_events')
-      .select('created_at')
-      .eq('establishment_id', claim.establishment_id)
-      .eq('event_type', 'page_view')
-      .gte('created_at', thirtyDaysAgo.toISOString())
-      .lte('created_at', now.toISOString());
-
-    // Get click events over last 30 days (phone, website, directions, share)
+    // Get click events over last 30 days
     const { data: clicks } = await supabase
-      .from('analytics_events')
-      .select('event_type, created_at')
-      .eq('establishment_id', claim.establishment_id)
-      .in('event_type', ['click_phone', 'click_website', 'click_directions', 'click_share'])
-      .gte('created_at', thirtyDaysAgo.toISOString())
-      .lte('created_at', now.toISOString());
+      .from('ClickEvent')
+      .select('eventType, createdAt')
+      .eq('establishmentId', claim.establishmentId)
+      .gte('createdAt', thirtyDaysAgo.toISOString())
+      .lte('createdAt', now.toISOString());
 
-    // Aggregate data by day for chart
-    const viewsByDay: Record<string, number> = {};
+    // Get search events (how often this establishment appeared in search)
+    const { data: searchEvents } = await supabase
+      .from('SearchEvent')
+      .select('createdAt')
+      .eq('establishmentId', claim.establishmentId)
+      .gte('createdAt', thirtyDaysAgo.toISOString())
+      .lte('createdAt', now.toISOString());
+
+    // Aggregate clicks by day
     const clicksByDay: Record<string, number> = {};
+    const viewsByDay: Record<string, number> = {};
 
-    views?.forEach((view: any) => {
-      const day = new Date(view.created_at).toISOString().split('T')[0];
-      viewsByDay[day] = (viewsByDay[day] || 0) + 1;
+    clicks?.forEach((click: Record<string, unknown>) => {
+      const day = new Date(click.createdAt as string).toISOString().split('T')[0];
+      clicksByDay[day] = (clicksByDay[day] || 0) + 1;
     });
 
-    clicks?.forEach((click: any) => {
-      const day = new Date(click.created_at).toISOString().split('T')[0];
-      clicksByDay[day] = (clicksByDay[day] || 0) + 1;
+    searchEvents?.forEach((event: Record<string, unknown>) => {
+      const day = new Date(event.createdAt as string).toISOString().split('T')[0];
+      viewsByDay[day] = (viewsByDay[day] || 0) + 1;
     });
 
     // Count click types
@@ -64,16 +62,16 @@ export async function GET() {
       directions: 0,
     };
 
-    clicks?.forEach((click: any) => {
-      if (click.event_type === 'click_phone') clicksByType.phone++;
-      else if (click.event_type === 'click_website') clicksByType.website++;
-      else if (click.event_type === 'click_directions') clicksByType.directions++;
+    clicks?.forEach((click: Record<string, unknown>) => {
+      const eventType = click.eventType as string;
+      if (eventType === 'PHONE') clicksByType.phone++;
+      else if (eventType === 'WEBSITE') clicksByType.website++;
+      else if (eventType === 'DIRECTIONS') clicksByType.directions++;
     });
 
     // Calculate stats
-    const totalViews = views?.length || 0;
     const totalClicks = clicks?.length || 0;
-    const avgViewsPerDay = Math.round(totalViews / 30);
+    const totalSearchAppearances = searchEvents?.length || 0;
 
     // Build daily series for chart
     const dailySeries = [];
@@ -89,9 +87,9 @@ export async function GET() {
 
     return NextResponse.json({
       summary: {
-        totalViews,
         totalClicks,
-        avgViewsPerDay,
+        totalSearchAppearances,
+        avgClicksPerDay: Math.round(totalClicks / 30),
       },
       clicks: clicksByType,
       daily: dailySeries,

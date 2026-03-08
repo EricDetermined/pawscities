@@ -26,29 +26,28 @@ export async function GET(request: NextRequest) {
     const sortOrder = searchParams.get('sortOrder') === 'asc' ? 'asc' : 'desc';
 
     // Validate sortBy
-    const validSortFields = ['rating', 'name', 'created_at', 'review_count'];
-    const sortField = validSortFields.includes(sortBy) ? sortBy : 'created_at';
+    const validSortFields = ['rating', 'name', 'createdAt', 'reviewCount'];
+    const sortField = validSortFields.includes(sortBy) ? sortBy : 'createdAt';
 
     // Build query with correct column names
-    let query = supabase.from('establishments').select(`
+    let query = supabase.from('Establishment').select(`
       id,
       name,
       slug,
-      category_id,
-      city_id,
+      categoryId,
+      cityId,
       status,
       tier,
       rating,
-      review_count,
-      claimed_by,
-      is_verified,
-      is_featured,
+      reviewCount,
+      isVerified,
+      isFeatured,
       address,
       neighborhood,
-      created_at,
-      updated_at,
-      cities(id, name, slug),
-      categories(id, name, slug)
+      createdAt,
+      updatedAt,
+      City(id, name, slug),
+      Category(id, name, slug)
     `, { count: 'exact' });
 
     // Apply filters
@@ -56,16 +55,16 @@ export async function GET(request: NextRequest) {
       // Support both city slug and city UUID
       const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(city);
       if (isUUID) {
-        query = query.eq('city_id', city);
+        query = query.eq('cityId', city);
       } else {
         // Look up city ID from slug
         const { data: cityData } = await supabase
-          .from('cities')
+          .from('City')
           .select('id')
           .eq('slug', city)
           .single();
         if (cityData) {
-          query = query.eq('city_id', cityData.id);
+          query = query.eq('cityId', cityData.id);
         }
       }
     }
@@ -74,15 +73,15 @@ export async function GET(request: NextRequest) {
       // Support both category slug and category UUID
       const isCatUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(category);
       if (isCatUUID) {
-        query = query.eq('category_id', category);
+        query = query.eq('categoryId', category);
       } else {
         const { data: catData } = await supabase
-          .from('categories')
+          .from('Category')
           .select('id')
           .eq('slug', category)
           .single();
         if (catData) {
-          query = query.eq('category_id', catData.id);
+          query = query.eq('categoryId', catData.id);
         }
       }
     }
@@ -141,32 +140,32 @@ export async function POST(request: NextRequest) {
       name,
       description,
       category,
-      city_id,
+      cityId,
       address,
       phone,
       email,
       website,
       hours,
-      image_url,
+      primaryImage,
     } = body;
 
     // Validate required fields
-    if (!name || !category || !city_id) {
+    if (!name || !category || !cityId) {
       return NextResponse.json(
-        { error: 'Missing required fields: name, category, city_id' },
+        { error: 'Missing required fields: name, category, cityId' },
         { status: 400 }
       );
     }
 
     // Create establishment
     const { data: establishment, error: createError } = await supabase
-      .from('establishments')
+      .from('Establishment')
       .insert([
         {
           name,
           description: description || null,
-          category_id: category,
-          city_id,
+          categoryId: category,
+          cityId,
           address: address || '',
           phone: phone || null,
           email: email || null,
@@ -175,7 +174,7 @@ export async function POST(request: NextRequest) {
           status: 'ACTIVE',
           tier: 'free',
           rating: 0,
-          review_count: 0,
+          reviewCount: 0,
         },
       ])
       .select();

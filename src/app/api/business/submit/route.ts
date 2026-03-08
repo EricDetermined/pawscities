@@ -1,18 +1,8 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { isCategoryClaimable } from '@/lib/categories';
+import { createClient } from '@/lib/supabase/server';
 
-// Slugs for non-claimable public space categories
-const NON_CLAIMABLE_SLUGS = ['parks', 'beaches'];
-
-function getSupabaseAdmin() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-}
+// Non-claimable category slugs
+const NON_CLAIMABLE_SLUGS = ['cat-park', 'cat-beach'];
 
 function generateSlug(name: string): string {
   return name
@@ -25,11 +15,11 @@ function generateSlug(name: string): string {
 
 export async function GET() {
   try {
-    const supabaseAdmin = getSupabaseAdmin();
+    const supabase = await createClient();
 
     const [citiesRes, categoriesRes] = await Promise.all([
-      supabaseAdmin.from('cities').select('id, name, slug').order('name'),
-      supabaseAdmin.from('categories').select('id, name, slug').order('name'),
+      supabase.from('City').select('id, name, slug').order('name'),
+      supabase.from('Category').select('id, name, slug').order('name'),
     ]);
 
     // Filter out non-claimable categories (parks, beaches) from the dropdown
@@ -49,35 +39,32 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const supabaseAdmin = getSupabaseAdmin();
-    const cookieStore = cookies();
-    const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    const { data: { session } } = await supabase.auth.getSession();
-
-    if (!session) {
+    if (!user) {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
     const body = await request.json();
-    const { name, address, city_id, category_id, description, phone, website, contactName, contactEmail } = body;
+    const { name, address, cityId, categoryId, description, phone, website, contactName, contactEmail } = body;
 
-    if (!name || !address || !city_id || !category_id || !contactName || !contactEmail) {
+    if (!name || !address || !cityId || !categoryId || !contactName || !contactEmail) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
     // Validate that the category is claimable (not a public space like parks/beaches)
-    const { data: category } = await supabaseAdmin
-      .from('categories')
+    const { data: category } = await supabase
+      .from('Category')
       .select('slug')
-      .eq('id', category_id)
+      .eq('id', categoryId)
       .single();
 
     if (!category) {
       return NextResponse.json({ error: 'Invalid category selected' }, { status: 400 });
     }
 
-    if (!isCategoryClaimable(category.slug)) {
+    if (NON_CLAIMABLE_SLUGS.includes(category.slug)) {
       return NextResponse.json(
         { error: 'Public spaces like parks and beaches cannot be claimed. These are community-maintained listings.' },
         { status: 400 }
@@ -86,28 +73,30 @@ export async function POST(request: Request) {
 
     // Generate unique slug
     let slug = generateSlug(name);
-    const { data: existingSlugs } = await supabaseAdmin
-      .from('establishments')
+    const { data: existingSlugs } = await supabase
+      .from('Establishment')
       .select('slug')
+      .eq('cityId', cityId)
       .like('slug', `${slug}%`);
 
     if (existingSlugs && existingSlugs.length > 0) {
       slug = `${slug}-${existingSlugs.length + 1}`;
     }
 
-    // Check if user exists in users table
-    let { data: existingUser } = await supabaseAdmin
-      .from('users')
+    // Check if user exists in User table
+    let { data: existingUser } = await supabase
+      .from('User')
       .select('id')
-      .eq('supabase_id', session.user.id)
+      .eq('supabaseId', user.id)
       .single();
 
     if (!existingUser) {
-      const { data: newUser, error: userError } = await supabaseAdmin
-        .from('users')
+      const { data: newUser, error: userError } = await supabase
+        .from('User')
         .insert({
-          supabase_id: session.user.id,
-          email: session.user.email,
+          supabaseId: user.id,
+          email: user.email || '',
+          name: user.user_metadata?.name || contactName,
           role: 'BUSINESS',
         })
         .select('id')
@@ -120,23 +109,27 @@ export async function POST(request: Request) {
       existingUser = newUser;
     }
 
+    if (!existingUser) {
+      return NextResponse.json({ error: 'Failed to create user record' }, { status: 500 });
+    }
+
     // Create the establishment
-    const { data: establishment, error: estError } = await supabaseAdmin
-      .from('establishments')
+    const { data: establishment, error: estError } = await supabase
+      .from('Establishment')
       .insert({
         name,
         slug,
         address,
-        city_id,
-        category_id,
+        cityId,
+        categoryId,
         description: description || null,
-        phone: phone || null,
-        website: website || null,
-        status: 'pending_review',
+        status: 'PENDING_REVIEW',
         tier: 'FREE',
-        is_verified: false,
-        source: 'business_submission',
-        confidence: 100,
+        isVerified: false,
+        isFeatured: false,
+        rating: 0,
+        reviewCount: 0,
+        priceLevel: 2,
       })
       .select('id')
       .single();
@@ -147,27 +140,29 @@ export async function POST(request: Request) {
     }
 
     // Create the claim
-    const { error: claimError } = await supabaseAdmin
-      .from('business_claims')
+    const { error: claimError } = await supabase
+      .from('BusinessClaim')
       .insert({
-        user_id: existingUser.id,
-        establishment_id: establishment.id,
-        business_name: name,
-        contact_name: contactName,
-        contact_email: contactEmail,
-        status: 'pending',
+        userId: existingUser.id,
+        establishmentId: establishment.id,
+        businessName: name,
+        contactName: contactName,
+        contactEmail: contactEmail,
+        contactPhone: phone || null,
+        verificationMethod: 'business_submission',
+        status: 'PENDING',
       });
 
     if (claimError) {
       console.error('Error creating claim:', claimError);
       // Clean up: delete the establishment we just created
-      await supabaseAdmin.from('establishments').delete().eq('id', establishment.id);
+      await supabase.from('Establishment').delete().eq('id', establishment.id);
       return NextResponse.json({ error: 'Failed to create claim' }, { status: 500 });
     }
 
     // Update user role to BUSINESS if not already
-    await supabaseAdmin
-      .from('users')
+    await supabase
+      .from('User')
       .update({ role: 'BUSINESS' })
       .eq('id', existingUser.id);
 

@@ -1,8 +1,10 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
-import { isCategoryClaimable } from '@/lib/categories';
 
-export async function GET(request: NextRequest) {
+// Non-claimable category slugs
+const NON_CLAIMABLE = ['cat-park', 'cat-beach'];
+
+export async function GET() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -10,10 +12,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
 
+  // Look up user in our User table by supabaseId
   const { data: dbUser } = await supabase
-    .from('users')
+    .from('User')
     .select('id')
-    .eq('supabase_id', user.id)
+    .eq('supabaseId', user.id)
     .single();
 
   if (!dbUser) {
@@ -21,16 +24,28 @@ export async function GET(request: NextRequest) {
   }
 
   const { data: claims, error } = await supabase
-    .from('business_claims')
-    .select('*, establishments:establishment_id(name, slug, city_id, address, primary_image)')
-    .eq('user_id', dbUser.id)
-    .order('created_at', { ascending: false });
+    .from('BusinessClaim')
+    .select('*')
+    .eq('userId', dbUser.id)
+    .order('createdAt', { ascending: false });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ claims: claims || [] });
+  // Fetch establishment details for each claim
+  const enrichedClaims = await Promise.all(
+    (claims || []).map(async (claim: Record<string, unknown>) => {
+      const { data: est } = await supabase
+        .from('Establishment')
+        .select('name, slug, cityId, address, primaryImage')
+        .eq('id', claim.establishmentId)
+        .single();
+      return { ...claim, establishment: est };
+    })
+  );
+
+  return NextResponse.json({ claims: enrichedClaims });
 }
 
 export async function POST(request: NextRequest) {
@@ -60,8 +75,8 @@ export async function POST(request: NextRequest) {
 
   // Check if the establishment exists and its category is claimable
   const { data: establishment } = await supabase
-    .from('establishments')
-    .select('id, website, categories:category_id(slug)')
+    .from('Establishment')
+    .select('id, website, categoryId')
     .eq('id', establishmentId)
     .single();
 
@@ -69,8 +84,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Establishment not found' }, { status: 404 });
   }
 
-  const categorySlug = (establishment as any).categories?.slug;
-  if (categorySlug && !isCategoryClaimable(categorySlug)) {
+  if (NON_CLAIMABLE.includes((establishment as Record<string, unknown>).categoryId as string)) {
     return NextResponse.json(
       { error: 'Public spaces like parks and beaches cannot be claimed. These are community-maintained listings.' },
       { status: 400 }
@@ -79,19 +93,19 @@ export async function POST(request: NextRequest) {
 
   // Check if already claimed
   const { data: existingClaim } = await supabase
-    .from('business_claims')
+    .from('BusinessClaim')
     .select('id, status')
-    .eq('establishment_id', establishmentId)
+    .eq('establishmentId', establishmentId)
     .single();
 
   if (existingClaim) {
-    if (existingClaim.status === 'approved') {
+    if (existingClaim.status === 'APPROVED') {
       return NextResponse.json(
         { error: 'This business has already been claimed' },
         { status: 409 }
       );
     }
-    if (existingClaim.status === 'pending') {
+    if (existingClaim.status === 'PENDING') {
       return NextResponse.json(
         { error: 'A claim for this business is already pending review' },
         { status: 409 }
@@ -99,19 +113,21 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  // Get or create user record in User table
   let { data: dbUser } = await supabase
-    .from('users')
+    .from('User')
     .select('id')
-    .eq('supabase_id', user.id)
+    .eq('supabaseId', user.id)
     .single();
 
   if (!dbUser) {
     const { data: newUser } = await supabase
-      .from('users')
+      .from('User')
       .insert({
-        supabase_id: user.id,
+        supabaseId: user.id,
         email: user.email || '',
         name: user.user_metadata?.name || contactName,
+        role: 'BUSINESS',
       })
       .select('id')
       .single();
@@ -124,11 +140,10 @@ export async function POST(request: NextRequest) {
 
   // Determine verification method based on email domain match
   let effectiveVerificationMethod = verificationMethod || 'other';
-  if (contactEmail && (establishment as any).website) {
+  const estWebsite = (establishment as Record<string, unknown>).website as string | undefined;
+  if (contactEmail && estWebsite) {
     try {
-      const websiteUrl = (establishment as any).website.startsWith('http')
-        ? (establishment as any).website
-        : `https://${(establishment as any).website}`;
+      const websiteUrl = estWebsite.startsWith('http') ? estWebsite : `https://${estWebsite}`;
       const websiteDomain = new URL(websiteUrl).hostname.replace('www.', '');
       const emailDomain = contactEmail.split('@')[1]?.toLowerCase();
       if (emailDomain === websiteDomain) {
@@ -140,17 +155,17 @@ export async function POST(request: NextRequest) {
   }
 
   const { data: claim, error } = await supabase
-    .from('business_claims')
+    .from('BusinessClaim')
     .insert({
-      user_id: dbUser.id,
-      establishment_id: establishmentId,
-      business_name: businessName,
-      contact_name: contactName,
-      contact_email: contactEmail,
-      contact_phone: contactPhone || null,
-      verification_method: effectiveVerificationMethod,
-      verification_doc: verificationDoc || null,
-      status: 'pending',
+      userId: dbUser.id,
+      establishmentId: establishmentId,
+      businessName: businessName,
+      contactName: contactName,
+      contactEmail: contactEmail,
+      contactPhone: contactPhone || null,
+      verificationMethod: effectiveVerificationMethod,
+      verificationNotes: verificationDoc || null,
+      status: 'PENDING',
     })
     .select()
     .single();
@@ -160,7 +175,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Update user role to BUSINESS
-  await supabase.from('users').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
+  await supabase.from('User').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
 
   return NextResponse.json({ claim }, { status: 201 });
 }

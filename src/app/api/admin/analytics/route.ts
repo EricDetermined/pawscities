@@ -16,11 +16,11 @@ export async function GET(request: NextRequest) {
 
     // Get page views by day for last 30 days
     const { data: pageViewsData, error: pageViewsError } = await supabase
-      .from('analytics_events')
-      .select('created_at')
-      .eq('event_type', 'page_view')
-      .gte('created_at', thirtyDaysAgo)
-      .order('created_at', { ascending: true });
+      .from('ClickEvent')
+      .select('createdAt')
+      .eq('eventType', 'page_view')
+      .gte('createdAt', thirtyDaysAgo)
+      .order('createdAt', { ascending: true });
 
     if (pageViewsError) {
       throw new Error(`Failed to fetch page views: ${pageViewsError.message}`);
@@ -29,17 +29,17 @@ export async function GET(request: NextRequest) {
     // Process page views by day
     const pageViewsByDay: Record<string, number> = {};
     pageViewsData?.forEach((event) => {
-      const date = new Date(event.created_at).toISOString().split('T')[0];
+      const date = new Date(event.createdAt).toISOString().split('T')[0];
       pageViewsByDay[date] = (pageViewsByDay[date] || 0) + 1;
     });
 
-    // Get top establishments by views (page_view events with establishment_id set)
+    // Get top establishments by views (page_view events with establishmentId set)
     const { data: topEstablishmentsData, error: topEstError } = await supabase
-      .from('analytics_events')
-      .select('establishment_id')
-      .eq('event_type', 'page_view')
-      .not('establishment_id', 'is', null)
-      .gte('created_at', thirtyDaysAgo);
+      .from('ClickEvent')
+      .select('establishmentId')
+      .eq('eventType', 'page_view')
+      .not('establishmentId', 'is', null)
+      .gte('createdAt', thirtyDaysAgo);
 
     if (topEstError) {
       throw new Error(`Failed to fetch establishment views: ${topEstError.message}`);
@@ -47,9 +47,9 @@ export async function GET(request: NextRequest) {
 
     const establishmentViewCounts: Record<string, number> = {};
     topEstablishmentsData?.forEach((event) => {
-      if (event.establishment_id) {
-        establishmentViewCounts[event.establishment_id] =
-          (establishmentViewCounts[event.establishment_id] || 0) + 1;
+      if (event.establishmentId) {
+        establishmentViewCounts[event.establishmentId] =
+          (establishmentViewCounts[event.establishmentId] || 0) + 1;
       }
     });
 
@@ -62,8 +62,8 @@ export async function GET(request: NextRequest) {
     let topEstablishmentsWithCounts: any[] = [];
     if (topEstIds.length > 0) {
       const { data: topEstablishments, error: estDetailsError } = await supabase
-        .from('establishments')
-        .select('id, name, category_id, categories(name)')
+        .from('Establishment')
+        .select('id, name, categoryId, Category(name)')
         .in('id', topEstIds);
 
       if (estDetailsError) {
@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
         .map((est: any) => ({
           id: est.id,
           name: est.name,
-          category: est.categories?.name || 'Unknown',
+          category: est.Category?.name || 'Unknown',
           views: establishmentViewCounts[est.id],
         }))
         .sort((a: any, b: any) => b.views - a.views);
@@ -82,11 +82,11 @@ export async function GET(request: NextRequest) {
 
     // Get top search queries
     const { data: searchEventsData, error: searchError } = await supabase
-      .from('analytics_events')
-      .select('search_query')
-      .eq('event_type', 'search')
-      .gte('created_at', thirtyDaysAgo)
-      .not('search_query', 'is', null);
+      .from('SearchEvent')
+      .select('queryString')
+      .eq('eventType', 'search')
+      .gte('createdAt', thirtyDaysAgo)
+      .not('queryString', 'is', null);
 
     if (searchError) {
       throw new Error(`Failed to fetch search queries: ${searchError.message}`);
@@ -94,9 +94,9 @@ export async function GET(request: NextRequest) {
 
     const searchQueryCounts: Record<string, number> = {};
     searchEventsData?.forEach((event: any) => {
-      if (event.search_query) {
-        searchQueryCounts[event.search_query] =
-          (searchQueryCounts[event.search_query] || 0) + 1;
+      if (event.queryString) {
+        searchQueryCounts[event.queryString] =
+          (searchQueryCounts[event.queryString] || 0) + 1;
       }
     });
 
@@ -107,10 +107,10 @@ export async function GET(request: NextRequest) {
 
     // Get user signups by day for last 30 days
     const { data: signupData, error: signupError } = await supabase
-      .from('users')
-      .select('created_at')
-      .gte('created_at', thirtyDaysAgo)
-      .order('created_at', { ascending: true });
+      .from('User')
+      .select('createdAt')
+      .gte('createdAt', thirtyDaysAgo)
+      .order('createdAt', { ascending: true });
 
     if (signupError) {
       throw new Error(`Failed to fetch signup data: ${signupError.message}`);
@@ -118,7 +118,7 @@ export async function GET(request: NextRequest) {
 
     const signupsByDay: Record<string, number> = {};
     signupData?.forEach((user) => {
-      const date = new Date(user.created_at).toISOString().split('T')[0];
+      const date = new Date(user.createdAt).toISOString().split('T')[0];
       signupsByDay[date] = (signupsByDay[date] || 0) + 1;
     });
 

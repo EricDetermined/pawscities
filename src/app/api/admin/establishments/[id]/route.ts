@@ -17,27 +17,26 @@ export async function GET(
     const establishmentId = params.id;
 
     const { data: establishment, error: estError } = await supabase
-      .from('establishments')
+      .from('Establishment')
       .select(`
         id,
         name,
         description,
         category,
-        city_id,
+        cityId,
         status,
         tier,
         rating,
-        reviews_count,
-        claimed_by,
+        reviewCount,
         address,
         phone,
         email,
         website,
         hours,
-        image_url,
-        created_at,
-        updated_at,
-        cities(id, name)
+        primaryImage,
+        createdAt,
+        updatedAt,
+        City(id, name)
       `)
       .eq('id', establishmentId)
       .single();
@@ -78,7 +77,7 @@ export async function PUT(
       name,
       description,
       category,
-      city_id,
+      cityId,
       status,
       tier,
       address,
@@ -86,18 +85,18 @@ export async function PUT(
       email,
       website,
       hours,
-      image_url,
+      primaryImage,
     } = body;
 
     // Build update object, only include provided fields
     const updateData: Record<string, any> = {
-      updated_at: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
     if (name !== undefined) updateData.name = name;
     if (description !== undefined) updateData.description = description;
     if (category !== undefined) updateData.category = category;
-    if (city_id !== undefined) updateData.city_id = city_id;
+    if (cityId !== undefined) updateData.cityId = cityId;
     if (status !== undefined) updateData.status = status;
     if (tier !== undefined) updateData.tier = tier;
     if (address !== undefined) updateData.address = address;
@@ -105,10 +104,10 @@ export async function PUT(
     if (email !== undefined) updateData.email = email;
     if (website !== undefined) updateData.website = website;
     if (hours !== undefined) updateData.hours = hours;
-    if (image_url !== undefined) updateData.image_url = image_url;
+    if (primaryImage !== undefined) updateData.primaryImage = primaryImage;
 
     const { data: establishment, error: updateError } = await supabase
-      .from('establishments')
+      .from('Establishment')
       .update(updateData)
       .eq('id', establishmentId)
       .select();
@@ -150,10 +149,10 @@ export async function DELETE(
 
     // Soft delete - set status to INACTIVE
     const { data: establishment, error: updateError } = await supabase
-      .from('establishments')
+      .from('Establishment')
       .update({
         status: 'INACTIVE',
-        updated_at: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       })
       .eq('id', establishmentId)
       .select();

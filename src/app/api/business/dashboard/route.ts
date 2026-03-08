@@ -12,10 +12,10 @@ export async function GET() {
   try {
     // Get the business's approved claim with establishment details
     const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('*, establishments:establishment_id(*)')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'approved')
+      .from('BusinessClaim')
+      .select('*')
+      .eq('userId', dbUser.id)
+      .eq('status', 'APPROVED')
       .single();
 
     if (claimError && claimError.code !== 'PGRST116') {
@@ -23,70 +23,79 @@ export async function GET() {
     }
 
     if (!claim) {
-      // No approved claim - return pending message
+      // Check for pending claim
+      const { data: pendingClaim } = await supabase
+        .from('BusinessClaim')
+        .select('id, status')
+        .eq('userId', dbUser.id)
+        .eq('status', 'PENDING')
+        .single();
+
       return NextResponse.json({
-        status: 'pending',
-        message: 'Your claim is pending review',
+        status: pendingClaim ? 'pending' : 'no_claim',
+        message: pendingClaim ? 'Your claim is pending review' : 'No business claim found',
         establishment: null,
         analytics: null,
         subscription: null,
       });
     }
 
-    const establishment = claim.establishments;
+    // Get the establishment
+    const { data: establishment } = await supabase
+      .from('Establishment')
+      .select('*')
+      .eq('id', claim.establishmentId)
+      .single();
 
-    // Get analytics for this month
-    const now = new Date();
-    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    if (!establishment) {
+      return NextResponse.json({ error: 'Establishment not found' }, { status: 404 });
+    }
 
-    const { data: views } = await supabase
-      .from('analytics_events')
-      .select('id', { count: 'exact' })
-      .eq('establishment_id', establishment.id)
-      .eq('event_type', 'page_view')
-      .gte('created_at', monthStart.toISOString())
-      .lte('created_at', now.toISOString());
-
+    // Get reviews
     const { data: reviews } = await supabase
-      .from('reviews')
-      .select('rating', { count: 'exact' })
-      .eq('establishment_id', establishment.id)
-      .eq('status', 'approved');
+      .from('Review')
+      .select('rating')
+      .eq('establishmentId', establishment.id)
+      .eq('status', 'APPROVED');
 
-    const totalViews = views?.length || 0;
     const totalReviews = reviews?.length || 0;
     const avgRating =
       totalReviews > 0
-        ? (reviews!.reduce((sum: number, r: any) => sum + r.rating, 0) / totalReviews).toFixed(1)
+        ? (reviews!.reduce((sum: number, r: Record<string, unknown>) => sum + (r.rating as number), 0) / totalReviews).toFixed(1)
         : 0;
 
     // Get subscription tier
     const { data: subscription } = await supabase
-      .from('subscriptions')
+      .from('Subscription')
       .select('*')
-      .eq('establishment_id', establishment.id)
+      .eq('establishmentId', establishment.id)
       .single();
 
-    const tier = subscription?.plan || 'free';
+    const tier = subscription?.tier || establishment.tier || 'FREE';
 
     return NextResponse.json({
       status: 'approved',
       establishment: {
         id: establishment.id,
         name: establishment.name,
+        slug: establishment.slug,
         address: establishment.address,
-        phone: establishment.phone,
+        description: establishment.description,
         website: establishment.website,
-        image: establishment.image_url,
+        primaryImage: establishment.primaryImage,
+        cityId: establishment.cityId,
+        categoryId: establishment.categoryId,
+        tier: establishment.tier,
       },
       analytics: {
-        viewsThisMonth: totalViews,
         totalReviews,
         avgRating: parseFloat(String(avgRating)),
+        rating: establishment.rating,
+        reviewCount: establishment.reviewCount,
       },
       subscription: {
         tier,
-        isPremium: tier === 'premium',
+        isPremium: tier !== 'FREE',
       },
     });
   } catch (error) {

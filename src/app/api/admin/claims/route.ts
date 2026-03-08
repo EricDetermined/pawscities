@@ -1,4 +1,3 @@
-import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/admin';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -14,45 +13,59 @@ export async function GET(request: NextRequest) {
 
     // Get query parameters
     const searchParams = request.nextUrl.searchParams;
-    const status = searchParams.get('status') || 'pending';
+    const status = searchParams.get('status') || 'PENDING';
     const page = Math.max(1, parseInt(searchParams.get('page') || '1'));
     const limit = Math.min(50, parseInt(searchParams.get('limit') || '20'));
     const offset = (page - 1) * limit;
 
     // Validate status filter
-    const validStatuses = ['pending', 'approved', 'rejected'];
-    const statusFilter = validStatuses.includes(status) ? status : 'pending';
+    const validStatuses = ['PENDING', 'APPROVED', 'REJECTED'];
+    const statusFilter = validStatuses.includes(status) ? status : 'PENDING';
 
     // Get total count
     const { count: totalCount } = await supabase
-      .from('business_claims')
+      .from('BusinessClaim')
       .select('*', { count: 'exact', head: true })
       .eq('status', statusFilter);
 
-    // Get claims with user and establishment data
+    // Get claims
     const { data: claims, error: claimsError } = await supabase
-      .from('business_claims')
-      .select(`
-        id,
-        establishment_id,
-        user_id,
-        status,
-        review_notes,
-        created_at,
-        updated_at,
-        establishments(id, name, category, city_id, status, tier, claimed_by),
-        users(id, email, display_name)
-      `)
+      .from('BusinessClaim')
+      .select('*')
       .eq('status', statusFilter)
-      .order('created_at', { ascending: false })
+      .order('createdAt', { ascending: false })
       .range(offset, offset + limit - 1);
 
     if (claimsError) {
       throw new Error(`Failed to fetch claims: ${claimsError.message}`);
     }
 
+    // Enrich claims with establishment and user data
+    const enrichedClaims = await Promise.all(
+      (claims || []).map(async (claim: Record<string, unknown>) => {
+        const [estResult, userResult] = await Promise.all([
+          supabase
+            .from('Establishment')
+            .select('id, name, slug, cityId, categoryId, status, tier')
+            .eq('id', claim.establishmentId)
+            .single(),
+          supabase
+            .from('User')
+            .select('id, email, name')
+            .eq('id', claim.userId)
+            .single(),
+        ]);
+
+        return {
+          ...claim,
+          establishment: estResult.data,
+          user: userResult.data,
+        };
+      })
+    );
+
     return NextResponse.json({
-      claims: claims || [],
+      claims: enrichedClaims,
       pagination: {
         page,
         limit,

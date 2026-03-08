@@ -18,17 +18,17 @@ export async function GET(
 
     // Get user details
     const { data: user, error: userError } = await supabase
-      .from('users')
+      .from('User')
       .select(`
         id,
-        supabase_id,
+        supabaseId,
         email,
-        display_name,
+        name,
         role,
-        suspended,
-        avatar_url,
-        created_at,
-        updated_at
+        isSuspended,
+        avatarUrl,
+        createdAt,
+        updatedAt
       `)
       .eq('id', userId)
       .single();
@@ -42,21 +42,21 @@ export async function GET(
 
     // Get reviews count
     const { count: reviewsCount } = await supabase
-      .from('reviews')
+      .from('Review')
       .select('*', { count: 'exact', head: true })
-      .eq('user_id', userId);
+      .eq('userId', userId);
 
     // Get claims count
     const { count: claimsCount } = await supabase
-      .from('business_claims')
+      .from('BusinessClaim')
       .select('*', { count: 'exact', head: true })
-      .eq('user_id', userId);
+      .eq('userId', userId);
 
     // Get favorites count
     const { count: favoritesCount } = await supabase
-      .from('favorites')
+      .from('Favorite')
       .select('*', { count: 'exact', head: true })
-      .eq('user_id', userId);
+      .eq('userId', userId);
 
     return NextResponse.json({
       user,
@@ -94,7 +94,7 @@ export async function PATCH(
 
     // Build update object
     const updateData: Record<string, any> = {
-      updated_at: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
     if (role !== undefined) {
@@ -110,7 +110,7 @@ export async function PATCH(
     }
 
     if (suspended !== undefined) {
-      updateData.suspended = suspended;
+      updateData.isSuspended = suspended;
     }
 
     // Prevent updating yourself to prevent lockout
@@ -122,7 +122,7 @@ export async function PATCH(
     }
 
     const { data: user, error: updateError } = await supabase
-      .from('users')
+      .from('User')
       .update(updateData)
       .eq('id', userId)
       .select();

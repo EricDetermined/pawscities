@@ -1,4 +1,3 @@
-import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/admin';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -17,29 +16,37 @@ export async function GET(
     const claimId = params.id;
 
     const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select(`
-        id,
-        establishment_id,
-        user_id,
-        status,
-        review_notes,
-        created_at,
-        updated_at,
-        establishments(id, name, category, city_id, status, tier, claimed_by, rating, reviews_count),
-        users(id, email, display_name)
-      `)
+      .from('BusinessClaim')
+      .select('*')
       .eq('id', claimId)
       .single();
 
-    if (claimError) {
+    if (claimError || !claim) {
       return NextResponse.json(
         { error: 'Claim not found' },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(claim);
+    // Enrich with establishment and user data
+    const [estResult, userResult] = await Promise.all([
+      supabase
+        .from('Establishment')
+        .select('id, name, slug, cityId, categoryId, status, tier, rating, reviewCount')
+        .eq('id', claim.establishmentId)
+        .single(),
+      supabase
+        .from('User')
+        .select('id, email, name')
+        .eq('id', claim.userId)
+        .single(),
+    ]);
+
+    return NextResponse.json({
+      ...claim,
+      establishment: estResult.data,
+      user: userResult.data,
+    });
   } catch (error) {
     console.error('Admin claim GET error:', error);
     return NextResponse.json(
@@ -64,7 +71,7 @@ export async function PATCH(
     const claimId = params.id;
     const body = await request.json();
 
-    const { action, review_notes } = body;
+    const { action, reviewNotes } = body;
 
     // Validate action
     if (!['approve', 'reject'].includes(action)) {
@@ -76,8 +83,8 @@ export async function PATCH(
 
     // Get the claim first
     const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('establishment_id, user_id, status')
+      .from('BusinessClaim')
+      .select('establishmentId, userId, status')
       .eq('id', claimId)
       .single();
 
@@ -88,7 +95,7 @@ export async function PATCH(
       );
     }
 
-    if (claim.status !== 'pending') {
+    if (claim.status !== 'PENDING') {
       return NextResponse.json(
         { error: 'Only pending claims can be updated' },
         { status: 400 }
@@ -98,10 +105,11 @@ export async function PATCH(
     if (action === 'approve') {
       // Update claim status
       const { error: updateClaimError } = await supabase
-        .from('business_claims')
+        .from('BusinessClaim')
         .update({
-          status: 'approved',
-          updated_at: new Date().toISOString(),
+          status: 'APPROVED',
+          reviewNotes: reviewNotes || null,
+          updatedAt: new Date().toISOString(),
         })
         .eq('id', claimId);
 
@@ -109,15 +117,15 @@ export async function PATCH(
         throw new Error(`Failed to update claim: ${updateClaimError.message}`);
       }
 
-      // Update establishment tier to 'claimed'
+      // Update establishment to mark as verified/claimed
       const { error: updateEstError } = await supabase
-        .from('establishments')
+        .from('Establishment')
         .update({
-          tier: 'claimed',
-          claimed_by: claim.user_id,
-          updated_at: new Date().toISOString(),
+          isVerified: true,
+          status: 'ACTIVE',
+          updatedAt: new Date().toISOString(),
         })
-        .eq('id', claim.establishment_id);
+        .eq('id', claim.establishmentId);
 
       if (updateEstError) {
         throw new Error(`Failed to update establishment: ${updateEstError.message}`);
@@ -125,17 +133,17 @@ export async function PATCH(
 
       return NextResponse.json({
         id: claimId,
-        status: 'approved',
+        status: 'APPROVED',
         message: 'Claim approved successfully',
       });
     } else {
       // Reject the claim
       const { error: updateClaimError } = await supabase
-        .from('business_claims')
+        .from('BusinessClaim')
         .update({
-          status: 'rejected',
-          review_notes: review_notes || null,
-          updated_at: new Date().toISOString(),
+          status: 'REJECTED',
+          reviewNotes: reviewNotes || null,
+          updatedAt: new Date().toISOString(),
         })
         .eq('id', claimId);
 
@@ -145,7 +153,7 @@ export async function PATCH(
 
       return NextResponse.json({
         id: claimId,
-        status: 'rejected',
+        status: 'REJECTED',
         message: 'Claim rejected successfully',
       });
     }

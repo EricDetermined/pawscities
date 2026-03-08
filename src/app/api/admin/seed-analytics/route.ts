@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     // Check if analytics data already exists
     const { count: existingCount } = await supabase
-      .from('analytics_events')
+      .from('ClickEvent')
       .select('*', { count: 'exact', head: true });
 
     if ((existingCount || 0) > 50) {
@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
 
     // Get all establishments
     const { data: establishments, error: estError } = await supabase
-      .from('establishments')
-      .select('id, city_id, name')
+      .from('Establishment')
+      .select('id, cityId, name')
       .eq('status', 'ACTIVE')
       .limit(265);
 
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
 
     // Get all city IDs
     const { data: cities } = await supabase
-      .from('cities')
+      .from('City')
       .select('id, slug');
 
     const cityIds = cities?.map((c) => c.id) || [];
@@ -131,27 +131,27 @@ export async function POST(request: NextRequest) {
         eventTime.setHours(hour, minute, Math.floor(Math.random() * 60));
 
         const event: any = {
-          event_type: eventType,
-          establishment_id: est.id,
-          city_id: est.city_id,
-          created_at: eventTime.toISOString(),
-          session_id: `sess_${dayOffset}_${i}_${Math.random().toString(36).slice(2, 8)}`,
+          eventType: eventType,
+          establishmentId: est.id,
+          cityId: est.cityId,
+          createdAt: eventTime.toISOString(),
+          sessionId: `sess_${dayOffset}_${i}_${Math.random().toString(36).slice(2, 8)}`,
         };
 
-        // Add search_query for search events
+        // Add queryString for search events
         if (eventType === 'search') {
-          event.search_query = searchQueries[Math.floor(Math.random() * searchQueries.length)];
-          event.establishment_id = null; // search events don't have establishment
+          event.queryString = searchQueries[Math.floor(Math.random() * searchQueries.length)];
+          event.establishmentId = null; // search events don't have establishment
         }
 
-        // Add page_path for page_view events
+        // Add pagePath for page_view events
         if (eventType === 'page_view') {
           // 60% chance of being an establishment page view, 40% general page
           if (Math.random() < 0.6) {
-            event.page_path = `/cities/${cities?.find((c) => c.id === est.city_id)?.slug || 'unknown'}/${est.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+            event.pagePath = `/cities/${cities?.find((c) => c.id === est.cityId)?.slug || 'unknown'}/${est.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
           } else {
-            event.page_path = pagePaths[Math.floor(Math.random() * pagePaths.length)];
-            event.establishment_id = null;
+            event.pagePath = pagePaths[Math.floor(Math.random() * pagePaths.length)];
+            event.establishmentId = null;
           }
         }
 
@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
     for (let i = 0; i < events.length; i += 100) {
       const batch = events.slice(i, i + 100);
       const { error: insertError } = await supabase
-        .from('analytics_events')
+        .from('ClickEvent')
         .insert(batch);
 
       if (insertError) {
