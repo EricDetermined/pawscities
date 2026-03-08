@@ -4,11 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   const supabase = await createClient();
 
+  // Auth is optional for search - allow unauthenticated users to search too
   const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
-  }
 
   const searchParams = request.nextUrl.searchParams;
   const query = searchParams.get('q');
@@ -18,11 +15,17 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    // Non-claimable category IDs (parks, beaches)
+    const nonClaimable = ['cat-park', 'cat-beach'];
+
     // Search establishments by name or address (case-insensitive)
+    // Uses PascalCase Prisma table "Establishment" with camelCase columns
     const { data: establishments, error } = await supabase
-      .from('establishments')
-      .select('id, name, slug, address, city_id, primary_image, category_id, categories:category_id(name)')
+      .from('Establishment')
+      .select('id, name, slug, address, cityId, primaryImage, categoryId')
       .or(`name.ilike.%${query}%,address.ilike.%${query}%`)
+      .not('categoryId', 'in', `(${nonClaimable.join(',')})`)
+      .eq('status', 'ACTIVE')
       .order('name')
       .limit(20);
 
@@ -37,22 +40,28 @@ export async function GET(request: NextRequest) {
     let claimedIds: Set<string> = new Set();
     if (estIds.length > 0) {
       const { data: claims } = await supabase
-        .from('business_claims')
-        .select('establishment_id, status')
-        .in('establishment_id', estIds);
+        .from('BusinessClaim')
+        .select('establishmentId, status')
+        .in('establishmentId', estIds);
 
       if (claims) {
-        claims.forEach((c: { establishment_id: string; status: string }) => {
-          if (c.status === 'approved' || c.status === 'pending') {
-            claimedIds.add(c.establishment_id);
+        claims.forEach((c: { establishmentId: string; status: string }) => {
+          if (c.status === 'APPROVED' || c.status === 'PENDING') {
+            claimedIds.add(c.establishmentId);
           }
         });
       }
     }
 
-    // Add claimed status to results
+    // Add claimed status and normalize column names for frontend
     const results = (establishments || []).map((est: Record<string, unknown>) => ({
-      ...est,
+      id: est.id,
+      name: est.name,
+      slug: est.slug,
+      address: est.address,
+      city_id: est.cityId,
+      primary_image: est.primaryImage,
+      category_id: est.categoryId,
       isClaimed: claimedIds.has(est.id as string),
     }));
 
