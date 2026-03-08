@@ -32,15 +32,38 @@ export default function BusinessDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/business/claimed')
+    fetch('/api/business/dashboard')
       .then(res => {
-        if (res.status === 401) { router.push('/auth/login?redirect=/business'); return null; }
+        if (res.status === 401) { router.push('/login?redirect=/business'); return null; }
         return res.json();
       })
       .then(data => {
         if (!data) return;
-        setBusinesses(data.businesses || []);
-        if (data.businesses?.length > 0) setSelectedBusiness(data.businesses[0].id);
+        if (data.status === 'approved' && data.establishment) {
+          const biz: ClaimedBusiness = {
+            id: data.establishment.id,
+            name: data.establishment.name,
+            slug: data.establishment.slug,
+            address: data.establishment.address || '',
+            city: data.establishment.cityId || '',
+            category: data.establishment.categoryId || '',
+            subscriptionTier: (data.subscription?.tier || 'FREE') as SubscriptionTier,
+            stats: {
+              views: data.analytics?.reviewCount || 0,
+              viewsTrend: 0,
+              checkins: 0,
+              checkinsTrend: 0,
+              reviews: data.analytics?.totalReviews || 0,
+              avgRating: data.analytics?.avgRating || 0,
+              favorites: 0,
+            },
+          };
+          setBusinesses([biz]);
+          setSelectedBusiness(biz.id);
+        } else if (data.status === 'pending') {
+          // No approved business yet - show pending message
+          setBusinesses([]);
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));
