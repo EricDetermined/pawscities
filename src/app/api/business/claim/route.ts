@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
+import { sendClaimConfirmation, sendNewClaimAdminAlert } from '@/lib/email';
 
 // Non-claimable category slugs
 const NON_CLAIMABLE = ['cat-park', 'cat-beach'];
@@ -176,6 +177,10 @@ export async function POST(request: NextRequest) {
 
   // Update user role to BUSINESS
   await supabase.from('User').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
+
+  // Send email notifications (non-blocking)
+  sendClaimConfirmation(contactEmail, businessName, claim.id).catch(() => {});
+  sendNewClaimAdminAlert(businessName, contactName, contactEmail, effectiveVerificationMethod).catch(() => {});
 
   return NextResponse.json({ claim }, { status: 201 });
 }
