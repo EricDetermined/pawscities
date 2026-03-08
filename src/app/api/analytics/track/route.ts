@@ -7,23 +7,23 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     const {
-      event_type,
-      user_id,
-      establishment_id,
-      city_id,
-      query_string,
+      eventType,
+      userId,
+      establishmentId,
+      cityId,
+      queryString,
       metadata,
     } = body;
 
     // Validate required field
-    if (!event_type) {
+    if (!eventType) {
       return NextResponse.json(
-        { error: 'Missing required field: event_type' },
+        { error: 'Missing required field: eventType' },
         { status: 400 }
       );
     }
 
-    // Validate event_type
+    // Validate eventType
     const validEventTypes = [
       'page_view',
       'establishment_view',
@@ -36,25 +36,25 @@ export async function POST(request: NextRequest) {
       'favorite_removed',
     ];
 
-    if (!validEventTypes.includes(event_type)) {
+    if (!validEventTypes.includes(eventType)) {
       return NextResponse.json(
-        { error: `Invalid event_type. Must be one of: ${validEventTypes.join(', ')}` },
+        { error: `Invalid eventType. Must be one of: ${validEventTypes.join(', ')}` },
         { status: 400 }
       );
     }
 
     // Create analytics event
     const { data: event, error: createError } = await supabase
-      .from('analytics_events')
+      .from('ClickEvent')
       .insert([
         {
-          event_type,
-          user_id: user_id || null,
-          establishment_id: establishment_id || null,
-          city_id: city_id || null,
-          query_string: query_string || null,
+          eventType,
+          userId: userId || null,
+          establishmentId: establishmentId || null,
+          cityId: cityId || null,
+          queryString: queryString || null,
           metadata: metadata || null,
-          created_at: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
         },
       ])
       .select();
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      event_id: event?.[0]?.id,
+      eventId: event?.[0]?.id,
     });
   } catch (error) {
     console.error('Analytics tracking error:', error);
