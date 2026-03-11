@@ -125,32 +125,31 @@ export const CITIES: Record<string, CityConfig> = {
 };
 
 export const CATEGORIES = [
-  { slug: 'parks', name: 'Dog Parks', nameFr: 'Parcs', icon: '🌳', color: '#22c55e' },
-  { slug: 'restaurants', name: 'Restaurants', nameFr: 'Restaurants', icon: '🍽️', color: '#f97316' },
-  { slug: 'cafes', name: 'Cafes', nameFr: 'Cafes', icon: '☕', color: '#f59e0b' },
-  { slug: 'hotels', name: 'Hotels', nameFr: 'Hotels', icon: '🏨', color: '#8b5cf6' },
-  { slug: 'beaches', name: 'Beaches', nameFr: 'Plages', icon: '🏖️', color: '#0ea5e9' },
-  { slug: 'vets', name: 'Vets', nameFr: 'Veterinaires', icon: '🏥', color: '#ef4444' },
-  { slug: 'groomers', name: 'Groomers', nameFr: 'Toiletteurs', icon: '✂️', color: '#ec4899' },
-  { slug: 'shops', name: 'Pet Shops', nameFr: 'Animaleries', icon: '🛍️', color: '#a855f7' },
-  { slug: 'activities', name: 'Activities', nameFr: 'Activites', icon: '🎾', color: '#3b82f6' },
+  { slug: 'parks', name: 'Dog Parks', nameFr: 'Parcs', icon: 'ð³', color: '#22c55e' },
+  { slug: 'restaurants', name: 'Restaurants', nameFr: 'Restaurants', icon: 'ð½ï¸', color: '#f97316' },
+  { slug: 'cafes', name: 'Cafes', nameFr: 'Cafes', icon: 'â', color: '#f59e0b' },
+  { slug: 'hotels', name: 'Hotels', nameFr: 'Hotels', icon: 'ð¨', color: '#8b5cf6' },
+  { slug: 'beaches', name: 'Beaches', nameFr: 'Plages', icon: 'ðï¸', color: '#0ea5e9' },
+  { slug: 'vets', name: 'Vets', nameFr: 'Veterinaires', icon: 'ð¥', color: '#ef4444' },
+  { slug: 'groomers', name: 'Groomers', nameFr: 'Toiletteurs', icon: 'âï¸', color: '#ec4899' },
+  { slug: 'shops', name: 'Pet Shops', nameFr: 'Animaleries', icon: 'ðï¸', color: '#a855f7' },
+  { slug: 'activities', name: 'Activities', nameFr: 'Activites', icon: 'ð¾', color: '#3b82f6' },
 ];
 
 export const DOG_FEATURES = {
-  offLeashArea: { name: 'Off-Leash Area', nameFr: 'Zone sans laisse', icon: '🐕' },
-  fenced: { name: 'Fenced', nameFr: 'Cloture', icon: '🔒' },
-  waterAccess: { name: 'Water Access', nameFr: 'Acces eau', icon: '💧' },
-  outdoorSeating: { name: 'Outdoor Seating', nameFr: 'Terrasse', icon: '☀️' },
-  indoorAllowed: { name: 'Dogs Inside', nameFr: 'Chiens dedans', icon: '🏠' },
-  waterBowls: { name: 'Water Bowls', nameFr: 'Gamelles', icon: '🥣' },
-  dogMenu: { name: 'Dog Menu', nameFr: 'Menu chien', icon: '🦴' },
-  treatsAvailable: { name: 'Treats', nameFr: 'Friandises', icon: '🍖' },
+  offLeashArea: { name: 'Off-Leash Area', nameFr: 'Zone sans laisse', icon: 'ð' },
+  fenced: { name: 'Fenced', nameFr: 'Cloture', icon: 'ð' },
+  waterAccess: { name: 'Water Access', nameFr: 'Acces eau', icon: 'ð§' },
+  outdoorSeating: { name: 'Outdoor Seating', nameFr: 'Terrasse', icon: 'âï¸' },
+  indoorAllowed: { name: 'Dogs Inside', nameFr: 'Chiens dedans', icon: 'ð ' },
+  waterBowls: { name: 'Water Bowls', nameFr: 'Gamelles', icon: 'ð¥£' },
+  dogMenu: { name: 'Dog Menu', nameFr: 'Menu chien', icon: 'ð¦´' },
+  treatsAvailable: { name: 'Treats', nameFr: 'Friandises', icon: 'ð' },
 };
 
 export const PRICING = {
-  bronze: { price: 29, name: 'Bronze', features: ['Enhanced profile', 'Photo gallery', 'Contact info'] },
-  silver: { price: 79, name: 'Silver', features: ['All Bronze features', 'Featured placement', 'Analytics'] },
-  gold: { price: 149, name: 'Gold', features: ['All Silver features', 'Priority search', 'Lead gen', 'Verified badge'] },
+  monthly: { price: 29, name: 'Premium Monthly', features: ['Enhanced profile', 'Photo gallery', 'Contact info', 'Featured placement', 'Analytics', 'Priority search', 'Verified badge'] },
+  annual: { price: 249, name: 'Premium Annual', features: ['All Premium features', 'Save $99/year', '$20.75/month effective rate'] },
 };
 
 export function getCityConfig(slug: string): CityConfig | undefined {
