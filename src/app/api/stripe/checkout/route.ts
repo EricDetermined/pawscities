@@ -7,9 +7,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 const PRICE_MAP: Record<string, string> = {
-  bronze: process.env.STRIPE_BRONZE_PRICE_ID || '',
-  silver: process.env.STRIPE_SILVER_PRICE_ID || '',
-  gold: process.env.STRIPE_GOLD_PRICE_ID || '',
+  monthly: process.env.STRIPE_MONTHLY_PRICE_ID || '',
+  annual: process.env.STRIPE_ANNUAL_PRICE_ID || '',
 };
 
 export async function POST(request: Request) {
@@ -24,7 +23,7 @@ export async function POST(request: Request) {
     const { plan, establishmentId } = await request.json();
 
     if (!plan || !PRICE_MAP[plan]) {
-      return NextResponse.json({ error: 'Invalid plan selected' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid plan selected. Choose monthly or annual.' }, { status: 400 });
     }
 
     if (!establishmentId) {
@@ -69,6 +68,7 @@ export async function POST(request: Request) {
         email: dbUser.email || user.email,
         metadata: {
           supabase_user_id: dbUser.id,
+          establishment_id: establishmentId,
         },
       });
       customerId = customer.id;
@@ -99,6 +99,7 @@ export async function POST(request: Request) {
           plan: plan,
         },
       },
+      allow_promotion_codes: true,
     });
 
     return NextResponse.json({ url: session.url });
