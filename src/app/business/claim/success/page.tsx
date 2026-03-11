@@ -10,7 +10,7 @@ const FREE_FEATURES = [
   'Display business hours & address',
 ];
 
-const BRONZE_FEATURES = [
+const PREMIUM_FEATURES = [
   'Everything in Free, plus:',
   'Respond to all reviews',
   'Enhanced listing badge',
@@ -18,16 +18,8 @@ const BRONZE_FEATURES = [
   'Weekly performance reports',
   'Add photos & menu/services',
   'Special offers & promotions',
-];
-
-const SILVER_HIGHLIGHTS = [
-  'Featured in city guides',
-  'Top placement in category',
   'Advanced analytics dashboard',
   'Event creation & promotion',
-  'Custom branding on listing',
-  'Monthly spotlight feature',
-  'Priority support',
 ];
 
 export default function ClaimSuccessPage() {
@@ -74,13 +66,13 @@ export default function ClaimSuccessPage() {
         </div>
       </div>
 
-      {/* Upgrade CTA - Main Upsell */}
+      {/* Upgrade CTA */}
       <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border-2 border-orange-200 p-8 mb-8">
         <div className="text-center mb-6">
           <span className="inline-block px-3 py-1 bg-orange-100 text-orange-700 text-xs font-semibold rounded-full mb-3">RECOMMENDED</span>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Get More From Your Listing</h2>
           <p className="text-gray-600 max-w-lg mx-auto">
-            While you wait for approval, explore how upgrading to Bronze can help you stand out and attract more customers.
+            While you wait for approval, explore how upgrading to Premium can help you stand out and attract more customers.
           </p>
         </div>
 
@@ -106,19 +98,19 @@ export default function ClaimSuccessPage() {
             </ul>
           </div>
 
-          {/* Bronze Plan */}
+          {/* Premium Plan */}
           <div className="bg-white rounded-lg border-2 border-orange-300 p-6 relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
               <span className="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-full">BEST VALUE</span>
             </div>
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="font-semibold text-gray-900">Bronze</h3>
+                <h3 className="font-semibold text-gray-900">Premium</h3>
                 <p className="text-2xl font-bold text-orange-600">$29<span className="text-sm font-normal text-gray-500">/mo</span></p>
               </div>
             </div>
             <ul className="space-y-2 mb-6">
-              {BRONZE_FEATURES.map((f, i) => (
+              {PREMIUM_FEATURES.map((f, i) => (
                 <li key={i} className={`flex items-start gap-2 text-sm ${i === 0 ? 'font-medium text-gray-900' : 'text-gray-600'}`}>
                   <svg className={`w-4 h-4 ${i === 0 ? 'text-orange-500' : 'text-orange-400'} mt-0.5 flex-shrink-0`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -131,18 +123,16 @@ export default function ClaimSuccessPage() {
               href="/business/upgrade"
               className="block w-full text-center px-4 py-2.5 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors"
             >
-              View All Plans
+              View Plans
             </Link>
           </div>
         </div>
 
-        {/* Silver Teaser */}
         <div className="text-center">
-          <p className="text-sm text-gray-500 mb-2">Want even more visibility?</p>
           <p className="text-sm text-gray-600">
-            Our <span className="font-semibold text-gray-800">Silver plan ($79/mo)</span> includes city guide features, top category placement, and advanced analytics.{' '}
+            Save $99/yr with our annual plan at $249/year.{' '}
             <Link href="/business/upgrade" className="text-orange-600 hover:text-orange-700 font-medium">
-              Compare all plans &rarr;
+              Compare plans &rarr;
             </Link>
           </p>
         </div>
@@ -181,7 +171,6 @@ export default function ClaimSuccessPage() {
         </Link>
       </div>
 
-      {/* Social Proof / Trust */}
       <div className="text-center text-sm text-gray-400 mb-8">
         <p>Join hundreds of dog-friendly businesses already growing with Paw Cities.</p>
       </div>
