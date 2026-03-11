@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { TierBadge } from '@/components/business/TierBadge';
@@ -65,7 +65,7 @@ const features = [
   },
 ];
 
-export default function UpgradePage() {
+function UpgradePageContent() {
   const searchParams = useSearchParams();
   const canceled = searchParams.get('canceled');
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
@@ -355,5 +355,17 @@ export default function UpgradePage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function UpgradePage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-96">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500" />
+      </div>
+    }>
+      <UpgradePageContent />
+    </Suspense>
   );
 }
