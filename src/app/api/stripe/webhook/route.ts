@@ -11,12 +11,6 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-const PLAN_TO_TIER: Record<string, string> = {
-  bronze: 'BRONZE',
-  silver: 'SILVER',
-  gold: 'GOLD',
-};
-
 export async function POST(request: Request) {
   const body = await request.text();
   const signature = request.headers.get('stripe-signature')!;
@@ -40,14 +34,24 @@ export async function POST(request: Request) {
         const session = event.data.object as Stripe.Checkout.Session;
         const { supabase_user_id, establishment_id, plan } = session.metadata || {};
 
-        if (supabase_user_id && establishment_id && plan) {
-          const tier = PLAN_TO_TIER[plan] || 'BRONZE';
-
-          // Update establishment tier
+        if (supabase_user_id && establishment_id) {
+          // Update establishment tier to PREMIUM
           await supabaseAdmin
             .from('Establishment')
-            .update({ tier: tier })
+            .update({ tier: 'PREMIUM' })
             .eq('id', establishment_id);
+
+          // Get subscription details from Stripe for accurate period dates
+          let periodStart = new Date().toISOString();
+          let periodEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+
+          if (session.subscription) {
+            const stripeSubscription = await stripe.subscriptions.retrieve(
+              session.subscription as string
+            );
+            periodStart = new Date(stripeSubscription.current_period_start * 1000).toISOString();
+            periodEnd = new Date(stripeSubscription.current_period_end * 1000).toISOString();
+          }
 
           // Create or update subscription record
           await supabaseAdmin
@@ -57,25 +61,30 @@ export async function POST(request: Request) {
               establishmentId: establishment_id,
               stripeSubscriptionId: session.subscription as string,
               stripeCustomerId: session.customer as string,
-              plan: plan,
-              tier: tier,
+              plan: plan || 'monthly',
+              tier: 'PREMIUM',
               status: 'ACTIVE',
-              currentPeriodStart: new Date().toISOString(),
-              currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+              currentPeriodStart: periodStart,
+              currentPeriodEnd: periodEnd,
             }, {
               onConflict: 'establishmentId',
             });
+
+          console.log(`â Subscription activated for establishment ${establishment_id} (${plan})`);
         }
         break;
       }
 
       case 'customer.subscription.updated': {
         const subscription = event.data.object as Stripe.Subscription;
-        const { supabase_user_id, establishment_id, plan } = subscription.metadata || {};
+        const { establishment_id } = subscription.metadata || {};
 
         if (establishment_id) {
-          const status = subscription.status === 'active' ? 'ACTIVE' : 'PAST_DUE';
-          const tier = subscription.status === 'active' ? (PLAN_TO_TIER[plan] || 'BRONZE') : 'FREE';
+          const isActive = subscription.status === 'active';
+          const status = isActive ? 'ACTIVE' :
+                        subscription.status === 'past_due' ? 'PAST_DUE' :
+                        subscription.status;
+          const tier = isActive ? 'PREMIUM' : 'FREE';
 
           await supabaseAdmin
             .from('Subscription')
@@ -92,6 +101,8 @@ export async function POST(request: Request) {
             .from('Establishment')
             .update({ tier: tier })
             .eq('id', establishment_id);
+
+          console.log(`ð Subscription updated for establishment ${establishment_id}: ${status}`);
         }
         break;
       }
@@ -112,6 +123,8 @@ export async function POST(request: Request) {
             .update({ tier: 'FREE' })
             .eq('id', establishment_id);
         }
+
+        console.log(`â Subscription canceled for establishment ${establishment_id}`);
         break;
       }
 
@@ -124,6 +137,39 @@ export async function POST(request: Request) {
             .from('Subscription')
             .update({ status: 'PAST_DUE' })
             .eq('stripeSubscriptionId', subscriptionId);
+
+          console.log(`â ï¸ Payment failed for subscription ${subscriptionId}`);
+        }
+        break;
+      }
+
+      case 'invoice.payment_succeeded': {
+        // Handle successful renewal payments
+        const invoice = event.data.object as Stripe.Invoice;
+        const subscriptionId = invoice.subscription as string;
+
+        if (subscriptionId && invoice.billing_reason === 'subscription_cycle') {
+          const stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId);
+          const { establishment_id } = stripeSubscription.metadata || {};
+
+          await supabaseAdmin
+            .from('Subscription')
+            .update({
+              status: 'ACTIVE',
+              tier: 'PREMIUM',
+              currentPeriodStart: new Date(stripeSubscription.current_period_start * 1000).toISOString(),
+              currentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000).toISOString(),
+            })
+            .eq('stripeSubscriptionId', subscriptionId);
+
+          if (establishment_id) {
+            await supabaseAdmin
+              .from('Establishment')
+              .update({ tier: 'PREMIUM' })
+              .eq('id', establishment_id);
+          }
+
+          console.log(`â Renewal payment succeeded for subscription ${subscriptionId}`);
         }
         break;
       }
