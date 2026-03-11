@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FeatureGate, TierBadge, hasFeatureAccess } from '@/components/business/FeatureGate';
+import { FeatureGate, hasFeatureAccess } from '@/components/business/FeatureGate';
 import type { SubscriptionTier } from '@/components/business/FeatureGate';
+import { TierBadge } from '@/components/business/TierBadge';
 
 interface ClaimedBusiness {
   id: string;
@@ -61,7 +62,6 @@ export default function BusinessDashboard() {
           setBusinesses([biz]);
           setSelectedBusiness(biz.id);
         } else if (data.status === 'pending') {
-          // No approved business yet - show pending message
           setBusinesses([]);
         }
         setLoading(false);
@@ -96,6 +96,7 @@ export default function BusinessDashboard() {
 
   const biz = businesses.find(b => b.id === selectedBusiness) || businesses[0];
   const tier = (biz.subscriptionTier || 'FREE') as SubscriptionTier;
+  const isPremium = hasFeatureAccess(tier);
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -104,7 +105,7 @@ export default function BusinessDashboard() {
         <div>
           <div className="flex items-center gap-3 mb-1">
             <h1 className="text-2xl font-bold text-gray-900">{biz.name}</h1>
-            <TierBadge tier={tier} />
+            <TierBadge tier={isPremium ? 'premium' : 'free'} />
           </div>
           <p className="text-sm text-gray-500">{biz.address} &middot; {biz.city} &middot; {biz.category}</p>
         </div>
@@ -120,7 +121,7 @@ export default function BusinessDashboard() {
               ))}
             </select>
           )}
-          {tier === 'FREE' && (
+          {!isPremium && (
             <Link href="/business/upgrade" className="px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 transition-colors">
               Upgrade
             </Link>
@@ -128,7 +129,7 @@ export default function BusinessDashboard() {
         </div>
       </div>
 
-      {/* Stats Grid - Always visible */}
+      {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div className="bg-white rounded-xl border p-5">
           <p className="text-sm text-gray-500 mb-1">Profile Views</p>
@@ -158,11 +159,11 @@ export default function BusinessDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Quick Actions - Always visible */}
+          {/* Quick Actions */}
           <div className="bg-white rounded-xl border p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
             <div className="grid grid-cols-2 gap-3">
-              <Link href={`/business/listing`} className="flex items-center gap-3 p-3 rounded-lg border hover:border-orange-300 hover:bg-orange-50/50 transition-colors">
+              <Link href="/business/listing" className="flex items-center gap-3 p-3 rounded-lg border hover:border-orange-300 hover:bg-orange-50/50 transition-colors">
                 <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
                   <svg className="w-4.5 h-4.5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -171,8 +172,8 @@ export default function BusinessDashboard() {
                 <span className="text-sm font-medium text-gray-700">Edit Listing</span>
               </Link>
 
-              {/* Respond to Reviews - BRONZE+ */}
-              {hasFeatureAccess(tier, 'BRONZE') ? (
+              {/* Respond to Reviews - Premium */}
+              {isPremium ? (
                 <Link href={`/business/reviews/${biz.id}`} className="flex items-center gap-3 p-3 rounded-lg border hover:border-orange-300 hover:bg-orange-50/50 transition-colors">
                   <div className="w-9 h-9 bg-green-100 rounded-lg flex items-center justify-center">
                     <svg className="w-4.5 h-4.5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -182,7 +183,7 @@ export default function BusinessDashboard() {
                   <span className="text-sm font-medium text-gray-700">Respond to Reviews</span>
                 </Link>
               ) : (
-                <Link href="/business/upgrade" className="flex items-center gap-3 p-3 rounded-lg border border-dashed border-gray-200 bg-gray-50/50 hover:border-orange-300 transition-colors relative">
+                <Link href="/business/upgrade" className="flex items-center gap-3 p-3 rounded-lg border border-dashed border-gray-200 bg-gray-50/50 hover:border-orange-300 transition-colors">
                   <div className="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center">
                     <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -190,13 +191,13 @@ export default function BusinessDashboard() {
                   </div>
                   <div>
                     <span className="text-sm font-medium text-gray-400">Respond to Reviews</span>
-                    <span className="block text-xs text-orange-500">Bronze+</span>
+                    <span className="block text-xs text-orange-500">Premium</span>
                   </div>
                 </Link>
               )}
 
-              {/* Create Event - SILVER+ */}
-              {hasFeatureAccess(tier, 'SILVER') ? (
+              {/* Create Event - Premium */}
+              {isPremium ? (
                 <Link href="/business/events" className="flex items-center gap-3 p-3 rounded-lg border hover:border-orange-300 hover:bg-orange-50/50 transition-colors">
                   <div className="w-9 h-9 bg-purple-100 rounded-lg flex items-center justify-center">
                     <svg className="w-4.5 h-4.5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -214,13 +215,13 @@ export default function BusinessDashboard() {
                   </div>
                   <div>
                     <span className="text-sm font-medium text-gray-400">Create Event</span>
-                    <span className="block text-xs text-orange-500">Silver+</span>
+                    <span className="block text-xs text-orange-500">Premium</span>
                   </div>
                 </Link>
               )}
 
-              {/* Special Offers - BRONZE+ */}
-              {hasFeatureAccess(tier, 'BRONZE') ? (
+              {/* Special Offers - Premium */}
+              {isPremium ? (
                 <Link href="/business/events" className="flex items-center gap-3 p-3 rounded-lg border hover:border-orange-300 hover:bg-orange-50/50 transition-colors">
                   <div className="w-9 h-9 bg-amber-100 rounded-lg flex items-center justify-center">
                     <svg className="w-4.5 h-4.5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -238,15 +239,15 @@ export default function BusinessDashboard() {
                   </div>
                   <div>
                     <span className="text-sm font-medium text-gray-400">Special Offers</span>
-                    <span className="block text-xs text-orange-500">Bronze+</span>
+                    <span className="block text-xs text-orange-500">Premium</span>
                   </div>
                 </Link>
               )}
             </div>
           </div>
 
-          {/* Advanced Analytics - Gated for SILVER+ */}
-          <FeatureGate currentTier={tier} requiredTier="SILVER" featureName="Advanced Analytics">
+          {/* Advanced Analytics - Gated for Premium */}
+          <FeatureGate currentTier={tier} featureName="Advanced Analytics">
             <div className="bg-white rounded-xl border p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-gray-900">Performance Analytics</h2>
@@ -304,7 +305,7 @@ export default function BusinessDashboard() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Upgrade Card - Only for FREE tier */}
-          {tier === 'FREE' && (
+          {!isPremium && (
             <div className="bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl p-6 text-white">
               <h3 className="font-bold text-lg mb-2">Unlock Premium Features</h3>
               <p className="text-sm text-orange-100 mb-4">
@@ -393,19 +394,33 @@ export default function BusinessDashboard() {
           <div className="bg-white rounded-xl border p-6">
             <h3 className="font-semibold text-gray-900 mb-3">Your Plan</h3>
             <div className="flex items-center gap-2 mb-3">
-              <TierBadge tier={tier} size="md" />
-              {tier !== 'GOLD' && (
+              <TierBadge tier={isPremium ? 'premium' : 'free'} />
+              {!isPremium && (
                 <Link href="/business/upgrade" className="text-xs text-orange-600 hover:text-orange-700 font-medium">
                   Upgrade
                 </Link>
               )}
             </div>
             <div className="text-sm text-gray-500 space-y-1">
-              {tier === 'FREE' && <p>Basic listing with limited features</p>}
-              {tier === 'BRONZE' && <p>Enhanced listing with review management</p>}
-              {tier === 'SILVER' && <p>Full analytics, events & city guides</p>}
-              {tier === 'GOLD' && <p>Premium with dedicated account manager</p>}
+              {!isPremium && <p>Basic listing with limited features</p>}
+              {isPremium && <p>Full access to all premium features</p>}
             </div>
+            {isPremium && (
+              <button
+                onClick={async () => {
+                  const res = await fetch('/api/stripe/portal', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ establishmentId: biz.id }),
+                  });
+                  const data = await res.json();
+                  if (data.url) window.location.href = data.url;
+                }}
+                className="mt-3 text-sm text-gray-500 hover:text-gray-700 underline"
+              >
+                Manage subscription
+              </button>
+            )}
           </div>
         </div>
       </div>
