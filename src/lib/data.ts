@@ -104,6 +104,9 @@ function normalizeCategory(cat: string): CategorySlug {
     'pet shop': 'shops', 'pet shops': 'shops',
     activity: 'activities', activities: 'activities', activitie: 'activities',
     pub: 'restaurants', pubs: 'restaurants', bar: 'restaurants',
+    walker: 'walkers', walkers: 'walkers', 'dog walker': 'walkers', 'dog walking': 'walkers',
+    trainer: 'trainers', trainers: 'trainers', 'dog trainer': 'trainers', 'dog training': 'trainers',
+    daycare: 'daycare', boarding: 'daycare', kennel: 'daycare', kennels: 'daycare',
   };
   const lower = cat.toLowerCase().trim();
   if (exactMapping[lower]) return exactMapping[lower];
@@ -113,11 +116,14 @@ function normalizeCategory(cat: string): CategorySlug {
   if (lower.includes('beach')) return 'beaches';
   if (lower.includes('park')) return 'parks';
   if (lower.includes('restaurant') || lower.includes('pub') || lower.includes('brunch')) return 'restaurants';
-  if (lower.includes('cafe') || lower.includes('café') || lower.includes('coffee')) return 'cafes';
+  if (lower.includes('cafe') || lower.includes('cafÃ©') || lower.includes('coffee')) return 'cafes';
   if (lower.includes('hotel') || lower.includes('hostel') || lower.includes('lodge') || lower.includes('bnb')) return 'hotels';
   if (lower.includes('vet') || lower.includes('clinic')) return 'vets';
   if (lower.includes('groom')) return 'groomers';
   if (lower.includes('shop') || lower.includes('store') || lower.includes('boutique')) return 'shops';
+  if (lower.includes('walk') || lower.includes('pet sit')) return 'walkers';
+  if (lower.includes('train') || lower.includes('obedience')) return 'trainers';
+  if (lower.includes('daycare') || lower.includes('boarding') || lower.includes('kennel') || lower.includes('pension')) return 'daycare';
 
   return 'activities';
 }
