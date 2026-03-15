@@ -125,15 +125,18 @@ export const CITIES: Record<string, CityConfig> = {
 };
 
 export const CATEGORIES = [
-  { slug: 'parks', name: 'Dog Parks', nameFr: 'Parcs', icon: 'ð³', color: '#22c55e' },
-  { slug: 'restaurants', name: 'Restaurants', nameFr: 'Restaurants', icon: 'ð½ï¸', color: '#f97316' },
-  { slug: 'cafes', name: 'Cafes', nameFr: 'Cafes', icon: 'â', color: '#f59e0b' },
-  { slug: 'hotels', name: 'Hotels', nameFr: 'Hotels', icon: 'ð¨', color: '#8b5cf6' },
-  { slug: 'beaches', name: 'Beaches', nameFr: 'Plages', icon: 'ðï¸', color: '#0ea5e9' },
-  { slug: 'vets', name: 'Vets', nameFr: 'Veterinaires', icon: 'ð¥', color: '#ef4444' },
-  { slug: 'groomers', name: 'Groomers', nameFr: 'Toiletteurs', icon: 'âï¸', color: '#ec4899' },
-  { slug: 'shops', name: 'Pet Shops', nameFr: 'Animaleries', icon: 'ðï¸', color: '#a855f7' },
-  { slug: 'activities', name: 'Activities', nameFr: 'Activites', icon: 'ð¾', color: '#3b82f6' },
+  { slug: 'parks', name: 'Dog Parks', nameFr: 'Parcs', icon: 'parks', color: '#22c55e' },
+  { slug: 'restaurants', name: 'Restaurants', nameFr: 'Restaurants', icon: 'restaurants', color: '#f97316' },
+  { slug: 'cafes', name: 'Cafes', nameFr: 'Caf\u00e9s', icon: 'cafes', color: '#f59e0b' },
+  { slug: 'hotels', name: 'Hotels', nameFr: 'H\u00f4tels', icon: 'hotels', color: '#8b5cf6' },
+  { slug: 'beaches', name: 'Beaches', nameFr: 'Plages', icon: 'beaches', color: '#0ea5e9' },
+  { slug: 'vets', name: 'Vets', nameFr: 'V\u00e9t\u00e9rinaires', icon: 'vets', color: '#ef4444' },
+  { slug: 'groomers', name: 'Groomers', nameFr: 'Toiletteurs', icon: 'groomers', color: '#ec4899' },
+  { slug: 'shops', name: 'Pet Shops', nameFr: 'Animaleries', icon: 'shops', color: '#a855f7' },
+  { slug: 'activities', name: 'Activities', nameFr: 'Activit\u00e9s', icon: 'activities', color: '#3b82f6' },
+  { slug: 'walkers', name: 'Dog Walkers', nameFr: 'Promeneurs', icon: 'walkers', color: '#14b8a6' },
+  { slug: 'trainers', name: 'Dog Trainers', nameFr: '\u00c9ducateurs canins', icon: 'trainers', color: '#6366f1' },
+  { slug: 'daycare', name: 'Daycare & Boarding', nameFr: 'Garderie & Pension', icon: 'daycare', color: '#d97706' },
 ];
 
 export const DOG_FEATURES = {
