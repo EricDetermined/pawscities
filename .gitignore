@@ -16,6 +16,7 @@ npm-debug.log*
 # Local env files
 .env
 .env*.local
+.env.instagram
 
 # Vercel
 .vercel
