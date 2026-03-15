@@ -26,7 +26,7 @@ const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABAS
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 if (!DRY_RUN && (!SUPABASE_URL || !SUPABASE_KEY)) {
-  console.error('❌ Missing environment variables.');
+  console.error('â Missing environment variables.');
   console.error('   Set SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) and SUPABASE_SERVICE_ROLE_KEY');
   console.error('   Or use --dry-run to preview without database connection.');
   process.exit(1);
@@ -68,7 +68,7 @@ const FILE_TO_CITY_SLUG: Record<string, string> = {
   'tokyo': 'tokyo',
 };
 
-// Map JSON category values → DB category slugs
+// Map JSON category values â DB category slugs
 const CATEGORY_MAP: Record<string, string> = {
   // Direct matches
   'restaurants': 'restaurants',
@@ -114,6 +114,31 @@ const CATEGORY_MAP: Record<string, string> = {
   'dog beach': 'beaches',
   'activitie': 'activities',
   'shopping': 'shops',
+  // Dog walkers
+  'walkers': 'walkers',
+  'walker': 'walkers',
+  'dog walker': 'walkers',
+  'dog walkers': 'walkers',
+  'dog walking': 'walkers',
+  'pet sitter': 'walkers',
+  'pet sitting': 'walkers',
+  // Dog trainers
+  'trainers': 'trainers',
+  'trainer': 'trainers',
+  'dog trainer': 'trainers',
+  'dog trainers': 'trainers',
+  'dog training': 'trainers',
+  'obedience': 'trainers',
+  // Daycare & boarding
+  'daycare': 'daycare',
+  'dog daycare': 'daycare',
+  'boarding': 'daycare',
+  'dog boarding': 'daycare',
+  'kennel': 'daycare',
+  'kennels': 'daycare',
+  'pet hotel': 'daycare',
+  'dog hotel': 'daycare',
+  'dog pension': 'daycare',
 };
 
 // ---------------------------------------------------------------------------
@@ -127,7 +152,7 @@ function slugify(name: string): string {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')   // strip accents
     .replace(/[^a-z0-9\s-]/g, '')      // remove special chars
-    .replace(/\s+/g, '-')              // spaces → hyphens
+    .replace(/\s+/g, '-')              // spaces â hyphens
     .replace(/-+/g, '-')               // collapse hyphens
     .replace(/^-|-$/g, '');            // trim hyphens
 }
@@ -136,7 +161,7 @@ function slugify(name: string): string {
 function normalizeDogFeatures(features: unknown): Record<string, boolean> {
   if (!features) return {};
 
-  // Already a dict → keep it
+  // Already a dict â keep it
   if (typeof features === 'object' && !Array.isArray(features)) {
     const result: Record<string, boolean> = {};
     for (const [key, val] of Object.entries(features as Record<string, unknown>)) {
@@ -145,7 +170,7 @@ function normalizeDogFeatures(features: unknown): Record<string, boolean> {
     return result;
   }
 
-  // Array of string feature names → convert to dict
+  // Array of string feature names â convert to dict
   if (Array.isArray(features)) {
     const result: Record<string, boolean> = {};
     for (const f of features) {
@@ -201,8 +226,8 @@ interface CityFileData {
 }
 
 async function main() {
-  console.log('🐾 Paw Cities — Establishment Seed Script');
-  if (DRY_RUN) console.log('⚡ DRY RUN MODE — no database writes will be made');
+  console.log('ð¾ Paw Cities â Establishment Seed Script');
+  if (DRY_RUN) console.log('â¡ DRY RUN MODE â no database writes will be made');
   console.log('==========================================\n');
 
   // In dry-run mode we use placeholder UUIDs
@@ -215,17 +240,17 @@ async function main() {
     const catSlugs = ['restaurants', 'cafes', 'hotels', 'parks', 'beaches', 'vets', 'groomers', 'shops', 'activities'];
     citySlugs.forEach((s, i) => cityIdMap.set(s, `city-${i}`));
     catSlugs.forEach((s, i) => categoryIdMap.set(s, `cat-${i}`));
-    console.log(`📍 Using placeholder city IDs: ${citySlugs.join(', ')}`);
-    console.log(`📂 Using placeholder category IDs: ${catSlugs.join(', ')}\n`);
+    console.log(`ð Using placeholder city IDs: ${citySlugs.join(', ')}`);
+    console.log(`ð Using placeholder category IDs: ${catSlugs.join(', ')}\n`);
   } else {
     // 1. Fetch city IDs from DB
-    console.log('📍 Fetching cities from database...');
+    console.log('ð Fetching cities from database...');
     const { data: cities, error: citiesErr } = await getSupabase()
       .from('cities')
       .select('id, slug');
 
     if (citiesErr || !cities?.length) {
-      console.error('❌ Failed to fetch cities. Did you run the SQL migration first?');
+      console.error('â Failed to fetch cities. Did you run the SQL migration first?');
       console.error(citiesErr?.message);
       process.exit(1);
     }
@@ -236,13 +261,13 @@ async function main() {
     console.log(`   Found ${cities.length} cities: ${cities.map((c: { slug: string }) => c.slug).join(', ')}\n`);
 
     // 2. Fetch category IDs from DB
-    console.log('📂 Fetching categories from database...');
+    console.log('ð Fetching categories from database...');
     const { data: categories, error: catsErr } = await getSupabase()
       .from('categories')
       .select('id, slug');
 
     if (catsErr || !categories?.length) {
-      console.error('❌ Failed to fetch categories. Did you run the SQL migration first?');
+      console.error('â Failed to fetch categories. Did you run the SQL migration first?');
       console.error(catsErr?.message);
       process.exit(1);
     }
@@ -263,7 +288,7 @@ async function main() {
     const filePath = path.join(DATA_DIR, filename);
 
     if (!fs.existsSync(filePath)) {
-      console.warn(`⚠️  File not found: ${filename} — skipping`);
+      console.warn(`â ï¸  File not found: ${filename} â skipping`);
       continue;
     }
 
@@ -277,11 +302,11 @@ async function main() {
     const cityId = cityIdMap.get(citySlug);
 
     if (!cityId) {
-      console.warn(`⚠️  No city ID found for slug "${citySlug}" — skipping ${filename}`);
+      console.warn(`â ï¸  No city ID found for slug "${citySlug}" â skipping ${filename}`);
       continue;
     }
 
-    console.log(`\n🏙️  Processing ${filename} (${places.length} places, city: ${citySlug})`);
+    console.log(`\nðï¸  Processing ${filename} (${places.length} places, city: ${citySlug})`);
 
     // Track slugs to detect duplicates within the same city
     const usedSlugs = new Set<string>();
@@ -296,7 +321,7 @@ async function main() {
 
       if (!categoryId) {
         unmappedCategories.add(place.category);
-        console.warn(`   ⚠️  Unknown category "${place.category}" (mapped to "${catSlug}") for "${place.name}" — skipping`);
+        console.warn(`   â ï¸  Unknown category "${place.category}" (mapped to "${catSlug}") for "${place.name}" â skipping`);
         totalSkipped++;
         continue;
       }
@@ -353,10 +378,10 @@ async function main() {
       if (DRY_RUN) {
         // In dry-run mode, just print a summary per city
         totalInserted += rows.length;
-        console.log(`   📋 Would insert/update ${rows.length} establishments`);
+        console.log(`   ð Would insert/update ${rows.length} establishments`);
         // Show first 3 as sample
         for (const r of rows.slice(0, 3)) {
-          console.log(`      • ${r.name} → slug: "${r.slug}", cat: ${r.category_id}`);
+          console.log(`      â¢ ${r.name} â slug: "${r.slug}", cat: ${r.category_id}`);
         }
         if (rows.length > 3) {
           console.log(`      ... and ${rows.length - 3} more`);
@@ -376,12 +401,12 @@ async function main() {
             .select('id');
 
           if (error) {
-            console.error(`   ❌ Batch insert error (rows ${i + 1}-${i + batch.length}):`, error.message);
+            console.error(`   â Batch insert error (rows ${i + 1}-${i + batch.length}):`, error.message);
             totalErrors += batch.length;
           } else {
             const count = data?.length || batch.length;
             totalInserted += count;
-            console.log(`   ✅ Inserted/updated ${count} establishments (batch ${Math.floor(i / BATCH_SIZE) + 1})`);
+            console.log(`   â Inserted/updated ${count} establishments (batch ${Math.floor(i / BATCH_SIZE) + 1})`);
           }
         }
       }
@@ -390,20 +415,20 @@ async function main() {
 
   // 4. Summary
   console.log('\n==========================================');
-  console.log('📊 SEED SUMMARY');
+  console.log('ð SEED SUMMARY');
   console.log('==========================================');
-  console.log(`   ✅ Inserted/updated: ${totalInserted}`);
-  console.log(`   ⚠️  Skipped:          ${totalSkipped}`);
-  console.log(`   ❌ Errors:            ${totalErrors}`);
+  console.log(`   â Inserted/updated: ${totalInserted}`);
+  console.log(`   â ï¸  Skipped:          ${totalSkipped}`);
+  console.log(`   â Errors:            ${totalErrors}`);
 
   if (unmappedCategories.size > 0) {
     console.log(`\n   Unmapped categories encountered: ${Array.from(unmappedCategories).join(', ')}`);
   }
 
-  console.log('\n🐾 Done!\n');
+  console.log('\nð¾ Done!\n');
 }
 
 main().catch((err) => {
-  console.error('❌ Fatal error:', err);
+  console.error('â Fatal error:', err);
   process.exit(1);
 });
