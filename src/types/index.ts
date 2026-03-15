@@ -40,7 +40,10 @@ export type CategorySlug =
   | 'vets'
   | 'groomers'
   | 'shops'
-  | 'activities';
+  | 'activities'
+  | 'walkers'
+  | 'trainers'
+  | 'daycare';
 
 export interface Category {
   slug: CategorySlug;
