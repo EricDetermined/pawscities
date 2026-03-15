@@ -87,6 +87,21 @@ const CATEGORY_IMAGES: Record<string, string[]> = {
   shops: ['https://images.unsplash.com/photo-1583337130417-13571c4e8ee2?w=800&h=600&fit=crop'],
   activities: ['https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&h=600&fit=crop'],
   beaches: ['https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop'],
+  walkers: [
+    'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1450778869180-e77b3aea0511?w=800&h=600&fit=crop',
+  ],
+  trainers: [
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1558929996-da64ba858215?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1546421845-6471bdbb26b1?w=800&h=600&fit=crop',
+  ],
+  daycare: [
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&h=600&fit=crop',
+  ],
 };
 
 function getDefaultImage(category: string, name: string): string {
