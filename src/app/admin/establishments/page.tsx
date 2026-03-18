@@ -7,17 +7,31 @@ interface Establishment {
   id: string;
   name: string;
   slug: string;
-  category_id: string;
-  city_id: string;
+  categoryId: string;
+  cityId: string;
   status: string;
   tier: string;
   rating: number;
-  review_count: number;
-  claimed_by?: string;
-  is_verified: boolean;
-  is_featured: boolean;
+  reviewCount: number;
+  claimedBy?: string;
+  isVerified: boolean;
+  isFeatured: boolean;
   address?: string;
   neighborhood?: string;
+  City?: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+  Category?: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+  // Aliases for backward compat with any snake_case references
+  is_verified?: boolean;
+  is_featured?: boolean;
+  review_count?: number;
   cities?: {
     id: string;
     name: string;
@@ -288,6 +302,7 @@ export default function EstablishmentsPage() {
                     establishment={est}
                     categoryIcons={categoryIcons}
                     tierColors={tierColors}
+                    onUpdate={() => fetchEstablishments(page)}
                   />
                 ))}
               </tbody>
@@ -335,18 +350,73 @@ function EstablishmentRow({
   establishment,
   categoryIcons,
   tierColors,
+  onUpdate,
 }: {
   establishment: Establishment;
   categoryIcons: Record<string, string>;
   tierColors: Record<string, string>;
+  onUpdate: () => void;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
+
+  const isFeatured = establishment.isFeatured ?? establishment.is_featured ?? false;
+  const isVerified = establishment.isVerified ?? establishment.is_verified ?? false;
+  const reviewCount = establishment.reviewCount ?? establishment.review_count ?? 0;
+  const cityData = establishment.City ?? establishment.cities;
+  const categoryData = establishment.Category ?? establishment.categories;
+
+  const handleAction = async (action: 'toggleFeatured' | 'toggleVerified' | 'deactivate') => {
+    setActionLoading(action);
+    try {
+      let body: Record<string, unknown> = {};
+
+      if (action === 'toggleFeatured') {
+        body = { isFeatured: !isFeatured };
+      } else if (action === 'toggleVerified') {
+        body = { isVerified: !isVerified };
+      } else if (action === 'deactivate') {
+        if (!confirm(`Are you sure you want to deactivate "${establishment.name}"?`)) {
+          setActionLoading(null);
+          return;
+        }
+        body = { status: 'INACTIVE' };
+      }
+
+      const response = await fetch(`/api/admin/establishments/${establishment.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || 'Failed to update');
+      }
+
+      onUpdate();
+    } catch (err) {
+      console.error(`Action ${action} failed:`, err);
+      alert(`Failed to ${action}: ${err}`);
+    } finally {
+      setActionLoading(null);
+      setIsMenuOpen(false);
+    }
+  };
 
   return (
     <tr className="hover:bg-gray-50">
       <td className="px-6 py-4 whitespace-nowrap">
         <div>
-          <p className="font-medium text-gray-900">{establishment.name}</p>
+          <div className="flex items-center gap-1.5">
+            <p className="font-medium text-gray-900">{establishment.name}</p>
+            {isFeatured && (
+              <span className="text-yellow-500 text-xs" title="Featured">★</span>
+            )}
+            {isVerified && (
+              <span className="text-blue-500 text-xs" title="Verified">✓</span>
+            )}
+          </div>
           <p className="text-sm text-gray-500">
             {establishment.address ? establishment.address.slice(0, 30) + (establishment.address.length > 30 ? '...' : '') : establishment.id.slice(0, 8)}
           </p>
@@ -354,20 +424,20 @@ function EstablishmentRow({
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full text-sm">
-          {categoryIcons[establishment.categories?.slug || ''] || '📍'}
-          <span className="capitalize">{establishment.categories?.name || 'Unknown'}</span>
+          {categoryIcons[categoryData?.slug || ''] || '📍'}
+          <span className="capitalize">{categoryData?.name || 'Unknown'}</span>
         </span>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <span className="text-gray-900 capitalize">
-          {establishment.cities?.name || 'Unknown'}
+          {cityData?.name || 'Unknown'}
         </span>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex items-center gap-1">
           <span className="text-yellow-500">★</span>
           <span className="font-medium">{Number(establishment.rating).toFixed(1)}</span>
-          <span className="text-gray-400">({establishment.review_count})</span>
+          <span className="text-gray-400">({reviewCount})</span>
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
@@ -430,15 +500,27 @@ function EstablishmentRow({
                 >
                   Edit
                 </Link>
-                <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                  Toggle Featured
+                <button
+                  onClick={() => handleAction('toggleFeatured')}
+                  disabled={actionLoading === 'toggleFeatured'}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                >
+                  {actionLoading === 'toggleFeatured' ? 'Updating...' : (isFeatured ? 'Remove Featured' : 'Set Featured')}
                 </button>
-                <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                  Toggle Verified
+                <button
+                  onClick={() => handleAction('toggleVerified')}
+                  disabled={actionLoading === 'toggleVerified'}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                >
+                  {actionLoading === 'toggleVerified' ? 'Updating...' : (isVerified ? 'Remove Verified' : 'Set Verified')}
                 </button>
                 <hr className="my-1" />
-                <button className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                  Deactivate
+                <button
+                  onClick={() => handleAction('deactivate')}
+                  disabled={actionLoading === 'deactivate' || establishment.status === 'INACTIVE'}
+                  className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 disabled:opacity-50"
+                >
+                  {actionLoading === 'deactivate' ? 'Deactivating...' : (establishment.status === 'INACTIVE' ? 'Already Inactive' : 'Deactivate')}
                 </button>
               </div>
             </>

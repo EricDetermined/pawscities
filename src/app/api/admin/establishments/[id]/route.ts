@@ -86,6 +86,8 @@ export async function PUT(
       website,
       hours,
       primaryImage,
+      isVerified,
+      isFeatured,
     } = body;
 
     // Build update object, only include provided fields
@@ -105,6 +107,8 @@ export async function PUT(
     if (website !== undefined) updateData.website = website;
     if (hours !== undefined) updateData.hours = hours;
     if (primaryImage !== undefined) updateData.primaryImage = primaryImage;
+    if (isVerified !== undefined) updateData.isVerified = isVerified;
+    if (isFeatured !== undefined) updateData.isFeatured = isFeatured;
 
     const { data: establishment, error: updateError } = await supabase
       .from('Establishment')
