@@ -204,7 +204,10 @@ function rawToEstablishment(raw: RawPlace, citySlug: string, cityConfig: CityCon
     priceLevel: (raw.priceLevel || 2) as 1 | 2 | 3 | 4,
     rating, reviewCount: raw.reviewCount || Math.floor(seededRandom(raw.name, 3) * 80 + 5),
     images: raw.photoRefs && raw.photoRefs.length > 0
-      ? raw.photoRefs.map(ref => `/api/places/photo?name=${encodeURIComponent(ref)}&maxWidth=800`)
+      ? [
+          ...raw.photoRefs.map(ref => `/api/places/photo?name=${encodeURIComponent(ref)}&maxWidth=800`),
+          getDefaultImage(category, raw.name), // Category fallback always last
+        ]
       : [getDefaultImage(category, raw.name)],
     hours: {}, dogFeatures, amenities: [],
     neighborhood: raw.neighborhood,
