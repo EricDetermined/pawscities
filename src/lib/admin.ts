@@ -30,9 +30,9 @@ export async function requireAdmin(): Promise<AdminAuthResult> {
     }
 
     const { data: dbUser, error: dbError } = await supabase
-      .from('User')
-      .select('id, supabaseId, email, role')
-      .eq('supabaseId', user.id)
+      .from('users')
+      .select('id, supabase_id, email, role')
+      .eq('supabase_id', user.id)
       .single();
 
     if (dbError || !dbUser) {
@@ -47,7 +47,15 @@ export async function requireAdmin(): Promise<AdminAuthResult> {
       };
     }
 
-    if (dbUser.role !== 'ADMIN') {
+    // Map snake_case DB columns to camelCase for internal use
+    const mappedDbUser = {
+      id: dbUser.id,
+      supabaseId: dbUser.supabase_id,
+      email: dbUser.email,
+      role: dbUser.role,
+    };
+
+    if (mappedDbUser.role !== 'ADMIN') {
       return {
         error: NextResponse.json(
           { error: 'Admin access required' },
@@ -63,7 +71,7 @@ export async function requireAdmin(): Promise<AdminAuthResult> {
       error: null,
       supabase,
       user,
-      dbUser,
+      dbUser: mappedDbUser,
     };
   } catch (error) {
     console.error('Admin auth error:', error);
@@ -101,9 +109,9 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
     }
 
     const { data: dbUser, error: dbError } = await supabase
-      .from('User')
-      .select('id, supabaseId, email, role')
-      .eq('supabaseId', user.id)
+      .from('users')
+      .select('id, supabase_id, email, role')
+      .eq('supabase_id', user.id)
       .single();
 
     if (dbError || !dbUser) {
@@ -118,7 +126,14 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
       };
     }
 
-    if (dbUser.role !== 'BUSINESS' && dbUser.role !== 'ADMIN') {
+    const mappedDbUser = {
+      id: dbUser.id,
+      supabaseId: dbUser.supabase_id,
+      email: dbUser.email,
+      role: dbUser.role,
+    };
+
+    if (mappedDbUser.role !== 'BUSINESS' && mappedDbUser.role !== 'ADMIN') {
       return {
         error: NextResponse.json(
           { error: 'Business or admin access required' },
@@ -134,7 +149,7 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
       error: null,
       supabase,
       user,
-      dbUser,
+      dbUser: mappedDbUser,
     };
   } catch (error) {
     console.error('Business/Admin auth error:', error);
