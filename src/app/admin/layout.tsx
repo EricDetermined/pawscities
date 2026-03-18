@@ -9,47 +9,52 @@ const navItems = [
   {
     title: 'Dashboard',
     href: '/admin',
-    icon: '📊',
+    icon: 'ð',
   },
   {
     title: 'Cities',
     href: '/admin/cities',
-    icon: '🏙️',
+    icon: 'ðï¸',
   },
   {
     title: 'Establishments',
     href: '/admin/establishments',
-    icon: '📍',
+    icon: 'ð',
   },
   {
     title: 'Categories',
     href: '/admin/categories',
-    icon: '🏷️',
+    icon: 'ð·ï¸',
   },
   {
     title: 'Users',
     href: '/admin/users',
-    icon: '👥',
+    icon: 'ð¥',
   },
   {
     title: 'Research Agent',
     href: '/admin/research',
-    icon: '🤖',
+    icon: 'ð¤',
+  },
+  {
+    title: 'Photo Moderation',
+    href: '/admin/photos',
+    icon: 'ð¸',
   },
   {
     title: 'Validation Queue',
     href: '/admin/validation',
-    icon: '✅',
+    icon: 'â',
   },
   {
     title: 'Analytics',
     href: '/admin/analytics',
-    icon: '📈',
+    icon: 'ð',
   },
   {
     title: 'Settings',
     href: '/admin/settings',
-    icon: '⚙️',
+    icon: 'âï¸',
   },
 ];
 
@@ -86,7 +91,7 @@ export default function AdminLayout({
               </svg>
             </button>
             <Link href="/admin" className="flex items-center gap-2">
-              <span className="text-2xl">🐾</span>
+              <span className="text-2xl">ð¾</span>
               <span className="font-display text-xl font-bold text-primary-600">
                 Paw Cities
               </span>
