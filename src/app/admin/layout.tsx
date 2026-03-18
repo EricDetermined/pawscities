@@ -9,52 +9,57 @@ const navItems = [
   {
     title: 'Dashboard',
     href: '/admin',
-    icon: 'ð',
+    icon: '\u{1F4CA}',
   },
   {
     title: 'Cities',
     href: '/admin/cities',
-    icon: 'ðï¸',
+    icon: '\u{1F3D9}\uFE0F',
   },
   {
     title: 'Establishments',
     href: '/admin/establishments',
-    icon: 'ð',
+    icon: '\u{1F4CD}',
   },
   {
     title: 'Categories',
     href: '/admin/categories',
-    icon: 'ð·ï¸',
+    icon: '\u{1F3F7}\uFE0F',
   },
   {
     title: 'Users',
     href: '/admin/users',
-    icon: 'ð¥',
+    icon: '\u{1F465}',
   },
   {
     title: 'Research Agent',
     href: '/admin/research',
-    icon: 'ð¤',
+    icon: '\u{1F916}',
   },
   {
     title: 'Photo Moderation',
     href: '/admin/photos',
-    icon: 'ð¸',
+    icon: '\u{1F4F8}',
+  },
+  {
+    title: 'Business Claims',
+    href: '/admin/claims',
+    icon: '\u{1F4CB}',
   },
   {
     title: 'Validation Queue',
     href: '/admin/validation',
-    icon: 'â',
+    icon: '\u2705',
   },
   {
     title: 'Analytics',
     href: '/admin/analytics',
-    icon: 'ð',
+    icon: '\u{1F4C8}',
   },
   {
     title: 'Settings',
     href: '/admin/settings',
-    icon: 'âï¸',
+    icon: '\u2699\uFE0F',
   },
 ];
 
@@ -91,7 +96,7 @@ export default function AdminLayout({
               </svg>
             </button>
             <Link href="/admin" className="flex items-center gap-2">
-              <span className="text-2xl">ð¾</span>
+              <span className="text-2xl">{'\u{1F43E}'}</span>
               <span className="font-display text-xl font-bold text-primary-600">
                 Paw Cities
               </span>
