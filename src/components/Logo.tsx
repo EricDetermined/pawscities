@@ -46,7 +46,7 @@ export function Logo({ variant = 'horizontal', size = 'md', showTagline = false,
         <PawIcon className={s.icon} />
         <div className="text-center">
           <span className={`${s.text} font-bold tracking-tight`}>
-            <span className="text-[#1A1A2E]">Paw</span>
+            <span className="text-[#1A1A2E]">Paw</span>{' '}
             <span className="text-[#ED7410]">Cities</span>
           </span>
           {showTagline && (
@@ -65,7 +65,7 @@ export function Logo({ variant = 'horizontal', size = 'md', showTagline = false,
       <PawIcon className={s.icon} />
       <div className="flex flex-col">
         <span className={`${s.text} font-bold tracking-tight leading-tight`}>
-          <span className="text-[#1A1A2E]">Paw</span>
+          <span className="text-[#1A1A2E]">Paw</span>{' '}
           <span className="text-[#ED7410]">Cities</span>
         </span>
         {showTagline && (
