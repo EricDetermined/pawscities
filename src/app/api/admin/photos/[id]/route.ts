@@ -23,8 +23,8 @@ export async function PATCH(
 
     // Get the photo
     const { data: photo, error: photoError } = await supabase
-      .from('Photo')
-      .select('id, url, userId, establishmentId, status')
+      .from('photos')
+      .select('id, url, user_id, establishment_id, status')
       .eq('id', photoId)
       .single();
 
@@ -43,7 +43,7 @@ export async function PATCH(
 
     // Update photo status
     const { error: updateError } = await supabase
-      .from('Photo')
+      .from('photos')
       .update({ status: newStatus })
       .eq('id', photoId);
 
@@ -51,63 +51,57 @@ export async function PATCH(
       throw new Error(`Failed to update photo: ${updateError.message}`);
     }
 
-    // If approved, add to establishment's images array
+    // If approved, add to establishment's photo_refs array
     if (action === 'approve') {
-      // Get current establishment images
       const { data: establishment } = await supabase
-        .from('Establishment')
-        .select('images, primaryImage')
-        .eq('id', photo.establishmentId)
+        .from('establishments')
+        .select('photo_refs, primary_image')
+        .eq('id', photo.establishment_id)
         .single();
 
       if (establishment) {
-        const currentImages = establishment.images || [];
-        // Add approved photo URL to the front of the images array (user photos first)
+        const currentImages = establishment.photo_refs || [];
         const updatedImages = [photo.url, ...currentImages.filter((img: string) => img !== photo.url)];
 
         const updateData: Record<string, unknown> = {
-          images: updatedImages,
-          updatedAt: new Date().toISOString(),
+          photo_refs: updatedImages,
         };
 
-        // Set as primary image if none exists
-        if (!establishment.primaryImage) {
-          updateData.primaryImage = photo.url;
+        if (!establishment.primary_image) {
+          updateData.primary_image = photo.url;
         }
 
         await supabase
-          .from('Establishment')
+          .from('establishments')
           .update(updateData)
-          .eq('id', photo.establishmentId);
+          .eq('id', photo.establishment_id);
       }
     }
 
-    // If rejected and was previously in images array, remove it
+    // If rejected, remove from images array if present
     if (action === 'reject') {
       const { data: establishment } = await supabase
-        .from('Establishment')
-        .select('images, primaryImage')
-        .eq('id', photo.establishmentId)
+        .from('establishments')
+        .select('photo_refs, primary_image')
+        .eq('id', photo.establishment_id)
         .single();
 
       if (establishment) {
-        const currentImages = establishment.images || [];
+        const currentImages = establishment.photo_refs || [];
         const updatedImages = currentImages.filter((img: string) => img !== photo.url);
 
         const updateData: Record<string, unknown> = {
-          images: updatedImages,
-          updatedAt: new Date().toISOString(),
+          photo_refs: updatedImages,
         };
 
-        // If this was the primary image, clear it
-        if (establishment.primaryImage === photo.url) {
-          updateData.primaryImage = updatedImages[0] || null;
+        if (establishment.primary_image === photo.url) {
+          updateData.primary_image = updatedImages[0] || null;
         }
 
         await supabase
-          .from('Establishment')
+          .from('establishments')
           .update(updateData)
-          .eq('id', photo.establishmentId);
+          .eq('id', photo.establishment_id);
       }
     }
 
