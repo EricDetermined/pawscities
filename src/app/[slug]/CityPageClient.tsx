@@ -278,7 +278,19 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                       alt={establishment.name}
                       loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      onError={(e) => { (e.target as HTMLImageElement).src = FALLBACK_IMAGE; }}
+                      onError={(e) => {
+                        const img = e.target as HTMLImageElement;
+                        const currentSrc = img.src;
+                        // Try the next image in the array (category fallback is always last)
+                        const idx = establishment.images.findIndex(url => currentSrc.includes(url) || currentSrc.endsWith(url));
+                        const nextIdx = idx + 1;
+                        if (nextIdx < establishment.images.length) {
+                          img.src = establishment.images[nextIdx];
+                        } else if (!currentSrc.includes('unsplash.com')) {
+                          // Ultimate fallback
+                          img.src = FALLBACK_IMAGE;
+                        }
+                      }}
                     />
                     {/* Favorite button */}
                     <button
