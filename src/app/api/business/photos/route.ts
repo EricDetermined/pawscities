@@ -1,0 +1,197 @@
+import { requireBusinessOrAdmin } from '@/lib/admin';
+import { NextRequest, NextResponse } from 'next/server';
+
+const TIER_LIMITS: Record<string, number> = {
+  free: 1,
+  premium: 10,
+};
+
+export async function GET() {
+  const { error, supabase, dbUser } = await requireBusinessOrAdmin();
+  if (error) return error;
+  if (!supabase || !dbUser) {
+    return NextResponse.json({ error: 'Authentication failed' }, { status: 401 });
+  }
+
+  try {
+    // Get the business's approved claim
+    const { data: claim, error: claimError } = await supabase
+      .from('BusinessClaim')
+      .select('establishmentId')
+      .eq('userId', dbUser.id)
+      .eq('status', 'APPROVED')
+      .single();
+
+    if (claimError || !claim) {
+      return NextResponse.json({ error: 'No approved business claim found' }, { status: 404 });
+    }
+
+    // Get photos for this establishment
+    const { data: photos, error: photosError } = await supabase
+      .from('Photo')
+      .select('id, url, caption, status, createdAt')
+      .eq('establishmentId', claim.establishmentId)
+      .eq('userId', dbUser.id)
+      .order('createdAt', { ascending: false });
+
+    if (photosError) {
+      throw new Error(`Failed to fetch photos: ${photosError.message}`);
+    }
+
+    // Get subscription tier
+    const { data: subscription } = await supabase
+      .from('Subscription')
+      .select('tier')
+      .eq('establishmentId', claim.establishmentId)
+      .eq('status', 'ACTIVE')
+      .single();
+
+    const tier = subscription?.tier || 'free';
+    const maxPhotos = TIER_LIMITS[tier] || 1;
+
+    return NextResponse.json({
+      photos: photos || [],
+      tier,
+      maxPhotos,
+      establishmentId: claim.establishmentId,
+    });
+  } catch (error) {
+    console.error('Business photos GET error:', error);
+    return NextResponse.json({ error: 'Failed to fetch photos' }, { status: 500 });
+  }
+}
+
+export async function POST(request: NextRequest) {
+  const { error, supabase, dbUser } = await requireBusinessOrAdmin();
+  if (error) return error;
+  if (!supabase || !dbUser) {
+    return NextResponse.json({ error: 'Authentication failed' }, { status: 401 });
+  }
+
+  try {
+    const body = await request.json();
+    const { urls, captions } = body as { urls: string[]; captions?: string[] };
+
+    if (!urls || urls.length === 0) {
+      return NextResponse.json({ error: 'No photo URLs provided' }, { status: 400 });
+    }
+
+    // Get the business's approved claim
+    const { data: claim, error: claimError } = await supabase
+      .from('BusinessClaim')
+      .select('establishmentId')
+      .eq('userId', dbUser.id)
+      .eq('status', 'APPROVED')
+      .single();
+
+    if (claimError || !claim) {
+      return NextResponse.json({ error: 'No approved business claim found' }, { status: 404 });
+    }
+
+    // Get subscription tier
+    const { data: subscription } = await supabase
+      .from('Subscription')
+      .select('tier')
+      .eq('establishmentId', claim.establishmentId)
+      .eq('status', 'ACTIVE')
+      .single();
+
+    const tier = subscription?.tier || 'free';
+    const maxPhotos = TIER_LIMITS[tier] || 1;
+
+    // Check existing photo count
+    const { count: existingCount } = await supabase
+      .from('Photo')
+      .select('*', { count: 'exact', head: true })
+      .eq('establishmentId', claim.establishmentId)
+      .eq('userId', dbUser.id)
+      .neq('status', 'REJECTED');
+
+    const currentCount = existingCount || 0;
+
+    if (currentCount + urls.length > maxPhotos) {
+      return NextResponse.json({
+        error: `Photo limit exceeded. Your ${tier} plan allows ${maxPhotos} photo${maxPhotos !== 1 ? 's' : ''}. You currently have ${currentCount} and are trying to add ${urls.length}.`,
+      }, { status: 400 });
+    }
+
+    // Insert photos with PENDING status
+    const photoRecords = urls.map((url, idx) => ({
+      userId: dbUser.id,
+      establishmentId: claim.establishmentId,
+      url,
+      caption: captions?.[idx] || null,
+      status: 'PENDING',
+    }));
+
+    const { data: photos, error: insertError } = await supabase
+      .from('Photo')
+      .insert(photoRecords)
+      .select('id, url, caption, status, createdAt');
+
+    if (insertError) {
+      throw new Error(`Failed to save photos: ${insertError.message}`);
+    }
+
+    return NextResponse.json({
+      success: true,
+      photos: photos || [],
+      message: `${urls.length} photo${urls.length !== 1 ? 's' : ''} uploaded and pending review.`,
+    });
+  } catch (error) {
+    console.error('Business photos POST error:', error);
+    return NextResponse.json({ error: 'Failed to save photos' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  const { error, supabase, dbUser } = await requireBusinessOrAdmin();
+  if (error) return error;
+  if (!supabase || !dbUser) {
+    return NextResponse.json({ error: 'Authentication failed' }, { status: 401 });
+  }
+
+  try {
+    const { photoId } = await request.json();
+
+    if (!photoId) {
+      return NextResponse.json({ error: 'Photo ID required' }, { status: 400 });
+    }
+
+    // Verify ownership: photo must belong to this user
+    const { data: photo, error: photoError } = await supabase
+      .from('Photo')
+      .select('id, url, userId')
+      .eq('id', photoId)
+      .eq('userId', dbUser.id)
+      .single();
+
+    if (photoError || !photo) {
+      return NextResponse.json({ error: 'Photo not found or access denied' }, { status: 404 });
+    }
+
+    // Delete from Supabase Storage if it's a Supabase URL
+    if (photo.url.includes('supabase')) {
+      const urlPath = new URL(photo.url).pathname;
+      const storagePath = urlPath.split('/storage/v1/object/public/photos/')[1];
+      if (storagePath) {
+        await supabase.storage.from('photos').remove([storagePath]);
+      }
+    }
+
+    // Delete the record
+    const { error: deleteError } = await supabase
+      .from('Photo')
+      .delete()
+      .eq('id', photoId);
+
+    if (deleteError) {
+      throw new Error(`Failed to delete photo: ${deleteError.message}`);
+    }
+
+    return NextResponse.json({ success: true, message: 'Photo deleted' });
+  } catch (error) {
+    console.error('Business photos DELETE error:', error);
+    return NextResponse.json({ error: 'Failed to delete photo' }, { status: 500 });
+  }
+}
