@@ -5,20 +5,23 @@ import Link from 'next/link';
 
 interface Claim {
   id: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: string;
   created_at: string;
   establishment_id: string;
   user_id: string;
-  establishments?: {
+  business_name: string;
+  contact_name: string;
+  contact_email: string;
+  establishment?: {
     id: string;
     name: string;
-    category: string;
+    category_id: string;
     city_id: string;
   };
-  users?: {
+  user?: {
     id: string;
     email: string;
-    display_name: string;
+    name: string;
   };
 }
 
@@ -33,7 +36,7 @@ interface ClaimsResponse {
 }
 
 export default function ClaimsPage() {
-  const [status, setStatus] = useState<'pending' | 'approved' | 'rejected' | 'all'>('pending');
+  const [status, setStatus] = useState<'PENDING' | 'APPROVED' | 'REJECTED' | 'all'>('PENDING');
   const [data, setData] = useState<ClaimsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -68,9 +71,9 @@ export default function ClaimsPage() {
 
   const tabs = [
     { label: 'All', value: 'all' as const },
-    { label: 'Pending', value: 'pending' as const, badge: data?.pagination.total },
-    { label: 'Approved', value: 'approved' as const },
-    { label: 'Rejected', value: 'rejected' as const },
+    { label: 'Pending', value: 'PENDING' as const, badge: data?.pagination.total },
+    { label: 'Approved', value: 'APPROVED' as const },
+    { label: 'Rejected', value: 'REJECTED' as const },
   ];
 
   return (
@@ -145,9 +148,9 @@ export default function ClaimsPage() {
             <div className="bg-white rounded-xl border p-12 text-center">
               <p className="text-gray-500 mb-2">No claims found</p>
               <p className="text-sm text-gray-400">
-                {status === 'pending'
+                {status === 'PENDING'
                   ? 'All claims have been reviewed'
-                  : `No ${status} claims at this time`}
+                  : `No ${status.toLowerCase()} claims at this time`}
               </p>
             </div>
           )}
@@ -170,9 +173,9 @@ export default function ClaimsPage() {
 function ClaimRow({ claim }: { claim: Claim }) {
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      pending: 'bg-yellow-100 text-yellow-700',
-      approved: 'bg-green-100 text-green-700',
-      rejected: 'bg-red-100 text-red-700',
+      PENDING: 'bg-yellow-100 text-yellow-700',
+      APPROVED: 'bg-green-100 text-green-700',
+      REJECTED: 'bg-red-100 text-red-700',
     };
     return styles[status] || 'bg-gray-100 text-gray-700';
   };
@@ -191,7 +194,7 @@ function ClaimRow({ claim }: { claim: Claim }) {
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
             <h3 className="font-medium text-gray-900">
-              {claim.establishments?.name || 'Unknown Establishment'}
+              {claim.establishment?.name || claim.business_name || 'Unknown Establishment'}
             </h3>
             <span
               className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(
@@ -204,12 +207,12 @@ function ClaimRow({ claim }: { claim: Claim }) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600">
             <div>
               <span className="text-gray-400">Claimant:</span>
-              <p>{claim.users?.display_name || claim.users?.email || 'Unknown'}</p>
+              <p>{claim.contact_name || claim.user?.name || claim.user?.email || 'Unknown'}</p>
             </div>
             <div>
-              <span className="text-gray-400">Category:</span>
+              <span className="text-gray-400">Business:</span>
               <p className="capitalize">
-                {claim.establishments?.category || 'Unknown'}
+                {claim.business_name || 'Unknown'}
               </p>
             </div>
             <div>
@@ -218,7 +221,7 @@ function ClaimRow({ claim }: { claim: Claim }) {
             </div>
             <div>
               <span className="text-gray-400">Contact:</span>
-              <p className="truncate">{claim.users?.email || 'N/A'}</p>
+              <p className="truncate">{claim.contact_email || claim.user?.email || 'N/A'}</p>
             </div>
           </div>
         </div>
