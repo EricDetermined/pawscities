@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     // Check if analytics data already exists
     const { count: existingCount } = await supabase
-      .from('ClickEvent')
+      .from('analytics_events')
       .select('*', { count: 'exact', head: true });
 
     if ((existingCount || 0) > 50) {
@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
 
     // Get all establishments
     const { data: establishments, error: estError } = await supabase
-      .from('Establishment')
-      .select('id, cityId, name')
+      .from('establishments')
+      .select('id, city_id, name')
       .eq('status', 'ACTIVE')
       .limit(265);
 
@@ -43,10 +43,10 @@ export async function POST(request: NextRequest) {
 
     // Get all city IDs
     const { data: cities } = await supabase
-      .from('City')
+      .from('cities')
       .select('id, slug');
 
-    const cityIds = cities?.map((c) => c.id) || [];
+    const cityIds = cities?.map((c: any) => c.id) || [];
 
     // Event types with realistic distribution weights
     const eventTypes = [
@@ -103,14 +103,12 @@ export async function POST(request: NextRequest) {
     const events: any[] = [];
 
     for (let dayOffset = 0; dayOffset < 30; dayOffset++) {
-      // More events on weekdays, fewer on weekends
       const dayDate = new Date(now - dayOffset * 24 * 60 * 60 * 1000);
       const isWeekend = dayDate.getDay() === 0 || dayDate.getDay() === 6;
       const baseEventsPerDay = isWeekend ? 15 : 25;
       const eventsToday = baseEventsPerDay + Math.floor(Math.random() * 10);
 
       for (let i = 0; i < eventsToday; i++) {
-        // Pick event type based on weights
         let rand = Math.random() * totalWeight;
         let eventType = 'page_view';
         for (const et of eventTypes) {
@@ -121,37 +119,32 @@ export async function POST(request: NextRequest) {
           }
         }
 
-        // Random establishment
         const est = establishments[Math.floor(Math.random() * establishments.length)];
 
-        // Random hour of day (skew toward daytime)
         const hour = Math.min(23, Math.max(6, Math.floor(8 + Math.random() * 14)));
         const minute = Math.floor(Math.random() * 60);
         const eventTime = new Date(dayDate);
         eventTime.setHours(hour, minute, Math.floor(Math.random() * 60));
 
         const event: any = {
-          eventType: eventType,
-          establishmentId: est.id,
-          cityId: est.cityId,
-          createdAt: eventTime.toISOString(),
-          sessionId: `sess_${dayOffset}_${i}_${Math.random().toString(36).slice(2, 8)}`,
+          event_type: eventType,
+          establishment_id: est.id,
+          city_id: est.city_id,
+          created_at: eventTime.toISOString(),
+          session_id: `sess_${dayOffset}_${i}_${Math.random().toString(36).slice(2, 8)}`,
         };
 
-        // Add queryString for search events
         if (eventType === 'search') {
-          event.queryString = searchQueries[Math.floor(Math.random() * searchQueries.length)];
-          event.establishmentId = null; // search events don't have establishment
+          event.search_query = searchQueries[Math.floor(Math.random() * searchQueries.length)];
+          event.establishment_id = null;
         }
 
-        // Add pagePath for page_view events
         if (eventType === 'page_view') {
-          // 60% chance of being an establishment page view, 40% general page
           if (Math.random() < 0.6) {
-            event.pagePath = `/cities/${cities?.find((c) => c.id === est.cityId)?.slug || 'unknown'}/${est.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+            event.page_path = `/cities/${cities?.find((c: any) => c.id === est.city_id)?.slug || 'unknown'}/${est.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
           } else {
-            event.pagePath = pagePaths[Math.floor(Math.random() * pagePaths.length)];
-            event.establishmentId = null;
+            event.page_path = pagePaths[Math.floor(Math.random() * pagePaths.length)];
+            event.establishment_id = null;
           }
         }
 
@@ -164,12 +157,11 @@ export async function POST(request: NextRequest) {
     for (let i = 0; i < events.length; i += 100) {
       const batch = events.slice(i, i + 100);
       const { error: insertError } = await supabase
-        .from('ClickEvent')
+        .from('analytics_events')
         .insert(batch);
 
       if (insertError) {
         console.error(`Batch insert error at ${i}:`, insertError.message);
-        // Continue with next batch
       } else {
         inserted += batch.length;
       }
