@@ -6,7 +6,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero â Split Layout */}
+      {/* Hero — Split Layout */}
       <section className="relative flex flex-col md:flex-row min-h-[480px]">
         {/* Left: Content Panel */}
         <div className="flex-1 bg-gradient-to-br from-[#1a1a2e] to-[#16213e] flex flex-col justify-center px-8 md:px-14 py-16 md:py-20">
@@ -18,19 +18,19 @@ export default function HomePage() {
             your furry friend in cities around the world.
           </p>
           <div className="flex flex-wrap gap-2 text-sm">
-            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">ð³ Parks</span>
-            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">ð½ï¸ Restaurants</span>
-            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">â Cafes</span>
-            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">ð¨ Hotels</span>
-            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">ðï¸ Beaches</span>
-            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">ð¥ Vets</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">🌳 Parks</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">🍽️ Restaurants</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">☕ Cafes</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">🏨 Hotels</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">🏖️ Beaches</span>
+            <span className="bg-white/15 border border-white/25 px-4 py-2 rounded-full text-white backdrop-blur-sm">🏥 Vets</span>
           </div>
         </div>
         {/* Right: Dog Photo */}
         <div className="flex-1 relative overflow-hidden min-h-[280px] md:min-h-0">
           <img
             src="/images/hero-dogs.jpg"
-            alt="Two adorable dogs â the Paw Cities mascots"
+            alt="Two adorable dogs — the Paw Cities mascots"
             className="w-full h-full object-cover object-center"
           />
           {/* Gradient blend from left panel into image */}
@@ -75,17 +75,17 @@ export default function HomePage() {
           <h2 className="font-display text-3xl font-bold mb-8 text-center">Why Paw Cities?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
-              <div className="text-4xl mb-4">ðºï¸</div>
+              <div className="text-4xl mb-4">🗺️</div>
               <h3 className="font-semibold text-lg mb-2">Interactive Maps</h3>
               <p className="text-gray-600">Find nearby dog-friendly places with our easy-to-use map interface.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
-              <div className="text-4xl mb-4">ð</div>
+              <div className="text-4xl mb-4">🌍</div>
               <h3 className="font-semibold text-lg mb-2">8 Global Cities</h3>
               <p className="text-gray-600">From Paris to Tokyo, discover dog-friendly spots wherever you travel.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
-              <div className="text-4xl mb-4">ð¾</div>
+              <div className="text-4xl mb-4">🐾</div>
               <h3 className="font-semibold text-lg mb-2">Dog-Specific Features</h3>
               <p className="text-gray-600">Filter by water bowls, off-leash areas, dog menus, and more.</p>
             </div>
@@ -114,7 +114,7 @@ export default function HomePage() {
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">ð¾</span>
+              <span className="text-2xl">🐾</span>
               <span className="font-display text-xl font-bold text-white">Paw Cities</span>
             </div>
             <div className="flex items-center gap-6 text-sm">
