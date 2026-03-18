@@ -5,10 +5,10 @@ import React, { useEffect, useState, useCallback } from 'react';
 interface User {
   id: string;
   email: string;
-  display_name: string;
+  name: string;
   role: 'USER' | 'BUSINESS' | 'ADMIN';
-  suspended: boolean;
-  avatar_url: string | null;
+  is_suspended: boolean;
+  avatar: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -89,7 +89,8 @@ export default function UsersPage() {
     return styles[role] || 'bg-gray-100 text-gray-700';
   };
 
-  const getInitials = (name: string) => {
+  const getInitials = (name: string | null) => {
+    if (!name) return '?';
     return name
       .split(' ')
       .map((n) => n[0])
@@ -219,6 +220,7 @@ export default function UsersPage() {
                     getRoleBadge={getRoleBadge}
                     getInitials={getInitials}
                     formatDate={formatDate}
+                    onUserDeleted={() => fetchUsers(page)}
                   />
                 ))}
               </tbody>
@@ -265,15 +267,20 @@ function UserRow({
   getRoleBadge,
   getInitials,
   formatDate,
+  onUserDeleted,
 }: {
   user: User;
   getRoleBadge: (role: string) => string;
-  getInitials: (name: string) => string;
+  getInitials: (name: string | null) => string;
   formatDate: (date: string) => string;
+  onUserDeleted: () => void;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isChangingRole, setIsChangingRole] = useState(false);
   const [selectedRole, setSelectedRole] = useState(user.role);
+  const [isSuspended, setIsSuspended] = useState(user.is_suspended);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const handleRoleChange = async (newRole: string) => {
@@ -304,7 +311,7 @@ function UserRow({
 
   const handleSuspend = async () => {
     try {
-      const newSuspendedStatus = !user.suspended;
+      const newSuspendedStatus = !isSuspended;
       const response = await fetch(`/api/admin/users/${user.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -316,14 +323,42 @@ function UserRow({
         throw new Error(json.error || 'Failed to update status');
       }
 
+      setIsSuspended(newSuspendedStatus);
       setMessage({
         type: 'success',
         text: newSuspendedStatus ? 'User suspended' : 'User unsuspended',
       });
+      setIsMenuOpen(false);
       setTimeout(() => setMessage(null), 2000);
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Failed to update status';
       setMessage({ type: 'error', text: errorMsg });
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      setIsDeleting(true);
+      const response = await fetch(`/api/admin/users/${user.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const json = await response.json();
+        throw new Error(json.error || 'Failed to delete user');
+      }
+
+      setMessage({ type: 'success', text: 'User deleted successfully' });
+      setShowDeleteConfirm(false);
+      setIsMenuOpen(false);
+      // Refresh the user list
+      setTimeout(() => onUserDeleted(), 500);
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to delete user';
+      setMessage({ type: 'error', text: errorMsg });
+      setShowDeleteConfirm(false);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -333,14 +368,14 @@ function UserRow({
         <div className="flex items-center gap-3">
           <div
             className={`w-10 h-10 rounded-full flex items-center justify-center font-medium text-sm text-white ${
-              user.avatar_url ? 'bg-cover' : 'bg-primary-500'
+              user.avatar ? 'bg-cover' : 'bg-primary-500'
             }`}
-            style={user.avatar_url ? { backgroundImage: `url(${user.avatar_url})` } : {}}
+            style={user.avatar ? { backgroundImage: `url(${user.avatar})` } : {}}
           >
-            {!user.avatar_url && getInitials(user.display_name)}
+            {!user.avatar && getInitials(user.name)}
           </div>
           <div>
-            <p className="font-medium text-gray-900">{user.display_name}</p>
+            <p className="font-medium text-gray-900">{user.name || 'No name'}</p>
             <p className="text-sm text-gray-500">ID: {user.id.slice(0, 8)}</p>
           </div>
         </div>
@@ -356,12 +391,12 @@ function UserRow({
       <td className="px-6 py-4 whitespace-nowrap">
         <span
           className={`px-2 py-1 rounded-full text-xs font-medium ${
-            user.suspended
+            isSuspended
               ? 'bg-red-100 text-red-700'
               : 'bg-green-100 text-green-700'
           }`}
         >
-          {user.suspended ? 'Suspended' : 'Active'}
+          {isSuspended ? 'Suspended' : 'Active'}
         </span>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
@@ -392,7 +427,7 @@ function UserRow({
             <>
               <div
                 className="fixed inset-0 z-10"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => { setIsMenuOpen(false); setShowDeleteConfirm(false); }}
               />
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-20">
                 <div className="px-4 py-2 border-b">
@@ -410,10 +445,39 @@ function UserRow({
                 </div>
                 <button
                   onClick={handleSuspend}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 border-b"
                 >
-                  {user.suspended ? 'Unsuspend' : 'Suspend'}
+                  {isSuspended ? 'Unsuspend' : 'Suspend'}
                 </button>
+                {!showDeleteConfirm ? (
+                  <button
+                    onClick={() => setShowDeleteConfirm(true)}
+                    className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                  >
+                    Delete User
+                  </button>
+                ) : (
+                  <div className="p-3 bg-red-50">
+                    <p className="text-xs text-red-700 mb-2 font-medium">
+                      Delete this user and all their data? This cannot be undone.
+                    </p>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={handleDelete}
+                        disabled={isDeleting}
+                        className="flex-1 px-2 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700 disabled:opacity-50"
+                      >
+                        {isDeleting ? 'Deleting...' : 'Confirm'}
+                      </button>
+                      <button
+                        onClick={() => setShowDeleteConfirm(false)}
+                        className="flex-1 px-2 py-1 bg-white text-gray-700 text-xs rounded border hover:bg-gray-50"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </>
           )}
