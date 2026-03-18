@@ -18,22 +18,22 @@ export async function GET(request: NextRequest) {
     const limit = Math.min(50, parseInt(searchParams.get('limit') || '20'));
     const offset = (page - 1) * limit;
 
-    // Validate status filter
+    // Validate status filter (normalize to uppercase)
     const validStatuses = ['PENDING', 'APPROVED', 'REJECTED'];
-    const statusFilter = validStatuses.includes(status) ? status : 'PENDING';
+    const statusFilter = validStatuses.includes(status.toUpperCase()) ? status.toUpperCase() : 'PENDING';
 
     // Get total count
     const { count: totalCount } = await supabase
-      .from('BusinessClaim')
+      .from('business_claims')
       .select('*', { count: 'exact', head: true })
       .eq('status', statusFilter);
 
     // Get claims
     const { data: claims, error: claimsError } = await supabase
-      .from('BusinessClaim')
+      .from('business_claims')
       .select('*')
       .eq('status', statusFilter)
-      .order('createdAt', { ascending: false })
+      .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
 
     if (claimsError) {
@@ -45,14 +45,14 @@ export async function GET(request: NextRequest) {
       (claims || []).map(async (claim: Record<string, unknown>) => {
         const [estResult, userResult] = await Promise.all([
           supabase
-            .from('Establishment')
-            .select('id, name, slug, cityId, categoryId, status, tier')
-            .eq('id', claim.establishmentId)
+            .from('establishments')
+            .select('id, name, slug, city_id, category_id, status, tier')
+            .eq('id', claim.establishment_id)
             .single(),
           supabase
-            .from('User')
+            .from('users')
             .select('id, email, name')
-            .eq('id', claim.userId)
+            .eq('id', claim.user_id)
             .single(),
         ]);
 
