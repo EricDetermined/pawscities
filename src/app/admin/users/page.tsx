@@ -177,7 +177,7 @@ export default function UsersPage() {
       )}
 
       {/* Users Table */}
-      <div className="bg-white rounded-xl border overflow-hidden">
+      <div className="bg-white rounded-xl border overflow-visible">
         {loading ? (
           <div className="divide-y">
             {[...Array(5)].map((_, i) => (
@@ -429,7 +429,7 @@ function UserRow({
                 className="fixed inset-0 z-10"
                 onClick={() => { setIsMenuOpen(false); setShowDeleteConfirm(false); }}
               />
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-20">
+              <div className="absolute right-0 bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg border z-20">
                 <div className="px-4 py-2 border-b">
                   <p className="text-xs text-gray-500 mb-2 font-medium">Change Role</p>
                   {(['USER', 'BUSINESS', 'ADMIN'] as const).map((role) => (
