@@ -139,7 +139,7 @@ export default function AdminPhotosPage() {
       {!loading && photos.length === 0 && (
         <div className="bg-white rounded-xl border p-12 text-center">
           <div className="text-5xl mb-4">
-            {statusFilter === 'PENDING' ? '&#9989;' : '&#128247;'}
+            {statusFilter === 'PENDING' ? '\u2705' : '\u{1F4F7}'}
           </div>
           <h2 className="text-xl font-semibold text-gray-900 mb-2">
             {statusFilter === 'PENDING'
@@ -183,7 +183,7 @@ export default function AdminPhotosPage() {
               <div className="p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-gray-900 truncate">
-                    {photo.establishment?.name || 'Unknown business'}
+                 {photo.establishment?.name || 'Unknown business'}
                   </span>
                   <span className={`text-xs px-2 py-0.5 rounded-full ${
                     photo.establishment?.tier === 'premium'
