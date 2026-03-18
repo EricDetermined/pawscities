@@ -1,7 +1,7 @@
 /**
  * Social media content bank and auto-selection logic for PawCities
  *
- * Contains 44 researched facts across 8 cities, with caption generation
+ * Contains 39 researched facts across 8 cities, with caption generation
  * and smart scheduling (round-robin cities, no duplicates).
  */
 
@@ -29,12 +29,9 @@ const CITY_ROTATION = ['barcelona', 'tokyo', 'paris', 'nyc', 'geneva', 'london',
 
 export const CONTENT_BANK: ContentFact[] = [
   // PARIS
-  { city: 'paris', type: 'did-you-know', headline: '1 Dog for Every 7 Parisians', body: 'Paris has over 300,000 dogs - one of the highest dog-to-human ratios of any major city in Europe.', icon: '\u{1F429}' },
-  { city: 'paris', type: 'did-you-know', headline: 'Dogs Dine Indoors in Paris', body: 'Unlike the US, France has no laws banning dogs from restaurants. Many Parisian caf\u00E9s welcome dogs at the table and bring out water bowls.', icon: '\u{1F377}' },
   { city: 'paris', type: 'did-you-know', headline: 'Dog Dining Since the 1800s', body: 'Wealthy Parisians brought dogs to fancy restaurants in the 1800s. It became so common that restaurants began offering special dog dishes - bouillon with rice and liver.', icon: '\u{1F4DC}' },
   { city: 'paris', type: 'tip', headline: 'Metro Tip: Small Dogs Only', body: 'Dogs must fit inside a carrier bag to travel on the Paris metro and buses. Larger dogs? You\'ll need a taxi or a long walk.', icon: '\u{1F687}' },
   { city: 'paris', type: 'did-you-know', headline: 'France\'s #1 Breed: Chihuahua', body: 'The Chihuahua is the most popular dog breed in France at 13.7%. Perfect for navigating narrow caf\u00E9 terraces!', icon: '\u{1F415}' },
-  { city: 'paris', type: 'tip', headline: '\u20AC68 Fine for Not Cleaning Up', body: 'Paris enforces a \u20AC68 fine for owners who don\'t pick up after their dogs. Keep those bags handy!', icon: '\u{1F4B0}' },
 
   // GENEVA
   { city: 'geneva', type: 'did-you-know', headline: 'World\'s Strictest Dog Laws', body: 'Switzerland is the ONLY European country requiring all dogs to be microchipped and registered by age 3 months.', icon: '\u{1F4CB}' },
@@ -51,7 +48,6 @@ export const CONTENT_BANK: ContentFact[] = [
   { city: 'london', type: 'did-you-know', headline: 'London is the UK\'s Cat City', body: 'Surprise: London is the only region in the UK where cats outnumber dogs. Just 9% of Londoners own dogs vs. 14% with cats.', icon: '\u{1F62E}' },
 
   // BARCELONA
-  { city: 'barcelona', type: 'did-you-know', headline: 'More Dogs Than Children', body: 'Barcelona has 172,971 dogs but only 165,482 children aged 0-12. Dogs officially outnumber kids in the city.', icon: '\u{1F476}' },
   { city: 'barcelona', type: 'did-you-know', headline: '100+ Off-Leash Dog Areas', body: 'Barcelona has over 100 designated off-leash areas across parks, plazas, and public spaces. Dog freedom is built into the city.', icon: '\u{1F415}' },
   { city: 'barcelona', type: 'did-you-know', headline: 'Europe\'s First Dog Water Park', body: 'Perros al Agua is Europe\'s first dog water park - large pools, water slides, jumping ramps, sand dunes, and even a restaurant.', icon: '\u{1F3CA}' },
   { city: 'barcelona', type: 'did-you-know', headline: '\u20AC1,500 Fine for Not Cleaning Up', body: 'Barcelona doesn\'t mess around: a \u20AC1,500 fine for not picking up after your dog. That\'s 22x more than Paris!', icon: '\u{1F4B8}' },
@@ -80,7 +76,6 @@ export const CONTENT_BANK: ContentFact[] = [
 
   // TOKYO
   { city: 'tokyo', type: 'did-you-know', headline: 'Virtually Zero Dog Waste on Streets', body: 'Tokyo\'s dog owners are so responsible about cleanup, you almost never see dog droppings on the streets.', icon: '\u2728' },
-  { city: 'tokyo', type: 'did-you-know', headline: 'You Can \'Rent\' a Dog', body: 'Tokyo has dog caf\u00E9s where you can rent a dog for 1-2 hours for walks and playtime. A uniquely Japanese innovation.', icon: '\u{1F436}' },
   { city: 'tokyo', type: 'did-you-know', headline: 'Tiny Dogs Rule Tokyo', body: 'Tokyo apartments are small, so Chihuahuas, Miniature Dachshunds, and Toy Poodles dominate.', icon: '\u{1F3E0}' },
   { city: 'tokyo', type: 'did-you-know', headline: 'Yoyogi Park\'s 3-Tier Dog Run', body: 'Yoyogi Park divides its dog run by size: large, medium, and small. Prevents hierarchy issues.', icon: '\u{1F4D0}' },
   { city: 'tokyo', type: 'did-you-know', headline: '$9 Billion Pet Industry', body: 'Japan\'s pet industry is worth 1.4 trillion yen (~$9B USD). In Tokyo, dogs are treated like royalty.', icon: '\u{1F48E}' },

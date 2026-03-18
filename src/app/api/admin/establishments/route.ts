@@ -43,7 +43,6 @@ export async function GET(request: NextRequest) {
       isVerified,
       isFeatured,
       address,
-      neighborhood,
       createdAt,
       updatedAt,
       City(id, name, slug),
