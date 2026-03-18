@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getCityConfig, getAllCitySlugs, CATEGORIES } from '@/lib/cities-config';
-import { getCityEstablishments, getCityCategoryCounts } from '@/lib/data';
+import { getCityEstablishments, getCityCategoryCounts, enrichEstablishmentsWithUserPhotos } from '@/lib/data';
 import { CityPageClient } from './CityPageClient';
 import type { Metadata } from 'next';
 
@@ -25,7 +25,8 @@ export default async function CityPage({ params }: CityPageProps) {
   const city = getCityConfig(params.slug);
   if (!city) notFound();
 
-  const establishments = await getCityEstablishments(params.slug);
+  const baseEstablishments = await getCityEstablishments(params.slug);
+  const establishments = await enrichEstablishmentsWithUserPhotos(baseEstablishments);
   const categoryCounts = await getCityCategoryCounts(params.slug);
 
   return (
