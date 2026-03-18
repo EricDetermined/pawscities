@@ -17,7 +17,7 @@ export async function GET(
     const claimId = params.id;
 
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
+      .from('business_claims')
       .select('*')
       .eq('id', claimId)
       .single();
@@ -32,14 +32,14 @@ export async function GET(
     // Enrich with establishment and user data
     const [estResult, userResult] = await Promise.all([
       supabase
-        .from('Establishment')
-        .select('id, name, slug, cityId, categoryId, status, tier, rating, reviewCount')
-        .eq('id', claim.establishmentId)
+        .from('establishments')
+        .select('id, name, slug, city_id, category_id, status, tier, rating, review_count')
+        .eq('id', claim.establishment_id)
         .single(),
       supabase
-        .from('User')
+        .from('users')
         .select('id, email, name')
-        .eq('id', claim.userId)
+        .eq('id', claim.user_id)
         .single(),
     ]);
 
@@ -84,8 +84,8 @@ export async function PATCH(
 
     // Get the claim first
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('establishmentId, userId, status, contactEmail, businessName')
+      .from('business_claims')
+      .select('establishment_id, user_id, status, contact_email, business_name')
       .eq('id', claimId)
       .single();
 
@@ -106,11 +106,12 @@ export async function PATCH(
     if (action === 'approve') {
       // Update claim status
       const { error: updateClaimError } = await supabase
-        .from('BusinessClaim')
+        .from('business_claims')
         .update({
           status: 'APPROVED',
-          reviewNotes: reviewNotes || null,
-          updatedAt: new Date().toISOString(),
+          review_notes: reviewNotes || null,
+          reviewed_by: authResult.dbUser?.id || null,
+          reviewed_at: new Date().toISOString(),
         })
         .eq('id', claimId);
 
@@ -120,21 +121,28 @@ export async function PATCH(
 
       // Update establishment to mark as verified/claimed
       const { error: updateEstError } = await supabase
-        .from('Establishment')
+        .from('establishments')
         .update({
-          isVerified: true,
+          is_verified: true,
           status: 'ACTIVE',
-          updatedAt: new Date().toISOString(),
+          claimed_by: claim.user_id,
+          claimed_at: new Date().toISOString(),
         })
-        .eq('id', claim.establishmentId);
+        .eq('id', claim.establishment_id);
 
       if (updateEstError) {
         throw new Error(`Failed to update establishment: ${updateEstError.message}`);
       }
 
+      // Update user role to BUSINESS
+      await supabase
+        .from('users')
+        .update({ role: 'BUSINESS' })
+        .eq('id', claim.user_id);
+
       // Notify business owner (non-blocking)
-      if (claim.contactEmail) {
-        sendClaimApproved(claim.contactEmail, claim.businessName || 'your business').catch(() => {});
+      if (claim.contact_email) {
+        sendClaimApproved(claim.contact_email, claim.business_name || 'your business').catch(() => {});
       }
 
       return NextResponse.json({
@@ -145,11 +153,12 @@ export async function PATCH(
     } else {
       // Reject the claim
       const { error: updateClaimError } = await supabase
-        .from('BusinessClaim')
+        .from('business_claims')
         .update({
           status: 'REJECTED',
-          reviewNotes: reviewNotes || null,
-          updatedAt: new Date().toISOString(),
+          review_notes: reviewNotes || null,
+          reviewed_by: authResult.dbUser?.id || null,
+          reviewed_at: new Date().toISOString(),
         })
         .eq('id', claimId);
 
@@ -158,8 +167,8 @@ export async function PATCH(
       }
 
       // Notify business owner (non-blocking)
-      if (claim.contactEmail) {
-        sendClaimRejected(claim.contactEmail, claim.businessName || 'your business', reviewNotes).catch(() => {});
+      if (claim.contact_email) {
+        sendClaimRejected(claim.contact_email, claim.business_name || 'your business', reviewNotes).catch(() => {});
       }
 
       return NextResponse.json({
