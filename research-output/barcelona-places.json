@@ -4,7 +4,7 @@
     {
       "name": "Parc de la Ciutadella",
       "category": "park",
-      "address": "Passeig de Picasso, 21, 08003 Barcelona",
+      "address": "Passeig de Picasso, 21, Ciutat Vella, 08003 Barcelona, Spain",
       "neighborhood": "El Born",
       "phone": "+34 932 562 200",
       "website": "https://www.barcelona.cat/es/que-hacer-en-bcn/parques-y-jardines/parque-de-la-ciutadella-92086011921",
@@ -27,13 +27,13 @@
       "latitude": 41.388123,
       "longitude": 2.1860152,
       "rating": 4.6,
-      "reviewCount": 76244,
+      "reviewCount": 76544,
       "photoRefs": [
-        "places/ChIJ4QmWQ_2ipBIRcD1a5hhhOEI/photos/AcnlKN1xlGi83h-QiRzYaEGe3Bm1g25JCp-WAopaClCGqJjE9OlJpS5tjFBRiqp4Lm_VPwovhYQblIy32OImk6KL2vKpFmTTQNR3KAfDpD6F5SEtPj3rfAmnPIYhmwR6QuhR1NAgyFdek8_yEIoaBPTcQ6TSGX9OYDsxviYWuFR1IBKljq-xQUrGRYN18ClxnLoe56gOxAttDHvT6HKno4R8mVtpAAT7teP4ohgZeU6aEdrX9sRlrYu4z8F73ohLvV8Yc6bT045KGVRGutd1VtPxOiaNWFClsIdkV6b2ociHJQo0WHTd9WzHHpn37YE3-PSS7y8FnG3RBKw3mdyGUOOpRVNDW1Bb0I8TFH-xiHbCFE0ENNRSZzai84lSIw_n4eB8NtpIWsuHCSFX4b9hMyNuSAI046vGLxomg2ocfJzGARlv_g",
-        "places/ChIJ4QmWQ_2ipBIRcD1a5hhhOEI/photos/AcnlKN3UMZpVR9j4oaf5vefSKXWbJGxsc74Z9z1ZWq9UTQVIFe3Dy_hsHzNwMNHN1V2osu9e4yvAoYtAcH8zcVffX65Qll3LKt6LR63Sue_c79WM8h-hSR67V3YrIBUJAiJx44hj2o440WCDBOZYr1xejde1hdzyS8SjJaoDmooIfVlFImIUY_nbHMD9IBFotwkwXow3S9-65oqWqNYRc-XNmssQ-W7yA5Yd0MzTg29W1MLMyLUZfUpRySwqoi2sBiL5IcZ-7hmk2ABqL10cpRsQO5ZlhUryg5dH_UiHpjOTktHJv7CWsFKMixLRHIx4DiHjI_v0iMoY8IchuDAgIMikLRM9bxNq2cig-Te7x4VN-2t9iwfBibN_J_bXH4-bEgis7BYmu79rMWCc4PCFDr5h57kFyy-4a_cmh2V4P4IuKcEPnA",
-        "places/ChIJ4QmWQ_2ipBIRcD1a5hhhOEI/photos/AcnlKN09lcKIAR2aAdHMEL0aMGT_l0UOejchfR7sT6cUrhaCofnxuP7jkxL67DM7jVxEfpSMTIm9Rb-fhBYdIjRne5zFtRDm0cJozq_mIBxVV-jfzePGCyLhBaUO9n0IXh_wzcVFRRdItFCWZuf7ZGKVCwXb1lahGJbxdm832EQtSn6tHTrFksqbJx_SQvI4La96-DzYdqhPKZ3jafM4q1KTztb6j-_1BKBQLNcGSFe_d_iJrUOJQDPDyYOyZuUdH0JvrDfo3fi6xTFvE0pij6eah6dPczPvqRrKn8A4T7_8xstsC1RmmDitmMobSvB18-Mdg-oiRKnHvnUVBUV9eE6sIJKWMWiewwniOAPhOd_aLZGjcrpIRy8XA-dP6i56XY71pT2HQst-VAVJRHOatW1P12fDpWmy_CTbvl-2kjl5xGD08w"
+        "places/ChIJ4QmWQ_2ipBIRcD1a5hhhOEI/photos/ATCDNfVIUKA8XIfEnjeYzh0-uCN_JxTgpITFtJKvuPlr5Se1vTrRLW3VP2_VE--IAQ98Qz3ze3jD7j7N2ECy75PBLGFyFJDBKn3eHmJe8qqjZXHoFpV2egVxAy8MdnqRpeTfQvKEc8yFZe4SGsQ0G7qGHksgzTmPcLcVoFA2CmrdV8nMvW21K7pJDH0grPBuSQmh9Ri5rq-40QHsLsrhHR9TxLdFqz280aTkapmjPxDV7cE179MjazembChlnY-RbDQh5z0I6x6xtAGR3GpUkChHbao_cVaw6JVEb9iB66kZLPDIIxj6HmCy1C8epBY_ROQJWssWjLnfc-Ra2CfScINIFPFUJFEBKU6LYIIL9Afff0z0g6P_aFNB06fE_ZxuCyuJ2te2wWr2lN_5wegsC8YGDoqP7NQZ0sEOSY-CDcPvlnJIMg",
+        "places/ChIJ4QmWQ_2ipBIRcD1a5hhhOEI/photos/ATCDNfVhzV6lITeUHlpOlFqCEBv9LCr2DUcKTs1ISqM7vn3fZ0NV7UL5wGlYnJZaq2v56f-GgA7BHyf3yLOaC21UWj7sxMgjOHlgbK4nvH2J8t3I-8S5mCFyuUhBbr-Jo5OMPwhUmiA-utKII9lB1TjlTTlhzc64nfFHDbDbHJFPrUcL77ABwWQyatuzC_mDCxxeHLg6dJxTfWw88weXn2VQkngZlXL2iGqYjVq1cUWJ3oyNYXZUhZPpgywhSgD8GuFSLhIaR2ArugMi-at0oMUo-BGVB366ydtWexIMPbTrYKpy_YHmFGF1LrGDGu20ADIpTDtsdD52g7R-h-RkWX_semRL11mPQMq42untoan9pUXUJ3BnBVlzInkCHCTbMSXRc65EC-or7eVRbF4PbpKNS9vXQWCsBKfeVYUxrRF84vP1MA",
+        "places/ChIJ4QmWQ_2ipBIRcD1a5hhhOEI/photos/ATCDNfWQDxSUBZfDXFvYHgqPOMKl0ztPmz-6rDQTlBcYIlPrdgTM8PDqmdlDYqthRgZL-6I0wkK3Qs9HQA4DYXoLslakRN1v0BjqQkCe7DIuU5WgqK4fFurRmWbSGc2Mmfyy6rCvlCcaJjZJCPSPIuAjqG7oDklg4g8IMICF9y0d_tgxQb_EoZ95o4NhcJ_CEmWHRz7FqSYCfOUZzy3FWA1fG7xUyLYDcgj_nnKg5A7exVJncCQXXTptxEAExxDpKsZCUFoiJ6gRp1sAkHwwAVy_fxAOfKWkZStbcbmsHgxSmatkNU4qmTWdm9WVR27ch5y4AuSldR8id7TAQgotsF9hk6_Bq1lkmG59QTcGYXOCS_gfjf959-jpXsXeqjWut_8Q0wXS6Y8l3FIchU3C166q_cG5ov3Sog7ewIFrUH8KCErhCg"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=4771670564770823536&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=4771670564770823536&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 7:00 AM – 10:30 PM",
         "Tuesday: 7:00 AM – 10:30 PM",
@@ -48,7 +48,7 @@
     {
       "name": "Parc del Poblenou",
       "category": "park",
-      "address": "Carrer del Joncar, 15, 08005 Barcelona",
+      "address": "Sant Martí, 08005 Barcelona, Spain",
       "neighborhood": "Poblenou",
       "phone": "+34 932 562 200",
       "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/parques-y-jardines",
@@ -71,13 +71,13 @@
       "latitude": 41.3971301,
       "longitude": 2.2073986999999997,
       "rating": 4.4,
-      "reviewCount": 3531,
+      "reviewCount": 3536,
       "photoRefs": [
-        "places/ChIJq-sut2ujpBIRbbFqGAnh70Q/photos/AcnlKN0u_VToOOkzP5XO2nmHVhoe2Zb6cSuTrMqvvJhS5C_QFhu3soKUEES1vXauhFF11vfiWJWD4e0VfYNCi8kDLHzekkCYoNxNt1Vu4vTcf5WVD04pG77MQXRvXLJ7SlIzKdJEMXKAXcO3QZsnqcw8DrVOG_yGQs6ij-E4tvsSOIwLMY0eNJOPDIXc2AEr3StmspwmdjmxS-aZICNfoYO35uKdqQMOel7kbYGQjujmoN9oQwCbhd08fjdbm3hqxK49FW3n2u6Z4aIGCGxDxJRKDTB30JakYaN8qPHK0ahH85UIOTtsyxmOw68nr2tp1YB8f9PYS1NEeGbh8wdt0h4A3ydt_dw1JVL43fPr1dHhbcGQdBEl33rok015i_gSxgQOOrrWer7nHUzUJt-Qz4YwUnNgtZ3SFKLG5-El6OViTPNwaEFf",
-        "places/ChIJq-sut2ujpBIRbbFqGAnh70Q/photos/AcnlKN3lXrTqhhuNKRCA5_uAJG-dgq59YuytYTCYshaadGO3j36iT4h0YI80gQDFUCsV1ZJ9N65GDNvizLkvKpzHFU7p6dlGa65dZIji1s8chQ6l4ivqoUgp_bNpVs96bjKIvLo9-pXqywP017RRN0Vmbi13ptL7Mh-jEZUYAQ2CbTDzzr1hFGkw8yM8vWOhuJJAZNzT9yq8zXEpWWL15R0ZI1_4P9UAmGnSiXdkq1vZAlKJBwiRGf3rqfCRcD9xD2vpWzZK4B_pZuUBRozh8UO4GT6WGZ69jDXhQ1T4necTqyy5Y-r9f40UQ-7dAHwsqFphVf5QWvkHajXKlRZuuC2sy9N2zt9miCAyGSJY4WzD4Hxuc-_8TEbu7DiSFOrQ3YzBE4tXvjIuYpFNU3iMBUsCtAzrKDaQ1nx_fsJYXqX-p_46Vdc",
-        "places/ChIJq-sut2ujpBIRbbFqGAnh70Q/photos/AcnlKN1G8BmBXFvrdpS-2yjksZxPoSLmybHFxGEo2_2c78aNevHpfuFZRYFMMTYGpsTa6p9z3qE5dSDuBKxlbUgpqCO--Dwc39B4By4_USl82kZzmeipvSMvC39wSPhzZpDiTo61tYxmesgsxOBYBEJax3VhsUa8Wo4BJ5J-U8MWfFxUVoF_76LTWXSWjcVEUm6l65mmsE8Incnswm9rXL0b-q8ycUhPY9PcGyR9H8y3y3mA-a51ToyKYTUgZatrIHYop3R85E7I0Cw5O744bITCm43EOhzkpvoGfeCMCz9jSTiIlPM4o2hyuTKrATgASeundp0z5hKDeqvTPx4Tc0lgw8dve3Anmh6o-xn9K6b4IeZo21mqAuaGg3S4gwz3hhqwuoGIVV-j9sttn42_o1DLMgy6n9UBP5ycvhWw3i_XXoA"
+        "places/ChIJq-sut2ujpBIRbbFqGAnh70Q/photos/ATCDNfUKbLM7eZbc1Txuvc01bQWMh14W_UKTDfgKO9iMkbCYXJzYZMzKVaV0nsfBKbxOVkMIDNbiFqISllDphGWl7YddSaopQiuzAdNajtcE4RNqdVDh7WIdW6iSXlOUnO3vuNEDEquv3qDC4OtsXcko96wrGgI1bhtMk8PtEoWBNNgBb9psxCMMKmuRmRxJd-jT1M0FBjB3lr6HwwfbkGsJFzdxw5-fZFXr8_vma7kcmFtEPDDA4_kWHwI-a9r01tlhFOglGCjHB9gzaVxd6rCgCt33Z1WVZ5ylIvjvgomUpfJ7q2xgQIVkdRebtrcrczP6_zMTGD-MAea2OQVOJB2pZRbrQrMK6oVnDYK78klIdvSn_lAXVQvLTEMSS0iq4k0094nGyO48OGQAEw_bwfgXDT3U9vROOM164AjxqBOYa8AdK6bz",
+        "places/ChIJq-sut2ujpBIRbbFqGAnh70Q/photos/ATCDNfW4y1HXLh3-VAnR9AhCejLqjggkuU8_UjmSeEbdPu2ZLDvID-uwlsBlj6qPBw-BXQpi9nk-bAnX5tQb8QGTGr56_wN75zpdWy8apzWJE5fWv8SMchILKZyDwobvSL1HIPBCX9fPYPZzTfwFjw77uXTCe7PaOhYKBcLgGV9_Gix5HcC06f4mdZ5EMZwXEELGzE68lwpQIrurxRn0uvEq6fGjFCh2E_hC4TtiJZ5vZoOj8SqJhHWJ1aVp6J3zQKao_C_UL3jO7-qjZZXEhYkoXWmC-j0kBt2fxCSaQnoO2x4kRDDvALmDSfkeRotm8Bew-bk7UxSAKTqFnSwNLnBKFd1iPiLPtuNx44Ti5_GEahyyW7lMY7CgAhT2_2Q5tOek1iqJnhjPquGOdU1JVFj6skPreVN__w9PpJdV1sE_N4RGyVk",
+        "places/ChIJq-sut2ujpBIRbbFqGAnh70Q/photos/ATCDNfUvAYiFbSmAg5IfNBZG4lFeIuxvqntj6x80LXZjK1Ze-IToDBKg4s59yxcj4pipNVwcwlF2NIzykEgytfywyyA8Bqtk2eO0IaT9ASu8vVVteKVBSyqNderEVYdPvG_tzbB--5GbDo1YV4YiIaOkCGNTmYWDo-0xz1uVSW_3u4tNsw5EowdvXJAMn9WsZar7Q07Bbipduad0ITwZ73MGfTLvPI-iylCxmyYHyP3POQmSns46I30Gohe-EMr7e-tfZ9n1wx5c1l0Bb_3couDpBWjTD-uwQ5vHOCYyRhubNrAjeDJ4U0opNi8yR-Fc9iPeK3jPkbW5OPAqltLF-YMau8vfwpp_D6mH_ocVJr6kdSv_sIMJRVLXGBcWNTckZUR5D3zUTxPD7ilBMDquA7MBjspTmClx4LnErZVUXvKIKoI"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=4967436343193547117&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=4967436343193547117&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: Open 24 hours",
         "Tuesday: Open 24 hours",
@@ -92,7 +92,7 @@
     {
       "name": "Parc Güell",
       "category": "park",
-      "address": "Carrer d'Olot, s/n, 08024 Barcelona",
+      "address": "Gràcia, 08024 Barcelona, Spain",
       "neighborhood": "Gràcia",
       "phone": "+34 934 09 18 31",
       "website": "https://parkguell.barcelona/",
@@ -115,13 +115,13 @@
       "latitude": 41.4144948,
       "longitude": 2.1526945,
       "rating": 4.4,
-      "reviewCount": 228409,
+      "reviewCount": 230178,
       "photoRefs": [
-        "places/ChIJq0HUUq6ipBIRWM6qGqALmok/photos/AcnlKN3CSHxehYEnNAGalZbwyowNbWSfTxbMztuH0c7cbrbfGny0K5M1J1rTICFTs6eN2uEQg0BNasUpwGsh7RzIYuOIjSDm61YXpveuPHl2APxQ0Fkl8ug63sWNBK7H-B4gqVCG6ZojepQDDgnkhgvXyHp2Jnphj5Qx8mpMFa836M3hmOgTXkaDb4SjHZwqB6fKB6DYjTiKVRv0LpNhQUzeW9N9eMi9ppJWia3DUccsfzZjAU8Tk24Hd_HEMdvC7yvJOwRLu09p_-PGCN6rl78Gsa3amDZ7SbG9_FXzsN6Syl7jtLKJJfD-6v3-mNdu7mUUZjmNTZnlU8Y_O7suQgKnuOyRIYPro5PzeiVc8assnD7cA5TArAbEnJ4L5bziYinMGlwwjFCxqX2QV2tqbXXmJNwMXjIYv8BaJncIxVChcosG5_ve",
-        "places/ChIJq0HUUq6ipBIRWM6qGqALmok/photos/AcnlKN0g8170MAm-2OZL91gQDEgPrm2jbo4KZBxckABYF8ovuZ8fwlPw3NXmscjx34Mp0VW6MfsdlTQ6jvhpWowoMB02DHQ2Hu1ipVmD0AW3FERz0Dhbgbs9GKmFGHg5FJCNpHLd4RnicqhTxJLfAD_HPLUPRA_TfkfXfucwnvuLEtbTPL8I6eNTyjcCFlmrRfzBP2LYYoxI_qJMQYS6wpcR1catSe5vssLwB8fk41SsAmY56ciUX50hSEy0WnlrrftfpsAXDLkcwCzeZ5C2-Nuf8Xqge2hPaS9gFUPAgx7FyJGS0uzxQTHU9Z0XsOOPzUQENTQt0W14TGT6HruLxEonKJS0qdNOU4neD-oS0CTBNPGfNdEuy4HJU_LW9n-vaPG-BcV9j3IYbKrRrtdia6w4ObBjkOWB4cco8XEODHLZhFDSnXO6",
-        "places/ChIJq0HUUq6ipBIRWM6qGqALmok/photos/AcnlKN0eGrwmUOV23NgohBlsYgCyzS9VtbVCjWhvsDCs6Tuc6WJi-ce52NoaYvSdJreOISKG4CTWb-QfnoDmESwPnH7zDdY9eCXn-Nc4HHfB2Bk-KPbo6A_jJarGhIHbROUeVoIhF9L_IMnxUp1RwAxSUHzlbKkNhM1JazexX3pAoNIXr8ulrNIhoC_kJHPI8O0Ts3G6DqCxh3A-9BRyaokBcJUJ1x4evVATF466OI51dkM6GSe6Y8aczZXZdmLYMuF16-MRffWSLLH3Q1ukXh3wah3o587q_Rk24sr7BsdE_vjqDOHvCQoySj7xTfalR3ykOj_CZjXZTQhiAEOHrZf5HV7jcDMu3ei0lCnolL78oMfJNMoRcp0AXYUs0DoFe8XaiTfTLxRT6sMppWSx9OoIoZ_6KU8pDXiWjwH4oxtjnkQpHDqc"
+        "places/ChIJq0HUUq6ipBIRWM6qGqALmok/photos/ATCDNfX4nqSE4UtqQSgQaaFrA7MPA9tf6ZgDpBY84LVeUpQSvurDyLeNyLH9dv-5X-s6LMBV368D4j8MqiIUlAiV5kVvFnq7tzSN73at2xwCtJkK2CcbDN4n1uCaOWzcq01xnYA5u68NfIScN_n1qSZaZ_ppcC4dgr4ywAlZIBTfMc7yIH_mSe9EDoWVTR8rWu09jXGJnDDQlq7ysy6lspdnRFIYnc0HE1njWmdNsmM_39wm6JEu_xDCF8Eepckljgm4WeggKk0WiVN6zAebqqcRJgwAuu551igSRnSaIDkpYU9JRvoXTdwdGrAgSlIFNDCDWsY9-6tn8Er38QwfQThjlPLlrpvKr2bs3t6yhWegwTOfb-UsEDGRor0b4JU1EOhrmkIlq2R5OGuqzmfTlMvNFZHy_R1IDb5TEmk0zamTZWGJDuJb",
+        "places/ChIJq0HUUq6ipBIRWM6qGqALmok/photos/ATCDNfXfWxTvA2s4HW9MdXnKMU9V7zrgV1jzVHySwR8LDQgepKVD09gkDmMybaH4FUBcdiE1aYgNQXDGPTd_IGBITKHtY8Jf5dRqVD3YA4LpSAMtFE48mq9a40zSJTitoXMNUyq3tAAEVmanxkW8VfriT9jdiW1yt_7gtkz6YqZNLOoIKY23QozXYS_EJh4MAL3VVLfq5i0aYjMgHenoQCMLxCvJ0k4Jqyduz1HUYyqo1evAI0LFp0lXoAHLnf1EUB3OdfzHKiExFrJa6W6_YtREs30U3zUwqL7JKJTej0kJPlkRd8Okk4FzUUsO1mTdJx6wY4xwkn3TuQT0msRqdNSX5YJeO9eUJqApP4ICq27oHVRtIvuhryHpakmUMGdOXggd0BvAFceIiK35auo56L-8bjX7hnZG8vBTyqEQgKU8Z2NeWPWa",
+        "places/ChIJq0HUUq6ipBIRWM6qGqALmok/photos/ATCDNfUzfKzE85n4ioBDYWW_y7cbfmbU003SxVxHgO7llyBVz1K0wkjbRV9t24NxSBg2ojIN_4EPa2HXn4DRoV1CLql-ZtQ1MQUoEyvlUup_8Ntmx68hxLzAS4XhC450JCu2WKrA-E8OKqcucAF3kPlfibXa4N009og5ujWOZy7gxigtFLTZAwUTvd17SEUqpZEduxCpejsR2lihtN-z7Sl-tGC5TiNii_W5jD_suTgiyLkqYEGzaW32ydlXGsei532g762IrYkJynNJR6bIE6SEWn5ImpMyy2Ca1ldbEKTiEjznDXySVinlRr1u4WRGoPfdhL34hOi5HhoJC0JkDVl9860dPQ2nm_OoCLNTOix1rHWR0Fa_mfUdsU9LAVHGNxB7BXeO5lcmIdVt983AFeOEIPdSU_rBm7--oK1-buGlxAdyKVwT"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=9915250311879642712&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=9915250311879642712&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 9:00 AM – 8:00 PM",
         "Tuesday: 9:00 AM – 8:00 PM",
@@ -136,7 +136,7 @@
     {
       "name": "Platja de la Barceloneta",
       "category": "beach",
-      "address": "Platja de la Barceloneta, 08003 Barcelona",
+      "address": "Barceloneta Beach, Spain",
       "neighborhood": "Barceloneta",
       "phone": "+34 932 562 200",
       "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/playas",
@@ -159,20 +159,20 @@
       "latitude": 41.3783713,
       "longitude": 2.1924685,
       "rating": 4.4,
-      "reviewCount": 14611,
+      "reviewCount": 14883,
       "photoRefs": [
-        "places/ChIJJ5Y4CaijpBIR-2VJP9cOjh4/photos/AcnlKN0bVdlgT7MRK8tWVQx9Jahqd-q1xOlpc5ZG13KLAb5-hPE8Ijzb15kgY_BAP64ljKMaGF29p9YyuP-u_zPsX9c0-OwKM-9jDORpqgJGEtns7mZerxHvviDxJExuBt4CchDNW9RJCCpkAA2DtBU2zRcOxDEzUdyuX2x20_0MjYuvzFi92nKfiNUa_MlDXPtNEUpgGtPJ-jFiK-0N6pxu1r53HlOFICA92a_rN5uuDY8RMTXTWkiZdyXHfkpdkr2vh7mPOdA8YEQlOfXyL3el2pnaPLIfKgPp8r5Tu21pQYX-p8pMMzlv4w2SAWAw-vKhHX-oMd8Ze3T4uoF2i9lInIa4pwfXFER1DP2dZDMN_2aBj8qUqDyvan4sK-_Vjh7wyXMcTyrXLdK7ki_9me0R9oX6HFCw3ZqAi17XjHSPPyhfrs7I",
-        "places/ChIJJ5Y4CaijpBIR-2VJP9cOjh4/photos/AcnlKN3hCBFw0X-WLAuaP6cgneGJ8O3MP5A5NTNqR14AN2DqRwpIbMmnlc7wRPRmq2b_xtTJ0Mm4uvKvRiwz70GX8IE9TicGkljH1mn8LgsLUNnJ8c7JDlYzhfJcwpIg7NHvpZpDwLUV9H_B5bEUBXorpFdFJ_3VaLZ5KHca97Z8mAcZrgvQlPIzq7txPf-IyGufgt76Ol0KNUlQL4hlOVpP6uIsMPfpmp5JJEUboTLMJMnDogijfBA7zQkLvNCMxQ9-GBmyWiCT-8I8T1ISNKT22jljgMnPBHBAxQJfeYihwsampL2hNPM8bbgecqJ0tbVKSuFlshcK3mrog1gOS30eyNOFf_6g49uZtxXs3RIJfnyHd5FdW9isq9Nl_omzfIosqjkmhc_JeuYzZsUXwxv5wBm1vjaewFitsOtS1xx4Jgga2Qw",
-        "places/ChIJJ5Y4CaijpBIR-2VJP9cOjh4/photos/AcnlKN2bU2ZdE3vPsed_xAYFdasLNHs0zCctFsmdCHn3rTRaNnuTFnlhPC8K8-HmPP-66c7OpejxcynyYUauLmwYlBkKiYaFJrWikagbyW94ZAwhhO2_WgYiM6M6vzgNOW5XVo9j3CVQnlQ3t6op4cGvbkxjqsJrjyGwCDS1ba9z-x9Cvv1p5II2eeULz80CB-CI9KkkiR-V0rjZu0yru0mNfePcm8TXuCYAd9DVfvrbn8_46d1yhYOnDbAjxLeruA48c_02E4Q6XCyJdtIB3o29FLh_PH-NhWgSU06pqgeEyxmR2-DfUuOvob-DjqB5649cGHrfp4ulrxVwrcqmIie2svLM-uw8CD8gGOwrZzn5j_LRDWBapLgdfMGaleyy1_sSPrPY1jRB_CrLSYSE51RJQAmBmqF7kE3UC7s1WSBXmnebGHr6"
+        "places/ChIJJ5Y4CaijpBIR-2VJP9cOjh4/photos/ATCDNfU1LiPt8vcocTYfLVd2ZHoEr5HSqJd1o4vsZrl_n2UOS-fsITe2sQ2wtpBYFlttaEKO_nqkMz8OeDbWcYaDFLLQNlihuQSyW4j_EST-VzxepA4xoYhmrUoME76RIRC-uBrLW-Daaov9pyjD5jk-pBZypY-3jJZiJgkhRzqbbtorPSzVeeYUthkN23Xpl62GTnpfmztDmPHtCLlzf_jmPBIIaix9dGnP8iPTCWt7avDNc2JMW73m883wylGx_BYEEPF15Scld02yII85M6VdCNdNc08Gnn_DJPrUrT-TxZq7htogNd30owlPqA3u-SqZ_5woxVsRDdk1MEjqX1C54lkNx0WFo66NezkwHiwjNvt0C6x0l7SV2oBThmVYEj4XvyKiYRiISIYvtAr5UpSZZ4sf1-YpVGzl0X98DQ3Ysou3Ly48",
+        "places/ChIJJ5Y4CaijpBIR-2VJP9cOjh4/photos/ATCDNfX7HLJneQN6kXOF8g3DLNMj3dBf1hXCj5a5ETzCZFwCAw5ZvZHgOHbstdRz7mJZicQTUZF7acgQ3B4iCbbr_ei6juNL0uM-Gow4woOyZMJ3ZONHeZh9TahV-UwR83VFOH1vgz0RAEXAp1zGpFUxAAd0kL8NOiktsGmyw7Bod5xQT8ZB5_ScConcLsKB35ydIjNz_AEXPbJ1ssIejGBqmoSyXQ0X46_V1XPL9_48QX31iOmPeaQZmNqie5MPX0Yxd6Uy17CMwBb3wACnGrJwuo7Q8bxzITLVP-F1c9jnkUrDCstke1ET5cVK_um5eIr1yJlvqGIT1g9dTJic1sns3bIypxAGMZKHMZClofW2LL99HSR_pBkGtOjSROWEvCGmpfipl6pY9rVJBZLjoFohCIxeLPne4SEP_5xUdngjGNwEYWo",
+        "places/ChIJJ5Y4CaijpBIR-2VJP9cOjh4/photos/ATCDNfWBqrzUSWF0gJXvoIwp8W798GOzHRltLVM-rixls0elNRX5QM1qBtCFtn-cIgAMdmXbtirI7EiCzIp3cnKfYFk04msYj56uhFkNVIDJge0tIDPbCxJpjY0sM7hWjRBbcVSTMl-avZQig1eLJG-MhA3Hb6gylVKwR7zREIz5kH6XLtQbyH42eOj4uMFdRSReGLosZ6HbWggU5g-6SeOLN41jDx_Hb1rGb4H7A0FBFqFlSV4mxyHpIgAsvp2_40eeACdXWT2gk5q5Up12DWSb7tuHmRO1ciC9_41DiX8-MpZD01o9TUru_HcbCfaGKj_u4wrGckSsVZPNXlVNKl98cjVR1thcLmZV0VQzMoQDA7PgXhoPMyvGuIEA-HKfTphF2RGk4otAFZ9RHkuUnq7y39PrpErpiiBhSj9ShABSEo0qL8J8"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=2201713585473283579&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=2201713585473283579&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": null,
       "enriched": true
     },
     {
       "name": "Platja de Llevant",
       "category": "beach",
-      "address": "Platja de Llevant, 08005 Barcelona",
+      "address": "Llevant, Sant Martí, Barcelona, Spain",
       "neighborhood": "Poblenou",
       "phone": "+34 932 562 200",
       "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/playas",
@@ -195,20 +195,20 @@
       "latitude": 41.404762999999996,
       "longitude": 2.2185939,
       "rating": 4.3,
-      "reviewCount": 517,
+      "reviewCount": 518,
       "photoRefs": [
-        "places/ChIJF6goGlyjpBIRblEAKWH8P0o/photos/AcnlKN3_CGi4Nc3uvf3UIVfxjw72Euex7c0REvpPxw5RJzjAMNp2Nb8llijOxTz0H4hc_kZ-RT2ZVrGoCWJssHE6pW-bR1HQaXT61cgePRzUE_qOTjvPzQXNckolaN34CVF68NuARm10AhtzH7nfELXnHyU9e0CJ5L4bRpdzyia1KPeS06PamVb5CBTXx9d7N--99AjTjDLqxInFjYBf5f9hnr1UJ6GBxjm9rxjIly_LGv04HK7VZElEnbe85WQg3owbLkkiFa4TiGvaBBGK7r0tZeE8Y5fzr2anoa2EG2BoVINnawdpVTG6x7aMi07MGcwUa-NwacohfYwbJZ60L7xwmUrwhnFELxPa2sLKSIUR8eH13pygcJ5inD6o0z659yXgzs_1al96O0N_qIulcd_njFoPew4o3sjvJ7fN434gov-4UQ",
-        "places/ChIJF6goGlyjpBIRblEAKWH8P0o/photos/AcnlKN11LEuLkoNjZMlgeaynIgacGbHp5CCj2tNQdcQVGNlHnZNSuwUC1p_9nyHvV4FIaGa62HbSXvdZ4yxSEducagDeVKVj_yqKsskTPP7D66kk3xYxmNKs3tTAQ8ydUq6xfj6e_svCHTuSBf3NiQUtcm1J-6R668Pw6kLMgLH_61DI2XGyrRoMtXxY1tbM-1V78Xz99nCcUeDmA8MjoXOX53AP-BX6O7VYEJufs2zV2RxUDiDGA0YRlagFy6M42vGmgFQi9RsMAoVxCn2ksjv6vS7CmNocV67VbmPMzoEIMYKIwmPLCM_bFU8vFUn6RGSbQ1zb69Hjnv6YEvVqRr6htugJCZaVkiM84ek7K7MS75dVG6Iv9B5c49M7JJIsfOwbu6lQLglOvFrgwSSD1WRn1viX84a_p3dkfeUK5_XJrxwCJus",
-        "places/ChIJF6goGlyjpBIRblEAKWH8P0o/photos/AcnlKN37BuDyHoD_iuA9BU75fjSDQ6lASpal4aW7gfsi7k8bkgx5g55K8Yvg29Q09UTt7jXoAjynea3tSwLi5YVvIlSMS4N6YbkXXTh41bRUEkdzhqZDMrVe_ecfNPoJHKhuz8s3QcCTC0sDmIEyN625OYczhz1NAtl_Jhir5VnuT76X0kR6I4b_YZsinOP8059plJ68VCOw6NzJ2RKnEv8IOE7Y6bFcpkSdaFYgZGNtQeWz8ZMecQFXi9LWGCevZKcOz_g90iIxaxyHeYO5A7fTzUNYEAPWfXE1jn9BRAA2WmkC2gBgTcxI3kbl_Q61h-ux_D1ba4x17K2qCE3lNWFcqoZ_yR-2853b2hnvX4tETHJpvhnzIZXhCP5CADiEkWCYQ5gpDATyksg60jbTc0nuACL674-h6Au8OPr7UGTG7SVx5g"
+        "places/ChIJF6goGlyjpBIRblEAKWH8P0o/photos/ATCDNfX7PyEPRj5UVDCccdqU1nSth4HgcuCdPXZDGgcPf5PVb4AObxzFktiQazDlgAw529Nc-CCYBSkyRrxyVKNjKBSU15hedOXz67VRJ8wSxx3sUygZSK6kblEkdlP3xBWsos9vtAY1DDR9rD5NNJHxDvS85D4b1blVhLohbwbC_6CgmH98Zhv9MblbEbwVD5JrFXP1LdgkCasJJv5xgA98g2fTA86VDSy3k4JkKigO9w-Tr6C5qc5YhwkPSs6Xit3PrD82DUh2aP4xj9XFKt3U5JZOjWFk9jdLdk6JqDyV8tmyocCkKSIEIFdGFlFHpLstzvPhqM_LAEMg9h0aQyc4QFBCmRD9CwRwaudbvP7HnBLBHpbjPURjMIJIyHIkAjfdlm55mlOzd-U3dSoERX2B_gdw_es4Rp3AcvyoANTdqvbdyQ",
+        "places/ChIJF6goGlyjpBIRblEAKWH8P0o/photos/ATCDNfUK1I9dBu1uP8NKYygOo1lTcgIA1APylMvyKkStVES24xDcy937_9jm7hYDXlCHgor7clWvXqcPG9SM_UOWtZjxo0WII_wkcchTADeoMDhA9_YfvtlsYAH3_sdDvfrzNN6J_WupRAYbmd5QSNITiz7Q2BmHizGcE0dCe6H0HBcry2lro_wpaExvja1qKSHxOuHH7i51UGPkkSed3ufA8kKBqwjKF4jvxNDdezEKkWrZvja1Re8aH2OA3D9mPd3kv0IMnaz1ARQajrYTkBpH5xZCUfCR__B5ER8MsoXqw_hHodBM2JF9J8EIvwX37ZjG52xYn_d6RKIXMw8eNVc2b4ZKcmQQeXNOzXI_yt-t4GYayNz8tt1uJb6yumMSyv7RjYY1e3zJsirc7kQPKVlE_26Quu9qXTb2NGES2ylRCKBikyo",
+        "places/ChIJF6goGlyjpBIRblEAKWH8P0o/photos/ATCDNfXwMQUe0TItzRoDzXY6_FgXuTRw3rGGhK8NvPXaLRF8WISKXIp1UwSky0R0acCwHxzONcQvGZbbsen-3iScnf4NcMuguK9EUcE1cBTtfbbcOqJySYtRVH0iloIzTKY1e5YO0F6uYphLIwZxrs2FNtmx6hF8s2erzQNA4WjmYmqUAX1rCoWxR_eOJIoptFGtfn3SjI-mu5f9FfvFuHhIHsDfGc52_ntsnr1iveoQ_onfoo6eQHAKNtBa4qozbu6XT0WpTyhcNvpQ9Rayekj2J9Opa4-D7-VR4clzw93pQQUg78AL_qc7Qs1m3vR8gyOJdOiiOnTfnTR2aUN9KO0MoUHfXGUbX8GBQ_NJbWFeWArjKFnKdXW6TPikyx0h1Iwpre67cX3-355fyZUfJQ-9VlRknQ6M6BDc7VHyLbevYH_AXw"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=5350272376569352558&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=5350272376569352558&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": null,
       "enriched": true
     },
     {
       "name": "Parc Joan Miró",
       "category": "park",
-      "address": "Carrer de Tarragona, 74, 08015 Barcelona",
+      "address": "Carrer d'Aragó, 2, Eixample, 08015 Barcelona, Spain",
       "neighborhood": "Eixample",
       "phone": "+34 932 562 200",
       "website": "https://www.barcelona.cat/ca/que-pots-fer-a-bcn/parcs-i-jardins/parc-de-joan-miro_92086012013.html",
@@ -231,13 +231,13 @@
       "latitude": 41.3786974,
       "longitude": 2.1480025,
       "rating": 4.2,
-      "reviewCount": 1689,
+      "reviewCount": 1697,
       "photoRefs": [
-        "places/ChIJs4v77X6ipBIRl4PijsQk4Yk/photos/AcnlKN0FEM6I9DABbJ8VfxIgBEQedA3e_QkoVJNzn2wrk8ROdC1LLBT-gfawSNqm-ufd1Pere-kYddeIv4C8NCKU1X7OxT9w4gZuWcNz6KMSQiuP8b9IGVfiRyLm_QBLD2TvyadwU6KTpeqzQI2wkFFZKTNzUjg44KAS_rjs7mHUID3AQTBjTyWiBi8LhPEOSXxRPDjIg_VF5WT8koRpIaCcStgylB14tKB5LFSGjBbgcR8ghTihzmIKqD2oJmXmzlxNPk5ALjQNkHR25sKAEYUmXI0yJJKrKzGB_DlE4dpIvh-eU82QEql4JstM3XC54UivTDVDBNlCqsBJHTQsRyJ0zOG0RRj5o75hbkp6iCbZVwilYiUBbdG1HQC8Log4PzW4Y873FBnBuH1-yxDnCm5ze7jIfuY-E7yqaLNihGfTsZkqyQvTGrruzzf1i5RwwV5A",
-        "places/ChIJs4v77X6ipBIRl4PijsQk4Yk/photos/AcnlKN0FKeQG29V8X53AXW3UtOEvXeXAQHS7xSr7O7wjNk5F9_t7fb-iMKyvv76EPlYjkkCIBYKZ83zL8Xf5oFFkScaK835zUE9Of_km_DdwB8BxHLummFQ9swzUwuoVRI1P_cxS1-Rlt8O-eilGFkAXiORgiIFyHDlZMYWJI-NMbmbzK3m30TQ13pFmQlZSU26Ces4Wdb6L-SKvF3AG6KmkXFKPeiUMWQ5BlKr_AwwfBGZaiXSalUZCcf7j33scbxEWRYoBKVcpHoencKYQHoQyKAxfNUlsVnsGBQvG_mSrFSCjmmch7_-O9_t6bW4-f5RQ612eooAttAG0TzRABrZr0yu2pGzL3ujqQg2YDCXtmgrY0vRetc3e3-Lrb7AevkKHjnnaGfzI1uML7fFgCDJdtViurf_bBRRHH_IkApNHgiYedA",
-        "places/ChIJs4v77X6ipBIRl4PijsQk4Yk/photos/AcnlKN0pejkuBgWLn2vf77CHWV7w8wfPdFiYVEE1AhWh45Oi61dS3006j2WzJRHdTMyki_qGjtlslAh5-nDD_9-U9rZs4NPPgYG3CO5QCpdCImJVJAv_HCHkIJctddffqGJ2k3HKq0P6g1dajbqJXTjEdqJsqiI1D0uTRq6DEyXIXfzAPEvRr-veXtC6W4LdSbE3RblrtZJ1w_0b5Z3ZnkAcdIpm33KSUz0YB3VAOtuAG1CC1YACF154WVDC7Gh9A3drMl6zFpLX25aO3vq00A_UQFEjpBQOz1iy18fDAUyp0am0C_vU4OVv3H1pbrh_azJWWfNLn2p-UU-1w73Ui-gw4xzdU-T_zfkBDLRFjkEVgkv_htA5b06MNMDMA9gDrWLJyAErvE4VeThpz6m_LuVq9mXfNHTiJ8NGE3Hnl0wUBEM"
+        "places/ChIJs4v77X6ipBIRl4PijsQk4Yk/photos/ATCDNfVNaWDiFx_1su7kvBtCTE7Ne6EzHSn8LBF_YOmkQdstmhbr3YFgQhyCjoR6S6NQm3l1UxVXXDviPKuhItQi8M5v2L2QTl4DwPu-w9yL2m9rpclXyt0_v6D-md1rQ1H7RL1d6YpZs9E0bKrEFqYWyCl0sdab2uT0tA5n_qA_h07LEHy2cmMsXrK_vg181_K7eM227fUHt1hksJynPSyfUDqX-JouUZprdxa1qL2kETK4goYjUlOon5Aa7TV5o54-62jsUMRJzgNllkEvQp7Ka-VI5ULCHKZtMhW_zjVmJ1jOyjIGJbrYGB8ITE1WAVlcS7i8KLIEswDRG3aRVVnKM7fBSJxfeD9XQ04ZzjTYc6PQwv35LwgaArJVnT5UkDqNYxwTNyNpR1gfOMvMfsXTQU9uRSBkTiPXdTsINQATWfWsCU6jydLWC5zWns4RTG2s",
+        "places/ChIJs4v77X6ipBIRl4PijsQk4Yk/photos/ATCDNfXnFWYWp8CVocoU85wOBYq29S2rKsyKLZvql92OA1Unb72nx-pR1fkbyZnp3-5g4AzumYhjxt9RFytV782dsOkI9Qj243BWDEGvVkCOYNS5NrIAygt10Y0vy_LbsasJoA1bXj4C9-R9YqaBA3QGn7ddEkqZUb_O0xK96cvSk7b01czEB43_Isth4o10qCuAqOEQqEYdfv-FVuhZC_ZTSqJK2woECfyhzfryZal1t-kuI7FD3pmXP_oEYhHGo0kiR_mpyScFCJGg6PF_QJer4RcAFWyTDTYh5gACWdVfAOhZyQWmR1pweIqgYbaMMTFDV_OWEogzrh-s5zm5Hg8dcKFCnSl4zojElbC8gG6q-5Sewvsb9bzXtQsmPZoixQHJsX56l1yBQG1gBP81_t_I4UnRzKEsIV8rm4QgbUM-P-mpfA",
+        "places/ChIJs4v77X6ipBIRl4PijsQk4Yk/photos/ATCDNfX3GLLUcKIOOWag0bkA6Kv-nPPK4sL_dnXGE7QSxuaTZjM7DECw42SFD0eqMBUd_MntKQFmgq4bEgYP9GkExILDNeTRWVVMIiBXSzRHqa-bWN_sqqDZWyrVfDtjqO7zH-MZS5X1UilQSKMOPalszCC-kiojLYUg_IEoQqBm-E6ndFETkF8Dat72K7GTndO5Nnd0MVNMDVeSwYgbeBZ1oMZTDd_Hou13tu3sRI99fz8TokWqTvefnNL_Lab_1wz5aKdsHVSavNqDz7KIbT3PeInzOn7Ba1w-sMSmeLKLQaihukjomK2QYX0yQoG0ObiV3fTEmhCy4UblIZR5Q6l3YqyuYIiIT1oT5P3OAs_wK6wMmK4L3tt8soTXW5E6saBtQE68GL2TDcqH13pMEOiXluDuuGxVbzpX_kLzsErSdLg"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=9935262679585424279&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=9935262679585424279&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 10:00 AM – 11:00 PM",
         "Tuesday: 10:00 AM – 11:00 PM",
@@ -252,7 +252,7 @@
     {
       "name": "Parc de la Trinitat",
       "category": "park",
-      "address": "Carrer de Moscou, 101, 08016 Barcelona",
+      "address": "Pg. de Santa Coloma, 60, Sant Andreu, 08030 Barcelona, Spain",
       "neighborhood": "Gràcia",
       "phone": "+34 932 562 200",
       "website": "https://www.barcelona.cat/es/que-puedes-hacer-en-bcn/parques-y-jardines",
@@ -275,13 +275,13 @@
       "latitude": 41.4491072,
       "longitude": 2.1952637000000004,
       "rating": 4.2,
-      "reviewCount": 3942,
+      "reviewCount": 3944,
       "photoRefs": [
-        "places/ChIJSaBJvO-8pBIRt65w-N2_cSg/photos/AcnlKN0x6YAAED-hCC-R-l60QTEW6ro01O5qzMM9cDDB5DPF50NpX9XEh44uvaLQxuBBuBJYP5aDY_fP7P9KF5_OKyxgscEHtf9QgrDRLmvs9HwSHQzsLmQ6buD9dlPum5o_iEw_cjkoR0eT8o0gbI_2nWMAjs4ekHMSNzo0pYBMkjYzMxBfsIJnRFl6-dA4tH3ijX-sebXKMM1agA4HxwRr5cMyXV-81FoXJBz-UzRKBYkpBalRMeWcEW7ugkXnrsEG0OfhPZvbpSd4b6-4Z2Cv3OtqkCJzmv-JMh3Lk_vnniNIP2RSIGmHg2NcSCHQBETAJM-JjBNSqI1OBVhdRns3rFSDKlhg1jSiJ9Ozi4BP3Cb1eZaGlSEF6ihICnaOy1CwoIiBoMcCrujlW1dDx2g3jD1XQeVSW57Q9mxfKiTczLlrMa4",
-        "places/ChIJSaBJvO-8pBIRt65w-N2_cSg/photos/AcnlKN0f1ylK_LoidfnO-FqbatmyBAK0MO-c_8_u3MCsTrT0yaLvD_iFaVnep9j7Rf3tZN_2B7m3Cq_iKSiOurAuHRqvVz_GR7lwMXjI08nlkQQbF46GKuBTDyQbLLcThibIfKqf24bwONi6ht2yd4PDwf9baiJd6dD2DivGYe5ZwdYJcGykZaraVaDlJ8kCM08FbLeYoPdd2SCQUp13JIiTbC5zlH8ne4NHx1XtuKPFq_KTNxx9JrJVlTlbU6CeO_pAivWJqod7hzapDqxJWk2GxQJtxWVAFGIfPmRINinunKiVXK5J8ySMNj78wEXn4o5q1RK6Zl2qoacillX7wstNJ9-i1MR84BLrlJlwIC_5ENvB6ZplOpwx5d22ySM8Wtlf37TWgoIA1A1KziHqwMecUvsKyWXbZ0qlQk5A_7Xlfkr9OQ",
-        "places/ChIJSaBJvO-8pBIRt65w-N2_cSg/photos/AcnlKN1cFw-KRFRqv6l3ZwS01TCOJU3it_Npwv7IZAd-3VsHTFBHbhmxczbKm3wlnm0Dwab-GFvVBOdA5-4fL-wbLa-fveACJKxObL3imyvnMoBRQZkgmiAwVHIoDr-7p2R7LnqShAHP_xBkNB6FuFQ8P3kjs5Wayeau6uHLjRegtQmiS6J83bjyz1mHj3EQC3AP4hLhTTm0VJgUHtk5KrsbDxqPc9bikmTUcYeNQ0M9CQAubTjKy8dTsXR8Zxrp27MQFve_CkVBYie6ni_HGkV316Zmk-a-UziQWhNibLC4LYZ8g5pg6Rj3sSe0yh2iyZoKc_H4hky4d10kFk7vLzUNtSlubDA3oIAa9w1P_skJNFPFwOct4H_8KVTKpMpqL3_SQDB-DT21GGb94f0mNv1sCxNPbwlNRC57zrBcfJN9gf4"
+        "places/ChIJSaBJvO-8pBIRt65w-N2_cSg/photos/ATCDNfWjo1fmweUmhe6VLq56qGpdCFI4HWA5wcJuiUJXGZjEenaqNzObe5I-oJ1ZtN_bTyQIGR4pSO9PC0qkzdNNoLBdIVbL8aUFYQvbXWfi5uzR2u4YqTvWA0ThYYO5cPPIQ3oCKsom3UwPYk6VdAYK1th1QYu6VqcS3uGMg2XdLyqb3Ul8OIKOKamIN7HRVbtqdPfJabvPYUkRmuW1thrlck4und_bJ8Q5fpy-sJlURuk8wSsR1nOGxWQ1YHfHeFEjS60EWcuh0qXfSHtOuFxpyUAorTYbsvjY7s5e83ouQd_pZ9cQdjXHsBhri5-kgRw5k5oy8m48pHuM7N-hQuMEV6I64dSR7AupkY-8PaWpZnqrJ19MJ-uvvNXWa5tClzNPS56Uw2d9jB_vWDjk72DC6twIA0bkjEKS67O0RH-ocPqyQOk",
+        "places/ChIJSaBJvO-8pBIRt65w-N2_cSg/photos/ATCDNfXz3xZmMnyNoxrlBpUOOCSTWtFCP6vgCDNtbTReF1OzL2mE1UZ080E2nctYwn73DPm-uEUbSnOIiWCyyuy-bpQIZgByQbcbVwHYnE_IMuIEImWy09qcV--kjOYcB_u6rhYNEIDuNrFW27F-e4nA2YfGBn2Ty2t2l7ZaFBc65sAAg6RRa18nXehAY46_viY3vky-oUJPjBvcaL4a6957yHs3_IpcWlcCW7wL2pr8SP6xESlJ4JAJXrRzxJJ_-v_gOHmSnMbF_reGxE0obkLmW2fpYUZgW4K64xauX1QrIzCqcfv6Q511noYwmpXTE0JUcguzbQpxDS2CYRippvcS36QUYEWk55Zrnp8oGmLj8hQ0OBsC_dLrYKFGDwiR5QN89o5Y4SnWFETZtPyQsTuDCAspSRqSc6J5pJH3iSFvAcpy9Q",
+        "places/ChIJSaBJvO-8pBIRt65w-N2_cSg/photos/ATCDNfUUwRMdRujMssNOgJmDYMi0a_DmS_5xSfQaIcWb4hH39NmTsgRlqJqT40jTvDhRXkpJV3Mt86jkmiKmYuHqjUQXcoiqdEWuKywKDvyEB2bAWHSRISsa5xcx1zg39UHdT1LjL6vd0Nj9Go3awCcNqf_PhbMo9J2-6Vppz-fEjl-ONpk3dGbJ-VFmeKXYLZJggEvA7Y6KnenfcsPkOD6k4hkOsO9LbQs4AHY3_eVqwofNj9uADF6EqrD2p-_NoK3Er4WTQRcfSkFBgbVxoXRMvCTxzoGCchSs7ejZEX6s2TBRydX1ZqREAi5dxafrr46JboVHC6vvxI0JGof-RvcTnN9mTf3QuQASTkyF6x3BhqKi08HfLH_rG2EIZrF_a0XCzbPxhLYhOPR8pLrNKAZWEQqCHRFv-68gqIHsSm_PnUU"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=2914321393962233527&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=2914321393962233527&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 10:00 AM – 9:00 PM",
         "Tuesday: 10:00 AM – 9:00 PM",
@@ -296,7 +296,7 @@
     {
       "name": "Jardins del Palau de la Virreina",
       "category": "park",
-      "address": "Carrer de Sant Gervasi de Cassoles, 47, 08022 Barcelona",
+      "address": "La Rambla, 99, Ciutat Vella, 08002 Barcelona, Spain",
       "neighborhood": "Gràcia",
       "phone": "+34 933 16 10 00",
       "website": "http://ajuntament.barcelona.cat/lavirreina",
@@ -319,13 +319,13 @@
       "latitude": 41.38248840000001,
       "longitude": 2.1717264,
       "rating": 4.5,
-      "reviewCount": 2524,
+      "reviewCount": 2540,
       "photoRefs": [
-        "places/ChIJd9RJT_aipBIRbit5aqjvWnM/photos/AcnlKN0ofTPWT-dkd1TdfyHNP6UaVNsLjCNQNtVCswwbw2pVB5b4W_ORB2_mhjE9BLAlv1cOAlpkngV8NFfSzAtNVTVsmU8QZMPRiVggFDuoVm2pBvZpA6GS_nMdmeyI2Qv2d2YwXCcSDwjX7w2aEb8eyoOkTDIrSOprPdykJ9a9RVmSevIBxu7FguqmBLtXrOAEu2-fYs5exUr35EthL1H7FGw4507J0yagcrjQcJon0bJ7A582sxwZiQVX2K4LH2Q5CSLi0jqi4Y4xMRvmxjkoWtx58pxM0H_BQwhD1Y1cnfcvfCs2HrsAWzxU4x3S-h-A5XuZt-_HmSVciMexyB1yQlxBrXVnUqkonHw4VgFImSbC_Txckz7zBzsdYziRL7hyP6jeVHkqNfqZfa6uFs9d_3eII9CaCp0qSECM3P40Uva-NQ",
-        "places/ChIJd9RJT_aipBIRbit5aqjvWnM/photos/AcnlKN2Qd_j_0-sEmQpMEA7HZynN1T7htQ8nRu_LOljUn5Gtcmo7Ln2R03g_ysq_6lXVIZKRLfDaehkvbqgXG-B7bGGv09GSP64PPnHGqHPmQdFyp0tmmFChPAcvcb8heh-5qtUnJL1ZNMU-b0mtoAJqtquBgo9-f8QpcK9c5GgbFXW64_iB1wTkudBuNwhy9qUC_lKqoFOfhcNyAXX3CHd-VHm6oin851AMTmn5NRRKvFgru3MtyS7hd7jBGfqMzcXQhSUZ-mAKFRbEu0hpcWwIrUQpOOratklnklp76jnAybtFEQPO5thJG1S7_f9qaAILWjD1zbAYq1bAjX5cVNe7cHUcnK2Bo7Mw40m_4sxkqcEl1NzEO1GdsmZ0LkoKb8f1xIl85lZjmuGFy5C6KqYbt6bGgaS_zq4CDK5e_Oez4E4",
-        "places/ChIJd9RJT_aipBIRbit5aqjvWnM/photos/AcnlKN1wX0XSMi5VgvdYxcEUxl46xrWJQQ4tGPyyXYhgFO-zZvr6mFEgXElI4WFIC7ftBVAd_cTo8XSeJ0YtggMh4AJmgOPzr15ITJHRIZo0XZxUWfOnEWKJcNg6L-s9e1kULWp4Zqo3pvWHPRdkX-4VGkaSvE7nOrWHpmfMYIl7Mc_VN4Z4u-KRLrDyF5NH1EPUqPMS4bknM2b4tRqv842wnCuOAVsz_SIjWWUx3ImuxKOySQVknbVphlVtpEMrjhzCwAoh2mdMHCPdbN7GAtb5BM37p3Z2Hv_WzfTG5QVyeqOSzCJhWvCBQkl0tCWDkFVMTmHelCMS6HWJH-gtNtsA_lJQ-YnIZYjdClrQ2EJHRPR-B5Dn5Yee8fr8GuuMDOaPUucKuzdKVB_uWNSPk38K7yhCojqc5_aDMY6VudJsMGBCuA"
+        "places/ChIJd9RJT_aipBIRbit5aqjvWnM/photos/ATCDNfUHpIiKIdH_-pVt099T7cMxnqGI5awB4Ez9GlU9q-StIKLSeytZwpQKuclRt47n72Y6GaOsPkUuASFjQGhG4E-YvzZIs8C-QgZOeYskxpw9hhXwNyR9a2atEwp4b32y7Evos6FWaopWYl367fC-e0VGXRMmUyy8FUPnStk8u7562VYtG4Q-8FkrmEK-9dDxSiX-xw1DfugDtHN8TknN2U71YAKP8lrL3yGoJ7_2GVTZcj6MBwBdXM1Yx4vBYRC7DAXrqymKB-HxCABd-tE9t-oNXPkJA8ll5q-SsudLxqRd3Jd19-goMQ2C-sxfbu1VwMDzZkeTGJMPM7zl0tdCjqYyOeHJfATd7u9JcjpgQiuAyNVdf7NeT_c2kRejJ6NSPDREil5Gj7a4BW_tGKis6i60gGHZQ30k7GF4miK-HMP6oQ",
+        "places/ChIJd9RJT_aipBIRbit5aqjvWnM/photos/ATCDNfUPN1DDuoDQ0K8vMomKMgVWOcOYsF1A137XHapWx_W_9WLa3yIsfelG5LUpGNqqYqyZR5y7kN_3H-ynaIko6YZW1hnLQvja5PwftdL9FFUID3KzFvBGkTlv2qT2JoyZXaqLgIoWZ69Xf3WUr-YJ5rmGspJCqnUu2YDLVHmthNnXxMsMcXIs8B6AROSPF8MaAxTozGlLUqcqA2m36C4f9XxVTpKST_wE-pGaFr1IF13w73ixibkm8u57Cj43qRPzKeDGHCON_CvP9vP-iNCBGuc9_-ltHXBXOG_2Ja-U8UQB3A7Cv5kYoLbBN3kgWzaH3433Yzs9FDpu9bzgXCHQItTrIj4Bj8x36itwlgu71UQHxBZr9K7suOImD0JC1S6_PWrhTNViHnZ6K14GqejsV2zfv-I2Y6XAEmTIno_76jE",
+        "places/ChIJd9RJT_aipBIRbit5aqjvWnM/photos/ATCDNfUMOOX6ZizIRSbdkOpkzTcAX-y2ZujcQm1J1mLrj2W5-00MftDaT7B_OuJBTgkCx7wAK3vXWtWjSTRdtsgKzU-l_Hz2rRUz3BmJ9gPaFFDPaHkF3Qm3Tb1NIfazPTycCSu655lpMrgAfV8BoJ76An_y_NiITAIl4MYfDDS1PPPLJdNbAARyeK_jRvCw5qcswCNzlNa228xsYir2bofxOXADV8LcbWDGEWROKLqjuROzHExL_D5vD0ywXhaYvid6sPSTLerg66H_Jy_iPHnirAokoVepqsdXtXj6dlXAaq7WfOkD_Xa-gJv8PKaN-dTbRnQ0ubyAh7-_1VqMEsTvZkTVS4cCYQTaSpbMyCYrc4h4r0uRvEwW2TD4nvh7QMJvkemzYg9L1DU1FsSIHSAAEuRQcMB1O6tVf59Y9lInjztiPQ"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=8312219568885541742&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=8312219568885541742&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: Closed",
         "Tuesday: 11:00 AM – 8:00 PM",
@@ -340,7 +340,7 @@
     {
       "name": "Can Pep",
       "category": "restaurant",
-      "address": "Plaça de les Olles, 8, 08003 Barcelona",
+      "address": "Plaça de les Olles, 8, Ciutat Vella, 08003 Barcelona, Spain",
       "neighborhood": "El Born",
       "phone": "+34 933 10 79 61",
       "website": "https://www.calpep.com/",
@@ -363,13 +363,13 @@
       "latitude": 41.3839621,
       "longitude": 2.1834105999999998,
       "rating": 4.4,
-      "reviewCount": 2956,
+      "reviewCount": 2991,
       "photoRefs": [
-        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN12EIhBB0ws4Vfr-99z4cFkjy8-fTSWEdCn1k-qV8wItlsUyO3PCmA8gRZMMoWrDVmvuQekwZWrQZ4DlsCjYJaNlOuF5kB-K4zX926KXdWf8n2s1wvjW8KIPacH08EJhdtIJ-EWmqBcJGEnIOuhslZ-zim_VYB-SCwmTPu19LQeaERANu132yMDb6BN2_J9YoG6edPrhTfF8H8zT0VJZ6ToFrI0uNdEF_-vrL8MF3QRXDYLSc4LWa334v6kNnumES3EQt_xqmZZ9THwMIXjw8CeEB8x5RaWvtr5njGuLbblTw",
-        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN0d6m0Lg66K6zXkqgVzUmE4O1R_oyYdiV_omrXh9L63PVaJCl1djre5f6dkR_YWaBZb3EsENGsGKmb3ZPCfkjFuz_cCW2JgDhcCal8zYcffVp_9eJtj_Vor2pHRORqMM9ubhNifhQ25uLUwbF4SR407N5341kJ9Kmz-_JAH8G1j_FOgj2BqNajo-C9x9RHaw23hYb3sgLD0sxaLPe0iz9rUc6rW42Ax9xviwKLy3NaEjcXJp5YC03hS6yGfJ65LR0Po0Ru5IaOq2RftQiKEjQQmxfUBZocNaw9K7XLptW2Xug",
-        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN2XcWga9PmY7sn8xEOXwmQjv9OePixP16CiPvp28OG36i24MO7HMvjgKG0eF6oEA6SJvU3OLcqS45P90vL01VOZSE2L5li2TaLHjXFF8izZfA9DJ1mGNo-figWvP1p8hj6tD5Fb71EYYPdyTKvLOAikRyvUGs22fwiPZ9EsN0LJyV4tGUjEHrh42qjCSPHq7dg5AFqZD6RH4j-GcczfM0XWxlK6TdyD-izEhTo0T2o4Yp-IhaSfsVS6ivfaws0N39JViFIUGPO-j1OMeKrnwLEFF6ZA9KsYN0XAqRbjmxyCqsl8V4PIMS40R-gbRONZpKx1AA_gTOnRcn8IfsbPJ3m41G8pa2SsrEbv0GpwqA1EBhyDuoogUs4DpSqJTdBdvF0eOpZ4jW4qUvn8IiyqcApmjiOaXHDiSAl0ocd7VC1WqfxnrWZfP8DHGmCY3w"
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/ATCDNfW2migNqbUtoJVfsvO5wrr-cc9Aio0lHCZ-zPDCoMCRWUZ5t9n427SnkkjiS7ww-526oX9uW4rcUDyzHwFn-ZQT3LvyczPg012nPg-3J_x8fIZUSjQbL_dDMyj350C-RR65d2ge9KXrtIUG48tuSRAOveoXdkMI3ZbmYN0GclUqha9_aZxUOBD-Pa8FTSP9IyragED_ECiCe_TN1gyTTcQNP6H7qA94ROfJnTAk9QQyzkuDVoa7HeJGVJcU9HzvtbHJH9_XHPG_dGE94hMDnH9CDnHAXCH3W9d8NzXnNbj5Rg",
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/ATCDNfVXM4RNV6U1YGqqicHrTfu5nCpcKU2hzZNmv3pOd_vvialS069Xu0LIXfhzDmFpgWEsd5BmKQlU3GsjvLT9S3dLqbbUY1Sc0OhyCf-9s1IrW6J-PPBqBzrnzC81w2gsKWq5MDDGzjd6HeXaHjVJOjhwD7eoDvAxjYHYIN_mu3obkSsWyD7XNVJFo2W28iXEUnHJMkx5H32gcsupJ6xFKa-ZTv221KD6KnA2QIpU2pnuke4Y8WOH62msA_Bu1CydmrICTA82x1aDaRuNGsfLGB1EpXBmvn2dZiIJHnWkDy42xA",
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/ATCDNfV937OPN7LeD3mxsycGVaj2tfKHyD7QseituEDaQa3jHfcMsLBoXgTlWEhRNxn7VpbZ5Hbww4YU3LO7TNP3P4j5QOOiPVkbu27iKDD0lbkLyPm1D20KjngxKbR7oKA0yNXCtuoeZFl385Fec5N56V_bjZrfK6wCmAjwYbSRgBYffvbvT5SUgj0UCXm0DiXePWPyUtI0keHYoO4bumuKkWoPm1XXu3uz4tl0DHaxUdcfHqz7mhd_etFjm1HK0412Jqqahk0r8hSH6LkXfzW_G1-qAbbLQX1McJYYGV_jbMdREOFpuPu7daE6ZV07zDj2t__woT6gzjHG4CLb-p32vevDQNMKm1_y5VKCdJv4d87jo5eFM1rnliiwuLaqOW_5Gc-y3xWhn_UzF4Q970j9XA7vh2BSwy7g_QsoTVPzkhzzCK2tS-Wxs_iXMM_P2AP2"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=8236058641574838967&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=8236058641574838967&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 7:30 – 11:30 PM",
         "Tuesday: 1:00 – 3:45 PM, 7:30 – 11:30 PM",
@@ -384,7 +384,7 @@
     {
       "name": "Cal Pep",
       "category": "restaurant",
-      "address": "Plaça de les Olles, 8, 08003 Barcelona",
+      "address": "Plaça de les Olles, 8, Ciutat Vella, 08003 Barcelona, Spain",
       "neighborhood": "El Born",
       "phone": "+34 933 10 79 61",
       "website": "https://www.calpep.com/",
@@ -407,13 +407,13 @@
       "latitude": 41.3839621,
       "longitude": 2.1834105999999998,
       "rating": 4.4,
-      "reviewCount": 2956,
+      "reviewCount": 2991,
       "photoRefs": [
-        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN1kmN0X44unEzmvBq2gs4zwzmpiQISclWJVe1PxTsZkET2_H41CT2JV3Fhn_mfmzLbIiyXN4fEThYslHoKfk_tQJBPLemYMejJV3_Lf0mJzAV441rW8O4XRvHnhdmW0JCZWHBB4AdJos9pr13617kv5MLcxmifKEOyUfO26EIPOoWGjwfRmaA4YZcMLSEtGRK4hPwl-YBBxeZL2SZgSzGhzms_2PuAfpwQsmF4XLBBAT8AWAclwnLSFsN5sGjLnEo5OVQQAUTOTUqStESYYUqF5BYnc7K3ALJh9byqgDSOCoA",
-        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN0FJ0JLXTqTzSWHcWgr4_QFvPJG4zclTd-bUy_MHn_8bXNfYyRiNLm8q18gXH7KjYVN1znVDNeSN9nmt85MUKlcbowP0PoqWwo7AMUTnHwe8tcSDEPeXK1RTd8vB914JhOA1pPsRDAourawW1J6hexrkt3PyA9qPxZ4kmnq_bO84-AiyU2YqY0BgEZfovGqUSK3us2IAhvGkM7qqJBwYsb67xCGTjxTH_2z4mJ0cSYax-FaiRNmdmlogSZzzEKmJ6nkm0mortl3HFPeuYJzBw5WNLRte0XhTk_4qBdJhrjKog",
-        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/AcnlKN0dNQmRjYAQRPL0UOpUpk2GWHW0iOlg466mBf7gz2kpTPqK8SbSxJpmSRx9Hv1eDftSbAUu9oPWp6r3moRjOBvgc4_8_i7SSs7q9OiJ9ByykLa8FnOFcuDM3he5zTcaX7CK5SYBS_lQ7enn0xmbon-Ay-cNAJOVbyOTUo3nS-_hcSjYVyzNYfpmSitgy0zB8Fg4-s8hKhuFNdSHaA-4CSfFaEWW83Tpmtz1GU13wOIp2yGgMtQZyx80aABicQnCA4TRhxzayTe7kocH4_5ZWVWX-YAXz0Y5VSJLWg-5IubLhc-t2PRvYcdhxtnGngWIk1NSe1bfpmsCZZlbbwq_kG7DnPU4hNvHH-NA6FDEPZN3nBIDEYVoOYrL82UtgmkcBSG0crgxOh3ZKnBuhLJjrdotcRc8q5d48Dv3UmuR3yAfoILKeuOclEfZlXFW3A"
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/ATCDNfWDqlUlN7niaV4yoUdzkY-Lq_ZL0IdC99eteR1GE0VzX6j_9bILq-ZK5d5N32MNBk9BJAYUd6eJ84_5-ayXdxQyQzxuE-UzIppCJoBQ0GOx02E8lr777E3ZKfMwxbbNlP8XXlpSaehiplLoLUxAmxFWKOKjI4cI1wesMKZ3MQ0KAZNT71aq_BeD1csL1CKVMGMfia6oeAmJzUtAMAdiRrxhMAUQUHAycJHCM1jIl-HdLW3EILA5CAi7_-Z12hg5xeh9rgeLH8N8s0E5x2KjO0pB2XhMVM5N2NMohPbSnDubFg",
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/ATCDNfXVFG_QRTr4D7HRc2zaiNvx57sN6KreU6DPgWbnC2R1Fh_uHPDULqvPCAjgKYmrhG_-RzRVe70dcsiR9I1B82DOyvsXEIYqZR4vGfmmmIKVGzl9FoZlrBFTU36n3b569bRj8SW58HjkEVJqOMNsR5uFlSPYcMUXlJBI5ZECP6vj4iOxqzLj8YB08khAINHuOBdRf7_xOXrWXgZgIorn3-fJGGL1f24YGezgEM8I57m5Je88ye2g8ZEEojByJQzODev7_t1qENfY4zEg8F1OjuQxyugPyYQEyUfR8GFsv_G3kA",
+        "places/ChIJbd9pOf6ipBIRt8JasLJbTHI/photos/ATCDNfUt3SoxzOWaPqINscdR2gcWMtw-PqoeZeghS7lARUjwXUdg-MkcvqOc8ZFGxp8rujKnmJoN8CcK7NjLNhy45L7JorWbScgeVf1vYQsjmlfwyneksiSWXAm6j8JZlu_cHBnmqQzjejkGWH68__6-H6AKSpSSzeE_-sJvJ58vApi4NkpQS6WIdEfwSbxRcs9ZtgyWYN-9I5MzCiJRW9WBsFbuJek-ntsmr6z1nIbJbFka1g0cTkL4bGzp9q84fkZFEYcOTeGTeWzcC_eUv4ph_WPb90E4s2gXL4pRRhzWzJUJ72Cjokj2Igt1eRsUWjueRVsOJKgMKPVtCSUgmdF1MKqhqTMxGo8cR025FCnFCqwf105YOYsHxk0MPtNcAhV2SnHbPfqWEaqh80nTCPgZhtYSUI12daFtLWm-01kKF3kydY2EungM7y09WwEyB5v9"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=8236058641574838967&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=8236058641574838967&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 7:30 – 11:30 PM",
         "Tuesday: 1:00 – 3:45 PM, 7:30 – 11:30 PM",
@@ -428,7 +428,7 @@
     {
       "name": "Bar del Pla",
       "category": "restaurant",
-      "address": "Carrer de Montcada, 2, 08003 Barcelona",
+      "address": "Carrer de Montcada, 2, Ciutat Vella, 08003 Barcelona, Spain",
       "neighborhood": "El Born",
       "phone": "+34 932 68 30 03",
       "website": "http://www.bardelpla.cat/",
@@ -451,13 +451,13 @@
       "latitude": 41.385602999999996,
       "longitude": 2.1800143999999997,
       "rating": 4.4,
-      "reviewCount": 5677,
+      "reviewCount": 5728,
       "photoRefs": [
-        "places/ChIJlxLxp_6ipBIRNCx_SbYvUPs/photos/AcnlKN0DykJJOBTZn8eN2DgJbWWQYAE87ZVnlsqwKD_07HwT64ZFxl3D9da5PjcdQrUdkLFfhn2WkT_iJ4C9XLls-6IWqNzYLjROFHVfVXaiJDuYBiyKa5TJ6maWIDp9WrSr08Gur4NyTGdpdf6hoJEcchviAQS5p-GzAynrzYPidTsMuyJjJ2iQGgynayzOu8csJprNVvrfqu9mdASJ6a5R4Rts15XvNEqvRjC1rnWkSfl_-t-ijfBGCUDcUIis2oNZclt1005KgPWkNhHCZkafENZplIBdx8lnk16SGWuepgwFDA",
-        "places/ChIJlxLxp_6ipBIRNCx_SbYvUPs/photos/AcnlKN0hGi_p68pve1uvqmk5bkY-0G9rViHaPSSoCWBpUwDFeroQlLvLhBPIRu5mKOqCV_YQ5CZSFttSXqpDgy46fKBL_fBVUz4scXGVvv-S1hXTHAySIWKIfVpjtpvR6k2JaNhIAwrP0HuazrVsxWzNamW1uoXt1y22bvriIZLpWvuBkYmSQXe6ez_5Uz0dPZE4ZhxqGthDOhl6LVIBk5p0gSeNPcjrYkYzu4j9h-Fh5-5bRhoXs8mzKAUyu3P1AFdp2yh_tGTTh5Kz0ntD2SEfd063nL_rFSFtEFQWONaNsPCA5g",
-        "places/ChIJlxLxp_6ipBIRNCx_SbYvUPs/photos/AcnlKN1M2Ajizt7lAFDFH5XNFtvSmbTuYVAyas4-Mo6wa-bLnI1VyPIFA3KSiZCtw3M9fjp8BuHIciefhiUEFh4n-DeY-IS8FPABboqYkKGcVyGe7KkpvumfIV03baLfoUO90V-tDlezcMrjom_xInnGA0wf66avBC-6-ggSTVt7pDcJKAddiFeNPIoyRHCujRcjCqA4G55O62q651grgP6ciU3lcqBu9EVF0a5pLig48IXkUqeoB9cI9rZ4Le1Z8ct7w_T0zVZ3nouLzZAXR7mD01gdRUlTyXJuln66MUHW7P2dqr8NTqn1r-9Kg4-QMGGuKnFQjoUz9FDe02yX4t2bJ3RWCCOL4UVAO-rLMk6zLyjll4H3aWOyhQxbClSRmr-P3HZjvp2qINDh872LoreEPFlNi16ULS0QwGY-LvXwfzySIqZi-1pOGPYLmtiWVg"
+        "places/ChIJlxLxp_6ipBIRNCx_SbYvUPs/photos/ATCDNfXw8XCw7xZbuFsxOisUyTtmx1ter-amgPIqMEWs70kGK3o3E5F-5xxndEas0wT7VHMbfp2CRox0fE_L7fwuYNtJcANhDhHVNjky1CrkQ0MC2tikocgU1GlMKMDHiLAzA_a_e8AXGbSDOOs7ME8co3piAiOfwx_zl1aA2hFdxgfNbJja9dFZau1acTODkN2j-gclMaqsZ3036VTh0sTV6F3dNbyRcrqqARKt4mGCNGt9kK_7Szkkv04Am0F13hw89ABAhUkUgIihFV6114_sSeATtUPaUggiUoE763zo1HSPTw",
+        "places/ChIJlxLxp_6ipBIRNCx_SbYvUPs/photos/ATCDNfUpfpY4VYtU4A9hctN8WJ2t00oaei9OhS9Fw6zOZa-nbZ-0fBhlsEAJgEW4SWHyDW4xVS28ZcnXjchAtgkmGjeS3AcBhbu-sHuZbLZRA8F-4qkAn4DExOE62V0E4bbs51kyI-tLWqKzxouTvfQ1JRC37kaclS1PrKj9u0zy0vSKuiN_s2byBzUbTfLghPNCa_LTaLlUH7IvnHnKd8Vun7X25bAjLX-anAjO7ogk1uaxw7o1kdD9tz79bCrtb7YR9oTJngxcdp1Nn0rUb8J0qqpG2rP0P-VCr8iIOOfOe6YblQ",
+        "places/ChIJlxLxp_6ipBIRNCx_SbYvUPs/photos/ATCDNfVmTqRPKqhuTL1merlZ6zwl7DdR4OAfP4zq3PcOr2jVe3ordllU3_ISxTFy60bDU9nIjduivD2xQGIjpQkIdL_TXFix0hCexUdrXflLGW3EmH2L8sfqwmE3WgjlsQOiX2tPPAeEfhcNRXUD0Sb8bKjv7DjhMePdNJcBgV6qtBPN36uX-h0fBSfbj3graeVbVLPOVQiFj-3jVhmmgBjIaAmNOH-ire0jn1VvjV7Lp8bNEQW-zYkAc-2SJ9I4TluzN6kK1ab6wgCgOP6dZ11n5LLA7FXSLWHwGJ9gCxcLzj0y7aek2K4Son_jrSb_bfWKsiqfDkkZRaF-qjJkWm6vwJSvGFc7M7duv2vJhur1ls3F7pyIl_j53yEYwwpyY-FOoCql67Ib2BH2eGxR7E1mKZJKB8r1VbFoNdPgnvWdHimnnOOgv3WM7aC6sPRwGhUL"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=18109026561620388916&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=18109026561620388916&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 12:00 – 11:00 PM",
         "Tuesday: 12:00 – 11:00 PM",
@@ -472,7 +472,7 @@
     {
       "name": "Els Quatre Gats",
       "category": "restaurant",
-      "address": "Carrer de Montsió, 3, 08002 Barcelona",
+      "address": "Carrer de Montsió, 3, Ciutat Vella, 08002 Barcelona, Spain",
       "neighborhood": "Gothic Quarter",
       "phone": "+34 933 02 41 40",
       "website": "http://www.4gats.com/",
@@ -495,13 +495,13 @@
       "latitude": 41.3857621,
       "longitude": 2.1736964000000003,
       "rating": 4.1,
-      "reviewCount": 8239,
+      "reviewCount": 8307,
       "photoRefs": [
-        "places/ChIJ4ecss_CipBIRzAR_ag45hM8/photos/AcnlKN2j_NzxpNIbjdZEzAnIhRTzLUHRGPykAYYP2jAcfbSHrp5ciLmTd2fj1-0UnOCwMr-c-htxVO7o2W9Jj85HrcboPlWsI9u4n13fvrSzp_wudFUIRnhHHaoUocdqBWyTybA40yArC9v-5obpmgGTszyI4cxVWBDXsT8eXKGD0SZs4hCULAxCart5nqwextuBC7sRI40DJ7F1rQ5fFnS1tpY8NUlYB-ONaDgbDwsw2wc6heBbHCgV8e-dA1kyyLxcz4-_1t0h_wzMxtXDEpuOakXqk0pNXRuXcBDMloLKC9zPFw",
-        "places/ChIJ4ecss_CipBIRzAR_ag45hM8/photos/AcnlKN0Z4pQ1OCSvoE9xXiNt42PvjNsB_bDLkmTgbuG5I5jIacQl9X4qWlZ02pqD5vFS04Z8IWXpM4h2x-xPY24sSM0o1i_bGctKPrBTzZK_ar-FRJQWTf7lIYww4XiNFB85YNou76Nh1Fr79N-JsS8JIBuH5wKIeiiZ4-NDrtgo_dbTxQP93Z86aiwPmUTwolycbTDM0QTJuiBcxVV2R-wMJK9UkPvQAw2WqLpuZxftPHnXLpJRxq-uPJ7YBQIL-itPA8DSgIVW_zwaubpMBMbJht7zKfnl1ET4KxXvaOkxbM5Bs2FtneuWYYT9k-XT9uXvE8WKE7g0Ux59yjbxv5By5dPY0sCxQ8imE0yQ-eSto-4HRtQA5zGidt_O4Aj9jzx4h0WydiDnA1JezFAw_P2SF5_tk-NL0zE5xSOO0OCTZDeA3n-JHx4orKJ9heEMwdLO",
-        "places/ChIJ4ecss_CipBIRzAR_ag45hM8/photos/AcnlKN1CLNoY2x8yohWxuXkZwwJonS24hnkgoqAA9SzxgrJ_qll_IW1rxxf-Q0cvHof39kqX12wWIEs7r8mxPjrjqcAZXYBtrKxPrwBNVwj7Xfi4pMmm6ut8qGs2q4So4XnGHWlgEOt7-2Nto0spYsCcJQgMoBlFXjV39uH1nCKJFbVhN8w6j_RliOzShwMVvA1DPyOTG0ZQ9JIMQwryn9hbaG0gUvM4hz-8rh89473JRI6J4TMjZrAiKa0me-VDwE7QbOUCoz6as45QQHS9vNCJpQqM843wx3KNcAX8mD2l_NIKRw"
+        "places/ChIJ4ecss_CipBIRzAR_ag45hM8/photos/ATCDNfXakiGB5I1jmoPGb4sTlUYFVEAOlVk74RTOIjjU_5TE_evkAH1Sq4dkWUuWWg4gZnF1XCHeRUnGRGTjXv2_9_tBaemmydpgCsfGHmQKpfphiKAgbDg3tflyyYkQJe5UUNzOfPbhtwK0oNmVPIz0dWoAx6MNH_RpWKMiwc1NmMuISOBlpZiXIw37xiZL4V9hXMppWaRYUvwvAU72D_ddZsV6Q8cLGYUwrJwF-pyOInCxgP0Gy4hJNntXJeQioJM5R6kRsS7ooPFRFHhpgJKP9VCY-MWPQ825HBUfGa4xFXnD4A",
+        "places/ChIJ4ecss_CipBIRzAR_ag45hM8/photos/ATCDNfXnR1fUIEoNfILaHQeOsVxnQcq1HZHHZD8uT1vZ6I3f6MycbZIalC-Ff1SucOK5V1Vn6cWeBm0hKC3KzKi0BAVDfOqrU5u8CecOmO5dWQmiYJifL3xk5JDUWssz9MhMg4_yD9eHuVRJjbqBIG7osHyHczpQ8mimaOwSmnAchZGihan8Pcofb2WDXMPT2V_2BfhgFsAyY78ADNCPmcIKfWzfXmXNYUasfONEgMjuxUAa5Sls0t3N3uF76_WfZ38QIqdfelL0akU9CBfnN3VOonkY5FvgLH34OjCY8azbtanPB0Mz96UfU5AUEf3qOOZ0WMuR1ogU7QSD4bv7p6NM5jFIDdOJod5-i38xklP6pjqcKNJdpYvHNst1i_EvVGXmkHIaxzUy5GbRuY03lE6h7tNj7rH7fjVanptBt8asvwA1dhILnSTBuqvRs34oVQ",
+        "places/ChIJ4ecss_CipBIRzAR_ag45hM8/photos/ATCDNfVPQA1yCiE3ttMNrYJgMoQOH3kUX7J0bOg4sBm9CIy0CHtcjFuVHZ_7aBHtxA71q-CHKjCrF6OckuZabnPNF8i8-lNQjd8P-0rN0rTR9oa77BNOKsS3PoLWefcgZ0hr5LUqLcDcOAiCxrarYfdADhqwdLd_4Sd474WFUsWz_xQRjQqSqmkjO8UDkFA6Ycr4NOIVx8qlgs3VSjkSgU0tI1Up2eHiOLsx_awN901Ypwu-eU2iCWWGuXjyGSqsLrSaCTC1RCGWtzSZ2QZEJymeR5t4QuQ1CqRRj0a3mK6cQgTfcw"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=14953139396855923916&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=14953139396855923916&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: Closed",
         "Tuesday: 11:00 AM – 11:00 PM",
@@ -516,7 +516,7 @@
     {
       "name": "La Vinya del Senyor",
       "category": "restaurant",
-      "address": "Plaça de Santa Maria del Mar, 5, 08003 Barcelona",
+      "address": "Plaça de Santa Maria, 5, Ciutat Vella, 08003 Barcelona, Spain",
       "neighborhood": "El Born",
       "phone": "+34 933 10 33 79",
       "website": "http://www.lavinyadelsenyor.es/",
@@ -539,13 +539,13 @@
       "latitude": 41.3832587,
       "longitude": 2.1817960999999997,
       "rating": 4.4,
-      "reviewCount": 1621,
+      "reviewCount": 1637,
       "photoRefs": [
-        "places/ChIJGZ6KVf6ipBIRnX9WIgIdp7U/photos/AcnlKN3Ko6OVQCqyNfD7GIg6OfwT75RYVOgOGtPTisCqXajtjsoEDv1rg3f0k0IUauW_mUA61LKop4AaIQGKU5CJjRuKpknQLIWqrSzmOiapBM8095CfGQoupNvk7JjkBTzv-ybXn1CGmsgpvc2qCnCSfrannvRkCkm1e4N9YdmHqxG6mK7CmxWM2QZ6plDjQEzf8B8QstE6gPmZvdv9RXIAhpaB9aETinltfJXFljv4KnljuclaB5kvAEwNoJfXwizRKKdttbclPpfhePgAS-OvCW_vKFtbk4CfL47CP0m1vU8jCg",
-        "places/ChIJGZ6KVf6ipBIRnX9WIgIdp7U/photos/AcnlKN0QX7tolCPjo2CnPg8Vs_fPzH3JmGG9yDPlSO_qiwjbNtV76gx4W5NJxCep7QEMfp75afHtgSIp-mau0lLoPZiDBCul-ILM-I97N_hkbIP-bixfZkpLWfOSNjRDxXbKvLy5YmAgwfIGjH8GRIscvxajAi5z-v92X0XtJXJVsr9yY7xZ8wygzIZo52wAO0iGJPkxFMPqSr8FUtdNa0lFH7cqiDoRqKVU1XlnNJs5wXoPfL0XeAj1KWWyqMn4fa62G5aIWaeKMy9BacFbLCTDFt9wGTMDdkNNyhEkL0zKaX0v2pL3TmOHrmpmGJmVcgmdtrPwYPaD1SNk7BYGnd-pwm_yQjEwfpDe1ei407VMgGL3uvp1e-HwCqTXXtpQu_b-X-QhkY8S8yBBuIg1GjsBeh65K28AKHRnweQhbQMz5Izerve2gZ8a9GjCVUehIH90",
-        "places/ChIJGZ6KVf6ipBIRnX9WIgIdp7U/photos/AcnlKN3d5NlbhqKzgBsD2UgsZgRuCG7UkXVudf8cDlt_QkJFe-7QvHleaN7TvOSTC_rUDhXQfGSTwOHyXVQq596l7KcAwsl6RV9zmdsxmwINS8W8iEB8_tM7L7Bkgw9mmViKbyOpcybpicJNaOzP0AUIJfdR4gnVDgZz_cQNajolJpLhXBYSQhPb0taodQGza2tGaqmKUG52y4Oi0HHePgBGjebPvioLQoZYNxYUcKpHCNueLE7La50kVgLJ-TBcV9IHbLfhOcBHW00vsWAVS6G92GFFvBUqzau5kIXjG-I9Mhw0j4mSiAQZv12YaFR2ksVIZgXUUu1gxLkFDk_UxPmxTFnmURLV5G_I_PpkeBGdbYJHF6cdpLD4slR-vCfCjM8upWcfkZyr9mmyeap4bQSsaCIGsAMhWc240bs1XaEuA5RMVmJy"
+        "places/ChIJGZ6KVf6ipBIRnX9WIgIdp7U/photos/ATCDNfVTYXrqEzBfNYB8wF39v0WtBeLQYrJAG5EfX4dggAodUAmoOaiNql9o0gtKtlezT-4gHCorxqtnARPtkIHGGU7m0qIhmr_MYjRa87dPsc1WrUE8AY1IoBC7uVUNeDk3j-wbJpJNPq76xUlOHqDMRs2Dlkuo-vx0r9L5ThKByw6-37aHuhHySH3X_uqRomKUut8FuWwGQ92-F3EPGoBLOX-gq2n2b_L8IaeUzeQA8GDBW7tkyykS4tN5PCWTenCegkjLwM22UkaYMtNoAEIMx_xL_ibHmwpGvcy70LouiPZq3A",
+        "places/ChIJGZ6KVf6ipBIRnX9WIgIdp7U/photos/ATCDNfVhLUI2bEaAP-B0X3Lk1AbkPI50kkqLFGbLHFHOCHRMEX-aM9yUupKLun5Cblo2G5Ecf0xIV_wslNcroQuECkcjAQTdjjgn4tf0AxBsR4bq3SKDolWh0kCUCUscOOxrLTX9V_W20nqwSWq0PizeRBMf_bHrBOWCe_aCHiYDq2WW5tusmItp6fv5E9gcUQ866g0b8vn0XL6ChaE9-fdKM6sv2fYD4O20cJekY7zitMuGoZFIcxXNCHo7szMDJ0FJ5NjNBpeUYyoe2U6uD-JaQ4D9PFXO7RP4Cg3ifLAWiFQEWDLgs0aAtPoDSPM69FgJl1QEfNx4IVWFd0cPNHJg7KvKhDNdxsTnF08hpVRGwZyxMjQ4pbOQJuyrY4-VVHnXGMWyFG-OC80VmL8PJ7T8x_jBG1KVbONNba9AR3vbIdBy1VNzu6Tk3cj676eKLQ",
+        "places/ChIJGZ6KVf6ipBIRnX9WIgIdp7U/photos/ATCDNfU9yvnSFn3nt7GcpHy1QdOMsoIz3Xl4O6Ug9dE5dan4Ow5x9jf12gMJ5iixqNch4TNUI8JBob946D-sxlhifV6cbtQIX6t5ooSP_iPVAppsbyqRswagm7hs7yg-Jn2CReLOstOQTKW7Vs3apOVg0ywVq4DDNsp-Zf5CTuZ3Ufp6bWpK_8EOzIy2gdTMDXJHMT6_wZhRXpoW2pYibLBsnUSWeqT4MjJ9_ffahLMJGz4p8SnFispFcrIaZX-4eX70nS-OBGOl3apYblO8atcp6guYnRkOWcMLktvr9_oSo_doQuuM-6lZ_hKCe1y4iC4LmsvFjzJzEEubIjkUS8IeG6dG8oDin88hcRhZsMlLb6B7d-lWAmAQIItf4b8Mi5LcnVYRQR9Du_EmxFkn3iraVrOCAlJumKL4fToHcVieQ3vaxtLS"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=13089462736978870173&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=13089462736978870173&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 12:00 PM – 12:00 AM",
         "Tuesday: 12:00 PM – 12:00 AM",
@@ -560,7 +560,7 @@
     {
       "name": "Xiringuito Escribà",
       "category": "restaurant",
-      "address": "Avinguda del Litoral, 42, 08005 Barcelona",
+      "address": "Av. del Litoral, 62, Sant Martí, 08005 Barcelona, Spain",
       "neighborhood": "Poblenou",
       "phone": "+34 932 21 07 29",
       "website": "https://restaurantsescriba.com/",
@@ -583,13 +583,13 @@
       "latitude": 41.3935386,
       "longitude": 2.2053561999999998,
       "rating": 4.2,
-      "reviewCount": 8944,
+      "reviewCount": 8998,
       "photoRefs": [
-        "places/ChIJux5s9Q2jpBIRDGd1vZQU9aE/photos/AcnlKN2lKB0ChJ9uBwFsNLTDlEQM7dfbzJcwXl5-iwcJH2fQLNASFJF0Awatrh9mCoLgK9Uh9LfDPYNH-4MPxNSNCuFNkolffBRngwSaYPdYhI6viAlISgiXT_xXa66YggFWYqfWn1Mi3Vk2bd-NCPRjlHitVY_1m11i5BmAZy9BgMAoKQJcAZbWgzkznlSv17kbG4Cn_Z50pSCqP75JZYKGA_I67o9m34sezJbhX0AA9kj9SuSPBxahokhTKaef0CC17WRjf1YPsUnYP42qIMIgPXcJKWmMEwnrT06H9bczJLgFlA",
-        "places/ChIJux5s9Q2jpBIRDGd1vZQU9aE/photos/AcnlKN2qTSIsYm4a2GdK7dRpKuaK_b2Zd2CAadbxH7TToCK8vGmYmxzxVmDtcMa2gjyDRwviBwy8uD_QavG4Eqv9WELMdlOfpSj_-Ksw4BIdo3_uDdEt7_i2y87VQ0mo6h2227N-zZuw88KVsb-YszS9pHDsIQV1Z-dHEx-dgAQYiHXBXg9DCGtih7DY9YOIVWfi-k6gv5SvcEOo5ge0MdU6Ub4HYhcOi2N5qJTNJr5adOieZ6gv4BIGaTW9Ctsh5CTcZ10aUI2vfcnnORJJXo8V8_I3F48SMv8WCvQyPGAVTz_rJw",
-        "places/ChIJux5s9Q2jpBIRDGd1vZQU9aE/photos/AcnlKN3GgaSF8L1E1oKy4h6oHDM77u53VcNywRisFF4_3P3f-Zj7PxzCsZ95E8HIpOFeBqKTdCOfAgOco749ThEodtXN6PlJ75hJlvA6BYlPne45dK_Xpnk9Cs1k1loDeEpeoFtby_Z0HRi28Yuky3wqFiD1vmdQmAeh3euJuhuXEuBZZWBt0i4zd80OuSTUXgiHF1-oTVZATUqEbSz-Kdv75GWc07ErcyHhLiuxF6NbEv2uXETlYJol04R2LEPCq7d2LVGifWkl7LQFmOPBda5begxyb8Dgeh2pStZyhDVJJy99HQGR1LoRSIxXSlgzFLxJu0y9yIPYEWl85aWFkMp3KLNouxZwurbqQAuoRJzczYz3EVVxUnfmFXWnoNdxYG4NDqnU1-12xNzB6Xr7leWwzDn6mbTXsPIuoxx-6CbO2LJC9UQtdagbLB6xIjcziQ"
+        "places/ChIJux5s9Q2jpBIRDGd1vZQU9aE/photos/ATCDNfVUgm_X1wT85n73UpHwSA4FpTYC1sF3o4-9Yws0nnxEqyJeYQ_B08cwIMToh9lQCP7BVY0aAEmaGd-Oye8KbL2It6IizojgKtQJ0ad0cIaZkUlbyvcPgtK4yhyf3sGZl6lfiIpHmTheQb6Z7jR_lAcucAyHn2ajw3kBEGEPco9eFDttnSNxXn1z4sz7WPSJJZgb9YC6mTdxUa00QpYNc6R9FZS9yD9IqAHZYrZ8HwlBShOGo82fQGhPt8H56X1nhjkNTlgHOsPXcsNHemOZtYZAQ2F-2k9MeZ8HO3NjvWZAmg",
+        "places/ChIJux5s9Q2jpBIRDGd1vZQU9aE/photos/ATCDNfXkOlNJXf2WGVgi8PcxeMNXXQXQvZ7KR2EY2Psfqw-sSKT73FoTDyvT5aD00yu7oWPShkGyHnmjXzzVoEBCbo1jfPv1atI60lc5pdPhmvwgG1GGtUo80Ln83--sHCYymP26QN-yTIkNoFnrhhKsWpJAuJ__I_qo8y4hBk58Cg2SChMSK-zG0rXRkMnRJGqpaxJtqBB7n9lWkLlDXfbvQ39q2SS_Nvhu2wiKlh4Yz6ZYaN4wDYIsjVJM4l44CzrromAZPkzcRqpUjOem78ZazSeUthcIK-mfoLhkL4oz62AoJQ",
+        "places/ChIJux5s9Q2jpBIRDGd1vZQU9aE/photos/ATCDNfVw91EDGgkRFe7KpAKD_Zx4Y5JhNrb46Zgr7ngjlRvIS5hOPa94Evows1fl1ZM8HTuNRalI95AHCVK-mx7QTAEf_Xx75bIwd8Aq_PDRz9QguNlgGc-olUqnN5iR6heHi3Z44se7-qwQzCmT_--ihkVwCpvPJh1hxDzf3OtbwTzbmZyNIgHIei5Qj_e7UtLUM1cThHi_rqxPYUzKbVoOpK2Qsb8jk5hjJLHM-G2dPFg3JtCIORltA5_ZXSsorz83crITGChfWzTINUbn64ZI8xU4s9BPX7UPVaGN6BkgxzCzUnrEj6mvkoO_nAQj9kiMqNcO_OgzhWe7QDryZ1_vSr_I4RCHJ4OKzgRtJelgZYMW93KKDTXwqo6xZPJnJOcUdhFSp5432Udh8YcYN4gjLzYSV0F257ZOeiwJE2o9Dkeiia3juLX-WgZHcM7OQZEV"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=11670256638466811660&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=11670256638466811660&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 12:00 – 10:30 PM",
         "Tuesday: 12:00 – 10:30 PM",
@@ -604,10 +604,10 @@
     {
       "name": "Botafumeiro",
       "category": "restaurant",
-      "address": "Carrer Gran de Gràcia, 81, 08012 Barcelona",
+      "address": "Carrer Gran de Gràcia, 81, Gràcia, 08012 Barcelona, Spain",
       "neighborhood": "Gràcia",
       "phone": "+34 932 18 42 30",
-      "website": "https://botafumeiro.es/",
+      "website": "https://botafumeiro.com/",
       "description": "Renowned seafood restaurant with outdoor terrace, dogs welcome with advance notice.",
       "descriptionFr": "Restaurant de fruits de mer renommé avec terrasse extérieure, chiens bienvenus avec préavis.",
       "dogFeatures": {
@@ -627,13 +627,13 @@
       "latitude": 41.4004531,
       "longitude": 2.1546939,
       "rating": 4.4,
-      "reviewCount": 8970,
+      "reviewCount": 9046,
       "photoRefs": [
-        "places/ChIJa0Y5HZiipBIROWRrQ0RCjVA/photos/AcnlKN3BsXQnflPGTU0Dpn0UtmwpG7ps4RVmYNHM6DYIEDjaLykwVRerAvAaJpd9vghUQrHfx5s7r0qwtSp82LA67b6TLgiuxVvwhT0NGfTbBF7yHA5-J4G4Z3DPwJXEpJmRjxuSBAStgYJkqQb6FDXce3AeFqAqFP0pEkdn6wGffylrwz8pSmwsNFEJATafaTDRyVI10Gpe08nFLQ6BeDSY3DyyjQQCzHThBnwQpfO3Lpqv_jiOFh1a70OfQgSV4oG6puvmFCAxhZOLrdcgos5mPttMmIkjwJzQbnT3Y8sdkIxCsA",
-        "places/ChIJa0Y5HZiipBIROWRrQ0RCjVA/photos/AcnlKN0tV2qUYM5DCdXCmybjjiLmcyqt0gErDxKCr23gLKo-xquyap8kiLry4g6izofDwZq8SWIcdAly4bfIrfpbip7ja14-9ELIqDEyZOqq5uKS3cbd1zYW1uCETDnlTf3McJZ3wzvgUXWE1vONEK0iXgUraUtcj6mOUl-a4FS27IdLW_KLDPTa2OA4ePHGRcXWZ4LHwJf1jSPYjfMHUSHjdkNA9KwG8PW_ZuTsp-dwWRKiMXbVOTF-h4ALiTgWSNajvBBbu7nOj72oIJEviOyZKs6TwooV31JPJci5GZNwMpTdlA",
-        "places/ChIJa0Y5HZiipBIROWRrQ0RCjVA/photos/AcnlKN06hba9UcQ9GbQjBITzRbWC15GTRarEbEh8mrPvifyn6kJgcl3k9iVchWJLcP9PbysefqE7Ec9VIkXFAtT8q8ywSZTfzdGRIxuSMDOqa3fQ0aMelVtE4Vpth4CJZ--YSECXXSyIwZCQPKsZOjjg4dbuVB4vQCSHTeDDycZKFGJl9Gr-eWgmLalXQhE00_9yt8xjvPUSTGmh93V41mhfDlmj7RoWcecKEzAsznsiSD4xAmIZMTkuL-i03tKo29a4iJL28Y4-qjLekEehYCY9q121IiJDZJZtDbONvT5Bn3NRVA"
+        "places/ChIJa0Y5HZiipBIROWRrQ0RCjVA/photos/ATCDNfVWNaxqPQPVsYAwoZ_Uad6lgRZuAHCEfSpgiLfMjfWbdzIwvS1UjETmTcm8p_yT98WCSM5tJfZgjm0T8HyAOXQgOoyB5sGjh-bBXrGhRbJE68QPA5UkMS62dkjOhlRVUlng7JOqk0h9FHFTFYBtM8Yq8oHD7-fYaHk97E8XabsYdid0y7DFz-GC2XWUuj3sAJ-6865t8BRGjbgEFmv0pVnDyqlWNkTkvqaI5YBi9GVTfhUQCyT3MqouOLVf5qTuKkrxDKRGq85vnytk1kFU7Pee7_XV12KhKcRIt0ZlTWsLAw",
+        "places/ChIJa0Y5HZiipBIROWRrQ0RCjVA/photos/ATCDNfVuOGiBSflR0OMhbijyJA66SnuM7_6U-yFGaajIQciN8D7sKgibD9hWw0BohzNuXh_dJ98hdj2d0Me0tZFOcOZkOEOfZ3k8t_3rbMr8z2T_lJlPhuSgj-9d9uZX-f3yubcYtDkVYhCatQuPch-fxs1g7B6YPhXcjvwF1kHDZY32TUWO2wkc-HX02ZfQu15VgQy1fGRmCfDBPUxi5XxHKIT_HZg0UgXEYnWFwlt9bypsU0kfal2ze0tQoi5SVtgfqtgukJjD-o1BZMlGmh4OSOslat0m9si2xdzKRLyiKKjf59dOJZAcj8ojZARQgsTHzvwnmWR1u9pKcDWLMdGHqs-W0I8PCkycfiX7PCmly1o91aU21Xa5W-ewa2iNdFHXRIc8NDEKN-U6YTBpnzsWetvdGRGUkHppiYcx0_p2P4ni-p9_RqWRhAHZjtrDYBoa",
+        "places/ChIJa0Y5HZiipBIROWRrQ0RCjVA/photos/ATCDNfUYN2gzhgPJ338nVDxekkdMTEczxzY_OoMxs7FhT_IgMRTxSy6B29l7iTWw-ozxQndR3fPBzitMS7j8M2ZrlIY3ikiFy5iHo8NLTCVMW_0TU9DwxXfmcEM0E-vTeASI7Sli6SOgHFPVJPUei7orOwNA7ZqU2WuhNCzyp0qYDtVPGJ1mT3Ksvf6LIOxdqnDiS_qCIGt8KB4E20sk_cdSgNo08VFu0xoObFCjqM-SFeWXy3d5tGCl-qC_SdtouJYAPXZTa139FLrg4-4jiZ4CB5AHWtDHlnG0g0uPd0QS3h83lg"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=5804368355706758201&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=5804368355706758201&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 12:00 PM – 1:00 AM",
         "Tuesday: 12:00 PM – 1:00 AM",
@@ -648,7 +648,7 @@
     {
       "name": "Café Central",
       "category": "restaurant",
-      "address": "Plaça Reial, 10, 08002 Barcelona",
+      "address": "Carrer de Girona, 69, Eixample, 08009 Barcelona, Spain",
       "neighborhood": "Gothic Quarter",
       "phone": "+34 935 63 04 97",
       "website": "https://www.cafedelcentre.com/",
@@ -670,14 +670,14 @@
       "googlePlaceId": "ChIJhcpqwu6ipBIRQIX-wz1yKRA",
       "latitude": 41.3946073,
       "longitude": 2.1711302999999997,
-      "rating": 4.5,
-      "reviewCount": 2578,
+      "rating": 4.6,
+      "reviewCount": 2732,
       "photoRefs": [
-        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN1TpIqqeM3rgLrC3zVHYDJwI4lIDQWSOj88bh5Q1DNBJLVoNNUsEXNhMAw4vchikPOSb0Byt4Lo8921pzfKecWfXruDorNqU4sN_A7TI_z-8i1tZORz4wAnB_cEso85r0H_1Yoi-PX7ZLE89HduoB2mbaV3Z9Ne4aN0VZZn0QogzmoofDPYp98l7gL38VWodmV3CiNbqG57klE3gWgXn1A8fWMGupNrb6ssmIJ4WgyzsSaPDjxXFvRPEFqsf2EGXTP_Ma7_FKaOLfNkLp4gOv3dymOgArTSsDfToTwdhJ2ODQ",
-        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN2bMt5JI9qTYtNPiFzj-BLkMeYpSZ0YgKzMCQiG8f7IfC0sf82u8iQdZGB5S5HoLzQTeBvYFDDEBxK29uBJVQIkDks3XdMnEjXapQR6B6Pil-slGM9RIuGaMRxMVMFZDavGrB0FTWWu56nz_8QRGgF0sduqLemWbK1TA8laJXdPL_9R78IOFQMcoJxQAlMEgf8xj1YncmjaR810q1lBPHmmRSV1DfpXoPbGjMhyXgOqEesz4uTYBrAXOFLXwIHlMwGGqDUT_sn23he6pk8-3cJRroqs7J6QJYSyiwceq2jIQA",
-        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN2kMqqGcgG4sunNeSDYnnwNUYiOK5q7JyArOxegPZzuNlHlFcHf1vcvjIzVkrBT_Zt1hpj6gcQI_sxQ_kW4qSqw-1kAWkuySNuY9mwXyd1BVnVDz7I1qs7j3RPfZf5DhgP7xhNoU4ruDM_odrNKfUN-9f2OPZob5Sgi60neJilkSsB-7mwwg0hvCo9TrjFe_9qK2ytoLXMuA8M_mmOxDcNNzX6HY6XQg1k7Z0hrRiaTwF57sAAq_mKe_CMeP0rKl45ixhNn4m-0CNeKNN_UolP8AgSV4G2i4ch0mOL_Hga86tCklaPPF9Bnldz3KRmNmqpDO2Cwtmim_4zBBmlrziNXr0LAgUvDi3J-nRUS6-nwTHg9L25rSEM8AT559cT-hSvUpEDZMzxIwvKpV_Q1saJdyn9h_RiJJcfX4qmyHKSEkYCnvxiBTf4a35YL9aTb"
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/ATCDNfUgTpkozgebInprro-4N8T7WUpkTXVFi0ZieSGR4casdY_fSE_5pywYLmVicBT1M-iA_KF1x5E00Q4rCEI0X_ydYJ1QZF8u6inGcq4OGLcywXwFcZUb3Dn1FmOJbTaHadTmlWn6pnd2JIgBdDaIrvEuTHkKGhy3nXyiq20C9Cm-kbXxonDdt_rwGbqHSfjEXN1w3CqCi5c-j-sJ4WVKJ5XsS565_ywVsnwutyttOUGRILtTWi8Yi-jk8ukXHxzNhuiHPZWlOdN_ULxGw_mEpMx4XAsXiF2Wbvw34MevaUTd4w",
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/ATCDNfVriry5NWuN2WQjbNNids-l1c4oZCjJAUdQD97qGXu6Cd3tucPyesKl7tnKE8vX4m2HauIQBXrIMzEYOrn-_G-PCmbNIh0Y47M1Y_JlMoRngdLrXVbCc93u5y6txgQmzKfqv6STf43kDFkbXqvGaVhYX0yqtBx8jrTwEJc3j8QR-M0jbpJeA-LMo3qUtrtVWS7vzFp5YCu7TtibATPCi1uSCM0ygF0kokhpqQCuvxAs2u_PFKVb4I3BqxUtUyEgL_XzG0pvvCsKqnzeulBFGZ5ZYlrv_bqSeosxvhgYakWDHx656rGSfIKPRpCa-jw_Um5_IJcBvsgBUGN-_hHHp8fx1E4CWB0hIwi77GnL7pMCDB3vaUzEiPUAwyAEEevduai6GBBlSUuEugddF-mu23lZrFu-Z4jGdnPsnn2MbDR9rwvziDH2o8FhLsn9qBaV",
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/ATCDNfWcbzrUNlamE7uw_a9XEVMpWA64yhq3hat2fstBSNF1eaI0nZrSn65zZor6K-px0J7U5_bfj0ApcwEfJyw9f2L133RE1zTNDNkt3Qt3pldHN1wti6mpF39cn6rpszAoOfSKSHnIeB043WY80Wxjzfn7ZQ5Zbfi9LvhCWJ9zEZoXMI1XG5e8zZSoydpyNjfa39sMVFcZpalP7Xuv3A16mEUBkXKhnyUbCjSUnwiuzF1qzGZAkYY9FFF5VKxMyNATBxeAWcMzmiHc6VETz8swn2aojs1eEgXst_neSMsU_V4zSw"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=1164587588258792768&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=1164587588258792768&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 1:00 PM – 12:00 AM",
         "Tuesday: 1:00 PM – 12:00 AM",
@@ -692,7 +692,7 @@
     {
       "name": "Bar Mut",
       "category": "restaurant",
-      "address": "Carrer de Pau Claris, 192, 08037 Barcelona",
+      "address": "Carrer de Pau Claris, 192, Eixample, 08037 Barcelona, Spain",
       "neighborhood": "Eixample",
       "phone": "+34 932 17 43 38",
       "website": "https://www.barmut.com/",
@@ -715,13 +715,13 @@
       "latitude": 41.3973351,
       "longitude": 2.1612629,
       "rating": 4.1,
-      "reviewCount": 1927,
+      "reviewCount": 1940,
       "photoRefs": [
-        "places/ChIJ5_8SapSipBIRQkiXvYQHOmA/photos/AcnlKN0IVvBtigodxBHTAdIgG81MR0RkBj_laj8HWY51_XUr4deKcYvkgb6KW5M8acqw4yHSfRRI7lbb_-YGbjvZvlcbmoc-6DATOYak8xflvJmk7IceEl7fH8kgzJfabQyTHksPsxbl4-UpTOsBV_rZjNfRI1kmpqUM_98OcNibxA8O2Imo2plRI1KZ3ToDzjYxcgrgISBzywR5PGs7oGbif2yM_fLFaphWEmyVFNXHZQNrVlTP0-D01bwzU9-sbeyt65E_D46755pOUMYGcDON4hrX0uQ0WsjaCAHAdylPWxV-IA",
-        "places/ChIJ5_8SapSipBIRQkiXvYQHOmA/photos/AcnlKN0mcgiAiIC8nJDwiBppX6XA46XlckvwVLHU4dzI_GnwLJshCwR40q5F3ijukBstGQHqu7I1xKRUCzyzdePdPKXyrUaf59cgxsj8vaZh5DVhC_sSqfe1QZ4CxyTEj73kw6sC4liW8RMHiC6sx4wHa8TnpaTS6fpzsttdcO0SW54c2Kcbj2VEx9RFWJPDJO4LsMcvDO7uESlfwYBQq1urHPdrp3OxamvnLvl0dN2G88BFtAlzgtH9KdKUArlsBkaujFZN5EiohcBzsoqrAdnwcY4zf2yhxJj3tXB1L6h34F3CJg",
-        "places/ChIJ5_8SapSipBIRQkiXvYQHOmA/photos/AcnlKN30rGJmm2UWFWfTLORwnmpxaWk2_Kgxe3AMBeAM40g8-oSKOFL3NAkBSqC6igd-Xqyuya9wvmxdur2NOcEHNV1DrwWsCjdp5S5aCSSbHB1GPt3ZUhuNtBAbDkXRn2P1NuHj6BUWD-NBTFxW-WjJNAQ87XzV9UjeI6CBaxSsmO5WeNUrQTth5gcOh9IvcDBunw9IKfWeveKYsKa0494xaX0KQuy0jDZaJVOT3IBbqqGvi13l1srwAnyjvLv26FecsIkHnOIR4dTz44cgUlI3uzHvvPUuQPsv7QZjmDKUvRBrArBVH7TGau1dUdYMdOBJC7S7_hBx_8YYqVI0lWkyhFyBCfCZGQy7a7WwpqdqUkWBjJKICyHd76JmDwFMXb9kri97S9EewiN_K2hOModwQef2kBpn6iVJFpHccasUm6ADF9No-7ns2eipBT1Acg"
+        "places/ChIJ5_8SapSipBIRQkiXvYQHOmA/photos/ATCDNfVxKJxGpM70wv29Ajz-GF1xk8slOyL7sexB3kyNxGa_uoyvr3YT3reGu-Fn06wD_-6GqSGfC9vyzu4k5nzbUEGbzTItkAwOZ0eGMXg85FkH7Xo9gWzHYDZaGSRAWFhUc59yyfM2zAa0UkCqBm9kYHO1kSM9L45p7luAL7HbXM2OkqRPz_AOfAWanhrMBuW9DsGoAg1PyjZ57G2HtGGfgn-pt54ONZFii1gRvNaSUlu9DocSsEP8rh1R6IOPspwn0wbt_X63-fQ42tbS9ZNbgMQ7_ODd3rwbwyOW5q8aAsc6Og",
+        "places/ChIJ5_8SapSipBIRQkiXvYQHOmA/photos/ATCDNfXiSErnPbZuXfC_ZVJGPbEL91mrU787K_g97xmLhccrLmJoR2S0tfTkASndVWfLvOTvgXcQvaWU4fBZRyeoV0uw-WnIftz-Mv_Ut27ot9hTouKlk4CN8BLJggL4vuokqu7uQR_XrH1Q_A6vZMIfMXvjUvAhTB-Njz8_mdITIoZ8Fpxs8aIY_JwAE5RcnHL5kzb-cHKdMbFPSI9S9pYd41VPZqqWtPoxVwDZ5y4yYY_bhZqdmpjt3LK4GpcA1avHM35igRkHyv_lyvYYVHsPT4mxMeuiK1eWamBVfAyPxQezjXRoFrBt4RsnowlG_Ax8qZSJnmE-KanXxXuPNpAK9SJxt2H4yqqbDfSpgPlsBQJnpMAtV_ccMxBL5eiTCXu8H3akzgUeywprDgqCCLSc_k-Bp9k7VMQQDpdiVbjaGX3XcfPStN8CYy8gFRY_hQ",
+        "places/ChIJ5_8SapSipBIRQkiXvYQHOmA/photos/ATCDNfU_PubsGwXbRJ9_qx2a6VDfYq1DUKLTBBl_eZnxe7OcrfCJFzhhj9Ygq4NdhxEp7KStABHWkjQ4IiIuU3XOn1n51g0rm9V1ru-37QFnY4EUECH2vePUOfl56Ul-DiEKpTB8zA9GuS76s2nwTYXUApfIHb-UzJbPKj7x028JOKdp2IsGJqhgia8ROouBuMXxp0HUnkkgiOPD-90fNBPFIiA6ufMOCA36yo2KCz4IYctUKHwJQcU3o_ZDb42Zya_gU3W3_Zo3mr5c7sFVK9EvELXgzyssSg2_HfE7cqWfn1EVDg"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=6933862842988185666&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=6933862842988185666&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 1:00 PM – 12:00 AM",
         "Tuesday: 1:00 PM – 12:00 AM",
@@ -736,7 +736,7 @@
     {
       "name": "Casa Delfín",
       "category": "restaurant",
-      "address": "Passeig del Born, 36, 08003 Barcelona",
+      "address": "Pg. del Born, 36, Ciutat Vella, 08003 Barcelona, Spain",
       "neighborhood": "El Born",
       "phone": "+34 933 19 50 88",
       "website": "http://www.casadelfinrestaurant.com/",
@@ -759,28 +759,28 @@
       "latitude": 41.3852519,
       "longitude": 2.1833796999999997,
       "rating": 4.5,
-      "reviewCount": 6013,
+      "reviewCount": 6157,
       "photoRefs": [
-        "places/ChIJRYr4C_6ipBIRFe_LoEEGcPg/photos/AcnlKN2Gx_d86HsBKm3kw0cGhe6DtWnSyAHqFJhQZn7uO5sx4q8P-umU0FudQYVs6qJL6pFvU4_1YeVd997GeboDTropHeAg_uBWQP9yJAO0z5CGDT2Y1Jp_AS4tXFCoVApy-LaiQ9jUoK3dWRvreIJTRaGKUjK3CBSx_jRMjm5vEZ5hyGUg-96_V-dNKk0hYPIog0qNqhwYtTh4lfwQUd_xI-TkXll46j6PKtWIbkBKmYUtxuUqhU3-rJLcFO_hKDfsI7NR4ZhgJ2coBpdgYINrztArc57WyC8lISWNIU-SFLbxgw",
-        "places/ChIJRYr4C_6ipBIRFe_LoEEGcPg/photos/AcnlKN3eX1qmxkXgpffbc0vkYPBlisw0FW5LDGSK9yoUUOgdmQU5BI4qcqWsgcy9er89plDW3-cxJ-dSOly5-KeFx1hYnEDPSyPLVhYa-BJr4B3oIJLN0AWiY5Znys2LZOwE7Y6zsbmokjvnlKsEJvfJ_blH6U0JzS8-ai1D4aa2bRmgSXRTWw8JIN931rluHOwUkD192u1Wd4sRpYt37QQiFFALLoSjpvsmOIO8SSU-NRP9LcRMr_3u9WHhhAiGfGsAL2U91TEkLVf8iQbRRrsDvHpwdNjldQtw-enNzX4GySF5AcylVYLV3PjW_gBAsMLYvwibTJdPhM3Yo-50cbvDYKNSQugJ8P6sLgVxsBNzJ3XWtpV9tZWMa2ctFfUnEAbrAGZNcyBpmOjzxsF-yRauJ7QMQFwAmsrf2KiUW6opfGCYiDPMH0x4QEltMOXRqV3R",
-        "places/ChIJRYr4C_6ipBIRFe_LoEEGcPg/photos/AcnlKN3_N656y8QPqEOTZvcDxVAXLPHrcaRhGMdIjk7qNQO2okYZyWLz9CIcCddK-Ui1_E9lI5TXbQUmrHwUJE6DMDJwb0yfcLCRmSYl3gYhFsKb62fYVuekxal0t8u3DAE250B2Xxk6D85KBNEWQ75yAhB2L12uV6IBFmbcxsg5SVP0k8Fk5_EjjUBMPLOB8_6fuyuYlHNBv3IUXmqota3jnjmLNIWMZztZZ3Lre3fPfYtWGjX55y0G3hBXfwGhLfH5iQnlc9ZhNjnxVRzfldm5xnGgEZQxHqKAA-CSK0U5QWOzfw"
+        "places/ChIJRYr4C_6ipBIRFe_LoEEGcPg/photos/ATCDNfXzWltL9hoK4CoVwx-lwaDYuk9LFZjwFh46Ut_2u-1DHMSpEdqi49fFELmEW5_ab7Fv7Bm3A797mfn9228kaPma2oEStVevEzJJ1LGTZiYls3CiHSZ8yYVhYDe3x7tpEjdBQGo-vCyDDHv_xmB9mRpBJNNgUo3hq9IiwFxcder3_rbu2_oYmsMvnQ_HYebdtZ70-sGcyuMtTaih_VP2X8O8MYOY0uibig8-ALSCmAmacKdVMgwI0MgiqwunRI_JKON5bedkJG_RU1AtH-drP8_f16HYz3PQighJ1zplFZyHlw",
+        "places/ChIJRYr4C_6ipBIRFe_LoEEGcPg/photos/ATCDNfXLT2vGOlL1VvnYVT8Pd_9kcvh2alCosDkIMLBJqVa1_YJIIiAYryZVHhvkhKlwX7iudsK3DxIsEJC4b2-kObqRNuRp5zkk4gUfjbL50ILjJw7I3FeQW8Ya-ezie0QoOieKmVr2xQtcaXbjJn94VRne26oIrh3S3J3Ht0Ia_jM1GCouODYPL1EPlzs0tW0azqNkJ3QUtHIj-jBr6U2PuJWfDP7-xAUIcg-uK-dPTBHr-nMli9CEP8q4w6b9xVTPb3deJ5SrRTIaDFLfR1IOiXuLkhKmRJdkrkMQlSyMxP1Lug",
+        "places/ChIJRYr4C_6ipBIRFe_LoEEGcPg/photos/ATCDNfVUTlL-La0T__tAINzTXFY4PcL9hXQrqsnKpTarnZGttLQ5kGakxvO4AhSSQKDu84t_pfaPZPo5ACCid0cBsZq0taPoJrwtqOwlQnGDFeQVK9fw5-kdDIRB3SrxzcMdPmmhK0WQWvZuyNWmhOJI6PDsUnFRoPDXsDAarA-FRGnKmuX9zrjOYv4_EirJpWa-jzfs8C4wHSgc7YPTiMKTQhBXHKDDwZsdy1ZSNyIRMy4XXqXupExQUhOGoZcSinUFYIcdyD7riXSfHaGAmoV7hLBjUhkjjtyibmHdJ0NNFKHaoAOSYgLNQgm4b43ImvXCqFNaDBe18nt5pFNNzCHuXAI-iC7fx5yYF4EwgDrwRtLSBJg1J5yzjwtVUwdyZS8gdrwS1yNAlwdx9Rxkh7962uLV0CogrLZp72LXZSwkEZ-x5WoOaCwfx9KabeApJuio"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=17901815397738082069&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=17901815397738082069&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
-        "Monday: 11:00 AM – 12:00 AM",
-        "Tuesday: 11:00 AM – 12:00 AM",
-        "Wednesday: 11:00 AM – 12:00 AM",
-        "Thursday: 11:00 AM – 12:00 AM",
-        "Friday: 11:00 AM – 12:00 AM",
-        "Saturday: 11:00 AM – 1:00 AM",
-        "Sunday: 11:00 AM – 1:00 AM"
+        "Monday: 12:00 PM – 12:00 AM",
+        "Tuesday: 12:00 PM – 12:00 AM",
+        "Wednesday: 12:00 PM – 12:00 AM",
+        "Thursday: 12:00 PM – 12:00 AM",
+        "Friday: 12:00 PM – 12:30 AM",
+        "Saturday: 12:00 PM – 12:30 AM",
+        "Sunday: 12:00 PM – 12:00 AM"
       ],
       "enriched": true
     },
     {
       "name": "La Pubilla",
       "category": "restaurant",
-      "address": "Plaça de la Llibertat, 23, 08012 Barcelona",
+      "address": "Plaça de la Llibertat, 23, Gràcia, 08012 Barcelona, Spain",
       "neighborhood": "Gràcia",
       "phone": "+34 932 18 29 94",
       "website": "https://www.instagram.com/lapubillagracia?igsh=NWF5YzJiOGJrMXJ4&utm_source=qr",
@@ -803,13 +803,13 @@
       "latitude": 41.3995399,
       "longitude": 2.1536577,
       "rating": 4.6,
-      "reviewCount": 2860,
+      "reviewCount": 2883,
       "photoRefs": [
-        "places/ChIJ-aOyOJiipBIRagVCipaXrMw/photos/AcnlKN05Y9_vtWSJZDc-LeMhzn19vm-iNDXLgDUxCmjE202-CLu_485s1GM-wFgRed8VhOFUCdwkcsXyrAV2rGMowHEVrl8DbBrFlAZOsPwRFUFKiFBmH6W8tUaB2YaUUc2wpffrpBdjmw5U-oyVWQPmOxHtkxMQ3qVvOKuC61M9xTju2Q5it8QVNVNVUVUOj5WYoeT6uikPCLou7Ydd8zNlPTMNTz0NtkGkZhfWZRUV3IHvU_Bf2jGhja6zLAdcjjfoBp766n4IgoMG8aH8DnlExg3-oXLzWD-QNW6ZdQgIIFM7BQ",
-        "places/ChIJ-aOyOJiipBIRagVCipaXrMw/photos/AcnlKN2YGxN-0ynV4UqZlOEGFqDdeiN5gJl8SWpTTUqYJcGhIBAZg-9jA1Zw40RJO4oot39nlE5jQZITNNOnuu0ByTODeC4edpHD4b4CZCAPf4DVc0SToYbqphOjIJxhA5NcFqLRCVBfsl5z_TADzL-erVcmYjAKq7KuX8pivtsmelWsVt5v9mBM41scUJB4JmlEqpsaOfNt9IrBQPSwIm6m-_6jhtRd-wm3FSAmAf1V8DJbmVq9IIJPNBOhORGgWKdB-m0FFT90bU9f4gZhTLo98Rr5ZIW8gE_Op0RalvaFZs_s-3phzkTP3APxznnmISxW1jb8W596uHVWQdDXApOcJf3zLrGJUVYS1u-h-jfy7K_ozjAnVoenG7I5sQ9Wd2F-zc_21JhrHguPLJTHW2S25DwdGY0OV20JaM7JaADNJL46S_slEl5uUZxltCv24t4i",
-        "places/ChIJ-aOyOJiipBIRagVCipaXrMw/photos/AcnlKN2Tihs-HVOvhdNyjc8EqfaROBZ8fU6O1bVt-chKUkBYxm-wpIrtOS_5_NHCvwHnx12A8_gbvHjI8X1zb0oNFJ5WlviaQalUIMif5fufDZksqdeSQnFw1lFSOdgn5kSl1cfKWp-bUoJyF0Mxm6UINQKWp8qNxbr7n7Nk6M-qoB6wZYXzowOyUTKt6sI9133GPsQfJ2YrfVcOYWuVlAgF-Zu8yScucG201mtEveJnAFgXK1SSm1GwXvaN_h4izt7Fpg61Yk_73PiFbzqx7dU_YIm9u5IhaBNWj2inaTTRhIe7bI-WTdo7cpOyzB4M2wDuTGaOEGbqAFRAejeAellnhJnUvMgOFjeJmUqfVJr5Zi6XTAApWytM1jayOPr11SWDUY2btSy7-cUFxsZuE6UKpJ7HjZsP8fhLQzXOG2kUagYSeJvewSoveGnLwWgpqo65"
+        "places/ChIJ-aOyOJiipBIRagVCipaXrMw/photos/ATCDNfUfWuL30fvExN_wt0MAPtIN3XczQKuzFz_SpbP5M784Xn3SZ3aDiSd0z1E0Sk76W9l__R5QKYcvSELAV99xJRoyXNEk7J_ET_VghKjFw8Tu1KEAv5Nf67k6Nz5wD6FMN4B8uT5p5ivpjvqjeqaoZEoLaXksDK1Ni55s24gSjiTuxvaCIt95Xf2tGvUyJTmaD6ixEFMHcFUAozyYvw99kFNw0UiX0-2_5Qt2t9UPSMyWkZIvdd03QBXuAbpGZPCUXbjkHq_h7dYTOy7IUqPoIFuB07m8vwtKD4V60DwQOJZlWg",
+        "places/ChIJ-aOyOJiipBIRagVCipaXrMw/photos/ATCDNfVvIIJggAYhnb2gJN3ygEvDJLD_jPMfNQ6RF5GoWvIrXSb1IxL9dFrINRyd9yWzKSBWYm_b_hlA07CW9DtGALjJw1vUEOhkW2oWM6xUO3kraJUdBENInGNUH0TG3ev4m-iD_bYN-Dzxx5z7Gunf06ZLJ0knn0mafDjUjckJdV5iakfvZn1w0zz9s1WjWxc8MzNSttEFINOnSIRgljjraPAf79hzD44-s6NpLCmvo0m44zalvIuc8Py90Z-TkijsraqP7lQfgjxjgSzrcVpr6FjWYhTiLq511vTJvKjQijWzh5uOEGanbrg6qSjjYP0CzmzeUN9u5WXFGClA_WwWqZhtPWWqi3XbYdqzSrzX5IdNVU6Pq2YPwVTAz5XffQc_z-8kTjDYc5CVpPqL20vu_OXyeS_jk42tzMpWS8qP3WwdQizTOpPOnNSl8lx9dQ",
+        "places/ChIJ-aOyOJiipBIRagVCipaXrMw/photos/ATCDNfVGmTGo0e_wpsbMKjscxeLM5K4ZlnMGTXAMbajTj9CE8ZKSu3412NgqnwQdHxublV10WaHv8MlNoAXGa7bpQkpNesITn5AHTKxNPWCcrAtKHiSuWYVPtKkoHyKnSGRRarOM2kg5wZgJqvpP7sI4R7c5i4vgV07i0V2F2-6lumjUXB0CIHpgogqei8JV8EYomgnndG3GDKGbK2_iHkfZkSxx1W-cs6HuWRzgdHAW-WhUpm7BnZHkZ8VuG6bkvFhFlSu0oxXIKpM8wA9TCY1vnFIDJu0jnaqIAwS0aZqDu3ugwMrjr0ksoU4VjKhzIgWFVBNtWmEEYBWp4-_MaOW9OeNQrzBZWDndUkgLjnMhJcr_k2y0ag3V4bCd4nb3lkf8A2yptI8yYvBe8lyLzCJ7DE3mA6Ywq3qzoSyTiuEarWYkFhlos2BqIHOYunBr2TAG"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=14748329552552002922&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=14748329552552002922&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: Closed",
         "Tuesday: 9:00 AM – 12:00 PM, 1:00 – 3:30 PM, 8:00 – 11:00 PM",
@@ -824,7 +824,7 @@
     {
       "name": "Bar Bodega Teo",
       "category": "restaurant",
-      "address": "Carrer de Mallorca, 410, 08013 Barcelona",
+      "address": "Av. Diagonal, 445, Eixample, 08036 Barcelona, Spain",
       "neighborhood": "Eixample",
       "phone": "+34 934 30 91 04",
       "website": null,
@@ -849,11 +849,11 @@
       "rating": 4.3,
       "reviewCount": 111,
       "photoRefs": [
-        "places/ChIJ6e2Ih5yipBIRWrKl4VF5jhg/photos/AcnlKN1h777nMJBN2AEYxNQAdFqif_jUYULwA9b_N4XuTFPPK0uSNOJ_8VAGFpi6cYxO_JeN6WHwlPgME6A4mCJw9TnL-X2wKrkPXdqWRJtpqCvWVXymTmUw-ajTPJA5chuU7FD_qxQ8LvdEwqcK3QrOo24YZuJ68zuheDPS23UV87fG4Xo5IWNPg6mRqImCDDX-zRoy6QS4DBmIShxOIpxMpYxoiaYAjHiBgCPhFwbGO53mhgF8OftunH8Y6E1dIDOqxSEoapLngw_Jkqp92HQLHpbHOxCuRXHsMBo_1I95Zqdfsr-csIh7izWVBlv4ugGtyP4-3MyQwNZ-aP98ZheYojnxdLvckPX7Pb5KpVwi-bFHYuNTvLvQ4lcoZai5GVbSiJjPvFVcuA85mgIiaFEtCXbBmpFT8yZS71iWe6k47ZqD0g",
-        "places/ChIJ6e2Ih5yipBIRWrKl4VF5jhg/photos/AcnlKN33ABfppAfSWnVSB7gjN0J8M17qynVbVajMR5wyxD3XXg-DABdPDWUDVCwukGTEG2IGIdVCMRiK6LJLuP7m_NhlblklmU-2Upl4fO-mECNUVMaU3lYcKh8ClbTo2nJFi_uoZMlRFXv3ieU_IdWh_suqRP0CQK9Ls_KXCK3mrZCfeSIVBKHIptmuQM5ZLY7Vp8Ez2tgfg_fwFShLGPXicPiwK7cPoX6x2FkWR-diR--0f-ivqLlMNHFxNi7jbadwHov3HaiRqLVz97tEAP3JvHg91Q9__Y6Hc-p1XMC82Qj6TUnAkWw0kg7hspU0HxyWlCcLgVfhmVHHif5t52fV3Gq5GUBDKiK9Kqry7ktFuxR_4T4mVYojg9Lly9miw70zIa4u4VqKHQ8W8WOG86ZuEP3Gp7fTyRzgmiF3rm3FU8Xp",
-        "places/ChIJ6e2Ih5yipBIRWrKl4VF5jhg/photos/AcnlKN0313R5G36V9qQvF4VteUdD73F-kluUPLMN_kdvPc-LFEghpj08qKdHC_8lW9_lGYjNrUezENiwMgNfCGvw3cJKZCFpmDYaxu6KeQNyT3_7u3-uHc-YDAEnsY2GR6sKhyHWtAQEB2zGw9WgNSGbfyQSn5wizYjIG9CXXNQJya4oiC_srD8rzf6AF2bBKwVeEJrZ8u-nEynjSDZLBBRDjTSSH7kPdW_9_OCofJtEHM2vq46ejgoNLE8P4EtIVzwhILhFtqjzNJALLSGAkuyjpQ0hz8NtQf-DJrBO70J0IxqTHAfTJb3fI3qFQjIdpVc5NsM8uLilDVwgfw69TJim6KsEHadNtrLE63une8wZJvhLmoSskirluOZH_GpM76K1TfLIElJh6m68aDQIa58EhSaU4zhn2H4fgS4vETM_JA5DFaw4"
+        "places/ChIJ6e2Ih5yipBIRWrKl4VF5jhg/photos/ATCDNfVgoOf3aFTEMe8zJFwAyEG31z79IYsRhbajA_g1g7PbL-EyhTKdsRfPNHTscVSN9dr5aUewNIIz2zsackDHfYYa9XdkE_bXNTkUg6htU_-gtUhMsnfpx9z-VhCJRTsf0RVlQKzhF7-ud8bJ-l7iWExPIIbs0x_WjA-O65yDxtxFKew2gkzY2x_RkKlHquyB3VklbA0-rq-vzsWkUX_LFnN9YI8EWakKDmTwQNlMvdFl7yiAsJUA9vC8UKpHR73MU9WMky5aUgUrPAIV22Hj2H7WadJiazVUI-ZlB8GPZRUG9aKXTB0C_8H5uJmmBXtq-hO2et3ngeLP0pq_0OzgYcCQH00APuhUGMV9FULHPc2zqYkErF3DZXXXzMaBjbQJoh4YRygcLslV9yL9WlO-mQTvD6JgV4BhgH8rctf6r0PwNA",
+        "places/ChIJ6e2Ih5yipBIRWrKl4VF5jhg/photos/ATCDNfXxDyUqMbRPODzGwahNmnIMH1INxa7V_6a_UEbCoThqfS5gCGgmTPahSJZJP8QckjcO0si3eKHaAJBqDTTCDEYduIk_RrDtn7-4jMwvDzllT5hpbaxWsEkaGCJNX51DaH2CPWJR-YRoxeZKsQJTmaL3HeMJ7GcNK0IAFbWIbHa1g8wmoBgwS3qXc4z_7gI-cruYFGySpbGhTXQm_x5f1al0nYHOYIHU8J78a2PXful1TCIpIOKCtn5ofjncGZdD1zj2XISS0QIjpQcIKcm3YtXB6FX9ULD7Yrta2ENSPniXwJuJf_9Z3sKWHkpfmnvj9OgQJMEH8HgE-AXO9apq4FTxknwnWUzrBFrdxIndoT_huY15Ev3kzNoqrWuqAoPmERAAytecsjF09HgwjLDlfB3IgLAA3BX2n0Jl5DwVo-sp",
+        "places/ChIJ6e2Ih5yipBIRWrKl4VF5jhg/photos/ATCDNfUG9dm0m5vt6-tIdxjvmjW1DfW4W6643KUSO3dgKcNLFooAljlLQdqJOf4A1r_KZZIsFoaY67Ff4RsuorxlnjpRO2i_NzUY86Ao7AI-jNfqTaqCkSRFv-COV4TLu5EQ3VRN-39qy07PS5aDBr3QuoYcGHCAR_dTZPZwEpGFvfp5WepQm_2soaTv_E7iGkVvYfbj-nyBng_tfAoXnctMKffFIWCPZUXZg0sIYQNm4Z2QeoAua8jnOgnkYRvJrjbOWtjoN8XzRwDQaBaimIWpx_GfpxMwrRX9-e_CkymfX2fR0MQjfuy-JgZPHuXVlvEU0t9S6EM2uNzIrDiubITINr0SdJEMwbwmboYHhM9Yut2ezsuZP_sVxNsy8xaqulKPaWcChhArJl6AkfZuyOcHITs_1960g9l7r3tf2PZxdWa8CzPs"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=1769485096188228186&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=1769485096188228186&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 7:30 AM – 7:00 PM",
         "Tuesday: 7:30 AM – 7:00 PM",
@@ -868,7 +868,7 @@
     {
       "name": "Federal Café",
       "category": "cafe",
-      "address": "Carrer del Parlament, 39, 08015 Barcelona",
+      "address": "Ptge. de la Pau, 11, Ciutat Vella, 08002 Barcelona, Spain",
       "neighborhood": "Eixample",
       "phone": "+34 932 80 81 71",
       "website": "https://www.federalcafe.es/bcn-gotic",
@@ -891,13 +891,13 @@
       "latitude": 41.3780022,
       "longitude": 2.1777241,
       "rating": 4.2,
-      "reviewCount": 3097,
+      "reviewCount": 3114,
       "photoRefs": [
-        "places/ChIJ0c3t9laipBIRvEUHQJkXfJU/photos/AcnlKN2cQsyRoLR04Cr6eQJcoZ9m5sWmuRVf6NeuzXeuFmIGG739zqBnFEJf9MaASxVIwBvpJN0vVz7-WdboljFPPW_YAGetm74fVZ4BrQWVseO8Ah9VKqDOaRl13YHavh5bTNuMy5M-EEWylD0FuXzqs1KP_f7Qar2EDgguBJuObWHozCHEAt6hqqUZ9fd8nM-NNnnOAdRoCGClczM_D941ZoFK5M9WJwnC-8O5JFrcg_AQb03BCA5O2smln5bJfY_I4m7L3aOZMLGjetLqaWAcIXspJQKJsMoUTatm7ubLEOof3w",
-        "places/ChIJ0c3t9laipBIRvEUHQJkXfJU/photos/AcnlKN2N7CGzbaiGbRpys1YaXvINyKR2PPbaaMNwyGr4CG9b5Cg4QrxDu4uyxZCiKXYawa4YqP9t-HSvbkWdQRBoHSDE8wAKuHBI6EWLA6mruyhDJ_WsAUW264JoKa2rWWsoIB_QBxolkHYYux4RKpVNuKdnqhg5AgOf8j9_EvNkGYPLMnOb602L8w2g729XVhR1zewnAabcC9vZbPLZQZbVXJ0V8JFkfP3RiATwW9_Z_I2058ErHchEK4e-siZUwcrkq6HZVgPjBz2nc70bfkIYKu2iL2Ljz0peMAAS-BGHeIvhAA",
-        "places/ChIJ0c3t9laipBIRvEUHQJkXfJU/photos/AcnlKN2r3NZR0GiwW3c_TxcVFla3r9DzNDMoysuLmimR1Rmf-Sb7q4dTdOxIKMFzFIZbTwaXkubHEhY6FqzS4ul-w5Aih7xlhC8-agvtXQVjJOhQwmzeN7LIS0IkmfUPTjHSRDNCQdoFj0pyfg9CUdw_tCpz3VcZ2I7S8BTLGkH52ikMiQ1YqTohZ9PFKexKeBvSLgtqSDeeN46g-oQAj69Qzhlb-FOvJWsQjrCFJ2ERvHH575tpG1ySXXJpb8rK7g_WR9hrqydsWI0nFpK9lr95s7JZMG9MoRfEsMd497LnS6CWzc21uIx8TWuiIaAr2WI5_TtUYSFCnQ_OdLtMj6vwgi1hladZTMprHAYn7aTWY-WlwcpEY41GfarZbAd5PrYRUfZOWbaZ3cJX_Y_tslpPtgBiwyQN3YQEFEQ-hFM-m6QbJn8qgkHiXxYenCad_oT_"
+        "places/ChIJ0c3t9laipBIRvEUHQJkXfJU/photos/ATCDNfWJEPRyMxrKt-UG5ymSqbJpDr8RTcdvzmee6v3Hn-R2GB80tcCVUSNs7q3WWaYCozeWtxJTjpNUruvGjiGmgLYG-pI_XPFNko8miYWgO_g_tJL2pq8ioYVfKGQFWB254uotzw9U-5EU0k79satjAcAuDBW8tVBkFz1DN8uQYtJmLcTli1ZZIWPQ1KtmbNccaO62T3JwcDobWKS4_Jmb7oX-m6U4HAssHQBZDNmsXRFQrFcvc6jr5tPPQGLNkZDywkILK8pos2utOVRpXWcIYC2jCk_BZQ-TFvgyAOUJ8Ixtxg",
+        "places/ChIJ0c3t9laipBIRvEUHQJkXfJU/photos/ATCDNfWOJdxxUidsovRO4PA242uOLA-5rgbmvyVnjrpT09sc1fKiG2mJnDl7GHv1NYallWPEd11HeyuzboV_KdjUz5YEr8Dey1eNI90nXkzdbqQ8QSCtmfe0-lHIlGj1m1NexpcE5g-DK4h_c-HlGjkTgyT37VTovDMzYdYs_x69oaBbqmUwGZg7cEPtdJ4pRb-rPEWr8hgARoNXUP_IEVTCotLGy4lkE6gB7SbrVmvKrLxvoFbCNd1Zon_12kcyO85yNuA3rthtJ6jSPlyBOxpToJjmzyz5N-uLI_0HonvVwOVGzA",
+        "places/ChIJ0c3t9laipBIRvEUHQJkXfJU/photos/ATCDNfU5JamgwVOimoXZZ3Nduq9tM9630TBBEc4_ThCPOyI0-0OEOZLBJRXBywZFO4gLlCRGmdebxEtcRHEgi18PamiGkLqa2lBSE-PcL1SbIcqSZyKnZpcdBfsGOBUsRMXTE_Ky2nOvu0VuXDeJuhSizERI-39xxz1jtyd-Y_7E7uYiCOLY9j8bs3B5aRg8lFHxV0u6Klno4iidZDMjtMOTkPtIg9a2sHuH_6KBMHbnH2l_o_Ou398_TbKihmKgtkabqpiytvquYs4BjpU0AdPCY0Z8qY6bI9VR9JnHmM-Imcmhuz9BX9z1Sby6PnnGqAnr-5t7bmde4ypv4h19_VxqDqTwyd3w7a1rJSD6Jd0SpjIjGFZbzUxVF99Ey5VLruhWwOYIgUXdK9m_RNTp_gPiDJaQcOa6wO1W1lEu3v6hPI3YD5w3a-TGGvYUCtOh-A"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=10771510355735037372&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=10771510355735037372&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 9:00 AM – 4:30 PM",
         "Tuesday: 9:00 AM – 4:30 PM",
@@ -912,7 +912,7 @@
     {
       "name": "Nomad Coffee",
       "category": "cafe",
-      "address": "Carrer de la Fusina, 9, 08003 Barcelona",
+      "address": "Passatge Sert, 12, Ciutat Vella, 08003 Barcelona, Spain",
       "neighborhood": "El Born",
       "phone": "+34 932 687 405",
       "website": "http://nomadcoffee.es/",
@@ -935,19 +935,19 @@
       "latitude": 41.3889218,
       "longitude": 2.1770391,
       "rating": 4.6,
-      "reviewCount": 2683,
+      "reviewCount": 2723,
       "photoRefs": [
-        "places/ChIJF3295_qipBIRFR8_uS69o6w/photos/AcnlKN017dlX_01Zws1SC_VHuN6GTCz6roSQmEQ1NomJA0L6idL5Re1HImrrQJZ8eRlvbRKCqlWpflugEZiO1G87wMl0LXmQHYxZx3j8agbXSzvtCyew_TzCANd4l-N2kc04vZBQku7dVb01qAsO_sG2O8CzSa3C_Yru4ECOFHnbqW3tQOtVnJCFGIpJIrsakX3wWQYuWASBoOA5ri_Er7Xy2Ab8yUHB5fn1e0d_7ikWVsuRu3EQfGW8cGImW_O5Ql3Okzo_7Calg-DufeTzqhxrGnwuj1R0ecpaMDKlxR7IYHFSBA",
-        "places/ChIJF3295_qipBIRFR8_uS69o6w/photos/AcnlKN1qPCVnpW7mEYQGVxwoMO1bAxK9x9onsKXqCC6gYxuC3OOgoNwFZWOgGJ9fbkwQtdna3TlqrIm02NafdK4gSiUj_yUhugARK4I6_wOQ_lsjOTj-pXSCSQbD9NOyOz34NtY9X2wGYkqxCTjkpsKk43LGkLwoVArJP9slRBixFbNaHq_qXIoHQNuQssl1wnptnZjZ8U9hT9PtUrTAmeGAJ6agFyBqclA5jKg-jcytbY9D34X9HkoMEgRdVMqcY1G_liWfryMsrvGMgZEB7gAiWMoo6RiB_f5BX46tURHYwlFMcWtSnYDQr9f1Gv4BaxZ8HMJIL0p-Sfu_m7l4juSGn7znCHMhJ1lBYJqt35h_GYMWeJxmJ_arvd8AF-3uYZ_W_gvTOfpoBPCb-5cqvisbJ8tPAqYOKUwCNSAlUBotsPb_4c9BO6OxRTzbjCHAVQ",
-        "places/ChIJF3295_qipBIRFR8_uS69o6w/photos/AcnlKN1E60Kd_wajPOKljfiiR1XbhsAis1M8JjPUAZbHCxiZ3s4PJqVqdxRfrcxhP-cvAlM4B6fNgZc3nN6wQLH_2-pnw4RIBhwRtS3tX2KI1Grtk6SKu4COAiu5fDRNcJX5o4sb3zKP4U0QH7tQC_f9-szlsGTOu4A6ABM1gDYcTCZo6uOXCEIwM1HlGxyI5Re3KOozX2CzpoTWlfR4m0aqfJaqSPpoSlxcyZFxBOsypKbEGOGDe6Qxtzie9A2DrhpUrDlBLSNt6-0HoODbKTLG4vVsG6RITD8ELxWS0UZa1FeybQ"
+        "places/ChIJF3295_qipBIRFR8_uS69o6w/photos/ATCDNfWbi9ZTAsRMZz3qsEGRLivfveHHVKoPXrE6P-0Wg0TF40_I3fgwK3_BGtRjwSUcEoUMmrYaUteBWwM8KP26BshxeMnOf3FIGZzBz4YEILQz_WzvZskw1QyEZhusL-lE3MwgIJ45OSujD8SxmsYP4dlG-WBbgL6ABqrbpuxvv5chdQvgayn8Gssx50Jvwqgh_XWYUc7CEX7oh5bi0nNVKyb8l53UzgbMhwnUn-NAJ4Rw7qr1OlG7VUIavUbBxgSPlcAI-mfaAbCsLE4KYPyu7pe57e3MWXdTqnDkg1s3huUs1g",
+        "places/ChIJF3295_qipBIRFR8_uS69o6w/photos/ATCDNfXttlFV0GyBA8xvG-foBKGoLrK1k5fZJc8dLfd19rNLa432AtnCAWonNXWineEyxyqCYZ6YzmAxzN4-68QuotZb_cHs8xLJGKZmm-p5IYFH8uSEdSFyf8ZlJLl81wN4lzuMY77DGfechLxxSmKjf0gqtra_mZxLYm43M6JU-rzxlL3cisIxsSkPb4LGxTWNSKPK8do3mHxUvDhF4DQm4oEjp8pWmcFYWA0nLOmWoqDjWZoAEGMmQUN0VHIaUFZbm06UsvQDdYTDDLn8zqSyxr9VO4AOinWDBlv50So9lmAyf7wynqCXTc3DE0I1AGx74oVH1dHYyb32DhBnEtv1EyLX89728pOyCqrbUJwQDUH3kfPANQhVuf2WCeBSsNPKqvJVxKnqB83u4DOnbeWcrcI0V0_hKMfbTiQnZr4rqUrdYqOLiDwEl7v3gikl2A",
+        "places/ChIJF3295_qipBIRFR8_uS69o6w/photos/ATCDNfVKuDrqNjPu2YgGKvzC4DRs6Q7IyEcEzRY9xdjt-FKJDb05Zj2sFbvrJph66k8CGJik3me9qu4kGG8vwUUxhdng0eNDyauQczZ-6SsUL6NlY8ZpHGG868bDD18p-2A1xOIR0XaDdHisbqtiwukCoMYM5Seu4A8c_93f_egEjeYxfzi1y0nG3fMu_ZOXlcmI9n2vEi9ganySm4xvRE8eutl7_NNKIWjsw3LBirUPgKQyKLxKmYUq6dCiFLncoMzJ4CrejtkU5TBMLPr2c3DP6Bl62pC4Ue744C-wd-cyexiwPw"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=12439994604101508885&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=12439994604101508885&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
-        "Monday: 8:30 AM – 6:00 PM",
-        "Tuesday: 8:30 AM – 6:00 PM",
-        "Wednesday: 8:30 AM – 6:00 PM",
-        "Thursday: 8:30 AM – 6:00 PM",
-        "Friday: 8:30 AM – 6:00 PM",
+        "Monday: 8:30 AM – 7:00 PM",
+        "Tuesday: 8:30 AM – 7:00 PM",
+        "Wednesday: 8:30 AM – 7:00 PM",
+        "Thursday: 8:30 AM – 7:00 PM",
+        "Friday: 8:30 AM – 7:00 PM",
         "Saturday: Closed",
         "Sunday: Closed"
       ],
@@ -956,7 +956,7 @@
     {
       "name": "Syra Coffee",
       "category": "cafe",
-      "address": "Carrer de Sant Pere Més Alt, 5, 08003 Barcelona",
+      "address": "Carrer de Sant Pere Més Alt, 32, Ciutat Vella, 08003 Barcelona, Spain",
       "neighborhood": "El Born",
       "phone": "+34 623 59 58 83",
       "website": "http://www.syra.coffee/",
@@ -979,13 +979,13 @@
       "latitude": 41.388132899999995,
       "longitude": 2.1763581999999997,
       "rating": 4.7,
-      "reviewCount": 718,
+      "reviewCount": 726,
       "photoRefs": [
-        "places/ChIJ-ZgJdwOjpBIRBHBmdOFZd4g/photos/AcnlKN3xbv7zjKkT5EurK64tV1YprIuvGcVqfawhVtvc80Vt59qXeN9gGNzEbJ45odkxkr7dyAIkNn0JOkuWW9olw28VHtF5QuZF4GbaLM4egji9yaX7xhk7uRFduhThcMuKjNf6E26xo0Md_Vm0Xqb66t25lYuFr85C0I_PSj_owq3bIjW5-7IyyTmxHTlAPce-50zODZTcjDulUAyR0WrgzCvPtyI682zMDRPiHV_RgyFtzjwg88f9LcjFBD4bmHfIbKSXl1Xv-v-zRgGiRf7Bqa0nOLRcBpb39mU5pWMakD2m7P32049XVGyo_e4Ypt-3GGKBc_l_P7csm9x9N9wBmrACq4Bwj220i_NjLZqjOCGMDBrOXQmJHeicJZO_-t1xJnZ-qWTtgZn-VamYpjdkSgYLXBV-XNOjrRZYlag6nTneyQ",
-        "places/ChIJ-ZgJdwOjpBIRBHBmdOFZd4g/photos/AcnlKN1i1zLnNiVMQ7OBCKA2w2YQw_smY_YSjsREck0m-kSa2rJDZWvSix08hah4fFy-NpeI09d68H74vYzUf4XiZhAzS0GI28l95rAPfhQySO6hlj1qnc-oCdRJgUR5GYqp2NGJVvZWzaSmhZCFZHqShdTW6EprmVTGoUXxBb3UIzI3MSTLKw9uNf0PPGFkPYQYHYmsg6drO2pxaY3xLwSwOsdTKciG3nsUWMXKB2hjUtPsdUBDiM8u5-KU3kBCrjXcFB3zc8LvFWDgkN34KgaBCEllpEinb10VbrzNCDRISCI71Rl9Si3ygVI4y_auw42GM2LEmFRuAQE3f7yyXgaaHA5vcRuYEqCKMAvtIi5sb9R_2k3wy_UCDvm7m8uVj4JKj9cilkByTx5KWOebpZN2Yzj_LXI-OSCLpZbtMW5VKOzHDOIdMkkEi6akZK6w0w",
-        "places/ChIJ-ZgJdwOjpBIRBHBmdOFZd4g/photos/AcnlKN3WrrlNQXen9KSpAf-U9XWuq-5YLQIpJTll_mwXrTwqtlhzd-ARzu0UD5nD8qUQcaN7kq6_GXMEeRZ-9HV8p2k4gmMwhS3U0UXi0sYLYcQbJiizj2FUQFjXtj3fpBmwrgiMr2Olgfb5BsvIfY-Cf6JEnCcxYJybKX7ZenWTdLDJ-YPSkGisvk7MqV8iQLbDiaJ1sB8r9sCyJ-b_jdXhubRaeFYs86GtGsNnGsTZciUBFam-IFvC9UHd4Zzbmt70KrFm8BSHgvqFIHKgoZnq4atHzUMqxurBHnpVyP0FI7L3n-x6_clmFNTNdFZjR72uNo-i252wMan90sS9CTjIeRMDzCGPG7YZwSGxCv1jMwrnlcmkCoEwuLRGEjvlOa-jAHcuiPMsUUeQJNLSie1AZKJntwnO2aR6nxdOV9Q1CgvYujlS"
+        "places/ChIJ-ZgJdwOjpBIRBHBmdOFZd4g/photos/ATCDNfVrLH4NQHmjB1MYUBY2QTC11TwphpJqHTFTCzJLPp5hLYsPoYh72XcdIq0fZ3FIRImaac_m_9PgIWibI4jXUR5766-ctMT8ZO0HrV2kYU7Do4Vo8nSw80WTHasN3eQefJmIHcuyyIg5HSbh3L9rzpZyGWAcDwm6ouUDMDyL9TuLfAHfywWstI--jhrsRAAZmUiv3VfO8BCU6QkBXZdIsaRSCudpNaCPNvXnzQUPo2VEDUGQGVkLWJ0CLgETkTC3OE5p9UqimvFAwSlCvH3yVsjCMQrnNyF1dVLBG4AjnnS-X-24WHjRoSkNOCONWdjuGj8clKVdT-oxAO33LK_wXp9jXK3_PmuvKCkC-3LCLSrHpc4xuwtfNdwfv5uonOfxVNUDfCXHV3KTZ-FpmabiMLgXYY-I7s5HA9SHAfCXYUQOOA",
+        "places/ChIJ-ZgJdwOjpBIRBHBmdOFZd4g/photos/ATCDNfUmhD1LbVr8uXwgErirb1-iUNWF5ySYBo5WgzA40wqngPPMbHUGW5A00cEftBDwWvNnc7Y47FzgxwJE1pRLiviVd0bhpSmX_uA-iyQjaiPMWDA2YUjt1r1OlrKfNwRTk1_aWUPdn19V7jZahd0o3B7ghgQ_soPQQ7lA63J7Q8DY9gsOmGo7AfkZPUl4n7Pum2LlMDxtXifzUMElUevs2mS0644xOmYhVdBCJ73i5K9eJ-hf-ehXaJr1U2ZM30r9P4gTLTP1YpF5x50t0l4f86vjPpCv-VCen11b7jCJKNVUdUXsQsb9aUm-FnDLg944L97Tcwk1bAjENjlH8wmhTBxLu2f74BejzuXnUX4WZT1HlToisqa7pwsmORJepROyJ-XKXUZGPYk2DicIjWQd728xUA7iGWUc0blkY6xFaOuI_Pd2",
+        "places/ChIJ-ZgJdwOjpBIRBHBmdOFZd4g/photos/ATCDNfVykQ-Y1qB0uIvbPed0V4isnr6eWQkGYPXYA_BFCjQc3jI638VStbG06-o9vUguom-XT55mnxtXSI6to3Z9imEyNV0llkXlBOGfwXIqkclt7h971co0r58K3s1cvjVO39W7C9DUtUkpHk55z81P1anFsP_ZAVjS4EoAN_zIirvUNzT2R-LFUut-Q1wSsjMMcNTIUnqTIMW1scDM_F140p2Y6KQZJpVEEGbxekz3o7vlocWoctgkdA-uvsuqBmYjKo4AMfZmCdrTLfr3YVSGWx3rh9SYzpdRgDsztuabnL1WqL_qU8eb6bEot9_YZZfXk39EHGmdeY_pl7Huc7nWXWAYgyTYfbzeAN-rlmuwB5IOPIsM_6N5qYfpTNlsKEHCcvAQDJUuhB1zaR172ELxB1zgtf1vf3AgwITSg43JTseSzEJ4rve44YNu6ZDBnCAi"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=9833427136242151428&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=9833427136242151428&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 8:00 AM – 8:00 PM",
         "Tuesday: 8:00 AM – 8:00 PM",
@@ -1000,7 +1000,7 @@
     {
       "name": "Café del Centre",
       "category": "cafe",
-      "address": "Plaça Sant Jaume, 1, 08002 Barcelona",
+      "address": "Carrer de Girona, 69, Eixample, 08009 Barcelona, Spain",
       "neighborhood": "Gothic Quarter",
       "phone": "+34 935 63 04 97",
       "website": "https://www.cafedelcentre.com/",
@@ -1022,14 +1022,14 @@
       "googlePlaceId": "ChIJhcpqwu6ipBIRQIX-wz1yKRA",
       "latitude": 41.3946073,
       "longitude": 2.1711302999999997,
-      "rating": 4.5,
-      "reviewCount": 2578,
+      "rating": 4.6,
+      "reviewCount": 2732,
       "photoRefs": [
-        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN3klwqtY3aRnQoCYjvhDgGeHtW_YgIgf62Db5IoJICQmop3bk35p_biPYT7D3zy5180eNt_Ighdn645fo748rqTxHiXEOo4soWcS4ls00xcl7wwwWFWQxr0PF_hpcZHEuOBFfEVAIiud6FOsGnnToCgsq-9fbSJtiVyStu9napByXucDpred-6NEB-lfTb8v4ocxU07dJbpH3_2w0-5IcSsOolVpMJuE9JyNV8g31D7Bm39E4BvqUr-fpA6Rntr5IC58FTh96xq1XJdC1v55yxNoiiDUAah5C_Zee2YoW-Wpg",
-        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN0RSD6H_fNDLah4sUNvjAjU8Ak1Q6EjejcYG1a_7rFkdHrjKd6hTF4aP0Flv1fXmgutvsTBsE55hUdLNeG3zdroWxfeS_7mE1wYNczAQxBsTr5Q-2VtVeH9RJs9jtY0zC8hpTArwD0WfVjksYYZwhJ7AteAgYJu1vMNd68sZ6KbE7Q4nSURO_iHYKlK8wOZz665Xsdb1tJqeRZiDiozW1_2vMVIYLc8QrKHUYPbl3bKdxGEmOMNOIiQMSbaHgAL1M8BxgtErP3dl0wvwcdK1vAeygAg-9RLz-ZF5_QTtxIEKQ",
-        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/AcnlKN0u4aqzIhvS-sDxyoMxnowCxim7iKZ8l7KAwGLkwxSQBqR5d_ttuvtNBrRUZEchxJIBEdPLIDl70RvY0YISXcaUgS8pBVpJK10dnqIZL-a8FmDJkkicJQLU0LXtrvdn0gGxU2jZJThjsQaV-WTDKB5m_2u-RruHdxQfXF2V7k7yjTVrueE34DFUqbMXkOp-w6EgiMKg2KYnSkvdS3j6AgqW8NMosmD6gd2ZUW463bIH9kkWhoWCjGjP59mSUsDj4LVJg2fvgPkGLSHnAQSpn8en_xtHk4w-b5k5zUb_qvyAWqfXB6JsZJNbNoHNksQm2Lw18CZ0xlsE6E8yqPU5xbknbtmOUrEN4GpXtwkrtkS_YAsQfeyuvj5pYF8sIyD0T3DSLbALN_sBtUokcV4hZMGuKDzXIk4aA56PBQbvEljKkmoyfn70matquRSN4Fw6"
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/ATCDNfUnTn7aTpxojpXRXiKMhvkMQC3iezu08C0pbjexTvFJhzFyFxSUetvptJOFsXgVSnY9xYQm-7NVU0Fi04Auguk6qzc9gnUzTcq9RnPpzankv3v_bzZQWXh6eKMr_K4QKVBPHamblylRXSuGRpJpVbYQDx4TtbfRnAKkMnU_Xnc0majO8REy5Mm6z-nm6LMfEG9md-e_zcWJ7yxRUtu8mioJl-oMkVCVhCFE4A_KUVoTh_j3u26L4rJ2566A95K6Ch4CgFQkHTIn5yDcX5xH52EzWglq8U_uq5zZDwoYB5BQjg",
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/ATCDNfX-qcsHtbSN-EWIyrVtgfB0AbVnOmqIKf2TFGzKYwyEvOLS9fR14NLIM11r3jE586beuQoL94E0UDkI2Yriy5MAxBSlKPBGkrITZlMZc6JcPor6WBRIyEJx7Hp5Dv184AjxhAKVyRWLJs-mAxF2nitXzTtJdEjq2pE2ZPqlKMP0xuSawojJSbhRtgboXtUHq9_i3BCwnL4jGWGtZ9zT7ErVA5v0VXQghxTrOsZ8wxlQBNqHES3-Sob8nF8yW4kS5TAuVVi_aVww4ihAKRMxQJnv7hGeHqjkdG8RMO8uywz1XG-MmL4m4S3MQJXUp10MdET_eflXATWYl3dX8PkJEqMFxSKOG9aUUJTxDOzIWuUbibMnCk2SwPZjkQZ1rFujc9E0L_tpEyOslPNxoIPp0ySG2lye1bvZBlAi2YbHM8Vqig8I8iysafeLlWXMTwHy",
+        "places/ChIJhcpqwu6ipBIRQIX-wz1yKRA/photos/ATCDNfXOi-Tpic1JtzeGbTM6B-rJxXCSlc0_BmObv8Z9hNaECtT4Cv564y5yyaAh9gaMQB1kuFShKNpElHKLi_R2kP4LI3ysxF9QrQnrO--lO8Uxkd-ndKEw5XPTBlbdAG2Ja6Cz_VUIUGH874M4aN5y8h9xTkAwEtx3uwzXutNcwvlVYRgzgDH-E-0HdlaK_ydYJCTt0i5LiqR0e2Fit_FRh9Np8O0RjxNPWCobnY9MxtZbnjtSGICWBOop8fH2TnQKx4C3eBmSQ3tYqwbacXR3PcXQycX_H2DDn-u64c0CeyhJdw"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=1164587588258792768&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=1164587588258792768&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 1:00 PM – 12:00 AM",
         "Tuesday: 1:00 PM – 12:00 AM",
@@ -1044,7 +1044,7 @@
     {
       "name": "Blue Project Coffee",
       "category": "cafe",
-      "address": "Carrer de Girona, 11, 08010 Barcelona",
+      "address": "Carrer de la Princesa, 57 bis, Ciutat Vella, 08003 Barcelona, Spain",
       "neighborhood": "Eixample",
       "phone": "+34 932 68 38 67",
       "website": "https://www.blueprojectcoffee.com",
@@ -1069,18 +1069,18 @@
       "rating": 4.1,
       "reviewCount": 89,
       "photoRefs": [
-        "places/ChIJGUvKu_2ipBIRYp3WeaVp-vA/photos/AcnlKN3Z4fb-zDORolUMHdsNm4FH4lh1iaPPt9OMoOE94DzTZq9hZXlbfRGCC_uCfszuUoTdNHpRo1LGO4vNhNwmFjKnq7eleUYsP4uyReaEwZ4JxD4lwu18t1RDVQ7-imHBZNpbIIhYLQaLjQFwbqV31SfyrsrWnhwMzSTO-rNWuXzRcB8eeQZ3GuSXz9zYsUHLl9crC16FWxqQAR2ElO2oKk7sz81KQF3TJpRSegoZDDQWZjYDNyG6cdatp47TaDrOuauqtQ6wseEIpszaUAa-B4T8ODoIblkJcNr9_cp9DRbcdA",
-        "places/ChIJGUvKu_2ipBIRYp3WeaVp-vA/photos/AcnlKN1vmFjzjAMu22IEk3pYdGgW6-pjnUSRrAzlYyZIqRwkkNIzu_gS--8AvVPaR_Eo7py3tJLhvbRkr_vHEXduKxkp7228Xtx2FrumceX9xY61jy3AxmK4jLuhwZu7FFOPMHX6W_1idtZlCiK16mGJV93wJCVIE9LP9RITMAzAkbLWPPiqotKGCaM2XF3eze2CPj0eG6cDyowfM5ixThT7kpqrRL2-gbgUnmqk9nyQeNdnF6M3wemOVyMvu5IPt9AG_s9IHa8nskNg4pCOd5ADevVUzmroFNIn77q9YWt4h7qaeQ",
-        "places/ChIJGUvKu_2ipBIRYp3WeaVp-vA/photos/AcnlKN0zFogeI3TjafHPnQCuTiMKnUffm2HzgmYtGjeu4hB5C2Cyj8XCeUjP8et922HiBUs-_QtNv2zdnGklD-lJcmD_ciueL81jw2EIU_XadKyoRu2tXsX774mSNjFDGz2wPik4mCYdzqHosKeZ4AOoF1Kq8KtVaCEBxMKWiDXwG-5MR9SkNG-hvcN60aniTyBMDbcPq-rC_fwtsddRmPkhe4euir3tHyQPfyiXNi8OBoaUQwvot6g_SH1axEJhYWlSLD5LsheWdTImiQxXLyxMmQ9dBOXkEKCbHchCHKogu5HLgw"
+        "places/ChIJGUvKu_2ipBIRYp3WeaVp-vA/photos/ATCDNfXr0vgE1wsyDJtXTtmghbHiPg5zEfqDc50YZ6grJfF50sJ3no8dm3ZM6m1Yi_QkpkVY9915TvvlyomgJZU_xsOHrTTsk2FyoWBcARcUh4ZhB_37vD4N5MlnCLJduQhv0A4IzAFcyWLk6vS96I0dFNbGhq1u-lKbmFPkNIflLmtcZO3ZZxhk-FXz5YiyzBN1Ru6hbFmloTYgQ3guHJo3WNnYat-IrVgeajN5C1LhfpwpFVCJj0i2qZbs6GPH8I_yD_UpXiTpZ9STwuWDkL44GxZZkxv7B70BV6h-jjWb3zgLYQ",
+        "places/ChIJGUvKu_2ipBIRYp3WeaVp-vA/photos/ATCDNfU3JMWwlnlmo5VShhVmxQvb46PYCFAq1skKS_NY5SuYJY9dIf3Y9kh9UAc-BgMskYXD5RA5llNBrUMCyBV_Fi9zX_DT7Cz4icsbDVQFzStOt4b9iLfYygLDVSq51I0YXTtik77fOE9OkHnS8yT0iwmQQCY9g4YejAqofMhv2pl4hHnN67-c2Fam2eMJQCIYYyPHAGqIZ8M5_YoT7UEqUmorE8NByZ7KfcGaMSsAgl579bUG7tlKG9ior51IT56s1WrMEQpzxclrb4yGZHHPLrOKk4y7KFNiVLwIuGDELMeCtw",
+        "places/ChIJGUvKu_2ipBIRYp3WeaVp-vA/photos/ATCDNfVD4IfJ_W_I38GW9KhJ8MvNvPxZ9gFzvUdEtzrXdpKJf8KiFAey7P93tCQNvbG7EmSJGnYfbDy4yNtoSaaOlvC_1q17yxU_YR-6EtJNr2fb7L21ERVjVl2JKcPox4BsNENvddXvGxbEFTMVZosU210C3a87gBOmcxMhTdqqxdfEjxBfFfDVCT5zBVZUBq_bDB9iCs8MNPAmnij-lWEJk9NayJ3TP1fH5hhX_Cp1iLB17T5sv0yQ5xiKB5b2mafq03IXnUtmo1WmXDLHQKnUqJYM26exRu93JCrSya_iPQbPhw"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=17364307472714997090&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=17364307472714997090&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": null,
       "enriched": true
     },
     {
       "name": "La Bicicleta Café",
       "category": "cafe",
-      "address": "Carrer de Verdi, 16, 08012 Barcelona",
+      "address": "Carrer de Venus, 1, Gràcia, 08012 Barcelona, Spain",
       "neighborhood": "Gràcia",
       "phone": "+34 931 96 43 30",
       "website": "https://www.bicioci.com/",
@@ -1103,13 +1103,13 @@
       "latitude": 41.399964499999996,
       "longitude": 2.1619078,
       "rating": 4.6,
-      "reviewCount": 1402,
+      "reviewCount": 1413,
       "photoRefs": [
-        "places/ChIJqy85mZWipBIR3e8iyAdN-dg/photos/AcnlKN3hndKgniNoVecLMOutMKGJ8jLnkfOd9fED8P3THfiBj7ONrV12IYcHzQmpHna8Aom1GGWp2VO9CdwI9pnqvZ3HoL3tFaXaOcdoJ9XYKqz0SiPeDqy6B2cp5ehFucz-jcUKV9bl90NZK951LRaUPXY7yG4AB7v0686lPOJYCQIVCF55nsaC5bUdtYaXLvmeJO-BwrHI3kJvw_7CBpjQ_caUtUmzj1pjkgcB0SEdIOOQgOqUcrXC9vyq33pGU3gQzS2s0DgdEWcgh7TxcEZSg9V7i1VzxJlru-N1u86H9mOGig",
-        "places/ChIJqy85mZWipBIR3e8iyAdN-dg/photos/AcnlKN0po3fsAOIztPJHuOTSfk4Hhwh1_f2y_3k_dQUEfU5Ys0dO8TwyUci3UiAdHKwq-XxTsXNYKEX7a7SoGCokGxDe04Xdw4yDn2jlRlsXD5dx8wwp1bpCBbW_HlYlYB_1JFDwFMdCU3pZNcEDOVlAlojIlyKc9XzxRUMBfzAVzQ48mISSfpdy29C9omisOLezp15Ozs8NTgb-_H-WzZQzv6GwmD7Cyry7n7e7rQeI2XFhFH2xEULM5KJNNdnllQSQkKizIl_LL4ZAwSkv1siQGT5LJ53_W8OUoDEoYjx1eAm5tGW0JJUWn_OiSrSYkahpRQI4eFLbAvfxjJT7DkP3IAWRdIEHHNRkFbpVul95BKEeEsuwps2pt267Dos5ZOEqslW6ZB91_bMcEWJxBcFq11y-1VBf-RYEG84QZoev9RNaUtbRHwR3YKzBY2enSw",
-        "places/ChIJqy85mZWipBIR3e8iyAdN-dg/photos/AcnlKN0up1_JU5ZD2XimtMo_8Tgt1_sXcccwEUPlvx678HxUUo52_8UNkIZKEjHv0GnsTyT77A8PIhlprTHFrajJP2SS3Wggy5rwRhU2aZ-fiEE_GRCPwxE9cV64QsptW3_KmSvjOIinxmxD6xmG7xb-62wZWC__cbi_U1lkyenRpb-5651NcEGK3tXUmYyJbYnTJGr2WHTSsrF97Pe4zslUMhgbn0nsrZaBGxt2-_qiswRTsl62e0rtCB3cM9aXY9OsXSbUgmqnOVBfXyfOUuCOi83V9TbHGvkfn14kDCXEodMBnw"
+        "places/ChIJqy85mZWipBIR3e8iyAdN-dg/photos/ATCDNfVOkg5MpWsCrER_arsjFZzgUFp4rWjwQnXY3ibNJuRCC_UwUya5gwTroZywk1t6cb4ut2IIQQbYWkrTXoXpPDqabW-MITs45Bt2LeIa05mMvVSVY2PFCZIZkobi9hwnIoSog1VAHIMyDUBeb5mHTFuRwhAGSqPR0zf8Mcq5PbFW0exebP6z-5KdlvMoyrYwWhBWIq2W0cpiaZGglaHD2I3q3JtfXx9RW2rN1NTdy_29uXDFEWfWVKaIzdlgrpjHOXCULd_MsTFCWLtD2OeCU8GawcT9YEQv-9MSWPDJyw2AyQ",
+        "places/ChIJqy85mZWipBIR3e8iyAdN-dg/photos/ATCDNfXg-Bn2AM3lsRHqZIAlU2AycXS6eEZ6utXBnqpvKc3cDVo82-9Em5LBE6JFtD53YR1PJdWlqkbrKqHz09roEb5zJL-auWIQmEzikLmnixc1utqZYMeWUfIdnK0xGP5E88g775TfdQlBW5nsXQBm-wrGFCc3AqlTNut8R0On-RjAEnCWaFh1sSP3KVI86l6aF6HRyIPAHRQ0kWMijydCygk8IZozszAxFq5BMfWUKpm2SEMcsDvVRuPo0jIiYB8YsNIu9KLt87IYqISAc2jzlK5eh0-G9nJHCdfRXZWjuJ8BHDhR7DYC8tb9q0lD82xccmc2iU0jGaWBQGVVbLX86k8TJxZZmMOw-IJb49bSwiLT45p10m_lL2aXAVrHYt1OjYKjvBulN0j6sgylKZamkBooSX_STAf9uRoJP4CrYcNLQXjS6BrqVs-pvcQJjEf0",
+        "places/ChIJqy85mZWipBIR3e8iyAdN-dg/photos/ATCDNfU7NPuKlsgLsvuBJUNRLmp4A1naMhaQVwQeKrv7PxuHqgeSqSC3w-gQNYEdsaTeKz2nozSXqJxQeAI5hl7OhAe2GX9gG76xDEVnSync3WPT8o5QJg1QGrlyO7W3GIutwxaYgEyLbg_7qLo_AnmPKGHZGqynWyBAAvvjpIIxwWrK46DQhMonsFWMh_RUMqWqyT_5DVUl2wKkHXsCZHz-ETwwHJa_IUrlxB0rVaC2Jox2pMLWiVLZvEx9_nEyeKmeMkVt_DDsJLvBF6S9GuaKdNXHACSUZP4-FXtni280AcQOsw"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=15634612277211230173&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=15634612277211230173&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 8:00 AM – 4:00 PM",
         "Tuesday: 8:00 AM – 4:00 PM",
@@ -1124,7 +1124,7 @@
     {
       "name": "Satan's Coffee Corner",
       "category": "cafe",
-      "address": "Carrer de l'Arc de Sant Ramon del Call, 11, 08002 Barcelona",
+      "address": "Carrer de l'Arc de Sant Ramon del Call, 11, Ciutat Vella, 08002 Barcelona, Spain",
       "neighborhood": "Gothic Quarter",
       "phone": "+34 666 022 255",
       "website": "http://www.rightsidecoffee.com/",
@@ -1147,13 +1147,13 @@
       "latitude": 41.3826099,
       "longitude": 2.1752634,
       "rating": 4.2,
-      "reviewCount": 2904,
+      "reviewCount": 2913,
       "photoRefs": [
-        "places/ChIJfb99MPiipBIRRm7r5cGAKF4/photos/AcnlKN2BqhoMzEa6x75lgshTns9MemGRd51zHlsEJ5xXPruT4b0naIKAsxWOwyMFXF6G-Mbr9pZDcEUbfHVQ_2otQlmF_ZwZIg9QlTZdvrUkR05IWUZMouH8qFNCQM4Ymo0ZadrhhHq7cMHI7ZSQ4CQ3eH2beAkSf4IdvMPXbHEkEiLq3eV5EfwcLGnnOYAY0mQaU5uPVaXF3yvjwMuhI7M9XDzn9EH_-v4tMoC3QLlllTW437kfw0p5VRXrMXzYeUiAzkHNrEWlRZ4kwc90qHVCz7j4xTJT5PGdT3p7U-dKzy54hFWxqv6YmcjLmt9K_qex2o9xcLDbj_gtxtSdFi0ZElvVsF6qjcA_lNbfFPuudFuxDqi45dRHENIzyB1Syr9eiVtpVLN8Q5PtWr3zjFav0uPpKa-oqtuMrXl1wmm7TvvFwA",
-        "places/ChIJfb99MPiipBIRRm7r5cGAKF4/photos/AcnlKN1JDB9RUh-0rVl1WzjhRMAxDlcB4nqbCIH3nofBhXtrVtO9-ewlhPdszyA0ieSGk9Y3K0D7xGHIX401n6GC1PHokLAcmkCeqDK46eS517nSJGWEPIaIxugOfs-Y9liotUxt_mXoQTBHc93hrE0fKrygMnwdG5WQ2PmnRNJwl5hlTP5ZozRNflYEtXtU1eD8RgW5nLu3tYFX24gS89fW3Hwj5XNJHnL00y0EDdQGa8Sp9hW5LWQH4Lj-CiDUWj-X0f1VMGWy-ptZPthjOg2g1cr5Ya7YnE9Xfyvvtn7d-cMpTA",
-        "places/ChIJfb99MPiipBIRRm7r5cGAKF4/photos/AcnlKN3RDfPLS3in09UIbhWgFiFk_0MPxbcO-_r-EB8RxN5YbYx49HpcTBEa2499d_hxXcaHnFJ6KRJYDANhZ6-NWSIlMsbhjpkWJF6WMvSkdF9T5wFF74jfNMiWqMllYC2_xzHip0mjd_VYoj3JJjSyjAjegrm17zcVNP4AmH9zE9tXlKcylx9pd8IfZZqlb-BRWlKGrkgY4UT1MfGeUXpd6uZmGfg3QeU1Qi13ubRewuSc04pRDc5pBMWm8kRYbLBMxFhP7qVZolwVW9qmXRTsiSxQt4rp0qUsQ3tK3y7qM_tB2NowKGqxH_TTLAQwsmcB2j6sf2kV7hXPUnI__Sv9d-bcK2EWdefQCQ0nJCwvFV84g8lM11BwpoCze1w2-L7FdkgQQ2PRHGkET_WQhiPpCDTqqvsTORSsDoETerdmfBpL9hlCvwQlAaFaihHlsMfr"
+        "places/ChIJfb99MPiipBIRRm7r5cGAKF4/photos/ATCDNfVJvz0aKdYUUG4mt3PPPvIBk_oVy4TAEs60HxNcwoLVCV5__uCraWE1pksEYQrgn4txJw_TiCPSzqcbQJ6Z56-YjtRMtU4uQSCVvBV-cpONOwPhI3zWi7HnKg1vBWMKcboponrVZN4wqDZmvuuoNnWZCiWlVArhARI4kuhqaA6Pmz3Q_x3P1b9M9Wks1IjMxDU_5qwWi_qenavo_9htc7F8ldYPM-Wvh_OTJt4woUGi-Nb2oZ77Sn_xXvqtvPHj1ZbFscBvPcIemayI4xmU75XW56nd4KNJbriQnlfOtS3BS7072ZjxissCjdJCf_AwvkWo_ZtYOKJ2xYFuw_DnyyTL744PGvkvvxeGgVfr4A89Z7deD1AM82MThYdAHgIvzn__pZdJZI7S964RqHsYT-d312FuIEuY2ZhBRwz60RjHrw",
+        "places/ChIJfb99MPiipBIRRm7r5cGAKF4/photos/ATCDNfXPbC1QZt3ULCQKgV8T5CQnztyQckE4gP8yztqaIqWlxmVrfQLT69SPMQVqE9Ice97AgtZR0PFkQ5-oWyiecWubLoW0l0TchoBZUtG7eg6C2rhsViZV3j2yHaHgAmoh4nJlX_iAUEBQHXXeanfBRr6S6NI2_n2XR7TzsaAvqsqgzCEQ3-2_Mb375zTXXI8IDRb7NC2QKxJgUMpP34xKyJCSympTmLUNHAmWjhrgu_uXGHa1UspT3V7xoykCOt10p6t3Lv4nmbVrbJ6MD-AwZlDjErulWY2XSmAPDOjZc6Mc5g",
+        "places/ChIJfb99MPiipBIRRm7r5cGAKF4/photos/ATCDNfUoglsNv-PZtqOEBVoshg63RIfRvNre3uTICYMHnwjL9QI4KHfVeXKYFiJJZDLJqLSG0GE6muNaKfh9M9RBU-raLnEJ_pvFY5E-abdUWkr9ZxrselCmyZ4n8c2ghRN-XwfjKQTqSBNIL8-vNsSJZiJ6prpOHvj7JUJPnewYMOfzSA6LEPmwseBJMcO8yaKOuHfeK0K1A7g4OAGlCJpNSwvnKWTooI56ieOamHkGjaYljJe0mW5mPfUcVWVVbuYcbdDHSdzN4OJBAbpPwyG5duMdngycm1jYvvrWsJXJRkAnldmsyJhUqiIel-W4XffDfA_fWgknAD-BA9Iu30uuXchlndp1zcnf9DgAR0nFSFAs846FpWbWA69aBT8Ksbn9SFp_PEbPheehSnqBPeOVp4bGGh4EpM4cUm4whAXx-IqU9grCfbiJdjenajSaDDwO"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=6784814408908107334&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=6784814408908107334&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 9:00 AM – 5:00 PM",
         "Tuesday: 9:00 AM – 5:00 PM",
@@ -1168,7 +1168,7 @@
     {
       "name": "Hotel Casa Fuster",
       "category": "hotel",
-      "address": "Passeig de Gràcia, 132, 08008 Barcelona",
+      "address": "Pg. de Gràcia, 132, Gràcia, 08008 Barcelona, Spain",
       "neighborhood": "Gràcia",
       "phone": "+34 932 55 30 00",
       "website": "http://www.hotelcasafuster.com/",
@@ -1191,13 +1191,13 @@
       "latitude": 41.3979721,
       "longitude": 2.1580323999999997,
       "rating": 4.5,
-      "reviewCount": 3349,
+      "reviewCount": 3370,
       "photoRefs": [
-        "places/ChIJnyTG75aipBIRSWZ5epDlShs/photos/AcnlKN1nCn5kpUU1IUoYSm7H9mRqAtJ-qpnVEvUMY90AkeykgHHEGwzFq96xPhhIAIQt7i8UtHaQErK9VFXxo6u5-423tn_Bg0HzXMRjK-5KQGp_mvmI0cPwI0ECnnO895B0nv3wNtNQPwkhF0ARca2PZQK81TY2wzNc4lYDz_aGdBZCy9DWs4bgDaCBfRyXTxrYmPn35beTtsouyWKVCg5ly41w5HPEvOi9So1E_Fj7Gt9J3ZZSdAsjK8zlFCWBu_R3IrL82UX-QANmuhIh1IhepzYCNAahsmNHjb05KXJdP494Fg",
-        "places/ChIJnyTG75aipBIRSWZ5epDlShs/photos/AcnlKN2cTERGoEDrHKz_V-28dlG6idzFw5KIRPSknaao_C3caJYE5G7CWJOOjzEes7QslnkTwe6DS8SM6C-q3Qk5ZdnGzRCGRZI4Qu4KR754Sj3iwjsRdAwYb-nwLH3M_qmLw4SLhSQjsyJMs0PK01t-vfTLTgFCdDQjEvF709HjEKxzln4OTGrbdDMndjJYWzr4cwFHz-MmSBWZM1-K898V_gm2IWRqM5Vs2uzyyQjRH7M3oNtp31wYLZFCa0retLStMWkenBZ-OsUmzKT4HVXGKMzIb2Kixn6Jf-lLyDeh8VaAfQ",
-        "places/ChIJnyTG75aipBIRSWZ5epDlShs/photos/AcnlKN1Z1LfZlw1g0-9yy6oeiaV9rd9DJV6Gn55S8arGZXEwvdBVzWCVPYgQByeX-m_D63sJH7k3olyiGCcIOz1KTr_Cx73OO4YS8-ZP9T_ZnKSDPG05clRfceISzlEIaadvHr0NmlctUhJUPk1_9BTPaaR1aPDbwy3G4ZLGidsFbNaGgXp0UKGG2JqUmdIIjB8aniIbkgFkhDAb2CL1eFAfXZLSqYO7h5ITKEfS4RA8qU3OXuvtt6bIn_lQdNcJDp5FKfR5FZTv2DpeKqm0rnr-_U5tjBK4CN1cV6QXal7ehLSAXA"
+        "places/ChIJnyTG75aipBIRSWZ5epDlShs/photos/ATCDNfWrg6dUJ_mkFigFeZIvSmvtMfDTUS7HSFfNsjQyG4oEyXgSSra5ndrm31bNsTZ9dLn-rzdnoVrRyOvvxk_YzQd_HWVtqWkapLysD5QTn5pQDq3o8IPx_tRTAs58XlZY6O_Yg4b7NJYiTguMtGC9Uh8NpTsee2Nf9nuLRgpxpMa9-FFgw8itb-jh8MoGxbPyBh8sCjZWMUX7rNuU9w6YzSK_JioS7_8TavthdPTuDPvkFLrK4QihQ0gUUgw0fpZEpfu573xEb3r0MxM8Rz81-sFanJ9ZQfVfhXIzIy4OxQHerQ",
+        "places/ChIJnyTG75aipBIRSWZ5epDlShs/photos/ATCDNfURhMoL-V85jVb6PYYFp4R0IgmiPVBfFeINxGbGyPtZaNT2rYB7N7yFeLtIUoWOctwYe1FrINhKPaJVaTd0Nq_K7-aLcvSh3_2KQgu3joVC9wjQCJeMupnbLx9zmsuEK20v0jZ8VlcSednUqkXN9-mEbDeGw-L59WBrTNjEhQjmxAnjf0NBgVZFg2m82IflHgZtTZo8qS6sf6S9cvGT66Wd17qt6WX3iiIi0MqSIKdYcpDFUVVq0n6BbJXTamqWhvLTIWnzotDLgr86ivX6ZDz35GDCdSdO9ES1qdtqXep1sQ",
+        "places/ChIJnyTG75aipBIRSWZ5epDlShs/photos/ATCDNfWgqUcgY8XHbZDlsqetM5f-SGEcd49adzalIvpJH3i37yQPe32Qp6G0k0WJU7fVeX6bc6LnNqLJWw-WVc3MsZOvjj6JABWFY7b0K2sgsJ4cshUpwBtMf5ZISCLpc2KPw2YgWUa0DaQxnIjg3-s_7tHYaRs3oPRg2FFCmr1K8chMkMV7gIbp06ifoAWIrH1w0MI7dUYe7IybQLbZwmwqP73YvciMChxmYK00bbSB3nQjp6uKJwCDoSBQNrshCWwZ_mkaLMI7JQFLG_KbIze3wZ6E_4JfGmgJ8ceVlqGmN36MvJ03WX0rhPU_c_7fcikT0DuKM42fu_PvpdkAnCRiYR5FnA73ifaBU_wDODAaGSUksfcOHCc3kCNgxZraSBj_kwe15cyO8UuQknbc4iRq-IS_Q44YLwJGI22KuDxhLPMTYVV5aib7zaYzoTpy2g"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=1966636595993470537&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=1966636595993470537&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: Open 24 hours",
         "Tuesday: Open 24 hours",
@@ -1212,7 +1212,7 @@
     {
       "name": "Hotel Brummell",
       "category": "hotel",
-      "address": "Carrer de Nou de la Rambla, 174, 08015 Barcelona",
+      "address": "Carrer Nou de la Rambla, 174, Sants-Montjuïc, 08004 Barcelona, Spain",
       "neighborhood": "Eixample",
       "phone": "+34 931 25 86 22",
       "website": "https://hotelbrummell.brummellprojects.com/?utm_source=gmb&utm_medium=organic",
@@ -1235,20 +1235,20 @@
       "latitude": 41.3716911,
       "longitude": 2.166437,
       "rating": 4.7,
-      "reviewCount": 772,
+      "reviewCount": 779,
       "photoRefs": [
-        "places/ChIJK0u1Ol2ipBIRiapk0P5DqoQ/photos/AcnlKN1IspdVN26SJL_3042XzEHJwIbLPlhA6gnSE_n0aF4BW_mWTVQlhwJyfXHO_tZjOa2MsoufvGVb0t9EG8q-7l2oXejsHnESQH8fBChH4uDe1nwItDQRWUY_fTmUwbygkOWdD0mfKqtfwMqiVqy-LhC-aloIOku9Ip2oUGioPK3rY6e31ogAX6w-o1f5N3p62B3OoutZLNK4GRd3o_6DLgRfdQyKo4pdRSHdMH66G9hJxc8YqbYHgfWVZJHJqyTN0vRAdwRqScioOddUogEZtVLL8OLBSJNVbF0Qmr2zuH3ADQ",
-        "places/ChIJK0u1Ol2ipBIRiapk0P5DqoQ/photos/AcnlKN3u4UpeU_87PfGOKMEd0mpD6OErXtm_Nh3b6Oaaya2mGPgpV03sguDK18yjUm3RjiS1vd1Wxb0eLhLlKhTiU0HAq10crt8C_PVBhXrHjv1FGFGU1HWWEn30Cw_2Aj_CXTD1GOJ8PJ9tdgwUr8Yo3dYSr2uwFldSs7cnXL_0ty7kVa1Vl_Yov2DTbvMWo98pnHFVOYPTjXbwjELIQoH2aedZDfawcXL1QApPxNp9cg-rKvFB8DAf0dWXyjfyLY4YSydmq8orsx_K9mwQ6hiBncqaEZHZH68_EHE0FeSX0jCq5JZJEWCxsXZSEF1pwtKm2YBSxBxgnq1GE2Kq9XUu3dS3udZXgi23R8AEpNvOvQEvK-EOOU1H5hpogi8TE4Ikh7f4tuxMC5c-XhWFSjOlw-5xDtpyjBaJYrCBVLoBAUXrgTs",
-        "places/ChIJK0u1Ol2ipBIRiapk0P5DqoQ/photos/AcnlKN3Rk8_gMBO2a1iFOv1jdjrRwM7h5wrLIrVwnNJbR5dFqv8E3WpIAtUVEu0Y-29Kx3gexye6jYcbFTTPyIdXZIz5raFN0N-7-0T8MJ1Gz4pn0JrC5b7weyU2VDdGrTElABBB2fasHgIsF4yoTtguFO9QtTVHSArtHwJJjmmj1wAadKunIjWul8XTX_z_eTUMtz43eXybXvUCoUyVYuoAD2FAJK3RIv5ljJD-OHLzyv_cegP6XwxhhCxdZqlanmkjEY3J3NHn6LYG_mFtsbFUxyTYK3SMEkPKRw9PHq02du36Mw"
+        "places/ChIJK0u1Ol2ipBIRiapk0P5DqoQ/photos/ATCDNfVc9rfRveQ2hj2NRuPJZ0IcnANVKNyDXOKzlwMyQvsgGewOwSYPkD9VXdN-Ny2FYBDf-udSBwHuW1nRUPrXRFTrqj4CZoFKbyL3gf1tH-pQej4ii_sWYaRHl6kWLEgb7QFydrok0Tizpt1HaucVVBjrAiJCZb-p1jF04BH2ND9xH0ZCkfVxeDmjDHGxkiYuJ6baAnuCqV9YEPcJe-tGovIXkPSRIBJryjnRxJyDiludTsjp2zxryCFAGHlBa0vQLxGTyywNqTwrrcDTuSAjynFODdzcUZ9t73rgZ466cwplJw",
+        "places/ChIJK0u1Ol2ipBIRiapk0P5DqoQ/photos/ATCDNfWSq_oAsWc0YjFdpaZ_UNgY3FjeVxXPf6z55g5M7LRehkkeUNC_hOebkN-3dSJcgIvrW7KQadCQGK7h0_dlvk_7XK1A2t4apX5QTKvioU8HwjtY1_pS3lRe_hOgONUgHJOOS7ndZ5uEuzKA6GOFCwT2G_Pbrsolwrc08nmSFPGyYXChv81mDE136bty4hKFDZqlch8X6GxWWr2jkjSJ7aRy_GddmvOoGD54usMZb0UroAIahp7_d8jganu8oQX-TvRYG4RkkgKKam4HPZ8t3F4yLQjdPT3AcHkRx2U6blwI6raoSJTYijAcNijCfqzD9HlwbpS7zr5bkEqZ6Z_nZM4pXMfd4TiM1P9II41md5K6IkzM2-wgPzmoXaglJGNx-Gf5u8xBRFyRI5QUI6HZyCYq7_zirc9AAyn4Yyltcf5w4rI",
+        "places/ChIJK0u1Ol2ipBIRiapk0P5DqoQ/photos/ATCDNfXPEY2mxVO1H4rBcuIxXlbwN3CC4yRB-Zi1fJwG_k63qZ0HvpAWwjeYbeDtWxx8_Q0LEs9OwsgXm73jFu0Eo-HuI5HBGZmj-WctTTWQC9IpwBYTk5o7wGuRnJI_m9CXeNyqkfQuHcv27_42d1ElGGv-jzldbql4vdqlY07Mn8LVhIf-2CktkMBJTVSvJlGkQKHF1JFY0CJ9rs9p6Hiun9By1rNkj3hl_AYbbrMws_1JwhmsHr0FZTBmhtuXa0yT_3vv3WDprrPNH0jRskxO_2-MHE4RDjBqjdEn5f94gZOBkw"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=9559527920744311433&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=9559527920744311433&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": null,
       "enriched": true
     },
     {
       "name": "Hotel Barcelona Center",
       "category": "hotel",
-      "address": "Carrer de Balmes, 103, 08008 Barcelona",
+      "address": "Calle de Balmes, 103, floor 7, Eixample, 08008 Barcelona, Spain",
       "neighborhood": "Eixample",
       "phone": "+34 932 73 00 00",
       "website": "http://www.hotelescenter.es/hotel-barcelona-center/",
@@ -1271,13 +1271,13 @@
       "latitude": 41.391723999999996,
       "longitude": 2.159261,
       "rating": 4.2,
-      "reviewCount": 2176,
+      "reviewCount": 2195,
       "photoRefs": [
-        "places/ChIJuWTB-pGipBIRiEdZbRcEnx8/photos/AcnlKN2eFqhQh3mcJ1ae72htUHddyj91eaiv6X5isOcZteFLt6YoLvSsAWmnUg2_g0P2LUcxwHYM8KUAGQZFMGpGHypdtY9Iqnn4hmySmquXd8A01hUjK6PTYI4uZ20HbTlqnKUeFy5UuZuO7M-sUD848xyj-km3qsX95o2AdkN4EeaOgwI3FnLB6u-_fYmPZGTsttWnrMBtACvXG1GJaQojDgy9vrNT8i8HsxmrmdHQcWmAWnAWn9-KLxOhkWiEglEvwPdKdqn2dF3X4CFZ-4Z61VXR6zsFCVOEEKI-JVWGauZaIw",
-        "places/ChIJuWTB-pGipBIRiEdZbRcEnx8/photos/AcnlKN3L8gHKDY0gE-6BuWL65Al7jZar2mbLDCfvS-EYNvInadUE63t-UBnk_7EGpsPTbfteLcGJQbpfKeo2LOLwHI8xdWkcIT-9IMvrH-WNCU5iCOOTRomy1cxukzUu7KIo68vi6VoEsRt9C8jlC6WzLp2Bw3Y8Q06udgmJhrmLXbdNoeRlDv5iKoTcgJGlrnAgwBwIBkWUJGmDkiyJsG9DKbcHY9UXMtFrfKAbemH0-R478IX4CiyfBpxcXWsJhGOEo8EG-F-mzzg9WT7BVya_bS3CkG0C_Mwtnnu3Y2_vnxs3Fg",
-        "places/ChIJuWTB-pGipBIRiEdZbRcEnx8/photos/AcnlKN0IMph9T40GHGJiM__ywXtz1pPMLsjUBSD0dhZjjkcGYu1TFiqZuh_v_xMZHvFBKLw8xpUcIT_NaVRXM8yHIA29Kk3172Cs0yV4f-Pmu3DH8BELfOtEbN36viY_us4B-Cy8K2-BtFXcLtbftBnxpvzRc0mQOp8tiGKbcSvUsYAOxleUIeYLzuXajNt9XwtjDuf4eFm1cOi2ERobSvemuZ6zPRKUbhZ2GBGgy5SAo9ZxDnxphKqFl1O6b8CJXYKnkquMv_IV9hG-THaSc_p1RRDvO5S79FoE5qQczsx2L-jnAJhQxqP4y-46G2XuR8kjnG6LVN3iXfsZEk3mZZMVcLOJuxIyzxQg4gCJyJzIYB6J-NO0LSIeVTftoRIILYhUDJ1xLASglrLrbO6d_YokeH8qhTRoK3gO_1siGCSSSbp9xYBa"
+        "places/ChIJuWTB-pGipBIRiEdZbRcEnx8/photos/ATCDNfWvfoa2CfnV9gCBsEYhvE9sNI84mmDNWf0_LB-4otlJzalnLyU3IvhXa7biVAJswuzlgzHpQ_EpQ-N6iTsIPlEmxvhShbwGGEbtcUBJIYFDqpt_7bxEH_p9LIboHEdSFU3VVOzAbLNwRFoC6oMjkKV0HNS4qgr3DfKuYBK7nWb-FEueXhKndoA47BnVvp_IjZb3adkQ9msAPTV0IJlt0x74c4qgyBcG_Dw2X6kb8ATPjnlF-xj9zfIeAutt6xajb8oCVEABAxa5GvX8rn_yS0M7qaxz_6ObtXBavuvps399dw",
+        "places/ChIJuWTB-pGipBIRiEdZbRcEnx8/photos/ATCDNfXDLcQl8mkbr7mxvU3UZ0px-cOadQ1AEldKnBbtzTJvaseWxwZ9q7YNo68EH-NbFr8KL7tSu7FzbOrp6NH9aUpLkejBijJmm-RffLOCaBvDOTJcqj6jQ28110bDMWSc8KHTIHAfchcL8S8-J36O3LP5u3iJ1Q8TA9hU4XjyuEtpNSJkFvemU03y1s-XPXa1FZ2H1RoEiFabnhY0S5k56CA9coBpxjD3149DdhvUcEX0v0xXwbNuemGetCEfH5xKQes8BAJzEFbhJj8sYF3q7ydZhcTZk7WsQTv4rqoexLgfuA",
+        "places/ChIJuWTB-pGipBIRiEdZbRcEnx8/photos/ATCDNfWMwiHBuqW7uLhWp4QKOvG5s6zZCO5pmJy8vNhBP6QPWkSRR-GazU4VLQe3wzcSK9rW82Co3XoL0F4HLXP5cDRvjzFqO6Y8JEPWjNZ90VgGY3Ec5feEOMjd2GLDG-kemljMvzoU8VeD8NHhjwEIsHczMvrqEUyQtO8k-wVtXXgo6zsGZDlGWiSWDA-KVkczcs6sPsgNgL22xmeTRFjVgGHpsAug5QmRiVTD1VbFpxJ32FWQQftSCripPXdYD2_U-SZXFHSkc8q97rTpcNkbRkxdDK-d-JtGqhTu_Yi5Zkr73mbgR2hk8qC6s9COwX_MeRP00NwAtZ7emEFA61KSUet6qUswNQVEd4cZn5U8sO-kIzV4Q2E2L_fha90RjgwlBVHaIRBIbYnKJHMqYoCXJwHQugvn8CGMnUNV_BnL8v1qHcGu"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=2278544435138086792&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=2278544435138086792&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: Open 24 hours",
         "Tuesday: Open 24 hours",
@@ -1292,7 +1292,7 @@
     {
       "name": "Hotel Neri Relais & Châteaux",
       "category": "hotel",
-      "address": "Carrer de Sant Sever, 5, 08002 Barcelona",
+      "address": "Carrer de Sant Sever, 5, Ciutat Vella, 08002 Barcelona, Spain",
       "neighborhood": "Gothic Quarter",
       "phone": "+34 933 04 06 55",
       "website": "http://www.hotelneri.com/?utm_source=gmb&utm_medium=organic",
@@ -1315,13 +1315,13 @@
       "latitude": 41.3831717,
       "longitude": 2.1753815,
       "rating": 4.5,
-      "reviewCount": 641,
+      "reviewCount": 646,
       "photoRefs": [
-        "places/ChIJWU9gM_iipBIRBo0JgzCmYjI/photos/AcnlKN1t8FvbbqxpLr0rNOGkwOMSreGBKLScno7V169wtcpCTXfsaIs64vIlwyY9paHgOH3Ygv16AzYuczk1P9WeQdNj1YvUiWqhDB-4WlwwadDMdemk3Aw7uc7G_aul-ILltZcVeCsU9QgsGLQd3Cp0pdSB88cTjUkbfHalQhPgm9IrvZwJQgxJPwndcvUjfwOAydLyrai4rBwt1LBHyjqOF80EpT0cy93KsVt6Zuz5WKfbmf6sRfBu4u5cDdQ3rxtO2SpKqLbNj7MT7vAkReLo2ixVLIhfUsEXeZMDo1kLOM69xg",
-        "places/ChIJWU9gM_iipBIRBo0JgzCmYjI/photos/AcnlKN1l414QAK_iSbHgV4zJPTfUM07H6EMbpqe8keicMzwZ3_MfNqKkuBzTW2_4Qyd-rlaOUKJVJGsOl2OcBAnD-IrdMDKcEPxjA1qccMg2rENWj42HN4zgEIYNc00lOApR_gNtffA0bHjkyWz0H-d4_mqu6qPOoXF7qvzem5_MbTpund654V3DbZ_nUaX5wRBs25fTsa7SSLYvV2yWJfJGbhFfHQad8yCfojMv98w5hDH34hDtn20kQT0FdQe2x0n519xSWL-yqfwsGuK1yujES1GwmGeM4XM2DX8huQpM8gtsRA",
-        "places/ChIJWU9gM_iipBIRBo0JgzCmYjI/photos/AcnlKN1UcKoAImKGcGejZu-1jhb3heMhsDxx9qveHwhwIH88C3p5Ek82aYJL7HNM-G-qj4FZIMuQVUUX1ZW8za-NC4req8aHSS8ccu6F8y4y2Bpc-MaXP4MqJT61UWhAXDuF7EB-bTaEeXtoJH6jrRFqYvTwZWT05cX18KCutdtRsEnXPvpMtxmivS-YQJQ8-C-RiFY43zsaM216Af7Tdz8l-KiTzrr_RlRWpf0T6bLJ1Lfi9TwqLXHnGOZlzueaJTF9y_rCeOd7C4X3jvTgbm0TzY_nVxy0ApjaJgyCGVRjY_HBJw"
+        "places/ChIJWU9gM_iipBIRBo0JgzCmYjI/photos/ATCDNfXGJHemCqzpqyk748CKckbiZH87filaptm_812Gn6zEbBzShZ1aUE7m10wUGthU1PBaJOsQoMuO8Nz7-Zd3cT5vKNT_oAMA1MreWC9G_B_ePi2wOXr4AXchdwd2U-IQY0S2suxWD9tvcjSKCiwysO-1j3lx0GTfK0iJmnDC3Dwv4HcYLfLcUIfBGW4OZQ-wW0SDPwmjGwx_orlqfpxg29DTjZTvd2uI1dR_2wl2xSooGVZj3FUDisVsGhGp9KjYR8XDY8g9nki3gDOLdPIgFd_N2s_J_Ue5kcn5bobjswDbFw",
+        "places/ChIJWU9gM_iipBIRBo0JgzCmYjI/photos/ATCDNfWcHyCZgfjYKRIIPCo5XXSX2uR6HfWHP70YKlwxJMog16NKcIn6qneFm0RGsSQ4Utzf8yFpSvB3n3qYwqSOptCRroucYdCODs9AkUkDa9M8AkcKZSkKXP_c4pR73c9tXX-4-9VEo-SUxMj0v5I-4E9OylRIGBS4chF98ZV938tWUlnSRnze9NZVh3G0jhbsmro383GUIMDLqyIcBtbG-7BKPbN658NQoR0NES4GxWeRcHqlzZZgG-bYMiTUUV0KlbyscWe7h6KaxzbRhDhFwAJBob_HBBD5GOTmMyinsqZp3w",
+        "places/ChIJWU9gM_iipBIRBo0JgzCmYjI/photos/ATCDNfXYbYKdZ94JltD9a0vBBHGklZ2yYKK7_EbxYokLKr51PXxjat-XWhT9sL4iBhoEuAp-vy8Z7thCRpDZ-1G2L6af_XOIK0Ne0SDnDIPEZY9KVj9jw4qS4c5zleH92AcJdyUWGIT9JhCtVEpqxDNXzwqY8XWEg1-5KD_MH9e8W4ZFMCJHpQ_1d-p5WZrv617fEnG8XuTeeysdrDFfvLmaV6MC_Qj0M07yg78ZFhcqCV34FP7QZqodYWDUj5mzqIjpoFTxDJKg5gVa45QiIRDJ8c6mdy3RoCd0Q5hXXOAQcD7j-g"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=3630646976901123334&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=3630646976901123334&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: Open 24 hours",
         "Tuesday: Open 24 hours",
@@ -1336,7 +1336,7 @@
     {
       "name": "Hotel Wittmore",
       "category": "hotel",
-      "address": "Carrer de Fontanella, 14, 08010 Barcelona",
+      "address": "Carrer de Riudarenes, 7, Ciutat Vella, 08002 Barcelona, Spain",
       "neighborhood": "Gothic Quarter",
       "phone": "+34 935 50 08 85",
       "website": "https://www.wittmorehotel.com/?utm_source=gmb&utm_medium=organic",
@@ -1359,20 +1359,20 @@
       "latitude": 41.380947,
       "longitude": 2.1796175,
       "rating": 4.6,
-      "reviewCount": 431,
+      "reviewCount": 432,
       "photoRefs": [
-        "places/ChIJoeF3VP-ipBIRpjdaHk-xhgk/photos/AcnlKN3AJmKq6Fu0zzugBQ_c4YwwxuprdKWiMWFDOdQxgDJxk0oU5vxzhFHFEZT5WF5sNaS3Zt-TsH_zJAj-qB2-paNJ2ml7QES8n0YrL8DAEmllWZT8-QdwCyqW7u2WVOwTnwH2ZAGjNMPr8u96hb1V_zqkTlRpW49B6gl4GbrA7ut2Zpefi6AUhe-R-qMApdnkeBOVCsjpgLKrEgzsXjze-hoZigXyRTbLQLFCjEisHaqtW8B7d4gGxgNeYb8rEOK2tWMOQNXe4Zf0uRVTshc_Ktv2CN5by9Zz8WT2rAAdb3LeMw",
-        "places/ChIJoeF3VP-ipBIRpjdaHk-xhgk/photos/AcnlKN1pSs0Hf0nKxZ-taMS9ygMJ738Wyi63yStrb3D81hvJVC1sAQsPxO1msiJcm4Rvg2Jr-GbcRnWqJEdN2aK4IA2_le7rbGW6q696RE13Y7TPm_jC70FtquYAjMgnRJBQQO8OlKloL_qvg8YJBxN-M7FjyAz9pe982mxE5t4gIiLjRRUmUNUuSiondo9eOUQ1550eb4GtLo6E2cvXHeLffZfp-RDB_HABrHiWJBA4HWQTh71K_zGSTcN1d_Xd423dggnJTPSti6lzC5DUQP-4OS4gEj3UUfFq9AcYvIkcLkzrng",
-        "places/ChIJoeF3VP-ipBIRpjdaHk-xhgk/photos/AcnlKN262SIz8pOGHhEUpOxaQz9Dwi2F-x9ZwLWSO41bEO9NtM-_oUnVdQYrUJNcd7IbovPVFWeDnxIoboPo7qs1OZPnv3pARw1l8w3nKRW2GVtR-JvIYlxJDVLJtwxJGHO7puVU3_jYqdzOnCzp8Sg_Ba_8bT0LCVrR89otUA3O0oLHTRfbCIr8NaGWH7FxxxkhX3J_bDHo1aftJeG4TNAB7uiLU4mmggtJuSxDiRg0WmFJsv3Uotp0bjpzgqT3i2uQUonYY12zMCogS3MKOsHwWjpYEXrj9LOzgsW0Ipr4VDMSOe6A_ZDQLh6zXQ8_LJ-aNCkgd4FMauNfZVU_-Nogq-tJu5_oavMUWdWSU1wL05dtCym4LWv_RgzXdyAIXSwFTpmQfFrbmDXFDV5Jl1J9MiPzVTNCD3AwwVxbzK7EOOO19A"
+        "places/ChIJoeF3VP-ipBIRpjdaHk-xhgk/photos/ATCDNfU1XDhtIstyKQM9BaUeFErYVFTgo_f3aAbXHdt5mJFUHzv7UnZARzfvI4raaJYv3pjVVFLVLy-ZDvBnKmr-gdyCW4neaPusQDJoja0EgmftTc08BWpSslCzIkiqomatYw4k2yRGCjyq2doycaJutNxhsISiw9444eF6X7SKLn5NWPkJ-bLHLM_b0Nm1eLKo4AovEO74V-U4VhKhw5YMUsy3hLcAdpSklVqlXO9qceSjUtf5J1mJrAS6tpIs3emHyS6LU0NjGbKJp5kPahUwF3H6Nb1oAypJyvE8EchXg1JoSw",
+        "places/ChIJoeF3VP-ipBIRpjdaHk-xhgk/photos/ATCDNfU64b6DRAnV3QvcPq6M4hp4PcftV1GdfD006n0kfISIn7wfXGJZF2R4A1zEEvAcxU8F09V6WIv9HeyWtnvj2Cq3CI13iTPluaiqg7IU-7SX78MpMZJL4adGsLVgpFEt9WGhXMOXiWhSnwrT_OOho_AT8A5uLIEQsRBLmihmtfivS-Z7V-4KwRKNniS1Wav9YBGvmuC9RlIj8ScSSmiSPQvpCbSY-ehi3zGLLNC_AC7MlKX8hVjv7ClV5WVtnpOIsE1zYFUKnA-9fy8KV7lJPy4kfj4lxqwoGNOELY3igd6KRQ",
+        "places/ChIJoeF3VP-ipBIRpjdaHk-xhgk/photos/ATCDNfUdCXz1QdPoyQ8LKL5I7gQrnNWsLtOnBqRrqrmoVrERd2W3ZdOQ5_TsEOLHzuiES6XwURl5y1eXgIVi5oHSoaZaT7MxZ_7cqpJqnBLw3UwL6o0saTvRILQemnbHyDFJxuyuHW8rq83u5vOC_DqqwwViWwCVgJE62zb4Ie_8UeRf_Ve_7lRujetkKR58n4RxNhmCzHc_eZKJt6QQLmYPCadeePwFlR9XTH6YvmzvSufdSJu89CcI4pIgqwQS9TLqiS7HW54FWgNzTM-S1jtTa4wflsBFRgHQ4MQSkuau7WK6lliRUQSu3M11YU-1gnLRFHXkvX-frSk0s3rZPkMVFIDIIvGgbKWfT0Tu4qS3lxx7TYfsyTRuvy0y6Rik3gR-vvigqyzIgap-uGqFqSFGTsD7KOxkKfi2XCi0An7SMXVITA"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=686430946590341030&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=686430946590341030&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": null,
       "enriched": true
     },
     {
       "name": "Petite Maison",
       "category": "shop",
-      "address": "Carrer del Rec, 23, 08003 Barcelona",
+      "address": "Carrer de Balmes, 266, Sarrià-Sant Gervasi, 08006 Barcelona, Spain",
       "neighborhood": "El Born",
       "phone": "+34 932 17 26 66",
       "website": "https://lamaisonbarcelona.com/",
@@ -1395,13 +1395,13 @@
       "latitude": 41.4006019,
       "longitude": 2.1486639999999997,
       "rating": 4.6,
-      "reviewCount": 70,
+      "reviewCount": 73,
       "photoRefs": [
-        "places/ChIJtas92piipBIRW98OpwHJWXA/photos/AcnlKN28Ok2ECieJj8r6dLFm7UiI0ksq34zanTKaas21O5bkTRtDQvnW5kCfewGug0gOShg_eTqUWbX5KpfpGxfLQBfCYJtEG6vguEtsLyLAAKd7ss828PjXHRPl1uSwBthfX14SSQ09gXhCsVcH0KS2IPpDLZl_T-W_mzUFUxdgQsOpKne1382YI6CgWMBR7hn7oWpTObXLPxr1HZuv9OTHSjX7YIYGF9IZ14kS02eH2dIKJaSXDtgQ_NY5RZ9kSwQD1rRF_EYho5rrx_6aBmfOfit68DRgcCyxsHoMa3tFKQHVCRGjHQBcumHnf9z9yU078TPtzel1608kx0Lc_UDyieeTvgc3BAVCochNmdUiH5Ih5UnPfUUnx8nYZddTubrx7wSGj069J1UBRWak52cKGpKwxFouw3JhaSj0ESWpvMakLFab",
-        "places/ChIJtas92piipBIRW98OpwHJWXA/photos/AcnlKN2fyb7T9ZXGOn6sg3CfZ_SaoFYQ4ezT8JMeNQV8-4mEegCwI3wX8nDUZEEXVpRP0k35fJ4pO2xfA8-yn2Fnbs_6mVRlZNpZ6HeEkfNkYLpqGKu2E7gMuzS4RYOGxJOtieFSl9HqIm-Hb-W6qrPXcTsOsJ1C4_zSq5H3oVrBhLIqAiUYQimHyYqr5ipMbzNgviJ1AqnU5RSALezADsEeNbXg7z08SuWZuWiNxkZ-GCBMN06NNY2GR6xuqRk4utl22gUeB3tfZJpik_zxHRcQ3xboIK8k96saUZc4Jy0GlYDhCQ",
-        "places/ChIJtas92piipBIRW98OpwHJWXA/photos/AcnlKN2g4PIIsE39PZY5MARdS-WYQWEFCpqJV9PHdqPG9DhbtgUwi83VQxkYqr4smujck3DTRYjHJqqVZDgQm_eebgYvlHqIcYOX8DKm2NHA-sNOiqZg4IpJ3_YRKTk8SqNFMSiZ0F0gZl5_PZSZge3yNsQNYMuLFcArj_841bJUxbv0FmXdrjmhMnVRV9NLfwddwBeOaFLM0NDaCYMAOIS4IXKJbZNtmu2ca3fFOEL9qSv25QX4mYJ4r1ToLaM_nW5WCG-JXBxP3Shk1sKYEQh62Ik4kUPp6xk-kgfhQMAWVnGlSw"
+        "places/ChIJtas92piipBIRW98OpwHJWXA/photos/ATCDNfVAvPyP8YqMCk7cfG4b9SX5yd75TUCbJ7B48EzqZ3FVuihMh_UlfPuzVVZq-822JVGrpnrwlngWcPO6shWmV7c7kqnHzc9jRjxQuBRVUYq7g3BEhpPk6LC2jG66X6OpWAgDkxQn6PXtEmx_sVPym3J4IE1hI61Sp_7eNn9u4xZzpLUVJwnvG7QUGaPYJ_YOqpaExEBzsmc494bFpaZL7J_S6BRw-VTssz-De-W1dYUOAcmDLRjfq-iPqpRnYMFIa5rWn0dgKgYX_qtKLORwYP-L_FZLLP5a5Ds1sS0cUKKAGRzLSVMspJIbkCIpDHvbyYB3WdweRBeP9Ynq-_70yMfByyjEPGLJrDPhKpBw6TrqobUBKrxrUXw5DsrJUOgVAFa7zr2K4o5pwU0B_2atdzgFrzI0pLSTHGwv-MdF71E20M5K",
+        "places/ChIJtas92piipBIRW98OpwHJWXA/photos/ATCDNfXsc1yMc877dR4lO9vyALj05DGvwxYudq2pvgFfmca6PgVEqja-ywYfWagybmSoWxL-0GYoLnaqk1tJyeOFs98JEFzuiNYcBdb9uDtjONrGVrUfnKeM63GkLxlL_re9Mx72mYiPVHKxbATnauhlP0MOy9-C-X1OHazDqwV-TCAKcSsA2EOlus-7u7dj_MMlq2QLdpv9RP72KfRtRezLL6BuLyBpux1-c-vDI_Z4GiXjM9gzEXG-8Ra1JiwD8gMNJfaUjwbVO__gKRrvZpM7NYY8sQWjgpX77aciQhu6bWVtng",
+        "places/ChIJtas92piipBIRW98OpwHJWXA/photos/ATCDNfXPD3DiHGBym-nRyVFtqW6ZNPBiIxsDanW0CicPR4HkOhzmjkDdpFdEN17bxTHv5Cr4Q-QBLe3sIJyZmhBYcDOoY6Ucjcw_8xY1h-xfDm0S2t4CQlzpxnRtiaKMfkSz-_TeAdhypxiS6qFRuX0ZfaGdpf2Z83DKjWNi7TWXSstcbe6_Y-MCN2OaDsJu3HAbSOEyRy-iE37HhBqeypq6y0cl2YhuoaWCIdRCJytSBjgU-7kJqGYY_dPD2vHAwAEhM07nWxTrvPeamnPbmJTgf20SOvIXrJxEYs6TpMWVF5r_2A"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=8095722814110097243&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=8095722814110097243&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 10:00 AM – 8:00 PM",
         "Tuesday: 10:00 AM – 8:00 PM",
@@ -1416,7 +1416,7 @@
     {
       "name": "Kiwoko",
       "category": "shop",
-      "address": "Carrer de Pelai, 32, 08001 Barcelona",
+      "address": "Carrer d'Aribau, 21, Eixample, 08011 Barcelona, Spain",
       "neighborhood": "Gothic Quarter",
       "phone": "+34 935 48 09 20",
       "website": "https://tiendas.kiwoko.com/catalunya/barcelona/barcelona/kiwoko-barcelona-aribau-33?utm_medium=maps&utm_source=google",
@@ -1439,13 +1439,13 @@
       "latitude": 41.3868705,
       "longitude": 2.1611843,
       "rating": 4.1,
-      "reviewCount": 2681,
+      "reviewCount": 2788,
       "photoRefs": [
-        "places/ChIJ9WnFFYyipBIRo1RODlYGU1s/photos/AcnlKN2VL8dIUXOxfvKbbPEI0rGbEy7ZvXr0BH5o5PA8bgxD9WyPOQkgWE53eEnJNz9wWJ_6Ncs-rXsRp7Q0NASr3aiRh8IBYCSl3sD7bM6WXxyDbMTKBe16tDqRLatCfuxrOki_Do2C-jqvcu2bIoxBIQYIH5wgBGvZ4BDkKY62cjik32ficZiXxbaTZmYLGsbK24-QI4hNar8e9eJBCmV8Qt9tiMrjm1oa7LA1dX7NMorAVOXYe7_xL-Xe_NnfaiDvKOzTOwXQi_T0rJBnhNErc7_xdkLySwajKsw1i2AKa-VIkw",
-        "places/ChIJ9WnFFYyipBIRo1RODlYGU1s/photos/AcnlKN12DkqUsQWl_VDZtrfyLTDaEUmdhDHW867hM8oxt2C4XYqd0NsOXqwU1_7DnpsHy9nIk86vU0-ijPOM7P0oFkFYxmczqFbpCfwFLaN6ibCCGOfLO-_hWkoIUjRIo-w95FC9ORvc34xwRq0iwnX6DROkgY8UGQiSWDZJPK7nnFno06pXiMi_p1O862_kF_3q8psykVZpaVOLCvVKJM2TdZJfvJrvarumXMh1pHPRyyvwbu-FBmCG3CetvdhVUUzh-R27UuYApitv50GSYbVFGd8A6I_d0mj1AooBFZQydqag5XPZ6z-6r_m4-Gpoo6raeeM2zs6Yu7Ha-_XBwy1sMwhlQVhks_PFyiM3qyBYFyEitSo4W9so5hW6Uk3nNsjeTzPhqw-mNPwhJ9y_fHoHfVQxdAzZtYVkkFjIVWJ-PTxHcA",
-        "places/ChIJ9WnFFYyipBIRo1RODlYGU1s/photos/AcnlKN0hhNo-JU9A9NDuIyu9wcnxNZHotFi2sMb9dDCVpbMW4oNIXReR1aMY1du4aNZTloR0RgbtRv4ISym3yH5RRdpwNb4p-cdi8wm6iJIJhoGfya_UGq34yndMr5H8u4jg7zFIAFKiEHLhNWb5eZcUvgWidgKLewmG7ZS-TIqACjOV0ke0O-GeyMYjBWtqB7PsWrNViZqEeFFTGT3_-EHySOnOG-4-y7SI3JdTnt3qjRw4baiEaAjbpTMakxdhnKyb9H3sZexKSgy5M9YwMZ7YHOY9NKud6-zaJacB9BXgNfbMKg"
+        "places/ChIJ9WnFFYyipBIRo1RODlYGU1s/photos/ATCDNfVK2PukCYwFdtFA4m_wh2xaB24qw9J7nVER_NNlDQvDnSV9k5O_04DiDQ6JvXx6XEk4q-AktAL7ZhQmufV4kcqjfDdY-nqvyVgOGs_9haSAgp9iBwzdPCZdZfQq8Gwei_Rc14R-H0fED2p5sa7h5DxsvbuPCe409_JrD1BaBMs0BzaoMaCyerTXT6JuU5NWznk12wO_F026KmECzV6XdMJqCogfqIqbZ82wj5p8XvhD8j9QTM-GGw2DiTkP4gyJ4oqPjXf5RM3Ar30L_NTq2Zx030FElQBLmprOi_AvZbq4gw",
+        "places/ChIJ9WnFFYyipBIRo1RODlYGU1s/photos/ATCDNfXQUgbyx6NO76WdJvpBJIBrP286a3JvD-FEHoHtn6xyAZSYuVYosn4Ju2SXvF49iF5C3jWTxtThPvKlQLiAG150VnUAPQpQSy8izVJzNFPWoaQpfTEFgl-jkLE1i8ZSGv1BSwQ7Miq1chxCiwjkkIVsn4GKCmMeeKcGim645Vtf-Uj3X6-mlPlFyM3ABKFyNw7eOWHci9UGq6IB9OAcIUuNiXATBx-mDIYpWK2HHceWDibtE-KOlslzcG852Hv1UdOGh-QfdIIXp3DtT6CIHHFwHzSekXWXUH0y9Q-Zo9dDZh-j28HEZ6qaHc5xx6E9dsCZjnGnZUvidCYhIG2jNQdKf-AGpmITKke8bBDgGUE-mc_qyhflbBFR05YGRvlEE78RfUwzEz73fbhuT4Z6WDPOqXmQSjJ0Y0rUQMJt4_U-zA",
+        "places/ChIJ9WnFFYyipBIRo1RODlYGU1s/photos/ATCDNfWaIGOepXkYq7If8menLm3ldC5OR8Q_JSDVufMjoxQJGktLWjH9-wBky-JYedTD-e_BhqJcNHg9wOB1OLFPztGVsSWcMpwWqfeSGoh176xB6dvzWYXhFMUE_ujEbmXWDK455eGYXM1r9C6xZaufunK8LzCx385hYiRycekah2kLk17H_umaIrnjq47qnxoOdJe0wkCwRmDe08J3oTKR9uHBVQaKYK_DEi_Ej9hJmVjBD2Wdq99eOpDvwiZnMyk3PI5gB8IH7z8NZUia7AsvXV1uWuZ8sZS9jHqYN8oTmBUZHg"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=6580610447195395235&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=6580610447195395235&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 9:00 AM – 9:00 PM",
         "Tuesday: 9:00 AM – 9:00 PM",
@@ -1460,7 +1460,7 @@
     {
       "name": "Decathlon",
       "category": "shop",
-      "address": "Carrer de la Marina, 16, 08005 Barcelona",
+      "address": "Carrer de la Canuda, 20, Ciutat Vella, 08002 Barcelona, Spain",
       "neighborhood": "Poblenou",
       "phone": "+34 933 42 61 61",
       "website": "https://www.decathlon.es/es/store-view/tienda-de-deportes-ciutat-vella-barcelona-0070025700257",
@@ -1483,13 +1483,13 @@
       "latitude": 41.384794,
       "longitude": 2.172671,
       "rating": 4.3,
-      "reviewCount": 20687,
+      "reviewCount": 20723,
       "photoRefs": [
-        "places/ChIJlb_qI_eipBIRSok1XHpPIqs/photos/AcnlKN0amw0-MxrujQ3UOg9noWfLAo3gefinEYxXQVHsD33X0pGGyvA2EO4FCjPnfBMZyVr7AbAlJhUvRix-rEn1bvuUDOHVM6iMmKWdaonYYBFuFXmp6aoHR5BAmH72_cDRB2H_kxOPoPpzOBfMeg1m80UWadhuP_KrLXIo805jr4kEM6GjhMudcoLYY-x5R9Qr0usOt5HaJnlC7I8iI4G8bOQ9N8hHzXEL6rohV_fImFz774ZLuZf7gwU6QwO1NZ-S62TQMd_Kiov8qmNKbmPe_60cpMNDuUrMcTa_XUL2toZWWg",
-        "places/ChIJlb_qI_eipBIRSok1XHpPIqs/photos/AcnlKN05_sTWqvrWskCbzYiFdrKwqx1XMz2Orv9b0xg5CSHjVRdTvolenDgAOGekJ8QKjFAoyj67YL_lmWiGRpEi0e_m567lX9kxs38obeYRj76r99Xah6TbI6P3Gq_5M01NL5zFJmwDOGkfQ_xcMKL-yN70QVr-UTe3OiiYSkq4rafXVRyiI-vzCkF3EtyfnYnlVGbbmg3uA85rP2M5wOH-4Dq7WHtnAOsT4Ls4IvRjqJARWJ1MmiJoLKzrRjcFfKsU1vgoRywEYpxn_Vfma2EJhUliTR0290GpjF02_TydgvSpmqYrFZrgwG8TMJghdYoV_Ytbt3kCEAxpwkTGrlEbJJcdSmm1xfFZP1gwmQM8BPprY5y3SmklKcnw8X4vf4XflSJEzjC1gA-huoX_eeZCqCYydj1mSpcAMLspt910IYR88djOh2_ycuoksahCihxJ",
-        "places/ChIJlb_qI_eipBIRSok1XHpPIqs/photos/AcnlKN0RE3AhYJm-sKDz6XxOIrcDqt4A2ZVZI2Ww6skOIiQvYEKApD5pIf3fY_gBT1EFqSWSnhNQ8LnwZ9_qR00qmSyfAsEdPe2tw40ckIP6E8MAYuH3j9oUvhmSzZ3t5niIvdb_GCvlGWZKwhCxQ2iBDFqmH-YOpygm0s-_IfmEMUKqEAQFmspKlphRnRbfD02rS1XDUkpVt30_pWq6ex_oO6QjJa616JOKVHJlor_hUfUi7xOVZNrRIszxoFU368aGWnNpNz1d9Wn2hiAbBI7VEkTbh0O0RRcPZy4qXQ-Tia6JYzBsKUsxRUvzwCpQB-geVw40_cdRbA4iND2ub3S3mbrN7zc9RNBfm07BZTZ3Ev9lL8Gge3q8m1xK5XlvHUlDY_fZ9XTtJXpvuQ5zzGtzqxbdN25CINmRf1mjs6hw19BAm6K3CMnE9u0YxF1w3GJZ"
+        "places/ChIJlb_qI_eipBIRSok1XHpPIqs/photos/ATCDNfViO6RtI3ymm2eV1bYeHFc49csnEGKWAAjN_d-TFzhwOK_qn4jG4AtC9wNpKrjeuQHr7cIPg2aGhtWkrGzg6W2l9x_WD3z21hSc_JQIxp6MKC6VHU37YQ_FbAUubgIB38PHMy2TraAqUGRYH0_HXM4iC2Nl6dNOTJzWIEom4G-Ck49xOo4LgtCmIRZ_QcsOL2QfoMzLhG-kYedSJpQ-1xrov2XXCBc2Hy0PKhOHGbnb_SIbeeZ_PpGMtDz73VCUduE9St_a3HQUjtcQ1RDwhRIzV8JLBrhN0_4KJ6IVYiHTMA",
+        "places/ChIJlb_qI_eipBIRSok1XHpPIqs/photos/ATCDNfUindADPafFd3n26uMxdM4CvDkYOGb0TnmdwZhpNrh7fe7mejtHmjKcClxK1DC2rImC4Na8a_nuzDqnKUtJ55xgeMFMPRFj47aIuBSnXMi1nWcrKc2IlwUZNxEZcbvPMsi5f-32--lGSCkj8Oo_v6rUGs20VL81o4ZVFpHS--8SbefPf9R_zcdcO1UrRCmPUiQ1rwa7qBew4guHR080OEtb2--eqSk3Tizo0qkSwwyYkYrp0IxmExcTjeRG6plz1_iJ0sLLXK9lM1p4nr1bw_513hcFOiqs2rr_ABCnmC0-SVA2BUBbg5EisFDU6TOCMwXLIxbBr91rkMdL02VX3s1geJ1eSJc2Yl8lD9TbSPVxIVQLGR91v9HHdIEZUGo6820ZYQOu7KPlm0njav-ptbEI_wKG4Uk21ORYrsuXtXYBSg",
+        "places/ChIJlb_qI_eipBIRSok1XHpPIqs/photos/ATCDNfUkP6rf_wyLOFkEGGvO2ADcJU-WJafO-u4EAJEgYsTR2w610oxW-7AfY25nxaeLSo4yj80zZYSHEcZOZ2aiYZ_enG5i6PBDgEemcq3XtghkFdbHnxxzqCERa9vT8nJP-EJyi_au-Z7xFfuayeoAG0TGnKMRzKHDnRuIzxR1jgyHqkIwHBlD56YSasP7InFS5yS0aKV9ZfaBBShcLLbEiZnGtX0eZAxHvxASGT3qr4eYgcMoOJpi1uSCUv-rP2iym22pLzPdlrH2cSSkkMvhgDDAxbuBhrPUoK1GNHgTWL31SzrQ4SRJK73tyoiwPgDGWHnmoZaxR92Lho6ycE5SSUUaD026GniPDv88H7VEntjB2JMi9TNdB6yS121s3pRog9W-r0ajf8sPFDpq0MKf_gZRJgykw7vtj59RSVYV4GH9Vtsbls13_HU8b0g55XZE"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=12331506116645456202&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=12331506116645456202&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 9:00 AM – 9:00 PM",
         "Tuesday: 9:00 AM – 9:00 PM",
@@ -1504,7 +1504,7 @@
     {
       "name": "El Corte Inglés Pet Section",
       "category": "shop",
-      "address": "Plaça de Catalunya, 14, 08002 Barcelona",
+      "address": "Pl. de Catalunya, 14, Eixample, 08002 Barcelona, Spain",
       "neighborhood": "Gothic Quarter",
       "phone": "+34 932 81 50 13",
       "website": "https://www.elcorteingles.es/centroscomerciales/es/eci/centros/centro-comercial-placa-de-catalunya",
@@ -1527,13 +1527,13 @@
       "latitude": 41.3876381,
       "longitude": 2.171023,
       "rating": 4.2,
-      "reviewCount": 54528,
+      "reviewCount": 54730,
       "photoRefs": [
-        "places/ChIJJbiSbfGipBIRtqUfjy8u5sg/photos/AcnlKN2TVq5iJFRjVraho1GMOvmIs5jvkAEirM7cu3-oBHhgKlM05xE6usGjPXa3wpuBj_vu3l6E6wFjzpJLhQZw_Zz2MCWlHu8gQ0v043TE89LwjiYHeeZ4CSLZKbIYEY7YhxgbXQ01J5HbnVfkSSho_Fyy3PKsS9FUAtysbUykDclVK5vmsgrback7B_vxFzxwBQG7Q9rIYQQqFadfZWJmJ809ttIcpqAKfTCB5S291RMrWvZkNd1gZouap-LXWV5fyZLB3AI-084LzMlJv6Pb0ISDDyss-YeR7lFWd1i0YppqUA",
-        "places/ChIJJbiSbfGipBIRtqUfjy8u5sg/photos/AcnlKN19ge_qVMMPKCPVaZQxB2G_XOgI9DpOP_C4Slt76qWCfh9602Q83mscMxi-BDUnRx0g79FU0zXCHzOFXizqA_GHLJldGgucQE0QL_SrMq5eya2hlkQFptPpTFiV4d2VcqFLRvObeJ-0eJT6qkUz1leviKHkAZabJ5TcAMAJI8UlfaAywG_a74w57_bauGWSRzNUp_hfYzWv2gghLcV8vjz0TFyPhq3hibV94iIjbj_gKkRIDxUzrHvoFVT2Oiv1S0d8b7Ws_X_fTrIQP5CNhDPb95UQxlQ5bBzcB7ZSMkXqyGSnMxI-H7iA6mSfgegvhXmMvDOKYlP52_uK3HCTI891BwoKJbosD38P1MyjGk0Zsu6y57XvDVj9odk167XuZ-QcPDm30xbaqveKPvyclRbQIvLJhurkiH76whavJz8F9h1Qex09k4JbncqSCg",
-        "places/ChIJJbiSbfGipBIRtqUfjy8u5sg/photos/AcnlKN16a7WAcUqMGcUr9XF-ukuRiylmb1PB6vE_lS1QqO8-zigTwFukq8l2GfWAJhZ-GYhmhBoEOp2MxGGq4nsQvj0sOfOzkgKvFr_jY-gRlo9Hkedb8d4yCV7AeA1AZCxeBp3TGS6NEUFF8p2O06Omy4VowpT3kDJl9ONNckED56DMN2JpXO-7erY6Tk4W5WFkJOw_FwWctt1BUd2_Q4DQYSeSwhkqQMCJFO3kU3d6PG0GhGdUZJHrVaYKhuko-lYec4TwVwIMbEqH8D-aLfvV3mOYrbf84kcXX_eMUZKh-GZBJ4SrTLz5erm7FZMFNCP5hrdGIUvCv2LNXWm__CjuCujeRDsCJSvE8UqWEVy6ASKdH96ehZn6jW2oVq7V6Wkomd_foy4uKfDBjuLYOk9Y_mNCbsD2fZlZ0ZXrZuarYRApFA"
+        "places/ChIJJbiSbfGipBIRtqUfjy8u5sg/photos/ATCDNfUGJxZ3H_piP_ER_93WvuLk8aAiRORwh2BjK2golOg3Lbo75cmN_cr3OlY2zees5kJgVc798aXK_60E86TTgGZr0PSUP7dPsL_5z2nFhUR38Ny74bp8AoPz900UlbQmIJ6YiqHxSf8w3rYtyLOmAuHBnwiZ9Q7UHz-a18sROrhjRDWgSfVlfjdJ34KWvt787Zy7meb4JeFt1kPQvauPRK9HnnzfofV9jl6Bvkf7FiM6-z8mHwEW4i7JgI1UQ1Y2kz7JlI8zpurr6VpX0wPX33cqVRPfLN9RvPyBdiLuAE1kQA",
+        "places/ChIJJbiSbfGipBIRtqUfjy8u5sg/photos/ATCDNfUzYvs95pJ10C9TiRAjr6Y9eX_Zd_y4RWLaM4a43pzJ1gfdCLIZGwF1rhEk-sOpvEyZeLNNKtgwIFXpJTdlr68yhkuvFBZzrPaZzqHTNRSptYCIkfVbQLBnUoQCts4156i2rp6kCptiLTlVkucqthiDb0ZpnDxHP_XgvKVZJAqI7bXhm1jJuNhGHE4lvpl6R0MeIg7UidcYCvFPUOeMw5PQpB9-sSAXhBLBXkoMXD2uHA6j5vzeMuBAsdcjz5Dok2H4Cbph9qddE_5GgWH9e9HCnGk3qyRkD4do63WBE1vKNHmb1iZVzaZ8IY5MzkWh9FpJeWAyKwOe8RVi2vZO4sOJCp8bZQoA678ZxAYy1QHDdkSIKzKHwwPvvKdk3hQrm3VY11fAgsQfSoGGBMZJlLf1CjewMy21Fy55ICGp3CzpzdZsSj7TPIa4wEXntEdZ",
+        "places/ChIJJbiSbfGipBIRtqUfjy8u5sg/photos/ATCDNfV_RuQRvOav4KVOECxWlpaq6MyZcwA7r1n97UiS1KeC1IHWV8zATO-vGg-_OvjGMmz7KcZBd9Z38JM2sYN8nCEW4gOn4Z6eK5lcAUd-cc8_fLlPbYgLUts1wIOOQO08Q2GdRWR_0UxgPUAxoDInm1i11llUgtcEISfpQ492dyacU7Nt7UkYR5m8jxnSyGIZVyw4t2QztlaKyTLbwIP7jIQe0FCbthH4pr28o-7tcdni5FYeo7d0jky9_JjH6I0NTKXC2PI5WRrEbQ3X0qSzV3wIm0Hfdl0_fgoO5BgnLQDPqQQoUCnhiLMfpTMprjQgiuQxjsVZcYTziakltxvdQug2TO_SDNppaI5_nxCBbCI3D1wbnmvi3hL8f4NOLucSxEEgwR2Jb0lNn_L2ADOZLGFzj6VOg34UvsytUCiinQDXzw"
       ],
-      "googleMapsUrl": "https://maps.google.com/?cid=14476308834028594614&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgBIAA",
+      "googleMapsUrl": "https://maps.google.com/?cid=14476308834028594614&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
       "openingHours": [
         "Monday: 9:00 AM – 9:00 PM",
         "Tuesday: 9:00 AM – 9:00 PM",
