@@ -281,14 +281,21 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                       onError={(e) => {
                         const img = e.target as HTMLImageElement;
                         const currentSrc = img.src;
-                        // Try the next image in the array (category fallback is always last)
-                        const idx = establishment.images.findIndex(url => currentSrc.includes(url) || currentSrc.endsWith(url));
-                        const nextIdx = idx + 1;
-                        if (nextIdx < establishment.images.length) {
-                          img.src = establishment.images[nextIdx];
-                        } else if (!currentSrc.includes('unsplash.com')) {
-                          // Ultimate fallback
-                          img.src = FALLBACK_IMAGE;
+                        // Track retry count to prevent infinite loops
+                        const retryCount = parseInt(img.dataset.retryCount || '0', 10);
+                        const images = establishment.images;
+
+                        if (retryCount < images.length) {
+                          // Try next image in the array
+                          const nextIdx = retryCount + 1;
+                          if (nextIdx < images.length) {
+                            img.dataset.retryCount = String(nextIdx);
+                            img.src = images[nextIdx];
+                          } else if (!currentSrc.includes('unsplash.com')) {
+                            // All images exhausted, use ultimate fallback
+                            img.dataset.retryCount = String(images.length);
+                            img.src = FALLBACK_IMAGE;
+                          }
                         }
                       }}
                     />
