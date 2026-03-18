@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
     // Get all cities with their IDs and slugs
     const { data: cities, error: citiesError } = await supabase
-      .from('City')
+      .from('cities')
       .select('id, slug, name')
       .order('name');
 
@@ -26,9 +26,9 @@ export async function GET(request: NextRequest) {
 
     for (const city of cities || []) {
       const { count } = await supabase
-        .from('Establishment')
+        .from('establishments')
         .select('*', { count: 'exact', head: true })
-        .eq('cityId', city.id);
+        .eq('city_id', city.id);
 
       counts[city.slug] = count || 0;
     }
