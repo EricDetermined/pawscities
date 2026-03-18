@@ -19,16 +19,16 @@ export async function GET(request: NextRequest) {
 
     // Get total count
     const { count: totalCount } = await supabase
-      .from('Photo')
+      .from('photos')
       .select('*', { count: 'exact', head: true })
       .eq('status', statusFilter);
 
     // Get photos
     const { data: photos, error: photosError } = await supabase
-      .from('Photo')
+      .from('photos')
       .select('*')
       .eq('status', statusFilter)
-      .order('createdAt', { ascending: false })
+      .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
 
     if (photosError) {
@@ -40,14 +40,14 @@ export async function GET(request: NextRequest) {
       (photos || []).map(async (photo: Record<string, unknown>) => {
         const [estResult, userResult] = await Promise.all([
           supabase
-            .from('Establishment')
-            .select('id, name, slug, cityId, tier')
-            .eq('id', photo.establishmentId)
+            .from('establishments')
+            .select('id, name, slug, city_id, tier')
+            .eq('id', photo.establishment_id)
             .single(),
           supabase
-            .from('User')
+            .from('users')
             .select('id, email, name')
-            .eq('id', photo.userId)
+            .eq('id', photo.user_id)
             .single(),
         ]);
 
