@@ -161,9 +161,9 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
             <p className="text-white/90 max-w-2xl text-sm md:text-base">{city.description}</p>
             <div className="flex items-center gap-4 mt-3 text-sm text-white/80">
               <span>{getCategoryIcon('parks')} {totalPlaces} dog-friendly places</span>
-              <span>â¢</span>
+              <span>{'\u2022'}</span>
               <span>{getCategoryIcon('parks')} {categoryCounts['parks'] || 0} parks</span>
-              <span>â¢</span>
+              <span>{'\u2022'}</span>
               <span>{getCategoryIcon('restaurants')} {categoryCounts['restaurants'] || 0} restaurants</span>
             </div>
           </div>
