@@ -2,6 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { CITIES, type CityConfig } from './cities-config';
 import type { Establishment, DogFeatures, CategorySlug } from '@/types';
+import { createClient } from '@/lib/supabase/server';
 
 const CITY_DATA_MAP: Record<string, string> = {
   geneva: 'geneva-places',
@@ -51,7 +52,6 @@ function slugify(text: string): string {
   return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
-
 const CATEGORY_IMAGES: Record<string, string[]> = {
   parks: [
     'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=600&fit=crop',
@@ -103,7 +103,6 @@ const CATEGORY_IMAGES: Record<string, string[]> = {
     'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&h=600&fit=crop',
   ],
 };
-
 function getDefaultImage(category: string, name: string): string {
   const images = CATEGORY_IMAGES[category] || CATEGORY_IMAGES['parks'];
   return images[hashString(name) % images.length];
@@ -157,7 +156,6 @@ interface RawPlace {
   openingHours?: string[];
   enriched?: boolean;
 }
-
 async function loadCityJson(citySlug: string): Promise<RawPlace[]> {
   const fileName = CITY_DATA_MAP[citySlug];
   if (!fileName) return [];
@@ -218,7 +216,6 @@ function rawToEstablishment(raw: RawPlace, citySlug: string, cityConfig: CityCon
     updatedAt: new Date().toISOString(),
   };
 }
-
 const dataCache = new Map<string, Establishment[]>();
 
 export async function getCityEstablishments(citySlug: string): Promise<Establishment[]> {
@@ -256,4 +253,99 @@ export async function getCityCategoryCounts(citySlug: string): Promise<Record<st
   const counts: Record<string, number> = {};
   for (const e of all) { counts[e.categorySlug] = (counts[e.categorySlug] || 0) + 1; }
   return counts;
+}
+/**
+ * Fetches approved user-uploaded photos from Supabase and merges them into
+ * establishments. User photos are placed FIRST in the images array, followed
+ * by Google Places refs, with Unsplash category fallback always last.
+ *
+ * Image priority: User uploads (approved) > Google Places photos > Category Unsplash fallback
+ */
+export async function enrichEstablishmentsWithUserPhotos(
+  establishments: Establishment[]
+): Promise<Establishment[]> {
+  try {
+    const supabase = await createClient();
+
+    // Get all approved photos with their establishment slugs
+    const { data: dbEstablishments, error: estError } = await supabase
+      .from('Establishment')
+      .select('id, slug, cityId, images, primaryImage')
+      .in('status', ['ACTIVE']);
+
+    if (estError || !dbEstablishments || dbEstablishments.length === 0) {
+      return establishments; // No DB establishments, return as-is
+    }
+
+    // Get approved photos for these establishments
+    const estIds = dbEstablishments.map((e: Record<string, unknown>) => e.id as string);
+    const { data: approvedPhotos, error: photoError } = await supabase
+      .from('Photo')
+      .select('url, establishmentId')
+      .in('establishmentId', estIds)
+      .eq('status', 'APPROVED')
+      .order('createdAt', { ascending: false });
+
+    if (photoError || !approvedPhotos || approvedPhotos.length === 0) {
+      return establishments; // No approved photos, return as-is
+    }
+
+    // Build a map: establishment slug -> approved photo URLs
+    const photosByEstId = new Map<string, string[]>();
+    for (const photo of approvedPhotos) {
+      const estId = photo.establishmentId as string;
+      if (!photosByEstId.has(estId)) {
+        photosByEstId.set(estId, []);
+      }
+      photosByEstId.get(estId)!.push(photo.url as string);
+    }
+
+    // Build slug -> photos map using the DB establishment slugs
+    const photosBySlug = new Map<string, string[]>();
+    for (const dbEst of dbEstablishments) {
+      const slug = dbEst.slug as string;
+      const estId = dbEst.id as string;
+      const photos = photosByEstId.get(estId);
+      if (photos && photos.length > 0) {
+        photosBySlug.set(slug, photos);
+      }
+    }
+
+    if (photosBySlug.size === 0) {
+      return establishments; // No matching photos
+    }
+
+    // Merge user photos into establishments
+    return establishments.map(est => {
+      const userPhotos = photosBySlug.get(est.slug);
+      if (!userPhotos || userPhotos.length === 0) {
+        return est; // No user photos for this establishment
+      }
+
+      // Build the merged images array:
+      // 1. User-uploaded approved photos (highest priority)
+      // 2. Google Places photo refs (existing non-Unsplash, non-user images)
+      // 3. Category Unsplash fallback (always last)
+      const existingImages = est.images;
+      const unsplashFallback = existingImages.filter(img => img.includes('unsplash.com'));
+      const googlePhotos = existingImages.filter(
+        img => !img.includes('unsplash.com') && !userPhotos.includes(img)
+      );
+
+      const mergedImages = [
+        ...userPhotos,
+        ...googlePhotos,
+        ...unsplashFallback,
+      ];
+
+      return {
+        ...est,
+        images: mergedImages,
+      };
+    });
+  } catch (error) {
+    // If Supabase is unavailable, silently fall back to existing data
+    console.error('Failed to enrich establishments with user photos:', error);
+    return establishments;
+  }
 }
