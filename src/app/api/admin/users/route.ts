@@ -1,4 +1,3 @@
-import { createClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/admin';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -22,16 +21,16 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * limit;
 
     // Build query
-    let query = supabase.from('User').select(`
+    let query = supabase.from('users').select(`
       id,
-      supabaseId,
+      supabase_id,
       email,
       name,
       role,
-      isSuspended,
-      avatarUrl,
-      createdAt,
-      updatedAt
+      is_suspended,
+      avatar,
+      created_at,
+      updated_at
     `, { count: 'exact' });
 
     // Apply filters
@@ -40,7 +39,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (suspended !== null && suspended !== undefined) {
-      query = query.eq('isSuspended', suspended === 'true');
+      query = query.eq('is_suspended', suspended === 'true');
     }
 
     if (search) {
@@ -49,7 +48,7 @@ export async function GET(request: NextRequest) {
 
     // Apply sorting and pagination
     const { data: users, count: totalCount, error: usersError } = await query
-      .order('createdAt', { ascending: false })
+      .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
 
     if (usersError) {
