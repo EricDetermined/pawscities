@@ -21,11 +21,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Establishment ID required' }, { status: 400 });
     }
 
-    // Look up user in our User table
+    // Look up user in users table
     const { data: dbUser } = await supabase
-      .from('User')
+      .from('users')
       .select('id')
-      .eq('supabaseId', user.id)
+      .eq('supabase_id', user.id)
       .single();
 
     if (!dbUser) {
@@ -34,18 +34,18 @@ export async function POST(request: Request) {
 
     // Get subscription with Stripe customer ID
     const { data: subscription } = await supabase
-      .from('Subscription')
-      .select('stripeCustomerId')
-      .eq('establishmentId', establishmentId)
+      .from('subscriptions')
+      .select('stripe_customer_id')
+      .eq('establishment_id', establishmentId)
       .single();
 
-    if (!subscription?.stripeCustomerId) {
+    if (!subscription?.stripe_customer_id) {
       return NextResponse.json({ error: 'No active subscription found' }, { status: 404 });
     }
 
     // Create Stripe customer portal session
     const session = await stripe.billingPortal.sessions.create({
-      customer: subscription.stripeCustomerId,
+      customer: subscription.stripe_customer_id,
       return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/business`,
     });
 

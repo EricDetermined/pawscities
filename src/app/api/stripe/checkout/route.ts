@@ -30,11 +30,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Establishment ID required' }, { status: 400 });
     }
 
-    // Look up user in our User table
+    // Look up user in users table
     const { data: dbUser } = await supabase
-      .from('User')
+      .from('users')
       .select('id, email')
-      .eq('supabaseId', user.id)
+      .eq('supabase_id', user.id)
       .single();
 
     if (!dbUser) {
@@ -43,10 +43,10 @@ export async function POST(request: Request) {
 
     // Verify the user owns this establishment (has approved claim)
     const { data: claim } = await supabase
-      .from('BusinessClaim')
-      .select('id, establishmentId')
-      .eq('userId', dbUser.id)
-      .eq('establishmentId', establishmentId)
+      .from('business_claims')
+      .select('id, establishment_id')
+      .eq('user_id', dbUser.id)
+      .eq('establishment_id', establishmentId)
       .eq('status', 'APPROVED')
       .single();
 
@@ -56,12 +56,12 @@ export async function POST(request: Request) {
 
     // Check for existing Stripe customer
     const { data: subscription } = await supabase
-      .from('Subscription')
-      .select('stripeCustomerId')
-      .eq('establishmentId', establishmentId)
+      .from('subscriptions')
+      .select('stripe_customer_id')
+      .eq('establishment_id', establishmentId)
       .single();
 
-    let customerId = subscription?.stripeCustomerId;
+    let customerId = subscription?.stripe_customer_id;
 
     if (!customerId) {
       const customer = await stripe.customers.create({

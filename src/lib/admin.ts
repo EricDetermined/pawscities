@@ -10,7 +10,7 @@ export interface AdminAuthResult {
 
 /**
  * Validates that the current user is authenticated and has ADMIN role
- * Returns auth context or error response
+ * Uses the `users` table (the only user table in the database)
  */
 export async function requireAdmin(): Promise<AdminAuthResult> {
   try {
@@ -47,7 +47,6 @@ export async function requireAdmin(): Promise<AdminAuthResult> {
       };
     }
 
-    // Map snake_case DB columns to camelCase for internal use
     const mappedDbUser = {
       id: dbUser.id,
       supabaseId: dbUser.supabase_id,
@@ -89,7 +88,8 @@ export async function requireAdmin(): Promise<AdminAuthResult> {
 
 /**
  * Validates that the current user is authenticated and has BUSINESS or ADMIN role
- * Returns auth context or error response
+ * All users are in the single `users` table with a `role` column
+ * Users who sign up as consumers have role USER, and get upgraded to BUSINESS when they claim
  */
 export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
   try {
@@ -108,55 +108,33 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
       };
     }
 
-    // Check User table first (PascalCase, used by business/consumer flows)
-    const { data: appUser } = await supabase
-      .from('User')
-      .select('id, supabaseId, email')
-      .eq('supabaseId', user.id)
-      .single();
-
-    if (appUser) {
-      // Check if user has an approved business claim (makes them a business user)
-      const { data: claim } = await supabase
-        .from('BusinessClaim')
-        .select('id')
-        .eq('userId', appUser.id)
-        .eq('status', 'APPROVED')
-        .limit(1)
-        .single();
-
-      // Also check for pending claims - allow dashboard access while waiting
-      const { data: pendingClaim } = !claim ? await supabase
-        .from('BusinessClaim')
-        .select('id')
-        .eq('userId', appUser.id)
-        .eq('status', 'PENDING')
-        .limit(1)
-        .single() : { data: null };
-
-      if (claim || pendingClaim) {
-        return {
-          error: null,
-          supabase,
-          user,
-          dbUser: {
-            id: appUser.id,
-            supabaseId: appUser.supabaseId,
-            email: appUser.email,
-            role: 'BUSINESS',
-          },
-        };
-      }
-    }
-
-    // Fallback: check users table (snake_case, used by admin flows)
-    const { data: adminUser } = await supabase
+    // Look up user by supabase_id first, then by email
+    let { data: dbUser } = await supabase
       .from('users')
       .select('id, supabase_id, email, role')
       .eq('supabase_id', user.id)
       .single();
 
-    if (!adminUser) {
+    if (!dbUser && user.email) {
+      const { data: emailUser } = await supabase
+        .from('users')
+        .select('id, supabase_id, email, role')
+        .eq('email', user.email)
+        .single();
+
+      if (emailUser) {
+        // Link supabase_id if not already linked
+        if (!emailUser.supabase_id) {
+          await supabase
+            .from('users')
+            .update({ supabase_id: user.id })
+            .eq('id', emailUser.id);
+        }
+        dbUser = emailUser;
+      }
+    }
+
+    if (!dbUser) {
       return {
         error: NextResponse.json(
           { error: 'User record not found' },
@@ -169,22 +147,39 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
     }
 
     const mappedDbUser = {
-      id: adminUser.id,
-      supabaseId: adminUser.supabase_id,
-      email: adminUser.email,
-      role: adminUser.role,
+      id: dbUser.id,
+      supabaseId: dbUser.supabase_id,
+      email: dbUser.email,
+      role: dbUser.role,
     };
 
+    // Allow BUSINESS and ADMIN roles
     if (mappedDbUser.role !== 'BUSINESS' && mappedDbUser.role !== 'ADMIN') {
-      return {
-        error: NextResponse.json(
-          { error: 'Business or admin access required' },
-          { status: 403 }
-        ),
-        supabase: null,
-        user: null,
-        dbUser: null,
-      };
+      // Also check if user has any business claims (pending or approved) - they may not have
+      // been upgraded to BUSINESS role yet
+      const { data: claim } = await supabase
+        .from('business_claims')
+        .select('id')
+        .eq('user_id', dbUser.id)
+        .in('status', ['APPROVED', 'PENDING'])
+        .limit(1)
+        .single();
+
+      if (claim) {
+        // Upgrade role to BUSINESS since they have a claim
+        await supabase.from('users').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
+        mappedDbUser.role = 'BUSINESS';
+      } else {
+        return {
+          error: NextResponse.json(
+            { error: 'Business or admin access required' },
+            { status: 403 }
+          ),
+          supabase: null,
+          user: null,
+          dbUser: null,
+        };
+      }
     }
 
     return {

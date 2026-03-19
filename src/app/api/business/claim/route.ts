@@ -13,16 +13,16 @@ export async function GET() {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
 
-  // Look up user in our User table by supabaseId, then by email
+  // Look up user in users table by supabase_id, then by email
   let { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser && user.email) {
     const { data: emailUser } = await supabase
-      .from('User')
+      .from('users')
       .select('id')
       .eq('email', user.email)
       .single();
@@ -34,10 +34,10 @@ export async function GET() {
   }
 
   const { data: claims, error } = await supabase
-    .from('BusinessClaim')
+    .from('business_claims')
     .select('*')
-    .eq('userId', dbUser.id)
-    .order('createdAt', { ascending: false });
+    .eq('user_id', dbUser.id)
+    .order('created_at', { ascending: false });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -47,9 +47,9 @@ export async function GET() {
   const enrichedClaims = await Promise.all(
     (claims || []).map(async (claim: Record<string, unknown>) => {
       const { data: est } = await supabase
-        .from('Establishment')
-        .select('name, slug, cityId, address, primaryImage')
-        .eq('id', claim.establishmentId)
+        .from('establishments')
+        .select('name, slug, city_id, address, primary_image')
+        .eq('id', claim.establishment_id)
         .single();
       return { ...claim, establishment: est };
     })
@@ -85,8 +85,8 @@ export async function POST(request: NextRequest) {
 
   // Check if the establishment exists and its category is claimable
   const { data: establishment } = await supabase
-    .from('Establishment')
-    .select('id, website, categoryId')
+    .from('establishments')
+    .select('id, website, category_id')
     .eq('id', establishmentId)
     .single();
 
@@ -95,10 +95,10 @@ export async function POST(request: NextRequest) {
   }
 
   // Look up category slug to check if claimable
-  const estCategoryId = (establishment as Record<string, unknown>).categoryId as string;
+  const estCategoryId = (establishment as Record<string, unknown>).category_id as string;
   if (estCategoryId) {
     const { data: category } = await supabase
-      .from('Category')
+      .from('categories')
       .select('slug')
       .eq('id', estCategoryId)
       .single();
@@ -113,9 +113,9 @@ export async function POST(request: NextRequest) {
 
   // Check if already claimed
   const { data: existingClaim } = await supabase
-    .from('BusinessClaim')
+    .from('business_claims')
     .select('id, status')
-    .eq('establishmentId', establishmentId)
+    .eq('establishment_id', establishmentId)
     .single();
 
   if (existingClaim) {
@@ -133,26 +133,25 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // Get or create user record in User table (check by supabaseId first, then email)
+  // Get or create user record in users table (check by supabase_id first, then email)
   let { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser && user.email) {
-    // Check by email - user may have signed up as consumer first
     const { data: emailUser } = await supabase
-      .from('User')
-      .select('id, supabaseId')
+      .from('users')
+      .select('id, supabase_id')
       .eq('email', user.email)
       .single();
 
     if (emailUser) {
-      if (!emailUser.supabaseId) {
+      if (!emailUser.supabase_id) {
         await supabase
-          .from('User')
-          .update({ supabaseId: user.id })
+          .from('users')
+          .update({ supabase_id: user.id })
           .eq('id', emailUser.id);
       }
       dbUser = emailUser;
@@ -161,11 +160,12 @@ export async function POST(request: NextRequest) {
 
   if (!dbUser) {
     const { data: newUser, error: userError } = await supabase
-      .from('User')
+      .from('users')
       .insert({
-        supabaseId: user.id,
+        supabase_id: user.id,
         email: user.email || contactEmail,
         name: user.user_metadata?.name || contactName,
+        role: 'BUSINESS',
       })
       .select('id')
       .single();
@@ -175,6 +175,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: `Failed to create user record: ${userError.message}` }, { status: 500 });
     }
     dbUser = newUser;
+  } else {
+    // Update role to BUSINESS
+    await supabase.from('users').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
   }
 
   if (!dbUser) {
@@ -198,16 +201,16 @@ export async function POST(request: NextRequest) {
   }
 
   const { data: claim, error } = await supabase
-    .from('BusinessClaim')
+    .from('business_claims')
     .insert({
-      userId: dbUser.id,
-      establishmentId: establishmentId,
-      businessName: businessName,
-      contactName: contactName,
-      contactEmail: contactEmail,
-      contactPhone: contactPhone || null,
-      verificationMethod: effectiveVerificationMethod,
-      verificationNotes: verificationDoc || null,
+      user_id: dbUser.id,
+      establishment_id: establishmentId,
+      business_name: businessName,
+      contact_name: contactName,
+      contact_email: contactEmail,
+      contact_phone: contactPhone || null,
+      verification_method: effectiveVerificationMethod,
+      verification_notes: verificationDoc || null,
       status: 'PENDING',
     })
     .select()
@@ -216,8 +219,6 @@ export async function POST(request: NextRequest) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
-  // Note: User role is managed at the application level, not in the User table
 
   // Send email notifications (non-blocking)
   sendClaimConfirmation(contactEmail, businessName, claim.id).catch(() => {});

@@ -35,10 +35,10 @@ export async function POST(request: Request) {
         const { supabase_user_id, establishment_id, plan } = session.metadata || {};
 
         if (supabase_user_id && establishment_id) {
-          // Update establishment tier to PREMIUM
+          // Update establishment tier to premium
           await supabaseAdmin
-            .from('Establishment')
-            .update({ tier: 'PREMIUM' })
+            .from('establishments')
+            .update({ tier: 'premium' })
             .eq('id', establishment_id);
 
           // Get subscription details from Stripe for accurate period dates
@@ -55,22 +55,21 @@ export async function POST(request: Request) {
 
           // Create or update subscription record
           await supabaseAdmin
-            .from('Subscription')
+            .from('subscriptions')
             .upsert({
-              userId: supabase_user_id,
-              establishmentId: establishment_id,
-              stripeSubscriptionId: session.subscription as string,
-              stripeCustomerId: session.customer as string,
+              user_id: supabase_user_id,
+              establishment_id: establishment_id,
+              stripe_subscription_id: session.subscription as string,
+              stripe_customer_id: session.customer as string,
               plan: plan || 'monthly',
-              tier: 'PREMIUM',
               status: 'ACTIVE',
-              currentPeriodStart: periodStart,
-              currentPeriodEnd: periodEnd,
+              current_period_start: periodStart,
+              current_period_end: periodEnd,
             }, {
-              onConflict: 'establishmentId',
+              onConflict: 'establishment_id',
             });
 
-          console.log(`â Subscription activated for establishment ${establishment_id} (${plan})`);
+          console.log(`Subscription activated for establishment ${establishment_id} (${plan})`);
         }
         break;
       }
@@ -84,25 +83,24 @@ export async function POST(request: Request) {
           const status = isActive ? 'ACTIVE' :
                         subscription.status === 'past_due' ? 'PAST_DUE' :
                         subscription.status;
-          const tier = isActive ? 'PREMIUM' : 'FREE';
+          const tier = isActive ? 'premium' : 'free';
 
           await supabaseAdmin
-            .from('Subscription')
+            .from('subscriptions')
             .update({
               status: status,
-              tier: tier,
-              currentPeriodStart: new Date(subscription.current_period_start * 1000).toISOString(),
-              currentPeriodEnd: new Date(subscription.current_period_end * 1000).toISOString(),
+              current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+              current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
             })
-            .eq('stripeSubscriptionId', subscription.id);
+            .eq('stripe_subscription_id', subscription.id);
 
           // Update establishment tier
           await supabaseAdmin
-            .from('Establishment')
+            .from('establishments')
             .update({ tier: tier })
             .eq('id', establishment_id);
 
-          console.log(`ð Subscription updated for establishment ${establishment_id}: ${status}`);
+          console.log(`Subscription updated for establishment ${establishment_id}: ${status}`);
         }
         break;
       }
@@ -113,18 +111,18 @@ export async function POST(request: Request) {
 
         // Downgrade to free
         await supabaseAdmin
-          .from('Subscription')
-          .update({ status: 'CANCELED', tier: 'FREE' })
-          .eq('stripeSubscriptionId', subscription.id);
+          .from('subscriptions')
+          .update({ status: 'CANCELED' })
+          .eq('stripe_subscription_id', subscription.id);
 
         if (establishment_id) {
           await supabaseAdmin
-            .from('Establishment')
-            .update({ tier: 'FREE' })
+            .from('establishments')
+            .update({ tier: 'free' })
             .eq('id', establishment_id);
         }
 
-        console.log(`â Subscription canceled for establishment ${establishment_id}`);
+        console.log(`Subscription canceled for establishment ${establishment_id}`);
         break;
       }
 
@@ -134,11 +132,11 @@ export async function POST(request: Request) {
 
         if (subscriptionId) {
           await supabaseAdmin
-            .from('Subscription')
+            .from('subscriptions')
             .update({ status: 'PAST_DUE' })
-            .eq('stripeSubscriptionId', subscriptionId);
+            .eq('stripe_subscription_id', subscriptionId);
 
-          console.log(`â ï¸ Payment failed for subscription ${subscriptionId}`);
+          console.log(`Payment failed for subscription ${subscriptionId}`);
         }
         break;
       }
@@ -153,23 +151,22 @@ export async function POST(request: Request) {
           const { establishment_id } = stripeSubscription.metadata || {};
 
           await supabaseAdmin
-            .from('Subscription')
+            .from('subscriptions')
             .update({
               status: 'ACTIVE',
-              tier: 'PREMIUM',
-              currentPeriodStart: new Date(stripeSubscription.current_period_start * 1000).toISOString(),
-              currentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000).toISOString(),
+              current_period_start: new Date(stripeSubscription.current_period_start * 1000).toISOString(),
+              current_period_end: new Date(stripeSubscription.current_period_end * 1000).toISOString(),
             })
-            .eq('stripeSubscriptionId', subscriptionId);
+            .eq('stripe_subscription_id', subscriptionId);
 
           if (establishment_id) {
             await supabaseAdmin
-              .from('Establishment')
-              .update({ tier: 'PREMIUM' })
+              .from('establishments')
+              .update({ tier: 'premium' })
               .eq('id', establishment_id);
           }
 
-          console.log(`â Renewal payment succeeded for subscription ${subscriptionId}`);
+          console.log(`Renewal payment succeeded for subscription ${subscriptionId}`);
         }
         break;
       }

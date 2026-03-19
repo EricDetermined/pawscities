@@ -12,9 +12,9 @@ export async function GET() {
   try {
     // Get the business's approved claim with establishment details
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
+      .from('business_claims')
       .select('*')
-      .eq('userId', dbUser.id)
+      .eq('user_id', dbUser.id)
       .eq('status', 'APPROVED')
       .single();
 
@@ -25,9 +25,9 @@ export async function GET() {
     if (!claim) {
       // Check for pending claim
       const { data: pendingClaim } = await supabase
-        .from('BusinessClaim')
+        .from('business_claims')
         .select('id, status')
-        .eq('userId', dbUser.id)
+        .eq('user_id', dbUser.id)
         .eq('status', 'PENDING')
         .single();
 
@@ -42,9 +42,9 @@ export async function GET() {
 
     // Get the establishment
     const { data: establishment } = await supabase
-      .from('Establishment')
+      .from('establishments')
       .select('*')
-      .eq('id', claim.establishmentId)
+      .eq('id', claim.establishment_id)
       .single();
 
     if (!establishment) {
@@ -53,9 +53,9 @@ export async function GET() {
 
     // Get reviews
     const { data: reviews } = await supabase
-      .from('Review')
+      .from('reviews')
       .select('rating')
-      .eq('establishmentId', establishment.id)
+      .eq('establishment_id', establishment.id)
       .eq('status', 'APPROVED');
 
     const totalReviews = reviews?.length || 0;
@@ -66,12 +66,12 @@ export async function GET() {
 
     // Get subscription tier
     const { data: subscription } = await supabase
-      .from('Subscription')
+      .from('subscriptions')
       .select('*')
-      .eq('establishmentId', establishment.id)
+      .eq('establishment_id', establishment.id)
       .single();
 
-    const tier = subscription?.tier || establishment.tier || 'FREE';
+    const tier = subscription?.tier || establishment.tier || 'free';
 
     return NextResponse.json({
       status: 'approved',
@@ -82,20 +82,20 @@ export async function GET() {
         address: establishment.address,
         description: establishment.description,
         website: establishment.website,
-        primaryImage: establishment.primaryImage,
-        cityId: establishment.cityId,
-        categoryId: establishment.categoryId,
+        primaryImage: establishment.primary_image,
+        cityId: establishment.city_id,
+        categoryId: establishment.category_id,
         tier: establishment.tier,
       },
       analytics: {
         totalReviews,
         avgRating: parseFloat(String(avgRating)),
         rating: establishment.rating,
-        reviewCount: establishment.reviewCount,
+        reviewCount: establishment.review_count,
       },
       subscription: {
         tier,
-        isPremium: tier !== 'FREE',
+        isPremium: tier !== 'free',
       },
     });
   } catch (error) {
