@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { createClient } from '@/lib/supabase/client';
 
 const navItems = [
   {
@@ -45,6 +46,23 @@ export default function BusinessLayout({
 }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [userInitial, setUserInitial] = useState('');
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        const name = user.user_metadata?.name || user.email || '';
+        if (user.user_metadata?.name) {
+          setUserInitial(
+            name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
+          );
+        } else if (user.email) {
+          setUserInitial(user.email.charAt(0).toUpperCase());
+        }
+      }
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -101,8 +119,8 @@ export default function BusinessLayout({
               </svg>
               View Public Listing
             </Link>
-            <div className="h-8 w-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-medium">
-              B
+            <div className="h-8 w-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-medium text-sm">
+              {userInitial || '?'}
             </div>
           </div>
         </div>
