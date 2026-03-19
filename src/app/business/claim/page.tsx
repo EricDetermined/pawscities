@@ -356,7 +356,7 @@ export default function ClaimBusinessPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                 <input type="email" value={claimForm.contactEmail} onChange={(e) => setClaimForm(prev => ({ ...prev, contactEmail: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
                 {emailDomainMatch === 'match' && (
-                  <p className="mt-1 text-xs text-green-600 flex items-center gap-1"><span>&#10003;</span> Email domain matches business website â faster verification</p>
+                  <p className="mt-1 text-xs text-green-600 flex items-center gap-1"><span>&#10003;</span> Email domain matches business website - faster verification</p>
                 )}
                 {emailDomainMatch === 'mismatch' && selectedEstablishment?.website && (
                   <p className="mt-1 text-xs text-amber-600">Tip: Using an email from your business domain speeds up verification</p>
@@ -481,7 +481,40 @@ export default function ClaimBusinessPage() {
           <div className="bg-white rounded-xl border p-6 text-center">
             <div className="text-3xl mb-3">&#128640;</div>
             <h3 className="font-semibold text-gray-900 mb-1">3. Start Managing</h3>
-            <p className="text-sm text-gray-600">Once verified, manage your listing, respond to reviews, and grow</p>
+            <p className="text-sm text-gray-600">Once verified, manage your listing for free. Upgrade to Premium for more features.</p>
+          </div>
+        </div>
+      )}
+
+      {/* Free vs Premium comparison */}
+      {!selectedEstablishment && !showNewForm && (
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-white rounded-xl border p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-sm font-semibold text-gray-700 bg-gray-100 px-2.5 py-0.5 rounded-full">Free</span>
+              <span className="text-xs text-gray-500">Included when you claim</span>
+            </div>
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> Basic business listing</li>
+              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> 1 photo upload</li>
+              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> Dog features display</li>
+              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> View reviews and ratings</li>
+              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> Basic stats</li>
+            </ul>
+          </div>
+          <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-200 p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-sm font-semibold text-orange-700 bg-orange-100 px-2.5 py-0.5 rounded-full">Premium</span>
+              <span className="text-xs text-orange-600">From $29/month</span>
+            </div>
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Everything in Free</li>
+              <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Respond to reviews</li>
+              <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Up to 10 photos</li>
+              <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Events and special offers</li>
+              <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Detailed analytics</li>
+              <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Verified and Premium badges</li>
+            </ul>
           </div>
         </div>
       )}
@@ -492,10 +525,10 @@ export default function ClaimBusinessPage() {
           <h3 className="font-semibold text-blue-900 mb-2">How We Verify Business Ownership</h3>
           <p className="text-sm text-blue-800 mb-3">We take business verification seriously to protect both business owners and our community.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-blue-800">
-            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Business domain email</strong> â Using an email matching your website domain is the fastest way to verify</span></div>
-            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Business license</strong> â Upload or link to your business registration</span></div>
-            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Google Business Profile</strong> â Link to your verified Google Business listing</span></div>
-            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Phone verification</strong> â We may call the business number on file to confirm</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Business domain email</strong> - Using an email matching your website domain is the fastest way to verify</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Business license</strong> - Upload or link to your business registration</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Google Business Profile</strong> - Link to your verified Google Business listing</span></div>
+            <div className="flex items-start gap-2"><span className="text-blue-500 mt-0.5">&#10003;</span><span><strong>Phone verification</strong> - We may call the business number on file to confirm</span></div>
           </div>
         </div>
       )}

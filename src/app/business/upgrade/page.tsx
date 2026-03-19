@@ -312,7 +312,7 @@ function UpgradePageContent() {
           <div>
             <h3 className="font-semibold text-gray-900 mb-2">How does billing work?</h3>
             <p className="text-gray-700">
-              Choose monthly ($29/mo) or annual ($249/yr â save $99). You can cancel anytime without penalty.
+              Choose monthly ($29/mo) or annual ($249/yr - save $99). You can cancel anytime without penalty.
             </p>
           </div>
           <div>

@@ -129,6 +129,28 @@ export default function BusinessDashboard() {
         </div>
       </div>
 
+      {/* Free Plan Banner */}
+      {!isPremium && (
+        <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-xl p-5 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-sm font-semibold text-orange-800 bg-orange-100 px-2.5 py-0.5 rounded-full">Free Plan</span>
+              </div>
+              <p className="text-sm text-orange-900">
+                You have access to your basic listing, 1 photo, and can view reviews. Upgrade to respond to reviews, add more photos, create events, and get detailed analytics.
+              </p>
+            </div>
+            <Link
+              href="/business/upgrade"
+              className="shrink-0 px-5 py-2.5 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition-colors"
+            >
+              See Premium Benefits
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div className="bg-white rounded-xl border p-5">
@@ -393,7 +415,7 @@ export default function BusinessDashboard() {
           {/* Your Plan */}
           <div className="bg-white rounded-xl border p-6">
             <h3 className="font-semibold text-gray-900 mb-3">Your Plan</h3>
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-4">
               <TierBadge tier={isPremium ? 'premium' : 'free'} />
               {!isPremium && (
                 <Link href="/business/upgrade" className="text-xs text-orange-600 hover:text-orange-700 font-medium">
@@ -401,25 +423,82 @@ export default function BusinessDashboard() {
                 </Link>
               )}
             </div>
-            <div className="text-sm text-gray-500 space-y-1">
-              {!isPremium && <p>Basic listing with limited features</p>}
-              {isPremium && <p>Full access to all premium features</p>}
-            </div>
+
+            {!isPremium && (
+              <div className="space-y-3">
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Included</p>
+                  <ul className="space-y-1.5 text-sm">
+                    <li className="flex items-center gap-2 text-green-700">
+                      <span className="text-green-500">&#10003;</span> Basic listing
+                    </li>
+                    <li className="flex items-center gap-2 text-green-700">
+                      <span className="text-green-500">&#10003;</span> 1 photo
+                    </li>
+                    <li className="flex items-center gap-2 text-green-700">
+                      <span className="text-green-500">&#10003;</span> View reviews
+                    </li>
+                    <li className="flex items-center gap-2 text-green-700">
+                      <span className="text-green-500">&#10003;</span> Basic stats
+                    </li>
+                  </ul>
+                </div>
+                <div className="border-t pt-3">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Premium only</p>
+                  <ul className="space-y-1.5 text-sm">
+                    <li className="flex items-center gap-2 text-gray-400">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      Respond to reviews
+                    </li>
+                    <li className="flex items-center gap-2 text-gray-400">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      Up to 10 photos
+                    </li>
+                    <li className="flex items-center gap-2 text-gray-400">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      Events & offers
+                    </li>
+                    <li className="flex items-center gap-2 text-gray-400">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      Detailed analytics
+                    </li>
+                  </ul>
+                </div>
+                <Link
+                  href="/business/upgrade"
+                  className="block w-full text-center mt-2 px-3 py-2 text-sm font-medium text-orange-600 border border-orange-200 rounded-lg hover:bg-orange-50 transition-colors"
+                >
+                  Compare Plans
+                </Link>
+              </div>
+            )}
+
             {isPremium && (
-              <button
-                onClick={async () => {
-                  const res = await fetch('/api/stripe/portal', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ establishmentId: biz.id }),
-                  });
-                  const data = await res.json();
-                  if (data.url) window.location.href = data.url;
-                }}
-                className="mt-3 text-sm text-gray-500 hover:text-gray-700 underline"
-              >
-                Manage subscription
-              </button>
+              <>
+                <p className="text-sm text-gray-600 mb-3">Full access to all premium features</p>
+                <button
+                  onClick={async () => {
+                    const res = await fetch('/api/stripe/portal', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ establishmentId: biz.id }),
+                    });
+                    const data = await res.json();
+                    if (data.url) window.location.href = data.url;
+                  }}
+                  className="text-sm text-gray-500 hover:text-gray-700 underline"
+                >
+                  Manage subscription
+                </button>
+              </>
             )}
           </div>
         </div>
