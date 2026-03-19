@@ -78,11 +78,16 @@ export async function POST(request: Request) {
         .single();
 
       if (!otherCat) {
-        const { data: newCat } = await supabaseAdmin
+        const { data: newCat, error: catError } = await supabaseAdmin
           .from('categories')
-          .insert({ name: 'Other', slug: 'other', icon: '\ud83d\udccb', description: 'Other business types' })
+          .insert({ name: 'Other', slug: 'other', icon: '📋', sort_order: 99 })
           .select('id')
           .single();
+
+        if (catError) {
+          console.error('Error creating Other category:', catError);
+          return NextResponse.json({ error: `Failed to create category: ${catError.message}` }, { status: 500 });
+        }
         otherCat = newCat;
       }
 
