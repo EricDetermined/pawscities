@@ -108,13 +108,49 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
       };
     }
 
-    const { data: dbUser, error: dbError } = await supabase
+    // Check User table first (PascalCase, used by business/consumer flows)
+    const { data: appUser } = await supabase
+      .from('User')
+      .select('id, supabaseId, email, role')
+      .eq('supabaseId', user.id)
+      .single();
+
+    if (appUser) {
+      const mappedDbUser = {
+        id: appUser.id,
+        supabaseId: appUser.supabaseId,
+        email: appUser.email,
+        role: appUser.role,
+      };
+
+      if (mappedDbUser.role !== 'BUSINESS' && mappedDbUser.role !== 'ADMIN') {
+        return {
+          error: NextResponse.json(
+            { error: 'Business or admin access required' },
+            { status: 403 }
+          ),
+          supabase: null,
+          user: null,
+          dbUser: null,
+        };
+      }
+
+      return {
+        error: null,
+        supabase,
+        user,
+        dbUser: mappedDbUser,
+      };
+    }
+
+    // Fallback: check users table (snake_case, used by admin flows)
+    const { data: adminUser } = await supabase
       .from('users')
       .select('id, supabase_id, email, role')
       .eq('supabase_id', user.id)
       .single();
 
-    if (dbError || !dbUser) {
+    if (!adminUser) {
       return {
         error: NextResponse.json(
           { error: 'User record not found' },
@@ -127,10 +163,10 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
     }
 
     const mappedDbUser = {
-      id: dbUser.id,
-      supabaseId: dbUser.supabase_id,
-      email: dbUser.email,
-      role: dbUser.role,
+      id: adminUser.id,
+      supabaseId: adminUser.supabase_id,
+      email: adminUser.email,
+      role: adminUser.role,
     };
 
     if (mappedDbUser.role !== 'BUSINESS' && mappedDbUser.role !== 'ADMIN') {
