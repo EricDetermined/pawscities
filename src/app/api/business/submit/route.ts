@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import { sendClaimConfirmation, sendNewClaimAdminAlert } from '@/lib/email';
 
 // Non-claimable category slugs
-const NON_CLAIMABLE_SLUGS = ['cat-park', 'cat-beach'];
+const NON_CLAIMABLE_SLUGS = ['parks', 'beaches'];
 
 function generateSlug(name: string): string {
   return name
@@ -84,19 +84,39 @@ export async function POST(request: Request) {
       slug = `${slug}-${existingSlugs.length + 1}`;
     }
 
-    // Check if user exists in User table
+    // Check if user exists in User table (by supabaseId first, then by email)
     let { data: existingUser } = await supabase
       .from('User')
       .select('id')
       .eq('supabaseId', user.id)
       .single();
 
+    if (!existingUser && user.email) {
+      // Check by email - user may have signed up as consumer first
+      const { data: emailUser } = await supabase
+        .from('User')
+        .select('id, supabaseId')
+        .eq('email', user.email)
+        .single();
+
+      if (emailUser) {
+        // Link existing user record to this Supabase auth account if not already linked
+        if (!emailUser.supabaseId) {
+          await supabase
+            .from('User')
+            .update({ supabaseId: user.id })
+            .eq('id', emailUser.id);
+        }
+        existingUser = emailUser;
+      }
+    }
+
     if (!existingUser) {
       const { data: newUser, error: userError } = await supabase
         .from('User')
         .insert({
           supabaseId: user.id,
-          email: user.email || '',
+          email: user.email || contactEmail,
           name: user.user_metadata?.name || contactName,
           role: 'BUSINESS',
         })
@@ -105,7 +125,7 @@ export async function POST(request: Request) {
 
       if (userError) {
         console.error('Error creating user:', userError);
-        return NextResponse.json({ error: 'Failed to create user profile' }, { status: 500 });
+        return NextResponse.json({ error: `Failed to create user profile: ${userError.message}` }, { status: 500 });
       }
       existingUser = newUser;
     }

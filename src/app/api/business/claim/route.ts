@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sendClaimConfirmation, sendNewClaimAdminAlert } from '@/lib/email';
 
 // Non-claimable category slugs
-const NON_CLAIMABLE = ['cat-park', 'cat-beach'];
+const NON_CLAIMABLE = ['parks', 'beaches'];
 
 export async function GET() {
   const supabase = await createClient();
@@ -13,12 +13,21 @@ export async function GET() {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
 
-  // Look up user in our User table by supabaseId
-  const { data: dbUser } = await supabase
+  // Look up user in our User table by supabaseId, then by email
+  let { data: dbUser } = await supabase
     .from('User')
     .select('id')
     .eq('supabaseId', user.id)
     .single();
+
+  if (!dbUser && user.email) {
+    const { data: emailUser } = await supabase
+      .from('User')
+      .select('id')
+      .eq('email', user.email)
+      .single();
+    dbUser = emailUser;
+  }
 
   if (!dbUser) {
     return NextResponse.json({ claims: [] });
@@ -85,11 +94,21 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Establishment not found' }, { status: 404 });
   }
 
-  if (NON_CLAIMABLE.includes((establishment as Record<string, unknown>).categoryId as string)) {
-    return NextResponse.json(
-      { error: 'Public spaces like parks and beaches cannot be claimed. These are community-maintained listings.' },
-      { status: 400 }
-    );
+  // Look up category slug to check if claimable
+  const estCategoryId = (establishment as Record<string, unknown>).categoryId as string;
+  if (estCategoryId) {
+    const { data: category } = await supabase
+      .from('Category')
+      .select('slug')
+      .eq('id', estCategoryId)
+      .single();
+
+    if (category && NON_CLAIMABLE.includes(category.slug)) {
+      return NextResponse.json(
+        { error: 'Public spaces like parks and beaches cannot be claimed. These are community-maintained listings.' },
+        { status: 400 }
+      );
+    }
   }
 
   // Check if already claimed
@@ -114,24 +133,48 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // Get or create user record in User table
+  // Get or create user record in User table (check by supabaseId first, then email)
   let { data: dbUser } = await supabase
     .from('User')
     .select('id')
     .eq('supabaseId', user.id)
     .single();
 
+  if (!dbUser && user.email) {
+    // Check by email - user may have signed up as consumer first
+    const { data: emailUser } = await supabase
+      .from('User')
+      .select('id, supabaseId')
+      .eq('email', user.email)
+      .single();
+
+    if (emailUser) {
+      if (!emailUser.supabaseId) {
+        await supabase
+          .from('User')
+          .update({ supabaseId: user.id })
+          .eq('id', emailUser.id);
+      }
+      dbUser = emailUser;
+    }
+  }
+
   if (!dbUser) {
-    const { data: newUser } = await supabase
+    const { data: newUser, error: userError } = await supabase
       .from('User')
       .insert({
         supabaseId: user.id,
-        email: user.email || '',
+        email: user.email || contactEmail,
         name: user.user_metadata?.name || contactName,
         role: 'BUSINESS',
       })
       .select('id')
       .single();
+
+    if (userError) {
+      console.error('Error creating user:', userError);
+      return NextResponse.json({ error: `Failed to create user record: ${userError.message}` }, { status: 500 });
+    }
     dbUser = newUser;
   }
 

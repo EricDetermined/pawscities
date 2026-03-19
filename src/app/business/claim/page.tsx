@@ -430,7 +430,11 @@ export default function ClaimBusinessPage() {
                 <select value={newForm.categoryId} onChange={(e) => setNewForm(prev => ({ ...prev, categoryId: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required>
                   <option value="">Select a category</option>
                   {categories.map(cat => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
+                  <option value="other">Other</option>
                 </select>
+                {newForm.categoryId === 'other' && (
+                  <input type="text" value={newForm.description.startsWith('[Other Category] ') ? newForm.description.replace('[Other Category] ', '') : ''} onChange={(e) => setNewForm(prev => ({ ...prev, description: `[Other Category] ${e.target.value}${prev.description.includes('\n') ? prev.description.substring(prev.description.indexOf('\n')) : ''}` }))} className="mt-2 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" placeholder="Describe your business type (e.g., Dog Walking Service, Pet Spa)" required />
+                )}
               </div>
             </div>
             <div>
