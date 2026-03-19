@@ -433,7 +433,7 @@ export default function ClaimBusinessPage() {
                   <option value="other">Other</option>
                 </select>
                 {newForm.categoryId === 'other' && (
-                  <input type="text" value={newForm.description.startsWith('[Other Category] ') ? newForm.description.replace('[Other Category] ', '') : ''} onChange={(e) => setNewForm(prev => ({ ...prev, description: `[Other Category] ${e.target.value}${prev.description.includes('\n') ? prev.description.substring(prev.description.indexOf('\n')) : ''}` }))} className="mt-2 w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" placeholder="Describe your business type (e.g., Dog Walking Service, Pet Spa)" required />
+                  <p className="mt-1 text-xs text-gray-500">Please describe your business type in the Description field below</p>
                 )}
               </div>
             </div>

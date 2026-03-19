@@ -54,22 +54,28 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Validate that the category is claimable (not a public space like parks/beaches)
-    const { data: category } = await supabase
-      .from('Category')
-      .select('slug')
-      .eq('id', categoryId)
-      .single();
+    // Handle "other" category - store null, admin will assign later
+    const isOtherCategory = categoryId === 'other';
+    const resolvedCategoryId = isOtherCategory ? null : categoryId;
 
-    if (!category) {
-      return NextResponse.json({ error: 'Invalid category selected' }, { status: 400 });
-    }
+    if (!isOtherCategory) {
+      // Validate that the category is claimable (not a public space like parks/beaches)
+      const { data: category } = await supabase
+        .from('Category')
+        .select('slug')
+        .eq('id', categoryId)
+        .single();
 
-    if (NON_CLAIMABLE_SLUGS.includes(category.slug)) {
-      return NextResponse.json(
-        { error: 'Public spaces like parks and beaches cannot be claimed. These are community-maintained listings.' },
-        { status: 400 }
-      );
+      if (!category) {
+        return NextResponse.json({ error: 'Invalid category selected' }, { status: 400 });
+      }
+
+      if (NON_CLAIMABLE_SLUGS.includes(category.slug)) {
+        return NextResponse.json(
+          { error: 'Public spaces like parks and beaches cannot be claimed. These are community-maintained listings.' },
+          { status: 400 }
+        );
+      }
     }
 
     // Generate unique slug
@@ -142,8 +148,8 @@ export async function POST(request: Request) {
         slug,
         address,
         cityId,
-        categoryId,
-        description: description || null,
+        categoryId: resolvedCategoryId,
+        description: isOtherCategory ? `[Other Category] ${description || ''}`.trim() : (description || null),
         status: 'PENDING_REVIEW',
         tier: 'FREE',
         isVerified: false,
