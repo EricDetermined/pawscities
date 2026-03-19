@@ -1,6 +1,16 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { sendClaimConfirmation, sendNewClaimAdminAlert } from '@/lib/email';
+
+// Lazy initialization to ensure env vars are available in serverless context
+function getSupabaseAdmin() {
+  return createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
 
 // Non-claimable category slugs
 const NON_CLAIMABLE_SLUGS = ['parks', 'beaches'];
@@ -40,6 +50,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    const supabaseAdmin = getSupabaseAdmin();
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -54,9 +65,32 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Handle "other" category - store null, admin will assign later
+    // Handle "other" category - find or create an "Other" category
     const isOtherCategory = categoryId === 'other';
-    const resolvedCategoryId = isOtherCategory ? null : categoryId;
+    let resolvedCategoryId = categoryId;
+
+    if (isOtherCategory) {
+      // Look up existing "Other" category, or create one
+      let { data: otherCat } = await supabaseAdmin
+        .from('categories')
+        .select('id')
+        .eq('slug', 'other')
+        .single();
+
+      if (!otherCat) {
+        const { data: newCat } = await supabaseAdmin
+          .from('categories')
+          .insert({ name: 'Other', slug: 'other', icon: '\ud83d\udccb', description: 'Other business types' })
+          .select('id')
+          .single();
+        otherCat = newCat;
+      }
+
+      if (!otherCat) {
+        return NextResponse.json({ error: 'Failed to resolve category' }, { status: 500 });
+      }
+      resolvedCategoryId = otherCat.id;
+    }
 
     if (!isOtherCategory) {
       // Validate that the category is claimable (not a public space like parks/beaches)
@@ -108,7 +142,7 @@ export async function POST(request: Request) {
       if (emailUser) {
         // Link existing user record to this Supabase auth account if not already linked
         if (!emailUser.supabase_id) {
-          await supabase
+          await supabaseAdmin
             .from('users')
             .update({ supabase_id: user.id })
             .eq('id', emailUser.id);
@@ -118,7 +152,7 @@ export async function POST(request: Request) {
     }
 
     if (!existingUser) {
-      const { data: newUser, error: userError } = await supabase
+      const { data: newUser, error: userError } = await supabaseAdmin
         .from('users')
         .insert({
           supabase_id: user.id,
@@ -136,7 +170,7 @@ export async function POST(request: Request) {
       existingUser = newUser;
     } else {
       // Update role to BUSINESS if not already
-      await supabase
+      await supabaseAdmin
         .from('users')
         .update({ role: 'BUSINESS' })
         .eq('id', existingUser.id);
@@ -146,8 +180,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Failed to create user record' }, { status: 500 });
     }
 
-    // Create the establishment
-    const { data: establishment, error: estError } = await supabase
+    // Create the establishment using admin client to bypass RLS
+    const { data: establishment, error: estError } = await supabaseAdmin
       .from('establishments')
       .insert({
         name,
@@ -173,7 +207,7 @@ export async function POST(request: Request) {
     }
 
     // Create the claim
-    const { error: claimError } = await supabase
+    const { error: claimError } = await supabaseAdmin
       .from('business_claims')
       .insert({
         user_id: existingUser.id,
@@ -189,7 +223,7 @@ export async function POST(request: Request) {
     if (claimError) {
       console.error('Error creating claim:', claimError);
       // Clean up: delete the establishment we just created
-      await supabase.from('establishments').delete().eq('id', establishment.id);
+      await supabaseAdmin.from('establishments').delete().eq('id', establishment.id);
       return NextResponse.json({ error: `Failed to create claim: ${claimError.message}` }, { status: 500 });
     }
 
