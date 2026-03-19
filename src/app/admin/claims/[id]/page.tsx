@@ -6,28 +6,33 @@ import { useParams, useRouter } from 'next/navigation';
 
 interface ClaimDetail {
   id: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: string;
   created_at: string;
   updated_at: string;
   review_notes: string | null;
   establishment_id: string;
   user_id: string;
-  establishments?: {
+  business_name: string | null;
+  contact_name: string | null;
+  contact_email: string | null;
+  contact_phone: string | null;
+  verification_method: string | null;
+  establishment?: {
     id: string;
     name: string;
-    category: string;
+    slug: string;
+    category_id: string;
     city_id: string;
     status: string;
     tier: string;
-    claimed_by?: string;
     rating?: number;
-    reviews_count?: number;
-  };
-  users?: {
+    review_count?: number;
+  } | null;
+  user?: {
     id: string;
     email: string;
-    display_name: string;
-  };
+    name: string;
+  } | null;
 }
 
 export default function ClaimDetailPage() {
@@ -76,7 +81,7 @@ export default function ClaimDetailPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'approve',
-          review_notes: reviewNotes || undefined,
+          reviewNotes: reviewNotes || undefined,
         }),
       });
 
@@ -107,7 +112,7 @@ export default function ClaimDetailPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'reject',
-          review_notes: reviewNotes || undefined,
+          reviewNotes: reviewNotes || undefined,
         }),
       });
 
@@ -163,7 +168,9 @@ export default function ClaimDetailPage() {
     );
   }
 
-  const isPending = claim.status === 'pending';
+  // Status comes as uppercase from DB (PENDING, APPROVED, REJECTED)
+  const isPending = claim.status.toUpperCase() === 'PENDING';
+  const statusDisplay = claim.status.charAt(0).toUpperCase() + claim.status.slice(1).toLowerCase();
 
   return (
     <div className="space-y-6">
@@ -198,22 +205,22 @@ export default function ClaimDetailPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
-            {claim.establishments?.name}
+            {claim.business_name || claim.establishment?.name || 'Unknown Business'}
           </h1>
           <p className="text-gray-600 mt-1">
             Claim #{claim.id.slice(0, 8)}
           </p>
         </div>
         <div
-          className={`px-4 py-2 rounded-full font-medium text-sm ${
-            claim.status === 'pending'
+          className={`px-4 py-2 rounded-full font-medium text-sm uppercase ${
+            isPending
               ? 'bg-yellow-100 text-yellow-700'
-              : claim.status === 'approved'
+              : claim.status.toUpperCase() === 'APPROVED'
               ? 'bg-green-100 text-green-700'
               : 'bg-red-100 text-red-700'
           }`}
         >
-          {claim.status}
+          {statusDisplay}
         </div>
       </div>
 
@@ -227,17 +234,13 @@ export default function ClaimDetailPage() {
               Establishment Details
             </h2>
             <div className="space-y-4">
-              <InfoRow label="Name" value={claim.establishments?.name} />
-              <InfoRow
-                label="Category"
-                value={claim.establishments?.category}
-              />
-              <InfoRow label="Status" value={claim.establishments?.status} />
-              <InfoRow label="Tier" value={claim.establishments?.tier} />
-              {claim.establishments?.rating !== undefined && (
+              <InfoRow label="Name" value={claim.establishment?.name || claim.business_name} />
+              <InfoRow label="Status" value={claim.establishment?.status} />
+              <InfoRow label="Tier" value={claim.establishment?.tier} />
+              {claim.establishment?.rating !== undefined && claim.establishment.rating > 0 && (
                 <InfoRow
                   label="Rating"
-                  value={`${claim.establishments.rating} ⭐ (${claim.establishments.reviews_count} reviews)`}
+                  value={`${claim.establishment.rating} ⭐ (${claim.establishment.review_count || 0} reviews)`}
                 />
               )}
             </div>
@@ -251,9 +254,16 @@ export default function ClaimDetailPage() {
             <div className="space-y-4">
               <InfoRow
                 label="Name"
-                value={claim.users?.display_name}
+                value={claim.contact_name || claim.user?.name}
               />
-              <InfoRow label="Email" value={claim.users?.email} />
+              <InfoRow label="Email" value={claim.contact_email || claim.user?.email} />
+              {claim.contact_phone && (
+                <InfoRow label="Phone" value={claim.contact_phone} />
+              )}
+              <InfoRow
+                label="Verification"
+                value={claim.verification_method?.replace(/_/g, ' ')}
+              />
               <InfoRow
                 label="Submitted"
                 value={new Date(claim.created_at).toLocaleDateString('en-US', {
@@ -267,7 +277,7 @@ export default function ClaimDetailPage() {
             </div>
           </div>
 
-          {/* Review Notes */}
+          {/* Review Notes Input */}
           {isPending && (
             <div className="bg-white rounded-xl border p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
@@ -310,16 +320,16 @@ export default function ClaimDetailPage() {
                 <button
                   onClick={handleApprove}
                   disabled={submitting}
-                  className="w-full px-4 py-2 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg"
                 >
-                  {submitting ? 'Approving...' : 'Approve Claim'}
+                  {submitting ? 'Processing...' : '✅ Approve Claim'}
                 </button>
                 <button
                   onClick={handleReject}
                   disabled={submitting}
-                  className="w-full px-4 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg"
                 >
-                  {submitting ? 'Rejecting...' : 'Reject Claim'}
+                  {submitting ? 'Processing...' : '❌ Reject Claim'}
                 </button>
               </div>
               <p className="text-xs text-gray-500 mt-4 text-center">
@@ -335,12 +345,12 @@ export default function ClaimDetailPage() {
               </h2>
               <div
                 className={`px-4 py-3 rounded-lg text-center font-medium ${
-                  claim.status === 'approved'
+                  claim.status.toUpperCase() === 'APPROVED'
                     ? 'bg-green-100 text-green-700'
                     : 'bg-red-100 text-red-700'
                 }`}
               >
-                {claim.status === 'approved' ? 'Approved' : 'Rejected'}
+                {statusDisplay}
               </div>
               <p className="text-sm text-gray-600 mt-4">
                 Updated {new Date(claim.updated_at).toLocaleDateString()}
@@ -353,7 +363,7 @@ export default function ClaimDetailPage() {
   );
 }
 
-function InfoRow({ label, value }: { label: string; value?: string }) {
+function InfoRow({ label, value }: { label: string; value?: string | null }) {
   return (
     <div className="flex items-start justify-between py-3 border-b last:border-b-0">
       <span className="text-gray-600 font-medium">{label}</span>
