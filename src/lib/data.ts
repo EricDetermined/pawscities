@@ -3,6 +3,15 @@ import path from 'path';
 import { CITIES, type CityConfig } from './cities-config';
 import type { Establishment, DogFeatures, CategorySlug } from '@/types';
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
+
+function getSupabaseAdmin() {
+  return createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
 
 const CITY_DATA_MAP: Record<string, string> = {
   geneva: 'geneva-places',
@@ -235,7 +244,79 @@ export async function getCityEstablishmentsByCategory(citySlug: string, category
 
 export async function getEstablishment(citySlug: string, establishmentSlug: string): Promise<Establishment | null> {
   const all = await getCityEstablishments(citySlug);
-  return all.find(e => e.slug === establishmentSlug) || null;
+  const place = all.find(e => e.slug === establishmentSlug) || null;
+  if (!place) return null;
+
+  // Try to get the real database UUID for this establishment
+  // This is needed so favorites, reviews, and check-ins use the correct ID
+  try {
+    const supabaseAdmin = getSupabaseAdmin();
+
+    // Look up existing DB record by slug
+    const { data: dbEst } = await supabaseAdmin
+      .from('establishments')
+      .select('id')
+      .eq('slug', establishmentSlug)
+      .single();
+
+    if (dbEst && dbEst.id) {
+      return { ...place, id: dbEst.id as string };
+    }
+
+    // If not in DB, auto-create so user actions (favorites, reviews, check-ins) work
+    // First, get or resolve the city_id and category_id
+    const { data: cityRecord } = await supabaseAdmin
+      .from('cities')
+      .select('id')
+      .eq('slug', citySlug)
+      .single();
+
+    const categoryMap: Record<string, string> = {
+      parks: 'parks', restaurants: 'restaurants', cafes: 'cafes',
+      hotels: 'hotels', beaches: 'beaches', vets: 'vets',
+      stores: 'stores', grooming: 'grooming', daycare: 'daycare',
+      activities: 'activities',
+    };
+    const catSlug = categoryMap[place.categorySlug] || place.categorySlug;
+    const { data: catRecord } = await supabaseAdmin
+      .from('categories')
+      .select('id')
+      .eq('slug', catSlug)
+      .single();
+
+    const { data: newEst } = await supabaseAdmin
+      .from('establishments')
+      .insert({
+        name: place.name,
+        slug: establishmentSlug,
+        address: place.address,
+        city_id: cityRecord?.id || null,
+        category_id: catRecord?.id || null,
+        description: place.description,
+        status: 'ACTIVE',
+        tier: 'free',
+        is_verified: false,
+        is_featured: false,
+        rating: place.rating || 0,
+        review_count: place.reviewCount || 0,
+        price_level: place.priceLevel || 2,
+        phone: place.phone || null,
+        website: place.website || null,
+        latitude: place.latitude || null,
+        longitude: place.longitude || null,
+      })
+      .select('id')
+      .single();
+
+    if (newEst && newEst.id) {
+      return { ...place, id: newEst.id as string };
+    }
+  } catch (err) {
+    // If Supabase lookup/creation fails, continue with static ID
+    console.error('Failed to resolve establishment UUID:', err);
+  }
+
+  return place;
 }
 
 export async function searchEstablishments(citySlug: string, query: string): Promise<Establishment[]> {
@@ -269,8 +350,8 @@ export async function enrichEstablishmentsWithUserPhotos(
 
     // Get all approved photos with their establishment slugs
     const { data: dbEstablishments, error: estError } = await supabase
-      .from('Establishment')
-      .select('id, slug, cityId, images, primaryImage')
+      .from('establishments')
+      .select('id, slug, city_id, images, primary_image')
       .in('status', ['ACTIVE']);
 
     if (estError || !dbEstablishments || dbEstablishments.length === 0) {
@@ -280,11 +361,11 @@ export async function enrichEstablishmentsWithUserPhotos(
     // Get approved photos for these establishments
     const estIds = dbEstablishments.map((e: Record<string, unknown>) => e.id as string);
     const { data: approvedPhotos, error: photoError } = await supabase
-      .from('Photo')
-      .select('url, establishmentId')
-      .in('establishmentId', estIds)
+      .from('photos')
+      .select('url, establishment_id')
+      .in('establishment_id', estIds)
       .eq('status', 'APPROVED')
-      .order('createdAt', { ascending: false });
+      .order('created_at', { ascending: false });
 
     if (photoError || !approvedPhotos || approvedPhotos.length === 0) {
       return establishments; // No approved photos, return as-is
@@ -293,7 +374,7 @@ export async function enrichEstablishmentsWithUserPhotos(
     // Build a map: establishment slug -> approved photo URLs
     const photosByEstId = new Map<string, string[]>();
     for (const photo of approvedPhotos) {
-      const estId = photo.establishmentId as string;
+      const estId = photo.establishment_id as string;
       if (!photosByEstId.has(estId)) {
         photosByEstId.set(estId, []);
       }
