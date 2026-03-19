@@ -1,6 +1,15 @@
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { sendClaimConfirmation, sendNewClaimAdminAlert } from '@/lib/email';
+
+function getSupabaseAdmin() {
+  return createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
 
 // Non-claimable category slugs
 const NON_CLAIMABLE = ['parks', 'beaches'];
@@ -59,6 +68,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const supabaseAdmin = getSupabaseAdmin();
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -149,7 +159,7 @@ export async function POST(request: NextRequest) {
 
     if (emailUser) {
       if (!emailUser.supabase_id) {
-        await supabase
+        await supabaseAdmin
           .from('users')
           .update({ supabase_id: user.id })
           .eq('id', emailUser.id);
@@ -159,7 +169,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (!dbUser) {
-    const { data: newUser, error: userError } = await supabase
+    const { data: newUser, error: userError } = await supabaseAdmin
       .from('users')
       .insert({
         supabase_id: user.id,
@@ -177,7 +187,7 @@ export async function POST(request: NextRequest) {
     dbUser = newUser;
   } else {
     // Update role to BUSINESS
-    await supabase.from('users').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
+    await supabaseAdmin.from('users').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
   }
 
   if (!dbUser) {
@@ -200,7 +210,7 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  const { data: claim, error } = await supabase
+  const { data: claim, error } = await supabaseAdmin
     .from('business_claims')
     .insert({
       user_id: dbUser.id,
