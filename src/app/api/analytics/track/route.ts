@@ -45,16 +45,16 @@ export async function POST(request: NextRequest) {
 
     // Create analytics event
     const { data: event, error: createError } = await supabase
-      .from('ClickEvent')
+      .from('click_events')
       .insert([
         {
-          eventType,
-          userId: userId || null,
-          establishmentId: establishmentId || null,
-          cityId: cityId || null,
-          queryString: queryString || null,
+          event_type: eventType,
+          user_id: userId || null,
+          establishment_id: establishmentId || null,
+          city_id: cityId || null,
+          query_string: queryString || null,
           metadata: metadata || null,
-          createdAt: new Date().toISOString(),
+          created_at: new Date().toISOString(),
         },
       ])
       .select();

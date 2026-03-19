@@ -16,9 +16,9 @@ export async function GET() {
   try {
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('establishmentId')
-      .eq('userId', dbUser.id)
+      .from('business_claims')
+      .select('establishment_id')
+      .eq('user_id', dbUser.id)
       .eq('status', 'APPROVED')
       .single();
 
@@ -28,11 +28,11 @@ export async function GET() {
 
     // Get photos for this establishment
     const { data: photos, error: photosError } = await supabase
-      .from('Photo')
-      .select('id, url, caption, status, createdAt')
-      .eq('establishmentId', claim.establishmentId)
-      .eq('userId', dbUser.id)
-      .order('createdAt', { ascending: false });
+      .from('photos')
+      .select('id, url, caption, status, created_at')
+      .eq('establishment_id', claim.establishment_id)
+      .eq('user_id', dbUser.id)
+      .order('created_at', { ascending: false });
 
     if (photosError) {
       throw new Error(`Failed to fetch photos: ${photosError.message}`);
@@ -40,9 +40,9 @@ export async function GET() {
 
     // Get subscription tier
     const { data: subscription } = await supabase
-      .from('Subscription')
+      .from('subscriptions')
       .select('tier')
-      .eq('establishmentId', claim.establishmentId)
+      .eq('establishment_id', claim.establishment_id)
       .eq('status', 'ACTIVE')
       .single();
 
@@ -53,7 +53,7 @@ export async function GET() {
       photos: photos || [],
       tier,
       maxPhotos,
-      establishmentId: claim.establishmentId,
+      establishmentId: claim.establishment_id,
     });
   } catch (error) {
     console.error('Business photos GET error:', error);
@@ -78,9 +78,9 @@ export async function POST(request: NextRequest) {
 
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('establishmentId')
-      .eq('userId', dbUser.id)
+      .from('business_claims')
+      .select('establishment_id')
+      .eq('user_id', dbUser.id)
       .eq('status', 'APPROVED')
       .single();
 
@@ -90,9 +90,9 @@ export async function POST(request: NextRequest) {
 
     // Get subscription tier
     const { data: subscription } = await supabase
-      .from('Subscription')
+      .from('subscriptions')
       .select('tier')
-      .eq('establishmentId', claim.establishmentId)
+      .eq('establishment_id', claim.establishment_id)
       .eq('status', 'ACTIVE')
       .single();
 
@@ -101,10 +101,10 @@ export async function POST(request: NextRequest) {
 
     // Check existing photo count
     const { count: existingCount } = await supabase
-      .from('Photo')
+      .from('photos')
       .select('*', { count: 'exact', head: true })
-      .eq('establishmentId', claim.establishmentId)
-      .eq('userId', dbUser.id)
+      .eq('establishment_id', claim.establishment_id)
+      .eq('user_id', dbUser.id)
       .neq('status', 'REJECTED');
 
     const currentCount = existingCount || 0;
@@ -117,17 +117,17 @@ export async function POST(request: NextRequest) {
 
     // Insert photos with PENDING status
     const photoRecords = urls.map((url, idx) => ({
-      userId: dbUser.id,
-      establishmentId: claim.establishmentId,
+      user_id: dbUser.id,
+      establishment_id: claim.establishment_id,
       url,
       caption: captions?.[idx] || null,
       status: 'PENDING',
     }));
 
     const { data: photos, error: insertError } = await supabase
-      .from('Photo')
+      .from('photos')
       .insert(photoRecords)
-      .select('id, url, caption, status, createdAt');
+      .select('id, url, caption, status, created_at');
 
     if (insertError) {
       throw new Error(`Failed to save photos: ${insertError.message}`);
@@ -160,10 +160,10 @@ export async function DELETE(request: NextRequest) {
 
     // Verify ownership: photo must belong to this user
     const { data: photo, error: photoError } = await supabase
-      .from('Photo')
-      .select('id, url, userId')
+      .from('photos')
+      .select('id, url, user_id')
       .eq('id', photoId)
-      .eq('userId', dbUser.id)
+      .eq('user_id', dbUser.id)
       .single();
 
     if (photoError || !photo) {
@@ -181,7 +181,7 @@ export async function DELETE(request: NextRequest) {
 
     // Delete the record
     const { error: deleteError } = await supabase
-      .from('Photo')
+      .from('photos')
       .delete()
       .eq('id', photoId);
 

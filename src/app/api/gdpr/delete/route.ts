@@ -17,9 +17,9 @@ export async function POST(request: NextRequest) {
   }
 
   const { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
@@ -27,30 +27,30 @@ export async function POST(request: NextRequest) {
   }
 
   await supabase
-    .from('Review')
+    .from('reviews')
     .update({
       title: '[Deleted]',
       content: 'This review was removed by the user.',
-      dogNames: null,
-      reviewPhotos: [],
+      dog_names: null,
+      review_photos: [],
     })
-    .eq('userId', dbUser.id);
+    .eq('user_id', dbUser.id);
 
   await Promise.all([
-    supabase.from('DogProfile').delete().eq('userId', dbUser.id),
-    supabase.from('Favorite').delete().eq('userId', dbUser.id),
-    supabase.from('CheckIn').delete().eq('userId', dbUser.id),
-    supabase.from('Activity').delete().eq('userId', dbUser.id),
-    supabase.from('BusinessClaim').delete().eq('userId', dbUser.id),
+    supabase.from('dog_profiles').delete().eq('user_id', dbUser.id),
+    supabase.from('favorites').delete().eq('user_id', dbUser.id),
+    supabase.from('check_ins').delete().eq('user_id', dbUser.id),
+    supabase.from('activities').delete().eq('user_id', dbUser.id),
+    supabase.from('business_claims').delete().eq('user_id', dbUser.id),
   ]);
 
   await supabase
-    .from('User')
+    .from('users')
     .update({
       email: `deleted-${dbUser.id}@deleted.pawcities.com`,
       name: 'Deleted User',
       avatar: null,
-      homeCity: null,
+      home_city: null,
     })
     .eq('id', dbUser.id);
 
@@ -70,9 +70,9 @@ export async function GET() {
   }
 
   const { data: dbUser } = await supabase
-    .from('User')
-    .select('email, name, createdAt')
-    .eq('supabaseId', user.id)
+    .from('users')
+    .select('email, name, created_at')
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {

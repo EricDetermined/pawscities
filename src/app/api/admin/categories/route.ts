@@ -13,9 +13,9 @@ export async function GET(request: NextRequest) {
 
     // Get all categories with establishment counts
     const { data: categories, error: catError } = await supabase
-      .from('Category')
-      .select('id, name, slug, icon, color, sortOrder')
-      .order('sortOrder', { ascending: true });
+      .from('categories')
+      .select('id, name, slug, icon, color, sort_order')
+      .order('sort_order', { ascending: true });
 
     if (catError) {
       throw new Error(`Failed to fetch categories: ${catError.message}`);
@@ -23,14 +23,14 @@ export async function GET(request: NextRequest) {
 
     // Get establishment counts per category
     const { data: counts, error: countError } = await supabase
-      .from('Establishment')
-      .select('categoryId')
+      .from('establishments')
+      .select('category_id')
       .eq('status', 'ACTIVE');
 
     const countMap: Record<string, number> = {};
     if (!countError && counts) {
-      counts.forEach((est: { categoryId: string }) => {
-        countMap[est.categoryId] = (countMap[est.categoryId] || 0) + 1;
+      counts.forEach((est: { category_id: string }) => {
+        countMap[est.category_id] = (countMap[est.category_id] || 0) + 1;
       });
     }
 

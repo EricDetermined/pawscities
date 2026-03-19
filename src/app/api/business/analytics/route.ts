@@ -12,9 +12,9 @@ export async function GET() {
   try {
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('establishmentId')
-      .eq('userId', dbUser.id)
+      .from('business_claims')
+      .select('establishment_id')
+      .eq('user_id', dbUser.id)
       .eq('status', 'APPROVED')
       .single();
 
@@ -27,31 +27,31 @@ export async function GET() {
 
     // Get click events over last 30 days
     const { data: clicks } = await supabase
-      .from('ClickEvent')
-      .select('eventType, createdAt')
-      .eq('establishmentId', claim.establishmentId)
-      .gte('createdAt', thirtyDaysAgo.toISOString())
-      .lte('createdAt', now.toISOString());
+      .from('click_events')
+      .select('event_type, created_at')
+      .eq('establishment_id', claim.establishment_id)
+      .gte('created_at', thirtyDaysAgo.toISOString())
+      .lte('created_at', now.toISOString());
 
     // Get search events (how often this establishment appeared in search)
     const { data: searchEvents } = await supabase
-      .from('SearchEvent')
-      .select('createdAt')
-      .eq('establishmentId', claim.establishmentId)
-      .gte('createdAt', thirtyDaysAgo.toISOString())
-      .lte('createdAt', now.toISOString());
+      .from('search_events')
+      .select('created_at')
+      .eq('establishment_id', claim.establishment_id)
+      .gte('created_at', thirtyDaysAgo.toISOString())
+      .lte('created_at', now.toISOString());
 
     // Aggregate clicks by day
     const clicksByDay: Record<string, number> = {};
     const viewsByDay: Record<string, number> = {};
 
     clicks?.forEach((click: Record<string, unknown>) => {
-      const day = new Date(click.createdAt as string).toISOString().split('T')[0];
+      const day = new Date(click.created_at as string).toISOString().split('T')[0];
       clicksByDay[day] = (clicksByDay[day] || 0) + 1;
     });
 
     searchEvents?.forEach((event: Record<string, unknown>) => {
-      const day = new Date(event.createdAt as string).toISOString().split('T')[0];
+      const day = new Date(event.created_at as string).toISOString().split('T')[0];
       viewsByDay[day] = (viewsByDay[day] || 0) + 1;
     });
 
@@ -63,7 +63,7 @@ export async function GET() {
     };
 
     clicks?.forEach((click: Record<string, unknown>) => {
-      const eventType = click.eventType as string;
+      const eventType = click.event_type as string;
       if (eventType === 'PHONE') clicksByType.phone++;
       else if (eventType === 'WEBSITE') clicksByType.website++;
       else if (eventType === 'DIRECTIONS') clicksByType.directions++;

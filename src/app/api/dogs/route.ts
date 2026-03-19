@@ -10,9 +10,9 @@ export async function GET() {
   }
 
   const { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
@@ -20,10 +20,10 @@ export async function GET() {
   }
 
   const { data: dogs, error } = await supabase
-    .from('DogProfile')
+    .from('dog_profiles')
     .select('*')
-    .eq('userId', dbUser.id)
-    .order('createdAt', { ascending: false });
+    .eq('user_id', dbUser.id)
+    .order('created_at', { ascending: false });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -46,16 +46,16 @@ export async function POST(request: NextRequest) {
   }
 
   let { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
     const { data: newUser } = await supabase
-      .from('User')
+      .from('users')
       .insert({
-        supabaseId: user.id,
+        supabase_id: user.id,
         email: user.email || '',
         name: user.user_metadata?.name || user.email?.split('@')[0] || 'Dog Lover',
       })
@@ -69,12 +69,12 @@ export async function POST(request: NextRequest) {
   }
 
   const { data: dog, error } = await supabase
-    .from('DogProfile')
+    .from('dog_profiles')
     .insert({
-      userId: dbUser.id,
+      user_id: dbUser.id,
       name,
       breed: breed || null,
-      birthDate: birthDate || null,
+      birth_date: birthDate || null,
       size: size || 'MEDIUM',
       personality: personality || null,
       photo: photo || null,
@@ -103,9 +103,9 @@ export async function PUT(request: NextRequest) {
   }
 
   const { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
@@ -114,10 +114,10 @@ export async function PUT(request: NextRequest) {
 
   // Verify ownership
   const { data: existing } = await supabase
-    .from('DogProfile')
+    .from('dog_profiles')
     .select('id')
     .eq('id', id)
-    .eq('userId', dbUser.id)
+    .eq('user_id', dbUser.id)
     .single();
 
   if (!existing) {
@@ -125,11 +125,11 @@ export async function PUT(request: NextRequest) {
   }
 
   const { data: dog, error } = await supabase
-    .from('DogProfile')
+    .from('dog_profiles')
     .update({
       ...(name !== undefined && { name }),
       ...(breed !== undefined && { breed }),
-      ...(birthDate !== undefined && { birthDate }),
+      ...(birthDate !== undefined && { birth_date: birthDate }),
       ...(size !== undefined && { size }),
       ...(personality !== undefined && { personality }),
       ...(photo !== undefined && { photo }),

@@ -13,9 +13,9 @@ export async function GET() {
   try {
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('establishmentId')
-      .eq('userId', dbUser.id)
+      .from('business_claims')
+      .select('establishment_id')
+      .eq('user_id', dbUser.id)
       .eq('status', 'APPROVED')
       .single();
 
@@ -25,11 +25,11 @@ export async function GET() {
 
     // Get reviews for this establishment
     const { data: reviews, error: reviewsError } = await supabase
-      .from('Review')
-      .select('*, User:userId(id, name, avatar)')
-      .eq('establishmentId', claim.establishmentId)
+      .from('reviews')
+      .select('*, users:user_id(id, name, avatar)')
+      .eq('establishment_id', claim.establishment_id)
       .eq('status', 'APPROVED')
-      .order('createdAt', { ascending: false });
+      .order('created_at', { ascending: false });
 
     if (reviewsError) {
       return NextResponse.json({ error: reviewsError.message }, { status: 500 });
@@ -37,9 +37,9 @@ export async function GET() {
 
     // Get review responses from business
     const { data: responses, error: responsesError } = await supabase
-      .from('ReviewResponse')
+      .from('review_responses')
       .select('*')
-      .eq('establishmentId', claim.establishmentId);
+      .eq('establishment_id', claim.establishment_id);
 
     if (responsesError) {
       console.error('Error fetching responses:', responsesError);
@@ -47,7 +47,7 @@ export async function GET() {
 
     const responseMap = new Map();
     responses?.forEach((r: any) => {
-      responseMap.set(r.reviewId, r);
+      responseMap.set(r.review_id, r);
     });
 
     // Enrich reviews with responses
@@ -94,9 +94,9 @@ export async function POST(request: NextRequest) {
 
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('establishmentId')
-      .eq('userId', dbUser.id)
+      .from('business_claims')
+      .select('establishment_id')
+      .eq('user_id', dbUser.id)
       .eq('status', 'APPROVED')
       .single();
 
@@ -106,10 +106,10 @@ export async function POST(request: NextRequest) {
 
     // Verify the review belongs to this establishment
     const { data: review, error: reviewError } = await supabase
-      .from('Review')
+      .from('reviews')
       .select('id')
       .eq('id', reviewId)
-      .eq('establishmentId', claim.establishmentId)
+      .eq('establishment_id', claim.establishment_id)
       .single();
 
     if (reviewError || !review) {
@@ -118,18 +118,18 @@ export async function POST(request: NextRequest) {
 
     // Check if response already exists
     const { data: existing } = await supabase
-      .from('ReviewResponse')
+      .from('review_responses')
       .select('id')
-      .eq('reviewId', reviewId)
+      .eq('review_id', reviewId)
       .single();
 
     let result;
     if (existing) {
       // Update existing response
       const { data: updated, error: updateError } = await supabase
-        .from('ReviewResponse')
-        .update({ response, updatedAt: new Date().toISOString() })
-        .eq('reviewId', reviewId)
+        .from('review_responses')
+        .update({ response, updated_at: new Date().toISOString() })
+        .eq('review_id', reviewId)
         .select()
         .single();
 
@@ -140,12 +140,12 @@ export async function POST(request: NextRequest) {
     } else {
       // Create new response
       const { data: created, error: createError } = await supabase
-        .from('ReviewResponse')
+        .from('review_responses')
         .insert({
-          reviewId,
-          establishmentId: claim.establishmentId,
+          review_id: reviewId,
+          establishment_id: claim.establishment_id,
           response,
-          respondedAt: new Date().toISOString(),
+          responded_at: new Date().toISOString(),
         })
         .select()
         .single();

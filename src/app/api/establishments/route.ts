@@ -14,17 +14,17 @@ export async function GET(request: NextRequest) {
   const offset = (page - 1) * limit;
 
   let query = supabase
-    .from('Establishment')
-    .select('*, Category:categoryId(name, nameFr, icon, slug)', { count: 'exact' })
+    .from('establishments')
+    .select('*, categories:category_id(name, name_fr, icon, slug)', { count: 'exact' })
     .eq('status', 'ACTIVE')
-    .order('isFeatured', { ascending: false })
+    .order('is_featured', { ascending: false })
     .order('rating', { ascending: false, nullsFirst: false })
     .range(offset, offset + limit - 1);
 
-  if (cityId) query = query.eq('cityId', cityId);
-  if (categoryId) query = query.eq('categoryId', categoryId);
-  if (featured === 'true') query = query.eq('isFeatured', true);
-  if (verified === 'true') query = query.eq('isVerified', true);
+  if (cityId) query = query.eq('city_id', cityId);
+  if (categoryId) query = query.eq('category_id', categoryId);
+  if (featured === 'true') query = query.eq('is_featured', true);
+  if (verified === 'true') query = query.eq('is_verified', true);
   if (search) query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
 
   const { data: establishments, count, error } = await query;
@@ -62,12 +62,12 @@ export async function POST(request: NextRequest) {
   const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
   const { data: establishment, error } = await supabase
-    .from('Establishment')
+    .from('establishments')
     .insert({
       name,
       slug,
-      cityId,
-      categoryId,
+      city_id: cityId,
+      category_id: categoryId,
       address,
       latitude: latitude || 0,
       longitude: longitude || 0,

@@ -62,22 +62,22 @@ export async function GET() {
       const supabase = createClient(supabaseUrl, supabaseKey);
 
       const { data: establishments } = await supabase
-        .from('Establishment')
+        .from('establishments')
         .select(`
           slug,
-          updatedAt,
-          city:City!cityId ( slug )
+          updated_at,
+          cities:city_id ( slug )
         `)
         .eq('status', 'ACTIVE')
-        .order('updatedAt', { ascending: false });
+        .order('updated_at', { ascending: false });
 
       if (establishments) {
         for (const est of establishments) {
-          const citySlug = (est.city)?.slug;
+          const citySlug = (est.cities)?.slug;
           if (!citySlug) continue;
 
-          const lastmod = est.updatedAt
-            ? new Date(est.updatedAt).toISOString().split('T')[0]
+          const lastmod = est.updated_at
+            ? new Date(est.updated_at).toISOString().split('T')[0]
             : now;
           xml += `  <url>
     <loc>${BASE_URL}/${citySlug}/${est.slug}</loc>

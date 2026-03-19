@@ -10,9 +10,9 @@ export async function GET() {
   }
 
   const { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('*')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
@@ -20,11 +20,11 @@ export async function GET() {
   }
 
   const [dogs, reviews, favorites, checkins, activities] = await Promise.all([
-    supabase.from('DogProfile').select('*').eq('userId', dbUser.id),
-    supabase.from('Review').select('*').eq('userId', dbUser.id),
-    supabase.from('Favorite').select('*, Establishment:establishmentId(name, slug)').eq('userId', dbUser.id),
-    supabase.from('CheckIn').select('*, Establishment:establishmentId(name, slug)').eq('userId', dbUser.id),
-    supabase.from('Activity').select('*').eq('userId', dbUser.id),
+    supabase.from('dog_profiles').select('*').eq('user_id', dbUser.id),
+    supabase.from('reviews').select('*').eq('user_id', dbUser.id),
+    supabase.from('favorites').select('*, establishments:establishment_id(name, slug)').eq('user_id', dbUser.id),
+    supabase.from('check_ins').select('*, establishments:establishment_id(name, slug)').eq('user_id', dbUser.id),
+    supabase.from('activities').select('*').eq('user_id', dbUser.id),
   ]);
 
   const exportData = {
@@ -34,9 +34,9 @@ export async function GET() {
       email: dbUser.email,
       name: dbUser.name,
       language: dbUser.language,
-      homeCity: dbUser.homeCity,
+      homeCity: dbUser.home_city,
       role: dbUser.role,
-      createdAt: dbUser.createdAt,
+      createdAt: dbUser.created_at,
     },
     dogs: dogs.data || [],
     reviews: reviews.data || [],

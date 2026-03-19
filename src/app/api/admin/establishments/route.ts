@@ -30,23 +30,23 @@ export async function GET(request: NextRequest) {
     const sortField = validSortFields.includes(sortBy) ? sortBy : 'createdAt';
 
     // Build query with correct column names
-    let query = supabase.from('Establishment').select(`
+    let query = supabase.from('establishments').select(`
       id,
       name,
       slug,
-      categoryId,
-      cityId,
+      category_id,
+      city_id,
       status,
       tier,
       rating,
-      reviewCount,
-      isVerified,
-      isFeatured,
+      review_count,
+      is_verified,
+      is_featured,
       address,
-      createdAt,
-      updatedAt,
-      City(id, name, slug),
-      Category(id, name, slug)
+      created_at,
+      updated_at,
+      cities(id, name, slug),
+      categories(id, name, slug)
     `, { count: 'exact' });
 
     // Apply filters
@@ -54,16 +54,16 @@ export async function GET(request: NextRequest) {
       // Support both city slug and city UUID
       const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(city);
       if (isUUID) {
-        query = query.eq('cityId', city);
+        query = query.eq('city_id', city);
       } else {
         // Look up city ID from slug
         const { data: cityData } = await supabase
-          .from('City')
+          .from('cities')
           .select('id')
           .eq('slug', city)
           .single();
         if (cityData) {
-          query = query.eq('cityId', cityData.id);
+          query = query.eq('city_id', cityData.id);
         }
       }
     }
@@ -72,15 +72,15 @@ export async function GET(request: NextRequest) {
       // Support both category slug and category UUID
       const isCatUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(category);
       if (isCatUUID) {
-        query = query.eq('categoryId', category);
+        query = query.eq('category_id', category);
       } else {
         const { data: catData } = await supabase
-          .from('Category')
+          .from('categories')
           .select('id')
           .eq('slug', category)
           .single();
         if (catData) {
-          query = query.eq('categoryId', catData.id);
+          query = query.eq('category_id', catData.id);
         }
       }
     }
@@ -98,8 +98,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Apply sorting and pagination
+    // Convert camelCase sortField to snake_case for database
+    const dbSortField = sortField.replace(/([A-Z])/g, '_$1').toLowerCase();
     const { data: establishments, count: totalCount, error: estError } = await query
-      .order(sortField, { ascending: sortOrder === 'asc' })
+      .order(dbSortField, { ascending: sortOrder === 'asc' })
       .range(offset, offset + limit - 1);
 
     if (estError) {
@@ -158,13 +160,13 @@ export async function POST(request: NextRequest) {
 
     // Create establishment
     const { data: establishment, error: createError } = await supabase
-      .from('Establishment')
+      .from('establishments')
       .insert([
         {
           name,
           description: description || null,
-          categoryId: category,
-          cityId,
+          category_id: category,
+          city_id: cityId,
           address: address || '',
           phone: phone || null,
           email: email || null,
@@ -173,7 +175,7 @@ export async function POST(request: NextRequest) {
           status: 'ACTIVE',
           tier: 'free',
           rating: 0,
-          reviewCount: 0,
+          review_count: 0,
         },
       ])
       .select();

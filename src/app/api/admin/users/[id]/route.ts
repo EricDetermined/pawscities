@@ -18,17 +18,17 @@ export async function GET(
 
     // Get user details
     const { data: user, error: userError } = await supabase
-      .from('User')
+      .from('users')
       .select(`
         id,
-        supabaseId,
+        supabase_id,
         email,
         name,
         role,
-        isSuspended,
-        avatarUrl,
-        createdAt,
-        updatedAt
+        is_suspended,
+        avatar,
+        created_at,
+        updated_at
       `)
       .eq('id', userId)
       .single();
@@ -42,21 +42,21 @@ export async function GET(
 
     // Get reviews count
     const { count: reviewsCount } = await supabase
-      .from('Review')
+      .from('reviews')
       .select('*', { count: 'exact', head: true })
-      .eq('userId', userId);
+      .eq('user_id', userId);
 
     // Get claims count
     const { count: claimsCount } = await supabase
-      .from('BusinessClaim')
+      .from('business_claims')
       .select('*', { count: 'exact', head: true })
-      .eq('userId', userId);
+      .eq('user_id', userId);
 
     // Get favorites count
     const { count: favoritesCount } = await supabase
-      .from('Favorite')
+      .from('favorites')
       .select('*', { count: 'exact', head: true })
-      .eq('userId', userId);
+      .eq('user_id', userId);
 
     return NextResponse.json({
       user,
@@ -94,7 +94,7 @@ export async function PATCH(
 
     // Build update object
     const updateData: Record<string, any> = {
-      updatedAt: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     };
 
     if (role !== undefined) {
@@ -110,7 +110,7 @@ export async function PATCH(
     }
 
     if (suspended !== undefined) {
-      updateData.isSuspended = suspended;
+      updateData.is_suspended = suspended;
     }
 
     // Prevent updating yourself to prevent lockout
@@ -122,7 +122,7 @@ export async function PATCH(
     }
 
     const { data: user, error: updateError } = await supabase
-      .from('User')
+      .from('users')
       .update(updateData)
       .eq('id', userId)
       .select();

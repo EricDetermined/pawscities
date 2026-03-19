@@ -11,9 +11,9 @@ export async function GET() {
   try {
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('establishmentId')
-      .eq('userId', dbUser.id)
+      .from('business_claims')
+      .select('establishment_id')
+      .eq('user_id', dbUser.id)
       .eq('status', 'APPROVED')
       .single();
 
@@ -23,9 +23,9 @@ export async function GET() {
 
     // Get the establishment
     const { data: establishment, error: estError } = await supabase
-      .from('Establishment')
+      .from('establishments')
       .select('*')
-      .eq('id', claim.establishmentId)
+      .eq('id', claim.establishment_id)
       .single();
 
     if (estError || !establishment) {
@@ -52,9 +52,9 @@ export async function PUT(request: NextRequest) {
 
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase
-      .from('BusinessClaim')
-      .select('establishmentId')
-      .eq('userId', dbUser.id)
+      .from('business_claims')
+      .select('establishment_id')
+      .eq('user_id', dbUser.id)
       .eq('status', 'APPROVED')
       .single();
 
@@ -67,14 +67,14 @@ export async function PUT(request: NextRequest) {
     if (description !== undefined) updateData.description = description;
     if (phone !== undefined) updateData.phone = phone;
     if (website !== undefined) updateData.website = website;
-    if (dogFeatures !== undefined) updateData.dogFeatures = dogFeatures;
-    if (openingHours !== undefined) updateData.openingHours = openingHours;
-    updateData.updatedAt = new Date().toISOString();
+    if (dogFeatures !== undefined) updateData.dog_features = dogFeatures;
+    if (openingHours !== undefined) updateData.opening_hours = openingHours;
+    updateData.updated_at = new Date().toISOString();
 
     const { data: updated, error: updateError } = await supabase
-      .from('Establishment')
+      .from('establishments')
       .update(updateData)
-      .eq('id', claim.establishmentId)
+      .eq('id', claim.establishment_id)
       .select()
       .single();
 

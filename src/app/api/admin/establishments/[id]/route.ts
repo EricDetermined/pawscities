@@ -17,26 +17,26 @@ export async function GET(
     const establishmentId = params.id;
 
     const { data: establishment, error: estError } = await supabase
-      .from('Establishment')
+      .from('establishments')
       .select(`
         id,
         name,
         description,
-        category,
-        cityId,
+        category_id,
+        city_id,
         status,
         tier,
         rating,
-        reviewCount,
+        review_count,
         address,
         phone,
         email,
         website,
-        hours,
-        primaryImage,
-        createdAt,
-        updatedAt,
-        City(id, name)
+        opening_hours,
+        primary_image,
+        created_at,
+        updated_at,
+        cities(id, name)
       `)
       .eq('id', establishmentId)
       .single();
@@ -92,26 +92,26 @@ export async function PUT(
 
     // Build update object, only include provided fields
     const updateData: Record<string, any> = {
-      updatedAt: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     };
 
     if (name !== undefined) updateData.name = name;
     if (description !== undefined) updateData.description = description;
-    if (category !== undefined) updateData.category = category;
-    if (cityId !== undefined) updateData.cityId = cityId;
+    if (category !== undefined) updateData.category_id = category;
+    if (cityId !== undefined) updateData.city_id = cityId;
     if (status !== undefined) updateData.status = status;
     if (tier !== undefined) updateData.tier = tier;
     if (address !== undefined) updateData.address = address;
     if (phone !== undefined) updateData.phone = phone;
     if (email !== undefined) updateData.email = email;
     if (website !== undefined) updateData.website = website;
-    if (hours !== undefined) updateData.hours = hours;
-    if (primaryImage !== undefined) updateData.primaryImage = primaryImage;
-    if (isVerified !== undefined) updateData.isVerified = isVerified;
-    if (isFeatured !== undefined) updateData.isFeatured = isFeatured;
+    if (hours !== undefined) updateData.opening_hours = hours;
+    if (primaryImage !== undefined) updateData.primary_image = primaryImage;
+    if (isVerified !== undefined) updateData.is_verified = isVerified;
+    if (isFeatured !== undefined) updateData.is_featured = isFeatured;
 
     const { data: establishment, error: updateError } = await supabase
-      .from('Establishment')
+      .from('establishments')
       .update(updateData)
       .eq('id', establishmentId)
       .select();
@@ -153,10 +153,10 @@ export async function DELETE(
 
     // Soft delete - set status to INACTIVE
     const { data: establishment, error: updateError } = await supabase
-      .from('Establishment')
+      .from('establishments')
       .update({
         status: 'INACTIVE',
-        updatedAt: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       })
       .eq('id', establishmentId)
       .select();
