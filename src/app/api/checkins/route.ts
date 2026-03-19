@@ -1,5 +1,11 @@
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
+
+const supabaseAdmin = createAdminClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export async function GET(request: NextRequest) {
   const supabase = await createClient();
@@ -13,9 +19,9 @@ export async function GET(request: NextRequest) {
   const establishmentId = searchParams.get('establishmentId');
 
   const { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
@@ -23,14 +29,14 @@ export async function GET(request: NextRequest) {
   }
 
   let query = supabase
-    .from('CheckIn')
-    .select('*, Establishment:establishmentId(name, slug, cityId, primaryImage), DogProfile:dogId(name, photo)')
-    .eq('userId', dbUser.id)
-    .order('createdAt', { ascending: false })
+    .from('check_ins')
+    .select('*, establishments:establishment_id(name, slug, city_id, primary_image), dog_profiles:dog_id(name, photo)')
+    .eq('user_id', dbUser.id)
+    .order('created_at', { ascending: false })
     .limit(50);
 
   if (establishmentId) {
-    query = query.eq('establishmentId', establishmentId);
+    query = query.eq('establishment_id', establishmentId);
   }
 
   const { data: checkIns, error } = await query;
@@ -56,16 +62,16 @@ export async function POST(request: NextRequest) {
   }
 
   let { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
-    const { data: newUser } = await supabase
-      .from('User')
+    const { data: newUser } = await supabaseAdmin
+      .from('users')
       .insert({
-        supabaseId: user.id,
+        supabase_id: user.id,
         email: user.email || '',
         name: user.user_metadata?.name || user.email?.split('@')[0] || 'Dog Lover',
       })
@@ -78,12 +84,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to resolve user' }, { status: 500 });
   }
 
-  const { data: checkIn, error } = await supabase
-    .from('CheckIn')
+  const { data: checkIn, error } = await supabaseAdmin
+    .from('check_ins')
     .insert({
-      userId: dbUser.id,
-      establishmentId,
-      dogId: dogId || null,
+      user_id: dbUser.id,
+      establishment_id: establishmentId,
+      dog_id: dogId || null,
       note: note || null,
       rating: rating || null,
     })
@@ -95,11 +101,11 @@ export async function POST(request: NextRequest) {
   }
 
   // Create activity
-  await supabase.from('Activity').insert({
-    userId: dbUser.id,
-    type: 'CHECKIN',
-    checkInId: checkIn.id,
-    establishmentId,
+  await supabaseAdmin.from('activities').insert({
+    user_id: dbUser.id,
+    activity_type: 'CHECKIN',
+    entity_id: checkIn.id,
+    entity_type: 'check_in',
   });
 
   return NextResponse.json({ checkIn }, { status: 201 });

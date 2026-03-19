@@ -1,5 +1,11 @@
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
+
+const supabaseAdmin = createAdminClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export async function GET(request: NextRequest) {
   const supabase = await createClient();
@@ -11,17 +17,17 @@ export async function GET(request: NextRequest) {
   const offset = (page - 1) * limit;
 
   let query = supabase
-    .from('Review')
-    .select('*, User:userId(name, avatar)', { count: 'exact' })
+    .from('reviews')
+    .select('*, users:user_id(name, avatar)', { count: 'exact' })
     .eq('status', 'APPROVED')
-    .order('createdAt', { ascending: false })
+    .order('created_at', { ascending: false })
     .range(offset, offset + limit - 1);
 
   if (establishmentId) {
-    query = query.eq('establishmentId', establishmentId);
+    query = query.eq('establishment_id', establishmentId);
   }
   if (userId) {
-    query = query.eq('userId', userId);
+    query = query.eq('user_id', userId);
   }
 
   const { data: reviews, count, error } = await query;
@@ -57,16 +63,16 @@ export async function POST(request: NextRequest) {
   }
 
   let { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
-    const { data: newUser } = await supabase
-      .from('User')
+    const { data: newUser } = await supabaseAdmin
+      .from('users')
       .insert({
-        supabaseId: user.id,
+        supabase_id: user.id,
         email: user.email || '',
         name: user.user_metadata?.name || user.email?.split('@')[0] || 'Dog Lover',
       })
@@ -81,29 +87,29 @@ export async function POST(request: NextRequest) {
 
   // Check for existing review
   const { data: existing } = await supabase
-    .from('Review')
+    .from('reviews')
     .select('id')
-    .eq('userId', dbUser.id)
-    .eq('establishmentId', establishmentId)
+    .eq('user_id', dbUser.id)
+    .eq('establishment_id', establishmentId)
     .single();
 
   if (existing) {
     return NextResponse.json({ error: 'You have already reviewed this place' }, { status: 409 });
   }
 
-  const { data: review, error } = await supabase
-    .from('Review')
+  const { data: review, error } = await supabaseAdmin
+    .from('reviews')
     .insert({
-      userId: dbUser.id,
-      establishmentId,
+      user_id: dbUser.id,
+      establishment_id: establishmentId,
       rating,
       title: title || null,
       content: content || null,
-      dogFriendliness: dogFriendliness || null,
-      serviceRating: serviceRating || null,
-      valueRating: valueRating || null,
-      dogNames: dogNames || null,
-      visitDate: visitDate || null,
+      dog_friendliness: dogFriendliness || null,
+      service_rating: serviceRating || null,
+      value_rating: valueRating || null,
+      dog_names: dogNames || null,
+      visit_date: visitDate || null,
       status: 'APPROVED',
     })
     .select()
@@ -115,25 +121,25 @@ export async function POST(request: NextRequest) {
 
   // Update establishment rating
   const { data: allReviews } = await supabase
-    .from('Review')
+    .from('reviews')
     .select('rating')
-    .eq('establishmentId', establishmentId)
+    .eq('establishment_id', establishmentId)
     .eq('status', 'APPROVED');
 
   if (allReviews && allReviews.length > 0) {
     const avgRating = allReviews.reduce((sum: number, r: any) => sum + r.rating, 0) / allReviews.length;
-    await supabase
-      .from('Establishment')
-      .update({ rating: Math.round(avgRating * 10) / 10, reviewCount: allReviews.length })
+    await supabaseAdmin
+      .from('establishments')
+      .update({ rating: Math.round(avgRating * 10) / 10, review_count: allReviews.length })
       .eq('id', establishmentId);
   }
 
   // Create activity
-  await supabase.from('Activity').insert({
-    userId: dbUser.id,
-    type: 'REVIEW_POSTED',
-    reviewId: review.id,
-    establishmentId,
+  await supabaseAdmin.from('activities').insert({
+    user_id: dbUser.id,
+    activity_type: 'REVIEW_POSTED',
+    entity_id: review.id,
+    entity_type: 'review',
   });
 
   return NextResponse.json({ review }, { status: 201 });

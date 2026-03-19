@@ -1,5 +1,11 @@
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
+
+const supabaseAdmin = createAdminClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export async function GET(request: NextRequest) {
   const supabase = await createClient();
@@ -10,9 +16,9 @@ export async function GET(request: NextRequest) {
   }
 
   const { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
@@ -20,10 +26,10 @@ export async function GET(request: NextRequest) {
   }
 
   const { data: favorites, error } = await supabase
-    .from('Favorite')
-    .select('*, Establishment:establishmentId(id, name, nameFr, slug, cityId, address, primaryImage, rating, reviewCount, category:categoryId(name, icon))')
-    .eq('userId', dbUser.id)
-    .order('createdAt', { ascending: false });
+    .from('favorites')
+    .select('*, establishments:establishment_id(id, name, slug, city_id, address, primary_image, rating, review_count, category_id)')
+    .eq('user_id', dbUser.id)
+    .order('created_at', { ascending: false });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -46,16 +52,16 @@ export async function POST(request: NextRequest) {
   }
 
   let { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('id')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
-    const { data: newUser } = await supabase
-      .from('User')
+    const { data: newUser } = await supabaseAdmin
+      .from('users')
       .insert({
-        supabaseId: user.id,
+        supabase_id: user.id,
         email: user.email || '',
         name: user.user_metadata?.name || user.email?.split('@')[0] || 'Dog Lover',
       })
@@ -69,20 +75,20 @@ export async function POST(request: NextRequest) {
   }
 
   // Toggle favorite
-  const { data: existing } = await supabase
-    .from('Favorite')
+  const { data: existing } = await supabaseAdmin
+    .from('favorites')
     .select('id')
-    .eq('userId', dbUser.id)
-    .eq('establishmentId', establishmentId)
+    .eq('user_id', dbUser.id)
+    .eq('establishment_id', establishmentId)
     .single();
 
   if (existing) {
-    await supabase.from('Favorite').delete().eq('id', existing.id);
+    await supabaseAdmin.from('favorites').delete().eq('id', existing.id);
     return NextResponse.json({ favorited: false, message: 'Removed from favorites' });
   } else {
-    const { error } = await supabase
-      .from('Favorite')
-      .insert({ userId: dbUser.id, establishmentId });
+    const { error } = await supabaseAdmin
+      .from('favorites')
+      .insert({ user_id: dbUser.id, establishment_id: establishmentId });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

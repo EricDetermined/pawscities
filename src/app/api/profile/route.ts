@@ -1,5 +1,11 @@
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
+
+const supabaseAdmin = createAdminClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export async function GET() {
   const supabase = await createClient();
@@ -10,16 +16,16 @@ export async function GET() {
   }
 
   let { data: dbUser } = await supabase
-    .from('User')
+    .from('users')
     .select('*')
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .single();
 
   if (!dbUser) {
-    const { data: newUser } = await supabase
-      .from('User')
+    const { data: newUser } = await supabaseAdmin
+      .from('users')
       .insert({
-        supabaseId: user.id,
+        supabase_id: user.id,
         email: user.email || '',
         name: user.user_metadata?.name || user.email?.split('@')[0] || 'Dog Lover',
         avatar: user.user_metadata?.avatar_url,
@@ -30,10 +36,10 @@ export async function GET() {
   }
 
   const [dogs, reviews, favorites, checkins] = await Promise.all([
-    supabase.from('DogProfile').select('id', { count: 'exact' }).eq('userId', dbUser!.id),
-    supabase.from('Review').select('id', { count: 'exact' }).eq('userId', dbUser!.id),
-    supabase.from('Favorite').select('id', { count: 'exact' }).eq('userId', dbUser!.id),
-    supabase.from('CheckIn').select('id', { count: 'exact' }).eq('userId', dbUser!.id),
+    supabase.from('dog_profiles').select('id', { count: 'exact' }).eq('user_id', dbUser!.id),
+    supabase.from('reviews').select('id', { count: 'exact' }).eq('user_id', dbUser!.id),
+    supabase.from('favorites').select('id', { count: 'exact' }).eq('user_id', dbUser!.id),
+    supabase.from('check_ins').select('id', { count: 'exact' }).eq('user_id', dbUser!.id),
   ]);
 
   return NextResponse.json({
@@ -57,14 +63,14 @@ export async function PUT(request: NextRequest) {
 
   const { name, language, homeCity } = await request.json();
 
-  const { data: updated, error } = await supabase
-    .from('User')
+  const { data: updated, error } = await supabaseAdmin
+    .from('users')
     .update({
       ...(name !== undefined && { name }),
       ...(language !== undefined && { language }),
-      ...(homeCity !== undefined && { homeCity }),
+      ...(homeCity !== undefined && { home_city: homeCity }),
     })
-    .eq('supabaseId', user.id)
+    .eq('supabase_id', user.id)
     .select()
     .single();
 

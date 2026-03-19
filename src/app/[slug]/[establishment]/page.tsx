@@ -4,6 +4,7 @@ import { getCityConfig, CATEGORIES } from '@/lib/cities-config';
 import { getEstablishment, getCityEstablishments } from '@/lib/data';
 import type { Metadata } from 'next';
 import { ListingBadges } from '@/components/ListingBadges';
+import EstablishmentInteractions from '@/components/EstablishmentInteractions';
 
 interface Props {
   params: { slug: string; establishment: string };
@@ -22,35 +23,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const DAY_NAMES = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-function generateSampleReviews(placeName: string, rating: number) {
-  const reviews = [
-    {
-      name: 'Sarah M.',
-      avatar: 'SM',
-      rating: Math.min(5, Math.round(rating + 0.3)),
-      date: '2 weeks ago',
-      dogName: 'Luna',
-      text: `Absolutely loved bringing Luna here! The staff was incredibly welcoming and brought out a water bowl right away. ${placeName} is now our go-to spot.`,
-    },
-    {
-      name: 'Marc D.',
-      avatar: 'MD',
-      rating: Math.round(rating),
-      date: '1 month ago',
-      dogName: 'Rex',
-      text: `Great experience with Rex. The outdoor area is spacious and other dog owners were friendly. Will definitely come back!`,
-    },
-    {
-      name: 'Emma L.',
-      avatar: 'EL',
-      rating: Math.min(5, Math.round(rating - 0.2)),
-      date: '2 months ago',
-      dogName: 'Bella',
-      text: `Nice place but can get crowded on weekends. Bella enjoyed the treats they offered. Good atmosphere overall and dog-friendly vibes.`,
-    },
-  ];
-  return reviews;
-}
 
 export default async function EstablishmentPage({ params }: Props) {
   const city = getCityConfig(params.slug);
@@ -65,7 +37,6 @@ export default async function EstablishmentPage({ params }: Props) {
     .slice(0, 3);
 
   const category = CATEGORIES.find(c => c.slug === place.categorySlug);
-  const reviews = generateSampleReviews(place.name, place.rating);
 
   const featureList = [
     { key: 'waterBowl', label: 'Water Bowls', icon: '/features/water.svg', emoji: '💧', active: place.dogFeatures.waterBowl },
@@ -219,99 +190,15 @@ export default async function EstablishmentPage({ params }: Props) {
               </div>
             )}
 
-            {/* Reviews */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="font-display text-xl font-bold flex items-center gap-2">
-                  <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                  </svg>
-                  Reviews ({place.reviewCount})
-                </h2>
-                <button className="px-4 py-2 bg-primary-500 text-white rounded-lg text-sm font-medium hover:bg-primary-600 transition-colors">
-                  Write a Review
-                </button>
-              </div>
-
-              {/* Rating Summary */}
-              <div className="flex items-center gap-6 mb-6 p-4 bg-gray-50 rounded-xl">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-gray-900">{place.rating.toFixed(1)}</div>
-                  <div className="flex items-center gap-0.5 mt-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <svg key={i} className={`w-4 h-4 ${i < Math.round(place.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300 fill-current'}`} viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <div className="text-sm text-gray-500 mt-1">{place.reviewCount} reviews</div>
-                </div>
-                <div className="flex-1 space-y-1.5">
-                  {[5, 4, 3, 2, 1].map(stars => {
-                    const pct = stars === Math.round(place.rating)
-                      ? 55
-                      : stars === Math.round(place.rating) - 1
-                        ? 25
-                        : stars === Math.round(place.rating) + 1
-                          ? 15
-                          : 3;
-                    return (
-                      <div key={stars} className="flex items-center gap-2 text-sm">
-                        <span className="w-3 text-gray-500">{stars}</span>
-                        <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                          <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${pct}%` }} />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Review Cards */}
-              <div className="space-y-4">
-                {reviews.map((review, i) => (
-                  <div key={i} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-medium text-sm shrink-0">
-                        {review.avatar}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium text-gray-900">{review.name}</span>
-                          <span className="text-gray-400 text-sm">{review.date}</span>
-                        </div>
-                        <div className="flex items-center gap-1 mb-2">
-                          {Array.from({ length: 5 }).map((_, j) => (
-                            <svg key={j} className={`w-4 h-4 ${j < review.rating ? 'text-yellow-400 fill-current' : 'text-gray-300 fill-current'}`} viewBox="0 0 20 20">
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                          ))}
-                          {review.dogName && (
-                            <span className="ml-2 text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded-full">
-                              🐕 with {review.dogName}
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-gray-700 text-sm leading-relaxed">{review.text}</p>
-                        <div className="flex items-center gap-4 mt-2">
-                          <button className="text-xs text-gray-400 hover:text-gray-600 flex items-center gap-1">
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-                            </svg>
-                            Helpful
-                          </button>
-                          <button className="text-xs text-gray-400 hover:text-gray-600">Reply</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <button className="mt-4 w-full py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">
-                View all {place.reviewCount} reviews
-              </button>
-            </div>
+            {/* Interactive Reviews, Favorites, Check-in, Share */}
+            <EstablishmentInteractions
+              establishmentId={place.id}
+              establishmentName={place.name}
+              establishmentSlug={place.slug}
+              citySlug={city.slug}
+              initialRating={place.rating}
+              initialReviewCount={place.reviewCount}
+            />
           </div>
 
           {/* Sidebar */}
@@ -392,21 +279,6 @@ export default async function EstablishmentPage({ params }: Props) {
               )}
             </div>
 
-            {/* Share */}
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h3 className="font-semibold mb-3">Share this place</h3>
-              <div className="flex gap-2">
-                <button className="flex-1 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
-                  Facebook
-                </button>
-                <button className="flex-1 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg text-sm font-medium hover:from-purple-600 hover:to-pink-600 transition-colors">
-                  Instagram
-                </button>
-                <button className="flex-1 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
-                  Copy Link
-                </button>
-              </div>
-            </div>
           </div>
         </div>
 
