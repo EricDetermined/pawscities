@@ -166,7 +166,6 @@ export async function POST(request: NextRequest) {
         supabaseId: user.id,
         email: user.email || contactEmail,
         name: user.user_metadata?.name || contactName,
-        role: 'BUSINESS',
       })
       .select('id')
       .single();
@@ -218,8 +217,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // Update user role to BUSINESS
-  await supabase.from('User').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
+  // Note: User role is managed at the application level, not in the User table
 
   // Send email notifications (non-blocking)
   sendClaimConfirmation(contactEmail, businessName, claim.id).catch(() => {});

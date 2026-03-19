@@ -111,36 +111,42 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
     // Check User table first (PascalCase, used by business/consumer flows)
     const { data: appUser } = await supabase
       .from('User')
-      .select('id, supabaseId, email, role')
+      .select('id, supabaseId, email')
       .eq('supabaseId', user.id)
       .single();
 
     if (appUser) {
-      const mappedDbUser = {
-        id: appUser.id,
-        supabaseId: appUser.supabaseId,
-        email: appUser.email,
-        role: appUser.role,
-      };
+      // Check if user has an approved business claim (makes them a business user)
+      const { data: claim } = await supabase
+        .from('BusinessClaim')
+        .select('id')
+        .eq('userId', appUser.id)
+        .eq('status', 'APPROVED')
+        .limit(1)
+        .single();
 
-      if (mappedDbUser.role !== 'BUSINESS' && mappedDbUser.role !== 'ADMIN') {
+      // Also check for pending claims - allow dashboard access while waiting
+      const { data: pendingClaim } = !claim ? await supabase
+        .from('BusinessClaim')
+        .select('id')
+        .eq('userId', appUser.id)
+        .eq('status', 'PENDING')
+        .limit(1)
+        .single() : { data: null };
+
+      if (claim || pendingClaim) {
         return {
-          error: NextResponse.json(
-            { error: 'Business or admin access required' },
-            { status: 403 }
-          ),
-          supabase: null,
-          user: null,
-          dbUser: null,
+          error: null,
+          supabase,
+          user,
+          dbUser: {
+            id: appUser.id,
+            supabaseId: appUser.supabaseId,
+            email: appUser.email,
+            role: 'BUSINESS',
+          },
         };
       }
-
-      return {
-        error: null,
-        supabase,
-        user,
-        dbUser: mappedDbUser,
-      };
     }
 
     // Fallback: check users table (snake_case, used by admin flows)

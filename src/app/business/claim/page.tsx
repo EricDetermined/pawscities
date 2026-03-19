@@ -432,9 +432,6 @@ export default function ClaimBusinessPage() {
                   {categories.map(cat => (<option key={cat.id} value={cat.id}>{cat.name}</option>))}
                   <option value="other">Other</option>
                 </select>
-                {newForm.categoryId === 'other' && (
-                  <p className="mt-1 text-xs text-gray-500">Please describe your business type in the Description field below</p>
-                )}
               </div>
             </div>
             <div>
