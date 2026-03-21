@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Badge } from '@/components/ui';
 import type { CityConfig } from '@/lib/cities-config';
@@ -100,8 +101,11 @@ interface CityPageClientProps {
 }
 
 export function CityPageClient({ city, establishments, categoryCounts, categories }: CityPageClientProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams.get('search') || '';
+  const initialCategory = searchParams.get('category') || null;
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory);
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
   const [favorites, setFavorites] = useState<string[]>([]);
   const [selectedMapPlace, setSelectedMapPlace] = useState<string | null>(null);

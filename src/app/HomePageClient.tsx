@@ -14,12 +14,19 @@ const CATEGORIES = [
   { slug: 'vets', icon: '🏥', label: 'Vets' },
 ];
 
-interface HomePageClientProps {
-  cities: CityConfig[];
-  cityCounts: Record<string, number>;
+interface CityStats {
+  count: number;
+  topRated: string | null;
+  topRating: number;
+  categories: Record<string, number>;
 }
 
-export default function HomePageClient({ cities, cityCounts }: HomePageClientProps) {
+interface HomePageClientProps {
+  cities: CityConfig[];
+  cityStats: Record<string, CityStats>;
+}
+
+export default function HomePageClient({ cities, cityStats }: HomePageClientProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -228,10 +235,22 @@ export default function HomePageClient({ cities, cityCounts }: HomePageClientPro
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {cities.map((city) => {
-              const count = cityCounts[city.slug] || 0;
+              const stats = cityStats[city.slug];
+              const count = stats?.count || 0;
               const href = activeCategory
                 ? `/${city.slug}?category=${activeCategory}`
                 : `/${city.slug}`;
+              // Get top 3 categories by count
+              const topCategories = stats?.categories
+                ? Object.entries(stats.categories)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 3)
+                    .map(([cat]) => cat)
+                : [];
+              const catIcons: Record<string, string> = {
+                parks: '🌳', restaurants: '🍽️', cafes: '☕', hotels: '🏨',
+                beaches: '🏖️', vets: '🏥', shops: '🛍️', other: '📍',
+              };
               return (
                 <Link
                   key={city.slug}
@@ -243,19 +262,33 @@ export default function HomePageClient({ cities, cityCounts }: HomePageClientPro
                     alt={city.name}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 text-white">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">
                         {city.country}
                       </span>
+                      {stats?.topRating > 0 && (
+                        <span className="text-xs bg-yellow-500/80 text-white px-2 py-0.5 rounded-full flex items-center gap-0.5">
+                          &#9733; {stats.topRating.toFixed(1)}
+                        </span>
+                      )}
                     </div>
                     <h3 className="font-display text-2xl font-bold mb-1">{city.name}</h3>
-                    <p className="text-sm opacity-90">
+                    <p className="text-sm opacity-90 mb-2">
                       {count > 0
                         ? `${count} dog-friendly place${count !== 1 ? 's' : ''}`
                         : 'Explore dog-friendly places'}
                     </p>
+                    {topCategories.length > 0 && (
+                      <div className="flex gap-1.5">
+                        {topCategories.map((cat) => (
+                          <span key={cat} className="text-xs bg-white/15 px-2 py-0.5 rounded-full">
+                            {catIcons[cat] || '📍'} {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </Link>
               );

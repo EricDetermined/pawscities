@@ -1,43 +1,43 @@
 import { CITIES } from '@/lib/cities-config';
-import { createClient } from '@/lib/supabase/server';
+import { getCityEstablishments } from '@/lib/data';
 import HomePageClient from './HomePageClient';
+
+export interface CityStats {
+  count: number;
+  topRated: string | null;
+  topRating: number;
+  categories: Record<string, number>;
+}
 
 export default async function HomePage() {
   const cities = Object.values(CITIES);
 
-  // Fetch place counts per city for the city cards
-  let cityCounts: Record<string, number> = {};
+  // Build rich stats per city from research data
+  const cityStats: Record<string, CityStats> = {};
   try {
-    const supabase = await createClient();
-    const { data: counts } = await supabase
-      .from('establishments')
-      .select('city_id')
-      .eq('status', 'ACTIVE');
-
-    // Look up city slugs from the cities table
-    const { data: cityRows } = await supabase
-      .from('cities')
-      .select('id, slug');
-
-    if (counts && cityRows) {
-      const cityIdToSlug: Record<string, string> = {};
-      cityRows.forEach((row: { id: string; slug: string }) => {
-        cityIdToSlug[row.id] = row.slug;
-      });
-
-      const countMap: Record<string, number> = {};
-      counts.forEach((est: { city_id: string }) => {
-        const slug = cityIdToSlug[est.city_id];
-        if (slug) {
-          countMap[slug] = (countMap[slug] || 0) + 1;
-        }
-      });
-      cityCounts = countMap;
-    }
+    await Promise.all(
+      cities.map(async (city) => {
+        const establishments = await getCityEstablishments(city.slug);
+        const topPlace = establishments.reduce(
+          (best, est) => (est.rating > best.rating ? est : best),
+          { name: '', rating: 0 } as { name: string; rating: number }
+        );
+        const categories: Record<string, number> = {};
+        establishments.forEach((est) => {
+          const cat = est.categorySlug || 'other';
+          categories[cat] = (categories[cat] || 0) + 1;
+        });
+        cityStats[city.slug] = {
+          count: establishments.length,
+          topRated: topPlace.name || null,
+          topRating: topPlace.rating,
+          categories,
+        };
+      })
+    );
   } catch (e) {
-    // Non-blocking — city cards will just show generic text
-    console.error('Failed to fetch city counts:', e);
+    console.error('Failed to build city stats:', e);
   }
 
-  return <HomePageClient cities={cities} cityCounts={cityCounts} />;
+  return <HomePageClient cities={cities} cityStats={cityStats} />;
 }
