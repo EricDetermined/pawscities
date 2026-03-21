@@ -8,6 +8,10 @@
     {
       "path": "/api/cron/refresh-photos?secret=${CRON_SECRET}",
       "schedule": "0 6 * * 0"
+    },
+    {
+      "path": "/api/cron/social-engagement?secret=${CRON_SECRET}",
+      "schedule": "0 10 * * *"
     }
   ]
 }

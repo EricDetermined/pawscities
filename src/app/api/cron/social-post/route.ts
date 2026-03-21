@@ -111,9 +111,33 @@ export async function GET(request: NextRequest) {
     const cityMeta = CITY_META[fact.city];
     const caption = generateCaption(fact);
 
-    // 3. Find a photo from a featured establishment in this city
+    // 3. Find the image — prefer stored branded creative, fall back to Google photo
     const cityFile = CITY_FILE_MAP[fact.city];
     let imageUrl = '';
+
+    // First, check for a pre-generated branded creative in Supabase Storage
+    const factIndex = CONTENT_BANK.indexOf(fact);
+    if (supabase && factIndex >= 0) {
+      try {
+        const fileName = `social-creatives/${fact.city}-${factIndex}.png`;
+        const { data: urlData } = supabase.storage
+          .from('photos')
+          .getPublicUrl(fileName);
+
+        if (urlData?.publicUrl) {
+          // Verify the creative exists
+          const testRes = await fetch(urlData.publicUrl, { method: 'HEAD' });
+          if (testRes.ok) {
+            imageUrl = urlData.publicUrl;
+            console.log(`Using stored branded creative for "${fact.headline}"`);
+          }
+        }
+      } catch {
+        // Fall through to Google photo fallback
+      }
+    }
+
+    // Fallback: find a Google photo from a featured establishment
 
     if (cityFile) {
       try {
