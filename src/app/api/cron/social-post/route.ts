@@ -121,13 +121,30 @@ export async function GET(request: NextRequest) {
         const cityData = JSON.parse(await fs.readFile(dataPath, 'utf-8'));
         const places: PlaceData[] = cityData.places || [];
 
-        // Find a place with photos - pick one for variety using post count as seed
+        // Find places with photos - try multiple in case some have expired tokens
         const placesWithPhotos = places.filter(p => p.photoRefs && p.photoRefs.length > 0);
         if (placesWithPhotos.length > 0) {
-          const idx = totalPosted % placesWithPhotos.length;
-          const place = placesWithPhotos[idx];
-          const photoRef = place.photoRefs![0];
-          imageUrl = getEstablishmentPhotoUrl(photoRef);
+          // Try up to 5 different places to find a working photo
+          for (let attempt = 0; attempt < Math.min(5, placesWithPhotos.length); attempt++) {
+            const idx = (totalPosted + attempt) % placesWithPhotos.length;
+            const place = placesWithPhotos[idx];
+            const photoRef = place.photoRefs![0];
+            const candidateUrl = getEstablishmentPhotoUrl(photoRef);
+
+            // Verify the photo URL actually works before using it
+            try {
+              const testResponse = await fetch(candidateUrl, { method: 'HEAD' });
+              if (testResponse.ok) {
+                imageUrl = candidateUrl;
+                console.log(`Using photo from "${place.name}" (attempt ${attempt + 1})`);
+                break;
+              } else {
+                console.log(`Photo expired for "${place.name}" (${testResponse.status}), trying next...`);
+              }
+            } catch {
+              console.log(`Photo fetch failed for "${place.name}", trying next...`);
+            }
+          }
         }
       } catch (err) {
         console.error(`Failed to load city data for ${fact.city}:`, err);
@@ -135,9 +152,20 @@ export async function GET(request: NextRequest) {
     }
 
     if (!imageUrl) {
+      // Log the failure so we can track it
+      if (supabase) {
+        await supabase.from('social_posts').insert({
+          platform: 'instagram',
+          headline: fact.headline,
+          city: fact.city,
+          caption,
+          status: 'failed',
+          error_message: `No working photo found for ${fact.city}. All photo tokens may be expired.`,
+        });
+      }
       return NextResponse.json({
         status: 'error',
-        error: `No photo available for ${fact.city}. Run re-enrichment first.`,
+        error: `No working photo available for ${fact.city}. Photo tokens may be expired — the weekly refresh job will fix this.`,
       }, { status: 500 });
     }
 
