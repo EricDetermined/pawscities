@@ -230,12 +230,14 @@ function rawToEstablishment(raw: RawPlace, citySlug: string, cityConfig: CityCon
   };
 }
 const dataCache = new Map<string, Establishment[]>();
+const rawCache = new Map<string, RawPlace[]>();
 
 export async function getCityEstablishments(citySlug: string): Promise<Establishment[]> {
   if (dataCache.has(citySlug)) return dataCache.get(citySlug)!;
   const cityConfig = CITIES[citySlug];
   if (!cityConfig) return [];
   const rawPlaces = await loadCityJson(citySlug);
+  rawCache.set(citySlug, rawPlaces);
   const establishments = rawPlaces.map((raw, index) => rawToEstablishment(raw, citySlug, cityConfig, index));
   dataCache.set(citySlug, establishments);
   return establishments;
@@ -256,15 +258,24 @@ export async function getEstablishment(citySlug: string, establishmentSlug: stri
   try {
     const supabaseAdmin = getSupabaseAdmin();
 
-    // Look up existing DB record by slug
+    // Look up existing DB record by slug — include photo_refs for fresh images
     const { data: dbEst } = await supabaseAdmin
       .from('establishments')
-      .select('id')
+      .select('id, photo_refs, primary_image, google_place_id')
       .eq('slug', establishmentSlug)
       .single();
 
     if (dbEst && dbEst.id) {
-      return { ...place, id: dbEst.id as string };
+      // If DB has fresh photo refs, use those instead of static JSON ones
+      let images = place.images;
+      if (dbEst.photo_refs && Array.isArray(dbEst.photo_refs) && dbEst.photo_refs.length > 0) {
+        images = dbEst.photo_refs.map((ref: string) =>
+          ref.startsWith('places/')
+            ? `/api/places/photo?name=${encodeURIComponent(ref)}&maxWidth=800`
+            : ref
+        );
+      }
+      return { ...place, id: dbEst.id as string, images };
     }
 
     // If not in DB, auto-create so user actions (favorites, reviews, check-ins) work
@@ -288,6 +299,10 @@ export async function getEstablishment(citySlug: string, establishmentSlug: stri
       .eq('slug', catSlug)
       .single();
 
+    // Get Google data from raw cache for this establishment
+    const rawPlaces = rawCache.get(citySlug) || [];
+    const rawPlace = rawPlaces.find(r => slugify(r.name) === establishmentSlug);
+
     const { data: newEst } = await supabaseAdmin
       .from('establishments')
       .insert({
@@ -308,6 +323,12 @@ export async function getEstablishment(citySlug: string, establishmentSlug: stri
         website: place.website || null,
         latitude: place.latitude || null,
         longitude: place.longitude || null,
+        google_place_id: rawPlace?.googlePlaceId || null,
+        photo_refs: rawPlace?.photoRefs || null,
+        google_maps_url: rawPlace?.googleMapsUrl || null,
+        primary_image: rawPlace?.photoRefs?.[0]
+          ? `/api/places/photo?name=${encodeURIComponent(rawPlace.photoRefs[0])}&maxWidth=800`
+          : null,
       })
       .select('id')
       .single();
