@@ -74,14 +74,14 @@ export function UserMenu() {
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
               onClick={() => setIsOpen(false)}
             >
-              🐕 My Dogs
+              🐾 My Profile
             </Link>
             <Link
-              href="/profile/reviews"
+              href="/profile/dogs"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
               onClick={() => setIsOpen(false)}
             >
-              ⭐ My Reviews
+              🐕 My Dogs
             </Link>
             <Link
               href="/profile/favorites"
@@ -91,21 +91,21 @@ export function UserMenu() {
               ❤️ Saved Places
             </Link>
             <Link
-              href="/profile/stories"
+              href="/profile/reviews"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
               onClick={() => setIsOpen(false)}
             >
-              📖 My Stories
+              ⭐ My Reviews
             </Link>
           </div>
 
           <div className="border-t py-1">
             <Link
-              href="/settings"
+              href="/profile/settings"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
               onClick={() => setIsOpen(false)}
             >
-              ☙️ Settings
+              ⚙️ Settings
             </Link>
             <button
               onClick={() => {
