@@ -95,7 +95,7 @@ export default async function EstablishmentPage({ params }: Props) {
                     </svg>
                     {place.rating.toFixed(1)}
                   </div>
-                  <span className="text-gray-500 text-sm">{place.reviewCount} reviews</span>
+                  <span className="text-gray-500 text-sm">{place.reviewCount} Google reviews</span>
                 </div>
                 <div className="flex items-center gap-0.5 text-gray-600 font-medium">
                   {Array.from({ length: 4 }).map((_, i) => (
@@ -126,28 +126,23 @@ export default async function EstablishmentPage({ params }: Props) {
               )}
             </div>
 
-            {/* Dog-Friendly Features */}
+            {/* Dog-Friendly Features — only show confirmed features */}
+            {featureList.some(f => f.active) && (
             <div className="bg-white rounded-xl p-6 shadow-sm">
               <h2 className="font-display text-xl font-bold mb-4 flex items-center gap-2">
                 <span>🐾</span> Dog-Friendly Features
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {featureList.map(feature => (
+                {featureList.filter(f => f.active).map(feature => (
                   <div
                     key={feature.key}
-                    className={`flex items-center gap-2 p-3 rounded-lg border transition-colors ${
-                      feature.active
-                        ? 'bg-green-50 border-green-200 text-green-700'
-                        : 'bg-gray-50 border-gray-100 text-gray-400'
-                    }`}
+                    className="flex items-center gap-2 p-3 rounded-lg border bg-green-50 border-green-200 text-green-700"
                   >
                     <span className="text-lg">{feature.emoji}</span>
                     <span className="text-sm font-medium">{feature.label}</span>
-                    {feature.active && (
-                      <svg className="w-4 h-4 ml-auto text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    )}
+                    <svg className="w-4 h-4 ml-auto text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
                   </div>
                 ))}
               </div>
@@ -162,6 +157,7 @@ export default async function EstablishmentPage({ params }: Props) {
                 </div>
               )}
             </div>
+            )}
 
             {/* Business Hours */}
             {hasHours && (
@@ -263,21 +259,28 @@ export default async function EstablishmentPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Dog Regulations */}
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
-              <h3 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
-                <span>🐕</span> Local Dog Rules
-              </h3>
-              <p className="text-sm text-amber-700 leading-relaxed">{city.dogRegulations.publicTransport}</p>
-              {city.dogRegulations.leashRequired && (
-                <p className="text-sm text-amber-600 mt-2 flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {/* City Dog Info — only show leash/off-leash rules, not transit */}
+            {city.dogRegulations.leashRequired && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
+                <h3 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
+                  <span>🐕</span> {city.name} Dog Rules
+                </h3>
+                <p className="text-sm text-amber-700 leading-relaxed flex items-center gap-1">
+                  <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                   Leash required in public areas
                 </p>
-              )}
-            </div>
+                {city.dogRegulations.offLeashAreas && (
+                  <p className="text-sm text-green-700 mt-2 flex items-center gap-1">
+                    <svg className="w-4 h-4 shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Designated off-leash areas available in {city.name}
+                  </p>
+                )}
+              </div>
+            )}
 
           </div>
         </div>

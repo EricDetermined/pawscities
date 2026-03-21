@@ -330,7 +330,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                       {establishment.isVerified && <Badge variant="verified" className="shrink-0">{'\u2713'}</Badge>}
                     </div>
                     <div className="flex items-center gap-3 mb-2 text-sm">
-                      <span className="flex items-center gap-1"><span className="text-yellow-500">{'\u2605'}</span> <span className="font-medium">{establishment.rating.toFixed(1)}</span> <span className="text-gray-400">({establishment.reviewCount})</span></span>
+                      <span className="flex items-center gap-1"><span className="text-yellow-500">{'\u2605'}</span> <span className="font-medium">{establishment.rating.toFixed(1)}</span> {establishment.reviewCount > 0 && <span className="text-gray-400">({establishment.reviewCount})</span>}</span>
                       <span className="text-gray-300">{'\u2022'}</span>
                       <span className="text-gray-600">{'\u20AC'.repeat(establishment.priceLevel)}</span>
                       {establishment.neighborhood && (<><span className="text-gray-300">{'\u2022'}</span><span className="text-gray-500 text-xs">{establishment.neighborhood}</span></>)}
