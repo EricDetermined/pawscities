@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { sendClaimConfirmation, sendNewClaimAdminAlert } from '@/lib/email';
+import { searchPlace, getPhotoUrl } from '@/lib/google-places';
 
 // Lazy initialization to ensure env vars are available in serverless context
 function getSupabaseAdmin() {
@@ -209,6 +210,68 @@ export async function POST(request: Request) {
     if (estError) {
       console.error('Error creating establishment:', estError);
       return NextResponse.json({ error: `Failed to create establishment: ${estError.message}` }, { status: 500 });
+    }
+
+    // Google Places enrichment (non-blocking — don't fail submission if this errors)
+    try {
+      // Look up the city name for a better search query
+      const { data: cityData } = await supabase
+        .from('cities')
+        .select('name')
+        .eq('id', cityId)
+        .single();
+      const cityName = cityData?.name || '';
+
+      const searchQuery = `${name} ${address} ${cityName}`;
+      const placeResult = await searchPlace(searchQuery);
+
+      if (placeResult) {
+        const photoRefs = (placeResult.photos || []).slice(0, 5).map(p => p.name);
+        const primaryImage = photoRefs.length > 0 ? getPhotoUrl(photoRefs[0], 800) : null;
+
+        const enrichmentUpdate: Record<string, unknown> = {
+          google_place_id: placeResult.id,
+          google_maps_url: placeResult.googleMapsUri || null,
+          photo_refs: photoRefs,
+        };
+
+        // Only set primary_image if we got a Google photo
+        if (primaryImage) {
+          enrichmentUpdate.primary_image = primaryImage;
+        }
+
+        // Add coordinates if available
+        if (placeResult.location?.latitude && placeResult.location?.longitude) {
+          enrichmentUpdate.latitude = placeResult.location.latitude;
+          enrichmentUpdate.longitude = placeResult.location.longitude;
+        }
+
+        // Add phone/website from Google if not provided by user
+        if (!phone && placeResult.internationalPhoneNumber) {
+          enrichmentUpdate.phone = placeResult.internationalPhoneNumber;
+        }
+        if (!website && placeResult.websiteUri) {
+          enrichmentUpdate.website = placeResult.websiteUri;
+        }
+
+        // Add rating data from Google
+        if (placeResult.rating) {
+          enrichmentUpdate.rating = placeResult.rating;
+          enrichmentUpdate.review_count = placeResult.userRatingCount || 0;
+        }
+
+        await supabaseAdmin
+          .from('establishments')
+          .update(enrichmentUpdate)
+          .eq('id', establishment.id);
+
+        console.log(`Google Places enrichment: matched "${name}" → place_id: ${placeResult.id}, ${photoRefs.length} photos`);
+      } else {
+        console.log(`Google Places enrichment: no match found for "${name}"`);
+      }
+    } catch (enrichError) {
+      // Log but don't fail the submission
+      console.error('Google Places enrichment error (non-blocking):', enrichError);
     }
 
     // Create the claim

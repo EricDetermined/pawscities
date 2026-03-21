@@ -38,6 +38,23 @@ export async function GET() {
       throw new Error(`Failed to fetch photos: ${photosError.message}`);
     }
 
+    // Get establishment details including Google photo refs
+    const { data: establishment } = await supabase
+      .from('establishments')
+      .select('photo_refs, google_place_id, primary_image')
+      .eq('id', claim.establishment_id)
+      .single();
+
+    // Build Google photo URLs from photo_refs (these are Google Places photo name references)
+    const googlePhotos = (establishment?.photo_refs || [])
+      .filter((ref: string) => ref && ref.startsWith('places/'))
+      .map((ref: string, index: number) => ({
+        photoRef: ref,
+        url: `/api/places/photo?name=${encodeURIComponent(ref)}&maxWidth=800`,
+        thumbnailUrl: `/api/places/photo?name=${encodeURIComponent(ref)}&maxWidth=400`,
+        label: index === 0 ? 'Main Google Business Photo' : `Google Business Photo ${index + 1}`,
+      }));
+
     // Get subscription tier
     const { data: subscription } = await supabase
       .from('subscriptions')
@@ -51,6 +68,8 @@ export async function GET() {
 
     return NextResponse.json({
       photos: photos || [],
+      googlePhotos,
+      googlePlaceId: establishment?.google_place_id || null,
       tier,
       maxPhotos,
       establishmentId: claim.establishment_id,

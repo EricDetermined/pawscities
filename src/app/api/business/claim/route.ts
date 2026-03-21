@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { sendClaimConfirmation, sendNewClaimAdminAlert } from '@/lib/email';
+import { searchPlace, getPhotoUrl } from '@/lib/google-places';
 
 function getSupabaseAdmin() {
   return createAdminClient(
@@ -96,7 +97,7 @@ export async function POST(request: NextRequest) {
   // Check if the establishment exists and its category is claimable
   const { data: establishment } = await supabase
     .from('establishments')
-    .select('id, website, category_id')
+    .select('id, name, address, website, category_id, google_place_id, city_id')
     .eq('id', establishmentId)
     .single();
 
@@ -207,6 +208,48 @@ export async function POST(request: NextRequest) {
       }
     } catch {
       // Invalid URL, continue with provided method
+    }
+  }
+
+  // Google Places enrichment — if establishment doesn't already have a google_place_id
+  const estRecord = establishment as Record<string, unknown>;
+  if (!estRecord.google_place_id) {
+    try {
+      // Look up city name for better search query
+      const { data: cityData } = await supabase
+        .from('cities')
+        .select('name')
+        .eq('id', estRecord.city_id)
+        .single();
+      const cityName = cityData?.name || '';
+      const searchQuery = `${estRecord.name} ${estRecord.address || ''} ${cityName}`;
+      const placeResult = await searchPlace(searchQuery);
+
+      if (placeResult) {
+        const photoRefs = (placeResult.photos || []).slice(0, 5).map(p => p.name);
+        const enrichmentUpdate: Record<string, unknown> = {
+          google_place_id: placeResult.id,
+          google_maps_url: placeResult.googleMapsUri || null,
+          photo_refs: photoRefs,
+        };
+
+        if (photoRefs.length > 0) {
+          enrichmentUpdate.primary_image = getPhotoUrl(photoRefs[0], 800);
+        }
+        if (placeResult.location?.latitude && placeResult.location?.longitude) {
+          enrichmentUpdate.latitude = placeResult.location.latitude;
+          enrichmentUpdate.longitude = placeResult.location.longitude;
+        }
+
+        await supabaseAdmin
+          .from('establishments')
+          .update(enrichmentUpdate)
+          .eq('id', establishmentId);
+
+        console.log(`Claim enrichment: matched "${estRecord.name}" → place_id: ${placeResult.id}`);
+      }
+    } catch (enrichError) {
+      console.error('Google Places enrichment during claim (non-blocking):', enrichError);
     }
   }
 

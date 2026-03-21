@@ -13,8 +13,17 @@ interface Photo {
   createdAt: string;
 }
 
+interface GooglePhoto {
+  photoRef: string;
+  url: string;
+  thumbnailUrl: string;
+  label: string;
+}
+
 interface PhotosData {
   photos: Photo[];
+  googlePhotos: GooglePhoto[];
+  googlePlaceId: string | null;
   tier: string;
   maxPhotos: number;
   establishmentId: string;
@@ -31,6 +40,7 @@ export default function PhotosPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [savingGoogle, setSavingGoogle] = useState<string | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -94,6 +104,39 @@ export default function PhotosPage() {
     } catch {
       setError('Failed to delete photo');
     }
+  };
+
+  const handleSelectGooglePhoto = async (googlePhoto: GooglePhoto) => {
+    setSavingGoogle(googlePhoto.photoRef);
+    setError(null);
+    setSuccessMessage(null);
+    try {
+      const response = await fetch('/api/business/photos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          urls: [googlePhoto.url],
+          captions: [googlePhoto.label],
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        setError(result.error || 'Failed to save Google photo');
+        return;
+      }
+      setSuccessMessage('Google Business photo added and pending review.');
+      await fetchPhotos();
+    } catch {
+      setError('Failed to save Google photo. Please try again.');
+    } finally {
+      setSavingGoogle(null);
+    }
+  };
+
+  // Check if a Google photo has already been added (by matching the proxy URL pattern)
+  const isGooglePhotoAlreadyAdded = (googlePhoto: GooglePhoto) => {
+    if (!data) return false;
+    return data.photos.some(p => p.url === googlePhoto.url);
   };
 
   if (loading) {
@@ -170,6 +213,57 @@ export default function PhotosPage() {
           Avoid photos with watermarks, logos, or heavy filters. All photos are reviewed before appearing on your listing.
         </p>
       </div>
+
+      {/* Google Business Photos */}
+      {data.googlePhotos && data.googlePhotos.length > 0 && (
+        <div className="mb-6 bg-white rounded-lg border border-gray-200 p-6">
+          <div className="flex items-center gap-3 mb-1">
+            <h2 className="text-lg font-semibold text-gray-900">Google Business Photos</h2>
+            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">From Google</span>
+          </div>
+          <p className="text-sm text-gray-500 mb-4">
+            We found photos from your Google Business Profile. Select any to use on your Paw Cities listing.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {data.googlePhotos.map((gPhoto) => {
+              const alreadyAdded = isGooglePhotoAlreadyAdded(gPhoto);
+              const isSaving = savingGoogle === gPhoto.photoRef;
+              return (
+                <div key={gPhoto.photoRef} className="relative border border-gray-200 rounded-lg overflow-hidden">
+                  <div className="aspect-[4/3] bg-gray-100">
+                    <img
+                      src={gPhoto.thumbnailUrl}
+                      alt={gPhoto.label}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-3">
+                    <p className="text-xs text-gray-500 mb-2">{gPhoto.label}</p>
+                    {alreadyAdded ? (
+                      <span className="inline-flex items-center gap-1 text-xs text-green-700 bg-green-50 px-2 py-1 rounded">
+                        <span>&#10003;</span> Added
+                      </span>
+                    ) : !canUploadMore ? (
+                      <span className="text-xs text-gray-400">Photo limit reached</span>
+                    ) : (
+                      <button
+                        onClick={() => handleSelectGooglePhoto(gPhoto)}
+                        disabled={isSaving}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white text-sm rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                      >
+                        {isSaving ? 'Adding...' : 'Use This Photo'}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <p className="text-xs text-gray-400 mt-3">
+            Google photos are subject to the same review process as uploaded photos.
+          </p>
+        </div>
+      )}
 
       {/* Upload Section */}
       {canUploadMore ? (
