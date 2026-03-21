@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { UserMenu } from '@/components/auth/UserMenu';
 
 const navigation = [
+  { name: 'Explore', href: '/#cities-section' },
   { name: 'For Business', href: '/for-business' },
 ]
 
