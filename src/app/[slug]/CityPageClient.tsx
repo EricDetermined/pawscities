@@ -245,7 +245,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
         </div>
 
         {viewMode === 'map' ? (
-          <div className="h-[600px] rounded-2xl overflow-hidden shadow-lg">
+          <div className="h-[350px] sm:h-[450px] md:h-[600px] rounded-2xl overflow-hidden shadow-lg">
             <MapView
               establishments={filtered}
               center={{ lat: city.latitude, lng: city.longitude }}

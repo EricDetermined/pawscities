@@ -25,14 +25,14 @@ export default function ProfileLayout({
       <Header />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Sidebar Navigation */}
+          {/* Sidebar Navigation — horizontal scroll on mobile, vertical on desktop */}
           <aside className="w-full md:w-64 shrink-0">
-            <nav className="bg-white rounded-xl shadow-sm p-4 space-y-1">
+            <nav className="bg-white rounded-xl shadow-sm p-2 md:p-4 flex md:flex-col gap-1 overflow-x-auto md:overflow-x-visible">
               {profileNav.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                  className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
                     pathname === item.href
                       ? 'bg-orange-50 text-orange-600'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'

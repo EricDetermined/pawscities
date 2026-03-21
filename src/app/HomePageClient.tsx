@@ -116,19 +116,19 @@ export default function HomePageClient({ cities, cityCounts }: HomePageClientPro
       </div>
 
       {/* Hero — Split Layout */}
-      <section className="relative flex flex-col md:flex-row min-h-[520px]">
+      <section className="relative flex flex-col md:flex-row min-h-[auto] md:min-h-[520px]">
         {/* Left: Content Panel */}
-        <div className="flex-1 bg-gradient-to-br from-[#1a1a2e] to-[#16213e] flex flex-col justify-center px-8 md:px-14 py-14 md:py-20">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+        <div className="flex-1 bg-gradient-to-br from-[#1a1a2e] to-[#16213e] flex flex-col justify-center px-5 sm:px-8 md:px-14 py-10 sm:py-14 md:py-20">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-3 sm:mb-4">
             Find Dog-Friendly<br />Places
           </h1>
-          <p className="text-base md:text-lg text-white/90 max-w-md mb-7 leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-md mb-5 sm:mb-7 leading-relaxed">
             Discover the best restaurants, cafes, parks, and more that welcome
             your furry friend in cities around the world.
           </p>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearch} className="mb-6 max-w-lg">
+          <form onSubmit={handleSearch} className="mb-5 sm:mb-6 max-w-lg">
             <div className="flex gap-2">
               <div className="relative flex-1">
                 <svg
@@ -155,7 +155,7 @@ export default function HomePageClient({ cities, cityCounts }: HomePageClientPro
               </div>
               <button
                 type="submit"
-                className="px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold transition-colors text-sm whitespace-nowrap"
+                className="px-3 sm:px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold transition-colors text-sm whitespace-nowrap"
               >
                 Search
               </button>
@@ -163,11 +163,11 @@ export default function HomePageClient({ cities, cityCounts }: HomePageClientPro
           </form>
 
           {/* Explore Near Me Button */}
-          <div className="mb-7">
+          <div className="mb-5 sm:mb-7">
             <button
               onClick={handleExploreNearMe}
               disabled={locatingUser}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white/90 text-sm hover:bg-white/15 hover:border-white/30 transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white/90 text-sm hover:bg-white/15 hover:border-white/30 transition-all disabled:opacity-50"
             >
               {locatingUser ? (
                 <>
@@ -190,12 +190,12 @@ export default function HomePageClient({ cities, cityCounts }: HomePageClientPro
           </div>
 
           {/* Category Filters — Interactive */}
-          <div className="flex flex-wrap gap-2 text-sm">
+          <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-1.5 sm:gap-2 text-xs sm:text-sm">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.slug}
                 onClick={() => handleCategoryClick(cat.slug)}
-                className={`px-4 py-2 rounded-full transition-all cursor-pointer ${
+                className={`px-3 sm:px-4 py-2 rounded-full transition-all cursor-pointer ${
                   activeCategory === cat.slug
                     ? 'bg-orange-500 border border-orange-400 text-white shadow-lg shadow-orange-500/25'
                     : 'bg-white/15 border border-white/25 text-white backdrop-blur-sm hover:bg-white/25 hover:border-white/40'
@@ -208,7 +208,7 @@ export default function HomePageClient({ cities, cityCounts }: HomePageClientPro
         </div>
 
         {/* Right: Dog Photo */}
-        <div className="flex-1 relative overflow-hidden min-h-[280px] md:min-h-0">
+        <div className="flex-1 relative overflow-hidden min-h-[200px] sm:min-h-[280px] md:min-h-0">
           <img
             src="/images/hero-dogs.jpg"
             alt="Two adorable dogs — the Paw Cities mascots"
@@ -226,7 +226,7 @@ export default function HomePageClient({ cities, cityCounts }: HomePageClientPro
           <p className="text-gray-600 mb-8">
             Find dog-friendly places in {cities.length} amazing destinations
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {cities.map((city) => {
               const count = cityCounts[city.slug] || 0;
               const href = activeCategory
