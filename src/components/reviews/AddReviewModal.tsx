@@ -16,8 +16,20 @@ export default function AddReviewModal({ establishmentId, establishmentName, onC
   const [content, setContent] = useState('');
   const [dogFriendliness, setDogFriendliness] = useState(0);
   const [dogNames, setDogNames] = useState('');
+  const [featuresExperienced, setFeaturesExperienced] = useState<Record<string, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+
+  const DOG_FEATURES = [
+    { key: 'waterBowl', label: 'Water Bowls', icon: '💧' },
+    { key: 'treats', label: 'Dog Treats', icon: '🍖' },
+    { key: 'outdoorSeating', label: 'Outdoor Seating', icon: '☀️' },
+    { key: 'indoorAllowed', label: 'Dogs Inside', icon: '🏠' },
+    { key: 'offLeashArea', label: 'Off-Leash', icon: '🐕' },
+    { key: 'dogMenu', label: 'Dog Menu', icon: '🍽️' },
+    { key: 'fenced', label: 'Fenced', icon: '🔒' },
+    { key: 'shadeAvailable', label: 'Shade', icon: '🌳' },
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +51,7 @@ export default function AddReviewModal({ establishmentId, establishmentName, onC
           content: content || null,
           dogFriendliness: dogFriendliness || null,
           dogNames: dogNames || null,
+          featuresExperienced: Object.keys(featuresExperienced).filter(k => featuresExperienced[k]),
         }),
       });
 
@@ -149,7 +162,7 @@ export default function AddReviewModal({ establishmentId, establishmentName, onC
 
           {/* Dog Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Your Dog's Name</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Your Dog&apos;s Name</label>
             <input
               type="text"
               value={dogNames}
@@ -157,6 +170,32 @@ export default function AddReviewModal({ establishmentId, establishmentName, onC
               placeholder="e.g., Luna, Rex"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
+          </div>
+
+          {/* Dog Features Experienced */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Which dog features did you experience?</label>
+            <div className="grid grid-cols-2 gap-2">
+              {DOG_FEATURES.map(feature => (
+                <label
+                  key={feature.key}
+                  className={`flex items-center gap-2 p-2 rounded-lg border cursor-pointer transition-colors text-sm ${
+                    featuresExperienced[feature.key]
+                      ? 'bg-green-50 border-green-300 text-green-700'
+                      : 'bg-white border-gray-200 text-gray-500 hover:border-gray-300'
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={!!featuresExperienced[feature.key]}
+                    onChange={(e) => setFeaturesExperienced(prev => ({ ...prev, [feature.key]: e.target.checked }))}
+                    className="sr-only"
+                  />
+                  <span>{feature.icon}</span>
+                  <span>{feature.label}</span>
+                </label>
+              ))}
+            </div>
           </div>
 
           {/* Submit */}

@@ -60,7 +60,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, address, cityId, categoryId, description, phone, website, contactName, contactEmail } = body;
+    const { name, address, cityId, categoryId, description, phone, website, contactName, contactEmail, dogFeatures } = body;
 
     if (!name || !address || !cityId || !categoryId || !contactName || !contactEmail) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -203,6 +203,7 @@ export async function POST(request: Request) {
         rating: 0,
         review_count: 0,
         price_level: 2,
+        ...(dogFeatures && Object.keys(dogFeatures).length > 0 && { dog_features: dogFeatures }),
       })
       .select('id')
       .single();

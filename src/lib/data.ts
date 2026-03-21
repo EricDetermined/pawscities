@@ -188,15 +188,19 @@ function rawToEstablishment(raw: RawPlace, citySlug: string, cityConfig: CityCon
   const coords = raw.latitude && raw.longitude
     ? { lat: raw.latitude, lng: raw.longitude }
     : generateCoordinates(cityConfig, raw.name, raw.category, index);
+  // Handle dogFeatures as either array of strings (from research JSON) or object of booleans (from DB)
+  const rawFeatures = raw.dogFeatures;
+  const featureArray = Array.isArray(rawFeatures) ? rawFeatures : [];
+  const featureObj = rawFeatures && !Array.isArray(rawFeatures) ? rawFeatures : {};
   const dogFeatures: DogFeatures = {
-    waterBowl: raw.dogFeatures?.waterBowl || false,
-    treats: raw.dogFeatures?.treats || false,
-    outdoorSeating: raw.dogFeatures?.outdoorSeating || false,
-    indoorAllowed: raw.dogFeatures?.indoorAllowed || false,
-    offLeashArea: raw.dogFeatures?.offLeashArea || false,
-    dogMenu: raw.dogFeatures?.dogMenu || false,
-    fenced: raw.dogFeatures?.fenced || false,
-    shadeAvailable: raw.dogFeatures?.shadeAvailable || false,
+    waterBowl: featureObj.waterBowl || featureArray.includes('waterBowl') || false,
+    treats: featureObj.treats || featureArray.includes('treats') || false,
+    outdoorSeating: featureObj.outdoorSeating || featureArray.includes('outdoorSeating') || false,
+    indoorAllowed: featureObj.indoorAllowed || featureArray.includes('indoorAllowed') || false,
+    offLeashArea: featureObj.offLeashArea || featureArray.includes('offLeashArea') || false,
+    dogMenu: featureObj.dogMenu || featureArray.includes('dogMenu') || false,
+    fenced: featureObj.fenced || featureArray.includes('fenced') || false,
+    shadeAvailable: featureObj.shadeAvailable || featureArray.includes('shadeAvailable') || false,
   };
   const confidence = raw.confidence || 80;
   const baseRating = raw.rating || (3.5 + (confidence / 100) * 1.5);
