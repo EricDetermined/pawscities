@@ -41,6 +41,7 @@ export default function PhotosPage() {
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [savingGoogle, setSavingGoogle] = useState<string | null>(null);
+  const [enriching, setEnriching] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -213,6 +214,75 @@ export default function PhotosPage() {
           Avoid photos with watermarks, logos, or heavy filters. All photos are reviewed before appearing on your listing.
         </p>
       </div>
+
+      {/* Fetch from Google Button — shows when no Google photos available */}
+      {(!data.googlePhotos || data.googlePhotos.length === 0) && (
+        <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-5">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-semibold text-blue-900 mb-1">Import from Google</h3>
+              <p className="text-sm text-blue-700">
+                If your business is listed on Google, we can automatically pull your photos, rating, and details.
+              </p>
+            </div>
+            <button
+              onClick={async () => {
+                setEnriching(true);
+                setError(null);
+                setSuccessMessage(null);
+                try {
+                  const res = await fetch('/api/business/enrich-google', { method: 'POST' });
+                  const result = await res.json();
+                  if (res.ok && result.success) {
+                    setSuccessMessage(result.message);
+                    await fetchPhotos();
+                  } else {
+                    setError(result.error || 'Could not find your business on Google');
+                  }
+                } catch {
+                  setError('Failed to fetch from Google');
+                } finally {
+                  setEnriching(false);
+                }
+              }}
+              disabled={enriching}
+              className="shrink-0 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+            >
+              {enriching ? 'Searching...' : 'Fetch from Google'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Re-fetch Google button — shows when Google photos already exist for a refresh */}
+      {data.googlePhotos && data.googlePhotos.length > 0 && (
+        <div className="mb-2 flex justify-end">
+          <button
+            onClick={async () => {
+              setEnriching(true);
+              setError(null);
+              try {
+                const res = await fetch('/api/business/enrich-google', { method: 'POST' });
+                const result = await res.json();
+                if (res.ok && result.success) {
+                  setSuccessMessage(`Refreshed: ${result.message}`);
+                  await fetchPhotos();
+                } else {
+                  setError(result.error || 'Refresh failed');
+                }
+              } catch {
+                setError('Failed to refresh from Google');
+              } finally {
+                setEnriching(false);
+              }
+            }}
+            disabled={enriching}
+            className="text-xs text-blue-600 hover:underline disabled:opacity-50"
+          >
+            {enriching ? 'Refreshing...' : 'Refresh Google Photos'}
+          </button>
+        </div>
+      )}
 
       {/* Google Business Photos */}
       {data.googlePhotos && data.googlePhotos.length > 0 && (
