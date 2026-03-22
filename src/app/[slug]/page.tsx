@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getCityConfig, getAllCitySlugs, CATEGORIES } from '@/lib/cities-config';
+import { getCityConfig, CATEGORIES } from '@/lib/cities-config';
 import { getCityEstablishments, getCityCategoryCounts, enrichEstablishmentsWithUserPhotos } from '@/lib/data';
 import { CityPageClient } from './CityPageClient';
 import type { Metadata } from 'next';
@@ -8,9 +8,7 @@ interface CityPageProps {
   params: { slug: string };
 }
 
-export async function generateStaticParams() {
-  return getAllCitySlugs().map((slug) => ({ slug }));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {
   const city = getCityConfig(params.slug);
