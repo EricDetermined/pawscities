@@ -53,24 +53,52 @@ export async function POST(
   const status = claim.status.toUpperCase();
 
   if (status === 'APPROVED') {
-    // Check if the contact email has a Supabase Auth account — if not, send invite
-    let inviteSent = false;
+    // Check if the contact email has a Supabase Auth account
+    let accountAction = 'none';
     try {
       const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
-      const hasAuthAccount = existingUsers?.users?.some(
+      const existingUser = existingUsers?.users?.find(
         (u: { email?: string }) => u.email?.toLowerCase() === claim.contact_email.toLowerCase()
       );
 
-      if (!hasAuthAccount) {
+      if (!existingUser) {
+        // No account — send invite to create one
         const { error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(
           claim.contact_email,
           { data: { name: businessName || 'Business Owner', role: 'BUSINESS' } }
         );
         if (!inviteError) {
-          inviteSent = true;
+          accountAction = 'invited';
+          console.log(`Invited ${claim.contact_email} to create account`);
         } else {
           console.error(`Failed to invite ${claim.contact_email}:`, inviteError.message);
         }
+      } else if (!existingUser.email_confirmed_at) {
+        // Account exists but unverified — send a magic link / password recovery
+        const { error: resetError } = await supabaseAdmin.auth.admin.generateLink({
+          type: 'magiclink',
+          email: claim.contact_email,
+          options: { redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com'}/business` }
+        });
+        if (!resetError) {
+          accountAction = 'magic_link_sent';
+          console.log(`Sent magic link to ${claim.contact_email} (unverified account)`);
+        } else {
+          console.error(`Failed to send magic link to ${claim.contact_email}:`, resetError.message);
+          // Fallback: try password reset
+          const { error: pwError } = await supabaseAdmin.auth.resetPasswordForEmail(
+            claim.contact_email,
+            { redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com'}/reset-password` }
+          );
+          if (!pwError) {
+            accountAction = 'password_reset_sent';
+            console.log(`Sent password reset to ${claim.contact_email}`);
+          } else {
+            console.error(`Failed to send password reset:`, pwError.message);
+          }
+        }
+      } else {
+        accountAction = 'account_exists';
       }
     } catch (inviteErr) {
       console.error('Auth invite check failed:', inviteErr);
@@ -81,11 +109,16 @@ export async function POST(
     if (!result.success) {
       return NextResponse.json({ error: result.error || 'Failed to send email' }, { status: 500 });
     }
+    const actionMessages: Record<string, string> = {
+      invited: `Approval email + account invitation sent to ${claim.contact_email}`,
+      magic_link_sent: `Approval email + sign-in link sent to ${claim.contact_email}`,
+      password_reset_sent: `Approval email + password reset sent to ${claim.contact_email}`,
+      account_exists: `Approval email resent to ${claim.contact_email} (account already verified)`,
+      none: `Approval email resent to ${claim.contact_email}`,
+    };
     return NextResponse.json({
       success: true,
-      message: inviteSent
-        ? `Approval email + account invitation sent to ${claim.contact_email}`
-        : `Approval email resent to ${claim.contact_email} (account already exists)`,
+      message: actionMessages[accountAction] || actionMessages.none,
     });
   }
 
