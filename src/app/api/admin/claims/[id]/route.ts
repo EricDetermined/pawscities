@@ -1,6 +1,15 @@
 import { requireAdmin } from '@/lib/admin';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { sendClaimApproved, sendClaimRejected } from '@/lib/email';
+
+function getSupabaseServiceRole() {
+  return createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
 
 export async function GET(
   request: NextRequest,
@@ -145,15 +154,16 @@ export async function PATCH(
       let inviteSent = false;
       if (claim.contact_email) {
         try {
+          const supabaseServiceRole = getSupabaseServiceRole();
           // Check if auth user exists for this email
-          const { data: existingUsers } = await supabase.auth.admin.listUsers();
+          const { data: existingUsers } = await supabaseServiceRole.auth.admin.listUsers();
           const hasAuthAccount = existingUsers?.users?.some(
             (u: { email?: string }) => u.email?.toLowerCase() === claim.contact_email.toLowerCase()
           );
 
           if (!hasAuthAccount) {
             // Send an invite — this creates an auth account and emails them a magic link
-            const { error: inviteError } = await supabase.auth.admin.inviteUserByEmail(
+            const { error: inviteError } = await supabaseServiceRole.auth.admin.inviteUserByEmail(
               claim.contact_email,
               { data: { name: claim.business_name || 'Business Owner', role: 'BUSINESS' } }
             );

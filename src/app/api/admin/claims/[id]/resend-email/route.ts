@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { requireAdmin } from '@/lib/admin';
 import { sendClaimApproved, sendClaimRejected } from '@/lib/email';
+
+function getSupabaseServiceRole() {
+  return createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
 
 export async function POST(
   request: NextRequest,
@@ -9,6 +18,9 @@ export async function POST(
   const { error, supabase } = await requireAdmin();
   if (error) return error;
   if (!supabase) return NextResponse.json({ error: 'Auth failed' }, { status: 401 });
+
+  // Use service role client for auth admin operations (invites)
+  const supabaseAdmin = getSupabaseServiceRole();
 
   const claimId = params.id;
 
@@ -44,13 +56,13 @@ export async function POST(
     // Check if the contact email has a Supabase Auth account — if not, send invite
     let inviteSent = false;
     try {
-      const { data: existingUsers } = await supabase.auth.admin.listUsers();
+      const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
       const hasAuthAccount = existingUsers?.users?.some(
         (u: { email?: string }) => u.email?.toLowerCase() === claim.contact_email.toLowerCase()
       );
 
       if (!hasAuthAccount) {
-        const { error: inviteError } = await supabase.auth.admin.inviteUserByEmail(
+        const { error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(
           claim.contact_email,
           { data: { name: businessName || 'Business Owner', role: 'BUSINESS' } }
         );
