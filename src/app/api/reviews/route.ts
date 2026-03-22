@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 
   let query = supabase
     .from('reviews')
-    .select('*, users:user_id(name, avatar)', { count: 'exact' })
+    .select('*, users:user_id(name, avatar), establishments:establishment_id(name, slug, city_id, primary_image)', { count: 'exact' })
     .eq('status', 'APPROVED')
     .order('created_at', { ascending: false })
     .range(offset, offset + limit - 1);

@@ -220,3 +220,75 @@ export async function sendNewClaimAdminAlert(
     newClaimAdminAlertTemplate(businessName, contactName, contactEmail, verificationMethod)
   );
 }
+
+// ——— Social Digest Email ——————————————————————————————————————————————————
+
+interface SocialDigestData {
+  newOpportunities: { permalink: string; caption: string; category: string; suggestedReply: string; likes: number }[];
+  unrepliedComments: { username: string; text: string; postId: string }[];
+  topPost: { permalink: string; likes: number; comments: number; caption: string } | null;
+  totalPendingOpportunities: number;
+  engagementSummary: { avgLikes: number; avgComments: number; postsTracked: number };
+}
+
+function socialDigestTemplate(data: SocialDigestData): string {
+  const opportunitiesHtml = data.newOpportunities.length > 0
+    ? data.newOpportunities.slice(0, 5).map(opp => `
+        <tr>
+          <td style="padding:12px;border-bottom:1px solid #f0f0f0;">
+            <p style="margin:0 0 4px;font-size:13px;color:#888;">${opp.category.toUpperCase()} · ${opp.likes} likes</p>
+            <p style="margin:0 0 8px;font-size:14px;color:#333;">${opp.caption.substring(0, 120)}${opp.caption.length > 120 ? '...' : ''}</p>
+            <p style="margin:0 0 4px;font-size:13px;color:#ea580c;font-style:italic;">Suggested: "${opp.suggestedReply.substring(0, 100)}..."</p>
+            <a href="${opp.permalink}" style="font-size:12px;color:#ea580c;">View on Instagram →</a>
+          </td>
+        </tr>`).join('')
+    : '<tr><td style="padding:12px;color:#888;font-size:14px;">No new opportunities found today.</td></tr>';
+
+  const commentsHtml = data.unrepliedComments.length > 0
+    ? data.unrepliedComments.slice(0, 5).map(c => `
+        <tr>
+          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">
+            <p style="margin:0;font-size:14px;"><strong>@${c.username}:</strong> ${c.text.substring(0, 100)}${c.text.length > 100 ? '...' : ''}</p>
+          </td>
+        </tr>`).join('')
+    : '<tr><td style="padding:8px 12px;color:#888;font-size:14px;">All comments replied to!</td></tr>';
+
+  const topPostHtml = data.topPost
+    ? `<p style="margin:8px 0;font-size:14px;">Best performing: <strong>${data.topPost.likes} likes, ${data.topPost.comments} comments</strong></p>
+       <a href="${data.topPost.permalink}" style="font-size:13px;color:#ea580c;">View post →</a>`
+    : '<p style="margin:8px 0;font-size:14px;color:#888;">No engagement data yet.</p>';
+
+  return baseTemplate('Daily Social Digest', `
+<p>Here's your daily social media summary for Paw Cities.</p>
+
+<h3 style="margin:24px 0 8px;font-size:16px;color:#1a1a1a;border-bottom:2px solid #ea580c;padding-bottom:4px;">Engagement Opportunities (${data.totalPendingOpportunities} pending)</h3>
+<table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 16px;border:1px solid #e5e5e5;border-radius:8px;">
+${opportunitiesHtml}
+</table>
+
+<h3 style="margin:24px 0 8px;font-size:16px;color:#1a1a1a;border-bottom:2px solid #ea580c;padding-bottom:4px;">Unreplied Comments (${data.unrepliedComments.length})</h3>
+<table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 16px;border:1px solid #e5e5e5;border-radius:8px;">
+${commentsHtml}
+</table>
+
+<h3 style="margin:24px 0 8px;font-size:16px;color:#1a1a1a;border-bottom:2px solid #ea580c;padding-bottom:4px;">Performance</h3>
+<p style="font-size:14px;">Posts tracked: ${data.engagementSummary.postsTracked} · Avg likes: ${data.engagementSummary.avgLikes} · Avg comments: ${data.engagementSummary.avgComments}</p>
+${topPostHtml}
+
+${ctaButton('Review All in Dashboard', `${APP_URL}/admin/social`)}
+<p style="font-size:12px;color:#aaa;margin-top:16px;">This digest is sent daily at 11:30 AM UTC after the outreach scan completes.</p>
+`);
+}
+
+export async function sendSocialDigest(data: SocialDigestData): Promise<EmailResult> {
+  if (ADMIN_EMAILS.length === 0) {
+    console.warn('[EMAIL] No ADMIN_EMAILS configured, skipping social digest');
+    return { success: false, error: 'No admin emails configured' };
+  }
+
+  const opCount = data.totalPendingOpportunities;
+  const commentCount = data.unrepliedComments.length;
+  const subject = `Social Digest: ${opCount} opportunities, ${commentCount} unreplied comments`;
+
+  return sendEmail(ADMIN_EMAILS, subject, socialDigestTemplate(data));
+}

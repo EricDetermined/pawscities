@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { sendSocialDigest } from '@/lib/email';
 
 const CRON_SECRET = process.env.CRON_SECRET;
 const META_PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN;
@@ -254,6 +255,78 @@ export async function GET(request: NextRequest) {
     };
 
     console.log('Social outreach scan complete:', summary);
+
+    // 6. Send daily social digest email
+    try {
+      // Get new opportunities for the email
+      const { data: newOpps } = await supabase
+        .from('social_opportunities')
+        .select('permalink, caption, category, suggested_reply, likes')
+        .eq('status', 'new')
+        .order('likes', { ascending: false })
+        .limit(5);
+
+      // Get unreplied comments
+      const { data: unreplied } = await supabase
+        .from('social_comments')
+        .select('username, text, post_id')
+        .eq('replied', false)
+        .order('commented_at', { ascending: false })
+        .limit(5);
+
+      // Get top performing post from social_posts
+      const { data: topPosts } = await supabase
+        .from('social_posts')
+        .select('post_id, likes, comments_count, caption')
+        .eq('status', 'published')
+        .order('engagement_score', { ascending: false })
+        .limit(1);
+
+      // Get engagement averages
+      const { data: allPosts } = await supabase
+        .from('social_posts')
+        .select('likes, comments_count')
+        .eq('status', 'published');
+
+      const avgLikes = allPosts && allPosts.length > 0
+        ? Math.round(allPosts.reduce((s: number, p: { likes: number }) => s + (p.likes || 0), 0) / allPosts.length)
+        : 0;
+      const avgComments = allPosts && allPosts.length > 0
+        ? Math.round((allPosts.reduce((s: number, p: { comments_count: number }) => s + (p.comments_count || 0), 0) / allPosts.length) * 10) / 10
+        : 0;
+
+      const topPost = topPosts?.[0] ? {
+        permalink: `https://instagram.com/p/${topPosts[0].post_id}`,
+        likes: topPosts[0].likes || 0,
+        comments: topPosts[0].comments_count || 0,
+        caption: topPosts[0].caption || '',
+      } : null;
+
+      await sendSocialDigest({
+        newOpportunities: (newOpps || []).map((o: { permalink: string; caption: string; category: string; suggested_reply: string; likes: number }) => ({
+          permalink: o.permalink,
+          caption: o.caption || '',
+          category: o.category || 'general',
+          suggestedReply: o.suggested_reply || '',
+          likes: o.likes || 0,
+        })),
+        unrepliedComments: (unreplied || []).map((c: { username: string; text: string; post_id: string }) => ({
+          username: c.username,
+          text: c.text,
+          postId: c.post_id,
+        })),
+        topPost,
+        totalPendingOpportunities: pendingCount || 0,
+        engagementSummary: {
+          avgLikes,
+          avgComments,
+          postsTracked: allPosts?.length || 0,
+        },
+      });
+      console.log('Social digest email sent');
+    } catch (emailErr) {
+      console.error('Failed to send social digest email:', emailErr);
+    }
 
     return NextResponse.json({ success: true, ...summary });
   } catch (error) {
