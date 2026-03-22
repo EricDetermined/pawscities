@@ -193,6 +193,47 @@ export async function GET(request: NextRequest) {
       }, { status: 500 });
     }
 
+    // 3b. If imageUrl is a proxy URL (not Supabase), download and re-upload to Supabase Storage
+    // Instagram Graph API needs a direct, publicly accessible image URL
+    if (supabase && imageUrl.includes('/api/places/photo')) {
+      try {
+        console.log('Downloading proxy image for Supabase upload...');
+        const imgResponse = await fetch(imageUrl);
+        if (imgResponse.ok) {
+          const imgBuffer = Buffer.from(await imgResponse.arrayBuffer());
+          const contentType = imgResponse.headers.get('content-type') || 'image/jpeg';
+          const ext = contentType.includes('png') ? 'png' : 'jpg';
+          const storagePath = `instagram-posts/${fact.city}-${Date.now()}.${ext}`;
+
+          const { error: uploadError } = await supabase.storage
+            .from('photos')
+            .upload(storagePath, imgBuffer, {
+              contentType,
+              upsert: true,
+            });
+
+          if (!uploadError) {
+            const { data: publicUrlData } = supabase.storage
+              .from('photos')
+              .getPublicUrl(storagePath);
+
+            if (publicUrlData?.publicUrl) {
+              // Verify the uploaded image is accessible
+              const verifyRes = await fetch(publicUrlData.publicUrl, { method: 'HEAD' });
+              if (verifyRes.ok) {
+                imageUrl = publicUrlData.publicUrl;
+                console.log(`Uploaded to Supabase Storage: ${storagePath}`);
+              }
+            }
+          } else {
+            console.error('Supabase upload error:', uploadError);
+          }
+        }
+      } catch (uploadErr) {
+        console.error('Image re-upload failed, proceeding with proxy URL:', uploadErr);
+      }
+    }
+
     // 4. Dry run mode - return what would be posted without publishing
     if (dryRun) {
       return NextResponse.json({
