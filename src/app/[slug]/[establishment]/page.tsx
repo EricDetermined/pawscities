@@ -2,9 +2,19 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getCityConfig, CATEGORIES } from '@/lib/cities-config';
 import { getEstablishment, getCityEstablishments } from '@/lib/data';
+import { createClient } from '@supabase/supabase-js';
 import type { Metadata } from 'next';
+import type { Establishment, CategorySlug, DogFeatures } from '@/types';
 import { ListingBadges } from '@/components/ListingBadges';
 import EstablishmentInteractions from '@/components/EstablishmentInteractions';
+
+function getSupabaseAdmin() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
 
 interface Props {
   params: { slug: string; establishment: string };
@@ -12,7 +22,19 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const city = getCityConfig(params.slug);
-  const place = await getEstablishment(params.slug, params.establishment);
+  let place = await getEstablishment(params.slug, params.establishment);
+  if (!place) {
+    try {
+      const supabase = getSupabaseAdmin();
+      const { data: dbEst } = await supabase
+        .from('establishments')
+        .select('name, description')
+        .eq('slug', params.establishment)
+        .eq('status', 'ACTIVE')
+        .single();
+      if (dbEst) place = { name: dbEst.name, description: dbEst.description } as Establishment;
+    } catch { /* fallthrough */ }
+  }
   if (!city || !place) return {};
   return {
     title: `${place.name} - Dog-Friendly in ${city.name} | Paw Cities`,
@@ -28,12 +50,66 @@ export default async function EstablishmentPage({ params }: Props) {
   const city = getCityConfig(params.slug);
   if (!city) notFound();
 
-  const place = await getEstablishment(params.slug, params.establishment);
+  let place = await getEstablishment(params.slug, params.establishment);
+
+  // If not in research JSON, check the database (user-submitted businesses)
+  if (!place) {
+    try {
+      const supabase = getSupabaseAdmin();
+      const { data: dbEst } = await supabase
+        .from('establishments')
+        .select('*, categories:category_id(slug)')
+        .eq('slug', params.establishment)
+        .eq('status', 'ACTIVE')
+        .single();
+
+      if (dbEst) {
+        const catSlug = (dbEst.categories as { slug: string } | null)?.slug || 'restaurants';
+        const df = (dbEst.dog_features || {}) as Record<string, boolean>;
+        const dogFeatures: DogFeatures = {
+          waterBowl: df.waterBowl || false, treats: df.treats || false,
+          outdoorSeating: df.outdoorSeating || false, indoorAllowed: df.indoorAllowed || false,
+          offLeashArea: df.offLeashArea || false, dogMenu: df.dogMenu || false,
+          fenced: df.fenced || false, shadeAvailable: df.shadeAvailable || false,
+        };
+        let images: string[] = [];
+        if (dbEst.photo_refs && Array.isArray(dbEst.photo_refs) && dbEst.photo_refs.length > 0) {
+          images = dbEst.photo_refs.map((ref: string) =>
+            ref.startsWith('places/') ? `/api/places/photo?name=${encodeURIComponent(ref)}&maxWidth=800` : ref
+          );
+        } else if (dbEst.primary_image) {
+          images = [dbEst.primary_image];
+        }
+        if (images.length === 0) {
+          images = ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop'];
+        }
+
+        place = {
+          id: dbEst.id, slug: dbEst.slug, citySlug: params.slug,
+          categorySlug: catSlug as CategorySlug,
+          name: dbEst.name, description: dbEst.description || '',
+          address: dbEst.address || '', latitude: dbEst.latitude || city.latitude,
+          longitude: dbEst.longitude || city.longitude,
+          phone: dbEst.phone || undefined, website: dbEst.website || undefined,
+          priceLevel: (dbEst.price_level || 2) as 1 | 2 | 3 | 4,
+          rating: dbEst.rating || 0, reviewCount: dbEst.review_count || 0,
+          images, hours: {}, dogFeatures, amenities: [],
+          neighborhood: undefined, tier: dbEst.tier || 'free',
+          isVerified: dbEst.is_verified || false, isFeatured: dbEst.is_featured || false,
+          createdAt: dbEst.created_at || new Date().toISOString(),
+          updatedAt: dbEst.updated_at || new Date().toISOString(),
+        };
+      }
+    } catch (err) {
+      console.error('DB establishment lookup failed:', err);
+    }
+  }
+
   if (!place) notFound();
 
   const allPlaces = await getCityEstablishments(params.slug);
   const similar = allPlaces
-    .filter(e => e.categorySlug === place.categorySlug && e.id !== place.id)
+    .filter(e => e.categorySlug === place!.categorySlug && e.id !== place!.id)
     .slice(0, 3);
 
   const category = CATEGORIES.find(c => c.slug === place.categorySlug);
