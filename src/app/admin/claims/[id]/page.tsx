@@ -355,6 +355,26 @@ export default function ClaimDetailPage() {
               <p className="text-sm text-gray-600 mt-4">
                 Updated {new Date(claim.updated_at).toLocaleDateString()}
               </p>
+              {claim.status.toUpperCase() === 'APPROVED' && claim.contact_email && (
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch(`/api/admin/claims/${claim.id}/resend-email`, { method: 'POST' });
+                      const data = await res.json();
+                      if (res.ok) {
+                        alert('Approval email resent to ' + claim.contact_email);
+                      } else {
+                        alert('Failed: ' + (data.error || 'Unknown error'));
+                      }
+                    } catch {
+                      alert('Failed to resend email');
+                    }
+                  }}
+                  className="mt-4 w-full px-4 py-2.5 bg-orange-500 text-white text-sm font-medium rounded-lg hover:bg-orange-600 transition-colors"
+                >
+                  Resend Approval Email
+                </button>
+              )}
             </div>
           )}
         </div>
