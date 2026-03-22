@@ -140,15 +140,44 @@ export async function PATCH(
         .update({ role: 'BUSINESS' })
         .eq('id', claim.user_id);
 
-      // Notify business owner (non-blocking)
+      // Check if the contact email has a Supabase Auth account
+      // If not, invite them so they can set up a password and access the dashboard
+      let inviteSent = false;
       if (claim.contact_email) {
+        try {
+          // Check if auth user exists for this email
+          const { data: existingUsers } = await supabase.auth.admin.listUsers();
+          const hasAuthAccount = existingUsers?.users?.some(
+            (u: { email?: string }) => u.email?.toLowerCase() === claim.contact_email.toLowerCase()
+          );
+
+          if (!hasAuthAccount) {
+            // Send an invite — this creates an auth account and emails them a magic link
+            const { error: inviteError } = await supabase.auth.admin.inviteUserByEmail(
+              claim.contact_email,
+              { data: { name: claim.business_name || 'Business Owner', role: 'BUSINESS' } }
+            );
+            if (!inviteError) {
+              inviteSent = true;
+              console.log(`Invited ${claim.contact_email} to create account`);
+            } else {
+              console.error(`Failed to invite ${claim.contact_email}:`, inviteError.message);
+            }
+          }
+        } catch (inviteErr) {
+          console.error('Auth invite check failed:', inviteErr);
+        }
+
+        // Send approval notification
         sendClaimApproved(claim.contact_email, claim.business_name || 'your business').catch(() => {});
       }
 
       return NextResponse.json({
         id: claimId,
         status: 'APPROVED',
-        message: 'Claim approved successfully',
+        message: inviteSent
+          ? `Claim approved. Invitation sent to ${claim.contact_email} to create their account.`
+          : 'Claim approved successfully',
       });
     } else {
       // Reject the claim

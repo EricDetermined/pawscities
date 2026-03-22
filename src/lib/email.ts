@@ -109,7 +109,7 @@ function claimConfirmationTemplate(businessName: string, claimId: string): strin
   <strong>Reference:</strong> ${claimId.slice(0, 8)}...
 </p>
 <p style="background:#e8f4fe;padding:12px 16px;border-radius:8px;font-size:14px;color:#1e40af;margin:16px 0;">
-  <strong>New to Paw Cities?</strong> If you don&rsquo;t have an account yet, <a href="${APP_URL}/signup" style="color:#ea580c;font-weight:600;">sign up here</a> using this email address. Already have an account with a different email? No problem &mdash; your claim is linked and you&rsquo;ll get access once approved.
+  <strong>New to Paw Cities?</strong> Once your claim is approved, you&rsquo;ll receive an invitation email to set up your account and password. No action needed from your side right now &mdash; we&rsquo;ll handle everything during the review.
 </p>
 <p>In the meantime, you can check the status of your claim from your dashboard.</p>
 ${ctaButton('View Your Dashboard', `${APP_URL}/business/claim`)}
@@ -122,13 +122,13 @@ function claimApprovedTemplate(businessName: string): string {
 <p>Great news! Your claim for <strong>${businessName}</strong> has been approved.</p>
 <p>Your listing is now <strong>active</strong> on Paw Cities and you have full access to manage it. Here&rsquo;s what you can do:</p>
 <ul style="padding-left:20px;margin:16px 0;">
-  <li style="margin-bottom:8px;">Edit your listing details, hours, and photos</li>
-  <li style="margin-bottom:8px;">View analytics and track visitors</li>
+  <li style="margin-bottom:8px;">Edit your listing details, hours and primary photo</li>
+  <li style="margin-bottom:8px;">View basic analytics</li>
   <li style="margin-bottom:8px;">Respond to reviews (Premium plan)</li>
-  <li style="margin-bottom:8px;">Create events and special offers (Premium plan)</li>
+  <li style="margin-bottom:8px;">Detailed visitor tracking and insights (Premium plan)</li>
 </ul>
-<p style="background:#fef3e8;padding:12px 16px;border-radius:8px;font-size:14px;color:#7c5a2e;">
-  <strong>First time here?</strong> If you haven&rsquo;t set up your password yet, click &ldquo;Forgot Password&rdquo; on the sign-in page using your business email to create one.
+<p style="background:#e8f4fe;padding:12px 16px;border-radius:8px;font-size:14px;color:#1e40af;">
+  <strong>First time here?</strong> If this is your first time on Paw Cities, check your inbox for a separate invitation email to set up your account and password.
 </p>
 ${ctaButton('Go to Your Dashboard', `${APP_URL}/business`)}
 <p style="font-size:13px;color:#888;">Welcome to Paw Cities! We&rsquo;re excited to have you on board.</p>
