@@ -72,6 +72,7 @@ export default async function CityPage({ params }: CityPageProps) {
             shadeAvailable: df.shadeAvailable || false,
           };
 
+          // Build images — only show listing if it has at least one real image
           let images: string[] = [];
           if (dbEst.photo_refs && Array.isArray(dbEst.photo_refs) && dbEst.photo_refs.length > 0) {
             images = dbEst.photo_refs.map((ref: string) =>
@@ -82,9 +83,22 @@ export default async function CityPage({ params }: CityPageProps) {
           } else if (dbEst.primary_image) {
             images = [dbEst.primary_image];
           }
+
+          // Also check for approved user-uploaded photos
           if (images.length === 0) {
-            images = ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop'];
+            const { data: approvedPhotos } = await supabase
+              .from('photos')
+              .select('url')
+              .eq('establishment_id', dbEst.id)
+              .eq('status', 'APPROVED')
+              .limit(1);
+            if (approvedPhotos && approvedPhotos.length > 0) {
+              images = approvedPhotos.map((p: { url: string }) => p.url);
+            }
           }
+
+          // Skip this establishment if no images — don't show listings without photos
+          if (images.length === 0) continue;
 
           const establishment: Establishment = {
             id: dbEst.id,
