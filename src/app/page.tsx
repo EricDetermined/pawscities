@@ -2,6 +2,9 @@ import { CITIES } from '@/lib/cities-config';
 import { getCityEstablishments } from '@/lib/data';
 import HomePageClient from './HomePageClient';
 
+// Force dynamic rendering since getCityEstablishments may access Supabase
+export const dynamic = 'force-dynamic';
+
 export interface CityStats {
   count: number;
   topRated: string | null;
