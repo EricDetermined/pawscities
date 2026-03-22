@@ -1,5 +1,13 @@
 {
   "framework": "nextjs",
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "www.pawcities.com" }],
+      "destination": "https://pawcities.com/:path",
+      "permanent": true
+    }
+  ],
   "crons": [
     {
       "path": "/api/cron/social-post?secret=${CRON_SECRET}",

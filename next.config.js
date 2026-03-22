@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
 
-  // Skip type checking for build (API routes need Prisma which we'll set up later)
+  // Skip type checking during build
   typescript: {
     ignoreBuildErrors: true,
   },
