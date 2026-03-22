@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { requireAdmin } from '@/lib/admin';
-import { sendClaimApproved, sendClaimRejected } from '@/lib/email';
+import { sendClaimApproved, sendClaimRejected, sendBusinessAccountSetup } from '@/lib/email';
 
 function getSupabaseServiceRole() {
   return createAdminClient(
@@ -53,7 +53,6 @@ export async function POST(
   const status = claim.status.toUpperCase();
 
   if (status === 'APPROVED') {
-    // Check if the contact email has a Supabase Auth account
     let accountAction = 'none';
     try {
       const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
@@ -62,46 +61,36 @@ export async function POST(
       );
 
       if (!existingUser) {
-        // No account — send invite to create one
-        const { error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(
-          claim.contact_email,
-          { data: { name: businessName || 'Business Owner', role: 'BUSINESS' } }
-        );
-        if (!inviteError) {
-          accountAction = 'invited';
-          console.log(`Invited ${claim.contact_email} to create account`);
-        } else {
-          console.error(`Failed to invite ${claim.contact_email}:`, inviteError.message);
-        }
-      } else if (!existingUser.email_confirmed_at) {
-        // Account exists but unverified — send a magic link / password recovery
-        const { error: resetError } = await supabaseAdmin.auth.admin.generateLink({
-          type: 'magiclink',
+        // No account — create one with email_confirm=true so they can immediately reset password
+        const { error: createError } = await supabaseAdmin.auth.admin.createUser({
           email: claim.contact_email,
-          options: { redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com'}/business` }
+          email_confirm: true,
+          user_metadata: { name: businessName || 'Business Owner', role: 'BUSINESS' },
         });
-        if (!resetError) {
-          accountAction = 'magic_link_sent';
-          console.log(`Sent magic link to ${claim.contact_email} (unverified account)`);
+        if (createError) {
+          console.error(`Failed to create user for ${claim.contact_email}:`, createError.message);
         } else {
-          console.error(`Failed to send magic link to ${claim.contact_email}:`, resetError.message);
-          // Fallback: try password reset
-          const { error: pwError } = await supabaseAdmin.auth.resetPasswordForEmail(
-            claim.contact_email,
-            { redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com'}/reset-password` }
-          );
-          if (!pwError) {
-            accountAction = 'password_reset_sent';
-            console.log(`Sent password reset to ${claim.contact_email}`);
-          } else {
-            console.error(`Failed to send password reset:`, pwError.message);
-          }
+          console.log(`Created verified account for ${claim.contact_email}`);
         }
+      }
+
+      // Whether account was just created or already existed — send password reset via Resend
+      // This generates a reset link through Supabase Auth but the email goes through our SMTP (Resend)
+      const { error: resetError } = await supabaseAdmin.auth.resetPasswordForEmail(
+        claim.contact_email,
+        { redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com'}/reset-password` }
+      );
+      if (!resetError) {
+        accountAction = 'password_reset_sent';
+        console.log(`Password reset email sent to ${claim.contact_email}`);
       } else {
-        accountAction = 'account_exists';
+        console.error(`Failed to send password reset to ${claim.contact_email}:`, resetError.message);
+        // Last resort: send setup instructions via our own Resend email
+        await sendBusinessAccountSetup(claim.contact_email, businessName || 'your business');
+        accountAction = 'setup_email_sent';
       }
     } catch (inviteErr) {
-      console.error('Auth invite check failed:', inviteErr);
+      console.error('Auth setup failed:', inviteErr);
     }
 
     // Also send the approval notification

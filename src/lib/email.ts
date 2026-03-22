@@ -227,6 +227,29 @@ export async function sendNewClaimAdminAlert(
   );
 }
 
+export async function sendBusinessAccountSetup(
+  to: string,
+  businessName: string
+): Promise<EmailResult> {
+  return sendEmail(
+    to,
+    `Set up your Paw Cities account for ${businessName}`,
+    baseTemplate('Set Up Your Account', `
+<p>Your business <strong>${businessName}</strong> has been approved on Paw Cities!</p>
+<p>To access your business dashboard, you need to set up your account password:</p>
+<ol style="padding-left:20px;margin:16px 0;">
+  <li style="margin-bottom:8px;">Go to the sign-in page</li>
+  <li style="margin-bottom:8px;">Click <strong>&ldquo;Forgot Password&rdquo;</strong></li>
+  <li style="margin-bottom:8px;">Enter this email address: <strong>${to}</strong></li>
+  <li style="margin-bottom:8px;">Check your inbox for the password reset link</li>
+  <li style="margin-bottom:8px;">Set your password and sign in!</li>
+</ol>
+${ctaButton('Go to Sign In', `${APP_URL}/login`)}
+<p style="font-size:13px;color:#888;">Once signed in, you&rsquo;ll have full access to manage your listing on Paw Cities.</p>
+`)
+  );
+}
+
 // ——— Social Digest Email ——————————————————————————————————————————————————
 
 interface SocialDigestData {
