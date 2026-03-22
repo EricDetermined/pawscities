@@ -13,7 +13,7 @@ function getResend(): Resend {
 
 const EMAIL_FROM = process.env.EMAIL_FROM || 'Paw Cities <noreply@pawcities.com>';
 const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://pawcities.com';
+const APP_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://pawcities.com';
 
 interface EmailResult {
   success: boolean;
@@ -108,8 +108,11 @@ function claimConfirmationTemplate(businessName: string, claimId: string): strin
 <p style="background:#fef3e8;padding:12px 16px;border-radius:8px;font-size:14px;color:#7c5a2e;">
   <strong>Reference:</strong> ${claimId.slice(0, 8)}...
 </p>
+<p style="background:#e8f4fe;padding:12px 16px;border-radius:8px;font-size:14px;color:#1e40af;margin:16px 0;">
+  <strong>New to Paw Cities?</strong> If you don&rsquo;t have an account yet, <a href="${APP_URL}/signup" style="color:#ea580c;font-weight:600;">sign up here</a> using this email address. Already have an account with a different email? No problem &mdash; your claim is linked and you&rsquo;ll get access once approved.
+</p>
 <p>In the meantime, you can check the status of your claim from your dashboard.</p>
-${ctaButton('View Your Dashboard', `${APP_URL}/business`)}
+${ctaButton('View Your Dashboard', `${APP_URL}/business/claim`)}
 <p style="font-size:13px;color:#888;">If you didn&rsquo;t submit this claim, you can safely ignore this email.</p>
 `);
 }
@@ -121,9 +124,12 @@ function claimApprovedTemplate(businessName: string): string {
 <ul style="padding-left:20px;margin:16px 0;">
   <li style="margin-bottom:8px;">Edit your listing details, hours, and photos</li>
   <li style="margin-bottom:8px;">View analytics and track visitors</li>
-  <li style="margin-bottom:8px;">Respond to reviews (Bronze+ plan)</li>
-  <li style="margin-bottom:8px;">Create events and special offers (Silver+ plan)</li>
+  <li style="margin-bottom:8px;">Respond to reviews (Premium plan)</li>
+  <li style="margin-bottom:8px;">Create events and special offers (Premium plan)</li>
 </ul>
+<p style="background:#fef3e8;padding:12px 16px;border-radius:8px;font-size:14px;color:#7c5a2e;">
+  <strong>First time here?</strong> If you haven&rsquo;t set up your password yet, click &ldquo;Forgot Password&rdquo; on the sign-in page using your business email to create one.
+</p>
 ${ctaButton('Go to Your Dashboard', `${APP_URL}/business`)}
 <p style="font-size:13px;color:#888;">Welcome to Paw Cities! We&rsquo;re excited to have you on board.</p>
 `);
