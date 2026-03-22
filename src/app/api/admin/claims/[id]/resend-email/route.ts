@@ -41,11 +41,40 @@ export async function POST(
   const status = claim.status.toUpperCase();
 
   if (status === 'APPROVED') {
+    // Check if the contact email has a Supabase Auth account — if not, send invite
+    let inviteSent = false;
+    try {
+      const { data: existingUsers } = await supabase.auth.admin.listUsers();
+      const hasAuthAccount = existingUsers?.users?.some(
+        (u: { email?: string }) => u.email?.toLowerCase() === claim.contact_email.toLowerCase()
+      );
+
+      if (!hasAuthAccount) {
+        const { error: inviteError } = await supabase.auth.admin.inviteUserByEmail(
+          claim.contact_email,
+          { data: { name: businessName || 'Business Owner', role: 'BUSINESS' } }
+        );
+        if (!inviteError) {
+          inviteSent = true;
+        } else {
+          console.error(`Failed to invite ${claim.contact_email}:`, inviteError.message);
+        }
+      }
+    } catch (inviteErr) {
+      console.error('Auth invite check failed:', inviteErr);
+    }
+
+    // Also send the approval notification
     const result = await sendClaimApproved(claim.contact_email, businessName || 'your business');
     if (!result.success) {
       return NextResponse.json({ error: result.error || 'Failed to send email' }, { status: 500 });
     }
-    return NextResponse.json({ success: true, message: `Approval email resent to ${claim.contact_email}` });
+    return NextResponse.json({
+      success: true,
+      message: inviteSent
+        ? `Approval email + account invitation sent to ${claim.contact_email}`
+        : `Approval email resent to ${claim.contact_email} (account already exists)`,
+    });
   }
 
   if (status === 'REJECTED') {
