@@ -20,27 +20,48 @@ const CITY_FILE_MAP: Record<string, string> = {
   geneva: 'geneva-places',
   london: 'london-places',
   barcelona: 'barcelona-places',
-  'los-angeles': 'los-angeles-places',
-  nyc: 'nyc-places',
+  losangeles: 'los-angeles-places',
+  newyork: 'nyc-places',
   sydney: 'sydney-places',
   tokyo: 'tokyo-places',
 };
 
 // Normalize category from research data to DB category slugs
+// Must match the comprehensive CATEGORY_MAP in scripts/seed-establishments.ts
 function normalizeCategory(cat: string): string {
   const lower = cat.toLowerCase().trim();
   const map: Record<string, string> = {
-    park: 'parks', parks: 'parks',
-    restaurant: 'restaurants', restaurants: 'restaurants',
-    cafe: 'cafes', cafes: 'cafes',
-    hotel: 'hotels', hotels: 'hotels',
-    beach: 'beaches', beaches: 'beaches',
-    vet: 'vets', vets: 'vets',
-    groomer: 'groomers', groomers: 'groomers',
-    shop: 'shops', shops: 'shops', 'pet shop': 'shops',
-    pub: 'restaurants', pubs: 'restaurants', bar: 'restaurants',
+    // Direct matches
+    restaurants: 'restaurants', restaurant: 'restaurants',
+    cafes: 'cafes', cafe: 'cafes', coffee: 'cafes',
+    hotels: 'hotels', hotel: 'hotels',
+    parks: 'parks', park: 'parks', 'dog park': 'parks', 'dog_park': 'parks',
+    beaches: 'beaches', beach: 'beaches',
+    vets: 'vets', vet: 'vets', veterinarian: 'vets', veterinary: 'vets',
+    groomers: 'groomers', groomer: 'groomers', grooming: 'groomers',
+    shops: 'shops', shop: 'shops', 'pet shop': 'shops', 'pet_shop': 'shops',
+    'pet store': 'shops', 'pet_store': 'shops', shopping: 'shops',
+    activities: 'activities', activity: 'activities',
+    // UK-specific
+    pubs: 'restaurants', pub: 'restaurants', 'pub/restaurant': 'restaurants',
+    bar: 'restaurants', bars: 'restaurants',
+    // Compound names
+    'cafe/brunch': 'cafes', 'dog cafe': 'cafes', 'regular cafe': 'cafes',
+    'dog beach/park': 'parks', 'dog beach': 'beaches',
+    // Dog walkers
+    walkers: 'walkers', walker: 'walkers', 'dog walker': 'walkers',
+    'dog walkers': 'walkers', 'dog walking': 'walkers',
+    'pet sitter': 'walkers', 'pet sitting': 'walkers',
+    // Dog trainers
+    trainers: 'trainers', trainer: 'trainers', 'dog trainer': 'trainers',
+    'dog trainers': 'trainers', 'dog training': 'trainers', obedience: 'trainers',
+    // Daycare & boarding
+    daycare: 'daycare', 'dog daycare': 'daycare', boarding: 'daycare',
+    'dog boarding': 'daycare', kennel: 'daycare', kennels: 'daycare',
+    'pet hotel': 'daycare', 'dog hotel': 'daycare', 'dog pension': 'daycare',
   };
   if (map[lower]) return map[lower];
+  // Fuzzy fallbacks
   if (lower.includes('beach')) return 'beaches';
   if (lower.includes('park')) return 'parks';
   if (lower.includes('restaurant') || lower.includes('pub') || lower.includes('brunch')) return 'restaurants';
@@ -49,7 +70,10 @@ function normalizeCategory(cat: string): string {
   if (lower.includes('vet') || lower.includes('clinic')) return 'vets';
   if (lower.includes('groom')) return 'groomers';
   if (lower.includes('shop') || lower.includes('store')) return 'shops';
-  return 'restaurants';
+  if (lower.includes('walk') || lower.includes('sit')) return 'walkers';
+  if (lower.includes('train') || lower.includes('obedien')) return 'trainers';
+  if (lower.includes('daycare') || lower.includes('board') || lower.includes('kennel')) return 'daycare';
+  return 'activities'; // true fallback — only for genuinely unmappable categories
 }
 
 function generateSlug(name: string): string {
