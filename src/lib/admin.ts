@@ -1,5 +1,14 @@
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
+
+function getSupabaseServiceRole() {
+  return createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
 
 export interface AdminAuthResult {
   error: NextResponse | null;
@@ -134,10 +143,56 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
       }
     }
 
+    // If no users record found, this might be a new business contact logging in for the first time
+    // Check if there's a business claim with their email as contact_email
+    if (!dbUser && user.email) {
+      const supabaseAdmin = getSupabaseServiceRole();
+
+      // Check for approved claims where this email is the contact
+      const { data: claimByContact } = await supabaseAdmin
+        .from('business_claims')
+        .select('id, user_id, establishment_id, business_name')
+        .eq('contact_email', user.email)
+        .eq('status', 'APPROVED')
+        .limit(1)
+        .single();
+
+      if (claimByContact) {
+        // Create a users record for this business contact
+        const { data: newUser } = await supabaseAdmin
+          .from('users')
+          .insert({
+            supabase_id: user.id,
+            email: user.email,
+            name: user.user_metadata?.name || user.email.split('@')[0],
+            role: 'BUSINESS',
+          })
+          .select('id, supabase_id, email, role')
+          .single();
+
+        if (newUser) {
+          // Link this new user to the existing claim
+          await supabaseAdmin
+            .from('business_claims')
+            .update({ user_id: newUser.id })
+            .eq('id', claimByContact.id);
+
+          // Also update the establishment's claimed_by
+          await supabaseAdmin
+            .from('establishments')
+            .update({ claimed_by: newUser.id })
+            .eq('id', claimByContact.establishment_id);
+
+          dbUser = newUser;
+          console.log(`Linked business contact ${user.email} to claim ${claimByContact.id}`);
+        }
+      }
+    }
+
     if (!dbUser) {
       return {
         error: NextResponse.json(
-          { error: 'User record not found' },
+          { error: 'User record not found. If you are a business contact, please check that your claim has been approved.' },
           { status: 404 }
         ),
         supabase: null,
@@ -155,9 +210,8 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
 
     // Allow BUSINESS and ADMIN roles
     if (mappedDbUser.role !== 'BUSINESS' && mappedDbUser.role !== 'ADMIN') {
-      // Also check if user has any business claims (pending or approved) - they may not have
-      // been upgraded to BUSINESS role yet
-      const { data: claim } = await supabase
+      // Check if user has any business claims by user_id OR by contact_email
+      const { data: claimById } = await supabase
         .from('business_claims')
         .select('id')
         .eq('user_id', dbUser.id)
@@ -165,9 +219,34 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
         .limit(1)
         .single();
 
-      if (claim) {
-        // Upgrade role to BUSINESS since they have a claim
-        await supabase.from('users').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
+      let hasClaim = !!claimById;
+
+      if (!hasClaim && dbUser.email) {
+        const { data: claimByEmail } = await supabase
+          .from('business_claims')
+          .select('id, user_id')
+          .eq('contact_email', dbUser.email)
+          .eq('status', 'APPROVED')
+          .limit(1)
+          .single();
+
+        if (claimByEmail) {
+          hasClaim = true;
+          // Link the claim to this user if it's not already
+          if (claimByEmail.user_id !== dbUser.id) {
+            const supabaseAdmin = getSupabaseServiceRole();
+            await supabaseAdmin
+              .from('business_claims')
+              .update({ user_id: dbUser.id })
+              .eq('id', claimByEmail.id);
+          }
+        }
+      }
+
+      if (hasClaim) {
+        // Upgrade role to BUSINESS
+        const supabaseAdmin = getSupabaseServiceRole();
+        await supabaseAdmin.from('users').update({ role: 'BUSINESS' }).eq('id', dbUser.id);
         mappedDbUser.role = 'BUSINESS';
       } else {
         return {

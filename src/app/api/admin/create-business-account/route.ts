@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
   </table>
   <p style="font-size:14px;color:#ea580c;font-weight:600;">Please change your password after your first login.</p>
   <table cellpadding="0" cellspacing="0" style="margin:24px 0;"><tr><td>
-    <a href="${APP_URL}/login" style="display:inline-block;padding:14px 32px;background:#ea580c;color:#fff;font-size:15px;font-weight:600;text-decoration:none;border-radius:8px;">Sign In to Your Dashboard</a>
+    <a href="${APP_URL}/login?redirect=/business" style="display:inline-block;padding:14px 32px;background:#ea580c;color:#fff;font-size:15px;font-weight:600;text-decoration:none;border-radius:8px;">Sign In to Your Dashboard</a>
   </td></tr></table>
   <p style="font-size:13px;color:#888;">Once signed in, go to Photos to upload your business image and make your listing visible on Paw Cities.</p>
 </td></tr>
