@@ -44,3 +44,6 @@ outputs/paws-cities/.next/
 outputs/paws-cities/.env.local
 outputs/paws-cities/.env
 outputs/paws-cities/tsconfig.tsbuildinfo
+
+# Downloaded posted creatives (local archive)
+instagram_launch_posts/posted/
