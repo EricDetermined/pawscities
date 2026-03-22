@@ -119,17 +119,28 @@ export async function GET(request: NextRequest) {
     const factIndex = CONTENT_BANK.indexOf(fact);
     if (supabase && factIndex >= 0) {
       try {
-        const fileName = `social-creatives/${fact.city}-${factIndex}.png`;
-        const { data: urlData } = supabase.storage
+        // List files with prefix matching since creatives have timestamps in filenames
+        // e.g. "barcelona-13-1774147605581.png" instead of "barcelona-13.png"
+        const prefix = `${fact.city}-${factIndex}-`;
+        const { data: files } = await supabase.storage
           .from('photos')
-          .getPublicUrl(fileName);
+          .list('social-creatives', {
+            search: prefix,
+            limit: 1,
+          });
 
-        if (urlData?.publicUrl) {
-          // Verify the creative exists
-          const testRes = await fetch(urlData.publicUrl, { method: 'HEAD' });
-          if (testRes.ok) {
-            imageUrl = urlData.publicUrl;
-            console.log(`Using stored branded creative for "${fact.headline}"`);
+        if (files && files.length > 0) {
+          const { data: urlData } = supabase.storage
+            .from('photos')
+            .getPublicUrl(`social-creatives/${files[0].name}`);
+
+          if (urlData?.publicUrl) {
+            // Verify the creative exists
+            const testRes = await fetch(urlData.publicUrl, { method: 'HEAD' });
+            if (testRes.ok) {
+              imageUrl = urlData.publicUrl;
+              console.log(`Using stored branded creative "${files[0].name}" for "${fact.headline}"`);
+            }
           }
         }
       } catch {
@@ -139,7 +150,7 @@ export async function GET(request: NextRequest) {
 
     // Fallback: find a Google photo from a featured establishment
 
-    if (cityFile) {
+    if (!imageUrl && cityFile) {
       try {
         const dataPath = path.join(process.cwd(), 'research-output', `${cityFile}.json`);
         const cityData = JSON.parse(await fs.readFile(dataPath, 'utf-8'));
