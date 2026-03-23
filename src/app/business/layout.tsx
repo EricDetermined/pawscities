@@ -39,7 +39,7 @@ const navItems = [
   },
   {
     title: 'Help Guide',
-    href: '/business/guide',
+    href: '/for-business/guide',
     icon: '📖',
   },
 ];

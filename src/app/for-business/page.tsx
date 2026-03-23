@@ -37,6 +37,9 @@ export default function ForBusinessPage() {
                 View Pricing
               </a>
             </div>
+            <p className="mt-6 text-sm text-orange-100">
+              Want to see everything you can do? <Link href="/for-business/guide" className="text-white underline font-medium hover:text-orange-50">Read the Business Owner Guide</Link>
+            </p>
           </div>
         </div>
       </section>
