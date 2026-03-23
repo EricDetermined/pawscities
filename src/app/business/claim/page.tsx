@@ -456,8 +456,15 @@ export default function ClaimBusinessPage() {
                 <input type="tel" value={newForm.phone} onChange={(e) => setNewForm(prev => ({ ...prev, phone: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Website</label>
-                <input type="url" value={newForm.website} onChange={(e) => setNewForm(prev => ({ ...prev, website: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" placeholder="https://..." />
+                <div className="flex items-center gap-2 mb-1">
+                  <label className="block text-sm font-medium text-gray-700">Website</label>
+                  <span className="text-xs bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded">Premium feature</span>
+                </div>
+                <div className="flex">
+                  <span className="inline-flex items-center px-3 py-2.5 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 text-gray-500 text-sm">https://</span>
+                  <input type="text" value={newForm.website.replace(/^https?:\/\//, '')} onChange={(e) => { const val = e.target.value.replace(/^https?:\/\//, ''); setNewForm(prev => ({ ...prev, website: val ? `https://${val}` : '' })); }} className="flex-1 px-4 py-2.5 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" placeholder="www.example.com" />
+                </div>
+                <p className="mt-1 text-xs text-gray-400">Clickable website link is available on Premium plans</p>
               </div>
             </div>
             {/* Dog-Friendly Features */}
@@ -537,6 +544,8 @@ export default function ClaimBusinessPage() {
             </div>
             <ul className="space-y-2 text-sm text-gray-700">
               <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Everything in Free</li>
+              <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Clickable website link</li>
+              <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Opening hours display</li>
               <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Respond to reviews</li>
               <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Up to 10 photos</li>
               <li className="flex items-center gap-2"><span className="text-orange-500">&#10003;</span> Events and special offers</li>

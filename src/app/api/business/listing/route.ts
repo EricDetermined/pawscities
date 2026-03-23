@@ -48,7 +48,9 @@ export async function PUT(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { description, phone, website, dogFeatures, openingHours } = body;
+    const { description, phone, website: rawWebsite, dogFeatures, openingHours } = body;
+    // Normalize website URL - ensure https:// prefix
+    const website = rawWebsite ? (rawWebsite.match(/^https?:\/\//) ? rawWebsite : `https://${rawWebsite}`) : rawWebsite;
 
     // Get the business's approved claim
     const { data: claim, error: claimError } = await supabase

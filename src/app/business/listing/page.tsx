@@ -204,16 +204,20 @@ export default function EditListing() {
                   </span>
                 )}
               </div>
-              <input
-                type="url"
-                value={formData.website}
-                onChange={(e) =>
-                  setFormData({ ...formData, website: e.target.value })
-                }
-                placeholder="https://example.com"
-                disabled={tier === 'free'}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500 cursor-not-allowed"
-              />
+              <div className="flex">
+                <span className={`inline-flex items-center px-3 py-2 border border-r-0 border-gray-300 rounded-l-lg text-gray-500 text-sm ${tier === 'free' ? 'bg-gray-100' : 'bg-gray-50'}`}>https://</span>
+                <input
+                  type="text"
+                  value={formData.website.replace(/^https?:\/\//, '')}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/^https?:\/\//, '');
+                    setFormData({ ...formData, website: val ? `https://${val}` : '' });
+                  }}
+                  placeholder="www.example.com"
+                  disabled={tier === 'free'}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500 cursor-not-allowed"
+                />
+              </div>
             </div>
           </div>
         </div>

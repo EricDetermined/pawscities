@@ -60,7 +60,9 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, address, cityId, categoryId, description, phone, website, contactName, contactEmail, dogFeatures } = body;
+    const { name, address, cityId, categoryId, description, phone, website: rawWebsite, contactName, contactEmail, dogFeatures } = body;
+    // Normalize website URL - ensure https:// prefix
+    const website = rawWebsite ? (rawWebsite.match(/^https?:\/\//) ? rawWebsite : `https://${rawWebsite}`) : '';
 
     if (!name || !address || !cityId || !categoryId || !contactName || !contactEmail) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
