@@ -1,4 +1,4 @@
-import { requireBusinessOrAdmin } from '@/lib/admin';
+import { requireBusinessOrAdmin, getEstablishmentForUser } from '@/lib/admin';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
@@ -9,15 +9,10 @@ export async function GET() {
   }
 
   try {
-    // Get the business's approved claim
-    const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('establishment_id')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'APPROVED')
-      .single();
+    // Get the establishment for this user (handles admin fallback)
+    const result = await getEstablishmentForUser(supabase, dbUser);
 
-    if (claimError || !claim) {
+    if (!result) {
       return NextResponse.json({ error: 'No approved business claim found' }, { status: 404 });
     }
 
@@ -25,7 +20,7 @@ export async function GET() {
     const { data: establishment, error: estError } = await supabase
       .from('establishments')
       .select('*')
-      .eq('id', claim.establishment_id)
+      .eq('id', result.establishmentId)
       .single();
 
     if (estError || !establishment) {
@@ -52,15 +47,10 @@ export async function PUT(request: NextRequest) {
     // Normalize website URL - ensure https:// prefix
     const website = rawWebsite ? (rawWebsite.match(/^https?:\/\//) ? rawWebsite : `https://${rawWebsite}`) : rawWebsite;
 
-    // Get the business's approved claim
-    const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('establishment_id')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'APPROVED')
-      .single();
+    // Get the establishment for this user (handles admin fallback)
+    const result = await getEstablishmentForUser(supabase, dbUser);
 
-    if (claimError || !claim) {
+    if (!result) {
       return NextResponse.json({ error: 'No approved business claim found' }, { status: 404 });
     }
 
@@ -76,7 +66,7 @@ export async function PUT(request: NextRequest) {
     const { data: updated, error: updateError } = await supabase
       .from('establishments')
       .update(updateData)
-      .eq('id', claim.establishment_id)
+      .eq('id', result.establishmentId)
       .select()
       .single();
 

@@ -1,4 +1,4 @@
-import { requireBusinessOrAdmin } from '@/lib/admin';
+import { requireBusinessOrAdmin, getEstablishmentForUser } from '@/lib/admin';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -10,19 +10,10 @@ export async function GET() {
   }
 
   try {
-    // Get the business's approved claim with establishment details
-    const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('*')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'APPROVED')
-      .single();
+    // Get the establishment for this user (handles admin fallback)
+    const result = await getEstablishmentForUser(supabase, dbUser);
 
-    if (claimError && claimError.code !== 'PGRST116') {
-      return NextResponse.json({ error: claimError.message }, { status: 500 });
-    }
-
-    if (!claim) {
+    if (!result) {
       // Check for pending claim
       const { data: pendingClaim } = await supabase
         .from('business_claims')
@@ -39,6 +30,8 @@ export async function GET() {
         subscription: null,
       });
     }
+
+    const claim = result.claim;
 
     // Get the establishment
     const { data: establishment } = await supabase

@@ -95,6 +95,7 @@ export default function AnalyticsPage() {
 
   const tier = subscription.tier;
 
+  // Free tier: show basic stats, gate detailed charts
   if (tier === 'free') {
     return (
       <div>
@@ -106,30 +107,59 @@ export default function AnalyticsPage() {
           <TierBadge tier={tier} />
         </div>
 
-        <PremiumFeature tier="free" feature="Analytics Dashboard">
-          <div className="h-96 bg-gray-50 rounded-lg"></div>
+        {/* Basic Stats - Available on Free */}
+        {analytics && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
+              <p className="text-gray-600 text-sm mb-1">Total Views</p>
+              <p className="text-3xl font-bold text-gray-900">
+                {(analytics.summary?.totalViews ?? analytics.summary?.totalSearchAppearances ?? 0).toLocaleString()}
+              </p>
+              <p className="text-xs text-gray-500 mt-2">Last 30 days</p>
+            </div>
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
+              <p className="text-gray-600 text-sm mb-1">Total Clicks</p>
+              <p className="text-3xl font-bold text-gray-900">
+                {(analytics.summary?.totalClicks ?? 0).toLocaleString()}
+              </p>
+              <p className="text-xs text-gray-500 mt-2">Last 30 days</p>
+            </div>
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
+              <p className="text-gray-600 text-sm mb-1">Engagement</p>
+              <p className="text-3xl font-bold text-gray-900">
+                {(analytics.summary?.totalViews ?? analytics.summary?.totalSearchAppearances ?? 0) > 0
+                  ? (((analytics.summary?.totalClicks ?? 0) / (analytics.summary?.totalViews ?? analytics.summary?.totalSearchAppearances ?? 1)) * 100).toFixed(0)
+                  : 0}%
+              </p>
+              <p className="text-xs text-gray-500 mt-2">Click-through rate</p>
+            </div>
+          </div>
+        )}
+
+        {/* Premium Upsell for Detailed Analytics */}
+        <PremiumFeature tier="free" feature="Detailed Analytics">
+          <div className="h-64 bg-gray-50 rounded-lg"></div>
         </PremiumFeature>
 
         <div className="mt-6 bg-orange-50 border border-orange-200 rounded-lg p-6 text-center">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            Unlock Advanced Analytics
+            Unlock Detailed Analytics
           </h3>
           <p className="text-gray-700 mb-4">
-            Upgrade to Premium to see detailed analytics about your business
-            performance, including:
+            Upgrade to Premium for in-depth performance insights:
           </p>
           <ul className="text-left inline-block space-y-2 mb-6 text-gray-700">
             <li className="flex items-center gap-2">
-              <span>✓</span> 30-day view and click trends
+              <span>&#10003;</span> 30-day view and click trends
             </li>
             <li className="flex items-center gap-2">
-              <span>✓</span> Phone, website, and direction clicks breakdown
+              <span>&#10003;</span> Phone, website, and direction clicks breakdown
             </li>
             <li className="flex items-center gap-2">
-              <span>✓</span> Daily performance charts
+              <span>&#10003;</span> Daily performance charts
             </li>
             <li className="flex items-center gap-2">
-              <span>✓</span> Identify peak hours and days
+              <span>&#10003;</span> Identify peak hours and days
             </li>
           </ul>
           <Link

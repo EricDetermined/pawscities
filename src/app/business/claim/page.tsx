@@ -530,11 +530,12 @@ export default function ClaimBusinessPage() {
               <span className="text-xs text-gray-500">Included when you claim</span>
             </div>
             <ul className="space-y-2 text-sm text-gray-700">
-              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> Basic business listing</li>
+              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> Business listing with description</li>
               <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> 1 photo upload</li>
-              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> Dog features display</li>
+              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> Dog-friendly features display</li>
               <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> View reviews and ratings</li>
-              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> Basic stats</li>
+              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> Basic analytics (views, clicks)</li>
+              <li className="flex items-center gap-2"><span className="text-green-500">&#10003;</span> Google Maps directions link</li>
             </ul>
           </div>
           <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-200 p-5">

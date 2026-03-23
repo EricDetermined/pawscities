@@ -280,3 +280,43 @@ export async function requireBusinessOrAdmin(): Promise<AdminAuthResult> {
     };
   }
 }
+
+/**
+ * Gets the establishment claim for the current user.
+ * For ADMIN users: if no claim exists for their user_id, returns any approved claim.
+ * For BUSINESS users: returns only their own approved claim.
+ */
+export async function getEstablishmentForUser(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  dbUser: { id: string; role: string }
+): Promise<{ establishmentId: string; claim: Record<string, unknown> } | null> {
+  // Try user's own claim first
+  const { data: ownClaim } = await supabase
+    .from('business_claims')
+    .select('*')
+    .eq('user_id', dbUser.id)
+    .eq('status', 'APPROVED')
+    .single();
+
+  if (ownClaim) {
+    return { establishmentId: ownClaim.establishment_id, claim: ownClaim };
+  }
+
+  // For ADMIN users, fall back to any approved claim
+  if (dbUser.role === 'ADMIN') {
+    const supabaseAdmin = getSupabaseServiceRole();
+    const { data: anyClaim } = await supabaseAdmin
+      .from('business_claims')
+      .select('*')
+      .eq('status', 'APPROVED')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (anyClaim) {
+      return { establishmentId: anyClaim.establishment_id, claim: anyClaim };
+    }
+  }
+
+  return null;
+}

@@ -1,4 +1,4 @@
-import { requireBusinessOrAdmin } from '@/lib/admin';
+import { requireBusinessOrAdmin, getEstablishmentForUser } from '@/lib/admin';
 import { NextRequest, NextResponse } from 'next/server';
 
 const TIER_LIMITS: Record<string, number> = {
@@ -14,25 +14,28 @@ export async function GET() {
   }
 
   try {
-    // Get the business's approved claim
-    const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('establishment_id')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'APPROVED')
-      .single();
+    // Get the establishment for this user (handles admin fallback)
+    const result = await getEstablishmentForUser(supabase, dbUser);
 
-    if (claimError || !claim) {
+    if (!result) {
       return NextResponse.json({ error: 'No approved business claim found' }, { status: 404 });
     }
 
-    // Get photos for this establishment
-    const { data: photos, error: photosError } = await supabase
+    const claim = result;
+
+    // Get photos for this establishment (admins see all photos, business users see their own)
+    const photosQuery = supabase
       .from('photos')
       .select('id, url, caption, status, created_at')
-      .eq('establishment_id', claim.establishment_id)
-      .eq('user_id', dbUser.id)
+      .eq('establishment_id', claim.establishmentId)
       .order('created_at', { ascending: false });
+
+    // Non-admin users only see their own photos
+    if (dbUser.role !== 'ADMIN') {
+      photosQuery.eq('user_id', dbUser.id);
+    }
+
+    const { data: photos, error: photosError } = await photosQuery;
 
     if (photosError) {
       throw new Error(`Failed to fetch photos: ${photosError.message}`);
@@ -42,7 +45,7 @@ export async function GET() {
     const { data: establishment } = await supabase
       .from('establishments')
       .select('photo_refs, google_place_id, primary_image')
-      .eq('id', claim.establishment_id)
+      .eq('id', claim.establishmentId)
       .single();
 
     // Build Google photo URLs from photo_refs (these are Google Places photo name references)
@@ -59,7 +62,7 @@ export async function GET() {
     const { data: subscription } = await supabase
       .from('subscriptions')
       .select('tier')
-      .eq('establishment_id', claim.establishment_id)
+      .eq('establishment_id', claim.establishmentId)
       .eq('status', 'ACTIVE')
       .single();
 
@@ -72,7 +75,7 @@ export async function GET() {
       googlePlaceId: establishment?.google_place_id || null,
       tier,
       maxPhotos,
-      establishmentId: claim.establishment_id,
+      establishmentId: claim.establishmentId,
     });
   } catch (error) {
     console.error('Business photos GET error:', error);
@@ -95,15 +98,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No photo URLs provided' }, { status: 400 });
     }
 
-    // Get the business's approved claim
-    const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('establishment_id')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'APPROVED')
-      .single();
-
-    if (claimError || !claim) {
+    // Get the establishment for this user (handles admin fallback)
+    const estResult = await getEstablishmentForUser(supabase, dbUser);
+    if (!estResult) {
       return NextResponse.json({ error: 'No approved business claim found' }, { status: 404 });
     }
 
@@ -111,7 +108,7 @@ export async function POST(request: NextRequest) {
     const { data: subscription } = await supabase
       .from('subscriptions')
       .select('tier')
-      .eq('establishment_id', claim.establishment_id)
+      .eq('establishment_id', estResult.establishmentId)
       .eq('status', 'ACTIVE')
       .single();
 
@@ -122,7 +119,7 @@ export async function POST(request: NextRequest) {
     const { count: existingCount } = await supabase
       .from('photos')
       .select('*', { count: 'exact', head: true })
-      .eq('establishment_id', claim.establishment_id)
+      .eq('establishment_id', estResult.establishmentId)
       .eq('user_id', dbUser.id)
       .neq('status', 'REJECTED');
 
@@ -137,7 +134,7 @@ export async function POST(request: NextRequest) {
     // Insert photos with PENDING status
     const photoRecords = urls.map((url, idx) => ({
       user_id: dbUser.id,
-      establishment_id: claim.establishment_id,
+      establishment_id: estResult.establishmentId,
       url,
       caption: captions?.[idx] || null,
       status: 'PENDING',

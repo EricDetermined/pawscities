@@ -1,4 +1,4 @@
-import { requireBusinessOrAdmin } from '@/lib/admin';
+import { requireBusinessOrAdmin, getEstablishmentForUser } from '@/lib/admin';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -10,17 +10,14 @@ export async function GET() {
   }
 
   try {
-    // Get the business's approved claim
-    const { data: claim, error: claimError } = await supabase
-      .from('business_claims')
-      .select('establishment_id')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'APPROVED')
-      .single();
+    // Get the establishment for this user (handles admin fallback)
+    const result = await getEstablishmentForUser(supabase, dbUser);
 
-    if (claimError || !claim) {
+    if (!result) {
       return NextResponse.json({ error: 'No approved business claim found' }, { status: 404 });
     }
+
+    const establishmentId = result.establishmentId;
 
     const now = new Date();
     const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
@@ -29,7 +26,7 @@ export async function GET() {
     const { data: clicks } = await supabase
       .from('click_events')
       .select('event_type, created_at')
-      .eq('establishment_id', claim.establishment_id)
+      .eq('establishment_id', establishmentId)
       .gte('created_at', thirtyDaysAgo.toISOString())
       .lte('created_at', now.toISOString());
 
@@ -37,7 +34,7 @@ export async function GET() {
     const { data: searchEvents } = await supabase
       .from('search_events')
       .select('created_at')
-      .eq('establishment_id', claim.establishment_id)
+      .eq('establishment_id', establishmentId)
       .gte('created_at', thirtyDaysAgo.toISOString())
       .lte('created_at', now.toISOString());
 
