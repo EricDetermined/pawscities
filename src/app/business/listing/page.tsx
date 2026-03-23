@@ -62,12 +62,16 @@ export default function EditListing() {
         setEstablishment(listing.establishment);
         setSubscription(dash.subscription);
 
+        // opening_hours comes as text[] from the DB
+        const hours = listing.establishment.opening_hours;
+        const hoursStr = Array.isArray(hours) ? hours.join('\n') : (hours || '');
+
         setFormData({
           description: listing.establishment.description || '',
           phone: listing.establishment.phone || '',
           website: listing.establishment.website || '',
-          dogFeatures: listing.establishment.dogFeatures || {},
-          openingHours: JSON.stringify(listing.establishment.hours) || '',
+          dogFeatures: listing.establishment.dog_features || {},
+          openingHours: hoursStr,
         });
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');

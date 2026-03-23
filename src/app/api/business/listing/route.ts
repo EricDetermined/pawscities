@@ -60,7 +60,16 @@ export async function PUT(request: NextRequest) {
     if (phone !== undefined) updateData.phone = phone;
     if (website !== undefined) updateData.website = website;
     if (dogFeatures !== undefined) updateData.dog_features = dogFeatures;
-    if (openingHours !== undefined) updateData.opening_hours = openingHours;
+    // opening_hours is a text[] column - convert string to array of lines
+    if (openingHours !== undefined) {
+      if (Array.isArray(openingHours)) {
+        updateData.opening_hours = openingHours;
+      } else if (typeof openingHours === 'string' && openingHours.trim()) {
+        updateData.opening_hours = openingHours.split('\n').map((line: string) => line.trim()).filter(Boolean);
+      } else {
+        updateData.opening_hours = [];
+      }
+    }
     updateData.updated_at = new Date().toISOString();
 
     const { data: updated, error: updateError } = await supabase
