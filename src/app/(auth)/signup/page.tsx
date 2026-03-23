@@ -33,13 +33,21 @@ export default function SignUpPage() {
 
     setIsLoading(true);
 
-    const { error } = await signUp(email, password, name);
+    try {
+      const { error } = await signUp(email, password, name);
 
-    if (error) {
-      setError(error.message);
+      if (error) {
+        console.error('Signup error:', error.message);
+        setError(error.message);
+        setIsLoading(false);
+      } else {
+        setSuccess(true);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      console.error('Unexpected signup error:', err);
+      setError('An unexpected error occurred. Please try again.');
       setIsLoading(false);
-    } else {
-      setSuccess(true);
     }
   };
 

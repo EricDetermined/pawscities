@@ -94,7 +94,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signUp = async (email: string, password: string, name?: string) => {
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -103,6 +103,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         },
       },
     });
+
+    // Supabase returns a fake success with empty identities when email
+    // already exists (anti-enumeration). Detect this and return a clear error.
+    if (!error && data?.user && (!data.user.identities || data.user.identities.length === 0)) {
+      return {
+        error: new Error(
+          'An account with this email may already exist. Please try logging in or resetting your password.'
+        ),
+      };
+    }
+
     return { error };
   };
 
