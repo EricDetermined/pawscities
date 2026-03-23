@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
 
   const { data: favorites, error } = await supabase
     .from('favorites')
-    .select('*, establishments:establishment_id(id, name, slug, city_id, address, primary_image, rating, review_count, category_id)')
+    .select('*, establishments:establishment_id(id, name, slug, city_id, address, primary_image, rating, review_count, category_id, cities:city_id(slug))')
     .eq('user_id', dbUser.id)
     .order('created_at', { ascending: false });
 

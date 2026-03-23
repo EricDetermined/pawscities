@@ -346,7 +346,7 @@ export default function EstablishmentInteractions({
               Create a free account to {loginPromptAction}, save favorites, and more.
             </p>
             <a
-              href="/auth/login"
+              href="/login"
               className="block w-full px-4 py-2.5 bg-primary-500 text-white rounded-lg text-sm font-medium hover:bg-primary-600 transition-colors mb-2"
             >
               Sign In
