@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { TierBadge } from '@/components/business/TierBadge';
-import { PremiumFeature } from '@/components/business/PremiumFeature';
 import {
   AreaChart,
   Area,
@@ -241,30 +240,65 @@ export default function AnalyticsPage() {
           </div>
         )}
 
-        {/* Premium Upsell */}
-        <PremiumFeature tier="free" feature="Detailed Analytics">
-          <div className="h-64 bg-gray-50 rounded-lg"></div>
-        </PremiumFeature>
+        {/* Data-driven Premium Upsell */}
+        {analytics && analytics.summary.totalClicks > 0 && (
+          <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-lg p-6 mb-6">
+            <div className="flex items-start gap-4">
+              <div className="text-3xl">&#128200;</div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  Your listing is driving real traffic
+                </h3>
+                <p className="text-gray-700">
+                  You received <span className="font-bold text-orange-700">{analytics.summary.totalClicks} click{analytics.summary.totalClicks !== 1 ? 's' : ''}</span> in
+                  the last 30 days. Upgrade to Premium to see exactly which actions customers took — phone calls, website visits, or direction requests — and track trends over time.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
-        <div className="mt-6 bg-orange-50 border border-orange-200 rounded-lg p-6 text-center">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            Unlock Premium Analytics
-          </h3>
-          <p className="text-gray-700 mb-4">
-            Get deeper insights into how customers find and interact with your business:
-          </p>
-          <ul className="text-left inline-block space-y-2 mb-6 text-gray-700">
-            <li className="flex items-center gap-2">
-              <span className="text-green-600 font-bold">&#10003;</span>
-              Custom date ranges (7, 30, 60, 90 days or custom)
-            </li>
+        <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="text-center mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Unlock Premium Analytics
+            </h3>
+            <p className="text-gray-600 text-sm">
+              See exactly how customers interact with your business
+            </p>
+          </div>
+
+          {/* Blurred preview of what Premium looks like */}
+          <div className="relative mb-6">
+            <div className="grid grid-cols-3 gap-3 filter blur-sm select-none pointer-events-none">
+              <div className="bg-blue-50 rounded-lg p-4 text-center">
+                <p className="text-xs text-gray-500">Phone Clicks</p>
+                <p className="text-xl font-bold text-gray-400">--</p>
+              </div>
+              <div className="bg-green-50 rounded-lg p-4 text-center">
+                <p className="text-xs text-gray-500">Website Clicks</p>
+                <p className="text-xl font-bold text-gray-400">--</p>
+              </div>
+              <div className="bg-orange-50 rounded-lg p-4 text-center">
+                <p className="text-xs text-gray-500">Direction Clicks</p>
+                <p className="text-xl font-bold text-gray-400">--</p>
+              </div>
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg px-4 py-2 shadow-sm border">
+                <span className="text-sm font-medium text-gray-700">Premium feature</span>
+              </div>
+            </div>
+          </div>
+
+          <ul className="space-y-2 mb-6 text-sm text-gray-700">
             <li className="flex items-center gap-2">
               <span className="text-green-600 font-bold">&#10003;</span>
               Click breakdown: phone, website, and directions
             </li>
             <li className="flex items-center gap-2">
               <span className="text-green-600 font-bold">&#10003;</span>
-              Daily trend charts with views and clicks
+              Custom date ranges and daily trend charts
             </li>
             <li className="flex items-center gap-2">
               <span className="text-green-600 font-bold">&#10003;</span>
@@ -274,17 +308,16 @@ export default function AnalyticsPage() {
               <span className="text-green-600 font-bold">&#10003;</span>
               Export to CSV for your own reporting
             </li>
-            <li className="flex items-center gap-2">
-              <span className="text-green-600 font-bold">&#10003;</span>
-              Unique visitor count and peak day insights
-            </li>
           </ul>
-          <Link
-            href="/business/upgrade"
-            className="inline-block px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
-          >
-            Upgrade to Premium
-          </Link>
+
+          <div className="text-center">
+            <Link
+              href="/business/upgrade"
+              className="inline-block px-6 py-2.5 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
+            >
+              Upgrade to Premium
+            </Link>
+          </div>
         </div>
       </div>
     );
