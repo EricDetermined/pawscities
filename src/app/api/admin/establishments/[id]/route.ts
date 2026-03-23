@@ -16,39 +16,50 @@ export async function GET(
     const supabase = authResult.supabase!;
     const establishmentId = params.id;
 
-    const { data: establishment, error: estError } = await supabase
-      .from('establishments')
-      .select(`
-        id,
-        name,
-        description,
-        category_id,
-        city_id,
-        status,
-        tier,
-        rating,
-        review_count,
-        address,
-        phone,
-        email,
-        website,
-        opening_hours,
-        primary_image,
-        created_at,
-        updated_at,
-        cities(id, name)
-      `)
-      .eq('id', establishmentId)
-      .single();
+    const [estResult, categoriesResult] = await Promise.all([
+      supabase
+        .from('establishments')
+        .select(`
+          id,
+          name,
+          description,
+          category_id,
+          city_id,
+          status,
+          tier,
+          rating,
+          review_count,
+          address,
+          phone,
+          email,
+          website,
+          opening_hours,
+          primary_image,
+          photo_refs,
+          created_at,
+          updated_at,
+          cities(id, name),
+          categories(id, name, slug)
+        `)
+        .eq('id', establishmentId)
+        .single(),
+      supabase
+        .from('categories')
+        .select('id, name, slug')
+        .order('name'),
+    ]);
 
-    if (estError) {
+    if (estResult.error) {
       return NextResponse.json(
         { error: 'Establishment not found' },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(establishment);
+    return NextResponse.json({
+      ...estResult.data,
+      allCategories: categoriesResult.data || [],
+    });
   } catch (error) {
     console.error('Admin establishment GET error:', error);
     return NextResponse.json(
