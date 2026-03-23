@@ -37,6 +37,11 @@ const navItems = [
     href: '/business/upgrade',
     icon: '👑',
   },
+  {
+    title: 'Help Guide',
+    href: '/business/guide',
+    icon: '📖',
+  },
 ];
 
 export default function BusinessLayout({
