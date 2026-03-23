@@ -54,20 +54,21 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'No approved business claim found' }, { status: 404 });
     }
 
-    // Update the establishment
+    // Build update — only include fields that were actually provided
+    // Empty strings are stored as null so partial saves always work
     const updateData: Record<string, unknown> = {};
-    if (description !== undefined) updateData.description = description;
-    if (phone !== undefined) updateData.phone = phone;
-    if (website !== undefined) updateData.website = website;
-    if (dogFeatures !== undefined) updateData.dog_features = dogFeatures;
+    if (description !== undefined) updateData.description = description || null;
+    if (phone !== undefined) updateData.phone = phone || null;
+    if (website !== undefined) updateData.website = website || null;
+    if (dogFeatures !== undefined) updateData.dog_features = dogFeatures || null;
     // opening_hours is a text[] column - convert string to array of lines
     if (openingHours !== undefined) {
       if (Array.isArray(openingHours)) {
-        updateData.opening_hours = openingHours;
+        updateData.opening_hours = openingHours.length > 0 ? openingHours : null;
       } else if (typeof openingHours === 'string' && openingHours.trim()) {
         updateData.opening_hours = openingHours.split('\n').map((line: string) => line.trim()).filter(Boolean);
       } else {
-        updateData.opening_hours = [];
+        updateData.opening_hours = null;
       }
     }
     updateData.updated_at = new Date().toISOString();
