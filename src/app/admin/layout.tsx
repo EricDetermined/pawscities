@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -74,7 +74,31 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile vs desktop
+  useEffect(() => {
+    const check = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      // Auto-open sidebar on desktop, close on mobile
+      if (!mobile) setSidebarOpen(true);
+      else setSidebarOpen(false);
+    };
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  // Close sidebar on mobile when navigating
+  useEffect(() => {
+    if (isMobile) setSidebarOpen(false);
+  }, [pathname, isMobile]);
+
+  const closeSidebar = useCallback(() => {
+    if (isMobile) setSidebarOpen(false);
+  }, [isMobile]);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -114,7 +138,7 @@ export default function AdminLayout({
           <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-1"
+              className="text-sm text-gray-600 hover:text-gray-900 hidden sm:flex items-center gap-1"
             >
               <svg
                 className="w-4 h-4"
@@ -138,11 +162,23 @@ export default function AdminLayout({
         </div>
       </header>
 
+      {/* Mobile backdrop overlay */}
+      {isMobile && sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-30 transition-opacity"
+          onClick={closeSidebar}
+        />
+      )}
+
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed left-0 top-16 bottom-0 bg-white border-r transition-all duration-300 z-40',
-          sidebarOpen ? 'w-64' : 'w-16'
+          'fixed top-16 bottom-0 bg-white border-r transition-all duration-300 z-40 overflow-y-auto',
+          // Mobile: slide in/out from left, full overlay
+          isMobile
+            ? cn('w-64', sidebarOpen ? 'left-0' : '-left-64')
+            // Desktop: collapse to icon-only
+            : cn('left-0', sidebarOpen ? 'w-64' : 'w-16')
         )}
       >
         <nav className="p-4 space-y-1">
@@ -155,6 +191,7 @@ export default function AdminLayout({
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={closeSidebar}
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors',
                   isActive
@@ -163,7 +200,7 @@ export default function AdminLayout({
                 )}
               >
                 <span className="text-xl">{item.icon}</span>
-                {sidebarOpen && (
+                {(sidebarOpen || isMobile) && (
                   <span className="font-medium">{item.title}</span>
                 )}
               </Link>
@@ -172,7 +209,7 @@ export default function AdminLayout({
         </nav>
 
         {/* Sidebar Footer */}
-        {sidebarOpen && (
+        {(sidebarOpen || isMobile) && (
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t">
             <div className="text-xs text-gray-500">
               <p>Paw Cities Admin v1.0</p>
@@ -186,10 +223,13 @@ export default function AdminLayout({
       <main
         className={cn(
           'pt-16 min-h-screen transition-all duration-300',
-          sidebarOpen ? 'ml-64' : 'ml-16'
+          // Mobile: always full width
+          isMobile
+            ? 'ml-0'
+            : sidebarOpen ? 'ml-64' : 'ml-16'
         )}
       >
-        <div className="p-6">{children}</div>
+        <div className="p-4 md:p-6">{children}</div>
       </main>
     </div>
   );
