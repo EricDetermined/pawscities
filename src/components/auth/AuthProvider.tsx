@@ -48,22 +48,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Get initial session
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setSession(session);
-      setUser(session?.user ?? null);
-      await fetchDbRole(session?.user ?? null);
-      setIsLoading(false);
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setSession(session);
+        setUser(session?.user ?? null);
+        // Fetch role in background — don't block loading on it
+        fetchDbRole(session?.user ?? null);
+      } catch (err) {
+        console.error('Failed to get session:', err);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     getSession();
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      async (_event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-        await fetchDbRole(session?.user ?? null);
         setIsLoading(false);
+        // Fetch role in background
+        fetchDbRole(session?.user ?? null);
       }
     );
 
