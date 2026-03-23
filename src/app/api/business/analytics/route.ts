@@ -1,7 +1,7 @@
 import { requireBusinessOrAdmin, getEstablishmentForUser } from '@/lib/admin';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const { error, supabase, dbUser } = await requireBusinessOrAdmin();
 
   if (error) return error;
@@ -19,24 +19,46 @@ export async function GET() {
 
     const establishmentId = result.establishmentId;
 
+    // Parse date range from query params (Premium feature), default to 30 days
+    const searchParams = request.nextUrl.searchParams;
     const now = new Date();
-    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+    const endDate = searchParams.get('end')
+      ? new Date(searchParams.get('end')! + 'T23:59:59.999Z')
+      : now;
+    const startDate = searchParams.get('start')
+      ? new Date(searchParams.get('start')! + 'T00:00:00.000Z')
+      : new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-    // Get click events over last 30 days
+    // Get subscription tier
+    const { data: subscription } = await supabase
+      .from('subscriptions')
+      .select('tier')
+      .eq('establishment_id', establishmentId)
+      .eq('status', 'ACTIVE')
+      .single();
+
+    const tier = subscription?.tier || 'free';
+
+    // Get click events for the date range
     const { data: clicks } = await supabase
       .from('click_events')
-      .select('event_type, created_at')
+      .select('event_type, created_at, user_id')
       .eq('establishment_id', establishmentId)
-      .gte('created_at', thirtyDaysAgo.toISOString())
-      .lte('created_at', now.toISOString());
+      .gte('created_at', startDate.toISOString())
+      .lte('created_at', endDate.toISOString())
+      .order('created_at', { ascending: false });
 
     // Get search events (how often this establishment appeared in search)
     const { data: searchEvents } = await supabase
       .from('search_events')
-      .select('created_at')
+      .select('created_at, user_id')
       .eq('establishment_id', establishmentId)
-      .gte('created_at', thirtyDaysAgo.toISOString())
-      .lte('created_at', now.toISOString());
+      .gte('created_at', startDate.toISOString())
+      .lte('created_at', endDate.toISOString())
+      .order('created_at', { ascending: false });
+
+    // Calculate total days in range
+    const daysDiff = Math.max(1, Math.ceil((endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000)));
 
     // Aggregate clicks by day
     const clicksByDay: Record<string, number> = {};
@@ -72,8 +94,8 @@ export async function GET() {
 
     // Build daily series for chart
     const dailySeries = [];
-    for (let i = 29; i >= 0; i--) {
-      const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+    for (let i = daysDiff - 1; i >= 0; i--) {
+      const date = new Date(endDate.getTime() - i * 24 * 60 * 60 * 1000);
       const dayStr = date.toISOString().split('T')[0];
       dailySeries.push({
         date: dayStr,
@@ -82,19 +104,70 @@ export async function GET() {
       });
     }
 
-    return NextResponse.json({
+    // Base response (available to all tiers)
+    const response: Record<string, unknown> = {
       summary: {
         totalClicks,
         totalSearchAppearances,
-        avgClicksPerDay: Math.round(totalClicks / 30),
+        avgClicksPerDay: Math.round(totalClicks / daysDiff),
+        clickThroughRate: totalSearchAppearances > 0
+          ? parseFloat(((totalClicks / totalSearchAppearances) * 100).toFixed(1))
+          : 0,
       },
-      clicks: clicksByType,
-      daily: dailySeries,
+      tier,
       period: {
-        start: thirtyDaysAgo.toISOString().split('T')[0],
-        end: now.toISOString().split('T')[0],
+        start: startDate.toISOString().split('T')[0],
+        end: endDate.toISOString().split('T')[0],
+        days: daysDiff,
       },
-    });
+    };
+
+    // Premium-only data: breakdowns, daily series, recent activity
+    if (tier === 'premium' || dbUser.role === 'ADMIN') {
+      response.clicks = clicksByType;
+      response.daily = dailySeries;
+
+      // Recent activity feed - last 50 interactions with details
+      const recentActivity = [
+        ...(clicks || []).map((c: Record<string, unknown>) => ({
+          type: c.event_type as string,
+          createdAt: c.created_at as string,
+          userId: c.user_id as string | null,
+        })),
+        ...(searchEvents || []).map((s: Record<string, unknown>) => ({
+          type: 'SEARCH_APPEARANCE',
+          createdAt: s.created_at as string,
+          userId: s.user_id as string | null,
+        })),
+      ]
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .slice(0, 50);
+
+      response.recentActivity = recentActivity;
+
+      // Unique visitors count
+      const uniqueUserIds = new Set<string>();
+      clicks?.forEach((c: Record<string, unknown>) => {
+        if (c.user_id) uniqueUserIds.add(c.user_id as string);
+      });
+      searchEvents?.forEach((s: Record<string, unknown>) => {
+        if (s.user_id) uniqueUserIds.add(s.user_id as string);
+      });
+      response.uniqueVisitors = uniqueUserIds.size;
+
+      // Peak day
+      let peakDay = '';
+      let peakViews = 0;
+      for (const [day, count] of Object.entries(viewsByDay)) {
+        if (count > peakViews) {
+          peakViews = count;
+          peakDay = day;
+        }
+      }
+      response.peakDay = { date: peakDay, views: peakViews };
+    }
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error('Analytics error:', error);
     return NextResponse.json({ error: 'Failed to fetch analytics' }, { status: 500 });
