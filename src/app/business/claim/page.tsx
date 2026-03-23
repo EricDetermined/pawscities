@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/components/auth/AuthProvider';
 
 interface Establishment {
   id: string;
@@ -50,6 +51,7 @@ const DOG_FEATURE_OPTIONS = [
 
 export default function ClaimBusinessPage() {
   const router = useRouter();
+  const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Establishment[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -88,6 +90,24 @@ export default function ClaimBusinessPage() {
     dogFeatures: {} as Record<string, boolean>,
   });
   const [isSubmittingNew, setIsSubmittingNew] = useState(false);
+
+  // Pre-fill contact fields from logged-in user
+  useEffect(() => {
+    if (user) {
+      const userName = user.user_metadata?.name || '';
+      const userEmail = user.email || '';
+      setClaimForm(prev => ({
+        ...prev,
+        contactName: prev.contactName || userName,
+        contactEmail: prev.contactEmail || userEmail,
+      }));
+      setNewForm(prev => ({
+        ...prev,
+        contactName: prev.contactName || userName,
+        contactEmail: prev.contactEmail || userEmail,
+      }));
+    }
+  }, [user]);
 
   // Load existing claims
   useEffect(() => {
