@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
       'search',
       'click_phone',
       'click_website',
+      'click_directions',
       'review_submitted',
       'claim_submitted',
       'favorite_added',
@@ -43,24 +44,37 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create analytics event
-    const { data: event, error: createError } = await supabase
-      .from('click_events')
-      .insert([
-        {
-          event_type: eventType,
-          user_id: userId || null,
-          establishment_id: establishmentId || null,
-          city_id: cityId || null,
-          query_string: queryString || null,
+    // Track click-type events in the ClickEvent table (camelCase columns)
+    const clickTypes = ['click_phone', 'click_website', 'click_directions'];
+    if (clickTypes.includes(eventType) && establishmentId) {
+      const { error: clickError } = await supabase
+        .from('ClickEvent')
+        .insert([{
+          eventType,
+          establishmentId,
+          userId: userId || null,
           metadata: metadata || null,
-          created_at: new Date().toISOString(),
-        },
-      ])
+        }]);
+
+      if (clickError) {
+        console.error('ClickEvent insert error:', clickError.message);
+      }
+    }
+
+    // Also insert into analytics_events for broader tracking (snake_case columns)
+    const { data: event, error: createError } = await supabase
+      .from('analytics_events')
+      .insert([{
+        event_type: eventType,
+        user_id: userId || null,
+        establishment_id: establishmentId || null,
+        city_id: cityId || null,
+        search_query: queryString || null,
+      }])
       .select();
 
     if (createError) {
-      throw new Error(`Failed to log event: ${createError.message}`);
+      console.error('analytics_events insert error:', createError.message);
     }
 
     return NextResponse.json({

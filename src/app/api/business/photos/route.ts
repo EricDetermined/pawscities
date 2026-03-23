@@ -23,23 +23,34 @@ export async function GET() {
 
     const claim = result;
 
-    // Get photos for this establishment (admins see all photos, business users see their own)
+    // Get photos for this establishment
+    // Table is "Photo" with camelCase columns (establishmentId, userId, isApproved, createdAt)
     const photosQuery = supabase
-      .from('photos')
-      .select('id, url, caption, status, created_at')
-      .eq('establishment_id', claim.establishmentId)
-      .order('created_at', { ascending: false });
+      .from('Photo')
+      .select('id, url, caption, isApproved, createdAt, userId')
+      .eq('establishmentId', claim.establishmentId)
+      .order('createdAt', { ascending: false });
 
     // Non-admin users only see their own photos
     if (dbUser.role !== 'ADMIN') {
-      photosQuery.eq('user_id', dbUser.id);
+      photosQuery.eq('userId', dbUser.id);
     }
 
     const { data: photos, error: photosError } = await photosQuery;
 
     if (photosError) {
+      console.error('Photos query error:', photosError);
       throw new Error(`Failed to fetch photos: ${photosError.message}`);
     }
+
+    // Normalize photo data to match frontend expectations
+    const normalizedPhotos = (photos || []).map((p: Record<string, unknown>) => ({
+      id: p.id,
+      url: p.url,
+      caption: p.caption || null,
+      status: p.isApproved ? 'APPROVED' : 'PENDING',
+      created_at: p.createdAt,
+    }));
 
     // Get establishment details including Google photo refs
     const { data: establishment } = await supabase
@@ -70,9 +81,10 @@ export async function GET() {
     const maxPhotos = TIER_LIMITS[tier] || 1;
 
     return NextResponse.json({
-      photos: photos || [],
+      photos: normalizedPhotos,
       googlePhotos,
       googlePlaceId: establishment?.google_place_id || null,
+      primaryImage: establishment?.primary_image || null,
       tier,
       maxPhotos,
       establishmentId: claim.establishmentId,
@@ -115,13 +127,12 @@ export async function POST(request: NextRequest) {
     const tier = subscription?.tier || 'free';
     const maxPhotos = TIER_LIMITS[tier] || 1;
 
-    // Check existing photo count
+    // Check existing photo count using Photo table (camelCase)
     const { count: existingCount } = await supabase
-      .from('photos')
+      .from('Photo')
       .select('*', { count: 'exact', head: true })
-      .eq('establishment_id', estResult.establishmentId)
-      .eq('user_id', dbUser.id)
-      .neq('status', 'REJECTED');
+      .eq('establishmentId', estResult.establishmentId)
+      .eq('userId', dbUser.id);
 
     const currentCount = existingCount || 0;
 
@@ -131,27 +142,35 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // Insert photos with PENDING status
+    // Insert photos with pending status using Photo table (camelCase)
     const photoRecords = urls.map((url, idx) => ({
-      user_id: dbUser.id,
-      establishment_id: estResult.establishmentId,
+      userId: dbUser.id,
+      establishmentId: estResult.establishmentId,
       url,
       caption: captions?.[idx] || null,
-      status: 'PENDING',
+      isApproved: false,
     }));
 
     const { data: photos, error: insertError } = await supabase
-      .from('photos')
+      .from('Photo')
       .insert(photoRecords)
-      .select('id, url, caption, status, created_at');
+      .select('id, url, caption, isApproved, createdAt');
 
     if (insertError) {
       throw new Error(`Failed to save photos: ${insertError.message}`);
     }
 
+    const normalizedPhotos = (photos || []).map((p: Record<string, unknown>) => ({
+      id: p.id,
+      url: p.url,
+      caption: p.caption || null,
+      status: p.isApproved ? 'APPROVED' : 'PENDING',
+      created_at: p.createdAt,
+    }));
+
     return NextResponse.json({
       success: true,
-      photos: photos || [],
+      photos: normalizedPhotos,
       message: `${urls.length} photo${urls.length !== 1 ? 's' : ''} uploaded and pending review.`,
     });
   } catch (error) {
@@ -174,12 +193,12 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'Photo ID required' }, { status: 400 });
     }
 
-    // Verify ownership: photo must belong to this user
+    // Verify ownership: photo must belong to this user (using Photo table, camelCase)
     const { data: photo, error: photoError } = await supabase
-      .from('photos')
-      .select('id, url, user_id')
+      .from('Photo')
+      .select('id, url, userId')
       .eq('id', photoId)
-      .eq('user_id', dbUser.id)
+      .eq('userId', dbUser.id)
       .single();
 
     if (photoError || !photo) {
@@ -197,7 +216,7 @@ export async function DELETE(request: NextRequest) {
 
     // Delete the record
     const { error: deleteError } = await supabase
-      .from('photos')
+      .from('Photo')
       .delete()
       .eq('id', photoId);
 

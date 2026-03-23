@@ -200,12 +200,12 @@ export default function EditListing() {
                 </label>
                 {tier === 'free' && (
                   <span className="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded">
-                    Premium only
+                    Clickable link on Premium
                   </span>
                 )}
               </div>
               <div className="flex">
-                <span className={`inline-flex items-center px-3 py-2 border border-r-0 border-gray-300 rounded-l-lg text-gray-500 text-sm ${tier === 'free' ? 'bg-gray-100' : 'bg-gray-50'}`}>https://</span>
+                <span className="inline-flex items-center px-3 py-2 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 text-gray-500 text-sm">https://</span>
                 <input
                   type="text"
                   value={formData.website.replace(/^https?:\/\//, '')}
@@ -214,10 +214,14 @@ export default function EditListing() {
                     setFormData({ ...formData, website: val ? `https://${val}` : '' });
                   }}
                   placeholder="www.example.com"
-                  disabled={tier === 'free'}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500 cursor-not-allowed"
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 />
               </div>
+              {tier === 'free' && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Your website will be saved but only displayed as a clickable link on Premium plans.
+                </p>
+              )}
             </div>
           </div>
         </div>

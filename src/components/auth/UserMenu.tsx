@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useAuth } from './AuthProvider';
 
 export function UserMenu() {
-  const { user, isLoading, signOut } = useAuth();
+  const { user, dbRole, isLoading, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -48,6 +48,9 @@ export function UserMenu() {
     ? user.user_metadata.name.split(' ').map((n: string) => n[0]).join('').toUpperCase()
     : user.email?.charAt(0).toUpperCase() || '?';
 
+  const isBusiness = dbRole === 'BUSINESS' || dbRole === 'ADMIN';
+  const isAdmin = dbRole === 'ADMIN';
+
   return (
     <div className="relative" ref={menuRef}>
       <button
@@ -68,34 +71,67 @@ export function UserMenu() {
             <p className="text-sm text-gray-500 truncate">{user.email}</p>
           </div>
 
+          {/* Business & Admin links */}
+          {isBusiness && (
+            <div className="py-1 border-b">
+              <Link
+                href="/business"
+                className="block px-4 py-2 text-sm text-orange-700 font-medium hover:bg-orange-50"
+                onClick={() => setIsOpen(false)}
+              >
+                <span className="inline-flex items-center gap-2">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                  Business Dashboard
+                </span>
+              </Link>
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  className="block px-4 py-2 text-sm text-purple-700 font-medium hover:bg-purple-50"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Admin Panel
+                  </span>
+                </Link>
+              )}
+            </div>
+          )}
+
           <div className="py-1">
             <Link
               href="/profile"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
               onClick={() => setIsOpen(false)}
             >
-              🐾 My Profile
+              My Profile
             </Link>
             <Link
               href="/profile/dogs"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
               onClick={() => setIsOpen(false)}
             >
-              🐕 My Dogs
+              My Dogs
             </Link>
             <Link
               href="/profile/favorites"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
               onClick={() => setIsOpen(false)}
             >
-              ❤️ Saved Places
+              Saved Places
             </Link>
             <Link
               href="/profile/reviews"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
               onClick={() => setIsOpen(false)}
             >
-              ⭐ My Reviews
+              My Reviews
             </Link>
           </div>
 
@@ -105,7 +141,7 @@ export function UserMenu() {
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
               onClick={() => setIsOpen(false)}
             >
-              ⚙️ Settings
+              Settings
             </Link>
             <button
               onClick={() => {
@@ -114,7 +150,7 @@ export function UserMenu() {
               }}
               className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
             >
-              🚪 Sign Out
+              Sign Out
             </button>
           </div>
         </div>

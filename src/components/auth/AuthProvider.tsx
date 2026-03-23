@@ -7,6 +7,7 @@ import type { User, Session } from '@supabase/supabase-js';
 interface AuthContextType {
   user: User | null;
   session: Session | null;
+  dbRole: string | null; // 'USER' | 'BUSINESS' | 'ADMIN' | null
   isLoading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signUp: (email: string, password: string, name?: string) => Promise<{ error: Error | null }>;
@@ -19,9 +20,30 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [dbRole, setDbRole] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const supabase = createClient();
+
+  // Fetch the user's DB role
+  const fetchDbRole = async (authUser: User | null) => {
+    if (!authUser) {
+      setDbRole(null);
+      return;
+    }
+
+    try {
+      const { data } = await supabase
+        .from('users')
+        .select('role')
+        .eq('supabase_id', authUser.id)
+        .single();
+
+      setDbRole(data?.role || null);
+    } catch {
+      setDbRole(null);
+    }
+  };
 
   useEffect(() => {
     // Get initial session
@@ -29,6 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { data: { session } } = await supabase.auth.getSession();
       setSession(session);
       setUser(session?.user ?? null);
+      await fetchDbRole(session?.user ?? null);
       setIsLoading(false);
     };
 
@@ -39,6 +62,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       async (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
+        await fetchDbRole(session?.user ?? null);
         setIsLoading(false);
       }
     );
@@ -46,7 +70,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => {
       subscription.unsubscribe();
     };
-  }, [supabase.auth]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({
@@ -87,6 +112,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         user,
         session,
+        dbRole,
         isLoading,
         signIn,
         signUp,

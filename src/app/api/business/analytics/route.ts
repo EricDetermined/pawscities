@@ -40,19 +40,25 @@ export async function GET(request: NextRequest) {
     const tier = subscription?.tier || 'free';
 
     // Get click events for the date range
+    // Table is "ClickEvent" with camelCase columns: eventType, establishmentId, createdAt, userId
     const { data: clicks } = await supabase
-      .from('click_events')
-      .select('event_type, created_at, user_id')
-      .eq('establishment_id', establishmentId)
-      .gte('created_at', startDate.toISOString())
-      .lte('created_at', endDate.toISOString())
-      .order('created_at', { ascending: false });
+      .from('ClickEvent')
+      .select('eventType, createdAt, userId')
+      .eq('establishmentId', establishmentId)
+      .gte('createdAt', startDate.toISOString())
+      .lte('createdAt', endDate.toISOString())
+      .order('createdAt', { ascending: false });
 
     // Get search events (how often this establishment appeared in search)
+    // Table is "SearchEvent" with camelCase columns: createdAt, userId
+    // Note: SearchEvent tracks searches by city/query, not per-establishment
+    // We'll use PageView or ClickEvent with establishment views instead
+    // For now, use the analytics_events table for search appearances
     const { data: searchEvents } = await supabase
-      .from('search_events')
+      .from('analytics_events')
       .select('created_at, user_id')
       .eq('establishment_id', establishmentId)
+      .in('event_type', ['page_view', 'search'])
       .gte('created_at', startDate.toISOString())
       .lte('created_at', endDate.toISOString())
       .order('created_at', { ascending: false });
@@ -65,7 +71,7 @@ export async function GET(request: NextRequest) {
     const viewsByDay: Record<string, number> = {};
 
     clicks?.forEach((click: Record<string, unknown>) => {
-      const day = new Date(click.created_at as string).toISOString().split('T')[0];
+      const day = new Date(click.createdAt as string).toISOString().split('T')[0];
       clicksByDay[day] = (clicksByDay[day] || 0) + 1;
     });
 
@@ -74,7 +80,7 @@ export async function GET(request: NextRequest) {
       viewsByDay[day] = (viewsByDay[day] || 0) + 1;
     });
 
-    // Count click types
+    // Count click types (ClickEvent uses camelCase eventType)
     const clicksByType = {
       phone: 0,
       website: 0,
@@ -82,10 +88,10 @@ export async function GET(request: NextRequest) {
     };
 
     clicks?.forEach((click: Record<string, unknown>) => {
-      const eventType = click.event_type as string;
-      if (eventType === 'PHONE') clicksByType.phone++;
-      else if (eventType === 'WEBSITE') clicksByType.website++;
-      else if (eventType === 'DIRECTIONS') clicksByType.directions++;
+      const eventType = click.eventType as string;
+      if (eventType === 'click_phone' || eventType === 'PHONE') clicksByType.phone++;
+      else if (eventType === 'click_website' || eventType === 'WEBSITE') clicksByType.website++;
+      else if (eventType === 'click_directions' || eventType === 'DIRECTIONS') clicksByType.directions++;
     });
 
     // Calculate stats
@@ -130,9 +136,9 @@ export async function GET(request: NextRequest) {
       // Recent activity feed - last 50 interactions with details
       const recentActivity = [
         ...(clicks || []).map((c: Record<string, unknown>) => ({
-          type: c.event_type as string,
-          createdAt: c.created_at as string,
-          userId: c.user_id as string | null,
+          type: c.eventType as string,
+          createdAt: c.createdAt as string,
+          userId: c.userId as string | null,
         })),
         ...(searchEvents || []).map((s: Record<string, unknown>) => ({
           type: 'SEARCH_APPEARANCE',
@@ -148,7 +154,7 @@ export async function GET(request: NextRequest) {
       // Unique visitors count
       const uniqueUserIds = new Set<string>();
       clicks?.forEach((c: Record<string, unknown>) => {
-        if (c.user_id) uniqueUserIds.add(c.user_id as string);
+        if (c.userId) uniqueUserIds.add(c.userId as string);
       });
       searchEvents?.forEach((s: Record<string, unknown>) => {
         if (s.user_id) uniqueUserIds.add(s.user_id as string);

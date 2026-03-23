@@ -48,19 +48,21 @@ export async function GET(request: NextRequest) {
     const format = searchParams.get('format') || 'daily'; // 'daily' or 'events'
 
     if (format === 'events') {
-      // Export raw events
+      // Export raw events - ClickEvent table (camelCase columns)
       const { data: clicks } = await supabase
-        .from('click_events')
-        .select('event_type, created_at')
-        .eq('establishment_id', establishmentId)
-        .gte('created_at', startDate.toISOString())
-        .lte('created_at', endDate.toISOString())
-        .order('created_at', { ascending: false });
+        .from('ClickEvent')
+        .select('eventType, createdAt')
+        .eq('establishmentId', establishmentId)
+        .gte('createdAt', startDate.toISOString())
+        .lte('createdAt', endDate.toISOString())
+        .order('createdAt', { ascending: false });
 
+      // Search appearances from analytics_events (snake_case columns)
       const { data: searchEvents } = await supabase
-        .from('search_events')
+        .from('analytics_events')
         .select('created_at')
         .eq('establishment_id', establishmentId)
+        .in('event_type', ['page_view', 'search'])
         .gte('created_at', startDate.toISOString())
         .lte('created_at', endDate.toISOString())
         .order('created_at', { ascending: false });
@@ -72,8 +74,8 @@ export async function GET(request: NextRequest) {
 
       const allEvents = [
         ...(clicks || []).map((c: Record<string, unknown>) => ({
-          type: c.event_type as string,
-          createdAt: c.created_at as string,
+          type: c.eventType as string,
+          createdAt: c.createdAt as string,
         })),
         ...(searchEvents || []).map((s: Record<string, unknown>) => ({
           type: 'SEARCH_APPEARANCE',
@@ -102,17 +104,20 @@ export async function GET(request: NextRequest) {
     }
 
     // Default: daily summary export
+    // ClickEvent table (camelCase columns)
     const { data: clicks } = await supabase
-      .from('click_events')
-      .select('event_type, created_at')
-      .eq('establishment_id', establishmentId)
-      .gte('created_at', startDate.toISOString())
-      .lte('created_at', endDate.toISOString());
+      .from('ClickEvent')
+      .select('eventType, createdAt')
+      .eq('establishmentId', establishmentId)
+      .gte('createdAt', startDate.toISOString())
+      .lte('createdAt', endDate.toISOString());
 
+    // Search appearances from analytics_events (snake_case columns)
     const { data: searchEvents } = await supabase
-      .from('search_events')
+      .from('analytics_events')
       .select('created_at')
       .eq('establishment_id', establishmentId)
+      .in('event_type', ['page_view', 'search'])
       .gte('created_at', startDate.toISOString())
       .lte('created_at', endDate.toISOString());
 
@@ -127,13 +132,13 @@ export async function GET(request: NextRequest) {
     }
 
     clicks?.forEach((c: Record<string, unknown>) => {
-      const day = new Date(c.created_at as string).toISOString().split('T')[0];
+      const day = new Date(c.createdAt as string).toISOString().split('T')[0];
       if (dayStats[day]) {
         dayStats[day].clicks++;
-        const eventType = c.event_type as string;
-        if (eventType === 'PHONE') dayStats[day].phone++;
-        else if (eventType === 'WEBSITE') dayStats[day].website++;
-        else if (eventType === 'DIRECTIONS') dayStats[day].directions++;
+        const eventType = c.eventType as string;
+        if (eventType === 'click_phone' || eventType === 'PHONE') dayStats[day].phone++;
+        else if (eventType === 'click_website' || eventType === 'WEBSITE') dayStats[day].website++;
+        else if (eventType === 'click_directions' || eventType === 'DIRECTIONS') dayStats[day].directions++;
       }
     });
 
