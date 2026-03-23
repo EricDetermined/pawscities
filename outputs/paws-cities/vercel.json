@@ -1,0 +1,141 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "prisma generate && next build",
+  "installCommand": "npm ci",
+  "devCommand": "next dev",
+  "env": {},
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "develop": true
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pawcities.supabase.co https://api.anthropic.com https://api.openweathermap.org; frame-src 'none'; object-src 'none';"
+        }
+      ]
+    },
+    {
+      "source": "/api/.*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/static/.*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/images/.*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/_next/static/.*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/(?!.*\\..*|.*:.*)(.*)",
+      "destination": "https://pawcities.com$1",
+      "permanent": true,
+      "has": [
+        {
+          "type": "host",
+          "value": "www.pawcities.com"
+        }
+      ]
+    },
+    {
+      "source": "/:path*",
+      "destination": "https://pawcities.com/:path*",
+      "permanent": true,
+      "has": [
+        {
+          "type": "host",
+          "value": "www.pawcities.com"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/api/robots"
+    }
+  ],
+  "functions": {
+    "api/**": {
+      "memory": 256,
+      "maxDuration": 30
+    },
+    "pages/api/**": {
+      "memory": 256,
+      "maxDuration": 30
+    }
+  },
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "regions": ["sfo1"],
+  "crons": [
+    {
+      "path": "/api/cron/health-check",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/cleanup-sessions",
+      "schedule": "0 2 * * *"
+    }
+  ]
+}

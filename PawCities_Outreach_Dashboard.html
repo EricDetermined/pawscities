@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawCities — Email Outreach Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a1a; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  h1 { font-size: 24px; color: #1B2A4A; margin-bottom: 4px; }
+  .subtitle { color: #666; font-size: 14px; margin-bottom: 24px; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .stat-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); text-align: center; }
+  .stat-card .number { font-size: 32px; font-weight: 800; color: #FF6B35; }
+  .stat-card .label { font-size: 13px; color: #888; margin-top: 4px; }
+
+  .section { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 24px; }
+  .section h2 { font-size: 18px; color: #1B2A4A; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; padding: 10px 12px; border-bottom: 2px solid #1B2A4A; color: #1B2A4A; font-weight: 600; font-size: 13px; }
+  td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+  tr:hover { background: #f9f9f9; }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-a { background: #E8F5E9; color: #2E7D32; }
+  .badge-b { background: #E3F2FD; color: #1565C0; }
+  .badge-c { background: #FFF3E0; color: #E65100; }
+  .badge-sent { background: #E8F5E9; color: #2E7D32; }
+  .badge-pending { background: #FFF8E1; color: #F57F17; }
+  .badge-failed { background: #FFEBEE; color: #C62828; }
+
+  .city-pill { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; background: #1B2A4A; color: white; }
+
+  .preview-section { margin-top: 24px; }
+  .email-preview { background: #f8f4f0; border-radius: 12px; padding: 24px; margin-top: 12px; }
+  .email-preview .from { font-size: 13px; color: #888; margin-bottom: 4px; }
+  .email-preview .subject { font-size: 16px; font-weight: 700; color: #1a1a1a; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #ddd; }
+  .email-preview .body { font-size: 14px; line-height: 1.7; color: #4a4a4a; }
+  .email-preview .body p { margin-bottom: 12px; }
+  .email-preview .cta-btn { display: inline-block; padding: 10px 24px; background: #ea580c; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px; margin: 8px 0 16px; }
+  .email-preview .sig { color: #666; font-size: 14px; }
+
+  .tab-row { display: flex; gap: 0; margin-bottom: 0; }
+  .tab { padding: 10px 20px; cursor: pointer; font-size: 14px; font-weight: 600; border: 1px solid #ddd; border-bottom: none; border-radius: 8px 8px 0 0; background: #f0f0f0; color: #666; }
+  .tab.active { background: white; color: #1B2A4A; border-bottom: 1px solid white; margin-bottom: -1px; position: relative; z-index: 1; }
+
+  .timeline-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid #eee; }
+  .timeline-week { min-width: 80px; font-weight: 700; color: #FF6B35; font-size: 14px; }
+  .timeline-city { min-width: 120px; }
+  .timeline-actions { flex: 1; font-size: 14px; line-height: 1.6; color: #4a4a4a; }
+  .timeline-target { min-width: 100px; text-align: right; font-size: 13px; color: #888; }
+
+  .how-to { background: #FFF8E1; border: 1px solid #FFE082; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+  .how-to h3 { font-size: 15px; color: #F57F17; margin-bottom: 8px; }
+  .how-to ol { padding-left: 20px; font-size: 14px; line-height: 1.8; color: #4a4a4a; }
+  .how-to code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>PawCities Business Outreach Dashboard</h1>
+  <p class="subtitle">Email campaign manager for business claim outreach — City-by-city sprint approach</p>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="number">8</div><div class="label">Target Cities</div></div>
+    <div class="stat-card"><div class="number">265</div><div class="label">Listed Businesses</div></div>
+    <div class="stat-card"><div class="number">0</div><div class="label">Emails Sent</div></div>
+    <div class="stat-card"><div class="number">0</div><div class="label">Claims Received</div></div>
+    <div class="stat-card"><div class="number">90</div><div class="label">Daily Send Limit</div></div>
+  </div>
+
+  <div class="how-to">
+    <h3>How to Use the Outreach Tool</h3>
+    <ol>
+      <li>Research prospects for your target city (start with LA per the marketing plan)</li>
+      <li>Add prospect details to a CSV file in <code>scripts/outreach/prospects/</code></li>
+      <li>Run a dry-run first: <code>npx tsx scripts/outreach/send-outreach.ts --csv prospects/la.csv</code></li>
+      <li>Review the output, then send for real: add <code>--send</code> flag</li>
+      <li>After 5 days, run follow-ups: add <code>--followup</code> flag</li>
+      <li>Track results in the log file at <code>scripts/outreach/logs/outreach-log.json</code></li>
+    </ol>
+  </div>
+
+  <!-- City Sprint Timeline -->
+  <div class="section">
+    <h2>City Sprint Timeline (16 weeks)</h2>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 1–2</div>
+      <div class="timeline-city"><span class="city-pill" style="background:#FF6B35;">Los Angeles</span></div>
+      <div class="timeline-actions">Research 25–50 LA prospects. Send Template A to listed businesses. Template B to unlisted. Follow up after 5 days.</div>
+      <div class="timeline-target">25–50 emails</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 3–4</div>
+      <div class="timeline-city"><span class="city-pill" style="background:#4682B4;">New York City</span></div>
+      <div class="timeline-actions">Evaluate LA results. Begin NYC prospect research. Send initial outreach. Continue LA follow-ups.</div>
+      <div class="timeline-target">25–50 emails</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 5–6</div>
+      <div class="timeline-city"><span class="city-pill" style="background:#9370DB;">London</span></div>
+      <div class="timeline-actions">London prospect research. Adjust templates based on US results. Target dog-friendly pubs and parks.</div>
+      <div class="timeline-target">25–50 emails</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 7–8</div>
+      <div class="timeline-city"><span class="city-pill" style="background:#00CED1;">Sydney</span></div>
+      <div class="timeline-actions">Sydney outreach. Focus on off-leash parks, beach venues, and dog-friendly cafes.</div>
+      <div class="timeline-target">25–50 emails</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 9–10</div>
+      <div class="timeline-city"><span class="city-pill" style="background:#FFC0CB;">Paris</span></div>
+      <div class="timeline-actions">Paris outreach. Consider French-language template option. Target dog-friendly restaurants and cafes.</div>
+      <div class="timeline-target">25–50 emails</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 11–12</div>
+      <div class="timeline-city"><span class="city-pill" style="background:#FFD700;">Barcelona</span></div>
+      <div class="timeline-actions">Barcelona outreach. Consider Spanish-language template. Target restaurants and off-leash parks.</div>
+      <div class="timeline-target">25–50 emails</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 13–14</div>
+      <div class="timeline-city"><span class="city-pill" style="background:#90EE90;">Geneva</span></div>
+      <div class="timeline-actions">Geneva outreach. French/English templates. Smaller market — quality over quantity.</div>
+      <div class="timeline-target">15–25 emails</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-week">Week 15–16</div>
+      <div class="timeline-city"><span class="city-pill" style="background:#FFDAB9;">Tokyo</span></div>
+      <div class="timeline-actions">Tokyo outreach. English-language businesses first. Consider Japanese template for local spots.</div>
+      <div class="timeline-target">15–25 emails</div>
+    </div>
+  </div>
+
+  <!-- Email Template Previews -->
+  <div class="section">
+    <h2>Email Template Previews</h2>
+
+    <div class="tab-row">
+      <div class="tab active" onclick="showTemplate('a', this)">Template A — Already Listed</div>
+      <div class="tab" onclick="showTemplate('b', this)">Template B — Not Listed</div>
+      <div class="tab" onclick="showTemplate('c', this)">Template C — Follow-up</div>
+    </div>
+
+    <div id="template-a" class="email-preview">
+      <div class="from">From: Eric Silverstein &lt;eric@pawcities.com&gt;</div>
+      <div class="subject">Subject: Your [Business Name] listing on Paw Cities</div>
+      <div class="body">
+        <p>Hi [Contact Name],</p>
+        <p>I wanted to let you know that <strong>[Business Name]</strong> is listed on Paw Cities — a dog-friendly business directory used by dog owners in [City] and travelers visiting with their pets.</p>
+        <p>Your listing is live, but it hasn't been claimed yet. Claiming takes under a minute and lets you:</p>
+        <p>• Update your description and dog-friendly amenities<br>• Add your phone number and photos<br>• See how dog owners are finding you</p>
+        <p>It's completely free — no credit card required.</p>
+        <a class="cta-btn" href="#">Claim Your Listing</a>
+        <p>Happy to answer any questions.</p>
+        <p class="sig">Cheers,<br><strong>Eric Silverstein</strong><br>Founder, Paw Cities</p>
+      </div>
+    </div>
+
+    <div id="template-b" class="email-preview" style="display:none;">
+      <div class="from">From: Eric Silverstein &lt;eric@pawcities.com&gt;</div>
+      <div class="subject">Subject: Feature [Business Name] to dog owners visiting [City]</div>
+      <div class="body">
+        <p>Hi [Contact Name],</p>
+        <p>I'm building Paw Cities, a directory that helps dog owners find pet-friendly restaurants, cafes, hotels, and parks in cities around the world. We currently cover [City] along with 7 other destinations.</p>
+        <p>I noticed that <strong>[Business Name]</strong> welcomes dogs — that's exactly what our users search for. I'd love to add your business to our directory so dog owners in [City] can discover you more easily.</p>
+        <p>Listing is free, and you can claim your profile to manage your description, photos, and amenities.</p>
+        <p>Would you like me to add you? Just reply and I'll set it up.</p>
+        <p class="sig">Best,<br><strong>Eric Silverstein</strong><br>Founder, Paw Cities</p>
+      </div>
+    </div>
+
+    <div id="template-c" class="email-preview" style="display:none;">
+      <div class="from">From: Eric Silverstein &lt;eric@pawcities.com&gt;</div>
+      <div class="subject">Subject: Re: Your [Business Name] listing on Paw Cities</div>
+      <div class="body">
+        <p>Hi [Contact Name],</p>
+        <p>Just following up — wanted to make sure this didn't get buried. Claiming your free listing on Paw Cities takes about 60 seconds and puts <strong>[Business Name]</strong> in front of dog owners exploring [City].</p>
+        <a class="cta-btn" href="#">Claim Your Free Listing</a>
+        <p>No worries if it's not a priority right now — your listing will stay active either way.</p>
+        <p class="sig">Cheers,<br><strong>Eric</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outreach Metrics Targets -->
+  <div class="section">
+    <h2>Target Metrics</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Target</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Prospects per city sprint</td><td><strong>25–50</strong></td><td>Mix of Template A (listed) and B (not listed)</td></tr>
+        <tr><td>Response rate (cold email)</td><td><strong>10–15%</strong></td><td>Template A should outperform B significantly</td></tr>
+        <tr><td>Claim rate (of responses)</td><td><strong>40–60%</strong></td><td>Free listing = low friction</td></tr>
+        <tr><td>Expected claims per sprint</td><td><strong>2–5</strong></td><td>Conservative estimate</td></tr>
+        <tr><td>16-week total (all 8 cities)</td><td><strong>15–40 claims</strong></td><td>Compound as templates get refined</td></tr>
+        <tr><td>Follow-up timing</td><td><strong>5 days</strong></td><td>Template C auto-sent by the script</td></tr>
+        <tr><td>Daily send limit</td><td><strong>90 emails</strong></td><td>Buffer under Resend's 100/day free tier</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+function showTemplate(id, tab) {
+  document.querySelectorAll('.email-preview').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('template-' + id).style.display = 'block';
+  tab.classList.add('active');
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  profilePicture String?
+  role          String    @default("USER")
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  dogs          DogProfile[]
+  reviews       Review[]
+  checkIns      CheckIn[]
+  favorites     Favorite[]
+  claimedBusinesses Establishment[] @relation("ClaimedBy")
+}
+
+model DogProfile {
+  id            String   @id @default(cuid())
+  name          String
+  breed         String?
+  size          String?
+  profilePicture String?
+  ownerId       String
+  owner         User     @relation(fields: [ownerId], references: [id])
+  checkIns      CheckIn[]
+  createdAt     DateTime @default(now())
+}
+
+model City {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  country     String
+  countryCode String
+  timezone    String
+  latitude    Float?
+  longitude   Float?
+  description String?
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  establishments Establishment[]
+}
+
+model Establishment {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String
+  category    String
+  description String?
+  address     String
+  phone       String?
+  website     String?
+  email       String?
+  imageUrl    String?
+  latitude    Float?
+  longitude   Float?
+  priceLevel  Int?
+  avgRating   Float?
+  totalReviews Int     @default(0)
+  totalCheckIns Int    @default(0)
+  amenities   Json?
+  isVerified  Boolean  @default(false)
+  cityId      String
+  city        City     @relation(fields: [cityId], references: [id])
+  claimedById String?
+  claimedBy   User?    @relation("ClaimedBy", fields: [claimedById], references: [id])
+  claimedAt   DateTime?
+  subscriptionTier String?
+  createdAt   DateTime @default(now())
+
+  reviews     Review[]
+  checkIns    CheckIn[]
+  favorites   Favorite[]
+
+  @@unique([slug, cityId])
+}
+
+model Review {
+  id              String   @id @default(cuid())
+  rating          Int
+  comment         String?
+  flagged         Boolean  @default(false)
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  establishmentId String
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  createdAt       DateTime @default(now())
+}
+
+model CheckIn {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  dogId           String?
+  dog             DogProfile? @relation(fields: [dogId], references: [id])
+  establishmentId String
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  createdAt       DateTime @default(now())
+}
+
+model Favorite {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  establishmentId String
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  createdAt       DateTime @default(now())
+
+  @@unique([userId, establishmentId])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  action     String
+  entityType String
+  entityId   String
+  userId     String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+}

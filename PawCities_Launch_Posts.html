@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawCities — Instagram Launch Posts</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; color: #1a1a1a; padding: 24px; }
+  .header { text-align: center; padding: 32px 0; }
+  .header h1 { font-size: 28px; color: #1B2A4A; }
+  .header p { color: #666; margin-top: 8px; font-size: 15px; }
+  .post-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 24px; }
+  .post-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .post-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid #eee; }
+  .post-avatar { width: 36px; height: 36px; border-radius: 50%; background: #FF6B35; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .post-handle { font-weight: 600; font-size: 14px; }
+  .post-meta { font-size: 12px; color: #999; }
+  .post-visual { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 32px; text-align: center; position: relative; }
+  .post-visual .city-label { position: absolute; top: 16px; left: 16px; background: rgba(0,0,0,0.6); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; }
+  .post-visual .post-number { position: absolute; top: 16px; right: 16px; background: rgba(255,107,53,0.9); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+  .post-visual .template-badge { position: absolute; bottom: 16px; right: 16px; background: rgba(0,0,0,0.5); color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; }
+  .post-visual .emoji-big { font-size: 48px; margin-bottom: 16px; }
+  .post-visual .headline { font-size: 22px; font-weight: 800; line-height: 1.3; max-width: 300px; }
+  .post-visual .subtext { font-size: 14px; margin-top: 10px; opacity: 0.85; max-width: 280px; line-height: 1.5; }
+  .post-visual .vs-container { display: flex; align-items: center; gap: 20px; margin-top: 12px; }
+  .post-visual .vs-city { text-align: center; }
+  .post-visual .vs-city .city-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .post-visual .vs-city .stat { font-size: 28px; font-weight: 900; }
+  .post-visual .vs-divider { font-size: 24px; font-weight: 800; opacity: 0.5; }
+  .post-caption { padding: 16px; font-size: 13px; line-height: 1.6; border-top: 1px solid #eee; max-height: 200px; overflow-y: auto; }
+  .post-caption .hashtags { color: #0563C1; margin-top: 8px; display: block; }
+  .post-caption .cta { font-weight: 600; display: block; margin-top: 6px; }
+
+  /* Color themes per city */
+  .theme-paris { background: linear-gradient(135deg, #FFE4E1, #FFC0CB); color: #4A1A2E; }
+  .theme-tokyo { background: linear-gradient(135deg, #FFE4E1, #FFDAB9); color: #4A2A1A; }
+  .theme-barcelona { background: linear-gradient(135deg, #FFD700, #FF8C00); color: #4A2A00; }
+  .theme-nyc { background: linear-gradient(135deg, #B0C4DE, #4682B4); color: #1B2A4A; }
+  .theme-geneva { background: linear-gradient(135deg, #E0F0E0, #90EE90); color: #1A4A2A; }
+  .theme-london { background: linear-gradient(135deg, #D4A8D4, #9370DB); color: #2A1A4A; }
+  .theme-la { background: linear-gradient(135deg, #87CEEB, #FFA07A); color: #2A1A1A; }
+  .theme-sydney { background: linear-gradient(135deg, #87CEEB, #00CED1); color: #1A2A4A; }
+  .theme-all { background: linear-gradient(135deg, #FF6B35, #FFB347); color: white; }
+  .theme-vs { background: linear-gradient(135deg, #1B2A4A, #2C3E6A); color: white; }
+
+  .section-label { max-width: 1200px; margin: 32px auto 16px; padding: 0 4px; }
+  .section-label h2 { font-size: 20px; color: #1B2A4A; }
+  .section-label p { font-size: 14px; color: #888; margin-top: 4px; }
+
+  .copy-btn { display: inline-block; margin-top: 8px; padding: 6px 14px; background: #FF6B35; color: white; border: none; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 600; }
+  .copy-btn:hover { background: #E55A2B; }
+  .copy-btn.copied { background: #27AE60; }
+
+  @media (max-width: 480px) {
+    .post-grid { grid-template-columns: 1fr; }
+    body { padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>PawCities Instagram Launch Posts</h1>
+  <p>First 10 posts for @ThePawCities — Week 1 & 2 content ready for scheduling</p>
+</div>
+
+<div class="section-label">
+  <h2>Week 1 — Community Building (Mon/Wed/Fri)</h2>
+  <p>Establish the brand voice. Focus on interesting facts that make people stop scrolling.</p>
+</div>
+
+<div class="post-grid">
+
+  <!-- POST 1: Barcelona — More Dogs Than Children -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">🐾</div>
+      <div>
+        <div class="post-handle">@ThePawCities</div>
+        <div class="post-meta">Post 1 · Monday · Single Fact Card</div>
+      </div>
+    </div>
+    <div class="post-visual theme-barcelona">
+      <div class="city-label">BARCELONA</div>
+      <div class="post-number">1</div>
+      <div class="emoji-big">🐕</div>
+      <div class="headline">More Dogs Than Children</div>
+      <div class="subtext">Barcelona has 172,971 dogs but only 165,482 children aged 0–12</div>
+      <div class="template-badge">Did You Know</div>
+    </div>
+    <div class="post-caption">
+      Barcelona is officially a dog city. 🐕
+
+With 172,971 registered dogs and only 165,482 children under 12, four-legged friends outnumber kids in the city.
+
+And with over 100 designated off-leash areas built into parks, plazas, and public spaces — Barcelona doesn't just tolerate dogs. It was designed for them.
+
+Explore dog-friendly Barcelona → link in bio
+      <span class="cta">🐾 Follow @ThePawCities for dog-friendly city guides worldwide</span>
+      <span class="hashtags">#PawCities #PawCitiesGuide #BarcelonaDog #DogsOfBarcelona #DogFriendlyBarcelona #DogTravel #DogsOfInstagram #DogFriendly #PetFriendly #TravelWithDog #DogFriendlyRestaurant #DogsOnAdventure #BarcelonaTravel #SpainDogs</span>
+      <button class="copy-btn" onclick="copyCaption(this)">Copy Caption</button>
+    </div>
+  </div>
+
+  <!-- POST 2: Tokyo — You Can 'Rent' a Dog -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">🐾</div>
+      <div>
+        <div class="post-handle">@ThePawCities</div>
+        <div class="post-meta">Post 2 · Wednesday · Single Fact Card</div>
+      </div>
+    </div>
+    <div class="post-visual theme-tokyo">
+      <div class="city-label">TOKYO</div>
+      <div class="post-number">2</div>
+      <div class="emoji-big">☕</div>
+      <div class="headline">You Can "Rent" a Dog in Tokyo</div>
+      <div class="subtext">Dog cafes let you borrow a pup for 1–2 hours of walks and playtime</div>
+      <div class="template-badge">Did You Know</div>
+    </div>
+    <div class="post-caption">
+      Missing a dog? In Tokyo, you can rent one. ☕🐕
+
+Tokyo's dog cafes let you borrow a dog for 1–2 hours — take them for walks, play in the park, and get all the cuddles without the commitment.
+
+It's a uniquely Japanese innovation born from a city where tiny apartments make full-time dog ownership tricky. But the love for dogs? That's enormous — Japan's pet industry is worth $9 billion.
+
+Would you rent a dog for the afternoon? 👇
+      <span class="cta">🐾 Follow @ThePawCities for dog-friendly city guides worldwide</span>
+      <span class="hashtags">#PawCities #TokyoDog #DogsOfTokyo #DogCafe #JapanDogs #DogTravel #DogsOfInstagram #DogFriendly #TokyoTravel #TravelWithDog #DogLovers #DogFriendlyCafe #PetFriendly #ShibaInu</span>
+      <button class="copy-btn" onclick="copyCaption(this)">Copy Caption</button>
+    </div>
+  </div>
+
+  <!-- POST 3: Paris — Top 3 Carousel -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">🐾</div>
+      <div>
+        <div class="post-handle">@ThePawCities</div>
+        <div class="post-meta">Post 3 · Friday · Top 3 Carousel</div>
+      </div>
+    </div>
+    <div class="post-visual theme-paris">
+      <div class="city-label">PARIS</div>
+      <div class="post-number">3</div>
+      <div class="emoji-big">🇫🇷</div>
+      <div class="headline">3 Things You Didn't Know About Dogs in Paris</div>
+      <div class="subtext">Slide 1 of 4 — Swipe →</div>
+      <div class="template-badge">Top 3 Carousel</div>
+    </div>
+    <div class="post-caption">
+      3 things you didn't know about dogs in Paris 🇫🇷🐕
+
+Slide 1: Cover
+Slide 2: 1 Dog for Every 7 Parisians — Paris has 300,000+ dogs, one of the highest dog-to-human ratios in Europe.
+Slide 3: Dogs Dine Indoors — France has no laws banning dogs from restaurants. Many cafes bring out water bowls and welcome dogs at the table.
+Slide 4: Dog Dining Since the 1800s — Wealthy Parisians brought dogs to fancy restaurants in the 1800s. Restaurants even offered special dog dishes — bouillon with rice and liver.
+
+Paris is one of the most dog-friendly cities on the planet. Explore dog-friendly Paris → link in bio
+      <span class="cta">🐾 Save this for your next trip to Paris! Follow @ThePawCities</span>
+      <span class="hashtags">#PawCities #DogFriendlyParis #DogsOfParis #ParisTravel #ParisDog #DogTravel #DogsOfInstagram #DogFriendly #TravelWithDog #DogFriendlyRestaurant #FranceDogs #ParisianLife #DogLovers #PetTravel</span>
+      <button class="copy-btn" onclick="copyCaption(this)">Copy Caption</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-label">
+  <h2>Week 2 — Expand & Engage (Mon/Wed/Fri)</h2>
+  <p>Continue building community. Introduce comparison posts and prep for National Puppy Day.</p>
+</div>
+
+<div class="post-grid">
+
+  <!-- POST 4: NYC vs LA -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">🐾</div>
+      <div>
+        <div class="post-handle">@ThePawCities</div>
+        <div class="post-meta">Post 4 · Monday · City vs City</div>
+      </div>
+    </div>
+    <div class="post-visual theme-vs">
+      <div class="city-label">CITY VS CITY</div>
+      <div class="post-number">4</div>
+      <div class="vs-container">
+        <div class="vs-city">
+          <div class="city-name">NYC</div>
+          <div class="stat">75%</div>
+          <div class="subtext" style="font-size:12px; margin-top:4px;">buy puppacinos</div>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="vs-city">
+          <div class="city-name">LA</div>
+          <div class="stat">🏄</div>
+          <div class="subtext" style="font-size:12px; margin-top:4px;">dogs surf competitively</div>
+        </div>
+      </div>
+      <div class="template-badge">City vs City</div>
+    </div>
+    <div class="post-caption">
+      NYC dogs vs LA dogs — who wins? 🗽🌴
+
+In NYC, 75% of dog owners have bought their pup a puppacino. 55% spend more on their dog's grooming than their own. And 42% throw full birthday parties for their pets.
+
+Meanwhile in LA, dogs surf in actual competitions at Huntington Beach. Thousands of Corgis gather for the world's largest Corgi meetup. And Runyon Canyon offers 90 acres of off-leash hiking with Hollywood Hills views.
+
+East coast bougie vs west coast adventurous — which vibe is your dog? Drop 🗽 or 🌴 below!
+      <span class="cta">🐾 Follow @ThePawCities for more city comparisons</span>
+      <span class="hashtags">#PawCities #NYCDogs #DogsOfNYC #LADogs #DogsOfLA #DogTravel #CityVsCity #DogsOfInstagram #DogFriendly #Puppacino #CorgiBeachDay #RunyonCanyon #DogLovers #PetFriendly</span>
+      <button class="copy-btn" onclick="copyCaption(this)">Copy Caption</button>
+    </div>
+  </div>
+
+  <!-- POST 5: Geneva — 4-Hour Loneliness Rule -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">🐾</div>
+      <div>
+        <div class="post-handle">@ThePawCities</div>
+        <div class="post-meta">Post 5 · Wednesday · Single Fact Card</div>
+      </div>
+    </div>
+    <div class="post-visual theme-geneva">
+      <div class="city-label">GENEVA</div>
+      <div class="post-number">5</div>
+      <div class="emoji-big">🇨🇭</div>
+      <div class="headline">The 4-Hour Loneliness Rule</div>
+      <div class="subtext">Swiss law says dogs shouldn't be left alone for more than 4 hours</div>
+      <div class="template-badge">Did You Know</div>
+    </div>
+    <div class="post-caption">
+      Switzerland doesn't just love dogs — they legislate it. 🇨🇭
+
+Swiss law says dogs shouldn't be left alone for more than 4 hours. It's one of the strictest loneliness regulations in the world.
+
+That's not all: shock collars are banned. All dogs must be microchipped by age 3 months. And owners of dogs over 25kg in Geneva must pass a behavior and training test.
+
+If every country treated dogs like Switzerland does... 🐾
+      <span class="cta">🐾 Follow @ThePawCities for dog-friendly city guides worldwide</span>
+      <span class="hashtags">#PawCities #GenevaDogs #SwissDogs #DogFriendly #DogLaw #DogTravel #DogsOfInstagram #SwissLife #PetFriendly #DogWelfare #AnimalRights #DogLovers #TravelWithDog #DogFriendlyTravel</span>
+      <button class="copy-btn" onclick="copyCaption(this)">Copy Caption</button>
+    </div>
+  </div>
+
+  <!-- POST 6: London — Dog-Friendly Cinema Nights -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">🐾</div>
+      <div>
+        <div class="post-handle">@ThePawCities</div>
+        <div class="post-meta">Post 6 · Friday · Single Fact Card</div>
+      </div>
+    </div>
+    <div class="post-visual theme-london">
+      <div class="city-label">LONDON</div>
+      <div class="post-number">6</div>
+      <div class="emoji-big">🎬</div>
+      <div class="headline">Dog-Friendly Cinema Nights</div>
+      <div class="subtext">Picturehouse Cinemas hosts dog-friendly screenings. The Rooftop Film Club runs 'Wooftop' events.</div>
+      <div class="template-badge">Did You Know</div>
+    </div>
+    <div class="post-caption">
+      Movie night... with your dog. 🎬🐕
+
+London's Picturehouse Cinemas hosts dog-friendly film screenings where your pup sits right beside you. And the Rooftop Film Club takes it up a notch with special "Wooftop" events.
+
+With 164 dog-friendly parks and free rides on the Tube, London might just be the most dog-welcoming city in Europe.
+
+Tag someone who'd bring their dog to the movies 👇
+      <span class="cta">🐾 Follow @ThePawCities for dog-friendly city guides worldwide</span>
+      <span class="hashtags">#PawCities #LondonDog #DogsOfLondon #DogFriendlyLondon #DogCinema #DogTravel #DogsOfInstagram #DogFriendly #LondonLife #PetFriendly #DogLovers #TravelWithDog #DogFriendlyCafe #UKDogs</span>
+      <button class="copy-btn" onclick="copyCaption(this)">Copy Caption</button>
+    </div>
+  </div>
+
+  <!-- POST 7: National Puppy Day -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">🐾</div>
+      <div>
+        <div class="post-handle">@ThePawCities</div>
+        <div class="post-meta">Post 7 · Sunday Mar 23 · Holiday Special</div>
+      </div>
+    </div>
+    <div class="post-visual theme-all">
+      <div class="city-label">ALL 8 CITIES</div>
+      <div class="post-number">7</div>
+      <div class="emoji-big">🐶</div>
+      <div class="headline">Happy National Puppy Day!</div>
+      <div class="subtext">The best puppy-friendly spots across 8 cities worldwide</div>
+      <div class="template-badge">Holiday Special</div>
+    </div>
+    <div class="post-caption">
+      Happy National Puppy Day! 🐶🎉
+
+Celebrating by spotlighting the best spots for puppies across 8 cities worldwide:
+
+🗼 Paris — Cafes that welcome pups at the table (no law against it!)
+🇨🇭 Geneva — Dogs ride trains for free in carriers
+🎬 London — 164 dog-friendly parks to explore
+🏖 Barcelona — 100+ off-leash areas built into the city
+🌴 LA — 90 acres of off-leash hiking at Runyon Canyon
+🗽 NYC — 20 off-leash zones in Central Park
+🏄 Sydney — Off-leash beaches at Sirius Cove
+🗼 Tokyo — Size-separated dog runs at Yoyogi Park
+
+Your city's dog-friendly guide is waiting → link in bio
+
+Show us your puppy! Tag @ThePawCities or use #PawCities for a feature 📸
+      <span class="hashtags">#PawCities #NationalPuppyDay #PuppyDay #DogTravel #DogsOfInstagram #DogFriendly #PetFriendly #TravelWithDog #DogLovers #PuppyLove #DogFriendlyTravel #PuppiesOfInstagram #DogCity #WorldDogs</span>
+      <button class="copy-btn" onclick="copyCaption(this)">Copy Caption</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-label">
+  <h2>Week 3 — Momentum (Mon/Wed/Fri)</h2>
+  <p>Post-Puppy Day momentum. Start tagging influencers and featuring more cities.</p>
+</div>
+
+<div class="post-grid">
+
+  <!-- POST 8: Sydney — Centennial Park -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">🐾</div>
+      <div>
+        <div class="post-handle">@ThePawCities</div>
+        <div class="post-meta">Post 8 · Monday · Single Fact Card</div>
+      </div>
+    </div>
+    <div class="post-visual theme-sydney">
+      <div class="city-label">SYDNEY</div>
+      <div class="post-number">8</div>
+      <div class="emoji-big">🦘</div>
+      <div class="headline">43% of Centennial Park is Off-Leash</div>
+      <div class="subtext">Nearly half of Sydney's iconic parklands are dedicated to dogs running free</div>
+      <div class="template-badge">Did You Know</div>
+    </div>
+    <div class="post-caption">
+      Sydney doesn't mess around when it comes to off-leash freedom. 🦘🐕
+
+About 43% of the massive Centennial Parklands is designated off-leash territory. That's hundreds of acres where your dog can run wild.
+
+Add in dedicated beach time at Sirius Cove and Greenhills Beach, and new laws protecting tenants' rights to keep dogs in rental properties — Sydney is building a seriously dog-friendly future.
+
+Explore dog-friendly Sydney → link in bio
+      <span class="cta">🐾 Follow @ThePawCities for dog-friendly city guides worldwide</span>
+      <span class="hashtags">#PawCities #SydneyDogs #DogsOfSydney #DogFriendlySydney #CentennialPark #DogTravel #DogsOfInstagram #DogFriendly #AustraliaDogs #PetFriendly #OffLeash #DogPark #DogBeach #TravelWithDog</span>
+      <button class="copy-btn" onclick="copyCaption(this)">Copy Caption</button>
+    </div>
+  </div>
+
+  <!-- POST 9: Barcelona vs Paris Fine -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">🐾</div>
+      <div>
+        <div class="post-handle">@ThePawCities</div>
+        <div class="post-meta">Post 9 · Wednesday · City vs City</div>
+      </div>
+    </div>
+    <div class="post-visual theme-vs">
+      <div class="city-label">CITY VS CITY</div>
+      <div class="post-number">9</div>
+      <div class="vs-container">
+        <div class="vs-city">
+          <div class="city-name">BARCELONA</div>
+          <div class="stat" style="color:#FF6B35;">€1,500</div>
+          <div class="subtext" style="font-size:12px; margin-top:4px;">poop fine</div>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="vs-city">
+          <div class="city-name">PARIS</div>
+          <div class="stat" style="color:#FFB347;">€68</div>
+          <div class="subtext" style="font-size:12px; margin-top:4px;">poop fine</div>
+        </div>
+      </div>
+      <div class="template-badge">City vs City</div>
+    </div>
+    <div class="post-caption">
+      Don't forget the bags in Barcelona. 💰🐕
+
+Barcelona fines dog owners €1,500 for not picking up after their dog. Paris? Just €68.
+
+That's a 22x difference. Barcelona is NOT messing around.
+
+Both cities love their dogs — Barcelona has more dogs than children, and Paris has 1 dog for every 7 people. But Barcelona takes street cleanliness very seriously.
+
+Which approach do you prefer? Huge deterrent or small reminder? 👇
+      <span class="cta">🐾 Follow @ThePawCities for more city comparisons</span>
+      <span class="hashtags">#PawCities #BarcelonaDog #ParisDog #CityVsCity #DogTravel #DogsOfInstagram #DogFriendly #PetFriendly #DogOwner #PickUpAfterYourDog #ResponsibleDogOwner #DogFriendlyTravel #EuropeDogs #DogLovers</span>
+      <button class="copy-btn" onclick="copyCaption(this)">Copy Caption</button>
+    </div>
+  </div>
+
+  <!-- POST 10: Tokyo — Top 3 Carousel -->
+  <div class="post-card">
+    <div class="post-header">
+      <div class="post-avatar">🐾</div>
+      <div>
+        <div class="post-handle">@ThePawCities</div>
+        <div class="post-meta">Post 10 · Friday · Top 3 Carousel</div>
+      </div>
+    </div>
+    <div class="post-visual theme-tokyo">
+      <div class="city-label">TOKYO</div>
+      <div class="post-number">10</div>
+      <div class="emoji-big">🇯🇵</div>
+      <div class="headline">3 Things You Didn't Know About Dogs in Tokyo</div>
+      <div class="subtext">Slide 1 of 4 — Swipe →</div>
+      <div class="template-badge">Top 3 Carousel</div>
+    </div>
+    <div class="post-caption">
+      3 things you didn't know about dogs in Tokyo 🇯🇵🐕
+
+Slide 1: Cover
+Slide 2: Virtually Zero Dog Waste — Tokyo's dog owners are so responsible about cleanup, you almost never see droppings on the streets. A cultural norm, not a fine.
+Slide 3: You Can Rent a Dog — Dog cafes let you borrow a pup for 1-2 hours for walks and playtime. A uniquely Japanese innovation.
+Slide 4: Hachiko's Legacy Lives On — The famous statue at Shibuya Station remains one of Tokyo's most-visited spots. A loyalty story woven into Japanese identity.
+
+Tokyo's relationship with dogs is unlike anywhere else in the world. Explore dog-friendly Tokyo → link in bio
+      <span class="cta">🐾 Save this for your next Tokyo trip! Follow @ThePawCities</span>
+      <span class="hashtags">#PawCities #TokyoDog #DogsOfTokyo #JapanDogs #DogTravel #DogsOfInstagram #DogFriendly #TokyoTravel #Hachiko #ShibaInu #DogCafe #TravelWithDog #DogLovers #JapanTravel</span>
+      <button class="copy-btn" onclick="copyCaption(this)">Copy Caption</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-label" style="margin-top: 40px;">
+  <h2>Posting Schedule Summary</h2>
+</div>
+
+<div style="max-width: 1200px; margin: 0 auto; background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+  <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+    <thead>
+      <tr style="border-bottom: 2px solid #1B2A4A;">
+        <th style="padding: 10px; text-align: left; color: #1B2A4A;">Day</th>
+        <th style="padding: 10px; text-align: left; color: #1B2A4A;">City</th>
+        <th style="padding: 10px; text-align: left; color: #1B2A4A;">Topic</th>
+        <th style="padding: 10px; text-align: left; color: #1B2A4A;">Template</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px;">Mon Week 1</td><td>Barcelona</td><td>More Dogs Than Children</td><td>Single Fact Card</td></tr>
+      <tr style="border-bottom: 1px solid #eee; background: #f9f9f9;"><td style="padding: 10px;">Wed Week 1</td><td>Tokyo</td><td>Rent a Dog</td><td>Single Fact Card</td></tr>
+      <tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px;">Fri Week 1</td><td>Paris</td><td>Top 3 Dog Facts</td><td>Top 3 Carousel</td></tr>
+      <tr style="border-bottom: 1px solid #eee; background: #f9f9f9;"><td style="padding: 10px;">Mon Week 2</td><td>NYC vs LA</td><td>Puppacino vs Surf Dogs</td><td>City vs City</td></tr>
+      <tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px;">Wed Week 2</td><td>Geneva</td><td>4-Hour Loneliness Rule</td><td>Single Fact Card</td></tr>
+      <tr style="border-bottom: 1px solid #eee; background: #f9f9f9;"><td style="padding: 10px;">Fri Week 2</td><td>London</td><td>Dog-Friendly Cinema Nights</td><td>Single Fact Card</td></tr>
+      <tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px; font-weight: 600; color: #FF6B35;">Sun Mar 23</td><td style="font-weight: 600;">ALL CITIES</td><td style="font-weight: 600;">National Puppy Day Special</td><td style="font-weight: 600;">Holiday Special</td></tr>
+      <tr style="border-bottom: 1px solid #eee; background: #f9f9f9;"><td style="padding: 10px;">Mon Week 3</td><td>Sydney</td><td>43% Off-Leash Centennial Park</td><td>Single Fact Card</td></tr>
+      <tr style="border-bottom: 1px solid #eee;"><td style="padding: 10px;">Wed Week 3</td><td>Barcelona vs Paris</td><td>€1,500 vs €68 Fine</td><td>City vs City</td></tr>
+      <tr><td style="padding: 10px;">Fri Week 3</td><td>Tokyo</td><td>Top 3: Zero Waste, Dog Rentals, Hachiko</td><td>Top 3 Carousel</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+function copyCaption(btn) {
+  const captionDiv = btn.parentElement;
+  const clone = captionDiv.cloneNode(true);
+  clone.querySelectorAll('button').forEach(b => b.remove());
+  const text = clone.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy Caption';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

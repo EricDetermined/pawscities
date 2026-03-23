@@ -1,0 +1,6 @@
+businessName,contactName,contactEmail,city,category,listingUrl,alreadyListed
+SAMPLE Dog Haus Biergarten,Manager,REPLACE@doghaus.com,Los Angeles,Restaurants,https://pawcities.com/cities/los-angeles/restaurants/dog-haus-biergarten,true
+SAMPLE Runyon Canyon Dog Park,Manager,REPLACE@laparks.org,Los Angeles,Parks,https://pawcities.com/cities/los-angeles/parks/runyon-canyon,true
+SAMPLE The Dog Cafe,Manager,REPLACE@thedogcafe.com,Los Angeles,Cafes,https://pawcities.com/cities/los-angeles/cafes/the-dog-cafe,true
+SAMPLE Lazy Dog Restaurant,Manager,REPLACE@lazydog.com,Los Angeles,Restaurants,https://pawcities.com/cities/los-angeles/restaurants/lazy-dog,true
+SAMPLE Rosie's Dog Beach,Manager,REPLACE@longbeach.gov,Los Angeles,Beaches,https://pawcities.com/cities/los-angeles/beaches/rosies-dog-beach,true
