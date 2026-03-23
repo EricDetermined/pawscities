@@ -24,6 +24,12 @@ interface ClaimedBusiness {
     avgRating: number;
     favorites: number;
   };
+  // For listing completeness
+  hasDescription: boolean;
+  hasPhoto: boolean;
+  hasHours: boolean;
+  hasPhone: boolean;
+  hasWebsite: boolean;
 }
 
 export default function BusinessDashboard() {
@@ -41,23 +47,29 @@ export default function BusinessDashboard() {
       .then(data => {
         if (!data) return;
         if (data.status === 'approved' && data.establishment) {
+          const est = data.establishment;
           const biz: ClaimedBusiness = {
-            id: data.establishment.id,
-            name: data.establishment.name,
-            slug: data.establishment.slug,
-            address: data.establishment.address || '',
-            city: data.establishment.cityId || '',
-            category: data.establishment.categoryId || '',
+            id: est.id,
+            name: est.name,
+            slug: est.slug,
+            address: est.address || '',
+            city: est.cityId || '',
+            category: est.categoryId || '',
             subscriptionTier: (data.subscription?.tier || 'FREE') as SubscriptionTier,
             stats: {
-              views: data.analytics?.reviewCount || 0,
+              views: data.analytics?.views || 0,
               viewsTrend: 0,
-              checkins: 0,
+              checkins: data.analytics?.checkIns || 0,
               checkinsTrend: 0,
               reviews: data.analytics?.totalReviews || 0,
               avgRating: data.analytics?.avgRating || 0,
-              favorites: 0,
+              favorites: data.analytics?.favorites || 0,
             },
+            hasDescription: !!(est.description && est.description.trim()),
+            hasPhoto: !!est.primaryImage,
+            hasHours: !!(est.openingHours && est.openingHours.length > 0),
+            hasPhone: !!(est.phone && est.phone.trim()),
+            hasWebsite: !!(est.website && est.website.trim()),
           };
           setBusinesses([biz]);
           setSelectedBusiness(biz.id);
@@ -196,7 +208,7 @@ export default function BusinessDashboard() {
 
               {/* Respond to Reviews - Premium */}
               {isPremium ? (
-                <Link href={`/business/reviews/${biz.id}`} className="flex items-center gap-3 p-3 rounded-lg border hover:border-orange-300 hover:bg-orange-50/50 transition-colors">
+                <Link href="/business/reviews" className="flex items-center gap-3 p-3 rounded-lg border hover:border-orange-300 hover:bg-orange-50/50 transition-colors">
                   <div className="w-9 h-9 bg-green-100 rounded-lg flex items-center justify-center">
                     <svg className="w-4.5 h-4.5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -283,44 +295,54 @@ export default function BusinessDashboard() {
             </div>
           </FeatureGate>
 
-          {/* Recent Activity */}
+          {/* Activity Summary */}
           <div className="bg-white rounded-xl border p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 py-2 border-b border-gray-50">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm text-gray-900">New check-in from a visitor with a Golden Retriever</p>
-                  <p className="text-xs text-gray-400">2 hours ago</p>
-                </div>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Activity Summary</h2>
+            {(biz.stats.reviews > 0 || biz.stats.checkins > 0 || biz.stats.favorites > 0) ? (
+              <div className="space-y-3">
+                {biz.stats.reviews > 0 && (
+                  <div className="flex items-center gap-3 py-2 border-b border-gray-50">
+                    <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">{biz.stats.reviews} {biz.stats.reviews === 1 ? 'review' : 'reviews'} with {biz.stats.avgRating.toFixed(1)} avg rating</p>
+                    </div>
+                  </div>
+                )}
+                {biz.stats.checkins > 0 && (
+                  <div className="flex items-center gap-3 py-2 border-b border-gray-50">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">{biz.stats.checkins} {biz.stats.checkins === 1 ? 'check-in' : 'check-ins'} from visitors</p>
+                    </div>
+                  </div>
+                )}
+                {biz.stats.favorites > 0 && (
+                  <div className="flex items-center gap-3 py-2">
+                    <div className="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center">
+                      <svg className="w-4 h-4 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">Saved as a favorite by {biz.stats.favorites} {biz.stats.favorites === 1 ? 'person' : 'people'}</p>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="flex items-center gap-3 py-2 border-b border-gray-50">
-                <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm text-gray-900">New 5-star review posted</p>
-                  <p className="text-xs text-gray-400">Yesterday</p>
-                </div>
+            ) : (
+              <div className="text-center py-6">
+                <div className="text-3xl mb-2">📊</div>
+                <p className="text-sm text-gray-500">No activity yet. As visitors interact with your listing, you&apos;ll see a summary here.</p>
               </div>
-              <div className="flex items-center gap-3 py-2">
-                <div className="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm text-gray-900">Someone added your business to favorites</p>
-                  <p className="text-xs text-gray-400">2 days ago</p>
-                </div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
@@ -369,48 +391,49 @@ export default function BusinessDashboard() {
           )}
 
           {/* Listing Completeness */}
-          <div className="bg-white rounded-xl border p-6">
-            <h3 className="font-semibold text-gray-900 mb-3">Listing Completeness</h3>
-            <div className="relative w-full h-2 bg-gray-100 rounded-full mb-3">
-              <div className="absolute h-2 bg-orange-500 rounded-full" style={{ width: '60%' }} />
-            </div>
-            <p className="text-sm text-gray-500 mb-3">60% complete</p>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center gap-2 text-green-600">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                Business name & address
-              </li>
-              <li className="flex items-center gap-2 text-green-600">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                Category selected
-              </li>
-              <li className="flex items-center gap-2 text-gray-400">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <circle cx="12" cy="12" r="10" />
-                </svg>
-                Add business hours
-              </li>
-              <li className="flex items-center gap-2 text-gray-400">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <circle cx="12" cy="12" r="10" />
-                </svg>
-                Upload photos
-              </li>
-              <li className="flex items-center gap-2 text-gray-400">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <circle cx="12" cy="12" r="10" />
-                </svg>
-                Add description
-              </li>
-            </ul>
-            <Link href="/business/listing" className="mt-4 inline-flex text-sm text-orange-600 hover:text-orange-700 font-medium">
-              Complete your listing &rarr;
-            </Link>
-          </div>
+          {(() => {
+            const items = [
+              { done: !!(biz.name && biz.address), label: 'Business name & address' },
+              { done: !!biz.category, label: 'Category selected' },
+              { done: biz.hasDescription, label: 'Add description' },
+              { done: biz.hasPhoto, label: 'Upload photos' },
+              { done: biz.hasHours, label: 'Add business hours' },
+              { done: biz.hasPhone, label: 'Add phone number' },
+              { done: biz.hasWebsite, label: 'Add website' },
+            ];
+            const doneCount = items.filter(i => i.done).length;
+            const pct = Math.round((doneCount / items.length) * 100);
+            return (
+              <div className="bg-white rounded-xl border p-6">
+                <h3 className="font-semibold text-gray-900 mb-3">Listing Completeness</h3>
+                <div className="relative w-full h-2 bg-gray-100 rounded-full mb-3">
+                  <div className="absolute h-2 bg-orange-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
+                </div>
+                <p className="text-sm text-gray-500 mb-3">{pct}% complete</p>
+                <ul className="space-y-2 text-sm">
+                  {items.map((item) => (
+                    <li key={item.label} className={`flex items-center gap-2 ${item.done ? 'text-green-600' : 'text-gray-400'}`}>
+                      {item.done ? (
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                      )}
+                      {item.label}
+                    </li>
+                  ))}
+                </ul>
+                {pct < 100 && (
+                  <Link href="/business/listing" className="mt-4 inline-flex text-sm text-orange-600 hover:text-orange-700 font-medium">
+                    Complete your listing &rarr;
+                  </Link>
+                )}
+              </div>
+            );
+          })()}
 
           {/* Your Plan */}
           <div className="bg-white rounded-xl border p-6">

@@ -57,6 +57,25 @@ export async function GET() {
         ? (reviews!.reduce((sum: number, r: Record<string, unknown>) => sum + (r.rating as number), 0) / totalReviews).toFixed(1)
         : 0;
 
+    // Get favorites count
+    const { count: favoritesCount } = await supabase
+      .from('favorites')
+      .select('id', { count: 'exact', head: true })
+      .eq('establishment_id', establishment.id);
+
+    // Get check-ins count
+    const { count: checkInsCount } = await supabase
+      .from('check_ins')
+      .select('id', { count: 'exact', head: true })
+      .eq('establishment_id', establishment.id);
+
+    // Get page views count from analytics_events
+    const { count: viewsCount } = await supabase
+      .from('analytics_events')
+      .select('id', { count: 'exact', head: true })
+      .eq('establishment_id', establishment.id)
+      .eq('event_type', 'page_view');
+
     // Get subscription tier
     const { data: subscription } = await supabase
       .from('subscriptions')
@@ -75,7 +94,9 @@ export async function GET() {
         address: establishment.address,
         description: establishment.description,
         website: establishment.website,
+        phone: establishment.phone,
         primaryImage: establishment.primary_image,
+        openingHours: establishment.opening_hours,
         cityId: establishment.city_id,
         categoryId: establishment.category_id,
         tier: establishment.tier,
@@ -85,6 +106,9 @@ export async function GET() {
         avgRating: parseFloat(String(avgRating)),
         rating: establishment.rating,
         reviewCount: establishment.review_count,
+        favorites: favoritesCount || 0,
+        checkIns: checkInsCount || 0,
+        views: viewsCount || 0,
       },
       subscription: {
         tier,
