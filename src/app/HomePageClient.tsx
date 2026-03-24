@@ -351,6 +351,28 @@ export default function HomePageClient({ cities, cityStats }: HomePageClientProp
         </div>
       </section>
 
+      {/* Suggest a City CTA */}
+      <section className="py-12 px-4 bg-gray-50">
+        <div className="container mx-auto">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-100 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <h3 className="font-display text-xl font-bold text-gray-900 mb-1">
+                Don&apos;t see your city?
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Vote for the next city Paw Cities should launch in, or suggest a new one.
+              </p>
+            </div>
+            <Link
+              href="/suggest-city"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap text-sm"
+            >
+              <span>🌍</span> Suggest a City
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Business CTA — Enhanced */}
       <section className="py-16 px-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white">
         <div className="container mx-auto text-center">
@@ -409,6 +431,12 @@ export default function HomePageClient({ cities, cityStats }: HomePageClientProp
                 className="hover:text-white transition-colors"
               >
                 For Business
+              </Link>
+              <Link
+                href="/suggest-city"
+                className="hover:text-white transition-colors"
+              >
+                Suggest a City
               </Link>
               <Link
                 href="/privacy"
