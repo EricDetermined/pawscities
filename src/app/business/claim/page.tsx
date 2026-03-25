@@ -201,12 +201,6 @@ export default function ClaimBusinessPage() {
       const data = await res.json();
       if (res.ok) {
         router.push('/business/claim/success');
-        return;
-        setSelectedEstablishment(null);
-        setClaimForm({ businessName: '', contactName: '', contactEmail: '', contactPhone: '', verificationMethod: 'business_license', verificationDoc: '' });
-        const claimsRes = await fetch('/api/business/claim');
-        const claimsData = await claimsRes.json();
-        setExistingClaims(claimsData.claims || []);
       } else {
         setSubmitResult({ success: false, message: data.error || 'Failed to submit claim' });
       }
@@ -230,12 +224,6 @@ export default function ClaimBusinessPage() {
       const data = await res.json();
       if (res.ok) {
         router.push('/business/claim/success');
-        return;
-        setShowNewForm(false);
-        setNewForm({ name: '', address: '', cityId: '', categoryId: '', description: '', phone: '', website: '', contactName: '', contactEmail: '' });
-        const claimsRes = await fetch('/api/business/claim');
-        const claimsData = await claimsRes.json();
-        setExistingClaims(claimsData.claims || []);
       } else {
         setSubmitResult({ success: false, message: data.error || 'Failed to submit business' });
       }

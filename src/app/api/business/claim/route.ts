@@ -122,12 +122,13 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // Check if already claimed
+  // Check if already claimed (exclude rejected claims so users can re-submit)
   const { data: existingClaim } = await supabase
     .from('business_claims')
     .select('id, status')
     .eq('establishment_id', establishmentId)
-    .single();
+    .in('status', ['APPROVED', 'PENDING'])
+    .maybeSingle();
 
   if (existingClaim) {
     if (existingClaim.status === 'APPROVED') {

@@ -21,8 +21,16 @@ function LoginForm() {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get('redirect') || '/';
+  // Validate redirect to prevent open redirect attacks
+  const rawRedirect = searchParams.get('redirect') || '/';
+  const redirectTo = rawRedirect.startsWith('/') && !rawRedirect.startsWith('//') ? rawRedirect : '/';
   const { signIn, signInWithGoogle } = useAuth();
+
+  // Show error from auth callback if present
+  const callbackError = searchParams.get('error');
+  const initialError = callbackError === 'auth_callback_failed'
+    ? 'Email verification failed or link expired. Please try logging in or request a new link.'
+    : null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,9 +63,9 @@ function LoginForm() {
         {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
+            {(error || initialError) && (
               <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-                {error}
+                {error || initialError}
               </div>
             )}
 
@@ -91,11 +99,7 @@ function LoginForm() {
               />
             </div>
 
-            <div className="flex items-center justify-between">
-              <label className="flex items-center">
-                <input type="checkbox" className="rounded border-gray-300 text-orange-500 focus:ring-orange-500" />
-                <span className="ml-2 text-sm text-gray-600">Remember me</span>
-              </label>
+            <div className="flex items-center justify-end">
               <Link href="/forgot-password" className="text-sm text-orange-600 hover:text-orange-700">
                 Forgot password?
               </Link>

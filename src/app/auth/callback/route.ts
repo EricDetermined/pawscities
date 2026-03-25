@@ -25,7 +25,9 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get('code');
   const token_hash = requestUrl.searchParams.get('token_hash');
   const type = requestUrl.searchParams.get('type');
-  const next = requestUrl.searchParams.get('next') ?? '/';
+  // Validate redirect to prevent open redirect attacks
+  const rawNext = requestUrl.searchParams.get('next') ?? '/';
+  const next = rawNext.startsWith('/') && !rawNext.startsWith('//') ? rawNext : '/';
 
   const supabase = await createClient();
 
