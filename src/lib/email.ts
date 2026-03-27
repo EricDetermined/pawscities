@@ -258,54 +258,91 @@ interface SocialDigestData {
   topPost: { permalink: string; likes: number; comments: number; caption: string } | null;
   totalPendingOpportunities: number;
   engagementSummary: { avgLikes: number; avgComments: number; postsTracked: number };
+  agentHealth?: string;
+  hashtagsScannedToday?: string[];
 }
 
 function socialDigestTemplate(data: SocialDigestData): string {
-  const opportunitiesHtml = data.newOpportunities.length > 0
-    ? data.newOpportunities.slice(0, 5).map(opp => `
+  // Separate story repost candidates from regular opportunities
+  const storyReposts = data.newOpportunities.filter(o => o.category === 'story_repost');
+  const regularOpps = data.newOpportunities.filter(o => o.category !== 'story_repost');
+
+  const storyRepostHtml = storyReposts.length > 0
+    ? storyReposts.map(opp => `
+        <tr>
+          <td style="padding:12px;border-bottom:1px solid #f0f0f0;background:#fff7ed;">
+            <p style="margin:0 0 4px;font-size:13px;color:#c2410c;font-weight:600;">STORY REPOST CANDIDATE · ${opp.likes} likes</p>
+            <p style="margin:0 0 8px;font-size:14px;color:#333;">${opp.caption.substring(0, 150)}${opp.caption.length > 150 ? '...' : ''}</p>
+            <a href="${opp.permalink}" style="display:inline-block;padding:6px 16px;background-color:#ea580c;color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;border-radius:6px;">View & Repost to Story</a>
+          </td>
+        </tr>`).join('')
+    : '';
+
+  const opportunitiesHtml = regularOpps.length > 0
+    ? regularOpps.slice(0, 8).map(opp => `
         <tr>
           <td style="padding:12px;border-bottom:1px solid #f0f0f0;">
             <p style="margin:0 0 4px;font-size:13px;color:#888;">${opp.category.toUpperCase()} · ${opp.likes} likes</p>
             <p style="margin:0 0 8px;font-size:14px;color:#333;">${opp.caption.substring(0, 120)}${opp.caption.length > 120 ? '...' : ''}</p>
-            <p style="margin:0 0 4px;font-size:13px;color:#ea580c;font-style:italic;">Suggested: "${opp.suggestedReply.substring(0, 100)}..."</p>
-            <a href="${opp.permalink}" style="font-size:12px;color:#ea580c;">View on Instagram →</a>
+            <p style="margin:0 0 4px;font-size:13px;color:#ea580c;font-style:italic;">Suggested: "${opp.suggestedReply.substring(0, 120)}${opp.suggestedReply.length > 120 ? '...' : ''}"</p>
+            <a href="${opp.permalink}" style="font-size:12px;color:#ea580c;">View on Instagram &rarr;</a>
           </td>
         </tr>`).join('')
-    : '<tr><td style="padding:12px;color:#888;font-size:14px;">No new opportunities found today.</td></tr>';
+    : '<tr><td style="padding:12px;color:#888;font-size:14px;">No new engagement opportunities found today. The agent scanned hashtags but nothing matched the threshold.</td></tr>';
 
   const commentsHtml = data.unrepliedComments.length > 0
-    ? data.unrepliedComments.slice(0, 5).map(c => `
+    ? data.unrepliedComments.slice(0, 8).map(c => `
         <tr>
           <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">
-            <p style="margin:0;font-size:14px;"><strong>@${c.username}:</strong> ${c.text.substring(0, 100)}${c.text.length > 100 ? '...' : ''}</p>
+            <p style="margin:0;font-size:14px;"><strong>@${c.username}:</strong> ${c.text.substring(0, 150)}${c.text.length > 150 ? '...' : ''}</p>
           </td>
         </tr>`).join('')
     : '<tr><td style="padding:8px 12px;color:#888;font-size:14px;">All comments replied to!</td></tr>';
 
   const topPostHtml = data.topPost
     ? `<p style="margin:8px 0;font-size:14px;">Best performing: <strong>${data.topPost.likes} likes, ${data.topPost.comments} comments</strong></p>
-       <a href="${data.topPost.permalink}" style="font-size:13px;color:#ea580c;">View post →</a>`
+       <a href="${data.topPost.permalink}" style="font-size:13px;color:#ea580c;">View post &rarr;</a>`
     : '<p style="margin:8px 0;font-size:14px;color:#888;">No engagement data yet.</p>';
 
+  const agentHealthHtml = data.agentHealth
+    ? `<p style="font-size:12px;color:#666;margin:8px 0;padding:8px 12px;background:#f9f9f9;border-radius:6px;">${data.agentHealth}</p>`
+    : '';
+
+  const hashtagsHtml = data.hashtagsScannedToday && data.hashtagsScannedToday.length > 0
+    ? `<p style="font-size:12px;color:#888;margin:4px 0;">Hashtags scanned today: ${data.hashtagsScannedToday.map(h => '#' + h).join(', ')}</p>`
+    : '';
+
   return baseTemplate('Daily Social Digest', `
-<p>Here's your daily social media summary for Paw Cities.</p>
+<p>Here's your daily social media intelligence for Paw Cities.</p>
+
+${storyReposts.length > 0 ? `
+<h3 style="margin:24px 0 8px;font-size:16px;color:#c2410c;border-bottom:2px solid #c2410c;padding-bottom:4px;">Story Repost Candidates (${storyReposts.length})</h3>
+<p style="font-size:13px;color:#666;margin:0 0 8px;">High-engagement posts perfect for sharing to your Instagram Story:</p>
+<table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 16px;border:1px solid #fed7aa;border-radius:8px;">
+${storyRepostHtml}
+</table>
+` : ''}
 
 <h3 style="margin:24px 0 8px;font-size:16px;color:#1a1a1a;border-bottom:2px solid #ea580c;padding-bottom:4px;">Engagement Opportunities (${data.totalPendingOpportunities} pending)</h3>
+<p style="font-size:13px;color:#666;margin:0 0 8px;">Posts from the dog-friendly community to comment on and build connections:</p>
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 16px;border:1px solid #e5e5e5;border-radius:8px;">
 ${opportunitiesHtml}
 </table>
 
-<h3 style="margin:24px 0 8px;font-size:16px;color:#1a1a1a;border-bottom:2px solid #ea580c;padding-bottom:4px;">Unreplied Comments (${data.unrepliedComments.length})</h3>
+<h3 style="margin:24px 0 8px;font-size:16px;color:#1a1a1a;border-bottom:2px solid #ea580c;padding-bottom:4px;">Unreplied Comments on Our Posts (${data.unrepliedComments.length})</h3>
 <table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 16px;border:1px solid #e5e5e5;border-radius:8px;">
 ${commentsHtml}
 </table>
 
-<h3 style="margin:24px 0 8px;font-size:16px;color:#1a1a1a;border-bottom:2px solid #ea580c;padding-bottom:4px;">Performance</h3>
-<p style="font-size:14px;">Posts tracked: ${data.engagementSummary.postsTracked} · Avg likes: ${data.engagementSummary.avgLikes} · Avg comments: ${data.engagementSummary.avgComments}</p>
+<h3 style="margin:24px 0 8px;font-size:16px;color:#1a1a1a;border-bottom:2px solid #ea580c;padding-bottom:4px;">Our Post Performance</h3>
+<p style="font-size:14px;">Posts tracked: ${data.engagementSummary.postsTracked} &middot; Avg likes: ${data.engagementSummary.avgLikes} &middot; Avg comments: ${data.engagementSummary.avgComments}</p>
 ${topPostHtml}
 
 ${ctaButton('Review All in Dashboard', `${APP_URL}/admin/social`)}
-<p style="font-size:12px;color:#aaa;margin-top:16px;">This digest is sent daily at 11:30 AM UTC after the outreach scan completes.</p>
+
+${agentHealthHtml}
+${hashtagsHtml}
+<p style="font-size:12px;color:#aaa;margin-top:16px;">This digest is sent daily at 11 AM UTC. Reply to this email with feedback or new hashtags/accounts to monitor.</p>
 `);
 }
 
@@ -315,9 +352,19 @@ export async function sendSocialDigest(data: SocialDigestData): Promise<EmailRes
     return { success: false, error: 'No admin emails configured' };
   }
 
+  // Build a more actionable subject line
+  const storyCount = data.newOpportunities.filter(o => o.category === 'story_repost').length;
   const opCount = data.totalPendingOpportunities;
   const commentCount = data.unrepliedComments.length;
-  const subject = `Social Digest: ${opCount} opportunities, ${commentCount} unreplied comments`;
+
+  const parts: string[] = [];
+  if (storyCount > 0) parts.push(`${storyCount} story repost${storyCount > 1 ? 's' : ''}`);
+  if (opCount > 0) parts.push(`${opCount} opportunities`);
+  if (commentCount > 0) parts.push(`${commentCount} unreplied comment${commentCount > 1 ? 's' : ''}`);
+
+  const subject = parts.length > 0
+    ? `Paw Cities Social: ${parts.join(', ')}`
+    : 'Paw Cities Social: Daily check-in (all clear)';
 
   return sendEmail(ADMIN_EMAILS, subject, socialDigestTemplate(data));
 }

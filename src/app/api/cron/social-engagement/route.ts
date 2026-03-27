@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
         .from('social_posts')
         .select('id')
         .eq('post_id', post.id)
-        .single();
+        .maybeSingle();
 
       if (existingPost) {
         await supabase
