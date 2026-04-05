@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
   // Fetch all establishments that have a google_place_id (these are Google-matched)
   const { data: establishments, error: fetchError } = await supabase
     .from('establishments')
-    .select('id, name, address, google_place_id, photo_refs, city_id')
+    .select('id, name, address, google_place_id, photo_refs, city_id, dog_features')
     .not('google_place_id', 'is', null)
     .eq('status', 'ACTIVE')
     .order('updated_at', { ascending: true }) // Oldest-updated first
@@ -58,6 +58,20 @@ export async function GET(request: NextRequest) {
 
   for (const est of establishments) {
     try {
+      // Skip establishments with manually pinned photos
+      const features = est.dog_features as Record<string, unknown> || {};
+      if (features.photo_pinned) {
+        skipped++;
+        // Touch updated_at so it goes to the back of the queue
+        await supabase
+          .from('establishments')
+          .update({ updated_at: new Date().toISOString() })
+          .eq('id', est.id);
+        details.push({ name: est.name, status: 'pinned_skip' });
+        await new Promise(resolve => setTimeout(resolve, 50));
+        continue;
+      }
+
       const cityName = cityMap[est.city_id] || '';
       const searchQuery = `${est.name} ${est.address || ''} ${cityName}`;
       const result = await searchPlace(searchQuery);
