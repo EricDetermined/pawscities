@@ -78,10 +78,13 @@ function normalizeCategory(cat: string): string {
 
 function generateSlug(name: string): string {
   return name
+    .normalize('NFD')                    // Decompose accents (é → e + combining accent)
+    .replace(/[\u0300-\u036f]/g, '')     // Strip combining accent marks
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')        // Remove remaining non-alphanumeric
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
+    .replace(/(^-|-$)/g, '')             // Trim leading/trailing hyphens
     .trim();
 }
 
@@ -161,14 +164,18 @@ export async function POST(request: NextRequest) {
     // Get existing slugs for this city to detect duplicates
     const { data: existingEstablishments } = await supabase
       .from('establishments')
-      .select('id, slug, google_place_id')
+      .select('id, name, slug, google_place_id')
       .eq('city_id', cityId);
 
     const existingBySlug: Record<string, { id: string; google_place_id: string | null }> = {};
     const existingByGoogleId: Record<string, string> = {};
-    (existingEstablishments || []).forEach((e: { id: string; slug: string; google_place_id: string | null }) => {
+    // Also index by normalized name (accent-stripped, lowercase, alphanumeric only) to catch encoding variants
+    const existingByNormalizedName: Record<string, { id: string; google_place_id: string | null }> = {};
+    (existingEstablishments || []).forEach((e: { id: string; name: string; slug: string; google_place_id: string | null }) => {
       existingBySlug[e.slug] = { id: e.id, google_place_id: e.google_place_id };
       if (e.google_place_id) existingByGoogleId[e.google_place_id] = e.id;
+      const normalizedName = e.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      existingByNormalizedName[normalizedName] = { id: e.id, google_place_id: e.google_place_id };
     });
 
     for (const place of places) {
@@ -215,10 +222,12 @@ export async function POST(request: NextRequest) {
       };
 
       try {
-        // Check if already exists by slug or Google Place ID
+        // Check if already exists by slug, Google Place ID, or normalized name
         const existingBySlugEntry = existingBySlug[slug];
         const existingByGoogleEntry = place.googlePlaceId ? existingByGoogleId[place.googlePlaceId] : null;
-        const existingId = existingBySlugEntry?.id || existingByGoogleEntry;
+        const normalizedName = place.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const existingByNameEntry = existingByNormalizedName[normalizedName];
+        const existingId = existingBySlugEntry?.id || existingByGoogleEntry || existingByNameEntry?.id;
 
         if (existingId) {
           // Update existing record with fresh data (photo refs, rating, etc.)

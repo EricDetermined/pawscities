@@ -171,7 +171,7 @@ export async function POST(request: NextRequest) {
           phone: phone || null,
           email: email || null,
           website: website || null,
-          slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+          slug: name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
           status: 'ACTIVE',
           tier: 'free',
           rating: 0,

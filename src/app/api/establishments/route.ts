@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Name, city, category, address, and description are required' }, { status: 400 });
   }
 
-  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const slug = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
   const { data: establishment, error } = await supabase
     .from('establishments')

@@ -18,10 +18,13 @@ const NON_CLAIMABLE_SLUGS = ['parks', 'beaches'];
 
 function generateSlug(name: string): string {
   return name
+    .normalize('NFD')                    // Decompose accents (é → e + combining accent)
+    .replace(/[\u0300-\u036f]/g, '')     // Strip combining accent marks
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
+    .replace(/(^-|-$)/g, '')
     .trim();
 }
 
