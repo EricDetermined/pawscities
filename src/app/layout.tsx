@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     title: 'Paw Cities - Dog-Friendly Places Worldwide',
     description: 'Discover dog-friendly restaurants, cafes, parks, hotels and more.',
   },
+  other: {
+    'facebook-domain-verification': '0n5yl6b7ey6vmmb96xmxo67rhy05r2',
+  },
 };
 
 export default function RootLayout({
