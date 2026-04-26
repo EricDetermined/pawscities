@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     .not('google_place_id', 'is', null)
     .eq('status', 'ACTIVE')
     .order('updated_at', { ascending: true }) // Oldest-updated first
-    .limit(50); // Process 50 at a time to stay within serverless timeout
+    .limit(60); // Process 60 at a time to stay within serverless timeout
 
   if (fetchError) {
     console.error('Failed to fetch establishments:', fetchError);
