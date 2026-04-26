@@ -62,6 +62,11 @@ const navItems = [
     icon: '\u{1F4C8}',
   },
   {
+    title: 'Health Monitor',
+    href: '/admin/health',
+    icon: '\u{1FA7A}',
+  },
+  {
     title: 'Settings',
     href: '/admin/settings',
     icon: '\u2699\uFE0F',
