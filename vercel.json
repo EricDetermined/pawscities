@@ -15,7 +15,7 @@
     },
     {
       "path": "/api/cron/refresh-photos?secret=${CRON_SECRET}",
-      "schedule": "0 6 * * 0"
+      "schedule": "0 6 * * *"
     },
     {
       "path": "/api/cron/social-engagement?secret=${CRON_SECRET}",
