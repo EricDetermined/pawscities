@@ -203,6 +203,7 @@ export async function GET(request: NextRequest) {
       .select('id, name, venue_name, venue_address, city_id, source_handle, start_date, cities!inner(name)')
       .eq('status', 'APPROVED')
       .not('venue_name', 'is', null)
+      .not('source_handle', 'is', null)
       .gte('start_date', new Date().toISOString().split('T')[0])
       .order('start_date', { ascending: true });
 

@@ -742,15 +742,9 @@ export default function SocialCommandCenter() {
                 )}
 
                 <div className="flex flex-wrap items-center gap-3">
-                  {inv.sourceHandle ? (
-                    <a href={`https://instagram.com/${inv.sourceHandle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-600 hover:underline font-medium">
-                      Open @{inv.sourceHandle.replace('@', '')} →
-                    </a>
-                  ) : (
-                    <a href={`https://www.google.com/search?q=${encodeURIComponent(inv.venueName + ' ' + inv.cityName + ' instagram')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 hover:underline font-medium">
-                      Find on Instagram →
-                    </a>
-                  )}
+                  <a href={`https://instagram.com/${(inv.sourceHandle || '').replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-600 hover:underline font-medium">
+                    DM @{(inv.sourceHandle || '').replace('@', '')} →
+                  </a>
                   {inv.venueAddress && (
                     <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(inv.venueName + ', ' + inv.venueAddress)}`} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 hover:underline">
                       Maps
