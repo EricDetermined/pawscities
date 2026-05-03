@@ -88,6 +88,26 @@ export async function GET(request: NextRequest) {
         (event.source_handle ? `\n📸 h/t ${event.source_handle}\n` : '') +
         `\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')} ${tagStr}`;
 
+      // Generate witty reply suggestions for the source post
+      const handle = event.source_handle as string | null;
+      const engagementReplies = handle ? [
+        `This is awesome! 🐾 We just added ${event.name} to our community events calendar at pawcities.com — dog owners across ${cityName} can now find it and share it. If you ever want to post future events for free, we'd love to feature them!`,
+        `Love this! We run a free dog-friendly events calendar at pawcities.com and just listed ${event.name}. The community is going to love it. Hit us up anytime to post new events — always free 🙌`,
+        `We're here for this! 🐕 Just featured ${event.name} on our events calendar at pawcities.com so more dog owners can discover it. We just launched our calendar — you can submit future events for free anytime!`,
+      ] : [];
+
+      // Build creative URL using the event-creative generator
+      const creativeParams = new URLSearchParams({
+        name: event.name as string,
+        city: cityName,
+        citySlug,
+        date: dateRange,
+        ...(event.venue_name ? { venue: event.venue_name as string } : {}),
+        ...(tags.length > 0 ? { tags: tags.join(',') } : {}),
+        ...(event.is_free ? { free: 'true' } : {}),
+      });
+      const creativeUrl = `/api/social/event-creative?${creativeParams.toString()}`;
+
       return {
         id: event.id,
         type: 'event',
@@ -106,6 +126,8 @@ export async function GET(request: NextRequest) {
         description: event.description,
         caption,
         imageUrl: event.image_url || null,
+        creativeUrl,
+        engagementReplies,
         alreadyPosted,
       };
     });

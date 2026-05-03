@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PawCities Daily Story Brief</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0a0a0f; color: #e8e8f0; min-height: 100vh;
+  }
+  .header {
+    background: linear-gradient(90deg, #1a0800, #0a0a1a);
+    border-bottom: 1px solid #ea580c33;
+    padding: 16px 24px;
+    display: flex; align-items: center; gap: 12;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .logo { display: flex; align-items: center; gap: 8; }
+  .logo-text { font-weight: 900; font-size: 15px; letter-spacing: 2px; color: #ea580c; text-transform: uppercase; }
+  .logo-sub { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 1px; margin-top: 2px; }
+  .date-badge {
+    margin-left: auto; background: #ea580c22; border: 1px solid #ea580c44;
+    border-radius: 20px; padding: 5px 14px; font-size: 11px; font-weight: 700; color: #ea580c;
+  }
+
+  .controls {
+    background: #111118; border-bottom: 1px solid #ffffff0a;
+    padding: 16px 24px; display: flex; gap: 12; flex-wrap: wrap; align-items: center;
+  }
+  .controls label { font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-right: 6px; }
+  select, input[type=text] {
+    background: #1e1e2e; border: 1px solid #ffffff15; border-radius: 8px;
+    padding: 7px 12px; color: white; font-size: 12px; outline: none; cursor: pointer;
+  }
+  .btn {
+    background: #ea580c; border: none; border-radius: 10px; padding: 9px 20px;
+    color: white; font-size: 12px; font-weight: 800; cursor: pointer; letter-spacing: 0.5px;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn.secondary { background: #1e1e2e; color: rgba(255,255,255,0.6); }
+
+  .main { padding: 24px; max-width: 1200px; margin: 0 auto; }
+
+  .brief-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: #ea580c; margin-bottom: 16px; display: flex; align-items: center; gap: 8;
+  }
+
+  .story-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+
+  .story-card {
+    background: #111118; border-radius: 14px; overflow: hidden;
+    border: 1px solid #ffffff08; transition: border-color 0.2s;
+  }
+  .story-card:hover { border-color: #ea580c33; }
+
+  .card-theme {
+    padding: 10px 14px; display: flex; align-items: center; gap: 8;
+    border-bottom: 1px solid #ffffff08;
+  }
+  .theme-badge {
+    font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 10px;
+  }
+  .card-city { margin-left: auto; font-size: 11px; opacity: 0.5; font-weight: 600; }
+
+  .card-body { padding: 14px; }
+  .card-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.4; margin-bottom: 4px; }
+  .card-value { font-size: 12px; line-height: 1.5; margin-bottom: 12px; }
+  .card-value.big { font-size: 14px; font-weight: 700; }
+
+  .frames-row { display: flex; gap: 8; margin-bottom: 12px; }
+  .frame-pill {
+    flex: 1; background: #1e1e2e; border-radius: 8px; padding: 7px 8px;
+    font-size: 9px; text-align: center; line-height: 1.4;
+  }
+  .frame-pill .frame-num { font-weight: 900; font-size: 11px; display: block; margin-bottom: 2px; }
+  .frame-pill .frame-desc { opacity: 0.5; }
+
+  .caption-box {
+    background: #0d0d1a; border: 1px solid #ffffff0a; border-radius: 8px;
+    padding: 10px 12px; font-size: 10px; color: rgba(255,255,255,0.5);
+    line-height: 1.7; white-space: pre-wrap; max-height: 120px; overflow-y: auto;
+    margin-bottom: 10px; font-family: 'Courier New', monospace;
+  }
+  .caption-box::-webkit-scrollbar { width: 4px; }
+  .caption-box::-webkit-scrollbar-track { background: transparent; }
+  .caption-box::-webkit-scrollbar-thumb { background: #ffffff20; border-radius: 2px; }
+
+  .sticker-box {
+    background: #1a1a0a; border: 1px solid #ea580c22; border-radius: 8px;
+    padding: 8px 10px; font-size: 10px; color: rgba(255,255,255,0.5);
+    line-height: 1.5; margin-bottom: 10px;
+  }
+  .sticker-box strong { color: #ea580c; }
+
+  .card-actions { display: flex; gap: 6; }
+  .copy-btn {
+    flex: 1; padding: 7px; border-radius: 8px; border: none; cursor: pointer;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.5px; transition: all 0.2s;
+  }
+  .copy-caption { background: #ea580c22; color: #ea580c; }
+  .copy-caption:hover { background: #ea580c; color: white; }
+  .copy-dm { background: #1e1e2e; color: rgba(255,255,255,0.5); }
+  .copy-dm:hover { background: #2e2e4e; color: white; }
+
+  .daily-mix {
+    background: #111118; border-radius: 14px; border: 1px solid #4ade8022;
+    padding: 16px; margin-bottom: 20px;
+  }
+  .mix-title { font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .mix-row { display: flex; gap: 8; align-items: center; margin-bottom: 8px; }
+  .mix-count { font-size: 12px; font-weight: 900; color: #4ade80; min-width: 24px; }
+  .mix-desc { font-size: 11px; color: rgba(255,255,255,0.6); }
+
+  .separator { height: 1px; background: #ffffff08; margin: 20px 0; }
+
+  .copied { background: #22c55e !important; color: white !important; }
+
+  @media (max-width: 600px) {
+    .story-grid { grid-template-columns: 1fr; }
+    .controls { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="#ea580c">
+      <ellipse cx="12" cy="17" rx="5" ry="4"/>
+      <ellipse cx="6.5" cy="12" rx="2.5" ry="3"/>
+      <ellipse cx="17.5" cy="12" rx="2.5" ry="3"/>
+      <ellipse cx="9" cy="8.5" rx="2" ry="2.5"/>
+      <ellipse cx="15" cy="8.5" rx="2" ry="2.5"/>
+    </svg>
+    <div>
+      <div class="logo-text">PawCities</div>
+      <div class="logo-sub">Daily Story Brief Generator</div>
+    </div>
+  </div>
+  <div class="date-badge" id="dateBadge"></div>
+</div>
+
+<div class="controls">
+  <div>
+    <label>Focus City</label>
+    <select id="citySelect">
+      <option value="all">🌍 All Cities (rotate)</option>
+      <option value="newyork">🇺🇸 New York City</option>
+      <option value="losangeles">🇺🇸 Los Angeles</option>
+      <option value="london">🇬🇧 London</option>
+      <option value="paris">🇫🇷 Paris</option>
+      <option value="barcelona">🇪🇸 Barcelona</option>
+      <option value="geneva">🇨🇭 Geneva</option>
+      <option value="sydney">🇦🇺 Sydney</option>
+      <option value="tokyo">🇯🇵 Tokyo</option>
+    </select>
+  </div>
+  <div>
+    <label>Story Count</label>
+    <select id="countSelect">
+      <option value="3">3 stories (minimum)</option>
+      <option value="4">4 stories</option>
+      <option value="5" selected>5 stories (recommended)</option>
+    </select>
+  </div>
+  <div>
+    <label>Custom Place (optional)</label>
+    <input type="text" id="customPlace" placeholder="e.g. The Plaza Hotel, NYC" style="width:200px;" />
+  </div>
+  <button class="btn" onclick="generateBrief()">⚡ Generate Today's Brief</button>
+  <button class="btn secondary" onclick="copyAllCaptions()">📋 Copy All Captions</button>
+</div>
+
+<div class="main">
+  <div id="briefContainer">
+    <div style="text-align:center; padding:60px; color:rgba(255,255,255,0.2);">
+      <div style="font-size:48px; margin-bottom:16px;">🐾</div>
+      <div style="font-size:14px; letter-spacing:1px;">Click "Generate Today's Brief" to create your daily story plan</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CITIES = {
+  newyork:    { label: "New York City", flag: "🇺🇸", hashtag: "#DogsOfNYC #DogFriendlyNYC #NYCDog #NewYorkDog" },
+  losangeles: { label: "Los Angeles",   flag: "🇺🇸", hashtag: "#DogsOfLA #DogFriendlyLA #LADog #LosAngelesDog" },
+  london:     { label: "London",        flag: "🇬🇧", hashtag: "#LondonDog #DogsOfLondon #DogFriendlyLondon #UKDog" },
+  paris:      { label: "Paris",         flag: "🇫🇷", hashtag: "#ParisDog #DogsOfParis #DogFriendlyParis #FranceDog" },
+  barcelona:  { label: "Barcelona",     flag: "🇪🇸", hashtag: "#BarcelonaDog #DogsOfBarcelona #DogFriendlyBarcelona" },
+  geneva:     { label: "Geneva",        flag: "🇨🇭", hashtag: "#GenevaDog #DogsOfGeneva #SwissDogs #SwitzerlandDog" },
+  sydney:     { label: "Sydney",        flag: "🇦🇺", hashtag: "#SydneyDogs #DogsOfSydney #DogFriendlySydney #AustraliaDog" },
+  tokyo:      { label: "Tokyo",         flag: "🇯🇵", hashtag: "#TokyoDog #DogsOfTokyo #DogFriendlyTokyo #JapanDog" },
+};
+
+const GLOBAL_TAGS = "#PawCities #DogsOfInstagram #DogTravel #TravelWithDog #PetFriendly #DogFriendly #DogLovers";
+
+const THEMES = [
+  {
+    id: "luxury", label: "🥂 Luxury Living", color: "#c9a84c", bg: "#1a1a2e",
+    vibes: ["Some dogs are living better than us 😂🐾", "Dog-friendly luxury done right ✨🐾", "Your pup's next 5-star experience 🥂", "We aspire to this level of dog privilege 😂"],
+    captions: [
+      "Some dogs are living better than us and we are completely fine with it 😂🐾\n\n{place} raising the bar for dog-friendly hospitality in {city}. Luxury doesn't have to mean leaving your pup at home.",
+      "If your dog has nicer accommodations than you, you're doing something right 🥂🐾\n\nSpotted this gem in {city} and had to share. {place} — the dog-friendly standard is set.",
+      "Not all dogs are created equal. Some of them are staying at {place} in {city} 😂✨\n\nAnd honestly? Good for them. 🐾",
+    ],
+    poll: { q: "Would your dog stay here?", a: "Obviously 🐾", b: "We can't afford it 😭" },
+    cta: "Tag a friend whose dog deserves this 👇🏻",
+  },
+  {
+    id: "cafe", label: "☕ Café of the Day", color: "#ea580c", bg: "#2c1a0e",
+    vibes: ["Your pup's next coffee date ☕🐾", "Because coffee is better with a dog", "Dog-friendly café culture done right", "The café your dog didn't know they needed ☕"],
+    captions: [
+      "Coffee dates hit different when your dog's invited ☕🐾\n\n{place} in {city} — where the lattes are good and the dog policy is better. This one's on the daily rotation.",
+      "Found {city}'s next dog-friendly café obsession ☕🐾\n\n{place} — dog bowls at the ready, good vibes included. Your morning just got an upgrade.",
+      "The café your dog has been waiting for 🐶☕\n\n{place}, {city}. The kind of place you discover and then tell everyone about.",
+    ],
+    poll: { q: "Morning coffee with your dog?", a: "Every single day 🐾", b: "My dog prefers tea 🍵" },
+    cta: "Drop your go-to dog café below 👇☕",
+  },
+  {
+    id: "outdoor", label: "🌿 Park & Outdoor", color: "#4ade80", bg: "#0a1a0a",
+    vibes: ["Where every dog deserves to run free 🌿", "Off-leash freedom, {city} edition", "Nature + dogs = the best formula", "The kind of place that makes tails wag 🌿🐾"],
+    captions: [
+      "Every dog deserves a place to run free 🌿🐾\n\n{place} in {city} is exactly that. Off-leash, open space, and happy pups. The city did something right here.",
+      "Nature + dogs = the best formula that exists 🌿🐾\n\n{place}, {city}. This one goes straight to the PawCities guide. Verified good for pups.",
+      "If your dog could choose their ideal weekend, it looks like this 🌿\n\n{place} in {city} — open space, fresh air, and zero judgement for zoomies. 🐾",
+    ],
+    poll: { q: "Today's vibe for your pup?", a: "Full sprint mode 🏃", b: "Sniff every blade of grass" },
+    cta: "Know a hidden outdoor gem? Comment below 🌿",
+  },
+  {
+    id: "funny", label: "😂 Living the Life", color: "#a855f7", bg: "#1a0e2e",
+    vibes: ["My dog eats better than I do 😂", "Living the life we deserve... the dog does", "Dog privileges > human privileges 😂🐾", "This dog's lifestyle is goals and I won't apologize"],
+    captions: [
+      "My dog's lifestyle > my lifestyle and I've fully accepted this 😂🐾\n\nSpotted in {city}: {place}. This is just where dogs go now apparently. Not jealous at all. 👀",
+      "The audacity of dogs living like this 😂🐾\n\n{place}, {city}. Meanwhile I'm eating leftovers. Wishing my dog would invite me to their plans.",
+      "Dog privilege is real and this is the proof 😂🐾\n\n{place} in {city}. The dog-friendly game is getting out of hand (we love it). 🐶",
+    ],
+    slider: "How spoiled is this pup? 🐾",
+    cta: "Rate this level of spoiled with the slider 👇",
+  },
+  {
+    id: "gem", label: "📍 Hidden Gem", color: "#38bdf8", bg: "#0a1220",
+    vibes: ["Dog-friendly spot you need to know about 📍", "Not on any list — until now 🐾", "The hidden gem {city} dogs have been keeping secret", "Underrated, dog-friendly, and worth the trip 📍"],
+    captions: [
+      "Dog-friendly spot that deserves way more attention 📍🐾\n\n{place}, {city}. The kind of place locals know and visitors don't — until now. Adding this to the PawCities guide.",
+      "Not on any major list. Not yet 📍🐾\n\n{place} in {city} is the hidden gem dog owners need to know about. The best spots are always word-of-mouth.",
+      "Found a gem 📍🐾\n\n{place}, {city}. Dog-friendly, off the beaten path, and worth going out of your way for. Know about it before everyone else does.",
+    ],
+    question: "Know a hidden dog-friendly spot we should add? 📍",
+    cta: "Drop your hidden gem below 👇📍",
+  },
+];
+
+const DAILY_MIX = [
+  { theme: "luxury",  required: true,  note: "One aspirational post per day" },
+  { theme: "cafe",    required: true,  note: "Daily café feature" },
+  { theme: "outdoor", required: true,  note: "Parks, beaches, or nature" },
+  { theme: "funny",   required: false, note: "Relatable + high engagement" },
+  { theme: "gem",     required: false, note: "Discovery + community building" },
+];
+
+// City rotation by day of week
+const CITY_ROTATION = ["newyork","london","paris","barcelona","losangeles","sydney","tokyo","geneva"];
+
+function getRotatingCity(index) {
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+  return CITY_ROTATION[(dayOfYear + index) % CITY_ROTATION.length];
+}
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function generateStory(themeId, cityId, customPlace, index) {
+  const theme = THEMES.find(t => t.id === themeId);
+  const city = CITIES[cityId];
+  const place = customPlace || `[Place Name]`;
+
+  const captionTemplate = pick(theme.captions);
+  const rawCaption = captionTemplate
+    .replace(/{place}/g, place)
+    .replace(/{city}/g, city.label);
+
+  const fullCaption = `${rawCaption}\n\n📍 Explore dog-friendly ${city.label} → link in bio\n\n${city.hashtag}\n${GLOBAL_TAGS}`;
+
+  const vibe = pick(theme.vibes).replace(/{city}/g, city.label);
+
+  const dmTemplate = `Hey [creator name]! Loved this post from ${city.label}. I run @ThePawCities — a free guide to dog-friendly spots worldwide. Would love to feature ${place} in our story with full credit 🐾 Open to it?`;
+
+  let stickerText = "";
+  if (theme.poll) stickerText = `Poll: "${theme.poll.q}"\nA: ${theme.poll.a}  |  B: ${theme.poll.b}`;
+  else if (theme.slider) stickerText = `Emoji slider: "${theme.slider}"`;
+  else if (theme.question) stickerText = `Question box: "${theme.question}"`;
+
+  return { theme, city, cityId, place, vibe, fullCaption, dmTemplate, stickerText, index };
+}
+
+function generateBrief() {
+  const selectedCity = document.getElementById('citySelect').value;
+  const count = parseInt(document.getElementById('countSelect').value);
+  const customPlace = document.getElementById('customPlace').value.trim();
+
+  const stories = [];
+  for (let i = 0; i < count; i++) {
+    const themeId = DAILY_MIX[i % DAILY_MIX.length].theme;
+    const cityId = selectedCity === 'all' ? getRotatingCity(i) : selectedCity;
+    stories.push(generateStory(themeId, cityId, customPlace, i));
+  }
+
+  renderBrief(stories);
+}
+
+function renderBrief(stories) {
+  const today = new Date();
+  const dateStr = today.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  document.getElementById('dateBadge').textContent = dateStr;
+
+  const html = `
+    <div class="brief-title">📅 Today's Story Brief — ${dateStr}</div>
+
+    <div class="daily-mix" style="margin-bottom:20px;">
+      <div class="mix-title">Daily Mix — ${stories.length} Stories Planned</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        ${stories.map((s, i) => `
+          <div style="background:${s.theme.color}22; border:1px solid ${s.theme.color}44; border-radius:8px; padding:6px 12px; font-size:10px; font-weight:700; color:${s.theme.color};">
+            ${i+1}. ${s.theme.label}
+            <span style="opacity:0.6;font-weight:400;"> · ${s.city.flag} ${s.city.label}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="story-grid">
+      ${stories.map((s, i) => renderCard(s, i)).join('')}
+    </div>
+  `;
+
+  document.getElementById('briefContainer').innerHTML = html;
+  window._stories = stories;
+}
+
+function renderCard(s, i) {
+  const escapedCaption = s.fullCaption.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const escapedDm = s.dmTemplate.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  return `
+    <div class="story-card">
+      <div class="card-theme" style="background:${s.theme.color}11;">
+        <div class="theme-badge" style="background:${s.theme.color}22; color:${s.theme.color};">
+          Story ${i+1} · ${s.theme.label}
+        </div>
+        <div class="card-city">${s.city.flag} ${s.city.label}</div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-label">3-Frame Structure</div>
+        <div class="frames-row">
+          <div class="frame-pill" style="border-left:2px solid ${s.theme.color};">
+            <span class="frame-num" style="color:${s.theme.color};">1</span>
+            <span class="frame-desc">Opener<br>${s.city.flag} + Theme</span>
+          </div>
+          <div class="frame-pill" style="border-left:2px solid ${s.theme.color}66;">
+            <span class="frame-num" style="color:${s.theme.color}99;">2</span>
+            <span class="frame-desc">Content<br>Image + Credit</span>
+          </div>
+          <div class="frame-pill" style="border-left:2px solid ${s.theme.color}33;">
+            <span class="frame-num" style="color:${s.theme.color}66;">3</span>
+            <span class="frame-desc">Engage<br>Sticker + CTA</span>
+          </div>
+        </div>
+
+        <div class="card-label">Frame 1 Vibe Line</div>
+        <div class="card-value" style="color:${s.theme.color}; font-style:italic; font-weight:600;">"${s.vibe}"</div>
+
+        <div class="card-label">Generated Caption + Hashtags</div>
+        <div class="caption-box" id="caption-${i}">${escapedCaption}</div>
+
+        <div class="card-label">Frame 3 Sticker</div>
+        <div class="sticker-box"><strong>Add to Frame 3:</strong> ${s.stickerText}</div>
+
+        <div class="card-label">CTA</div>
+        <div class="card-value" style="color:rgba(255,255,255,0.5); font-size:11px;">${s.theme.cta}</div>
+
+        <div class="card-actions">
+          <button class="copy-btn copy-caption" onclick="copyText('caption-${i}', this)">📋 Copy Caption</button>
+          <button class="copy-btn copy-dm" onclick="copyToClipboard(\`${s.dmTemplate.replace(/`/g, "'")}\`, this)">✉️ Copy DM</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function copyText(elementId, btn) {
+  const el = document.getElementById(elementId);
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function copyToClipboard(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function copyAllCaptions() {
+  if (!window._stories) { alert('Generate a brief first!'); return; }
+  const all = window._stories.map((s, i) => `--- STORY ${i+1}: ${s.theme.label.toUpperCase()} · ${s.city.flag} ${s.city.label.toUpperCase()} ---\n\n${s.fullCaption}`).join('\n\n\n');
+  navigator.clipboard.writeText(all);
+  const btn = event.target;
+  btn.textContent = '✓ All Copied!';
+  setTimeout(() => btn.textContent = '📋 Copy All Captions', 2000);
+}
+
+// Init
+document.getElementById('dateBadge').textContent = new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+
+// Auto-generate on load with sample
+generateBrief();
+</script>
+</body>
+</html>

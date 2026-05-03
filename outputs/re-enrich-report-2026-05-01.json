@@ -1,0 +1,68 @@
+{
+  "run_date": "2026-05-01",
+  "elapsed_seconds": 183.1,
+  "cities": [
+    {
+      "city": "geneva",
+      "total": 20,
+      "matched": 20,
+      "not_found": 0,
+      "errors": 0
+    },
+    {
+      "city": "paris",
+      "total": 35,
+      "matched": 35,
+      "not_found": 0,
+      "errors": 0
+    },
+    {
+      "city": "london",
+      "total": 35,
+      "matched": 35,
+      "not_found": 0,
+      "errors": 0
+    },
+    {
+      "city": "losangeles",
+      "total": 34,
+      "matched": 34,
+      "not_found": 0,
+      "errors": 0
+    },
+    {
+      "city": "newyork",
+      "total": 35,
+      "matched": 35,
+      "not_found": 0,
+      "errors": 0
+    },
+    {
+      "city": "barcelona",
+      "total": 36,
+      "matched": 36,
+      "not_found": 0,
+      "errors": 0
+    },
+    {
+      "city": "sydney",
+      "total": 37,
+      "matched": 37,
+      "not_found": 0,
+      "errors": 0
+    },
+    {
+      "city": "tokyo",
+      "total": 33,
+      "matched": 33,
+      "not_found": 0,
+      "errors": 0
+    }
+  ],
+  "totals": {
+    "places": 265,
+    "matched": 265,
+    "not_found": 0,
+    "errors": 0
+  }
+}
