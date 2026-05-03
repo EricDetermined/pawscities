@@ -1,0 +1,993 @@
+{
+  "drafts": [
+    {
+      "id": "draft-1777830419299-pmzw",
+      "type": "post",
+      "category": "showcase",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.292Z",
+      "platform": "instagram",
+      "content": {
+        "caption": "🐾 Big news for dog parents everywhere!\n\nWe just launched our event calendar across 7 cities worldwide. From pack walks in LA to dog festivals in Tokyo, we're tracking the best dog-friendly events so you never miss out.\n\n📍 7 cities: LA, NYC, London, Tokyo, Paris, Barcelona & Geneva\n📅 Updated weekly with new events\n🆓 Submit your own events at pawcities.com/events/submit\n\nKnow about a dog-friendly event in your city? Drop the details in comments or submit it on our site — our community helps curate the best events for pup parents worldwide.\n\n#PawCities #DogFriendlyEvents #DogFriendlyCity #DogsOfInstagram #DogEvents #PetFriendly #DogCommunity #DogTravel #DogLife",
+        "imageNote": "Use PawCities branded graphic with event calendar preview. Could show a collage of city icons with calendar dates, or a screenshot of the events page.",
+        "suggestedImageUrl": null
+      },
+      "targeting": {
+        "audience": "followers + explore",
+        "goalFollows": true,
+        "goalTraffic": true
+      },
+      "notes": "Feature announcement — should be posted first before outreach begins."
+    },
+    {
+      "id": "draft-1777830419299-9twt",
+      "type": "post",
+      "category": "showcase",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.292Z",
+      "platform": "instagram",
+      "content": {
+        "caption": "📅 Los Angeles dog event alert!\n\nSpring is here and so is our lineup! 🌸🐾\n\n🗓 May 1\n📍 Los Angeles, California\n\nFind this and more dog-friendly events at pawcities.com — your go-to guide for exploring cities with your pup.\n\n@bennyboybrewing @pupculturerescue @bellesbagels @cheftrevpresents\n\n#PawCities #DogEventsLosAngeles #DogFriendlyLosAngeles #DogsOfLosAngeles",
+        "imageNote": "Repost or reference image from @dogsonlysocialclub. Ask for permission first or use PawCities branded template with event details.",
+        "suggestedImageUrl": "https://scontent-cph2-1.cdninstagram.com/v/t51.82787-15/671751890_17921674599330993_9057051981529012837_n.jpg?stp=dst-jpg_e35_p1080x1080_sh2.08_tt6&_nc_cat=104&ig_cache_key=Mzg3OTgxNTAwNzQ3OTc0MjQ5Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEzNTB4MTY4OC5zZHIuQzMifQ%3D%3D&_nc_ohc=fAwPbZYdABMQ7kNvwHUIjiK&_nc_oc=AdoGA5RYOM0rGEj8bsxeidl5fblBwm3CjUtqDoMluoVr3KHojhzkyzdxPo9VNNFrlS8&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-cph2-1.cdninstagram.com&_nc_gid=c8TOGv7Rq4_usd4H_yV9Vw&_nc_ss=7a3ba&oh=00_Af4wQ2C0iehkmZ62w9CmeA-88nkHcLF_eozfLLawSBoZKg&oe=69FD489C",
+        "sourcePostUrl": "https://www.instagram.com/p/DXX3zFzD0Ad/"
+      },
+      "targeting": {
+        "audience": "Los Angeles dog community",
+        "goalFollows": true,
+        "goalTraffic": true,
+        "tagAccounts": [
+          "bennyboybrewing",
+          "pupculturerescue",
+          "bellesbagels",
+          "cheftrevpresents"
+        ]
+      },
+      "notes": "Based on high-scoring discovery post from @dogsonlysocialclub (score: 85)"
+    },
+    {
+      "id": "draft-1777830419308-11m6",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "Love this! We just added this to our dog-friendly event calendar for Los Angeles on pawcities.com 🐾 Thanks for sharing!",
+        "targetPost": "https://www.instagram.com/p/DXX3zFzD0Ad/",
+        "targetUsername": "dogsonlysocialclub",
+        "targetCity": "los-angeles"
+      },
+      "context": {
+        "postPreview": "Spring is here and so is our lineup! 🌸🐾\n\n🍻 April 30 — Dogs Only Thursdays & Paint Your Pup at @bennyboybrewing \n\n🦮 M",
+        "relevanceScore": 85,
+        "likesCount": 152,
+        "eventSignals": [
+          "caption:event",
+          "caption:day",
+          "caption:walk",
+          "has-location",
+          "has-date",
+          "4-mentions",
+          "high-engagement",
+          "last-30d"
+        ]
+      },
+      "notes": "Comment on @dogsonlysocialclub's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-nkhn",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "This looks amazing! We track dog-friendly events across Los Angeles and 6 other cities — just featured this one 🙌",
+        "targetPost": "https://www.instagram.com/p/DXqaIiYlW14/",
+        "targetUsername": "today_la",
+        "targetCity": "los-angeles"
+      },
+      "context": {
+        "postPreview": "DTLA’s first-ever structured dog pack walk is here 🐾 presented by @fitpalslosangeles in partnership with @theblocla and",
+        "relevanceScore": 85,
+        "likesCount": 50,
+        "eventSignals": [
+          "caption:event",
+          "caption:day",
+          "caption:walk",
+          "has-location",
+          "has-date",
+          "3-mentions",
+          "medium-engagement",
+          "recent"
+        ]
+      },
+      "notes": "Comment on @today_la's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-w77u",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "Great event! We're building a global calendar of dog-friendly events and this is exactly what the Los Angeles community needs 🐕",
+        "targetPost": "https://www.instagram.com/p/DX37HXtjebB/",
+        "targetUsername": "makersatthemansion",
+        "targetCity": "los-angeles"
+      },
+      "context": {
+        "postPreview": "@makersatthemansion is back this month for our summer market - save the date! 🎄💝🛍️\n\nMakers at the Mansion\nSunday 31st",
+        "relevanceScore": 85,
+        "likesCount": 38,
+        "eventSignals": [
+          "caption:event",
+          "caption:fair",
+          "caption:park",
+          "has-location",
+          "has-date",
+          "3-mentions",
+          "medium-engagement",
+          "recent"
+        ]
+      },
+      "notes": "Comment on @makersatthemansion's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-216x",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "So cool! We curate dog-friendly events worldwide and just spotted this for Los Angeles. Added to pawcities.com! 📅🐾",
+        "targetPost": "https://www.instagram.com/p/DXuU1rNF1ti/",
+        "targetUsername": "no4onthehighstreet",
+        "targetCity": "los-angeles"
+      },
+      "context": {
+        "postPreview": "The Wisteria is looking beautiful💜 And the courtyard is almost ready for the Cavalier Cafe on Sunday..\n\n*** More detail",
+        "relevanceScore": 85,
+        "likesCount": 31,
+        "eventSignals": [
+          "caption:event",
+          "caption:day",
+          "caption:meetup",
+          "has-location",
+          "has-date",
+          "5-mentions",
+          "medium-engagement",
+          "recent"
+        ]
+      },
+      "notes": "Comment on @no4onthehighstreet's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-t32j",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "What an awesome event for the London dog community! We've been tracking these at pawcities.com — keep them coming! 🐶",
+        "targetPost": "https://www.instagram.com/p/DXyh-nsiPvo/",
+        "targetUsername": "jasper_harley_doodledoo",
+        "targetCity": "london"
+      },
+      "context": {
+        "postPreview": "🐾✨ ALL ABOUT DOGS SHOW UK – MAY BANK HOLIDAY 2026 ✨🐾 \n\nLooking for the best dog show in the UK this May Bank Holiday w",
+        "relevanceScore": 85,
+        "likesCount": 74,
+        "eventSignals": [
+          "caption:event",
+          "caption:show",
+          "caption:park",
+          "has-location",
+          "has-date",
+          "2-mentions",
+          "medium-engagement",
+          "recent"
+        ]
+      },
+      "notes": "Comment on @jasper_harley_doodledoo's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-eu0d",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "Love this! We just added this to our dog-friendly event calendar for Los Angeles on pawcities.com 🐾 Thanks for sharing!",
+        "targetPost": "https://www.instagram.com/p/DXt4ijxDnHa/",
+        "targetUsername": "baileyscbd",
+        "targetCity": "los-angeles"
+      },
+      "context": {
+        "postPreview": "VENDOR ALERT 🚨💛 DTLA’s first-ever structured dog pack walk is here 🐾 presented by @fitpalslosangeles in partnership w",
+        "relevanceScore": 80,
+        "likesCount": 26,
+        "eventSignals": [
+          "caption:event",
+          "caption:day",
+          "caption:walk",
+          "has-location",
+          "has-date",
+          "3-mentions",
+          "recent"
+        ]
+      },
+      "notes": "Comment on @baileyscbd's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-pu6d",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "This looks amazing! We track dog-friendly events across Los Angeles and 6 other cities — just featured this one 🙌",
+        "targetPost": "https://www.instagram.com/p/DX0K20DFGEJ/",
+        "targetUsername": "dogsintheparknsw",
+        "targetCity": "los-angeles"
+      },
+      "context": {
+        "postPreview": "🚨🐾 DOGS DAY OUT IS TOMORROW! 🐾🚨\n\nCastle Hill, are you ready?\nThe countdown is almost over and we are bringing the pa",
+        "relevanceScore": 80,
+        "likesCount": 16,
+        "eventSignals": [
+          "caption:event",
+          "caption:show",
+          "caption:day",
+          "has-location",
+          "venue:showground",
+          "has-date",
+          "recent"
+        ]
+      },
+      "notes": "Comment on @dogsintheparknsw's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-ar4t",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "Great event! We're building a global calendar of dog-friendly events and this is exactly what the London community needs 🐕",
+        "targetPost": "https://www.instagram.com/p/DXzcfKNiEKU/",
+        "targetUsername": "thedogvine",
+        "targetCity": "london"
+      },
+      "context": {
+        "postPreview": "Your dog is going to love May 🐶🤩👇\n\nIf your social plans revolve around your dog, May is looking very good so far...\n\n",
+        "relevanceScore": 80,
+        "likesCount": 471,
+        "eventSignals": [
+          "caption:event",
+          "caption:festival",
+          "caption:show",
+          "has-location",
+          "has-date",
+          "high-engagement",
+          "recent"
+        ]
+      },
+      "notes": "Comment on @thedogvine's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-761z",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "So cool! We curate dog-friendly events worldwide and just spotted this for London. Added to pawcities.com! 📅🐾",
+        "targetPost": "https://www.instagram.com/p/DXhdo6RiGeD/",
+        "targetUsername": "daisydogmeets",
+        "targetCity": "london"
+      },
+      "context": {
+        "postPreview": "Daisy’s Dachshund Meet Ups are a regular monthly London-based, relaxed, friendly and social way to meet other dachshunds",
+        "relevanceScore": 80,
+        "likesCount": 85,
+        "eventSignals": [
+          "caption:event",
+          "caption:park",
+          "caption:day",
+          "has-location",
+          "venue:park",
+          "has-date",
+          "medium-engagement",
+          "last-30d"
+        ]
+      },
+      "notes": "Comment on @daisydogmeets's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-spdl",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "What an awesome event for the Los Angeles dog community! We've been tracking these at pawcities.com — keep them coming! 🐶",
+        "targetPost": "https://www.instagram.com/p/DXmilM8jeMS/",
+        "targetUsername": "amff_markets.notts",
+        "targetCity": "los-angeles"
+      },
+      "context": {
+        "postPreview": "📆 SUNDAY 3rd May \n📍Ravenshead Village Hall NG15 9BP\n⏰ 10am  to  2pm\n💰 Free Entry & Parking\n🐕 Dogs on leads welcome \n",
+        "relevanceScore": 75,
+        "likesCount": 24,
+        "eventSignals": [
+          "caption:park",
+          "caption:day",
+          "caption:market",
+          "has-location",
+          "has-date",
+          "5-mentions",
+          "last-30d"
+        ]
+      },
+      "notes": "Comment on @amff_markets.notts's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-oiht",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "Love this! We just added this to our dog-friendly event calendar for New York City on pawcities.com 🐾 Thanks for sharing!",
+        "targetPost": "https://www.instagram.com/p/DXXoS1TjmCa/",
+        "targetUsername": "tzu_ming_doodle",
+        "targetCity": "new-york-city"
+      },
+      "context": {
+        "postPreview": "We’re so excited to be part of Good Bois Club 🐾💌\n\nThis weekend, korean k9 rescue is teaming up with Good Bois Club to ",
+        "relevanceScore": 75,
+        "likesCount": 338,
+        "eventSignals": [
+          "caption:event",
+          "caption:adoption",
+          "caption:rescue",
+          "has-location",
+          "has-date",
+          "high-engagement",
+          "last-30d"
+        ]
+      },
+      "notes": "Comment on @tzu_ming_doodle's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-36ki",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "This looks amazing! We track dog-friendly events across London and 6 other cities — just featured this one 🙌",
+        "targetPost": "https://www.instagram.com/p/DU-kqElDZ6B/",
+        "targetUsername": "dogstival",
+        "targetCity": "london"
+      },
+      "context": {
+        "postPreview": "Grab your furiends and head to @dogstival sponsored by @naturopetfood 🐾💛 The GREATEST festival for dogs in the heart o",
+        "relevanceScore": 75,
+        "likesCount": 96,
+        "eventSignals": [
+          "caption:event",
+          "caption:festival",
+          "caption:fest",
+          "has-location",
+          "has-date",
+          "3-mentions",
+          "medium-engagement"
+        ]
+      },
+      "notes": "Comment on @dogstival's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-7ub5",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "Great event! We're building a global calendar of dog-friendly events and this is exactly what the Los Angeles community needs 🐕",
+        "targetPost": "https://www.instagram.com/p/C8e9qaYpt3D/",
+        "targetUsername": "northpawsbaseball",
+        "targetCity": "los-angeles"
+      },
+      "context": {
+        "postPreview": "BARK IN THE PARK 🐕⚾️\nSponsored by : @bosleyskamloopsvalleyview \nCharity : @bcspca \nWho : The NorthPaws vs. The RiverHaw",
+        "relevanceScore": 70,
+        "likesCount": 20,
+        "eventSignals": [
+          "caption:event",
+          "caption:park",
+          "caption:day",
+          "has-location",
+          "has-date",
+          "3-mentions"
+        ]
+      },
+      "notes": "Comment on @northpawsbaseball's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-d5xn",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "So cool! We curate dog-friendly events worldwide and just spotted this for London. Added to pawcities.com! 📅🐾",
+        "targetPost": "https://www.instagram.com/p/DXWb8tyCsuL/",
+        "targetUsername": "thatgoldiecalledlowen",
+        "targetCity": "london"
+      },
+      "context": {
+        "postPreview": "Jumping for joy today - KNOW WHY!?\n\nCos @dogsdayout.worldham is now less than 3 weeks away…WAHOO!\n\nWhy don’t you have ti",
+        "relevanceScore": 70,
+        "likesCount": 40,
+        "eventSignals": [
+          "caption:event",
+          "caption:day",
+          "caption:tickets",
+          "has-location",
+          "has-date",
+          "medium-engagement",
+          "last-30d"
+        ]
+      },
+      "notes": "Comment on @thatgoldiecalledlowen's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-ujm0",
+      "type": "comment",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "text": "What an awesome event for the Los Angeles dog community! We've been tracking these at pawcities.com — keep them coming! 🐶",
+        "targetPost": "https://www.instagram.com/p/DXn0vsiAlSF/",
+        "targetUsername": "pippasparlouricecream",
+        "targetCity": "los-angeles"
+      },
+      "context": {
+        "postPreview": "📆 SUNDAY 3rd May \n📍Ravenshead Village Hall NG15 9BP\n⏰ 10am  to  2pm\n💰 Free Entry & Parking\n🐕 Dogs on leads welcome \n",
+        "relevanceScore": 65,
+        "likesCount": 1,
+        "eventSignals": [
+          "caption:park",
+          "caption:day",
+          "caption:market",
+          "has-date",
+          "5-mentions",
+          "recent"
+        ]
+      },
+      "notes": "Comment on @pippasparlouricecream's event post. Manual: open post → paste comment → post (~15 sec)."
+    },
+    {
+      "id": "draft-1777830419309-273j",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "sippofesta",
+        "targetCity": "tokyo",
+        "profileUrl": "https://instagram.com/sippofesta",
+        "action": "follow",
+        "engagementNote": "Follow @sippofesta — 8 event-related posts, 205 total likes, avg score 66"
+      },
+      "context": {
+        "postCount": 8,
+        "totalLikes": 205,
+        "avgRelevanceScore": 66,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DX2vwkUgZv1/",
+          "https://www.instagram.com/p/DX2v34Qgdt1/"
+        ]
+      },
+      "notes": "Follow @sippofesta (Tokyo). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-hlj6",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "thecolorofsound",
+        "targetCity": "geneva",
+        "profileUrl": "https://instagram.com/thecolorofsound",
+        "action": "follow",
+        "engagementNote": "Follow @thecolorofsound — 9 event-related posts, 234 total likes, avg score 46"
+      },
+      "context": {
+        "postCount": 9,
+        "totalLikes": 234,
+        "avgRelevanceScore": 46,
+        "sampleUrls": [
+          "https://www.instagram.com/p/C0MZPAHIFwB/",
+          "https://www.instagram.com/p/DQB0NM8CHp9/"
+        ]
+      },
+      "notes": "Follow @thecolorofsound (Geneva). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-u14t",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "dogsonlysocialclub",
+        "targetCity": "los-angeles",
+        "profileUrl": "https://instagram.com/dogsonlysocialclub",
+        "action": "follow",
+        "engagementNote": "Follow @dogsonlysocialclub — 4 event-related posts, 609 total likes, avg score 80"
+      },
+      "context": {
+        "postCount": 4,
+        "totalLikes": 609,
+        "avgRelevanceScore": 80,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DXX3zFzD0Ad/",
+          "https://www.instagram.com/p/DP2gnxdieyx/"
+        ]
+      },
+      "notes": "Follow @dogsonlysocialclub (Los Angeles). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-gel3",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "urbandogholiday",
+        "targetCity": "los-angeles",
+        "profileUrl": "https://instagram.com/urbandogholiday",
+        "action": "follow",
+        "engagementNote": "Follow @urbandogholiday — 3 event-related posts, 162 total likes, avg score 70"
+      },
+      "context": {
+        "postCount": 3,
+        "totalLikes": 162,
+        "avgRelevanceScore": 70,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DX39i_4klVp/",
+          "https://www.instagram.com/p/DX39T1NkpjR/"
+        ]
+      },
+      "notes": "Follow @urbandogholiday (Los Angeles). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-as9r",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "pupgum",
+        "targetCity": "new-york-city",
+        "profileUrl": "https://instagram.com/pupgum",
+        "action": "follow",
+        "engagementNote": "Follow @pupgum — 3 event-related posts, 142 total likes, avg score 57"
+      },
+      "context": {
+        "postCount": 3,
+        "totalLikes": 142,
+        "avgRelevanceScore": 57,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DXxI7_eCT5j/",
+          "https://www.instagram.com/p/DXrlmjxiRk5/"
+        ]
+      },
+      "notes": "Follow @pupgum (New York City). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-904t",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "noriandpabi",
+        "targetCity": "tokyo",
+        "profileUrl": "https://instagram.com/noriandpabi",
+        "action": "follow",
+        "engagementNote": "Follow @noriandpabi — 3 event-related posts, 41 total likes, avg score 53"
+      },
+      "context": {
+        "postCount": 3,
+        "totalLikes": 41,
+        "avgRelevanceScore": 53,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DXWEKUiANss/",
+          "https://www.instagram.com/p/DXWFna5gLtL/"
+        ]
+      },
+      "notes": "Follow @noriandpabi (Tokyo). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-f1gb",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "dogsintheparknsw",
+        "targetCity": "los-angeles",
+        "profileUrl": "https://instagram.com/dogsintheparknsw",
+        "action": "follow",
+        "engagementNote": "Follow @dogsintheparknsw — 2 event-related posts, 20 total likes, avg score 68"
+      },
+      "context": {
+        "postCount": 2,
+        "totalLikes": 20,
+        "avgRelevanceScore": 68,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DX0K20DFGEJ/",
+          "https://www.instagram.com/p/DXvwXv5DDG-/"
+        ]
+      },
+      "notes": "Follow @dogsintheparknsw (Los Angeles). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-c7r4",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "tailmate.app",
+        "targetCity": "paris",
+        "profileUrl": "https://instagram.com/tailmate.app",
+        "action": "follow",
+        "engagementNote": "Follow @tailmate.app — 3 event-related posts, 285 total likes, avg score 40"
+      },
+      "context": {
+        "postCount": 3,
+        "totalLikes": 285,
+        "avgRelevanceScore": 40,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DXkF2rliYnx/",
+          "https://www.instagram.com/p/DXuW2qYiR6r/"
+        ]
+      },
+      "notes": "Follow @tailmate.app (Paris). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-7g1h",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "sophart.photography.ch",
+        "targetCity": "geneva",
+        "profileUrl": "https://instagram.com/sophart.photography.ch",
+        "action": "follow",
+        "engagementNote": "Follow @sophart.photography.ch — 3 event-related posts, 198 total likes, avg score 40"
+      },
+      "context": {
+        "postCount": 3,
+        "totalLikes": 198,
+        "avgRelevanceScore": 40,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DJ6BiwToTuO/",
+          "https://www.instagram.com/p/DJ6Be8poEkE/"
+        ]
+      },
+      "notes": "Follow @sophart.photography.ch (Geneva). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-kc4e",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "tzu_ming_doodle",
+        "targetCity": "new-york-city",
+        "profileUrl": "https://instagram.com/tzu_ming_doodle",
+        "action": "follow",
+        "engagementNote": "Follow @tzu_ming_doodle — 2 event-related posts, 426 total likes, avg score 58"
+      },
+      "context": {
+        "postCount": 2,
+        "totalLikes": 426,
+        "avgRelevanceScore": 58,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DXXoS1TjmCa/",
+          "https://www.instagram.com/p/DXgIADOjqpi/"
+        ]
+      },
+      "notes": "Follow @tzu_ming_doodle (New York City). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-khku",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "the.jett.stream",
+        "targetCity": "london",
+        "profileUrl": "https://instagram.com/the.jett.stream",
+        "action": "follow",
+        "engagementNote": "Follow @the.jett.stream — 2 event-related posts, 52 total likes, avg score 55"
+      },
+      "context": {
+        "postCount": 2,
+        "totalLikes": 52,
+        "avgRelevanceScore": 55,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DPWt3C4DSso/",
+          "https://www.instagram.com/p/DUi_SbLjTq2/"
+        ]
+      },
+      "notes": "Follow @the.jett.stream (London). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-97u6",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "emi_the_cockapooo",
+        "targetCity": "los-angeles",
+        "profileUrl": "https://instagram.com/emi_the_cockapooo",
+        "action": "follow",
+        "engagementNote": "Follow @emi_the_cockapooo — 2 event-related posts, 346 total likes, avg score 55"
+      },
+      "context": {
+        "postCount": 2,
+        "totalLikes": 346,
+        "avgRelevanceScore": 55,
+        "sampleUrls": [
+          "https://www.instagram.com/p/CsziYypPf35/",
+          "https://www.instagram.com/p/CqhNdPnrPLa/"
+        ]
+      },
+      "notes": "Follow @emi_the_cockapooo (Los Angeles). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-vgdv",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "borisandhorton",
+        "targetCity": "new-york-city",
+        "profileUrl": "https://instagram.com/borisandhorton",
+        "action": "follow",
+        "engagementNote": "Follow @borisandhorton — 2 event-related posts, 93 total likes, avg score 50"
+      },
+      "context": {
+        "postCount": 2,
+        "totalLikes": 93,
+        "avgRelevanceScore": 50,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DXzAPfwDvJY/",
+          "https://www.instagram.com/p/DXwi351jrc4/"
+        ]
+      },
+      "notes": "Follow @borisandhorton (New York City). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-c2y6",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "finnegan.the.boxer",
+        "targetCity": "geneva",
+        "profileUrl": "https://instagram.com/finnegan.the.boxer",
+        "action": "follow",
+        "engagementNote": "Follow @finnegan.the.boxer — 2 event-related posts, 75 total likes, avg score 50"
+      },
+      "context": {
+        "postCount": 2,
+        "totalLikes": 75,
+        "avgRelevanceScore": 50,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DXmwET4CnVB/",
+          "https://www.instagram.com/p/DV30UE1Cvag/"
+        ]
+      },
+      "notes": "Follow @finnegan.the.boxer (Geneva). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-q1u6",
+      "type": "follow",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "today_la",
+        "targetCity": "los-angeles",
+        "profileUrl": "https://instagram.com/today_la",
+        "action": "follow",
+        "engagementNote": "Follow @today_la — 1 event-related posts, 50 total likes, avg score 85"
+      },
+      "context": {
+        "postCount": 1,
+        "totalLikes": 50,
+        "avgRelevanceScore": 85,
+        "sampleUrls": [
+          "https://www.instagram.com/p/DXqaIiYlW14/"
+        ]
+      },
+      "notes": "Follow @today_la (Los Angeles). Then engage with their latest post."
+    },
+    {
+      "id": "draft-1777830419309-0qnm",
+      "type": "dm",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "low",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "sippofesta",
+        "text": "Hey! 👋 Love what you're doing for the dog community in Tokyo. We're building pawcities.com — a free guide to dog-friendly cities, events, and places around the world. We just featured your events on our Tokyo calendar!\n\nWould love to connect and support each other's communities. Let us know if you have any upcoming events you'd like us to help promote! 🐾"
+      },
+      "context": {
+        "avgRelevanceScore": 66,
+        "totalLikes": 205,
+        "postCount": 8
+      },
+      "notes": "DM to @sippofesta — high-value event organizer in Tokyo. Send AFTER following + commenting."
+    },
+    {
+      "id": "draft-1777830419309-h390",
+      "type": "dm",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "low",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "dogsonlysocialclub",
+        "text": "Hey! 👋 Love what you're doing for the dog community in Los Angeles. We're building pawcities.com — a free guide to dog-friendly cities, events, and places around the world. We just featured your events on our Los Angeles calendar!\n\nWould love to connect and support each other's communities. Let us know if you have any upcoming events you'd like us to help promote! 🐾"
+      },
+      "context": {
+        "avgRelevanceScore": 80,
+        "totalLikes": 609,
+        "postCount": 4
+      },
+      "notes": "DM to @dogsonlysocialclub — high-value event organizer in Los Angeles. Send AFTER following + commenting."
+    },
+    {
+      "id": "draft-1777830419309-ozp1",
+      "type": "dm",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "low",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "urbandogholiday",
+        "text": "Hey! 👋 Love what you're doing for the dog community in Los Angeles. We're building pawcities.com — a free guide to dog-friendly cities, events, and places around the world. We just featured your events on our Los Angeles calendar!\n\nWould love to connect and support each other's communities. Let us know if you have any upcoming events you'd like us to help promote! 🐾"
+      },
+      "context": {
+        "avgRelevanceScore": 70,
+        "totalLikes": 162,
+        "postCount": 3
+      },
+      "notes": "DM to @urbandogholiday — high-value event organizer in Los Angeles. Send AFTER following + commenting."
+    },
+    {
+      "id": "draft-1777830419309-k9g9",
+      "type": "dm",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "low",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "pupgum",
+        "text": "Hey! 👋 Love what you're doing for the dog community in New York City. We're building pawcities.com — a free guide to dog-friendly cities, events, and places around the world. We just featured your events on our New York City calendar!\n\nWould love to connect and support each other's communities. Let us know if you have any upcoming events you'd like us to help promote! 🐾"
+      },
+      "context": {
+        "avgRelevanceScore": 57,
+        "totalLikes": 142,
+        "postCount": 3
+      },
+      "notes": "DM to @pupgum — high-value event organizer in New York City. Send AFTER following + commenting."
+    },
+    {
+      "id": "draft-1777830419309-blfl",
+      "type": "dm",
+      "category": "outreach",
+      "status": "pending",
+      "priority": "low",
+      "createdAt": "2026-05-03T17:46:59.300Z",
+      "platform": "instagram",
+      "content": {
+        "targetUsername": "tzu_ming_doodle",
+        "text": "Hey! 👋 Love what you're doing for the dog community in New York City. We're building pawcities.com — a free guide to dog-friendly cities, events, and places around the world. We just featured your events on our New York City calendar!\n\nWould love to connect and support each other's communities. Let us know if you have any upcoming events you'd like us to help promote! 🐾"
+      },
+      "context": {
+        "avgRelevanceScore": 58,
+        "totalLikes": 426,
+        "postCount": 2
+      },
+      "notes": "DM to @tzu_ming_doodle — high-value event organizer in New York City. Send AFTER following + commenting."
+    }
+  ],
+  "meta": {
+    "created": "2026-05-03T17:46:59.275Z",
+    "lastGenerated": "2026-05-03T17:46:59.309Z"
+  }
+}

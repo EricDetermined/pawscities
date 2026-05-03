@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { CityConfig } from '@/lib/cities-config';
+import type { PawEvent } from '@/types';
 
 const CATEGORIES = [
   { slug: 'parks', icon: '🌳', label: 'Parks' },
@@ -24,9 +25,19 @@ interface CityStats {
 interface HomePageClientProps {
   cities: CityConfig[];
   cityStats: Record<string, CityStats>;
+  events?: PawEvent[];
 }
 
-export default function HomePageClient({ cities, cityStats }: HomePageClientProps) {
+function formatEventDate(dateStr: string): { day: string; month: string; weekday: string } {
+  const d = new Date(dateStr + 'T00:00:00');
+  return {
+    day: d.getDate().toString(),
+    month: d.toLocaleDateString('en-US', { month: 'short' }),
+    weekday: d.toLocaleDateString('en-US', { weekday: 'short' }),
+  };
+}
+
+export default function HomePageClient({ cities, cityStats, events = [] }: HomePageClientProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -225,6 +236,89 @@ export default function HomePageClient({ cities, cityStats }: HomePageClientProp
           <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#16213e] to-transparent w-24" />
         </div>
       </section>
+
+      {/* Events Banner */}
+      {events.length > 0 && (
+        <section className="bg-gray-50 border-b">
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <span className="text-lg">📅</span>
+                <h2 className="font-display text-lg font-bold text-gray-900">Happening Soon</h2>
+                <span className="text-sm text-gray-500">Dog-friendly events worldwide</span>
+              </div>
+              <Link
+                href="/events/submit"
+                className="text-sm text-orange-600 hover:text-orange-700 font-medium hidden sm:inline-flex items-center gap-1"
+              >
+                Submit an event &rarr;
+              </Link>
+            </div>
+            <div className="flex gap-4 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
+              {events.map((event) => {
+                const { day, month, weekday } = formatEventDate(event.startDate);
+                return (
+                  <Link
+                    key={event.id}
+                    href={`/${event.citySlug}#events`}
+                    className="flex items-center gap-3 min-w-[280px] sm:min-w-[300px] bg-white rounded-xl border border-gray-200 p-3 hover:border-orange-300 hover:shadow-sm transition-all group shrink-0"
+                  >
+                    {/* Date block */}
+                    <div className="text-center min-w-[48px] shrink-0">
+                      <div className="text-xs text-gray-400 uppercase">{weekday}</div>
+                      <div className="text-xl font-bold text-gray-900 leading-tight">{day}</div>
+                      <div className="text-xs text-gray-500">{month}</div>
+                    </div>
+                    {/* Event info */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate group-hover:text-orange-600 transition-colors">
+                        {event.name}
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">
+                        {event.venueName ? `${event.venueName} · ` : ''}{event.cityName}
+                      </p>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <span className="text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">
+                          {event.cityName}
+                        </span>
+                        {event.isFree && (
+                          <span className="text-xs bg-green-50 text-green-700 px-1.5 py-0.5 rounded">
+                            Free
+                          </span>
+                        )}
+                        {event.isFeatured && (
+                          <span className="text-xs bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded">
+                            Featured
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+              {/* Submit CTA card */}
+              <Link
+                href="/events/submit"
+                className="flex items-center justify-center min-w-[180px] bg-orange-50 border-2 border-dashed border-orange-200 rounded-xl p-4 hover:border-orange-400 hover:bg-orange-100/50 transition-all shrink-0"
+              >
+                <div className="text-center">
+                  <div className="text-2xl mb-1">🐾</div>
+                  <p className="text-sm font-medium text-orange-700">Know an event?</p>
+                  <p className="text-xs text-orange-500">Submit it free</p>
+                </div>
+              </Link>
+            </div>
+            <div className="mt-3 sm:hidden">
+              <Link
+                href="/events/submit"
+                className="text-sm text-orange-600 hover:text-orange-700 font-medium inline-flex items-center gap-1"
+              >
+                Submit an event &rarr;
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Cities Grid */}
       <section id="cities-section" className="py-16 px-4">

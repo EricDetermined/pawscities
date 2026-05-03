@@ -1,0 +1,715 @@
+[
+  {
+    "username": "sippofesta",
+    "postCount": 8,
+    "totalLikes": 205,
+    "totalRelevanceScore": 525,
+    "cities": [
+      "tokyo"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DX2vwkUgZv1/",
+      "https://www.instagram.com/p/DX2v34Qgdt1/",
+      "https://www.instagram.com/p/DX2v0oWAXG5/"
+    ],
+    "avgRelevanceScore": 66
+  },
+  {
+    "username": "thecolorofsound",
+    "postCount": 9,
+    "totalLikes": 234,
+    "totalRelevanceScore": 415,
+    "cities": [
+      "geneva"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/C0MZPAHIFwB/",
+      "https://www.instagram.com/p/DQB0NM8CHp9/",
+      "https://www.instagram.com/p/C0MaxNnIJ7d/"
+    ],
+    "avgRelevanceScore": 46
+  },
+  {
+    "username": "dogsonlysocialclub",
+    "postCount": 4,
+    "totalLikes": 609,
+    "totalRelevanceScore": 320,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXX3zFzD0Ad/",
+      "https://www.instagram.com/p/DP2gnxdieyx/",
+      "https://www.instagram.com/p/DNGpki2SeG0/"
+    ],
+    "avgRelevanceScore": 80
+  },
+  {
+    "username": "urbandogholiday",
+    "postCount": 3,
+    "totalLikes": 162,
+    "totalRelevanceScore": 210,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DX39i_4klVp/",
+      "https://www.instagram.com/p/DX39T1NkpjR/",
+      "https://www.instagram.com/p/DX38z-rEkzY/"
+    ],
+    "avgRelevanceScore": 70
+  },
+  {
+    "username": "areyouintense",
+    "postCount": 7,
+    "totalLikes": 162,
+    "totalRelevanceScore": 180,
+    "cities": [
+      "new-york-city"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXhM6JjjOZ1/",
+      "https://www.instagram.com/p/DXCaKFgFexz/",
+      "https://www.instagram.com/p/DW_ngisjcy3/"
+    ],
+    "avgRelevanceScore": 26
+  },
+  {
+    "username": "kenya.friends",
+    "postCount": 5,
+    "totalLikes": 205,
+    "totalRelevanceScore": 175,
+    "cities": [
+      "geneva"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DUBTbG4iNeQ/",
+      "https://www.instagram.com/p/DTfz9VEiM-p/",
+      "https://www.instagram.com/p/DUn7PBJiOLx/"
+    ],
+    "avgRelevanceScore": 35
+  },
+  {
+    "username": "pupgum",
+    "postCount": 3,
+    "totalLikes": 142,
+    "totalRelevanceScore": 170,
+    "cities": [
+      "new-york-city",
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXxI7_eCT5j/",
+      "https://www.instagram.com/p/DXrlmjxiRk5/",
+      "https://www.instagram.com/p/DX4MSpwkxA9/"
+    ],
+    "avgRelevanceScore": 57
+  },
+  {
+    "username": "terrace_park_dog_fes",
+    "postCount": 3,
+    "totalLikes": -3,
+    "totalRelevanceScore": 165,
+    "cities": [
+      "tokyo"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DX4GM7eAVz5/",
+      "https://www.instagram.com/p/DX3xVbdjq72/",
+      "https://www.instagram.com/p/DX3OL6KgVQH/"
+    ],
+    "avgRelevanceScore": 55
+  },
+  {
+    "username": "noriandpabi",
+    "postCount": 3,
+    "totalLikes": 41,
+    "totalRelevanceScore": 160,
+    "cities": [
+      "tokyo"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXWEKUiANss/",
+      "https://www.instagram.com/p/DXWFna5gLtL/",
+      "https://www.instagram.com/p/DXWFT9PAA8k/"
+    ],
+    "avgRelevanceScore": 53
+  },
+  {
+    "username": "evolveprinting",
+    "postCount": 4,
+    "totalLikes": 0,
+    "totalRelevanceScore": 145,
+    "cities": [
+      "london"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXzDlZgDO0p/",
+      "https://www.instagram.com/p/DXtpBPUjP1f/",
+      "https://www.instagram.com/p/DXpP9D7lgaO/"
+    ],
+    "avgRelevanceScore": 36
+  },
+  {
+    "username": "dogsintheparknsw",
+    "postCount": 2,
+    "totalLikes": 20,
+    "totalRelevanceScore": 135,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DX0K20DFGEJ/",
+      "https://www.instagram.com/p/DXvwXv5DDG-/"
+    ],
+    "avgRelevanceScore": 68
+  },
+  {
+    "username": "thedogbff",
+    "postCount": 4,
+    "totalLikes": 26,
+    "totalRelevanceScore": 135,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DJEyRNKJJ3j/",
+      "https://www.instagram.com/p/DJIYoLTyoDh/",
+      "https://www.instagram.com/p/DJIGnxRTXKH/"
+    ],
+    "avgRelevanceScore": 34
+  },
+  {
+    "username": "_dogsofparis",
+    "postCount": 4,
+    "totalLikes": 19,
+    "totalRelevanceScore": 135,
+    "cities": [
+      "paris"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DX36VjbCC-g/",
+      "https://www.instagram.com/p/DXolxgniLJj/",
+      "https://www.instagram.com/p/DXmt2FJCMrS/"
+    ],
+    "avgRelevanceScore": 34
+  },
+  {
+    "username": "mi_adorable_perro",
+    "postCount": 5,
+    "totalLikes": 80,
+    "totalRelevanceScore": 125,
+    "cities": [
+      "barcelona"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXgvt7xjEkf/",
+      "https://www.instagram.com/p/DWx3z2wjBgh/",
+      "https://www.instagram.com/p/DX4EyNZDHjc/"
+    ],
+    "avgRelevanceScore": 25
+  },
+  {
+    "username": "tailmate.app",
+    "postCount": 3,
+    "totalLikes": 285,
+    "totalRelevanceScore": 120,
+    "cities": [
+      "paris"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXkF2rliYnx/",
+      "https://www.instagram.com/p/DXuW2qYiR6r/",
+      "https://www.instagram.com/p/DXhcSTtCT2G/"
+    ],
+    "avgRelevanceScore": 40
+  },
+  {
+    "username": "sophart.photography.ch",
+    "postCount": 3,
+    "totalLikes": 198,
+    "totalRelevanceScore": 120,
+    "cities": [
+      "geneva"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DJ6BiwToTuO/",
+      "https://www.instagram.com/p/DJ6Be8poEkE/",
+      "https://www.instagram.com/p/DJ4rZ0WIiRP/"
+    ],
+    "avgRelevanceScore": 40
+  },
+  {
+    "username": "themosaicers",
+    "postCount": 4,
+    "totalLikes": 16,
+    "totalRelevanceScore": 120,
+    "cities": [
+      "london"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DPV72RdFfWa/",
+      "https://www.instagram.com/p/DPTur53CU44/",
+      "https://www.instagram.com/p/DPQ9ZIhDDpU/"
+    ],
+    "avgRelevanceScore": 30
+  },
+  {
+    "username": "tzu_ming_doodle",
+    "postCount": 2,
+    "totalLikes": 426,
+    "totalRelevanceScore": 115,
+    "cities": [
+      "new-york-city"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXXoS1TjmCa/",
+      "https://www.instagram.com/p/DXgIADOjqpi/"
+    ],
+    "avgRelevanceScore": 58
+  },
+  {
+    "username": "theirishbluecross",
+    "postCount": 3,
+    "totalLikes": 93,
+    "totalRelevanceScore": 115,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/Cebz4ojIwIF/",
+      "https://www.instagram.com/p/Cuz6SMpI6QL/",
+      "https://www.instagram.com/p/CiCedSwKKGz/"
+    ],
+    "avgRelevanceScore": 38
+  },
+  {
+    "username": "the.jett.stream",
+    "postCount": 2,
+    "totalLikes": 52,
+    "totalRelevanceScore": 110,
+    "cities": [
+      "london"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DPWt3C4DSso/",
+      "https://www.instagram.com/p/DUi_SbLjTq2/"
+    ],
+    "avgRelevanceScore": 55
+  },
+  {
+    "username": "emi_the_cockapooo",
+    "postCount": 2,
+    "totalLikes": 346,
+    "totalRelevanceScore": 110,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/CsziYypPf35/",
+      "https://www.instagram.com/p/CqhNdPnrPLa/"
+    ],
+    "avgRelevanceScore": 55
+  },
+  {
+    "username": "wildernessbullies",
+    "postCount": 4,
+    "totalLikes": 328,
+    "totalRelevanceScore": 110,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/B06SQkLn45J/",
+      "https://www.instagram.com/p/B0vwO8dHJ8b/",
+      "https://www.instagram.com/p/B0ti5B8nQYB/"
+    ],
+    "avgRelevanceScore": 28
+  },
+  {
+    "username": "laguiapetfriendly",
+    "postCount": 4,
+    "totalLikes": 52,
+    "totalRelevanceScore": 105,
+    "cities": [
+      "barcelona"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXlqBHrgHz7/",
+      "https://www.instagram.com/p/DX2NMbmjtFY/",
+      "https://www.instagram.com/p/DXjMkzxAMZS/"
+    ],
+    "avgRelevanceScore": 26
+  },
+  {
+    "username": "jimmychew.pom",
+    "postCount": 2,
+    "totalLikes": -2,
+    "totalRelevanceScore": 100,
+    "cities": [
+      "london"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DX16SN1iLrC/",
+      "https://www.instagram.com/p/DXteQcGCCCB/"
+    ],
+    "avgRelevanceScore": 50
+  },
+  {
+    "username": "borisandhorton",
+    "postCount": 2,
+    "totalLikes": 93,
+    "totalRelevanceScore": 100,
+    "cities": [
+      "new-york-city"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXzAPfwDvJY/",
+      "https://www.instagram.com/p/DXwi351jrc4/"
+    ],
+    "avgRelevanceScore": 50
+  },
+  {
+    "username": "kadkidsarounddogs",
+    "postCount": 2,
+    "totalLikes": 13,
+    "totalRelevanceScore": 100,
+    "cities": [
+      "london"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXbIdDziRtt/",
+      "https://www.instagram.com/p/DXMOCvJCpiL/"
+    ],
+    "avgRelevanceScore": 50
+  },
+  {
+    "username": "finnegan.the.boxer",
+    "postCount": 2,
+    "totalLikes": 75,
+    "totalRelevanceScore": 100,
+    "cities": [
+      "geneva"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXmwET4CnVB/",
+      "https://www.instagram.com/p/DV30UE1Cvag/"
+    ],
+    "avgRelevanceScore": 50
+  },
+  {
+    "username": "betsy__bulldog",
+    "postCount": 3,
+    "totalLikes": 4,
+    "totalRelevanceScore": 95,
+    "cities": [
+      "london"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DX2Bv2nDYs7/",
+      "https://www.instagram.com/p/DX2BQE1DfNp/",
+      "https://www.instagram.com/p/DX2BA-vDcIr/"
+    ],
+    "avgRelevanceScore": 32
+  },
+  {
+    "username": "eventosperrox",
+    "postCount": 3,
+    "totalLikes": 296,
+    "totalRelevanceScore": 95,
+    "cities": [
+      "barcelona"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DGSU6sBxZme/",
+      "https://www.instagram.com/p/DKBePwvxv9x/",
+      "https://www.instagram.com/p/DG67UN3PHRH/"
+    ],
+    "avgRelevanceScore": 32
+  },
+  {
+    "username": "today_la",
+    "postCount": 1,
+    "totalLikes": 50,
+    "totalRelevanceScore": 85,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXqaIiYlW14/"
+    ],
+    "avgRelevanceScore": 85
+  },
+  {
+    "username": "makersatthemansion",
+    "postCount": 1,
+    "totalLikes": 38,
+    "totalRelevanceScore": 85,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DX37HXtjebB/"
+    ],
+    "avgRelevanceScore": 85
+  },
+  {
+    "username": "no4onthehighstreet",
+    "postCount": 1,
+    "totalLikes": 31,
+    "totalRelevanceScore": 85,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXuU1rNF1ti/"
+    ],
+    "avgRelevanceScore": 85
+  },
+  {
+    "username": "jasper_harley_doodledoo",
+    "postCount": 1,
+    "totalLikes": 74,
+    "totalRelevanceScore": 85,
+    "cities": [
+      "london"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXyh-nsiPvo/"
+    ],
+    "avgRelevanceScore": 85
+  },
+  {
+    "username": "montysdogbeach_cali",
+    "postCount": 2,
+    "totalLikes": 48,
+    "totalRelevanceScore": 85,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXRxbioCN3R/",
+      "https://www.instagram.com/p/DX17ZZliPJd/"
+    ],
+    "avgRelevanceScore": 43
+  },
+  {
+    "username": "lanuevacentinelapdt",
+    "postCount": 2,
+    "totalLikes": 278,
+    "totalRelevanceScore": 85,
+    "cities": [
+      "barcelona"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DIfd00cx6gW/",
+      "https://www.instagram.com/p/DIh3M0xvMVL/"
+    ],
+    "avgRelevanceScore": 43
+  },
+  {
+    "username": "zoomroomlakewood",
+    "postCount": 1,
+    "totalLikes": 102,
+    "totalRelevanceScore": 80,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DMCaRBhOqqO/"
+    ],
+    "avgRelevanceScore": 80
+  },
+  {
+    "username": "baileyscbd",
+    "postCount": 1,
+    "totalLikes": 26,
+    "totalRelevanceScore": 80,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXt4ijxDnHa/"
+    ],
+    "avgRelevanceScore": 80
+  },
+  {
+    "username": "daisydogmeets",
+    "postCount": 1,
+    "totalLikes": 85,
+    "totalRelevanceScore": 80,
+    "cities": [
+      "london"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXhdo6RiGeD/"
+    ],
+    "avgRelevanceScore": 80
+  },
+  {
+    "username": "pattes_de_paris",
+    "postCount": 2,
+    "totalLikes": 4,
+    "totalRelevanceScore": 80,
+    "cities": [
+      "paris"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXrz2cdDC2w/",
+      "https://www.instagram.com/p/DXxOQS5DHnp/"
+    ],
+    "avgRelevanceScore": 40
+  },
+  {
+    "username": "rufflifepatches",
+    "postCount": 2,
+    "totalLikes": 253,
+    "totalRelevanceScore": 80,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DNQroEFRFM2/",
+      "https://www.instagram.com/p/DHZm1dzS72z/"
+    ],
+    "avgRelevanceScore": 40
+  },
+  {
+    "username": "theodorablecitydood",
+    "postCount": 2,
+    "totalLikes": 49,
+    "totalRelevanceScore": 80,
+    "cities": [
+      "new-york-city"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXzFo68kcD1/",
+      "https://www.instagram.com/p/DX4KmEikTI5/"
+    ],
+    "avgRelevanceScore": 40
+  },
+  {
+    "username": "nycragdolls",
+    "postCount": 2,
+    "totalLikes": 41,
+    "totalRelevanceScore": 80,
+    "cities": [
+      "new-york-city"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DSEFv2QjP6h/",
+      "https://www.instagram.com/p/DQ-IWUACfDq/"
+    ],
+    "avgRelevanceScore": 40
+  },
+  {
+    "username": "a_z_u_r_e_a_w",
+    "postCount": 2,
+    "totalLikes": 20,
+    "totalRelevanceScore": 80,
+    "cities": [
+      "paris"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXwxFaQDbbt/",
+      "https://www.instagram.com/p/DXrqbu-DfTx/"
+    ],
+    "avgRelevanceScore": 40
+  },
+  {
+    "username": "amff_markets.notts",
+    "postCount": 1,
+    "totalLikes": 24,
+    "totalRelevanceScore": 75,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXmilM8jeMS/"
+    ],
+    "avgRelevanceScore": 75
+  },
+  {
+    "username": "dogstival",
+    "postCount": 1,
+    "totalLikes": 96,
+    "totalRelevanceScore": 75,
+    "cities": [
+      "london"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DU-kqElDZ6B/"
+    ],
+    "avgRelevanceScore": 75
+  },
+  {
+    "username": "odewanbu",
+    "postCount": 1,
+    "totalLikes": 185,
+    "totalRelevanceScore": 75,
+    "cities": [
+      "tokyo"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DX35q-7mYaE/"
+    ],
+    "avgRelevanceScore": 75
+  },
+  {
+    "username": "thefoodfestkent",
+    "postCount": 2,
+    "totalLikes": 11,
+    "totalRelevanceScore": 75,
+    "cities": [
+      "los-angeles"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DWd0Rx6jVtN/",
+      "https://www.instagram.com/p/DWWrTDTDY4m/"
+    ],
+    "avgRelevanceScore": 38
+  },
+  {
+    "username": "cohengive",
+    "postCount": 2,
+    "totalLikes": 43,
+    "totalRelevanceScore": 75,
+    "cities": [
+      "new-york-city"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/ChvJP1bp3Y9/",
+      "https://www.instagram.com/p/ChvKEbCJrY9/"
+    ],
+    "avgRelevanceScore": 38
+  },
+  {
+    "username": "puroyakima",
+    "postCount": 2,
+    "totalLikes": 944,
+    "totalRelevanceScore": 75,
+    "cities": [
+      "barcelona"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DGw1T2kx8nD/",
+      "https://www.instagram.com/p/DHFWWEExefM/"
+    ],
+    "avgRelevanceScore": 38
+  },
+  {
+    "username": "domikokennel",
+    "postCount": 3,
+    "totalLikes": 48,
+    "totalRelevanceScore": 75,
+    "cities": [
+      "geneva"
+    ],
+    "sampleUrls": [
+      "https://www.instagram.com/p/DXC7NVIj7nV/",
+      "https://www.instagram.com/p/DXAXaH5Dzch/",
+      "https://www.instagram.com/p/DXAkFRnj20J/"
+    ],
+    "avgRelevanceScore": 25
+  }
+]

@@ -244,3 +244,74 @@ export interface SearchEvent {
   resultsCount: number;
   timestamp: string;
 }
+
+// ============================================
+// Event Types
+// ============================================
+
+export type EventStatus = 'PENDING' | 'APPROVED' | 'REJECTED' | 'CANCELLED';
+export type EventSource = 'discovery_agent' | 'user_submission' | 'admin';
+
+export interface PawEvent {
+  id: string;
+  slug: string;
+  citySlug: string;
+  cityName?: string;
+
+  // Core info
+  name: string;
+  description: string | null;
+  venueName: string | null;
+  venueAddress: string | null;
+  externalUrl: string | null;
+
+  // Date & time
+  startDate: string; // ISO date string YYYY-MM-DD
+  endDate: string | null;
+  startTime: string | null; // HH:MM
+  endTime: string | null;
+  timezone: string | null;
+
+  // Location
+  latitude: number | null;
+  longitude: number | null;
+
+  // Image
+  imageUrl: string | null;
+
+  // Categorization
+  tags: string[];
+
+  // Social metadata
+  sourceHandle: string | null;
+  sourcePostUrl: string | null;
+  discoveryScore: number;
+  mentionedHandles: string[];
+
+  // Status
+  status: EventStatus;
+  source: EventSource;
+  isFeatured: boolean;
+  isFree: boolean;
+
+  // Timestamps
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface EventSubmission {
+  name: string;
+  description?: string;
+  venueName?: string;
+  venueAddress?: string;
+  externalUrl?: string;
+  startDate: string;
+  endDate?: string;
+  startTime?: string;
+  endTime?: string;
+  citySlug: string;
+  imageUrl?: string;
+  tags?: string[];
+  submitterName: string;
+  submitterEmail: string;
+}

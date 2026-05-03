@@ -1,5 +1,6 @@
 import { CITIES } from '@/lib/cities-config';
 import { getCityEstablishments } from '@/lib/data';
+import { getHomepageEvents } from '@/lib/events';
 import HomePageClient from './HomePageClient';
 
 // Force dynamic rendering since getCityEstablishments may access Supabase
@@ -42,5 +43,13 @@ export default async function HomePage() {
     console.error('Failed to build city stats:', e);
   }
 
-  return <HomePageClient cities={cities} cityStats={cityStats} />;
+  // Fetch upcoming events for the homepage banner
+  let homepageEvents: Awaited<ReturnType<typeof getHomepageEvents>> = [];
+  try {
+    homepageEvents = await getHomepageEvents(6);
+  } catch (e) {
+    console.error('Failed to fetch homepage events:', e);
+  }
+
+  return <HomePageClient cities={cities} cityStats={cityStats} events={homepageEvents} />;
 }

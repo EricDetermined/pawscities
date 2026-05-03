@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Badge } from '@/components/ui';
 import type { CityConfig } from '@/lib/cities-config';
-import type { Establishment, CategorySlug } from '@/types';
+import type { Establishment, CategorySlug, PawEvent } from '@/types';
 import { PremiumCard } from '@/components/ListingBadges';
 
 // Dynamic import for MapView to avoid SSR issues with Leaflet
@@ -93,14 +93,145 @@ function WeatherBanner({ lat, lng, cityName }: { lat: number; lng: number; cityN
   );
 }
 
+/** Group events by relative time period */
+function groupEventsByPeriod(events: PawEvent[]): { label: string; events: PawEvent[] }[] {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const endOfWeek = new Date(today);
+  endOfWeek.setDate(today.getDate() + (7 - today.getDay()));
+  const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+  const thisWeek: PawEvent[] = [];
+  const laterThisMonth: PawEvent[] = [];
+  const upcoming: PawEvent[] = [];
+
+  events.forEach(e => {
+    const d = new Date(e.startDate + 'T00:00:00');
+    if (d <= endOfWeek) thisWeek.push(e);
+    else if (d <= endOfMonth) laterThisMonth.push(e);
+    else upcoming.push(e);
+  });
+
+  const groups: { label: string; events: PawEvent[] }[] = [];
+  if (thisWeek.length > 0) groups.push({ label: 'This week', events: thisWeek });
+  if (laterThisMonth.length > 0) groups.push({ label: 'Later this month', events: laterThisMonth });
+  if (upcoming.length > 0) groups.push({ label: 'Upcoming', events: upcoming });
+  return groups;
+}
+
+function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; cityName: string; citySlug: string }) {
+  if (events.length === 0) {
+    return (
+      <div id="events" className="bg-white rounded-xl border border-gray-200 p-5">
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-lg">📅</span>
+          <h3 className="font-display text-base font-bold text-gray-900">Events in {cityName}</h3>
+        </div>
+        <p className="text-sm text-gray-500 mb-4">No upcoming events yet for {cityName}.</p>
+        <Link
+          href="/events/submit"
+          className="inline-flex items-center gap-1.5 text-sm text-orange-600 hover:text-orange-700 font-medium"
+        >
+          {'\u{1F43E}'} Submit an event &rarr;
+        </Link>
+      </div>
+    );
+  }
+
+  const groups = groupEventsByPeriod(events);
+
+  return (
+    <div id="events" className="bg-white rounded-xl border border-gray-200 p-5 sticky top-20">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">📅</span>
+          <h3 className="font-display text-base font-bold text-gray-900">Events</h3>
+        </div>
+        <span className="text-xs text-gray-400">{events.length} upcoming</span>
+      </div>
+
+      <div className="space-y-5 max-h-[600px] overflow-y-auto pr-1">
+        {groups.map((group) => (
+          <div key={group.label}>
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+              {group.label}
+            </p>
+            <div className="space-y-2">
+              {group.events.map((event) => {
+                const d = new Date(event.startDate + 'T00:00:00');
+                const day = d.getDate();
+                const weekday = d.toLocaleDateString('en-US', { weekday: 'short' });
+                const month = d.toLocaleDateString('en-US', { month: 'short' });
+
+                return (
+                  <div
+                    key={event.id}
+                    className="flex gap-3 items-start py-2 border-b border-gray-100 last:border-0"
+                  >
+                    <div className="text-center min-w-[40px] shrink-0">
+                      <div className="text-lg font-bold text-gray-900 leading-tight">{day}</div>
+                      <div className="text-[10px] text-gray-400 uppercase">{month}</div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 leading-snug truncate">
+                        {event.name}
+                      </p>
+                      {event.venueName && (
+                        <p className="text-xs text-gray-500 truncate">{event.venueName}</p>
+                      )}
+                      <div className="flex items-center gap-1.5 mt-1">
+                        {event.isFree && (
+                          <span className="text-[10px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded font-medium">
+                            Free
+                          </span>
+                        )}
+                        {event.isFeatured && (
+                          <span className="text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded font-medium">
+                            Featured
+                          </span>
+                        )}
+                        {event.externalUrl && (
+                          <a
+                            href={event.externalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] text-orange-600 hover:text-orange-700 font-medium"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            Details &rarr;
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 pt-3 border-t border-gray-100">
+        <Link
+          href="/events/submit"
+          className="flex items-center justify-center gap-1.5 w-full py-2 text-sm text-orange-600 hover:text-orange-700 hover:bg-orange-50 rounded-lg font-medium transition-colors"
+        >
+          {'\u{1F43E}'} Submit an event
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 interface CityPageClientProps {
   city: CityConfig;
   establishments: Establishment[];
   categoryCounts: Record<string, number>;
   categories: { slug: string; name: string; nameFr: string; icon: string; color: string }[];
+  events?: PawEvent[];
 }
 
-export function CityPageClient({ city, establishments, categoryCounts, categories }: CityPageClientProps) {
+export function CityPageClient({ city, establishments, categoryCounts, categories, events = [] }: CityPageClientProps) {
   const searchParams = useSearchParams();
   const initialSearch = searchParams.get('search') || '';
   const initialCategory = searchParams.get('category') || null;
@@ -235,7 +366,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
         </div>
       </div>
 
-      {/* Results */}
+      {/* Results + Events Sidebar */}
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
           <p className="text-gray-600">
@@ -247,6 +378,10 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
             {weather?.suggestIndoor && !selectedCategory && ' (indoor-friendly first)'}
           </p>
         </div>
+
+        <div className="flex gap-6">
+        {/* Main content area */}
+        <div className="flex-1 min-w-0">
 
         {viewMode === 'map' ? (
           <div className="h-[350px] sm:h-[450px] md:h-[600px] rounded-2xl overflow-hidden shadow-lg">
@@ -261,7 +396,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
             />
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filtered.length === 0 ? (
               <div className="col-span-full text-center py-16">
                 <div className="text-6xl mb-4">{'\u{1F415}'}</div>
@@ -355,6 +490,21 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
             )}
           </div>
         )}
+
+        </div>
+        {/* End main content */}
+
+        {/* Events Sidebar — right side, desktop only */}
+        <div className="hidden lg:block w-[280px] shrink-0">
+          <EventSidebar events={events} cityName={city.name} citySlug={city.slug} />
+        </div>
+        </div>
+        {/* End flex container */}
+
+        {/* Events section — mobile (shown below listings) */}
+        <div className="lg:hidden mt-8">
+          <EventSidebar events={events} cityName={city.name} citySlug={city.slug} />
+        </div>
       </div>
 
       {/* List Your Business CTA */}

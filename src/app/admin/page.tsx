@@ -27,6 +27,7 @@ interface DashboardData {
 
 const quickActions = [
   { title: 'View Claims', href: '/admin/claims', icon: '✅', color: 'bg-blue-500' },
+  { title: 'Event Calendar', href: '/admin/events', icon: '📅', color: 'bg-rose-500' },
   { title: 'Manage Users', href: '/admin/users', icon: '👥', color: 'bg-green-500' },
   { title: 'View Analytics', href: '/admin/analytics', icon: '📈', color: 'bg-orange-500' },
   { title: 'Establishments', href: '/admin/establishments', icon: '📍', color: 'bg-purple-500' },

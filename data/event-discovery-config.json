@@ -1,0 +1,159 @@
+{
+  "version": "1.0",
+  "updated": "2026-05-03",
+  "budget": {
+    "monthly_target_usd": 39,
+    "cost_per_ig_result": 0.0023,
+    "cost_per_ig_run_base": 0.02,
+    "estimated_weekly_cost_usd": 3.50,
+    "estimated_monthly_cost_usd": 14.00,
+    "notes": "Leaves ~$25/month for handle monitoring (Task #18)"
+  },
+  "schedule": "weekly",
+  "results_per_hashtag": 10,
+  "global_event_hashtags": [
+    "dogfriendlyevent",
+    "dogevent",
+    "barkinthpark",
+    "barkintheparkmlb",
+    "dogfriendlyfestival",
+    "dogfriendlyvenue",
+    "pupevent",
+    "dogday"
+  ],
+  "cities": {
+    "los-angeles": {
+      "enabled": true,
+      "hashtags": [
+        "dogfriendlyLA",
+        "LAdogevents",
+        "dodgersdognight",
+        "barkinthparkLA",
+        "dogfriendlysocal",
+        "LAdogpark",
+        "dogsofLA",
+        "angelstadiumdogs",
+        "dogdayLA",
+        "socaldogevents"
+      ],
+      "event_sources": {
+        "instagram_hashtags": true,
+        "notes": "MLB: Dodgers, Angels both run Bark in the Park. Rose Bowl dog events. Santa Monica dog festivals."
+      }
+    },
+    "new-york-city": {
+      "enabled": true,
+      "hashtags": [
+        "NYCdogevents",
+        "dogfriendlyNYC",
+        "dogsofnyc",
+        "nycdog",
+        "PinstripePetsContest",
+        "barkinthparkNYC",
+        "dogdaynyc",
+        "puppyjamnyc",
+        "nycpuppy",
+        "dogfriendlybrooklyn"
+      ],
+      "event_sources": {
+        "instagram_hashtags": true,
+        "notes": "Yankees Pinstripe Pets, Mets Bark at the Park, Puppy Jam NYC events, Central Park dog events, Brooklyn dog community."
+      }
+    },
+    "london": {
+      "enabled": true,
+      "hashtags": [
+        "londondogevents",
+        "dogfriendlylondon",
+        "londondogs",
+        "TheLondog",
+        "dogshowUK",
+        "dogfriendlyUK",
+        "londonpuppy",
+        "UKdogevents",
+        "dogfestUK",
+        "discoverdogs"
+      ],
+      "event_sources": {
+        "instagram_hashtags": true,
+        "notes": "Discover Dogs at ExCel, PupAid, London Dog Week, breed-specific meetups in Royal Parks."
+      }
+    },
+    "barcelona": {
+      "enabled": true,
+      "hashtags": [
+        "perrobarcelona",
+        "eventosperros",
+        "perrosfriendly",
+        "dogfriendlybarcelona",
+        "perrosdebarcelona",
+        "eventocanino",
+        "perrosfelices",
+        "dogbarcelona",
+        "mascotabarcelona",
+        "concursocanino"
+      ],
+      "event_sources": {
+        "instagram_hashtags": true,
+        "notes": "Perros al Agua, Fira de l'Adopció, dog-friendly beach events. Spanish-language tags dominate."
+      }
+    },
+    "paris": {
+      "enabled": true,
+      "hashtags": [
+        "chienparis",
+        "canidays",
+        "chienstagram",
+        "evenementchien",
+        "chienfriendly",
+        "parischien",
+        "baladecanine",
+        "expositioncanine",
+        "concourschien",
+        "chiendeparis"
+      ],
+      "event_sources": {
+        "instagram_hashtags": true,
+        "notes": "Canidays Festival (May 2026), Salon de l'Agriculture dog section, Paris dog-friendly cafe culture. French-language tags essential."
+      }
+    },
+    "tokyo": {
+      "enabled": true,
+      "hashtags": [
+        "ドッグイベント",
+        "わんこイベント",
+        "わんこフェスタ",
+        "犬のイベント",
+        "ドッグフェス",
+        "犬イベント東京",
+        "ワンコイベント",
+        "ドッグラン東京",
+        "sippofesta",
+        "東京犬"
+      ],
+      "event_sources": {
+        "instagram_hashtags": true,
+        "notes": "Japan Wanko Festa (largest, 70K+), Sippo Festa, Yoyogi Park Wanwan Carnival, Urban Dog Holiday. Japanese hashtags required — English tags miss 90%+ of content."
+      }
+    },
+    "geneva": {
+      "enabled": true,
+      "hashtags": [
+        "worlddogshow",
+        "swissdogs",
+        "chienssuisses",
+        "dogshowgeneva",
+        "chienfriendlygeneve",
+        "hundevent",
+        "dogfriendlyswiss",
+        "expositioncanine",
+        "hundeschau",
+        "swissdogevents"
+      ],
+      "event_sources": {
+        "instagram_hashtags": true,
+        "notes": "World Dog Show (major global event), Swiss Kennel Club events. Trilingual: French/German/English all needed. Smaller event scene than other pilot cities."
+      }
+    }
+  }
+}

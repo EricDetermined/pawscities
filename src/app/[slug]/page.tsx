@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getCityConfig, CATEGORIES } from '@/lib/cities-config';
 import { getCityEstablishments, enrichEstablishmentsWithUserPhotos } from '@/lib/data';
+import { getCityEvents } from '@/lib/events';
 import { CityPageClient } from './CityPageClient';
 import { createClient } from '@supabase/supabase-js';
 import type { Metadata } from 'next';
@@ -154,12 +155,21 @@ export default async function CityPage({ params }: CityPageProps) {
     categoryCounts[e.categorySlug] = (categoryCounts[e.categorySlug] || 0) + 1;
   });
 
+  // Fetch upcoming events for this city
+  let cityEvents: Awaited<ReturnType<typeof getCityEvents>> = { events: [], total: 0 };
+  try {
+    cityEvents = await getCityEvents(params.slug, { limit: 20 });
+  } catch (e) {
+    console.error(`Failed to fetch events for ${params.slug}:`, e);
+  }
+
   return (
     <CityPageClient
       city={city}
       establishments={establishments}
       categoryCounts={categoryCounts}
       categories={CATEGORIES}
+      events={cityEvents.events}
     />
   );
 }
