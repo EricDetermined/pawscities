@@ -1,20 +1,23 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-    const robotsTxt = `# PawsCities - Dog-Friendly City Guide
-    # https://pawcities.com
+    const robotsTxt = `# Paw Cities - Dog-Friendly City Guide
+# https://pawcities.com
 
-    User-agent: *
-    Allow: /
-    Disallow: /api/
-    Disallow: /admin/
-    Disallow: /profile/
-    Disallow: /login
-    Disallow: /signup
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /profile/
+Disallow: /login
+Disallow: /signup
 
-    # Sitemaps
-    Sitemap: https://pawcities.com/sitemap.xml
-    `;
+# Sitemaps
+Sitemap: https://pawcities.com/sitemap.xml
+
+# AI / LLM crawlers
+# See https://pawcities.com/llms.txt for structured site info
+`;
 
   return new NextResponse(robotsTxt, {
         status: 200,

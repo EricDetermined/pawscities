@@ -9,6 +9,8 @@ import { ListingBadges } from '@/components/ListingBadges';
 import EstablishmentInteractions from '@/components/EstablishmentInteractions';
 import { TrackedContactButtons } from '@/components/TrackedContactButtons';
 
+const BASE_URL = 'https://pawcities.com';
+
 function getSupabaseAdmin() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -37,9 +39,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     } catch { /* fallthrough */ }
   }
   if (!city || !place) return {};
+  const url = `${BASE_URL}/${city.slug}/${params.establishment}`;
   return {
     title: `${place.name} - Dog-Friendly in ${city.name} | Paw Cities`,
     description: place.description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${place.name} - Dog-Friendly in ${city.name}`,
+      description: place.description || `Discover ${place.name}, a dog-friendly place in ${city.name}.`,
+      url,
+      siteName: 'Paw Cities',
+      type: 'website',
+      images: [{ url: `${BASE_URL}/images/og-default.png`, width: 1200, height: 630, alt: `${place.name} - Paw Cities` }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${place.name} - Dog-Friendly in ${city.name}`,
+      description: place.description || `Discover ${place.name}, a dog-friendly place in ${city.name}.`,
+      images: [`${BASE_URL}/images/og-default.png`],
+    },
   };
 }
 
@@ -128,8 +146,58 @@ export default async function EstablishmentPage({ params }: Props) {
 
   const hasHours = place.hours && Object.keys(place.hours).length > 0;
 
+  // Build JSON-LD structured data
+  const priceLevelMap: Record<number, string> = { 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' };
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: place.name,
+    description: place.description,
+    url: `${BASE_URL}/${city.slug}/${place.slug}`,
+    image: place.images[0],
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: place.address,
+      addressLocality: city.name,
+      addressCountry: city.countryCode,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: place.latitude,
+      longitude: place.longitude,
+    },
+    ...(place.phone ? { telephone: place.phone } : {}),
+    ...(place.website ? { sameAs: [place.website] } : {}),
+    priceRange: priceLevelMap[place.priceLevel] || '$$',
+    aggregateRating: place.reviewCount > 0 ? {
+      '@type': 'AggregateRating',
+      ratingValue: place.rating,
+      reviewCount: place.reviewCount,
+      bestRating: 5,
+    } : undefined,
+    additionalProperty: featureList.filter(f => f.active).map(f => ({
+      '@type': 'PropertyValue',
+      name: f.label,
+      value: 'Yes',
+    })),
+  };
+
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Paw Cities', item: BASE_URL },
+      { '@type': 'ListItem', position: 2, name: city.name, item: `${BASE_URL}/${city.slug}` },
+      { '@type': 'ListItem', position: 3, name: place.name, item: `${BASE_URL}/${city.slug}/${place.slug}` },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* JSON-LD Structured Data */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+
       {/* Breadcrumb */}
       <nav className="container mx-auto px-4 py-3">
         <Link href={`/${city.slug}`} className="flex items-center gap-1 text-sm text-gray-600 hover:text-primary-600 transition-colors">

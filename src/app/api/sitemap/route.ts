@@ -18,6 +18,7 @@ const CITY_SLUGS = [
 const STATIC_PAGES = [
   { path: '/', priority: '1.0', changefreq: 'daily' },
   { path: '/explore', priority: '0.9', changefreq: 'daily' },
+  { path: '/for-business', priority: '0.7', changefreq: 'weekly' },
   { path: '/business/list', priority: '0.7', changefreq: 'weekly' },
   { path: '/privacy', priority: '0.3', changefreq: 'monthly' },
   { path: '/terms', priority: '0.3', changefreq: 'monthly' },

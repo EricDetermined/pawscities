@@ -7,6 +7,8 @@ import { createClient } from '@supabase/supabase-js';
 import type { Metadata } from 'next';
 import type { Establishment, CategorySlug, DogFeatures } from '@/types';
 
+const BASE_URL = 'https://pawcities.com';
+
 function getSupabaseAdmin() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -24,9 +26,25 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {
   const city = getCityConfig(params.slug);
   if (!city) return {};
+  const url = `${BASE_URL}/${city.slug}`;
   return {
     title: `Dog-Friendly Places in ${city.name} | Paw Cities`,
     description: city.description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `Dog-Friendly Places in ${city.name}`,
+      description: city.description,
+      url,
+      siteName: 'Paw Cities',
+      type: 'website',
+      images: [{ url: `${BASE_URL}/images/og-default.png`, width: 1200, height: 630, alt: `Dog-Friendly ${city.name} - Paw Cities` }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Dog-Friendly Places in ${city.name}`,
+      description: city.description,
+      images: [`${BASE_URL}/images/og-default.png`],
+    },
   };
 }
 
@@ -163,13 +181,69 @@ export default async function CityPage({ params }: CityPageProps) {
     console.error(`Failed to fetch events for ${params.slug}:`, e);
   }
 
+  // JSON-LD: BreadcrumbList + ItemList for the city
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Paw Cities', item: BASE_URL },
+      { '@type': 'ListItem', position: 2, name: city.name, item: `${BASE_URL}/${city.slug}` },
+    ],
+  };
+
+  // JSON-LD: Event schema for upcoming city events
+  const eventListLd = cityEvents.events.slice(0, 10).map((event) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: event.name,
+    ...(event.description ? { description: event.description } : {}),
+    startDate: event.startDate,
+    ...(event.endDate ? { endDate: event.endDate } : {}),
+    ...(event.venueName ? {
+      location: {
+        '@type': 'Place',
+        name: event.venueName,
+        ...(event.venueAddress ? { address: event.venueAddress } : {}),
+        ...(event.latitude && event.longitude ? {
+          geo: { '@type': 'GeoCoordinates', latitude: event.latitude, longitude: event.longitude },
+        } : {}),
+      },
+    } : {
+      location: { '@type': 'Place', name: city.name },
+    }),
+    ...(event.isFree ? { isAccessibleForFree: true } : {}),
+    ...(event.imageUrl ? { image: event.imageUrl } : {}),
+    organizer: { '@type': 'Organization', name: 'Paw Cities', url: BASE_URL },
+  }));
+
+  const itemListLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `Dog-Friendly Places in ${city.name}`,
+    description: city.description,
+    numberOfItems: establishments.length,
+    itemListElement: establishments.slice(0, 20).map((est, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: est.name,
+      url: `${BASE_URL}/${city.slug}/${est.slug}`,
+    })),
+  };
+
   return (
-    <CityPageClient
-      city={city}
-      establishments={establishments}
-      categoryCounts={categoryCounts}
-      categories={CATEGORIES}
-      events={cityEvents.events}
-    />
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }} />
+      {eventListLd.length > 0 && eventListLd.map((eventLd, i) => (
+        <script key={`event-ld-${i}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventLd) }} />
+      ))}
+      <CityPageClient
+        city={city}
+        establishments={establishments}
+        categoryCounts={categoryCounts}
+        categories={CATEGORIES}
+        events={cityEvents.events}
+      />
+    </>
   );
 }

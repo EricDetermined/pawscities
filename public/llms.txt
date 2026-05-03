@@ -1,0 +1,55 @@
+# Paw Cities
+
+> The global guide to dog-friendly restaurants, cafes, parks, hotels, events, and services.
+
+Paw Cities helps dog owners discover pet-friendly places in cities worldwide. We cover 8 cities with curated, verified listings and a community-driven events calendar.
+
+## Cities
+
+- [Geneva](https://pawcities.com/geneva): Dog-friendly places in Geneva, Switzerland
+- [Paris](https://pawcities.com/paris): Dog-friendly places in Paris, France
+- [London](https://pawcities.com/london): Dog-friendly places in London, UK
+- [Los Angeles](https://pawcities.com/losangeles): Dog-friendly places in Los Angeles, USA
+- [New York City](https://pawcities.com/newyork): Dog-friendly places in New York City, USA
+- [Barcelona](https://pawcities.com/barcelona): Dog-friendly places in Barcelona, Spain
+- [Sydney](https://pawcities.com/sydney): Dog-friendly places in Sydney, Australia
+- [Tokyo](https://pawcities.com/tokyo): Dog-friendly places in Tokyo, Japan
+
+## Content Types
+
+Each city page lists dog-friendly establishments across these categories:
+- Dog Parks
+- Restaurants
+- Cafes
+- Hotels
+- Beaches
+- Vets
+- Groomers
+- Pet Shops
+- Activities
+- Dog Walkers
+- Dog Trainers
+- Daycare & Boarding
+
+Each listing includes: name, address, description, dog-friendly features (water bowls, treats, outdoor seating, indoor access, off-leash areas, dog menu, fenced areas, shade), price level, Google rating, business hours, phone, and website.
+
+## Events
+
+Paw Cities maintains a curated calendar of dog-friendly events across all cities. Events include dog walks, adoption fairs, pet expos, yappy hours, dog-friendly brunches, training workshops, and community meetups. Events are shown on each city page and include date, venue, description, and whether they are free.
+
+## For Businesses
+
+Dog-friendly businesses can claim and manage their listing at https://pawcities.com/for-business. Listings can be enhanced with photos, verified badges, and featured placement.
+
+## Key URLs
+
+- Homepage: https://pawcities.com
+- Explore all cities: https://pawcities.com/explore
+- Business listings: https://pawcities.com/for-business
+- Privacy Policy: https://pawcities.com/privacy
+- Terms of Service: https://pawcities.com/terms
+- Sitemap: https://pawcities.com/sitemap.xml
+
+## Contact
+
+Paw Cities is operated independently. For questions or partnerships, visit https://pawcities.com.
