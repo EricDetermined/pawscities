@@ -76,6 +76,7 @@ export async function GET(request: NextRequest) {
     let totalPosted = 0;
 
     if (supabase) {
+      // Get published posts
       const { data: posts } = await supabase
         .from('social_posts')
         .select('headline')
@@ -84,6 +85,25 @@ export async function GET(request: NextRequest) {
       if (posts) {
         postedHeadlines = new Set(posts.map((p: { headline: string }) => p.headline));
         totalPosted = posts.length;
+      }
+
+      // Also skip headlines that have failed 3+ times to prevent infinite retry loops
+      const { data: failedPosts } = await supabase
+        .from('social_posts')
+        .select('headline')
+        .eq('status', 'failed');
+
+      if (failedPosts) {
+        const failCounts: Record<string, number> = {};
+        for (const p of failedPosts) {
+          failCounts[p.headline] = (failCounts[p.headline] || 0) + 1;
+        }
+        for (const [headline, count] of Object.entries(failCounts)) {
+          if (count >= 3) {
+            postedHeadlines.add(headline);
+            console.log(`Skipping "${headline}" — failed ${count} times`);
+          }
+        }
       }
     } else {
       // Fallback: read from JSON (works in dev)
