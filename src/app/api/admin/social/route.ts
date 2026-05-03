@@ -273,7 +273,16 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  return NextResponse.json({ error: 'Invalid type parameter. Use: opportunities, comments, event-drafts, content-drafts, outreach, invitations, performance, summary' }, { status: 400 });
+  /* --- Action tracking: load completed actions --- */
+  if (type === 'actions') {
+    const { data } = await db
+      .from('social_actions')
+      .select('*')
+      .order('updated_at', { ascending: false });
+    return NextResponse.json({ actions: data || [] });
+  }
+
+  return NextResponse.json({ error: 'Invalid type parameter. Use: opportunities, comments, event-drafts, content-drafts, outreach, invitations, performance, summary, actions' }, { status: 400 });
 }
 
 /* ────────────────── PATCH ────────────────── */
@@ -283,7 +292,8 @@ export async function PATCH(request: NextRequest) {
   if (!supabase) return NextResponse.json({ error: 'Auth failed' }, { status: 401 });
 
   const db = getSupabaseAdmin();
-  const { id, type, status, replied } = await request.json();
+  const body = await request.json();
+  const { id, type, status, replied, entityType, entityId, completed } = body;
 
   if (type === 'opportunity' && id && status) {
     await db
@@ -298,6 +308,24 @@ export async function PATCH(request: NextRequest) {
       .from('social_comments')
       .update({ replied, replied_at: replied ? new Date().toISOString() : null })
       .eq('id', id);
+    return NextResponse.json({ success: true });
+  }
+
+  /* --- Toggle a social action (checkbox tracking) --- */
+  if (type === 'action' && entityType && entityId && completed !== undefined) {
+    const { error: upsertError } = await db
+      .from('social_actions')
+      .upsert({
+        entity_type: entityType,
+        entity_id: entityId,
+        completed,
+        completed_at: completed ? new Date().toISOString() : null,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'entity_type,entity_id' });
+
+    if (upsertError) {
+      return NextResponse.json({ error: upsertError.message }, { status: 500 });
+    }
     return NextResponse.json({ success: true });
   }
 

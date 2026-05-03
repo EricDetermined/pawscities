@@ -82,6 +82,13 @@ interface PostItem {
   post_id: string | null;
 }
 
+interface ActionRecord {
+  entity_type: string;
+  entity_id: string;
+  completed: boolean;
+  completed_at: string | null;
+}
+
 interface PerformanceStats {
   totalPublished: number;
   totalFailed: number;
@@ -117,6 +124,9 @@ export default function SocialCommandCenter() {
   const [posts, setPosts] = useState<PostItem[]>([]);
   const [perfStats, setPerfStats] = useState<PerformanceStats | null>(null);
 
+  // Action tracking
+  const [actions, setActions] = useState<ActionRecord[]>([]);
+
   // UI state
   const [publishing, setPublishing] = useState<string | null>(null);
   const [publishResult, setPublishResult] = useState<{ id: string; success: boolean; permalink?: string; error?: string } | null>(null);
@@ -126,13 +136,14 @@ export default function SocialCommandCenter() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [evRes, oppRes, outRes, invRes, comRes, perfRes] = await Promise.all([
+      const [evRes, oppRes, outRes, invRes, comRes, perfRes, actRes] = await Promise.all([
         fetch('/api/admin/social?type=event-drafts').then(r => r.json()),
         fetch('/api/admin/social?type=opportunities').then(r => r.json()),
         fetch('/api/admin/social?type=outreach').then(r => r.json()),
         fetch('/api/admin/social?type=invitations').then(r => r.json()),
         fetch('/api/admin/social?type=comments').then(r => r.json()),
         fetch('/api/admin/social?type=performance').then(r => r.json()),
+        fetch('/api/admin/social?type=actions').then(r => r.json()),
       ]);
       setEventDrafts(evRes.drafts || []);
       setOpportunities(oppRes.opportunities || []);
@@ -141,6 +152,7 @@ export default function SocialCommandCenter() {
       setComments(comRes.comments || []);
       setPosts(perfRes.posts || []);
       setPerfStats(perfRes.stats || null);
+      setActions(actRes.actions || []);
     } catch (err) {
       console.error('Failed to fetch social data:', err);
     } finally {
@@ -215,16 +227,55 @@ export default function SocialCommandCenter() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  /* --- Counts --- */
+  /** Check if an action is completed */
+  const isActionDone = (entityType: string, entityId: string): boolean => {
+    return actions.some(a => a.entity_type === entityType && a.entity_id === entityId && a.completed);
+  };
+
+  /** Toggle an action's completed state */
+  const toggleAction = async (entityType: string, entityId: string) => {
+    const current = isActionDone(entityType, entityId);
+    const newVal = !current;
+
+    // Optimistic update
+    setActions(prev => {
+      const existing = prev.find(a => a.entity_type === entityType && a.entity_id === entityId);
+      if (existing) {
+        return prev.map(a =>
+          a.entity_type === entityType && a.entity_id === entityId
+            ? { ...a, completed: newVal, completed_at: newVal ? new Date().toISOString() : null }
+            : a
+        );
+      }
+      return [...prev, { entity_type: entityType, entity_id: entityId, completed: newVal, completed_at: newVal ? new Date().toISOString() : null }];
+    });
+
+    // Persist to server
+    await fetch('/api/admin/social', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'action', entityType, entityId, completed: newVal }),
+    });
+  };
+
+  /* --- Counts (factor in action tracking) --- */
   const pendingEvents = eventDrafts.filter(d => !d.alreadyPosted);
+  // Events with incomplete actions (either reply or post not done)
+  const eventsNeedingAction = pendingEvents.filter(d => {
+    const replyDone = !d.sourceHandle || isActionDone('event_reply', d.id);
+    const postDone = d.alreadyPosted || isActionDone('event_post', d.id);
+    return !replyDone || !postDone;
+  });
   const pendingOpps = opportunities.filter(o => o.status === 'new');
   const unrepliedComments = comments.filter(c => !c.replied);
+  const outreachPending = outreach.filter(o => !isActionDone('outreach_reply', o.id));
+  const invitationsPending = invitations.filter(i => !isActionDone('invitation_dm', i.id));
 
   const tabs: { id: TabId; label: string; count?: number; icon: string }[] = [
-    { id: 'events', label: 'Event Posts', count: pendingEvents.length, icon: '📅' },
+    { id: 'events', label: 'Event Posts', count: eventsNeedingAction.length, icon: '📅' },
     { id: 'engagement', label: 'Engagement', count: pendingOpps.length, icon: '💬' },
-    { id: 'outreach', label: 'Outreach', count: outreach.length, icon: '📣' },
-    { id: 'invitations', label: 'Invitations', count: invitations.length, icon: '🤝' },
+    { id: 'outreach', label: 'Outreach', count: outreachPending.length, icon: '📣' },
+    { id: 'invitations', label: 'Invitations', count: invitationsPending.length, icon: '🤝' },
     { id: 'comments', label: 'Comments', count: unrepliedComments.length, icon: '💭' },
     { id: 'performance', label: 'Performance', icon: '📊' },
   ];
@@ -247,7 +298,7 @@ export default function SocialCommandCenter() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Social Command Center</h1>
           <p className="text-sm text-gray-500 mt-1">
-            {pendingEvents.length} event posts ready &middot; {pendingOpps.length} engagement opportunities &middot; {unrepliedComments.length} unreplied comments
+            {eventsNeedingAction.length} events need action &middot; {outreachPending.length} outreach pending &middot; {invitationsPending.length} DMs to send &middot; {unrepliedComments.length} unreplied comments
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -286,145 +337,189 @@ export default function SocialCommandCenter() {
             <p className="text-sm text-blue-800">
               <strong>Step 1: Engage with the source</strong> — Reply to the original post where we found each event. This builds relationships and drives traffic.
               <br /><strong>Step 2: Post your own</strong> — Publish a branded creative with the city skyline + event details to your feed.
+              <br /><span className="text-blue-600">Use the checkboxes to track which steps you&apos;ve completed.</span>
             </p>
           </div>
 
           {pendingEvents.length === 0 ? (
             <EmptyState icon="📅" message="All events have been posted! Add more events to generate new post drafts." />
-          ) : pendingEvents.map(draft => (
-            <div key={draft.id} className={`bg-white rounded-xl border ${draft.isFeatured ? 'border-orange-300 ring-1 ring-orange-100' : 'border-gray-200'} overflow-hidden`}>
-              {/* Event header bar */}
-              <div className="px-5 pt-4 pb-3">
-                <div className="flex items-center gap-2 mb-2 flex-wrap">
-                  {draft.isFeatured && <span className="text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-medium">Featured</span>}
-                  {draft.isFree && <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">Free</span>}
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">{draft.cityName}</span>
-                  <span className="text-xs text-gray-400">{formatDate(draft.startDate)}{draft.endDate ? ` - ${formatDate(draft.endDate)}` : ''}</span>
-                </div>
-                <h3 className="font-semibold text-gray-900">{draft.name}</h3>
-                {draft.venueName && <p className="text-sm text-gray-600 mt-0.5">📍 {draft.venueName}{draft.venueAddress ? `, ${draft.venueAddress}` : ''}</p>}
-                {draft.tags.length > 0 && (
-                  <div className="flex gap-1 mt-2 flex-wrap">
-                    {draft.tags.map(tag => (
-                      <span key={tag} className="text-xs px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">#{tag}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
+          ) : (
+            <>
+              {/* Sort: uncompleted first, then completed */}
+              {[...pendingEvents].sort((a, b) => {
+                const aDone = (!a.sourceHandle || isActionDone('event_reply', a.id)) && (a.alreadyPosted || isActionDone('event_post', a.id));
+                const bDone = (!b.sourceHandle || isActionDone('event_reply', b.id)) && (b.alreadyPosted || isActionDone('event_post', b.id));
+                if (aDone === bDone) return 0;
+                return aDone ? 1 : -1;
+              }).map(draft => {
+                const replyDone = isActionDone('event_reply', draft.id);
+                const postDone = draft.alreadyPosted || isActionDone('event_post', draft.id);
+                const allDone = (!draft.sourceHandle || replyDone) && postDone;
 
-              {/* ── SECTION 1: Engage with Source (Primary) ── */}
-              {draft.sourceHandle && draft.engagementReplies.length > 0 && (
-                <div className="bg-purple-50 border-t border-b border-purple-200 px-5 py-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-sm font-semibold text-purple-800">Step 1: Reply to {draft.sourceHandle}</span>
-                    <a
-                      href={draft.sourcePostUrl || `https://instagram.com/${draft.sourceHandle.replace('@', '')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-purple-600 border border-purple-300 px-2.5 py-1 rounded-lg hover:bg-purple-100 font-medium"
-                    >
-                      Open Post →
-                    </a>
-                  </div>
-                  <div className="space-y-2">
-                    {draft.engagementReplies.map((reply, i) => (
-                      <div key={i} className="bg-white border border-purple-200 rounded-lg p-3 flex items-start gap-3">
-                        <div className="flex-1">
-                          <p className="text-sm text-gray-700">{reply}</p>
+                return (
+                  <div key={draft.id} className={`bg-white rounded-xl border overflow-hidden transition-all ${allDone ? 'border-green-200 opacity-75' : draft.isFeatured ? 'border-orange-300 ring-1 ring-orange-100' : 'border-gray-200'}`}>
+                    {/* Event header bar */}
+                    <div className="px-5 pt-4 pb-3">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        {allDone && <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">All Done</span>}
+                        {draft.isFeatured && !allDone && <span className="text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-medium">Featured</span>}
+                        {draft.isFree && <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">Free</span>}
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">{draft.cityName}</span>
+                        <span className="text-xs text-gray-400">{formatDate(draft.startDate)}{draft.endDate ? ` - ${formatDate(draft.endDate)}` : ''}</span>
+                      </div>
+                      <h3 className={`font-semibold ${allDone ? 'text-gray-500 line-through' : 'text-gray-900'}`}>{draft.name}</h3>
+                      {draft.venueName && <p className="text-sm text-gray-600 mt-0.5">📍 {draft.venueName}{draft.venueAddress ? `, ${draft.venueAddress}` : ''}</p>}
+                      {draft.tags.length > 0 && (
+                        <div className="flex gap-1 mt-2 flex-wrap">
+                          {draft.tags.map(tag => (
+                            <span key={tag} className="text-xs px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">#{tag}</span>
+                          ))}
                         </div>
-                        <button
-                          onClick={() => handleCopy(reply, `reply-${draft.id}-${i}`)}
-                          className="text-xs text-purple-600 border border-purple-300 px-2.5 py-1 rounded hover:bg-purple-50 whitespace-nowrap font-medium"
-                        >
-                          {copiedId === `reply-${draft.id}-${i}` ? '✓ Copied' : 'Copy'}
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* No source handle — show note */}
-              {!draft.sourceHandle && (
-                <div className="bg-gray-50 border-t border-b border-gray-200 px-5 py-3">
-                  <p className="text-xs text-gray-500">No source handle — this event was added manually. Skip to posting your own creative below.</p>
-                </div>
-              )}
-
-              {/* ── SECTION 2: Post Your Own (Secondary) ── */}
-              <div className="px-5 py-4">
-                <p className="text-sm font-semibold text-gray-700 mb-3">
-                  {draft.sourceHandle ? 'Step 2: ' : ''}Post to @thepawcities
-                </p>
-
-                <div className="flex gap-4">
-                  {/* Creative preview */}
-                  <div className="w-40 h-40 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 bg-gray-100">
-                    <img
-                      src={draft.creativeUrl}
-                      alt={`Creative for ${draft.name}`}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    {/* Caption preview */}
-                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3">
-                      <div className="flex items-center justify-between mb-1">
-                        <p className="text-xs font-medium text-gray-500">Caption:</p>
-                        <button onClick={() => handleCopy(draft.caption, `caption-${draft.id}`)} className="text-xs text-orange-600 hover:underline">
-                          {copiedId === `caption-${draft.id}` ? 'Copied!' : 'Copy'}
-                        </button>
-                      </div>
-                      <p className="text-sm text-gray-700 whitespace-pre-line">
-                        {expandedCaption === draft.id ? draft.caption : draft.caption.slice(0, 150) + (draft.caption.length > 150 ? '...' : '')}
-                      </p>
-                      {draft.caption.length > 150 && (
-                        <button onClick={() => setExpandedCaption(expandedCaption === draft.id ? null : draft.id)} className="text-xs text-orange-500 mt-1">
-                          {expandedCaption === draft.id ? 'Less' : 'More'}
-                        </button>
                       )}
                     </div>
 
-                    {/* Publish actions */}
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => publishPost(draft)}
-                        disabled={publishing === draft.id}
-                        className="flex items-center gap-1.5 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                      >
-                        {publishing === draft.id ? (
-                          <><span className="animate-spin">⏳</span> Publishing...</>
-                        ) : (
-                          <>📸 Publish</>
+                    {/* ── SECTION 1: Engage with Source (Primary) ── */}
+                    {draft.sourceHandle && draft.engagementReplies.length > 0 && (
+                      <div className={`border-t border-b px-5 py-4 ${replyDone ? 'bg-green-50 border-green-200' : 'bg-purple-50 border-purple-200'}`}>
+                        <div className="flex items-center gap-3 mb-3">
+                          <label className="flex items-center gap-2 cursor-pointer group">
+                            <input
+                              type="checkbox"
+                              checked={replyDone}
+                              onChange={() => toggleAction('event_reply', draft.id)}
+                              className="w-4 h-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
+                            />
+                            <span className={`text-sm font-semibold ${replyDone ? 'text-green-700 line-through' : 'text-purple-800'}`}>
+                              Step 1: Reply to {draft.sourceHandle}
+                            </span>
+                          </label>
+                          <a
+                            href={draft.sourcePostUrl || `https://instagram.com/${draft.sourceHandle.replace('@', '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`text-xs border px-2.5 py-1 rounded-lg font-medium ${replyDone ? 'text-green-600 border-green-300 hover:bg-green-100' : 'text-purple-600 border-purple-300 hover:bg-purple-100'}`}
+                          >
+                            Open Post →
+                          </a>
+                          {replyDone && <span className="text-xs text-green-600">✓ Done</span>}
+                        </div>
+                        {!replyDone && (
+                          <div className="space-y-2">
+                            {draft.engagementReplies.map((reply, i) => (
+                              <div key={i} className="bg-white border border-purple-200 rounded-lg p-3 flex items-start gap-3">
+                                <div className="flex-1">
+                                  <p className="text-sm text-gray-700">{reply}</p>
+                                </div>
+                                <button
+                                  onClick={() => handleCopy(reply, `reply-${draft.id}-${i}`)}
+                                  className="text-xs text-purple-600 border border-purple-300 px-2.5 py-1 rounded hover:bg-purple-50 whitespace-nowrap font-medium"
+                                >
+                                  {copiedId === `reply-${draft.id}-${i}` ? '✓ Copied' : 'Copy'}
+                                </button>
+                              </div>
+                            ))}
+                          </div>
                         )}
-                      </button>
-                      <a
-                        href={draft.creativeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-gray-500 hover:text-gray-700 border border-gray-200 px-3 py-2 rounded-lg hover:bg-gray-50"
-                      >
-                        Preview Creative
-                      </a>
+                      </div>
+                    )}
+
+                    {/* No source handle — show note */}
+                    {!draft.sourceHandle && (
+                      <div className="bg-gray-50 border-t border-b border-gray-200 px-5 py-3">
+                        <p className="text-xs text-gray-500">No source handle — this event was added manually. Skip to posting your own creative below.</p>
+                      </div>
+                    )}
+
+                    {/* ── SECTION 2: Post Your Own (Secondary) ── */}
+                    <div className="px-5 py-4">
+                      <div className="flex items-center gap-3 mb-3">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={postDone}
+                            onChange={() => toggleAction('event_post', draft.id)}
+                            className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
+                          />
+                          <span className={`text-sm font-semibold ${postDone ? 'text-green-700 line-through' : 'text-gray-700'}`}>
+                            {draft.sourceHandle ? 'Step 2: ' : ''}Post to @thepawcities
+                          </span>
+                        </label>
+                        {postDone && <span className="text-xs text-green-600">✓ Done</span>}
+                      </div>
+
+                      {!postDone && (
+                        <div className="flex gap-4">
+                          {/* Creative preview */}
+                          <div className="w-40 h-40 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 bg-gray-100">
+                            <img
+                              src={draft.creativeUrl}
+                              alt={`Creative for ${draft.name}`}
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                          </div>
+
+                          <div className="flex-1 min-w-0">
+                            {/* Caption preview */}
+                            <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3">
+                              <div className="flex items-center justify-between mb-1">
+                                <p className="text-xs font-medium text-gray-500">Caption:</p>
+                                <button onClick={() => handleCopy(draft.caption, `caption-${draft.id}`)} className="text-xs text-orange-600 hover:underline">
+                                  {copiedId === `caption-${draft.id}` ? 'Copied!' : 'Copy'}
+                                </button>
+                              </div>
+                              <p className="text-sm text-gray-700 whitespace-pre-line">
+                                {expandedCaption === draft.id ? draft.caption : draft.caption.slice(0, 150) + (draft.caption.length > 150 ? '...' : '')}
+                              </p>
+                              {draft.caption.length > 150 && (
+                                <button onClick={() => setExpandedCaption(expandedCaption === draft.id ? null : draft.id)} className="text-xs text-orange-500 mt-1">
+                                  {expandedCaption === draft.id ? 'Less' : 'More'}
+                                </button>
+                              )}
+                            </div>
+
+                            {/* Publish actions */}
+                            <div className="flex items-center gap-3">
+                              <button
+                                onClick={() => publishPost(draft)}
+                                disabled={publishing === draft.id}
+                                className="flex items-center gap-1.5 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                              >
+                                {publishing === draft.id ? (
+                                  <><span className="animate-spin">⏳</span> Publishing...</>
+                                ) : (
+                                  <>📸 Publish</>
+                                )}
+                              </button>
+                              <a
+                                href={draft.creativeUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs text-gray-500 hover:text-gray-700 border border-gray-200 px-3 py-2 rounded-lg hover:bg-gray-50"
+                              >
+                                Preview Creative
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Publish result */}
+                      {publishResult?.id === draft.id && (
+                        <div className={`mt-3 p-3 rounded-lg text-sm ${publishResult.success ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+                          {publishResult.success ? (
+                            <>✅ Published! <a href={publishResult.permalink} target="_blank" rel="noopener noreferrer" className="underline font-medium">View on Instagram</a></>
+                          ) : (
+                            <>❌ Failed: {publishResult.error}</>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
-
-                {/* Publish result */}
-                {publishResult?.id === draft.id && (
-                  <div className={`mt-3 p-3 rounded-lg text-sm ${publishResult.success ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
-                    {publishResult.success ? (
-                      <>✅ Published! <a href={publishResult.permalink} target="_blank" rel="noopener noreferrer" className="underline font-medium">View on Instagram</a></>
-                    ) : (
-                      <>❌ Failed: {publishResult.error}</>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
+                );
+              })}
+            </>
+          )}
         </div>
       )}
 
@@ -478,44 +573,62 @@ export default function SocialCommandCenter() {
 
           {outreach.length === 0 ? (
             <EmptyState icon="📣" message="No outreach targets found. Events without source handles won't appear here." />
-          ) : outreach.map((item, idx) => (
-            <div key={item.id} className="bg-white rounded-xl border border-gray-200 p-5">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 font-medium">{item.handle}</span>
-                <span className="text-xs text-gray-400">{item.cityName}</span>
-                <span className="text-xs text-gray-400">{formatDate(item.startDate)}</span>
-              </div>
-              <h3 className="font-medium text-gray-900 mb-3">Re: {item.eventName}</h3>
+          ) : [...outreach].sort((a, b) => {
+            const aDone = isActionDone('outreach_reply', a.id);
+            const bDone = isActionDone('outreach_reply', b.id);
+            return aDone === bDone ? 0 : aDone ? 1 : -1;
+          }).map((item) => {
+            const done = isActionDone('outreach_reply', item.id);
+            return (
+              <div key={item.id} className={`bg-white rounded-xl border p-5 transition-all ${done ? 'border-green-200 opacity-75' : 'border-gray-200'}`}>
+                <div className="flex items-center gap-3 mb-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={done}
+                      onChange={() => toggleAction('outreach_reply', item.id)}
+                      className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
+                    />
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${done ? 'bg-green-100 text-green-700' : 'bg-purple-100 text-purple-700'}`}>{item.handle}</span>
+                  </label>
+                  <span className="text-xs text-gray-400">{item.cityName}</span>
+                  <span className="text-xs text-gray-400">{formatDate(item.startDate)}</span>
+                  {done && <span className="text-xs text-green-600">✓ Replied</span>}
+                </div>
+                <h3 className={`font-medium mb-3 ${done ? 'text-gray-500 line-through' : 'text-gray-900'}`}>Re: {item.eventName}</h3>
 
-              <div className="space-y-2 mb-3">
-                {item.suggestedComments.map((comment, i) => (
-                  <div key={i} className="bg-gray-50 border border-gray-200 rounded-lg p-3 flex items-start gap-3">
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-700">{comment}</p>
-                    </div>
-                    <button
-                      onClick={() => handleCopy(comment, `out-${item.id}-${i}`)}
-                      className="text-xs text-orange-600 border border-orange-200 px-2 py-1 rounded hover:bg-orange-50 whitespace-nowrap"
-                    >
-                      {copiedId === `out-${item.id}-${i}` ? '✓' : 'Copy'}
-                    </button>
+                {!done && (
+                  <div className="space-y-2 mb-3">
+                    {item.suggestedComments.map((comment, i) => (
+                      <div key={i} className="bg-gray-50 border border-gray-200 rounded-lg p-3 flex items-start gap-3">
+                        <div className="flex-1">
+                          <p className="text-sm text-gray-700">{comment}</p>
+                        </div>
+                        <button
+                          onClick={() => handleCopy(comment, `out-${item.id}-${i}`)}
+                          className="text-xs text-orange-600 border border-orange-200 px-2 py-1 rounded hover:bg-orange-50 whitespace-nowrap"
+                        >
+                          {copiedId === `out-${item.id}-${i}` ? '✓' : 'Copy'}
+                        </button>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-
-              <div className="flex items-center gap-3">
-                {item.sourcePostUrl ? (
-                  <a href={item.sourcePostUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-600 hover:underline font-medium">
-                    Open Source Post →
-                  </a>
-                ) : (
-                  <a href={`https://instagram.com/${item.handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-600 hover:underline font-medium">
-                    View Profile →
-                  </a>
                 )}
+
+                <div className="flex items-center gap-3">
+                  {item.sourcePostUrl ? (
+                    <a href={item.sourcePostUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-600 hover:underline font-medium">
+                      Open Source Post →
+                    </a>
+                  ) : (
+                    <a href={`https://instagram.com/${item.handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-600 hover:underline font-medium">
+                      View Profile →
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
@@ -530,33 +643,51 @@ export default function SocialCommandCenter() {
 
           {invitations.length === 0 ? (
             <EmptyState icon="🤝" message="No venues to invite. Events without venue names won't appear here." />
-          ) : invitations.map(inv => (
-            <div key={inv.id} className="bg-white rounded-xl border border-gray-200 p-5">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-medium">{inv.cityName}</span>
-                <span className="text-xs text-gray-400">{formatDate(inv.startDate)}</span>
-                {inv.sourceHandle && <span className="text-xs text-purple-500">{inv.sourceHandle}</span>}
-              </div>
-              <h3 className="font-medium text-gray-900 mb-1">{inv.venueName}</h3>
-              <p className="text-sm text-gray-500 mb-3">Hosting: {inv.eventName}</p>
-
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
-                <div className="flex items-center justify-between mb-1">
-                  <p className="text-xs font-medium text-amber-700">DM Template:</p>
-                  <button onClick={() => handleCopy(inv.dmTemplate, `inv-${inv.id}`)} className="text-xs text-amber-600 hover:underline">
-                    {copiedId === `inv-${inv.id}` ? 'Copied!' : 'Copy'}
-                  </button>
+          ) : [...invitations].sort((a, b) => {
+            const aDone = isActionDone('invitation_dm', a.id);
+            const bDone = isActionDone('invitation_dm', b.id);
+            return aDone === bDone ? 0 : aDone ? 1 : -1;
+          }).map(inv => {
+            const done = isActionDone('invitation_dm', inv.id);
+            return (
+              <div key={inv.id} className={`bg-white rounded-xl border p-5 transition-all ${done ? 'border-green-200 opacity-75' : 'border-gray-200'}`}>
+                <div className="flex items-center gap-3 mb-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={done}
+                      onChange={() => toggleAction('invitation_dm', inv.id)}
+                      className="w-4 h-4 rounded border-gray-300 text-amber-600 focus:ring-amber-500 cursor-pointer"
+                    />
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${done ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>{inv.cityName}</span>
+                  </label>
+                  <span className="text-xs text-gray-400">{formatDate(inv.startDate)}</span>
+                  {inv.sourceHandle && <span className="text-xs text-purple-500">{inv.sourceHandle}</span>}
+                  {done && <span className="text-xs text-green-600">✓ DM Sent</span>}
                 </div>
-                <p className="text-sm text-amber-800 whitespace-pre-line">{inv.dmTemplate}</p>
-              </div>
+                <h3 className={`font-medium mb-1 ${done ? 'text-gray-500 line-through' : 'text-gray-900'}`}>{inv.venueName}</h3>
+                <p className="text-sm text-gray-500 mb-3">Hosting: {inv.eventName}</p>
 
-              {inv.sourceHandle && (
-                <a href={`https://instagram.com/${inv.sourceHandle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-500 hover:underline">
-                  Open Instagram Profile →
-                </a>
-              )}
-            </div>
-          ))}
+                {!done && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-xs font-medium text-amber-700">DM Template:</p>
+                      <button onClick={() => handleCopy(inv.dmTemplate, `inv-${inv.id}`)} className="text-xs text-amber-600 hover:underline">
+                        {copiedId === `inv-${inv.id}` ? 'Copied!' : 'Copy'}
+                      </button>
+                    </div>
+                    <p className="text-sm text-amber-800 whitespace-pre-line">{inv.dmTemplate}</p>
+                  </div>
+                )}
+
+                {inv.sourceHandle && (
+                  <a href={`https://instagram.com/${inv.sourceHandle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-500 hover:underline">
+                    Open Instagram Profile →
+                  </a>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
 
