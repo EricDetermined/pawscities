@@ -119,12 +119,44 @@ function groupEventsByPeriod(events: PawEvent[]): { label: string; events: PawEv
   return groups;
 }
 
+/** Format time string from HH:MM:SS or HH:MM to a human-readable format */
+function formatTime(time: string): string {
+  const [h, m] = time.split(':').map(Number);
+  const suffix = h >= 12 ? 'PM' : 'AM';
+  const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return m === 0 ? `${hour12} ${suffix}` : `${hour12}:${m.toString().padStart(2, '0')} ${suffix}`;
+}
+
+/** Format a date range for display */
+function formatDateRange(event: PawEvent): string {
+  const d = new Date(event.startDate + 'T00:00:00');
+  const dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
+  let timeStr = '';
+  if (event.startTime) {
+    timeStr = formatTime(event.startTime);
+    if (event.endTime) {
+      timeStr += ` – ${formatTime(event.endTime)}`;
+    }
+  }
+
+  if (event.endDate && event.endDate !== event.startDate) {
+    const end = new Date(event.endDate + 'T00:00:00');
+    const endStr = end.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    return timeStr ? `${dateStr} – ${endStr} · ${timeStr}` : `${dateStr} – ${endStr}`;
+  }
+
+  return timeStr ? `${dateStr} · ${timeStr}` : dateStr;
+}
+
 function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; cityName: string; citySlug: string }) {
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
   if (events.length === 0) {
     return (
       <div id="events" className="bg-white rounded-xl border border-gray-200 p-5">
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-lg">📅</span>
+          <span className="text-lg">{'\u{1F4C5}'}</span>
           <h3 className="font-display text-base font-bold text-gray-900">Events in {cityName}</h3>
         </div>
         <p className="text-sm text-gray-500 mb-4">No upcoming events yet for {cityName}.</p>
@@ -144,13 +176,13 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
     <div id="events" className="bg-white rounded-xl border border-gray-200 p-5 sticky top-20">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <span className="text-lg">📅</span>
+          <span className="text-lg">{'\u{1F4C5}'}</span>
           <h3 className="font-display text-base font-bold text-gray-900">Events</h3>
         </div>
         <span className="text-xs text-gray-400">{events.length} upcoming</span>
       </div>
 
-      <div className="space-y-5 max-h-[600px] overflow-y-auto pr-1">
+      <div className="space-y-5 max-h-[70vh] overflow-y-auto pr-1">
         {groups.map((group) => (
           <div key={group.label}>
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
@@ -160,49 +192,176 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
               {group.events.map((event) => {
                 const d = new Date(event.startDate + 'T00:00:00');
                 const day = d.getDate();
-                const weekday = d.toLocaleDateString('en-US', { weekday: 'short' });
                 const month = d.toLocaleDateString('en-US', { month: 'short' });
+                const isExpanded = expandedId === event.id;
 
                 return (
                   <div
                     key={event.id}
-                    className="flex gap-3 items-start py-2 border-b border-gray-100 last:border-0"
+                    className={`rounded-lg transition-all duration-200 ${
+                      isExpanded
+                        ? 'bg-orange-50/60 border border-orange-200 -mx-2 px-2'
+                        : 'hover:bg-gray-50 cursor-pointer border border-transparent'
+                    }`}
                   >
-                    <div className="text-center min-w-[40px] shrink-0">
-                      <div className="text-lg font-bold text-gray-900 leading-tight">{day}</div>
-                      <div className="text-[10px] text-gray-400 uppercase">{month}</div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 leading-snug truncate">
-                        {event.name}
-                      </p>
-                      {event.venueName && (
-                        <p className="text-xs text-gray-500 truncate">{event.venueName}</p>
-                      )}
-                      <div className="flex items-center gap-1.5 mt-1">
-                        {event.isFree && (
-                          <span className="text-[10px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded font-medium">
-                            Free
-                          </span>
+                    {/* Collapsed row — always visible */}
+                    <div
+                      className="flex gap-3 items-start py-2 cursor-pointer"
+                      onClick={() => setExpandedId(isExpanded ? null : event.id)}
+                    >
+                      <div className="text-center min-w-[40px] shrink-0">
+                        <div className="text-lg font-bold text-gray-900 leading-tight">{day}</div>
+                        <div className="text-[10px] text-gray-400 uppercase">{month}</div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-sm font-medium text-gray-900 leading-snug ${isExpanded ? '' : 'truncate'}`}>
+                          {event.name}
+                        </p>
+                        {event.venueName && (
+                          <p className="text-xs text-gray-500 truncate">{event.venueName}</p>
                         )}
-                        {event.isFeatured && (
-                          <span className="text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded font-medium">
-                            Featured
-                          </span>
-                        )}
-                        {event.externalUrl && (
-                          <a
-                            href={event.externalUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[10px] text-orange-600 hover:text-orange-700 font-medium"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            Details &rarr;
-                          </a>
-                        )}
+                        <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                          {event.isFree && (
+                            <span className="text-[10px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded font-medium">
+                              Free
+                            </span>
+                          )}
+                          {event.isFeatured && (
+                            <span className="text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded font-medium">
+                              Featured
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="shrink-0 mt-1">
+                        <svg
+                          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
                       </div>
                     </div>
+
+                    {/* Expanded details */}
+                    {isExpanded && (
+                      <div className="pb-3 px-1 space-y-3 animate-in slide-in-from-top-1 duration-200">
+                        {/* Date & time */}
+                        <div className="flex items-start gap-2 text-xs text-gray-600">
+                          <svg className="w-3.5 h-3.5 text-gray-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span>{formatDateRange(event)}</span>
+                        </div>
+
+                        {/* Venue & address */}
+                        {(event.venueName || event.venueAddress) && (
+                          <div className="flex items-start gap-2 text-xs text-gray-600">
+                            <svg className="w-3.5 h-3.5 text-gray-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <div>
+                              {event.venueName && <span className="font-medium">{event.venueName}</span>}
+                              {event.venueName && event.venueAddress && <br />}
+                              {event.venueAddress && <span className="text-gray-500">{event.venueAddress}</span>}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Description */}
+                        {event.description && (
+                          <p className="text-xs text-gray-600 leading-relaxed">
+                            {event.description.length > 200
+                              ? event.description.substring(0, 200) + '...'
+                              : event.description}
+                          </p>
+                        )}
+
+                        {/* Tags */}
+                        {event.tags && event.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1">
+                            {event.tags.map(tag => (
+                              <span
+                                key={tag}
+                                className="text-[10px] bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded"
+                              >
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Map embed */}
+                        {event.latitude && event.longitude && (
+                          <div className="rounded-lg overflow-hidden border border-gray-200">
+                            <iframe
+                              title={`Map for ${event.name}`}
+                              width="100%"
+                              height="120"
+                              style={{ border: 0 }}
+                              loading="lazy"
+                              referrerPolicy="no-referrer-when-downgrade"
+                              src={`https://www.openstreetmap.org/export/embed.html?bbox=${event.longitude - 0.005},${event.latitude - 0.003},${event.longitude + 0.005},${event.latitude + 0.003}&layer=mapnik&marker=${event.latitude},${event.longitude}`}
+                            />
+                          </div>
+                        )}
+
+                        {/* Source attribution */}
+                        {event.sourceHandle && (
+                          <div className="flex items-center gap-1.5 text-[11px] text-gray-500">
+                            <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                            </svg>
+                            <span>Discovered via</span>
+                            <a
+                              href={event.sourcePostUrl || `https://instagram.com/${event.sourceHandle.replace('@', '')}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-orange-600 hover:text-orange-700 font-medium"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {event.sourceHandle.startsWith('@') ? event.sourceHandle : `@${event.sourceHandle}`}
+                            </a>
+                          </div>
+                        )}
+
+                        {/* Action buttons */}
+                        <div className="flex gap-2 pt-1">
+                          {event.externalUrl && (
+                            <a
+                              href={event.externalUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-xs font-medium text-white bg-orange-500 hover:bg-orange-600 rounded-lg transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                              Event Details
+                            </a>
+                          )}
+                          {event.venueAddress && (
+                            <a
+                              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.venueAddress)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`${event.externalUrl ? '' : 'flex-1'} flex items-center justify-center gap-1.5 py-1.5 px-3 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors`}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                              </svg>
+                              Directions
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}
