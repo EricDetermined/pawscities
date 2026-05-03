@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import type { PawEvent } from '@/types';
+import { sendNewEventAdminAlert } from '@/lib/email';
 
 function getSupabaseAdmin() {
   return createAdminClient(
@@ -169,10 +170,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Look up city ID from slug
+    // Look up city ID and name from slug
     const { data: city, error: cityError } = await supabase
       .from('cities')
-      .select('id')
+      .select('id, name')
       .eq('slug', citySlug)
       .single();
 
@@ -252,6 +253,16 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    // Send admin notification email (fire-and-forget, don't block response)
+    sendNewEventAdminAlert(
+      name,
+      city.name || citySlug,
+      startDate,
+      submitterName,
+      submitterEmail,
+      body.venueName || null,
+    ).catch(err => console.error('[EMAIL] Failed to send event admin alert:', err));
 
     return NextResponse.json({
       success: true,

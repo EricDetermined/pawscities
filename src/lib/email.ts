@@ -227,6 +227,51 @@ export async function sendNewClaimAdminAlert(
   );
 }
 
+// ——— Event Submission Emails ————————————————————————————————————————————
+
+function newEventSubmissionAdminTemplate(
+  eventName: string,
+  cityName: string,
+  startDate: string,
+  submitterName: string,
+  submitterEmail: string,
+  venueName?: string | null,
+): string {
+  return baseTemplate('New Event Submission', `
+<p>A new dog-friendly event has been submitted and needs your review.</p>
+<table width="100%" cellpadding="8" cellspacing="0" style="margin:16px 0;border:1px solid #e5e5e5;border-radius:8px;font-size:14px;">
+  <tr style="background:#f9f9f9;"><td style="font-weight:600;width:140px;">Event</td><td>${eventName}</td></tr>
+  <tr><td style="font-weight:600;">City</td><td>${cityName}</td></tr>
+  <tr style="background:#f9f9f9;"><td style="font-weight:600;">Date</td><td>${startDate}</td></tr>
+  ${venueName ? `<tr><td style="font-weight:600;">Venue</td><td>${venueName}</td></tr>` : ''}
+  <tr style="background:#f9f9f9;"><td style="font-weight:600;">Submitted&nbsp;by</td><td>${submitterName}</td></tr>
+  <tr><td style="font-weight:600;">Email</td><td><a href="mailto:${submitterEmail}" style="color:#ea580c;">${submitterEmail}</a></td></tr>
+</table>
+${ctaButton('Review in Admin Dashboard', `${APP_URL}/admin/events`)}
+<p style="font-size:13px;color:#888;">Approve or reject this event from the admin events dashboard.</p>
+`);
+}
+
+export async function sendNewEventAdminAlert(
+  eventName: string,
+  cityName: string,
+  startDate: string,
+  submitterName: string,
+  submitterEmail: string,
+  venueName?: string | null,
+): Promise<EmailResult> {
+  if (ADMIN_EMAILS.length === 0) {
+    console.warn('[EMAIL] No ADMIN_EMAILS configured, skipping event admin alert');
+    return { success: false, error: 'No admin emails configured' };
+  }
+
+  return sendEmail(
+    ADMIN_EMAILS,
+    `New event submission: ${eventName} (${cityName})`,
+    newEventSubmissionAdminTemplate(eventName, cityName, startDate, submitterName, submitterEmail, venueName)
+  );
+}
+
 export async function sendBusinessAccountSetup(
   to: string,
   businessName: string
