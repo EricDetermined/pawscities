@@ -602,23 +602,33 @@ export default function SocialCommandCenter() {
                 </div>
                 <h3 className={`font-medium mb-3 ${done ? 'text-gray-500 line-through' : 'text-gray-900'}`}>Re: {item.eventName}</h3>
 
-                {!done && (
-                  <div className="space-y-2 mb-3">
-                    {item.suggestedComments.map((comment, i) => (
-                      <div key={i} className="bg-gray-50 border border-gray-200 rounded-lg p-3 flex items-start gap-3">
-                        <div className="flex-1">
-                          <p className="text-sm text-gray-700">{comment}</p>
+                {!done && (() => {
+                  const isJapanese = item.cityName === 'Tokyo';
+                  const japaneseComments = isJapanese ? [
+                    `素敵ですね！🐾 ${item.eventName}をpawcities.comの犬と楽しめるイベントカレンダーに掲載させていただきました。東京の愛犬家の方々にもっと知っていただけると嬉しいです！`,
+                    `いいですね！私たちはpawcities.comで犬に優しいスポットやイベントを紹介しています。${item.eventName}も掲載させていただきました。イベント情報の投稿はいつでも無料です 🙌`,
+                  ] : [];
+                  const allComments = [...item.suggestedComments, ...japaneseComments];
+
+                  return (
+                    <div className="space-y-2 mb-3">
+                      {allComments.map((comment, i) => (
+                        <div key={i} className={`border rounded-lg p-3 flex items-start gap-3 ${i >= item.suggestedComments.length ? 'bg-rose-50 border-rose-200' : 'bg-gray-50 border-gray-200'}`}>
+                          <div className="flex-1">
+                            {i >= item.suggestedComments.length && <p className="text-xs text-rose-500 font-medium mb-1">日本語</p>}
+                            <p className="text-sm text-gray-700">{comment}</p>
+                          </div>
+                          <button
+                            onClick={() => handleCopy(comment, `out-${item.id}-${i}`)}
+                            className="text-xs text-orange-600 border border-orange-200 px-2 py-1 rounded hover:bg-orange-50 whitespace-nowrap"
+                          >
+                            {copiedId === `out-${item.id}-${i}` ? '✓' : 'Copy'}
+                          </button>
                         </div>
-                        <button
-                          onClick={() => handleCopy(comment, `out-${item.id}-${i}`)}
-                          className="text-xs text-orange-600 border border-orange-200 px-2 py-1 rounded hover:bg-orange-50 whitespace-nowrap"
-                        >
-                          {copiedId === `out-${item.id}-${i}` ? '✓' : 'Copy'}
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                      ))}
+                    </div>
+                  );
+                })()}
 
                 <div className="flex items-center gap-3">
                   {item.sourcePostUrl ? (
@@ -723,27 +733,57 @@ export default function SocialCommandCenter() {
                     <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${done ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>{inv.cityName}</span>
                   </label>
                   <span className="text-xs text-gray-400">{formatDate(inv.startDate)}</span>
-                  {inv.sourceHandle && <span className="text-xs text-purple-500">{inv.sourceHandle}</span>}
                   {done && <span className="text-xs text-green-600">✓ DM Sent</span>}
                 </div>
                 <h3 className={`font-medium mb-1 ${done ? 'text-gray-500 line-through' : 'text-gray-900'}`}>{inv.venueName}</h3>
-                <p className="text-sm text-gray-500 mb-3">Hosting: {inv.eventName}</p>
-
-                {!done && (
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
-                    <div className="flex items-center justify-between mb-1">
-                      <p className="text-xs font-medium text-amber-700">DM Template:</p>
-                      <button onClick={() => handleCopy(inv.dmTemplate, `inv-${inv.id}`)} className="text-xs text-amber-600 hover:underline">
-                        {copiedId === `inv-${inv.id}` ? 'Copied!' : 'Copy'}
-                      </button>
-                    </div>
-                    <p className="text-sm text-amber-800 whitespace-pre-line">{inv.dmTemplate}</p>
-                  </div>
+                <p className="text-sm text-gray-500 mb-1">Hosting: {inv.eventName}</p>
+                {inv.sourceHandle && (
+                  <p className="text-xs text-gray-400 mb-3">
+                    Found via{' '}
+                    <a href={`https://instagram.com/${inv.sourceHandle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-purple-500 hover:underline">
+                      {inv.sourceHandle}
+                    </a>
+                  </p>
                 )}
 
+                {!done && (() => {
+                  const isJapanese = inv.cityName === 'Tokyo';
+                  const englishDm = inv.dmTemplate;
+                  const japaneseDm = `${inv.venueName}様、こんにちは！👋\n\n` +
+                    `「${inv.eventName}」を開催されているとお見かけしました。素晴らしいですね！\n\n` +
+                    `私たちはPaw Cities（pawcities.com）を運営しており、東京をはじめ世界8都市の犬に優しいスポットを紹介する無料ディレクトリです。\n\n` +
+                    `${inv.venueName}様をサイトに掲載させていただき、より多くの愛犬家の方々に知っていただけたらと思います。掲載は完全無料です。pawcities.comで店舗情報、写真、イベント情報などをご登録いただけます。\n\n` +
+                    `ご不明な点がございましたら、お気軽にお問い合わせください！🐾`;
+
+                  return (
+                    <>
+                      <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
+                        <div className="flex items-center justify-between mb-1">
+                          <p className="text-xs font-medium text-amber-700">DM Template (English):</p>
+                          <button onClick={() => handleCopy(englishDm, `inv-${inv.id}`)} className="text-xs text-amber-600 hover:underline">
+                            {copiedId === `inv-${inv.id}` ? 'Copied!' : 'Copy'}
+                          </button>
+                        </div>
+                        <p className="text-sm text-amber-800 whitespace-pre-line">{englishDm}</p>
+                      </div>
+                      {isJapanese && (
+                        <div className="bg-rose-50 border border-rose-200 rounded-lg p-3 mb-3">
+                          <div className="flex items-center justify-between mb-1">
+                            <p className="text-xs font-medium text-rose-700">DM Template (日本語):</p>
+                            <button onClick={() => handleCopy(japaneseDm, `inv-jp-${inv.id}`)} className="text-xs text-rose-600 hover:underline">
+                              {copiedId === `inv-jp-${inv.id}` ? 'Copied!' : 'Copy'}
+                            </button>
+                          </div>
+                          <p className="text-sm text-rose-800 whitespace-pre-line">{japaneseDm}</p>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+
                 <div className="flex flex-wrap items-center gap-3">
-                  <a href={`https://instagram.com/${(inv.sourceHandle || '').replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-600 hover:underline font-medium">
-                    DM @{(inv.sourceHandle || '').replace('@', '')} →
+                  <a href={`https://www.google.com/search?q=${encodeURIComponent(inv.venueName + ' ' + inv.cityName + ' instagram')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-amber-600 hover:underline font-medium">
+                    Find {inv.venueName} on IG →
                   </a>
                   {inv.venueAddress && (
                     <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(inv.venueName + ', ' + inv.venueAddress)}`} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 hover:underline">
