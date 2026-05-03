@@ -133,6 +133,11 @@ export default function SocialCommandCenter() {
   const [expandedCaption, setExpandedCaption] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  // Quick DM composer state
+  const [quickDmBusiness, setQuickDmBusiness] = useState('');
+  const [quickDmCity, setQuickDmCity] = useState('');
+  const [quickDmContext, setQuickDmContext] = useState('');
+
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
@@ -641,6 +646,62 @@ export default function SocialCommandCenter() {
             </p>
           </div>
 
+          {/* Quick DM Composer */}
+          <div className="bg-white rounded-xl border-2 border-dashed border-amber-300 p-5 mb-4">
+            <h3 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
+              <span>✍️</span> Quick DM — Invite Any Business
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+              <input
+                type="text"
+                placeholder="Business name"
+                value={quickDmBusiness}
+                onChange={(e) => setQuickDmBusiness(e.target.value)}
+                className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-amber-500 focus:border-amber-500"
+              />
+              <input
+                type="text"
+                placeholder="City (e.g. London)"
+                value={quickDmCity}
+                onChange={(e) => setQuickDmCity(e.target.value)}
+                className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-amber-500 focus:border-amber-500"
+              />
+              <input
+                type="text"
+                placeholder="Context (e.g. dog-friendly section, event name)"
+                value={quickDmContext}
+                onChange={(e) => setQuickDmContext(e.target.value)}
+                className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-amber-500 focus:border-amber-500"
+              />
+            </div>
+            {quickDmBusiness && quickDmCity && (() => {
+              const dm = `Hi ${quickDmBusiness}! 👋\n\n` +
+                (quickDmContext
+                  ? `We noticed ${quickDmContext} — that's awesome! `
+                  : `We love what you're doing for dog owners! `) +
+                `We run Paw Cities (pawcities.com), a free directory of dog-friendly places across ${quickDmCity} and 7 other cities worldwide.\n\n` +
+                `We'd love to list ${quickDmBusiness} on our site so more dog owners can discover you. ` +
+                `It's completely free — you can claim your listing at pawcities.com and add your details, photos, and upcoming events.\n\n` +
+                `Let us know if you have any questions! 🐾`;
+              return (
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-xs font-medium text-amber-700">Generated DM:</p>
+                    <div className="flex items-center gap-2">
+                      <a href={`https://www.google.com/search?q=${encodeURIComponent(quickDmBusiness + ' ' + quickDmCity + ' instagram')}`} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">
+                        Find on IG
+                      </a>
+                      <button onClick={() => handleCopy(dm, 'quick-dm')} className="text-xs text-amber-600 hover:underline">
+                        {copiedId === 'quick-dm' ? 'Copied!' : 'Copy'}
+                      </button>
+                    </div>
+                  </div>
+                  <p className="text-sm text-amber-800 whitespace-pre-line">{dm}</p>
+                </div>
+              );
+            })()}
+          </div>
+
           {invitations.length === 0 ? (
             <EmptyState icon="🤝" message="No venues to invite. Events without venue names won't appear here." />
           ) : [...invitations].sort((a, b) => {
@@ -680,11 +741,22 @@ export default function SocialCommandCenter() {
                   </div>
                 )}
 
-                {inv.sourceHandle && (
-                  <a href={`https://instagram.com/${inv.sourceHandle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-500 hover:underline">
-                    Open Instagram Profile →
-                  </a>
-                )}
+                <div className="flex flex-wrap items-center gap-3">
+                  {inv.sourceHandle ? (
+                    <a href={`https://instagram.com/${inv.sourceHandle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-600 hover:underline font-medium">
+                      Open @{inv.sourceHandle.replace('@', '')} →
+                    </a>
+                  ) : (
+                    <a href={`https://www.google.com/search?q=${encodeURIComponent(inv.venueName + ' ' + inv.cityName + ' instagram')}`} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 hover:underline font-medium">
+                      Find on Instagram →
+                    </a>
+                  )}
+                  {inv.venueAddress && (
+                    <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(inv.venueName + ', ' + inv.venueAddress)}`} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 hover:underline">
+                      Maps
+                    </a>
+                  )}
+                </div>
               </div>
             );
           })}
