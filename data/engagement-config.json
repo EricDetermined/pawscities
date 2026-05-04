@@ -1,0 +1,148 @@
+{
+  "version": "1.0",
+  "daily_cap": 50,
+  "ramp_schedule": {
+    "week_1": 50,
+    "week_2": 80,
+    "week_3": 120,
+    "week_4": 180,
+    "week_5_plus": 250
+  },
+  "timing": {
+    "min_delay_seconds": 45,
+    "max_delay_seconds": 120,
+    "batch_size": 20,
+    "batch_break_min_seconds": 300,
+    "batch_break_max_seconds": 600,
+    "active_hours_start": 7,
+    "active_hours_end": 23,
+    "timezone": "UTC"
+  },
+  "discovery": {
+    "results_per_hashtag": 15,
+    "min_likes": 5,
+    "max_age_days": 7,
+    "skip_verified_accounts": false,
+    "skip_private_accounts": true
+  },
+  "hashtags": {
+    "global": [
+      "dogfriendly",
+      "dogsofinstagram",
+      "doglovers",
+      "doglife",
+      "dogtravel",
+      "travelwithdog",
+      "dogcafe",
+      "dogrestaurant",
+      "dogfriendlyhotel",
+      "dogfriendlybeach",
+      "dogpark",
+      "puppylove",
+      "dogmom",
+      "dogdad",
+      "doglover"
+    ],
+    "los-angeles": [
+      "dogfriendlyLA",
+      "dogsofLA",
+      "LAdogs",
+      "dogfriendlysocal",
+      "LAdogpark",
+      "socaldogs",
+      "dogbeachLA",
+      "dogcafeLA"
+    ],
+    "new-york-city": [
+      "dogsofnyc",
+      "nycdog",
+      "dogfriendlyNYC",
+      "dogfriendlybrooklyn",
+      "nycdogpark",
+      "nycdoglife",
+      "dogsofbrooklyn",
+      "nycpuppy"
+    ],
+    "london": [
+      "dogfriendlylondon",
+      "londondogs",
+      "dogsofLondon",
+      "dogfriendlyUK",
+      "londonpuppy",
+      "dogpubslondon"
+    ],
+    "barcelona": [
+      "dogfriendlybarcelona",
+      "perrosdebarcelona",
+      "perrobarcelona",
+      "dogfriendlyspain",
+      "dogbarcelona",
+      "mascotabarcelona"
+    ],
+    "paris": [
+      "chienparis",
+      "chienstagram",
+      "parischien",
+      "dogfriendlyparis",
+      "chienfriendly",
+      "chiendeparis"
+    ],
+    "tokyo": [
+      "\u72ac\u30b9\u30bf\u30b0\u30e9\u30e0",
+      "\u72ac\u306e\u3044\u308b\u66ae\u3089\u3057",
+      "\u30c9\u30c3\u30b0\u30ab\u30d5\u30a7",
+      "\u72ac\u3068\u304a\u51fa\u304b\u3051",
+      "\u30c9\u30c3\u30b0\u30d5\u30ec\u30f3\u30c9\u30ea\u30fc",
+      "\u6771\u4eac\u72ac"
+    ],
+    "geneva": [
+      "dogfriendlyswiss",
+      "swissdogs",
+      "chienssuisses",
+      "dogfriendlygeneva",
+      "hundeschweiz"
+    ],
+    "sydney": [
+      "dogsofsydney",
+      "dogfriendlysydney",
+      "sydneydogs",
+      "dogfriendlyaustralia",
+      "dogsofaustralia",
+      "dogbeachsydney"
+    ]
+  },
+  "cities": {
+    "los-angeles": {
+      "name": "Los Angeles",
+      "tz": "America/Los_Angeles"
+    },
+    "new-york-city": {
+      "name": "New York City",
+      "tz": "America/New_York"
+    },
+    "london": {
+      "name": "London",
+      "tz": "Europe/London"
+    },
+    "barcelona": {
+      "name": "Barcelona",
+      "tz": "Europe/Madrid"
+    },
+    "paris": {
+      "name": "Paris",
+      "tz": "Europe/Paris"
+    },
+    "tokyo": {
+      "name": "Tokyo",
+      "tz": "Asia/Tokyo"
+    },
+    "geneva": {
+      "name": "Geneva",
+      "tz": "Europe/Zurich"
+    },
+    "sydney": {
+      "name": "Sydney",
+      "tz": "Australia/Sydney"
+    }
+  }
+}
