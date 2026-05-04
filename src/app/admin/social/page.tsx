@@ -449,7 +449,16 @@ export default function SocialCommandCenter() {
                             {draft.sourceHandle ? 'Step 2: ' : ''}Post to @thepawcities
                           </span>
                         </label>
-                        {postDone && <span className="text-xs text-green-600">✓ Done</span>}
+                        {postDone && <span className="text-xs text-green-600">{isActionDone('event_post_skip', draft.id) ? '✓ Skipped' : '✓ Done'}</span>}
+                        {!postDone && (
+                          <button
+                            onClick={() => toggleAction('event_post', draft.id)}
+                            className="text-xs text-gray-400 hover:text-gray-600 border border-gray-200 px-2 py-0.5 rounded hover:bg-gray-50 ml-auto"
+                            title="Skip posting — marks this as done without publishing"
+                          >
+                            Skip
+                          </button>
+                        )}
                       </div>
 
                       {!postDone && (
