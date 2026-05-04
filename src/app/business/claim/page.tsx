@@ -79,7 +79,9 @@ export default function ClaimBusinessPage() {
   const [categories, setCategories] = useState<SelectOption[]>([]);
   const [newForm, setNewForm] = useState({
     name: '',
+    listingType: 'storefront' as 'storefront' | 'mobile' | 'online',
     address: '',
+    serviceArea: '',
     cityId: '',
     categoryId: '',
     description: '',
@@ -433,10 +435,28 @@ export default function ClaimBusinessPage() {
                 <input type="text" value={newForm.name} onChange={(e) => setNewForm(prev => ({ ...prev, name: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
               </div>
               <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Business Type *</label>
+                <select value={newForm.listingType} onChange={(e) => setNewForm(prev => ({ ...prev, listingType: e.target.value as 'storefront' | 'mobile' | 'online' }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none">
+                  <option value="storefront">Storefront (physical location)</option>
+                  <option value="mobile">Mobile Service (travels to clients)</option>
+                  <option value="online">Online Business (delivery/digital)</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Address for storefronts, Service Area for mobile/online */}
+            {newForm.listingType === 'storefront' ? (
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Address *</label>
                 <input type="text" value={newForm.address} onChange={(e) => setNewForm(prev => ({ ...prev, address: e.target.value }))} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
               </div>
-            </div>
+            ) : (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Service Area *</label>
+                <input type="text" value={newForm.serviceArea} onChange={(e) => setNewForm(prev => ({ ...prev, serviceArea: e.target.value }))} placeholder={newForm.listingType === 'mobile' ? 'e.g., Serves all of Brooklyn & Manhattan' : 'e.g., Ships to Los Angeles, Delivers across NYC'} className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
+                <p className="mt-1 text-xs text-gray-400">Describe the area your business serves</p>
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>

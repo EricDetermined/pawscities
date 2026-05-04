@@ -4,7 +4,7 @@ import { getCityConfig, CATEGORIES } from '@/lib/cities-config';
 import { getEstablishment, getCityEstablishments } from '@/lib/data';
 import { createClient } from '@supabase/supabase-js';
 import type { Metadata } from 'next';
-import type { Establishment, CategorySlug, DogFeatures } from '@/types';
+import type { Establishment, CategorySlug, DogFeatures, ListingType } from '@/types';
 import { ListingBadges } from '@/components/ListingBadges';
 import EstablishmentInteractions from '@/components/EstablishmentInteractions';
 import { TrackedContactButtons } from '@/components/TrackedContactButtons';
@@ -77,7 +77,7 @@ export default async function EstablishmentPage({ params }: Props) {
       const supabase = getSupabaseAdmin();
       const { data: dbEst } = await supabase
         .from('establishments')
-        .select('*, categories:category_id(slug)')
+        .select('*, categories:category_id(slug), listing_type, service_area')
         .eq('slug', params.establishment)
         .eq('status', 'ACTIVE')
         .single();
@@ -112,6 +112,8 @@ export default async function EstablishmentPage({ params }: Props) {
           phone: dbEst.phone || undefined, website: dbEst.website || undefined,
           priceLevel: (dbEst.price_level || 2) as 1 | 2 | 3 | 4,
           rating: dbEst.rating || 0, reviewCount: dbEst.review_count || 0,
+          listingType: (dbEst.listing_type as 'storefront' | 'mobile' | 'online') || 'storefront',
+          serviceArea: (dbEst.service_area as string) || undefined,
           images, hours: {}, dogFeatures, amenities: [],
           neighborhood: undefined, tier: dbEst.tier || 'free',
           isVerified: dbEst.is_verified || false, isFeatured: dbEst.is_featured || false,
@@ -148,19 +150,28 @@ export default async function EstablishmentPage({ params }: Props) {
 
   // Build JSON-LD structured data
   const priceLevelMap: Record<number, string> = { 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' };
+  const isStorefront = !place.listingType || place.listingType === 'storefront';
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
+    '@type': isStorefront ? 'LocalBusiness' : 'Service',
     name: place.name,
     description: place.description,
     url: `${BASE_URL}/${city.slug}/${place.slug}`,
     image: place.images[0],
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: place.address,
-      addressLocality: city.name,
-      addressCountry: city.countryCode,
-    },
+    ...(isStorefront ? {
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: place.address,
+        addressLocality: city.name,
+        addressCountry: city.countryCode,
+      },
+    } : {
+      areaServed: {
+        '@type': 'City',
+        name: city.name,
+      },
+      ...(place.serviceArea ? { description: `${place.description} — ${place.serviceArea}` } : {}),
+    }),
     geo: {
       '@type': 'GeoCoordinates',
       latitude: place.latitude,
@@ -220,7 +231,21 @@ export default async function EstablishmentPage({ params }: Props) {
           <div className="container mx-auto">
             <ListingBadges tier={place.tier || 'FREE'} isClaimed={place.isVerified || false} />
             <h1 className="font-display text-3xl md:text-5xl font-bold text-white mb-2">{place.name}</h1>
-            <p className="text-white/80 text-lg">{place.address}</p>
+            {place.listingType && place.listingType !== 'storefront' && (
+              <span className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full mb-2 ${
+                place.listingType === 'mobile'
+                  ? 'bg-blue-500/80 text-white'
+                  : 'bg-purple-500/80 text-white'
+              }`}>
+                {place.listingType === 'mobile' ? '\u{1F6A8}' : '\u{1F310}'}{' '}
+                {place.listingType === 'mobile' ? 'Mobile Service' : 'Online Business'}
+              </span>
+            )}
+            <p className="text-white/80 text-lg">
+              {place.listingType && place.listingType !== 'storefront' && place.serviceArea
+                ? place.serviceArea
+                : place.address}
+            </p>
           </div>
         </div>
       </div>
@@ -348,6 +373,22 @@ export default async function EstablishmentPage({ params }: Props) {
             <div className="bg-white rounded-xl p-6 shadow-sm">
               <h3 className="font-semibold mb-4">Contact Info</h3>
               <div className="space-y-3">
+                {/* Service area badge for mobile/online */}
+                {place.listingType && place.listingType !== 'storefront' && place.serviceArea && (
+                  <div className="flex items-start gap-3 text-sm">
+                    <svg className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <span className="text-gray-700 font-medium">{place.serviceArea}</span>
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        {place.listingType === 'mobile' ? 'Mobile service — travels to you' : 'Online business — serves remotely'}
+                      </p>
+                    </div>
+                  </div>
+                )}
+                {/* Address for storefront, or if address exists as secondary info */}
+                {(place.listingType === 'storefront' || !place.listingType) && place.address && (
                 <div className="flex items-start gap-3 text-sm">
                   <svg className="w-4 h-4 text-gray-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -355,6 +396,7 @@ export default async function EstablishmentPage({ params }: Props) {
                   </svg>
                   <span className="text-gray-700">{place.address}</span>
                 </div>
+                )}
                 {place.phone && (
                   <div className="flex items-center gap-3 text-sm">
                     <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

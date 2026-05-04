@@ -411,7 +411,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
       .catch(() => {});
   }, [city.latitude, city.longitude]);
 
-  const filtered = useMemo(() => {
+  const { storefronts: filtered, services } = useMemo(() => {
     let result = establishments;
     if (selectedCategory) {
       result = result.filter(e => e.categorySlug === selectedCategory);
@@ -421,18 +421,23 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
       result = result.filter(e =>
         e.name.toLowerCase().includes(q) ||
         e.description.toLowerCase().includes(q) ||
-        (e.neighborhood && e.neighborhood.toLowerCase().includes(q))
+        (e.neighborhood && e.neighborhood.toLowerCase().includes(q)) ||
+        (e.serviceArea && e.serviceArea.toLowerCase().includes(q))
       );
     }
+    // Split into storefronts vs mobile/online services
+    const storefrontList = result.filter(e => !e.listingType || e.listingType === 'storefront');
+    const serviceList = result.filter(e => e.listingType && e.listingType !== 'storefront');
+
     // Smart weather sorting: when indoor is recommended, prioritize indoor-friendly places
     if (weather?.suggestIndoor && !selectedCategory) {
-      result = [...result].sort((a, b) => {
+      storefrontList.sort((a, b) => {
         const aIndoor = a.dogFeatures.indoorAllowed ? 1 : 0;
         const bIndoor = b.dogFeatures.indoorAllowed ? 1 : 0;
         return bIndoor - aIndoor;
       });
     }
-    return result;
+    return { storefronts: storefrontList, services: serviceList };
   }, [establishments, selectedCategory, searchQuery, weather]);
 
   const toggleFavorite = (id: string) => {
@@ -531,12 +536,13 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
           <p className="text-gray-600">
-            {filtered.length === totalPlaces
+            {(filtered.length + services.length) === totalPlaces
               ? `Showing all ${totalPlaces} places`
-              : `${filtered.length} of ${totalPlaces} places`}
+              : `${filtered.length + services.length} of ${totalPlaces} places`}
             {selectedCategory && ` in ${categories.find(c => c.slug === selectedCategory)?.name}`}
             {searchQuery && ` matching "${searchQuery}"`}
             {weather?.suggestIndoor && !selectedCategory && ' (indoor-friendly first)'}
+            {services.length > 0 && ` (${services.length} online/mobile)`}
           </p>
         </div>
 
@@ -649,6 +655,61 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                 </Link>
               ))
             )}
+          </div>
+        )}
+
+        {/* Services & Online section for mobile/online businesses */}
+        {services.length > 0 && (
+          <div className="mt-10">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-lg">{'\u{1F310}'}</span>
+              <h2 className="font-display text-xl font-bold text-gray-900">Services & Online</h2>
+              <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{services.length}</span>
+            </div>
+            <p className="text-sm text-gray-500 mb-4">Mobile services and online businesses serving {city.name}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {services.map((est) => (
+                <Link
+                  key={est.id}
+                  href={`/${city.slug}/${est.slug}`}
+                  className="group flex gap-4 bg-white rounded-xl shadow-sm border border-gray-100 p-4 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
+                >
+                  {/* Thumbnail */}
+                  <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+                    <img
+                      src={est.images[0]}
+                      alt={est.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).src = FALLBACK_IMAGE; }}
+                    />
+                    <div className={`absolute top-1 left-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
+                      est.listingType === 'mobile'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-purple-500 text-white'
+                    }`}>
+                      {est.listingType === 'mobile' ? '\u{1F6A8} Mobile' : '\u{1F310} Online'}
+                    </div>
+                  </div>
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="font-semibold text-gray-900 text-sm line-clamp-1">{est.name}</h3>
+                      {est.isVerified && <span className="text-green-500 text-xs shrink-0">{'✓'}</span>}
+                    </div>
+                    <div className="flex items-center gap-2 mt-0.5 text-xs text-gray-500">
+                      <span className="flex items-center gap-0.5"><span className="text-yellow-500">{'★'}</span> {est.rating.toFixed(1)}</span>
+                      <span>{'•'}</span>
+                      <span>{getCategoryIcon(est.categorySlug)} {categories.find(c => c.slug === est.categorySlug)?.name}</span>
+                    </div>
+                    {est.serviceArea && (
+                      <p className="text-xs text-blue-600 mt-1 line-clamp-1">{est.serviceArea}</p>
+                    )}
+                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">{est.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
 

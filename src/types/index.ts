@@ -53,6 +53,9 @@ export interface Category {
   color: string;
 }
 
+// Listing type for establishments
+export type ListingType = 'storefront' | 'mobile' | 'online';
+
 // Establishment Types
 export interface Establishment {
   id: string;
@@ -66,6 +69,8 @@ export interface Establishment {
   address: string;
   latitude: number;
   longitude: number;
+  listingType?: ListingType;
+  serviceArea?: string;
   phone?: string;
   email?: string;
   website?: string;

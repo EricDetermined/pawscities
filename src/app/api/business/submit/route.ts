@@ -63,12 +63,22 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, address, cityId, categoryId, description, phone, website: rawWebsite, contactName, contactEmail, dogFeatures } = body;
+    const { name, address, cityId, categoryId, description, phone, website: rawWebsite, contactName, contactEmail, dogFeatures, listingType: rawListingType, serviceArea } = body;
     // Normalize website URL - ensure https:// prefix
     const website = rawWebsite ? (rawWebsite.match(/^https?:\/\//) ? rawWebsite : `https://${rawWebsite}`) : '';
+    // Normalize listing type - default to storefront
+    const listingType = ['storefront', 'mobile', 'online'].includes(rawListingType) ? rawListingType : 'storefront';
+    const isStorefront = listingType === 'storefront';
 
-    if (!name || !address || !cityId || !categoryId || !contactName || !contactEmail) {
+    // Address is required for storefronts; service area is required for mobile/online
+    if (!name || !cityId || !categoryId || !contactName || !contactEmail) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+    if (isStorefront && !address) {
+      return NextResponse.json({ error: 'Address is required for storefront businesses' }, { status: 400 });
+    }
+    if (!isStorefront && !serviceArea) {
+      return NextResponse.json({ error: 'Service area is required for mobile and online businesses' }, { status: 400 });
     }
 
     // Handle "other" category - find or create an "Other" category
@@ -197,10 +207,12 @@ export async function POST(request: Request) {
       .insert({
         name,
         slug,
-        address,
+        address: isStorefront ? address : (address || null),
         city_id: cityId,
         category_id: resolvedCategoryId,
         description: isOtherCategory ? `[Other Category] ${description || ''}`.trim() : (description || null),
+        listing_type: listingType,
+        service_area: serviceArea || null,
         status: 'PENDING_REVIEW',
         tier: 'free',
         is_verified: false,
@@ -218,8 +230,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: `Failed to create establishment: ${estError.message}` }, { status: 500 });
     }
 
-    // Google Places enrichment (non-blocking — don't fail submission if this errors)
-    try {
+    // Google Places enrichment (non-blocking — only for storefronts with a physical address)
+    if (isStorefront) try {
       // Look up the city name for a better search query
       const { data: cityData } = await supabase
         .from('cities')

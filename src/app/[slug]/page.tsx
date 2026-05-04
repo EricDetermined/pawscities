@@ -5,7 +5,7 @@ import { getCityEvents } from '@/lib/events';
 import { CityPageClient } from './CityPageClient';
 import { createClient } from '@supabase/supabase-js';
 import type { Metadata } from 'next';
-import type { Establishment, CategorySlug, DogFeatures } from '@/types';
+import type { Establishment, CategorySlug, DogFeatures, ListingType } from '@/types';
 
 const BASE_URL = 'https://pawcities.com';
 
@@ -105,6 +105,8 @@ function dbToEstablishment(dbEst: Record<string, unknown>, citySlug: string, cit
     address: (dbEst.address as string) || '',
     latitude: (dbEst.latitude as number) || cityLat,
     longitude: (dbEst.longitude as number) || cityLng,
+    listingType: (dbEst.listing_type as ListingType) || 'storefront',
+    serviceArea: (dbEst.service_area as string) || undefined,
     phone: (dbEst.phone as string) || undefined,
     website: (dbEst.website as string) || undefined,
     priceLevel: ((dbEst.price_level as number) || 2) as 1 | 2 | 3 | 4,
@@ -142,7 +144,7 @@ export default async function CityPage({ params }: CityPageProps) {
     if (cityRecord) {
       const { data: dbEstablishments } = await supabase
         .from('establishments')
-        .select('*, categories:category_id(slug)')
+        .select('*, categories:category_id(slug), listing_type, service_area')
         .eq('city_id', cityRecord.id)
         .eq('status', 'ACTIVE')
         .order('is_featured', { ascending: false })
