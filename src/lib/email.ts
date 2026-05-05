@@ -12,7 +12,10 @@ function getResend(): Resend {
 }
 
 const EMAIL_FROM = process.env.EMAIL_FROM || 'Paw Cities <noreply@pawcities.com>';
-const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
+// Read at call time, not build time, so env var changes take effect without redeploying
+function getAdminEmails(): string[] {
+  return (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
+}
 const APP_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://pawcities.com';
 
 interface EmailResult {
@@ -215,13 +218,13 @@ export async function sendNewClaimAdminAlert(
   contactEmail: string,
   verificationMethod: string
 ): Promise<EmailResult> {
-  if (ADMIN_EMAILS.length === 0) {
+  if (getAdminEmails().length === 0) {
     console.warn('[EMAIL] No ADMIN_EMAILS configured, skipping admin alert');
     return { success: false, error: 'No admin emails configured' };
   }
 
   return sendEmail(
-    ADMIN_EMAILS,
+    getAdminEmails(),
     `New claim: ${businessName}`,
     newClaimAdminAlertTemplate(businessName, contactName, contactEmail, verificationMethod)
   );
@@ -260,13 +263,13 @@ export async function sendNewEventAdminAlert(
   submitterEmail: string,
   venueName?: string | null,
 ): Promise<EmailResult> {
-  if (ADMIN_EMAILS.length === 0) {
+  if (getAdminEmails().length === 0) {
     console.warn('[EMAIL] No ADMIN_EMAILS configured, skipping event admin alert');
     return { success: false, error: 'No admin emails configured' };
   }
 
   return sendEmail(
-    ADMIN_EMAILS,
+    getAdminEmails(),
     `New event submission: ${eventName} (${cityName})`,
     newEventSubmissionAdminTemplate(eventName, cityName, startDate, submitterName, submitterEmail, venueName)
   );
@@ -392,7 +395,7 @@ ${hashtagsHtml}
 }
 
 export async function sendSocialDigest(data: SocialDigestData): Promise<EmailResult> {
-  if (ADMIN_EMAILS.length === 0) {
+  if (getAdminEmails().length === 0) {
     console.warn('[EMAIL] No ADMIN_EMAILS configured, skipping social digest');
     return { success: false, error: 'No admin emails configured' };
   }
@@ -411,5 +414,5 @@ export async function sendSocialDigest(data: SocialDigestData): Promise<EmailRes
     ? `Paw Cities Social: ${parts.join(', ')}`
     : 'Paw Cities Social: Daily check-in (all clear)';
 
-  return sendEmail(ADMIN_EMAILS, subject, socialDigestTemplate(data));
+  return sendEmail(getAdminEmails(), subject, socialDigestTemplate(data));
 }
