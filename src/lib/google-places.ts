@@ -2,7 +2,7 @@
 // Uses the newer places.googleapis.com endpoint
 
 // Read at request time, not build time
-function getApiKey() { return process.env.GOOGLE_PLACES_getApiKey() || ''; }
+function getApiKey() { return process.env.GOOGLE_PLACES_API_KEY || ''; }
 const BASE_URL = 'https://places.googleapis.com/v1';
 
 interface PlaceSearchResult {
