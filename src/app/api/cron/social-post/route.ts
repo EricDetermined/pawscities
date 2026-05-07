@@ -11,8 +11,8 @@ import {
   getEstablishmentPhotoUrl,
 } from '@/lib/social-content';
 
-// Vercel cron secret for authentication
-const CRON_SECRET = process.env.CRON_SECRET;
+// Read at request time, not build time
+function getCronSecret() { return process.env.CRON_SECRET; }
 
 // Map city keys to JSON filenames
 const CITY_FILE_MAP: Record<string, string> = {
@@ -65,7 +65,8 @@ export async function GET(request: NextRequest) {
   const cronParam = request.nextUrl.searchParams.get('secret');
   const dryRun = request.nextUrl.searchParams.get('dryRun') === 'true';
 
-  if (CRON_SECRET && authHeader !== `Bearer ${CRON_SECRET}` && cronParam !== CRON_SECRET) {
+  const cronSecret = getCronSecret();
+  if (cronSecret && authHeader !== `Bearer ${cronSecret}` && cronParam !== cronSecret) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
