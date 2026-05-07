@@ -11,8 +11,9 @@
  *   META_API_VERSION (default: v25.0)
  */
 
-const META_API_VERSION = process.env.META_API_VERSION || 'v25.0';
-const BASE_URL = `https://graph.facebook.com/${META_API_VERSION}`;
+// Read at request time, not build time
+function getMetaApiVersion() { return process.env.META_API_VERSION || 'v25.0'; }
+function getBaseUrl() { return `https://graph.facebook.com/${getMetaApiVersion()}`; }
 
 interface MediaContainerResponse {
   id: string;
@@ -49,7 +50,7 @@ export async function createMediaContainer(
   }
 
   try {
-    const url = `${BASE_URL}/${accountId}/media`;
+    const url = `${getBaseUrl()}/${accountId}/media`;
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -93,7 +94,7 @@ export async function createCarouselContainer(
     // Step 1: Create individual image containers (children)
     const childIds: string[] = [];
     for (const imageUrl of imageUrls) {
-      const url = `${BASE_URL}/${accountId}/media`;
+      const url = `${getBaseUrl()}/${accountId}/media`;
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -115,7 +116,7 @@ export async function createCarouselContainer(
     }
 
     // Step 2: Create the carousel container
-    const url = `${BASE_URL}/${accountId}/media`;
+    const url = `${getBaseUrl()}/${accountId}/media`;
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -147,7 +148,7 @@ export async function checkContainerStatus(
   const token = process.env.META_PAGE_ACCESS_TOKEN;
 
   try {
-    const url = `${BASE_URL}/${containerId}?fields=status_code&access_token=${token}`;
+    const url = `${getBaseUrl()}/${containerId}?fields=status_code&access_token=${token}`;
     const res = await fetch(url);
     const data: MediaStatusResponse = await res.json();
     return data.status_code || 'ERROR';
@@ -170,7 +171,7 @@ export async function publishContainer(
   }
 
   try {
-    const url = `${BASE_URL}/${accountId}/media_publish`;
+    const url = `${getBaseUrl()}/${accountId}/media_publish`;
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -291,7 +292,7 @@ export async function getRecentMedia(limit: number = 10): Promise<{
   }
 
   try {
-    const url = `${BASE_URL}/${accountId}/media?fields=id,caption,media_url,timestamp,permalink&limit=${limit}&access_token=${token}`;
+    const url = `${getBaseUrl()}/${accountId}/media?fields=id,caption,media_url,timestamp,permalink&limit=${limit}&access_token=${token}`;
     const res = await fetch(url);
     const data = await res.json();
 

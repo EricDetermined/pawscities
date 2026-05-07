@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const CRON_SECRET = process.env.CRON_SECRET;
+function getCronSecret() { return process.env.CRON_SECRET; }
 
 function getSupabaseAdmin() {
   return createClient(
@@ -22,7 +22,7 @@ function getSupabaseAdmin() {
 export async function POST(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get('secret');
-  if (secret !== CRON_SECRET) {
+  if (secret !== getCronSecret()) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

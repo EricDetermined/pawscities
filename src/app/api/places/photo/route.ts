@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const API_KEY = process.env.GOOGLE_PLACES_API_KEY || '';
+function getApiKey() { return process.env.GOOGLE_PLACES_API_KEY || ''; }
 const BASE_URL = 'https://places.googleapis.com/v1';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const photoName = searchParams.get('name');
   const maxWidth = searchParams.get('maxWidth') || '800';
+  const API_KEY = getApiKey();
 
   if (!photoName) {
     return NextResponse.json({ error: 'Missing photo name' }, { status: 400 });

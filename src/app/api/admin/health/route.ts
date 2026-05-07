@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const CRON_SECRET = process.env.CRON_SECRET;
+function getCronSecret() { return process.env.CRON_SECRET; }
 
 export async function GET() {
   // Call the health check endpoint internally with skipEmail=true
@@ -8,7 +8,7 @@ export async function GET() {
 
   try {
     const res = await fetch(
-      `${baseUrl}/api/cron/health-check?secret=${CRON_SECRET}&skipEmail=true`,
+      `${baseUrl}/api/cron/health-check?secret=${getCronSecret()}&skipEmail=true`,
       { signal: AbortSignal.timeout(55000) }
     );
 

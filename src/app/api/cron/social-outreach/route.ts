@@ -3,9 +3,10 @@ import { createClient } from '@supabase/supabase-js';
 import { sendSocialDigest } from '@/lib/email';
 
 function getCronSecret() { return process.env.CRON_SECRET; }
-const META_PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN;
-const INSTAGRAM_ACCOUNT_ID = process.env.INSTAGRAM_ACCOUNT_ID;
-const META_API_VERSION = process.env.META_API_VERSION || 'v21.0';
+// Read at request time, not build time — avoids empty-string caching on Vercel
+function getMetaToken() { return process.env.META_PAGE_ACCESS_TOKEN; }
+function getInstagramAccountId() { return process.env.INSTAGRAM_ACCOUNT_ID; }
+function getMetaApiVersion() { return process.env.META_API_VERSION || 'v21.0'; }
 
 function getSupabaseAdmin() {
   return createClient(
@@ -67,6 +68,10 @@ export async function GET(request: NextRequest) {
   if (secret !== getCronSecret()) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  const META_PAGE_ACCESS_TOKEN = getMetaToken();
+  const INSTAGRAM_ACCOUNT_ID = getInstagramAccountId();
+  const META_API_VERSION = getMetaApiVersion();
 
   if (!META_PAGE_ACCESS_TOKEN || !INSTAGRAM_ACCOUNT_ID) {
     console.error('[OUTREACH] Instagram API credentials not configured');

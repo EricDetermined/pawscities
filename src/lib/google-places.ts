@@ -1,7 +1,8 @@
 // Google Places API (New) client for Paw Cities
 // Uses the newer places.googleapis.com endpoint
 
-const API_KEY = process.env.GOOGLE_PLACES_API_KEY || '';
+// Read at request time, not build time
+function getApiKey() { return process.env.GOOGLE_PLACES_getApiKey() || ''; }
 const BASE_URL = 'https://places.googleapis.com/v1';
 
 interface PlaceSearchResult {
@@ -61,7 +62,7 @@ export async function searchPlace(query: string, locationBias?: { lat: number; l
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Goog-Api-Key': API_KEY,
+      'X-Goog-Api-Key': getApiKey(),
       'X-Goog-FieldMask': fieldMask,
     },
     body: JSON.stringify(body),
@@ -85,7 +86,7 @@ export function getPhotoUrl(photoName: string, maxWidth: number = 800): string {
 
 export function getDirectPhotoUrl(photoName: string, maxWidth: number = 800): string {
   // Direct Google Places photo URL (for server-side use only)
-  return `${BASE_URL}/${photoName}/media?maxWidthPx=${maxWidth}&key=${API_KEY}`;
+  return `${BASE_URL}/${photoName}/media?maxWidthPx=${maxWidth}&key=${getApiKey()}`;
 }
 
 function priceLevelToNumber(priceLevel?: string): number {

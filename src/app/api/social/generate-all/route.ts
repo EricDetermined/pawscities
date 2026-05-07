@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { CONTENT_BANK, CITY_META } from '@/lib/social-content';
 
-const CRON_SECRET = process.env.CRON_SECRET;
+function getCronSecret() { return process.env.CRON_SECRET; }
 
 function getSupabaseAdmin() {
   return createClient(
@@ -24,7 +24,7 @@ export const maxDuration = 300; // 5 minutes for batch generation
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get('secret');
-  if (secret !== CRON_SECRET) {
+  if (secret !== getCronSecret()) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
