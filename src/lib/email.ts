@@ -11,12 +11,14 @@ function getResend(): Resend {
   return _resend;
 }
 
-const EMAIL_FROM = process.env.EMAIL_FROM || 'Paw Cities <noreply@pawcities.com>';
+// Read at request time, not build time
+function getEmailFrom() { return process.env.EMAIL_FROM || 'Paw Cities <noreply@pawcities.com>'; }
 // Read at call time, not build time, so env var changes take effect without redeploying
 function getAdminEmails(): string[] {
   return (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
 }
-const APP_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://pawcities.com';
+// Read at request time, not build time
+function getAppUrl() { return process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://pawcities.com'; }
 
 interface EmailResult {
   success: boolean;
@@ -37,7 +39,7 @@ async function sendEmail(
 
   try {
     const { error } = await getResend().emails.send({
-      from: EMAIL_FROM,
+      from: getEmailFrom(),
       to: Array.isArray(to) ? to : [to],
       subject,
       html,
@@ -86,7 +88,7 @@ ${content}
 <!-- Footer -->
 <tr><td style="padding:24px 32px;background-color:#fef3e8;border-top:1px solid #fed7aa;">
   <p style="margin:0;font-size:13px;color:#9a7b5a;">Paw Cities &mdash; Dog-Friendly Places Worldwide</p>
-  <p style="margin:4px 0 0;font-size:12px;color:#b89b78;"><a href="${APP_URL}" style="color:#ea580c;text-decoration:none;">${APP_URL}</a></p>
+  <p style="margin:4px 0 0;font-size:12px;color:#b89b78;"><a href="${getAppUrl()}" style="color:#ea580c;text-decoration:none;">${getAppUrl()}</a></p>
 </td></tr>
 
 </table>
@@ -115,7 +117,7 @@ function claimConfirmationTemplate(businessName: string, claimId: string): strin
   <strong>New to Paw Cities?</strong> Once your claim is approved, you&rsquo;ll receive an invitation email to set up your account and password. No action needed from your side right now &mdash; we&rsquo;ll handle everything during the review.
 </p>
 <p>In the meantime, you can check the status of your claim from your dashboard.</p>
-${ctaButton('View Your Dashboard', `${APP_URL}/business/claim`)}
+${ctaButton('View Your Dashboard', `${getAppUrl()}/business/claim`)}
 <p style="font-size:13px;color:#888;">If you didn&rsquo;t submit this claim, you can safely ignore this email.</p>
 `);
 }
@@ -133,7 +135,7 @@ function claimApprovedTemplate(businessName: string): string {
 <p style="background:#e8f4fe;padding:12px 16px;border-radius:8px;font-size:14px;color:#1e40af;">
   <strong>First time here?</strong> If this is your first time on Paw Cities, check your inbox for a separate invitation email to set up your account and password.
 </p>
-${ctaButton('Go to Your Dashboard', `${APP_URL}/business`)}
+${ctaButton('Go to Your Dashboard', `${getAppUrl()}/business`)}
 <p style="font-size:13px;color:#888;">Welcome to Paw Cities! We&rsquo;re excited to have you on board.</p>
 `);
 }
@@ -152,7 +154,7 @@ ${reasonBlock}
   <li style="margin-bottom:8px;">Providing a business license or registration document</li>
   <li style="margin-bottom:8px;">A utility bill or lease agreement showing the business address</li>
 </ul>
-${ctaButton('Submit a New Claim', `${APP_URL}/business/claim`)}
+${ctaButton('Submit a New Claim', `${getAppUrl()}/business/claim`)}
 <p style="font-size:13px;color:#888;">Questions? Reply to this email and we&rsquo;ll be happy to help.</p>
 `);
 }
@@ -171,7 +173,7 @@ function newClaimAdminAlertTemplate(
   <tr style="background:#f9f9f9;"><td style="font-weight:600;">Email</td><td><a href="mailto:${contactEmail}" style="color:#ea580c;">${contactEmail}</a></td></tr>
   <tr><td style="font-weight:600;">Verification</td><td>${verificationMethod.replace(/_/g, ' ')}</td></tr>
 </table>
-${ctaButton('Review in Admin Dashboard', `${APP_URL}/admin/claims`)}
+${ctaButton('Review in Admin Dashboard', `${getAppUrl()}/admin/claims`)}
 `);
 }
 
@@ -250,7 +252,7 @@ function newEventSubmissionAdminTemplate(
   <tr style="background:#f9f9f9;"><td style="font-weight:600;">Submitted&nbsp;by</td><td>${submitterName}</td></tr>
   <tr><td style="font-weight:600;">Email</td><td><a href="mailto:${submitterEmail}" style="color:#ea580c;">${submitterEmail}</a></td></tr>
 </table>
-${ctaButton('Review in Admin Dashboard', `${APP_URL}/admin/events`)}
+${ctaButton('Review in Admin Dashboard', `${getAppUrl()}/admin/events`)}
 <p style="font-size:13px;color:#888;">Approve or reject this event from the admin events dashboard.</p>
 `);
 }
@@ -292,7 +294,7 @@ export async function sendBusinessAccountSetup(
   <li style="margin-bottom:8px;">Check your inbox for the password reset link</li>
   <li style="margin-bottom:8px;">Set your password and sign in!</li>
 </ol>
-${ctaButton('Go to Sign In', `${APP_URL}/login`)}
+${ctaButton('Go to Sign In', `${getAppUrl()}/login`)}
 <p style="font-size:13px;color:#888;">Once signed in, you&rsquo;ll have full access to manage your listing on Paw Cities.</p>
 `)
   );
@@ -386,7 +388,7 @@ ${commentsHtml}
 <p style="font-size:14px;">Posts tracked: ${data.engagementSummary.postsTracked} &middot; Avg likes: ${data.engagementSummary.avgLikes} &middot; Avg comments: ${data.engagementSummary.avgComments}</p>
 ${topPostHtml}
 
-${ctaButton('Review All in Dashboard', `${APP_URL}/admin/social`)}
+${ctaButton('Review All in Dashboard', `${getAppUrl()}/admin/social`)}
 
 ${agentHealthHtml}
 ${hashtagsHtml}
@@ -415,4 +417,69 @@ export async function sendSocialDigest(data: SocialDigestData): Promise<EmailRes
     : 'Paw Cities Social: Daily check-in (all clear)';
 
   return sendEmail(getAdminEmails(), subject, socialDigestTemplate(data));
+}
+
+// ——— Health Report Email ——————————————————————————————————————————————————
+
+interface HealthCheck {
+  name: string;
+  status: 'healthy' | 'warning' | 'critical';
+  message: string;
+}
+
+interface HealthReportData {
+  timestamp: string;
+  overall: 'healthy' | 'warning' | 'critical';
+  checks: HealthCheck[];
+  summary: string;
+}
+
+export async function sendHealthReport(report: HealthReportData): Promise<EmailResult> {
+  const adminEmails = getAdminEmails();
+  if (adminEmails.length === 0) {
+    console.error('[EMAIL] No ADMIN_EMAILS configured — cannot send health report');
+    return { success: false, error: 'No ADMIN_EMAILS configured' };
+  }
+
+  const statusEmoji: Record<string, string> = { healthy: '✅', warning: '⚠️', critical: '🚨' };
+  const statusColor: Record<string, string> = { healthy: '#22c55e', warning: '#f59e0b', critical: '#ef4444' };
+
+  const checksHtml = report.checks.map(c => `
+    <tr>
+      <td style="padding:10px 16px;border-bottom:1px solid #e5e7eb;">${statusEmoji[c.status]} ${c.name}</td>
+      <td style="padding:10px 16px;border-bottom:1px solid #e5e7eb;color:${statusColor[c.status]};font-weight:600;">${c.status.toUpperCase()}</td>
+      <td style="padding:10px 16px;border-bottom:1px solid #e5e7eb;color:#6b7280;font-size:14px;">${c.message}</td>
+    </tr>
+  `).join('');
+
+  const subject = report.overall === 'healthy'
+    ? '✅ PawCities Daily Health — All Systems Go'
+    : report.overall === 'warning'
+      ? '⚠️ PawCities Health Alert — Issues Detected'
+      : '🚨 PawCities CRITICAL — Immediate Action Needed';
+
+  const html = baseTemplate(`${statusEmoji[report.overall]} Health Report`, `
+    <div style="background:${statusColor[report.overall]}15;border:1px solid ${statusColor[report.overall]}40;border-radius:8px;padding:16px;margin-bottom:20px;">
+      <strong style="color:${statusColor[report.overall]};font-size:16px;">${statusEmoji[report.overall]} Overall: ${report.overall.toUpperCase()}</strong>
+      <p style="margin:8px 0 0;color:#374151;font-size:14px;">${report.summary}</p>
+    </div>
+    <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
+      <thead><tr style="background:#f9fafb;">
+        <th style="padding:10px 16px;text-align:left;font-weight:600;">Service</th>
+        <th style="padding:10px 16px;text-align:left;font-weight:600;">Status</th>
+        <th style="padding:10px 16px;text-align:left;font-weight:600;">Details</th>
+      </tr></thead>
+      <tbody>${checksHtml}</tbody>
+    </table>
+    ${ctaButton('View Health Dashboard', `${getAppUrl()}/admin/health`)}
+    <p style="font-size:12px;color:#aaa;margin-top:16px;">Sent daily at 7 AM UTC by the PawCities health monitor.</p>
+  `);
+
+  const result = await sendEmail(adminEmails, subject, html);
+  if (!result.success) {
+    console.error(`[EMAIL] Health report email FAILED: ${result.error}`);
+  } else {
+    console.log(`[EMAIL] Health report sent to ${adminEmails.join(', ')}`);
+  }
+  return result;
 }

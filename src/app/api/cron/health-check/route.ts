@@ -360,96 +360,10 @@ async function checkEmailService(): Promise<CheckResult> {
   }
 }
 
-// ——— Email Alert ————————————————————————————————————————————————————————————
+// ——— Email Alert (uses shared email utility — no more inline Resend) ————————
 
-async function sendHealthAlert(report: HealthReport) {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('[HEALTH] No RESEND_API_KEY — skipping email alert');
-    return;
-  }
-
-  const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean);
-  if (adminEmails.length === 0) {
-    console.warn('[HEALTH] No ADMIN_EMAILS configured — skipping email alert');
-    return;
-  }
-
-  const statusEmoji = { healthy: '✅', warning: '⚠️', critical: '🚨' };
-  const statusColor = { healthy: '#22c55e', warning: '#f59e0b', critical: '#ef4444' };
-
-  const checksHtml = report.checks.map(c => `
-    <tr>
-      <td style="padding: 12px 16px; border-bottom: 1px solid #e5e7eb;">
-        ${statusEmoji[c.status]} ${c.name}
-      </td>
-      <td style="padding: 12px 16px; border-bottom: 1px solid #e5e7eb; color: ${statusColor[c.status]}; font-weight: 600;">
-        ${c.status.toUpperCase()}
-      </td>
-      <td style="padding: 12px 16px; border-bottom: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
-        ${c.message}
-      </td>
-    </tr>
-  `).join('');
-
-  const subject = report.overall === 'healthy'
-    ? '✅ PawCities Daily Health Report — All Systems Healthy'
-    : report.overall === 'warning'
-      ? '⚠️ PawCities Health Alert — Issues Detected'
-      : '🚨 PawCities CRITICAL Alert — Immediate Action Needed';
-
-  const html = `<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f9fafb; padding: 20px;">
-  <div style="max-width: 640px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-    <div style="background: ${statusColor[report.overall]}; padding: 24px 32px; color: white;">
-      <h1 style="margin: 0; font-size: 22px;">🐾 PawCities Health Report</h1>
-      <p style="margin: 8px 0 0; opacity: 0.9; font-size: 14px;">${new Date(report.timestamp).toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })}</p>
-    </div>
-    <div style="padding: 24px 32px;">
-      <div style="background: ${statusColor[report.overall]}15; border: 1px solid ${statusColor[report.overall]}40; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-        <strong style="color: ${statusColor[report.overall]}; font-size: 16px;">
-          ${statusEmoji[report.overall]} Overall: ${report.overall.toUpperCase()}
-        </strong>
-        <p style="margin: 8px 0 0; color: #374151; font-size: 14px;">${report.summary}</p>
-      </div>
-      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-        <thead>
-          <tr style="background: #f9fafb;">
-            <th style="padding: 10px 16px; text-align: left; font-weight: 600; color: #374151;">Service</th>
-            <th style="padding: 10px 16px; text-align: left; font-weight: 600; color: #374151;">Status</th>
-            <th style="padding: 10px 16px; text-align: left; font-weight: 600; color: #374151;">Details</th>
-          </tr>
-        </thead>
-        <tbody>${checksHtml}</tbody>
-      </table>
-      <div style="margin-top: 24px; text-align: center;">
-        <a href="https://pawcities.com/admin/health" style="display: inline-block; background: #f97316; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
-          View Health Dashboard →
-        </a>
-      </div>
-    </div>
-    <div style="padding: 16px 32px; background: #f9fafb; text-align: center; font-size: 12px; color: #9ca3af;">
-      PawCities Automated Health Monitor • <a href="https://pawcities.com/admin/health" style="color: #f97316;">Dashboard</a>
-    </div>
-  </div>
-</body>
-</html>`;
-
-  try {
-    const { Resend } = await import('resend');
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'Paw Cities <noreply@pawcities.com>',
-      to: adminEmails,
-      subject,
-      html,
-    });
-    console.log(`[HEALTH] Alert email sent to ${adminEmails.join(', ')}`);
-  } catch (err) {
-    console.error('[HEALTH] Failed to send alert email:', err);
-  }
-}
+// Import the shared email function that handles Resend properly
+import { sendHealthReport } from '@/lib/email';
 
 // ——— Store Results in Supabase ——————————————————————————————————————————————
 
@@ -474,8 +388,8 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get('secret');
 
-  const cronSecret = getCronSecret();
-  if (cronSecret && secret !== cronSecret) {
+  // FIX: Always require secret match (reject if CRON_SECRET is unset too)
+  if (secret !== getCronSecret()) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -513,12 +427,21 @@ export async function GET(request: NextRequest) {
   // Store the report
   await storeHealthReport(report);
 
-  // Send email alert (always for daily cron, skip for manual checks if requested)
+  // Send email alert using shared email utility (not inline Resend)
+  let emailResult = { success: false, error: 'skipped' };
   if (!skipEmail) {
-    await sendHealthAlert(report);
+    emailResult = await sendHealthReport(report);
+    if (!emailResult.success) {
+      console.error(`[HEALTH] Email delivery FAILED: ${emailResult.error}`);
+    }
   }
 
-  console.log(`[HEALTH] ${summary}`);
+  console.log(`[HEALTH] ${summary} | email: ${emailResult.success ? 'sent' : emailResult.error}`);
 
-  return NextResponse.json(report);
+  // FIX: Include email delivery status in response so failures are visible
+  return NextResponse.json({
+    ...report,
+    emailDelivered: emailResult.success,
+    emailError: emailResult.error || null,
+  });
 }

@@ -1,8 +1,11 @@
 /**
- * Paw Cities — Gmail → Ingest Queue Bridge
+ * Paw Cities — Gmail to Ingest Queue Bridge
  *
- * Google Apps Script that watches a Gmail inbox for emails containing
- * Instagram links and forwards them to the Paw Cities ingest API.
+ * Google Apps Script that watches Gmail for emails sent to the ingest
+ * address and forwards them to the Paw Cities ingest API.
+ *
+ * Uses LABEL-BASED tracking (not read/unread) so that self-sent emails
+ * (same Google Workspace account) are correctly detected and processed.
  *
  * SETUP:
  * 1. Go to https://script.google.com
@@ -17,84 +20,77 @@
  *    - Interval: Every 5 minutes
  *
  * HOW IT WORKS:
- * - Checks for unread emails in inbox (or a specific label)
+ * - Searches for emails TO the ingest address that haven't been labeled yet
  * - Extracts URLs from the email body
  * - POSTs to /api/ingest/email with from, subject, text
- * - Marks email as read and labels it "PawCities/Processed"
- * - Emails with no URLs get labeled "PawCities/NoLinks" and skipped
+ * - Labels thread "PawCities-Processed" on success
+ * - Emails with no URLs get labeled "PawCities-NoLinks" and skipped
+ *
+ * NOTE: Uses hyphens in label names (PawCities-Processed) not slashes,
+ * because Gmail search -label: syntax works more reliably with hyphens.
  */
 
 // ─── Configuration ───────────────────────────────────────────────────────────
 
-const WEBHOOK_URL = 'https://pawcities.com/api/ingest/email';
-const WEBHOOK_SECRET = '3344a89bf005fe23c6c0e529c462e3cca378fbffcbb02b54a3b501656c9f11eb';
+var WEBHOOK_URL = 'https://pawcities.com/api/ingest/email';
+var WEBHOOK_SECRET = '3344a89bf005fe23c6c0e529c462e3cca378fbffcbb02b54a3b501656c9f11eb';
 
-// Which inbox to watch. Options:
-//   'ingest@pawcities.com' — dedicated ingest address (recommended)
-//   'INBOX'                — watch entire inbox (not recommended)
-//   'PawCities/Inbox'      — watch a specific Gmail label
-const WATCH_ADDRESS = 'ingest@pawcities.com';
+// Emails sent TO this address will be processed
+var WATCH_ADDRESS = 'ingest@pawcities.com';
 
 // ─── Main function (runs on timer) ──────────────────────────────────────────
 
 function processNewEmails() {
-  // Search for unread emails to the ingest address
-  const query = `to:${WATCH_ADDRESS} is:unread`;
-  const threads = GmailApp.search(query, 0, 20); // Process up to 20 at a time
+  // Search for emails TO the ingest address that have NOT been processed yet
+  // Uses label exclusion instead of is:unread so self-sent emails are found
+  var query = 'to:' + WATCH_ADDRESS + ' -label:PawCities-Processed -label:PawCities-NoLinks -label:PawCities-Error';
+  var threads = GmailApp.search(query, 0, 20);
 
   if (threads.length === 0) return;
 
-  // Ensure labels exist
-  const processedLabel = getOrCreateLabel('PawCities/Processed');
-  const noLinksLabel = getOrCreateLabel('PawCities/NoLinks');
-  const errorLabel = getOrCreateLabel('PawCities/Error');
+  var processedLabel = getOrCreateLabel('PawCities-Processed');
+  var noLinksLabel = getOrCreateLabel('PawCities-NoLinks');
+  var errorLabel = getOrCreateLabel('PawCities-Error');
+  var processed = 0;
+  var errors = 0;
 
-  let processed = 0;
-  let errors = 0;
-
-  for (const thread of threads) {
-    const messages = thread.getMessages();
-
-    for (const message of messages) {
-      if (message.isUnread()) {
-        try {
-          const result = forwardToIngest(message);
-          message.markRead();
-
-          if (result.success) {
-            thread.addLabel(processedLabel);
-            processed++;
-          } else if (result.noLinks) {
-            thread.addLabel(noLinksLabel);
-          } else {
-            thread.addLabel(errorLabel);
-            errors++;
-          }
-        } catch (e) {
-          Logger.log('Error processing message: ' + e.toString());
-          thread.addLabel(errorLabel);
-          message.markRead(); // Don't retry forever
-          errors++;
-        }
+  for (var i = 0; i < threads.length; i++) {
+    var messages = threads[i].getMessages();
+    // Process the last message in thread (most recent)
+    var message = messages[messages.length - 1];
+    try {
+      var result = forwardToIngest(message);
+      if (result.success) {
+        threads[i].addLabel(processedLabel);
+        processed++;
+      } else if (result.noLinks) {
+        threads[i].addLabel(noLinksLabel);
+      } else {
+        threads[i].addLabel(errorLabel);
+        errors++;
       }
+    } catch (e) {
+      Logger.log('Error processing message: ' + e.toString());
+      threads[i].addLabel(errorLabel);
+      errors++;
     }
   }
 
   if (processed > 0 || errors > 0) {
-    Logger.log(`Paw Cities Ingest: ${processed} processed, ${errors} errors`);
+    Logger.log('Paw Cities Ingest: ' + processed + ' processed, ' + errors + ' errors');
   }
 }
 
 // ─── Forward a single email to the webhook ──────────────────────────────────
 
 function forwardToIngest(message) {
-  const from = message.getFrom();
-  const subject = message.getSubject();
-  const body = message.getPlainBody();
+  var from = message.getFrom();
+  var subject = message.getSubject();
+  var body = message.getPlainBody();
 
   // Quick check: does the body contain any URLs?
-  const urlPattern = /https?:\/\/[^\s<>"{}|\\^`\[\]]+/gi;
-  const urls = body.match(urlPattern);
+  var urlPattern = /https?:\/\/[^\s<>"{}|\\^`\[\]]+/gi;
+  var urls = body.match(urlPattern);
 
   if (!urls || urls.length === 0) {
     Logger.log('No URLs found in: ' + subject);
@@ -102,30 +98,30 @@ function forwardToIngest(message) {
   }
 
   // POST to the ingest webhook
-  const payload = {
+  var payload = {
     from: from,
     subject: subject,
-    text: body.substring(0, 5000), // Cap body length
-    source: 'email',
+    text: body.substring(0, 5000),
+    source: 'email'
   };
 
-  const options = {
+  var options = {
     method: 'post',
     contentType: 'application/json',
     payload: JSON.stringify(payload),
-    muteHttpExceptions: true,
+    muteHttpExceptions: true
   };
 
-  const url = WEBHOOK_URL + '?secret=' + WEBHOOK_SECRET;
-  const response = UrlFetchApp.fetch(url, options);
-  const code = response.getResponseCode();
+  var url = WEBHOOK_URL + '?secret=' + WEBHOOK_SECRET;
+  var response = UrlFetchApp.fetch(url, options);
+  var code = response.getResponseCode();
 
   if (code === 200) {
-    const result = JSON.parse(response.getContentText());
-    Logger.log(`Ingested: ${subject} → ${result.classification || 'unknown'} (${result.urls_found || 0} URLs)`);
+    var result = JSON.parse(response.getContentText());
+    Logger.log('Ingested: ' + subject + ' -> ' + (result.classification || 'unknown') + ' (' + (result.urls_found || 0) + ' URLs)');
     return { success: true };
   } else {
-    Logger.log(`Webhook error ${code}: ${response.getContentText()}`);
+    Logger.log('Webhook error ' + code + ': ' + response.getContentText());
     return { success: false, noLinks: false };
   }
 }
@@ -133,7 +129,7 @@ function forwardToIngest(message) {
 // ─── Helper: get or create a Gmail label ────────────────────────────────────
 
 function getOrCreateLabel(name) {
-  let label = GmailApp.getUserLabelByName(name);
+  var label = GmailApp.getUserLabelByName(name);
   if (!label) {
     label = GmailApp.createLabel(name);
   }
@@ -143,22 +139,22 @@ function getOrCreateLabel(name) {
 // ─── Manual test function ───────────────────────────────────────────────────
 
 function testWebhook() {
-  const payload = {
+  var payload = {
     from: 'eric@ericdetermined.com',
     subject: 'Test - Paris dog event',
     text: 'Check out this event in Paris! https://www.instagram.com/p/TEST123/',
-    source: 'email',
+    source: 'email'
   };
 
-  const options = {
+  var options = {
     method: 'post',
     contentType: 'application/json',
     payload: JSON.stringify(payload),
-    muteHttpExceptions: true,
+    muteHttpExceptions: true
   };
 
-  const url = WEBHOOK_URL + '?secret=' + WEBHOOK_SECRET;
-  const response = UrlFetchApp.fetch(url, options);
+  var url = WEBHOOK_URL + '?secret=' + WEBHOOK_SECRET;
+  var response = UrlFetchApp.fetch(url, options);
 
   Logger.log('Status: ' + response.getResponseCode());
   Logger.log('Response: ' + response.getContentText());
