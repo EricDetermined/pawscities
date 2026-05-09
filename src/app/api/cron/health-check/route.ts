@@ -427,9 +427,11 @@ export async function GET(request: NextRequest) {
   // Store the report
   await storeHealthReport(report);
 
-  // Send email alert using shared email utility (not inline Resend)
-  let emailResult = { success: false, error: 'skipped' };
-  if (!skipEmail) {
+  // Email: Only send standalone health email for CRITICAL issues or if explicitly requested
+  // The unified marketing-digest cron (12 PM UTC) now includes health status daily
+  const forceEmail = searchParams.get('forceEmail') === 'true';
+  let emailResult = { success: false, error: 'skipped — use marketing digest' };
+  if (!skipEmail && (forceEmail || overall === 'critical')) {
     emailResult = await sendHealthReport(report);
     if (!emailResult.success) {
       console.error(`[HEALTH] Email delivery FAILED: ${emailResult.error}`);

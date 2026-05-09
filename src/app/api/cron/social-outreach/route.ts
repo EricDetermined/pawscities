@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { sendSocialDigest } from '@/lib/email';
+// Email sending moved to the unified marketing-digest cron
 
 function getCronSecret() { return process.env.CRON_SECRET; }
 // Read at request time, not build time — avoids empty-string caching on Vercel
@@ -311,86 +311,8 @@ export async function GET(request: NextRequest) {
 
     console.log('[OUTREACH] Scan complete:', JSON.stringify(summary));
 
-    // 6. ALWAYS send daily social digest email — even if no new opportunities
-    try {
-      // Get new opportunities for the email
-      const { data: newOpps } = await supabase
-        .from('social_opportunities')
-        .select('permalink, caption, category, suggested_reply, likes')
-        .eq('status', 'new')
-        .order('likes', { ascending: false })
-        .limit(10);
-
-      // Get unreplied comments from the engagement agent
-      const { data: unreplied } = await supabase
-        .from('social_comments')
-        .select('username, text, post_id')
-        .eq('replied', false)
-        .order('commented_at', { ascending: false })
-        .limit(10);
-
-      // Get top performing post from social_posts
-      const { data: topPosts } = await supabase
-        .from('social_posts')
-        .select('post_id, likes, comments_count, caption, permalink')
-        .eq('status', 'published')
-        .order('engagement_score', { ascending: false })
-        .limit(1);
-
-      // Get engagement averages
-      const { data: allPosts } = await supabase
-        .from('social_posts')
-        .select('likes, comments_count')
-        .eq('status', 'published');
-
-      const avgLikes = allPosts && allPosts.length > 0
-        ? Math.round(allPosts.reduce((s: number, p: { likes: number }) => s + (p.likes || 0), 0) / allPosts.length)
-        : 0;
-      const avgComments = allPosts && allPosts.length > 0
-        ? Math.round((allPosts.reduce((s: number, p: { comments_count: number }) => s + (p.comments_count || 0), 0) / allPosts.length) * 10) / 10
-        : 0;
-
-      // Build top post link — prefer stored permalink, fallback to constructed URL
-      const topPost = topPosts?.[0] ? {
-        permalink: (topPosts[0] as { permalink?: string }).permalink
-          || `https://instagram.com/p/${topPosts[0].post_id}`,
-        likes: topPosts[0].likes || 0,
-        comments: topPosts[0].comments_count || 0,
-        caption: topPosts[0].caption || '',
-      } : null;
-
-      // Include agent health info in the digest
-      const agentHealthNote = hashtagErrors.length > 0 || watchlistErrors.length > 0
-        ? `Agent issues: ${hashtagErrors.length} hashtag errors, ${watchlistErrors.length} watchlist errors. Check Vercel logs for details.`
-        : 'All agents running smoothly.';
-
-      await sendSocialDigest({
-        newOpportunities: (newOpps || []).map((o: { permalink: string; caption: string; category: string; suggested_reply: string; likes: number }) => ({
-          permalink: o.permalink,
-          caption: o.caption || '',
-          category: o.category || 'general',
-          suggestedReply: o.suggested_reply || '',
-          likes: o.likes || 0,
-        })),
-        unrepliedComments: (unreplied || []).map((c: { username: string; text: string; post_id: string }) => ({
-          username: c.username,
-          text: c.text,
-          postId: c.post_id,
-        })),
-        topPost,
-        totalPendingOpportunities: pendingCount || 0,
-        engagementSummary: {
-          avgLikes,
-          avgComments,
-          postsTracked: allPosts?.length || 0,
-        },
-        agentHealth: agentHealthNote,
-        hashtagsScannedToday: todaysHashtags,
-      });
-      console.log('[OUTREACH] Social digest email sent successfully');
-    } catch (emailErr) {
-      console.error('[OUTREACH] FAILED to send social digest email:', emailErr);
-    }
+    // 6. Email is now handled by the unified marketing-digest cron (runs at 12 PM UTC)
+    // This cron just does the scanning work — no more separate email
 
     return NextResponse.json({ success: true, ...summary, hashtagErrors, watchlistErrors });
   } catch (error) {

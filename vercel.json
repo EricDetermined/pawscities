@@ -32,6 +32,10 @@
     {
       "path": "/api/cron/event-discovery?secret=${CRON_SECRET}",
       "schedule": "0 8 * * 1"
+    },
+    {
+      "path": "/api/cron/marketing-digest?secret=${CRON_SECRET}",
+      "schedule": "0 12 * * *"
     }
   ]
 }
