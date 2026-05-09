@@ -266,7 +266,7 @@ async function checkInstagramPosting(): Promise<CheckResult> {
 /** Check that key site pages are responding */
 async function checkSitePages(): Promise<CheckResult> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
-  const pages = ['/', '/paris', '/london', '/sydney', '/api/places/photo?name=test'];
+  const pages = ['/', '/paris', '/london', '/sydney'];
   const results: { page: string; status: number; ok: boolean }[] = [];
 
   for (const page of pages) {
@@ -276,7 +276,7 @@ async function checkSitePages(): Promise<CheckResult> {
         signal: AbortSignal.timeout(10000),
         redirect: 'follow',
       });
-      results.push({ page, status: res.status, ok: res.ok || res.status === 400 }); // 400 expected for photo test
+      results.push({ page, status: res.status, ok: res.ok });
     } catch {
       results.push({ page, status: 0, ok: false });
     }
