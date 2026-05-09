@@ -3,32 +3,65 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Install Paw Cities Shortcut</title>
+  <title>Paw Cities — Quick Share Setup</title>
   <style>
     body { font-family: -apple-system, sans-serif; background: #f9fafb; margin: 0; padding: 20px; text-align: center; }
-    .card { max-width: 400px; margin: 60px auto; background: white; border-radius: 16px; padding: 32px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    h1 { font-size: 24px; margin: 16px 0 8px; }
+    .card { max-width: 420px; margin: 40px auto; background: white; border-radius: 16px; padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    h1 { font-size: 22px; margin: 12px 0 8px; }
+    h2 { font-size: 17px; margin: 20px 0 8px; color: #374151; }
     p { color: #6b7280; font-size: 15px; line-height: 1.5; }
-    .icon { font-size: 64px; }
-    .btn { display: inline-block; background: #f97316; color: white; padding: 14px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 17px; margin-top: 20px; }
-    .steps { text-align: left; margin-top: 24px; font-size: 14px; color: #374151; }
-    .steps li { margin-bottom: 8px; }
+    .icon { font-size: 56px; }
+    .steps { text-align: left; margin-top: 16px; font-size: 14px; color: #374151; }
+    .steps li { margin-bottom: 10px; line-height: 1.5; }
+    code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 13px; word-break: break-all; }
+    .copy-btn { display: inline-block; background: #f97316; color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 16px; margin-top: 16px; border: none; cursor: pointer; }
+    .copy-btn:active { background: #ea580c; }
+    .secret-box { background: #fef3c7; border: 1px solid #fbbf24; border-radius: 8px; padding: 12px; margin: 12px 0; text-align: left; font-size: 13px; word-break: break-all; }
+    .note { font-size: 12px; color: #9ca3af; margin-top: 16px; }
   </style>
 </head>
 <body>
   <div class="card">
     <div class="icon">🐾</div>
     <h1>Paw Cities Share</h1>
-    <p>Install this shortcut to send Instagram posts to Paw Cities with two taps.</p>
-    <a class="btn" href="/PawCities-Share.shortcut" download="PawCities-Share.shortcut">Download Shortcut</a>
-    <div class="steps">
-      <p><strong>After downloading:</strong></p>
-      <ol>
-        <li>Tap the downloaded file in Safari</li>
-        <li>Tap <strong>"Add Shortcut"</strong></li>
-        <li>In Instagram, tap <strong>Share → Paw Cities</strong></li>
-      </ol>
-    </div>
+    <p>3-step setup to send Instagram content to your pipeline with two taps.</p>
+
+    <h2>Setup (one time)</h2>
+    <ol class="steps">
+      <li>Open the <strong>Shortcuts</strong> app on your iPhone</li>
+      <li>Tap <strong>+</strong> then name it <strong>Paw Cities</strong></li>
+      <li>Add action: <strong>Get Contents of URL</strong>
+        <br>URL: <code>https://pawcities.com/api/ingest</code>
+        <br>Method: <strong>POST</strong>
+        <br>Request Body: <strong>JSON</strong>
+      </li>
+      <li>Add 3 fields (tap <strong>Add New Field → Text</strong> each time):
+        <br><code>url</code> → tap value → <strong>Shortcut Input</strong>
+        <br><code>source</code> → type <code>share_sheet</code>
+        <br><code>secret</code> → paste the key below
+      </li>
+      <li>Tap the <strong>settings icon</strong> at the top → enable <strong>Show in Share Sheet</strong></li>
+    </ol>
+
+    <p style="font-size:14px; font-weight:600; color:#374151;">Your secret key:</p>
+    <div class="secret-box" id="secretBox">3344a89bf005fe23c6c0e529c462e3cca378fbffcbb02b54a3b501656c9f11eb</div>
+    <button class="copy-btn" onclick="copySecret()">Copy Secret Key</button>
+
+    <h2>Usage</h2>
+    <p style="text-align:left; font-size:14px;">On any Instagram post or reel, tap <strong>Share</strong> → scroll to <strong>Paw Cities</strong>. Done! It auto-classifies as event, engagement, or influencer and queues it for your agents.</p>
+
+    <p class="note">Keep this page bookmarked for reference.</p>
   </div>
+
+  <script>
+    function copySecret() {
+      const text = document.getElementById('secretBox').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy Secret Key', 2000);
+      });
+    }
+  </script>
 </body>
 </html>
