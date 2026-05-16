@@ -3,6 +3,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { createClient } from '@supabase/supabase-js';
 import { publishImagePost } from '@/lib/instagram';
+import { searchPlace } from '@/lib/google-places';
 import {
   CONTENT_BANK,
   CITY_META,
@@ -248,7 +249,34 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Fallback: find a MATCHING Google photo from a relevant establishment
+    // Priority 2: If the post names a specific business, look it up via Google Places
+    if (!imageUrl && fact.placeName) {
+      try {
+        console.log(`[PHOTO-MATCH] Searching Google Places for specific business: "${fact.placeName}"`);
+        const placeResult = await searchPlace(fact.placeName);
+
+        if (placeResult?.photos && placeResult.photos.length > 0) {
+          const photoName = placeResult.photos[0].name;
+          // Use the photo proxy to get a publicly accessible URL
+          const candidateUrl = getEstablishmentPhotoUrl(photoName);
+
+          // Verify the photo URL works
+          const testResponse = await fetch(candidateUrl, { method: 'HEAD' });
+          if (testResponse.ok) {
+            imageUrl = candidateUrl;
+            console.log(`[PHOTO-MATCH] ✅ Using Google Places photo of "${placeResult.displayName?.text}" for "${fact.headline}"`);
+          } else {
+            console.log(`[PHOTO-MATCH] Google Places photo returned ${testResponse.status}, falling back...`);
+          }
+        } else {
+          console.log(`[PHOTO-MATCH] No photos found for "${fact.placeName}", falling back to category match`);
+        }
+      } catch (err) {
+        console.error(`[PHOTO-MATCH] Google Places search failed for "${fact.placeName}":`, err);
+      }
+    }
+
+    // Priority 3: find a MATCHING Google photo from a relevant establishment in our data
     // Smart matching: analyze post content to pick a photo that fits the theme
 
     if (!imageUrl && cityFile) {
