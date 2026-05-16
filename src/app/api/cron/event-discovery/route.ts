@@ -142,20 +142,32 @@ export async function GET(request: NextRequest) {
 
   const supabase = getSupabaseAdmin();
 
-  // Pick 4 hashtags for this run (rotate weekly using week number)
+  // Smart rotation: ALWAYS 2 global + 2 city-specific hashtags per run
+  // This guarantees city-level event discovery every week
   const weekNumber = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
-  const allHashtags = [
-    ...GLOBAL_EVENT_HASHTAGS,
-    ...Object.values(EVENT_HASHTAGS).flat(),
-  ];
-  const uniqueHashtags = [...new Set(allHashtags)];
-  const startIdx = (weekNumber * 4) % uniqueHashtags.length;
-  const selectedHashtags = [];
-  for (let i = 0; i < 4; i++) {
-    selectedHashtags.push(uniqueHashtags[(startIdx + i) % uniqueHashtags.length]);
-  }
 
-  console.log(`[EVENT-DISCOVERY] Scanning hashtags: ${selectedHashtags.join(', ')}`);
+  // Pick 2 global hashtags (rotate through 8)
+  const globalStart = (weekNumber * 2) % GLOBAL_EVENT_HASHTAGS.length;
+  const selectedGlobal = [
+    GLOBAL_EVENT_HASHTAGS[globalStart % GLOBAL_EVENT_HASHTAGS.length],
+    GLOBAL_EVENT_HASHTAGS[(globalStart + 1) % GLOBAL_EVENT_HASHTAGS.length],
+  ];
+
+  // Pick 2 city-specific hashtags (rotate through cities, pick 1 hashtag each from 2 cities)
+  const cities = Object.keys(EVENT_HASHTAGS);
+  const cityIdx1 = weekNumber % cities.length;
+  const cityIdx2 = (weekNumber + 1) % cities.length;
+  const city1Tags = EVENT_HASHTAGS[cities[cityIdx1]];
+  const city2Tags = EVENT_HASHTAGS[cities[cityIdx2]];
+  const selectedCity = [
+    city1Tags[weekNumber % city1Tags.length],
+    city2Tags[weekNumber % city2Tags.length],
+  ];
+
+  const selectedHashtags = [...selectedGlobal, ...selectedCity];
+  const targetCities = [cities[cityIdx1], cities[cityIdx2]];
+
+  console.log(`[EVENT-DISCOVERY] Scanning: ${selectedHashtags.join(', ')} (targeting ${targetCities.join(', ')})`);
 
   const discoveredEvents: Array<{
     caption: string;

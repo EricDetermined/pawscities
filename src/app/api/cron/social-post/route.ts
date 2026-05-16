@@ -30,6 +30,7 @@ interface PlaceData {
   name: string;
   photoRefs?: string[];
   category?: string;
+  neighborhood?: string;
   [key: string]: unknown;
 }
 
@@ -44,6 +45,84 @@ function getSupabaseAdmin() {
   if (!url || !serviceKey) return null;
 
   return createClient(url, serviceKey);
+}
+
+// ─── Smart Photo Matching ──────────────────────────────────────────────────────
+// Analyze post content to determine what kind of venue photo would be relevant
+
+type ContentType = 'did-you-know' | 'tip' | 'spotlight' | 'event' | 'guide' | 'fun';
+
+/**
+ * Infer preferred establishment categories from post content.
+ * Returns an array of normalized category keywords to match against.
+ */
+function inferPhotoCategory(headline: string, body: string, type: ContentType): string[] {
+  const text = `${headline} ${body}`.toLowerCase();
+
+  // Outdoor / nature signals
+  if (/beach|swim|lake|ocean|surf|sand|waterfront|shore|coastal/.test(text)) {
+    return ['park', 'beach', 'outdoor'];
+  }
+  if (/park|garden|trail|hike|walk|green|forest|woods|off-leash|run free/.test(text)) {
+    return ['park', 'beach', 'outdoor'];
+  }
+
+  // Café / brunch signals
+  if (/caf[eé]|coffee|brunch|latte|espresso|bakery|pastry|croissant/.test(text)) {
+    return ['cafe', 'cafes', 'brunch'];
+  }
+
+  // Restaurant / dining signals
+  if (/restaurant|dining|dinner|roast|menu|chef|food|eat|meal|bistro|brasserie/.test(text)) {
+    return ['restaurant', 'restaurants', 'pub', 'pubs', 'dining'];
+  }
+
+  // Hotel / accommodation signals
+  if (/hotel|stay|accommodation|resort|boutique hotel|check.?in|room|suite/.test(text)) {
+    return ['hotel', 'hotels'];
+  }
+
+  // Shopping signals
+  if (/shop|store|boutique|market|retail|buy|pet store/.test(text)) {
+    return ['shop', 'shopping', 'pet shop'];
+  }
+
+  // Pub / bar signals
+  if (/pub|bar|beer|brew|wine|cocktail|pint|tap room|happy hour/.test(text)) {
+    return ['pub', 'pubs', 'restaurant', 'restaurants'];
+  }
+
+  // Transit / general city signals — use cafés as they're the most photogenic
+  if (/metro|tube|train|transit|bus|ride|transport/.test(text)) {
+    return ['cafe', 'cafes', 'restaurant', 'restaurants'];
+  }
+
+  // Event type posts — prefer outdoor/park venues
+  if (type === 'event') {
+    return ['park', 'beach', 'outdoor', 'cafe'];
+  }
+
+  // Default: cafés and restaurants are the most visually appealing fallback
+  return ['cafe', 'cafes', 'restaurant', 'restaurants'];
+}
+
+/**
+ * Check if an establishment category matches any of the preferred categories.
+ * Handles the inconsistent category naming across different city data files.
+ */
+function matchesCategory(estCategory: string, preferred: string[]): boolean {
+  const cat = estCategory.toLowerCase().replace(/[\/\s]+/g, ' ');
+
+  for (const pref of preferred) {
+    const p = pref.toLowerCase();
+    // Direct match
+    if (cat === p || cat === p + 's') return true;
+    // Partial match (e.g. "Cafe/Brunch" contains "cafe", "Dog Beach/Park" contains "park")
+    if (cat.includes(p)) return true;
+    // Handle plurals both ways
+    if (p.endsWith('s') && cat === p.slice(0, -1)) return true;
+  }
+  return false;
 }
 
 /**
@@ -169,7 +248,8 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Fallback: find a Google photo from a featured establishment
+    // Fallback: find a MATCHING Google photo from a relevant establishment
+    // Smart matching: analyze post content to pick a photo that fits the theme
 
     if (!imageUrl && cityFile) {
       try {
@@ -177,13 +257,29 @@ export async function GET(request: NextRequest) {
         const cityData = JSON.parse(await fs.readFile(dataPath, 'utf-8'));
         const places: PlaceData[] = cityData.places || [];
 
-        // Find places with photos - try multiple in case some have expired tokens
+        // Determine what kind of venue photo matches this content
+        const preferredCategories = inferPhotoCategory(fact.headline, fact.body, fact.type);
+        console.log(`[PHOTO-MATCH] "${fact.headline}" → preferred: [${preferredCategories.join(', ')}]`);
+
+        // Find places with photos, prioritizing category matches
         const placesWithPhotos = places.filter(p => p.photoRefs && p.photoRefs.length > 0);
-        if (placesWithPhotos.length > 0) {
-          // Try up to 5 different places to find a working photo
-          for (let attempt = 0; attempt < Math.min(5, placesWithPhotos.length); attempt++) {
-            const idx = (totalPosted + attempt) % placesWithPhotos.length;
-            const place = placesWithPhotos[idx];
+
+        // Sort: matching categories first, then others as fallback
+        const sorted = [...placesWithPhotos].sort((a, b) => {
+          const aMatch = matchesCategory(a.category || '', preferredCategories) ? 0 : 1;
+          const bMatch = matchesCategory(b.category || '', preferredCategories) ? 0 : 1;
+          return aMatch - bMatch;
+        });
+
+        const matchedCount = sorted.filter(p => matchesCategory(p.category || '', preferredCategories)).length;
+        console.log(`[PHOTO-MATCH] ${matchedCount}/${sorted.length} places match preferred categories`);
+
+        if (sorted.length > 0) {
+          // Rotate within matched places (or all if no matches)
+          const pool = matchedCount > 0 ? sorted.slice(0, matchedCount) : sorted;
+          for (let attempt = 0; attempt < Math.min(5, pool.length); attempt++) {
+            const idx = (totalPosted + attempt) % pool.length;
+            const place = pool[idx];
             const photoRef = place.photoRefs![0];
             const candidateUrl = getEstablishmentPhotoUrl(photoRef);
 
@@ -192,7 +288,7 @@ export async function GET(request: NextRequest) {
               const testResponse = await fetch(candidateUrl, { method: 'HEAD' });
               if (testResponse.ok) {
                 imageUrl = candidateUrl;
-                console.log(`Using photo from "${place.name}" (attempt ${attempt + 1})`);
+                console.log(`[PHOTO-MATCH] Using "${place.name}" (${place.category}) for "${fact.headline}"`);
                 break;
               } else {
                 console.log(`Photo expired for "${place.name}" (${testResponse.status}), trying next...`);
