@@ -1,146 +1,95 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
 import { createClient } from '@supabase/supabase-js';
 import { publishImagePost } from '@/lib/instagram';
-import { searchPlace } from '@/lib/google-places';
 import {
   CONTENT_BANK,
   CITY_META,
   generateCaption,
+  generateEventCaption,
   pickNextContent,
-  getEstablishmentPhotoUrl,
 } from '@/lib/social-content';
+
+// ─── Config ────────────────────────────────────────────────────────────────────
 
 // Read at request time, not build time
 function getCronSecret() { return process.env.CRON_SECRET; }
 
-// Map city keys to JSON filenames
-const CITY_FILE_MAP: Record<string, string> = {
-  paris: 'paris-places',
-  geneva: 'geneva-places',
-  london: 'london-places',
-  barcelona: 'barcelona-places',
-  losangeles: 'los-angeles-places',
-  nyc: 'nyc-places',
-  sydney: 'sydney-places',
-  tokyo: 'tokyo-places',
-};
+/** How many days ahead to look for upcoming events */
+const EVENT_LOOKAHEAD_DAYS = 14;
 
-interface PlaceData {
-  name: string;
-  photoRefs?: string[];
-  category?: string;
-  neighborhood?: string;
-  [key: string]: unknown;
-}
+// ─── Supabase Admin ────────────────────────────────────────────────────────────
 
-/**
- * Create a Supabase admin client (service role) for cron jobs
- * Falls back gracefully if not configured
- */
 function getSupabaseAdmin() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
   if (!url || !serviceKey) return null;
-
   return createClient(url, serviceKey);
 }
 
-// ─── Smart Photo Matching ──────────────────────────────────────────────────────
-// Analyze post content to determine what kind of venue photo would be relevant
+// ─── Helpers ───────────────────────────────────────────────────────────────────
 
-type ContentType = 'did-you-know' | 'tip' | 'spotlight' | 'event' | 'guide' | 'fun';
-
-/**
- * Infer preferred establishment categories from post content.
- * Returns an array of normalized category keywords to match against.
- */
-function inferPhotoCategory(headline: string, body: string, type: ContentType): string[] {
-  const text = `${headline} ${body}`.toLowerCase();
-
-  // Outdoor / nature signals
-  if (/beach|swim|lake|ocean|surf|sand|waterfront|shore|coastal/.test(text)) {
-    return ['park', 'beach', 'outdoor'];
-  }
-  if (/park|garden|trail|hike|walk|green|forest|woods|off-leash|run free/.test(text)) {
-    return ['park', 'beach', 'outdoor'];
-  }
-
-  // Café / brunch signals
-  if (/caf[eé]|coffee|brunch|latte|espresso|bakery|pastry|croissant/.test(text)) {
-    return ['cafe', 'cafes', 'brunch'];
-  }
-
-  // Restaurant / dining signals
-  if (/restaurant|dining|dinner|roast|menu|chef|food|eat|meal|bistro|brasserie/.test(text)) {
-    return ['restaurant', 'restaurants', 'pub', 'pubs', 'dining'];
-  }
-
-  // Hotel / accommodation signals
-  if (/hotel|stay|accommodation|resort|boutique hotel|check.?in|room|suite/.test(text)) {
-    return ['hotel', 'hotels'];
-  }
-
-  // Shopping signals
-  if (/shop|store|boutique|market|retail|buy|pet store/.test(text)) {
-    return ['shop', 'shopping', 'pet shop'];
-  }
-
-  // Pub / bar signals
-  if (/pub|bar|beer|brew|wine|cocktail|pint|tap room|happy hour/.test(text)) {
-    return ['pub', 'pubs', 'restaurant', 'restaurants'];
-  }
-
-  // Transit / general city signals — use cafés as they're the most photogenic
-  if (/metro|tube|train|transit|bus|ride|transport/.test(text)) {
-    return ['cafe', 'cafes', 'restaurant', 'restaurants'];
-  }
-
-  // Event type posts — prefer outdoor/park venues
-  if (type === 'event') {
-    return ['park', 'beach', 'outdoor', 'cafe'];
-  }
-
-  // Default: cafés and restaurants are the most visually appealing fallback
-  return ['cafe', 'cafes', 'restaurant', 'restaurants'];
+/** Get the deployment base URL for internal API calls */
+function getBaseUrl(): string {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return 'http://localhost:3000';
 }
 
-/**
- * Check if an establishment category matches any of the preferred categories.
- * Handles the inconsistent category naming across different city data files.
- */
-function matchesCategory(estCategory: string, preferred: string[]): boolean {
-  const cat = estCategory.toLowerCase().replace(/[\/\s]+/g, ' ');
-
-  for (const pref of preferred) {
-    const p = pref.toLowerCase();
-    // Direct match
-    if (cat === p || cat === p + 's') return true;
-    // Partial match (e.g. "Cafe/Brunch" contains "cafe", "Dog Beach/Park" contains "park")
-    if (cat.includes(p)) return true;
-    // Handle plurals both ways
-    if (p.endsWith('s') && cat === p.slice(0, -1)) return true;
-  }
-  return false;
+/** Format an event date for display (e.g. "Sat, Jun 14") */
+function formatEventDate(dateStr: string): string {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 }
+
+/** Format time for display (e.g. "2:00 PM") */
+function formatEventTime(timeStr: string | null): string {
+  if (!timeStr) return '';
+  const [h, m] = timeStr.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hour = h % 12 || 12;
+  return `${hour}:${String(m).padStart(2, '0')} ${ampm}`;
+}
+
+// ─── Event row type from Supabase query ────────────────────────────────────────
+
+interface EventRow {
+  id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  venue_name: string | null;
+  venue_address: string | null;
+  start_date: string;
+  end_date: string | null;
+  start_time: string | null;
+  end_time: string | null;
+  tags: string[] | null;
+  source_handle: string | null;
+  is_free: boolean;
+  is_featured: boolean;
+  status: string;
+  cities: { slug: string; name: string } | null;
+}
+
+// ─── Main Route ────────────────────────────────────────────────────────────────
 
 /**
  * GET /api/cron/social-post
  *
- * Called by Vercel Cron (or manually by admin) to auto-post to Instagram.
- * Flow:
- * 1. Read posting history from Supabase (or fallback to JSON file)
- * 2. Pick the next content using round-robin city rotation
- * 3. Find a Google Places photo from a featured establishment in that city
- * 4. Publish to Instagram via the Meta Graph API
- * 5. Log the post to Supabase
+ * Events-first Instagram posting cron for @thepawcities.
  *
- * Auth: requires CRON_SECRET header or query param
+ * Priority 1: Post upcoming APPROVED events (next 14 days) that haven't
+ *             been posted yet. Uses branded event creatives (city skyline +
+ *             text overlay) which ALWAYS match the content.
+ *
+ * Priority 2: Fall back to content bank items ONLY if they have a
+ *             pre-stored branded creative in Supabase Storage. Never uses
+ *             Google Places photos — images must match post content.
+ *
+ * Max 1 post per invocation. Auth via CRON_SECRET.
  */
 export async function GET(request: NextRequest) {
-  // Authenticate
+  // ── Auth ────────────────────────────────────────────────────────────────────
   const authHeader = request.headers.get('authorization');
   const cronParam = request.nextUrl.searchParams.get('secret');
   const dryRun = request.nextUrl.searchParams.get('dryRun') === 'true';
@@ -151,77 +100,258 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // 1. Load posting history from Supabase
     const supabase = getSupabaseAdmin();
-    let postedHeadlines = new Set<string>();
-    let totalPosted = 0;
+    if (!supabase) {
+      return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });
+    }
 
-    if (supabase) {
-      // Get published posts
-      const { data: posts } = await supabase
-        .from('social_posts')
-        .select('headline')
-        .eq('status', 'published');
+    // ── Load posting history ──────────────────────────────────────────────────
+    const { data: publishedPosts } = await supabase
+      .from('social_posts')
+      .select('headline')
+      .eq('status', 'published');
 
-      if (posts) {
-        postedHeadlines = new Set(posts.map((p: { headline: string }) => p.headline));
-        totalPosted = posts.length;
+    const postedHeadlines = new Set(
+      (publishedPosts || []).map((p: { headline: string }) => p.headline)
+    );
+    const totalPosted = postedHeadlines.size;
+
+    // Also skip headlines that have failed 3+ times
+    const { data: failedPosts } = await supabase
+      .from('social_posts')
+      .select('headline')
+      .eq('status', 'failed');
+
+    if (failedPosts) {
+      const failCounts: Record<string, number> = {};
+      for (const p of failedPosts) {
+        failCounts[p.headline] = (failCounts[p.headline] || 0) + 1;
       }
-
-      // Also skip headlines that have failed 3+ times to prevent infinite retry loops
-      const { data: failedPosts } = await supabase
-        .from('social_posts')
-        .select('headline')
-        .eq('status', 'failed');
-
-      if (failedPosts) {
-        const failCounts: Record<string, number> = {};
-        for (const p of failedPosts) {
-          failCounts[p.headline] = (failCounts[p.headline] || 0) + 1;
+      for (const [headline, count] of Object.entries(failCounts)) {
+        if (count >= 3) {
+          postedHeadlines.add(headline);
+          console.log(`Skipping "${headline}" — failed ${count} times`);
         }
-        for (const [headline, count] of Object.entries(failCounts)) {
-          if (count >= 3) {
-            postedHeadlines.add(headline);
-            console.log(`Skipping "${headline}" — failed ${count} times`);
-          }
-        }
-      }
-    } else {
-      // Fallback: read from JSON (works in dev)
-      try {
-        const historyPath = path.join(process.cwd(), 'social-post-history.json');
-        const raw = await fs.readFile(historyPath, 'utf-8');
-        const history = JSON.parse(raw);
-        postedHeadlines = new Set(history.map((h: { headline: string }) => h.headline));
-        totalPosted = history.length;
-      } catch {
-        // No history yet
       }
     }
 
-    // 2. Pick next content
+    // ══════════════════════════════════════════════════════════════════════════
+    // PRIORITY 1: Events
+    // ══════════════════════════════════════════════════════════════════════════
+
+    const today = new Date().toISOString().split('T')[0];
+    const lookahead = new Date();
+    lookahead.setDate(lookahead.getDate() + EVENT_LOOKAHEAD_DAYS);
+    const lookaheadDate = lookahead.toISOString().split('T')[0];
+
+    // Fetch approved events in the next 14 days, joined with city info
+    const { data: upcomingEvents, error: eventsError } = await supabase
+      .from('events')
+      .select('id, slug, name, description, venue_name, venue_address, start_date, end_date, start_time, end_time, tags, source_handle, is_free, is_featured, status, cities(slug, name)')
+      .eq('status', 'APPROVED')
+      .gte('start_date', today)
+      .lte('start_date', lookaheadDate)
+      .order('start_date', { ascending: true });
+
+    if (eventsError) {
+      console.error('Error fetching events:', eventsError);
+    }
+
+    // Find the first event that hasn't been posted yet
+    const unpostedEvent = (upcomingEvents as EventRow[] | null)?.find(
+      (evt) => !postedHeadlines.has(evt.name)
+    );
+
+    if (unpostedEvent) {
+      const city = unpostedEvent.cities;
+      const citySlug = city?.slug || 'losangeles';
+      const cityName = city?.name || 'City';
+
+      // Map Supabase city slug to CITY_META key (e.g. "newyork" -> "nyc")
+      const metaKey = Object.keys(CITY_META).find(
+        k => CITY_META[k].slug === citySlug
+      ) || citySlug;
+
+      console.log(`[EVENT] Posting event: "${unpostedEvent.name}" in ${cityName}`);
+
+      // ── Step 1: Generate branded creative via event-creative endpoint ──────
+      const dateDisplay = formatEventDate(unpostedEvent.start_date);
+      const timeDisplay = formatEventTime(unpostedEvent.start_time);
+      const dateStr = timeDisplay ? `${dateDisplay} at ${timeDisplay}` : dateDisplay;
+
+      const creativeParams = new URLSearchParams({
+        name: unpostedEvent.name,
+        city: cityName,
+        citySlug,
+        date: dateStr,
+      });
+      if (unpostedEvent.venue_name) creativeParams.set('venue', unpostedEvent.venue_name);
+      if (unpostedEvent.tags?.length) creativeParams.set('tags', unpostedEvent.tags.join(','));
+      if (unpostedEvent.is_free) creativeParams.set('free', 'true');
+
+      const creativeUrl = `${getBaseUrl()}/api/social/event-creative?${creativeParams.toString()}`;
+      console.log(`[EVENT] Fetching creative from: ${creativeUrl}`);
+
+      const creativeRes = await fetch(creativeUrl);
+      if (!creativeRes.ok) {
+        const errText = await creativeRes.text();
+        console.error(`[EVENT] Creative generation failed (${creativeRes.status}):`, errText);
+        await supabase.from('social_posts').insert({
+          platform: 'instagram',
+          headline: unpostedEvent.name,
+          city: metaKey,
+          caption: '',
+          status: 'failed',
+          error_message: `Creative generation failed: HTTP ${creativeRes.status}`,
+        });
+        return NextResponse.json({
+          status: 'error',
+          error: `Failed to generate event creative: HTTP ${creativeRes.status}`,
+        }, { status: 500 });
+      }
+
+      // ── Step 2: Upload creative to Supabase Storage ─────────────────────────
+      const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
+      const storagePath = `instagram-posts/${citySlug}-event-${unpostedEvent.slug}-${Date.now()}.png`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('photos')
+        .upload(storagePath, imgBuffer, {
+          contentType: 'image/png',
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.error('[EVENT] Supabase upload error:', uploadError);
+        await supabase.from('social_posts').insert({
+          platform: 'instagram',
+          headline: unpostedEvent.name,
+          city: metaKey,
+          caption: '',
+          status: 'failed',
+          error_message: `Storage upload failed: ${uploadError.message}`,
+        });
+        return NextResponse.json({
+          status: 'error',
+          error: `Failed to upload event creative: ${uploadError.message}`,
+        }, { status: 500 });
+      }
+
+      // ── Step 3: Get public URL ──────────────────────────────────────────────
+      const { data: publicUrlData } = supabase.storage
+        .from('photos')
+        .getPublicUrl(storagePath);
+
+      const imageUrl = publicUrlData?.publicUrl;
+      if (!imageUrl) {
+        return NextResponse.json({
+          status: 'error',
+          error: 'Failed to get public URL for uploaded creative',
+        }, { status: 500 });
+      }
+
+      // Verify the image is accessible
+      const verifyRes = await fetch(imageUrl, { method: 'HEAD' });
+      if (!verifyRes.ok) {
+        return NextResponse.json({
+          status: 'error',
+          error: `Uploaded creative not accessible: HTTP ${verifyRes.status}`,
+        }, { status: 500 });
+      }
+
+      // ── Step 4: Generate caption ────────────────────────────────────────────
+      const caption = generateEventCaption({
+        name: unpostedEvent.name,
+        cityName,
+        citySlug: metaKey,
+        venueName: unpostedEvent.venue_name,
+        dateDisplay: dateStr,
+        tags: unpostedEvent.tags || [],
+        isFree: unpostedEvent.is_free,
+        description: unpostedEvent.description,
+      });
+
+      // ── Dry run? ────────────────────────────────────────────────────────────
+      if (dryRun) {
+        return NextResponse.json({
+          status: 'dry_run',
+          type: 'event',
+          event: {
+            name: unpostedEvent.name,
+            city: cityName,
+            date: dateStr,
+            venue: unpostedEvent.venue_name,
+          },
+          imageUrl,
+          caption,
+          totalPosted,
+        });
+      }
+
+      // ── Step 5: Publish to Instagram ────────────────────────────────────────
+      const result = await publishImagePost(imageUrl, caption);
+
+      // ── Step 6: Log to social_posts ─────────────────────────────────────────
+      await supabase.from('social_posts').insert({
+        platform: 'instagram',
+        post_id: result.postId || null,
+        container_id: result.containerId || null,
+        headline: unpostedEvent.name,
+        city: metaKey,
+        caption,
+        image_url: imageUrl,
+        status: result.success ? 'published' : 'failed',
+        error_message: result.error || null,
+      });
+
+      if (!result.success) {
+        return NextResponse.json({
+          status: 'error',
+          type: 'event',
+          error: result.error,
+          event: { name: unpostedEvent.name, city: cityName },
+          imageUrl,
+        }, { status: 500 });
+      }
+
+      return NextResponse.json({
+        status: 'published',
+        type: 'event',
+        postId: result.postId,
+        event: {
+          name: unpostedEvent.name,
+          city: cityName,
+          date: dateStr,
+          venue: unpostedEvent.venue_name,
+        },
+        totalPosted: totalPosted + 1,
+      });
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // PRIORITY 2: Content bank with branded creatives ONLY
+    // No events to post — fall back to content bank items that have a
+    // pre-stored branded creative in Supabase Storage. If no creative
+    // exists for an item, skip it entirely. NEVER use Google Places photos.
+    // ══════════════════════════════════════════════════════════════════════════
+
+    console.log('[CONTENT] No unposted events found, checking content bank with branded creatives...');
+
     const fact = pickNextContent(postedHeadlines);
     if (!fact) {
       return NextResponse.json({
         status: 'exhausted',
-        message: 'All 44 content pieces have been posted. Time to create new content!',
+        message: 'All events posted and all content bank pieces used. Time to create new content!',
         totalPosted,
       });
     }
 
-    const cityMeta = CITY_META[fact.city];
-    const caption = generateCaption(fact);
-
-    // 3. Find the image — prefer stored branded creative, fall back to Google photo
-    const cityFile = CITY_FILE_MAP[fact.city];
+    // Check for a pre-generated branded creative in Supabase Storage
+    const factIndex = CONTENT_BANK.indexOf(fact);
     let imageUrl = '';
 
-    // First, check for a pre-generated branded creative in Supabase Storage
-    const factIndex = CONTENT_BANK.indexOf(fact);
-    if (supabase && factIndex >= 0) {
+    if (factIndex >= 0) {
       try {
-        // List files with prefix matching since creatives have timestamps in filenames
-        // e.g. "barcelona-13-1774147605581.png" instead of "barcelona-13.png"
         const prefix = `${fact.city}-${factIndex}-`;
         const { data: files } = await supabase.storage
           .from('photos')
@@ -236,225 +366,152 @@ export async function GET(request: NextRequest) {
             .getPublicUrl(`social-creatives/${files[0].name}`);
 
           if (urlData?.publicUrl) {
-            // Verify the creative exists
             const testRes = await fetch(urlData.publicUrl, { method: 'HEAD' });
             if (testRes.ok) {
               imageUrl = urlData.publicUrl;
-              console.log(`Using stored branded creative "${files[0].name}" for "${fact.headline}"`);
-            }
-          }
-        }
-      } catch {
-        // Fall through to Google photo fallback
-      }
-    }
-
-    // Priority 2: If the post names a specific business, look it up via Google Places
-    if (!imageUrl && fact.placeName) {
-      try {
-        console.log(`[PHOTO-MATCH] Searching Google Places for specific business: "${fact.placeName}"`);
-        const placeResult = await searchPlace(fact.placeName);
-
-        if (placeResult?.photos && placeResult.photos.length > 0) {
-          const photoName = placeResult.photos[0].name;
-          // Use the photo proxy to get a publicly accessible URL
-          const candidateUrl = getEstablishmentPhotoUrl(photoName);
-
-          // Verify the photo URL works
-          const testResponse = await fetch(candidateUrl, { method: 'HEAD' });
-          if (testResponse.ok) {
-            imageUrl = candidateUrl;
-            console.log(`[PHOTO-MATCH] ✅ Using Google Places photo of "${placeResult.displayName?.text}" for "${fact.headline}"`);
-          } else {
-            console.log(`[PHOTO-MATCH] Google Places photo returned ${testResponse.status}, falling back...`);
-          }
-        } else {
-          console.log(`[PHOTO-MATCH] No photos found for "${fact.placeName}", falling back to category match`);
-        }
-      } catch (err) {
-        console.error(`[PHOTO-MATCH] Google Places search failed for "${fact.placeName}":`, err);
-      }
-    }
-
-    // Priority 3: find a MATCHING Google photo from a relevant establishment in our data
-    // Smart matching: analyze post content to pick a photo that fits the theme
-
-    if (!imageUrl && cityFile) {
-      try {
-        const dataPath = path.join(process.cwd(), 'research-output', `${cityFile}.json`);
-        const cityData = JSON.parse(await fs.readFile(dataPath, 'utf-8'));
-        const places: PlaceData[] = cityData.places || [];
-
-        // Determine what kind of venue photo matches this content
-        const preferredCategories = inferPhotoCategory(fact.headline, fact.body, fact.type);
-        console.log(`[PHOTO-MATCH] "${fact.headline}" → preferred: [${preferredCategories.join(', ')}]`);
-
-        // Find places with photos, prioritizing category matches
-        const placesWithPhotos = places.filter(p => p.photoRefs && p.photoRefs.length > 0);
-
-        // Sort: matching categories first, then others as fallback
-        const sorted = [...placesWithPhotos].sort((a, b) => {
-          const aMatch = matchesCategory(a.category || '', preferredCategories) ? 0 : 1;
-          const bMatch = matchesCategory(b.category || '', preferredCategories) ? 0 : 1;
-          return aMatch - bMatch;
-        });
-
-        const matchedCount = sorted.filter(p => matchesCategory(p.category || '', preferredCategories)).length;
-        console.log(`[PHOTO-MATCH] ${matchedCount}/${sorted.length} places match preferred categories`);
-
-        if (sorted.length > 0) {
-          // Rotate within matched places (or all if no matches)
-          const pool = matchedCount > 0 ? sorted.slice(0, matchedCount) : sorted;
-          for (let attempt = 0; attempt < Math.min(5, pool.length); attempt++) {
-            const idx = (totalPosted + attempt) % pool.length;
-            const place = pool[idx];
-            const photoRef = place.photoRefs![0];
-            const candidateUrl = getEstablishmentPhotoUrl(photoRef);
-
-            // Verify the photo URL actually works before using it
-            try {
-              const testResponse = await fetch(candidateUrl, { method: 'HEAD' });
-              if (testResponse.ok) {
-                imageUrl = candidateUrl;
-                console.log(`[PHOTO-MATCH] Using "${place.name}" (${place.category}) for "${fact.headline}"`);
-                break;
-              } else {
-                console.log(`Photo expired for "${place.name}" (${testResponse.status}), trying next...`);
-              }
-            } catch {
-              console.log(`Photo fetch failed for "${place.name}", trying next...`);
+              console.log(`[CONTENT] Using stored branded creative "${files[0].name}" for "${fact.headline}"`);
             }
           }
         }
       } catch (err) {
-        console.error(`Failed to load city data for ${fact.city}:`, err);
+        console.error('[CONTENT] Error checking for branded creative:', err);
       }
     }
 
+    // If no branded creative exists, skip this item and try the next ones
     if (!imageUrl) {
-      // Log the failure so we can track it
-      if (supabase) {
-        await supabase.from('social_posts').insert({
-          platform: 'instagram',
-          headline: fact.headline,
-          city: fact.city,
-          caption,
-          status: 'failed',
-          error_message: `No working photo found for ${fact.city}. All photo tokens may be expired.`,
-        });
-      }
-      return NextResponse.json({
-        status: 'error',
-        error: `No working photo available for ${fact.city}. Photo tokens may be expired — the weekly refresh job will fix this.`,
-      }, { status: 500 });
-    }
+      console.log(`[CONTENT] No branded creative for "${fact.headline}" — searching for another item with a creative...`);
 
-    // 3b. If imageUrl is a proxy URL (not Supabase), download and re-upload to Supabase Storage
-    // Instagram Graph API needs a direct, publicly accessible image URL
-    if (supabase && imageUrl.includes('/api/places/photo')) {
-      try {
-        console.log('Downloading proxy image for Supabase upload...');
-        const imgResponse = await fetch(imageUrl);
-        if (imgResponse.ok) {
-          const imgBuffer = Buffer.from(await imgResponse.arrayBuffer());
-          const contentType = imgResponse.headers.get('content-type') || 'image/jpeg';
-          const ext = contentType.includes('png') ? 'png' : 'jpg';
-          const storagePath = `instagram-posts/${fact.city}-${Date.now()}.${ext}`;
+      // Try remaining content bank items in order
+      const tempPosted = new Set(postedHeadlines);
+      tempPosted.add(fact.headline); // Skip the one we just tried
 
-          const { error: uploadError } = await supabase.storage
-            .from('photos')
-            .upload(storagePath, imgBuffer, {
-              contentType,
-              upsert: true,
-            });
-
-          if (!uploadError) {
-            const { data: publicUrlData } = supabase.storage
+      let fallbackFact = pickNextContent(tempPosted);
+      while (fallbackFact && !imageUrl) {
+        const fbIndex = CONTENT_BANK.indexOf(fallbackFact);
+        if (fbIndex >= 0) {
+          try {
+            const prefix = `${fallbackFact.city}-${fbIndex}-`;
+            const { data: files } = await supabase.storage
               .from('photos')
-              .getPublicUrl(storagePath);
+              .list('social-creatives', {
+                search: prefix,
+                limit: 1,
+              });
 
-            if (publicUrlData?.publicUrl) {
-              // Verify the uploaded image is accessible
-              const verifyRes = await fetch(publicUrlData.publicUrl, { method: 'HEAD' });
-              if (verifyRes.ok) {
-                imageUrl = publicUrlData.publicUrl;
-                console.log(`Uploaded to Supabase Storage: ${storagePath}`);
+            if (files && files.length > 0) {
+              const { data: urlData } = supabase.storage
+                .from('photos')
+                .getPublicUrl(`social-creatives/${files[0].name}`);
+
+              if (urlData?.publicUrl) {
+                const testRes = await fetch(urlData.publicUrl, { method: 'HEAD' });
+                if (testRes.ok) {
+                  imageUrl = urlData.publicUrl;
+                  console.log(`[CONTENT] Found branded creative "${files[0].name}" for fallback "${fallbackFact.headline}"`);
+                  // Use this fact instead
+                  break;
+                }
               }
             }
-          } else {
-            console.error('Supabase upload error:', uploadError);
+          } catch {
+            // Continue searching
           }
         }
-      } catch (uploadErr) {
-        console.error('Image re-upload failed, proceeding with proxy URL:', uploadErr);
+
+        tempPosted.add(fallbackFact.headline);
+        fallbackFact = pickNextContent(tempPosted);
       }
-    }
 
-    // 4. Dry run mode - return what would be posted without publishing
-    if (dryRun) {
+      // If we found a fallback with a creative, use it
+      if (imageUrl && fallbackFact) {
+        // Reassign to the fallback fact that has a creative
+        return await publishContentPost(supabase, fallbackFact, imageUrl, postedHeadlines, totalPosted, dryRun);
+      }
+
+      // No content bank items have branded creatives — nothing to post
       return NextResponse.json({
-        status: 'dry_run',
-        fact: {
-          city: fact.city,
-          cityName: cityMeta?.name,
-          headline: fact.headline,
-          body: fact.body,
-        },
-        imageUrl,
-        caption,
+        status: 'no_creative',
+        message: 'No events to post and no content bank items have branded creatives. Generate creatives via the admin dashboard.',
         totalPosted,
-        remainingContent: CONTENT_BANK.length - postedHeadlines.size,
       });
     }
 
-    // 5. Publish to Instagram
-    const result = await publishImagePost(imageUrl, caption);
+    // We have a branded creative for the primary fact — publish it
+    return await publishContentPost(supabase, fact, imageUrl, postedHeadlines, totalPosted, dryRun);
 
-    // 6. Log to Supabase (or fallback to console)
-    if (supabase) {
-      await supabase.from('social_posts').insert({
-        platform: 'instagram',
-        post_id: result.postId || null,
-        container_id: result.containerId || null,
-        headline: fact.headline,
-        city: fact.city,
-        caption,
-        image_url: imageUrl,
-        status: result.success ? 'published' : 'failed',
-        error_message: result.error || null,
-      });
-    } else {
-      console.log('Social post result:', {
-        headline: fact.headline,
-        city: fact.city,
-        success: result.success,
-        postId: result.postId,
-        error: result.error,
-      });
-    }
-
-    if (!result.success) {
-      return NextResponse.json({
-        status: 'error',
-        error: result.error,
-        fact: { city: fact.city, headline: fact.headline },
-        imageUrl,
-      }, { status: 500 });
-    }
-
-    return NextResponse.json({
-      status: 'published',
-      postId: result.postId,
-      fact: {
-        city: fact.city,
-        cityName: cityMeta?.name,
-        headline: fact.headline,
-      },
-      totalPosted: totalPosted + 1,
-      remainingContent: CONTENT_BANK.length - postedHeadlines.size - 1,
-    });
   } catch (error) {
     console.error('Social post cron error:', error);
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
+}
+
+// ─── Helper: publish a content bank post ───────────────────────────────────────
+
+async function publishContentPost(
+  supabase: ReturnType<typeof createClient>,
+  fact: (typeof CONTENT_BANK)[number],
+  imageUrl: string,
+  postedHeadlines: Set<string>,
+  totalPosted: number,
+  dryRun: boolean,
+): Promise<NextResponse> {
+  const cityMeta = CITY_META[fact.city];
+  const caption = generateCaption(fact);
+
+  if (dryRun) {
+    return NextResponse.json({
+      status: 'dry_run',
+      type: 'content_bank',
+      fact: {
+        city: fact.city,
+        cityName: cityMeta?.name,
+        headline: fact.headline,
+        body: fact.body,
+      },
+      imageUrl,
+      caption,
+      totalPosted,
+      remainingContent: CONTENT_BANK.length - postedHeadlines.size,
+    });
+  }
+
+  // Publish to Instagram
+  const result = await publishImagePost(imageUrl, caption);
+
+  // Log to Supabase
+  await supabase.from('social_posts').insert({
+    platform: 'instagram',
+    post_id: result.postId || null,
+    container_id: result.containerId || null,
+    headline: fact.headline,
+    city: fact.city,
+    caption,
+    image_url: imageUrl,
+    status: result.success ? 'published' : 'failed',
+    error_message: result.error || null,
+  });
+
+  if (!result.success) {
+    return NextResponse.json({
+      status: 'error',
+      type: 'content_bank',
+      error: result.error,
+      fact: { city: fact.city, headline: fact.headline },
+      imageUrl,
+    }, { status: 500 });
+  }
+
+  return NextResponse.json({
+    status: 'published',
+    type: 'content_bank',
+    postId: result.postId,
+    fact: {
+      city: fact.city,
+      cityName: cityMeta?.name,
+      headline: fact.headline,
+    },
+    totalPosted: totalPosted + 1,
+    remainingContent: CONTENT_BANK.length - postedHeadlines.size - 1,
+  });
 }

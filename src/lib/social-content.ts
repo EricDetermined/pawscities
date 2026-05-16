@@ -216,6 +216,105 @@ export function generateCaption(fact: ContentFact): string {
   ].join('\n');
 }
 
+// ─── Event Caption Generator ───────────────────────────────────────────────────
+
+export interface EventCaptionInput {
+  name: string;
+  cityName: string;
+  citySlug: string;       // CITY_META key (e.g. "nyc", "losangeles")
+  venueName: string | null;
+  dateDisplay: string;    // Pre-formatted date string (e.g. "Sat, Jun 14 at 2:00 PM")
+  tags: string[];
+  isFree: boolean;
+  description: string | null;
+}
+
+/**
+ * Generate an engaging Instagram caption for an event post.
+ * Highlights the venue, date, and a clear CTA — designed to drive
+ * saves, shares, and foot traffic for @thepawcities.
+ */
+export function generateEventCaption(event: EventCaptionInput): string {
+  const city = CITY_META[event.citySlug];
+  const cityName = city?.name || event.cityName;
+  const cityEmoji = city?.emoji || '';
+  const slug = city?.slug || event.citySlug;
+
+  // Opening line — varies by event attributes for variety
+  let opener: string;
+  if (event.isFree) {
+    opener = `${cityEmoji} FREE dog-friendly event in ${cityName}!`;
+  } else {
+    opener = `${cityEmoji} Dog-friendly event alert in ${cityName}!`;
+  }
+
+  // Event name as the hero line
+  const heroLine = `🐾 ${event.name}`;
+
+  // Date and venue details
+  const details: string[] = [];
+  if (event.dateDisplay) {
+    details.push(`📅 ${event.dateDisplay}`);
+  }
+  if (event.venueName) {
+    details.push(`📍 ${event.venueName}`);
+  }
+
+  // Short description snippet (first sentence or first 120 chars)
+  let snippet = '';
+  if (event.description) {
+    const firstSentence = event.description.split(/[.!?]\s/)[0];
+    snippet = firstSentence.length > 120
+      ? firstSentence.slice(0, 117) + '...'
+      : firstSentence + (firstSentence.endsWith('.') ? '' : '.');
+  }
+
+  // CTA
+  const cta = 'Save this 🔖 and tag your dog crew!';
+
+  // Link
+  const link = `Discover more events at pawcities.com/${slug} 🔗`;
+
+  // Hashtags — event-specific + city + base
+  const hashtags: string[] = [
+    '#PawCities',
+    `#DogFriendly${cityName.replace(/\s/g, '')}`,
+    `#${cityName.replace(/\s/g, '')}Dogs`,
+    '#DogFriendlyEvents',
+    '#DogsOfInstagram',
+    '#DogEvent',
+  ];
+
+  // Add tag-based hashtags (up to 4)
+  if (event.tags.length > 0) {
+    for (const tag of event.tags.slice(0, 4)) {
+      const clean = tag.trim().replace(/[- ]/g, '');
+      if (clean) hashtags.push(`#${clean}`);
+    }
+  }
+
+  hashtags.push('#DogFriendly', '#DogLovers', '#PetFriendly', '#DogLife');
+
+  // Assemble caption
+  const parts = [
+    opener,
+    '',
+    heroLine,
+    ...(details.length ? ['', ...details] : []),
+    ...(snippet ? ['', snippet] : []),
+    '',
+    link,
+    '',
+    cta,
+    '',
+    hashtags.join(' '),
+  ];
+
+  return parts.join('\n');
+}
+
+// ─── Content Bank Selection ────────────────────────────────────────────────────
+
 /**
  * Pick the next content to post based on what's already been posted.
  * Uses round-robin city rotation and avoids duplicate headlines.
