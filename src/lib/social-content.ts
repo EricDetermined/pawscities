@@ -7,7 +7,7 @@
 
 export interface ContentFact {
   city: string;
-  type: 'did-you-know' | 'tip';
+  type: 'did-you-know' | 'tip' | 'spotlight' | 'event' | 'guide' | 'fun';
   headline: string;
   body: string;
   icon: string;
@@ -80,37 +80,135 @@ export const CONTENT_BANK: ContentFact[] = [
   { city: 'tokyo', type: 'did-you-know', headline: 'Yoyogi Park\'s 3-Tier Dog Run', body: 'Yoyogi Park divides its dog run by size: large, medium, and small. Prevents hierarchy issues.', icon: '\u{1F4D0}' },
   { city: 'tokyo', type: 'did-you-know', headline: '$9 Billion Pet Industry', body: 'Japan\'s pet industry is worth 1.4 trillion yen (~$9B USD). In Tokyo, dogs are treated like royalty.', icon: '\u{1F48E}' },
   { city: 'tokyo', type: 'did-you-know', headline: 'Hachiko\'s Legacy Lives On', body: 'Hachiko\'s statue at Shibuya Station remains one of Tokyo\'s most-visited spots. A loyalty story woven into Japanese identity.', icon: '\u{1F5FF}' },
+
+  // ════════════════════════════════════════════════════════════════
+  // WAVE 2 — Dog-First Content (Events, Spotlights, Tips, Fun)
+  // ════════════════════════════════════════════════════════════════
+
+  // ─── PARIS (7 posts) ──────────────────────────────────────────
+  { city: 'paris', type: 'spotlight', headline: 'Best Terrace for Pups in Le Marais', body: 'The cafés along Rue des Rosiers are famous for welcoming dogs with water bowls and treats. Your pup gets served before you do. That\'s Parisian hospitality.', icon: '☕\u{1F43E}' },
+  { city: 'paris', type: 'fun', headline: 'POV: Your Dog Has a Better Croissant Than You', body: 'Paris bakeries now sell dog-friendly croissants and pastries. Your golden retriever eating a pain au chocolat at a sidewalk café is peak main character energy.', icon: '\u{1F950}\u{1F436}' },
+  { city: 'paris', type: 'guide', headline: 'Off-Leash in Paris: The Complete List', body: 'Bois de Vincennes, Bois de Boulogne, Jardin des Tuileries (early mornings), Parc de Bercy — here are the best spots to let your pup run free in Paris.', icon: '\u{1F3C3}\u{1F43E}' },
+  { city: 'paris', type: 'event', headline: 'Woofstock Paris Returns This Summer', body: 'The annual dog festival in Parc de la Villette brings together hundreds of pups for agility shows, treats, and the famous Cutest Mutt competition. Free entry for all dogs and humans.', icon: '\u{1F389}\u{1F436}' },
+  { city: 'paris', type: 'tip', headline: 'Your Dog Can Join You in Most Paris Hotels', body: '85% of Paris hotels accept dogs, many at no extra charge. Pro tip: boutique hotels in Saint-Germain are especially pup-friendly — some leave treats on the pillow.', icon: '\u{1F3E8}\u{1F43E}' },
+  { city: 'paris', type: 'fun', headline: 'French Dogs Don\'t Do Fetch', body: 'Studies show French dogs are trained differently — less "sit/stay/fetch" and more socialized for café culture. They\'re basically tiny Parisians who judge your outfit.', icon: '\u{1F1EB}\u{1F1F7}\u{1F436}' },
+
+  // ─── GENEVA (6 posts) ─────────────────────────────────────────
+  { city: 'geneva', type: 'spotlight', headline: 'Lake Geneva\'s Secret Dog Beach', body: 'Plage de la Savonnière near Versoix is Geneva\'s best-kept secret — a quiet lakeside beach where dogs swim freely with stunning Alpine views. Locals only... until now.', icon: '\u{1F3D6}\u{1F43E}' },
+  { city: 'geneva', type: 'guide', headline: 'Hiking With Your Dog in the Swiss Alps', body: 'Trails from Carouge to Salève, the Jura ridge walks — Geneva is a gateway to epic dog hikes. Most mountain huts welcome dogs and even provide water stations.', icon: '⛰\u{1F43E}' },
+  { city: 'geneva', type: 'fun', headline: 'Swiss Dogs Are Better Trained Than Your Boss', body: 'Geneva mandates professional training courses for first-time dog owners. The result? Swiss dogs are absurdly well-behaved. They probably file their own taxes too.', icon: '\u{1F9D1}‍\u{1F393}\u{1F436}' },
+  { city: 'geneva', type: 'tip', headline: 'Dog Poop Bags Are Free All Over Geneva', body: 'Green dispensers on nearly every street corner provide free bags. Geneva takes cleanup seriously — and makes it easy. No excuses, no fines.', icon: '♻\u{1F43E}' },
+  { city: 'geneva', type: 'event', headline: 'Fête de la Musique: Dogs Welcome', body: 'Geneva\'s annual free music festival across the city is surprisingly dog-friendly. Outdoor stages, laid-back vibes, and your pup gets to enjoy live jazz by the lake.', icon: '\u{1F3B6}\u{1F436}' },
+  { city: 'geneva', type: 'spotlight', headline: 'Parc des Bastions: Where Dogs Meet History', body: 'The famous Reformation Wall park doubles as Geneva\'s favorite dog hangout. Pups play in the shadow of 500-year-old history while their owners play giant chess.', icon: '♟\u{1F43E}' },
+
+  // ─── LONDON (7 posts) ─────────────────────────────────────────
+  { city: 'london', type: 'spotlight', headline: 'This Pub Has a Bigger Dog Menu Than People Menu', body: 'The Baring in Islington serves a dedicated dog menu including "Barkscotti" and a Sunday roast for pups. They also have a dog beer garden. Yes, really.', icon: '\u{1F37A}\u{1F436}' },
+  { city: 'london', type: 'fun', headline: 'London Dogs Have Their Own Fashion Week', body: 'Paws in the Park hosts an annual dog fashion show with actual runway walks, designer outfits, and crowd cheering. Your corgi in a bow tie deserves this moment.', icon: '\u{1F451}\u{1F43E}' },
+  { city: 'london', type: 'guide', headline: 'Best Dog Walks Along the Thames', body: 'From Richmond Park deer spotting to the South Bank buzz — these Thames-side walks give your pup river views, squirrel chases, and the best sniff trails in London.', icon: '\u{1F30A}\u{1F43E}' },
+  { city: 'london', type: 'event', headline: 'Pup Up Café: Dachshund Edition', body: 'London\'s viral Pup Up Café series runs breed-specific meetups. The Dachshund edition fills out in minutes — 100+ sausage dogs in one room. Pure chaos. Pure joy.', icon: '\u{1F32D}\u{1F436}' },
+  { city: 'london', type: 'tip', headline: 'Every London Park Has Off-Leash Hours', body: 'Most Royal Parks allow dogs off-leash except in designated wildlife areas. Hampstead Heath and Battersea Park are local favorites for dawn zoomies.', icon: '\u{1F305}\u{1F43E}' },
+  { city: 'london', type: 'spotlight', headline: 'Harrods Has a Dog Spa', body: 'The Harrods Urban Retreat offers full grooming, pawdicures, and blueberry facials for dogs. Starting at £65. Your dog will come out posher than you went in.', icon: '\u{1F485}\u{1F43E}' },
+
+  // ─── BARCELONA (6 posts) ──────────────────────────────────────
+  { city: 'barcelona', type: 'spotlight', headline: 'This Beach Bar Serves Dog Smoothies', body: 'Chiringuito del Mar in Barceloneta serves frozen bone broth smoothies for dogs alongside your sangria. Your pup gets the beach day they deserve.', icon: '\u{1F379}\u{1F436}' },
+  { city: 'barcelona', type: 'guide', headline: 'Barcelona\'s Dog-Friendly Beaches: The Full Guide', body: 'Platja de Llevant is the city\'s official dog beach, but locals know Platja del Fòrum and Platja de Sant Adrià are less crowded and equally pup-friendly.', icon: '\u{1F3D6}\u{1F43E}' },
+  { city: 'barcelona', type: 'fun', headline: 'Barcelona Dogs Party Harder Than You', body: 'Sant Joan (June 23) is Spain\'s biggest street party and dogs are everywhere — wearing bandanas, eating treats from pop-up stalls, partying until dawn. Living their best vida.', icon: '\u{1F386}\u{1F436}' },
+  { city: 'barcelona', type: 'event', headline: 'Fira de Mascotes: Barcelona\'s Biggest Pet Fair', body: 'The annual pet expo in Montjuïc brings dog brands, rescues, agility demos, and adoption drives together. The treats aisle alone is worth the trip.', icon: '\u{1F3AA}\u{1F43E}' },
+  { city: 'barcelona', type: 'tip', headline: 'Dogs Ride Barcelona Metro for Free', body: 'Dogs travel free on Barcelona\'s metro, buses, and trams — no carrier needed for small dogs, muzzle + leash for larger breeds. One of Europe\'s best deals for dog owners.', icon: '\u{1F687}\u{1F43E}' },
+  { city: 'barcelona', type: 'spotlight', headline: 'Park Güell\'s Dog-Friendly Secret Path', body: 'Skip the ticketed Gaudí zone — the free park area around Park Güell is off-leash friendly with stunning mosaic views. Locals bring their dogs here daily at sunset.', icon: '\u{1F305}\u{1F436}' },
+
+  // ─── LOS ANGELES (6 posts) ────────────────────────────────────
+  { city: 'losangeles', type: 'spotlight', headline: 'This Hollywood Café Treats Dogs Like Celebrities', body: 'The Larchmont Bungalow brings out water and treats for every dog before asking what humans want. Regulars say their golden has a better social life than they do.', icon: '\u{1F31F}\u{1F436}' },
+  { city: 'losangeles', type: 'fun', headline: 'LA Dogs Have Their Own Instagram Agents', body: 'Only in LA: professional pet influencer agencies manage Instagram accounts for dogs with 100K+ followers. Your neighbor\'s poodle might be making more than you.', icon: '\u{1F4F1}\u{1F43E}' },
+  { city: 'losangeles', type: 'guide', headline: 'Best Sunrise Hikes With Your Dog in LA', body: 'Griffith Observatory trail, Temescal Gateway, Eaton Canyon — these sunrise hikes give you and your pup golden hour views without the midday heat.', icon: '\u{1F305}\u{1F43E}' },
+  { city: 'losangeles', type: 'event', headline: 'Strut Your Mutt: LA\'s Biggest Dog Walk', body: 'Best Friends Animal Society hosts this annual 2-mile charity walk with thousands of dogs, costume contests, and an adoption village. All breeds, all vibes.', icon: '\u{1F3C5}\u{1F436}' },
+  { city: 'losangeles', type: 'tip', headline: 'LA Dog Parks Have Their Own Yelp Rankings', body: 'Sepulveda Basin, Laurel Canyon, Silverlake — LA takes dog parks as seriously as restaurants. Check the reviews before you go. Some have splash pads.', icon: '⭐\u{1F43E}' },
+  { city: 'losangeles', type: 'spotlight', headline: 'The Farmer\'s Market Dogs of LA', body: 'Sunday morning at the Hollywood Farmer\'s Market is basically a dog parade. Vendors keep treats behind the counter. It\'s LA\'s most wholesome weekly tradition.', icon: '\u{1F955}\u{1F436}' },
+
+  // ─── NEW YORK CITY (6 posts) ──────────────────────────────────
+  { city: 'nyc', type: 'spotlight', headline: 'This Brooklyn Bar Lets Dogs Sit at the Counter', body: 'The Passenger in Williamsburg has stools designed for dogs to sit at the bar. They get their own menu of frozen treats. No ID required (for the dogs).', icon: '\u{1F37B}\u{1F436}' },
+  { city: 'nyc', type: 'fun', headline: 'NYC Dogs Take Taxis Better Than Most Humans', body: 'It\'s illegal for NYC taxis to refuse a ride because of a dog. So your terrier has better transportation rights than you do during rush hour.', icon: '\u{1F695}\u{1F43E}' },
+  { city: 'nyc', type: 'guide', headline: 'Dog-Friendly Brunch Guide: Manhattan Edition', body: 'Westville, The Smith, Jack\'s Wife Freda — these spots have heated patios, under-table bowls, and servers who greet your dog by name. Reservations for two (plus paws).', icon: '\u{1F373}\u{1F43E}' },
+  { city: 'nyc', type: 'event', headline: 'Tompkins Square Halloween Dog Parade', body: 'The largest dog Halloween costume parade in the world. 500+ dogs in costumes, thousands of spectators, and the most creative outfits you\'ve ever seen on a chihuahua.', icon: '\u{1F383}\u{1F436}' },
+  { city: 'nyc', type: 'tip', headline: 'Off-Leash Before 9 AM in Every NYC Park', body: 'NYC\'s official off-leash policy: before 9 AM and after 9 PM in most parks. Central Park, Prospect Park, Fort Greene — early birds get the zoomies.', icon: '\u{1F305}\u{1F43E}' },
+  { city: 'nyc', type: 'spotlight', headline: 'The Dog Bakeries of the Upper West Side', body: 'Three Dog Bakery and Barkery in the UWS bake fresh pupcakes, peanut butter biscuits, and birthday cakes daily. The line wraps around the block on Saturday mornings.', icon: '\u{1F382}\u{1F43E}' },
+
+  // ─── SYDNEY (6 posts) ─────────────────────────────────────────
+  { city: 'sydney', type: 'spotlight', headline: 'Sydney\'s Most Instagrammed Dog Beach', body: 'Sirius Cove in Mosman is where Sydney\'s most photogenic dogs gather at golden hour. Harbour Bridge backdrop, crystal water, off-leash bliss. Your feed will thank you.', icon: '\u{1F4F8}\u{1F436}' },
+  { city: 'sydney', type: 'fun', headline: 'Aussie Dogs Have Better Beach Days Than You', body: 'Sydney has 12+ dedicated dog beaches. While you stress about sunscreen, your kelpie is catching waves, chasing seagulls, and living their absolute best life.', icon: '\u{1F3C4}\u{1F43E}' },
+  { city: 'sydney', type: 'guide', headline: 'Coastal Walk With Your Dog: Bondi to Coogee', body: 'The iconic 6km Bondi to Coogee walk is dog-friendly before 10 AM. Start early for empty paths, ocean views, and rock pool swims for brave pups.', icon: '\u{1F30A}\u{1F43E}' },
+  { city: 'sydney', type: 'event', headline: 'Million Paws Walk: Sydney Edition', body: 'RSPCA\'s annual charity walk brings thousands of dogs to Sydney Olympic Park. Fancy dress competition, longest-ears contest, and the best dog community vibe in Australia.', icon: '\u{1F3C6}\u{1F436}' },
+  { city: 'sydney', type: 'tip', headline: 'Sydney Ferries Welcome Dogs On Board', body: 'Dogs travel free on Sydney Ferries (leashed on the lower deck). Take the Manly ferry with your pup for the most scenic commute in Australia.', icon: '⛴\u{1F43E}' },
+  { city: 'sydney', type: 'spotlight', headline: 'The Grounds of Alexandria: Pup Paradise', body: 'This café-garden-market combo in Alexandria is a dog lovers\' dream. Pups get their own menu, there\'s a resident pig named Kevin, and weekend mornings are pure chaos.', icon: '\u{1F331}\u{1F436}' },
+
+  // ─── TOKYO (6 posts) ──────────────────────────────────────────
+  { city: 'tokyo', type: 'spotlight', headline: 'Dog Heart Café: Tea With 20 Rescue Dogs', body: 'This Harajuku café lets you spend an hour with resident rescue dogs over matcha. All dogs are adoptable. It\'s therapy and matchmaking in one visit.', icon: '\u{1F375}\u{1F436}' },
+  { city: 'tokyo', type: 'fun', headline: 'Tokyo Dogs Ride in Strollers and Nobody Blinks', body: 'Dog strollers are completely normal in Tokyo. High-end ones cost more than baby strollers. Your shiba inu deserves climate-controlled suspension and a cup holder.', icon: '\u{1F476}\u{1F43E}' },
+  { city: 'tokyo', type: 'guide', headline: 'Shinjuku Gyoen to Meiji Shrine: A Dog Day in Tokyo', body: 'Start at Shinjuku Gyoen\'s garden paths (leashed), cross to Meiji Shrine forest, end at Yoyogi dog run. Three iconic Tokyo spots, one perfect dog day.', icon: '\u{1F5FE}\u{1F43E}' },
+  { city: 'tokyo', type: 'event', headline: 'Inunohi: Japan\'s Day of the Dog', body: 'November 1 is Inunohi in Japan — shrines offer blessings for dogs, shops run pet sales, and families celebrate their four-legged members. The whole country goes dog-crazy.', icon: '⛩\u{1F436}' },
+  { city: 'tokyo', type: 'tip', headline: 'Dog-Friendly Hotels in Shinjuku', body: 'Hotel Gracery, Keio Plaza, and several boutique ryokan in Shinjuku welcome small dogs. Some provide dog beds, food bowls, and even pet-sitting services while you explore.', icon: '\u{1F3E8}\u{1F43E}' },
+  { city: 'tokyo', type: 'spotlight', headline: 'Komazawa Olympic Dog Park', body: 'Tokyo\'s largest dedicated dog park has separate areas for small and large dogs, agility equipment, and a café with a front-row view of the action. Weekend mornings are legendary.', icon: '\u{1F3DF}\u{1F436}' },
+  { city: 'paris', type: 'spotlight', headline: 'Canal Saint-Martin: Paris\'s Chillest Dog Walk', body: 'The tree-lined canal banks are where Parisian dog owners gather at golden hour. Iron bridges, quiet water reflections, and your pup socializing with every passing bichon.', icon: '\u{1F309}\u{1F43E}' },
+  { city: 'london', type: 'fun', headline: 'The Queen\'s Corgis Changed British Dog Culture', body: 'The Royal Corgis made the breed a national icon. Today London has more corgis per capita than any city on earth. You can\'t walk through Hyde Park without seeing one.', icon: '\u{1F451}\u{1F436}' },
 ];
 
 /**
- * Generate an Instagram caption for a single fact post
+ * Generate an Instagram caption for a content post
+ * Supports multiple content types with dog-first, playful tone
  */
 export function generateCaption(fact: ContentFact): string {
   const city = CITY_META[fact.city];
   if (!city) return '';
 
-  const hashtags = [
+  // Type-specific intros — playful, dog-forward
+  const intros: Record<string, string> = {
+    'did-you-know': `${fact.icon} Did you know? ${fact.headline}`,
+    'tip': `${fact.icon} Pro Pup Tip: ${fact.headline}`,
+    'spotlight': `${fact.icon} ${fact.headline}`,
+    'event': `${fact.icon} Mark your calendars! ${fact.headline}`,
+    'guide': `${fact.icon} Your dog deserves this: ${fact.headline}`,
+    'fun': `${fact.icon} ${fact.headline}`,
+  };
+
+  // Type-specific CTAs
+  const ctas: Record<string, string> = {
+    'did-you-know': 'Save this for your next trip! \u{1F43E}',
+    'tip': 'Tag a dog parent who needs this \u{1F43E}',
+    'spotlight': 'Know a hidden gem? Drop it in the comments \u{1F447}',
+    'event': 'Tag your dog crew! \u{1F43E}\u{1F389}',
+    'guide': 'Save this \u{1F516} and share with your pack!',
+    'fun': 'Double tap if your pup agrees \u{1F43E}',
+  };
+
+  // Core hashtags + type-specific ones
+  const baseHashtags = [
     '#PawCities',
     `#DogFriendly${city.name.replace(/\s/g, '')}`,
     `#${city.name.replace(/\s/g, '')}Dogs`,
-    '#DogTravel',
     '#DogFriendly',
     '#DogsOfInstagram',
-    '#PetTravel',
     '#DogLovers',
-    '#TravelWithDogs',
-    '#DogFriendlyTravel',
-    '#PetFriendly',
-  ].join(' ');
+  ];
+
+  const typeHashtags: Record<string, string[]> = {
+    'did-you-know': ['#DogTravel', '#PetTravel', '#DogFriendlyTravel', '#TravelWithDogs', '#PetFriendly'],
+    'tip': ['#DogTips', '#DogParent', '#PupTips', '#DogLife', '#DogOwnerTips'],
+    'spotlight': ['#DogFriendlySpots', '#HiddenGem', '#DogAdventure', '#DogsWelcome', '#PetFriendlyPlaces'],
+    'event': ['#DogEvent', '#DogMeetup', '#DogFriendlyEvents', '#DogsOfTheCity', '#PawtyTime'],
+    'guide': ['#DogGuide', '#DogTravel', '#TravelWithDogs', '#DogBucketList', '#PetTravel'],
+    'fun': ['#DogMom', '#DogDad', '#DogLife', '#PupLife', '#DogsBeingDogs'],
+  };
+
+  const hashtags = [...baseHashtags, ...(typeHashtags[fact.type] || typeHashtags['did-you-know'])].join(' ');
 
   return [
-    `${fact.icon} Did you know? ${fact.headline}`,
+    intros[fact.type] || `${fact.icon} ${fact.headline}`,
     '',
     fact.body,
     '',
-    `Discover more dog-friendly spots in ${city.name} at pawcities.com/${city.slug} (link in bio)`,
+    `Explore dog-friendly ${city.name} at pawcities.com/${city.slug} \u{1F517}`,
     '',
-    `Save this for your next trip! \u{1F43E}`,
+    ctas[fact.type] || 'Save this for your next trip! \u{1F43E}',
     '',
     hashtags,
   ].join('\n');
