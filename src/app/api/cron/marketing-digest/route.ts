@@ -236,11 +236,11 @@ export async function GET(request: NextRequest) {
       .eq('classification', 'event')
       .gte('created_at', sevenDaysAgo);
 
+    // Count PENDING events in the events table (what admin dashboard shows)
     const { count: pendingEventCount } = await supabase
-      .from('ingest_queue')
+      .from('events')
       .select('*', { count: 'exact', head: true })
-      .eq('classification', 'event')
-      .eq('status', 'pending');
+      .eq('status', 'PENDING');
 
     if ((newEventCount || 0) > 0 || (pendingEventCount || 0) > 0) {
       eventsData = {

@@ -174,12 +174,32 @@ export async function POST(request: NextRequest) {
 
     console.log(`[EMAIL INGEST] Processed email from ${senderEmail}: ${classification} ${city || ''} (${urls.length} URLs)`);
 
+    // Auto-process event items immediately
+    let autoProcessed = false;
+    if (classification === 'event') {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://pawcities.com';
+        const processRes = await fetch(`${baseUrl}/api/cron/process-ingest?secret=${cronSecret}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        if (processRes.ok) {
+          const processResult = await processRes.json();
+          autoProcessed = processResult.created > 0;
+          console.log(`[EMAIL INGEST] Auto-processed: ${processResult.created} events created`);
+        }
+      } catch (e) {
+        console.error('[EMAIL INGEST] Auto-process failed (non-blocking):', e);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       id: inserted.id,
       urls_found: urls.length,
       classification,
       city,
+      auto_processed: autoProcessed,
     });
   } catch (error) {
     console.error('[EMAIL INGEST] Error:', error);
