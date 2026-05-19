@@ -180,8 +180,20 @@ function getImageAttachments(body: Record<string, unknown>): Array<{
     }
   }
 
-  // Also check for inline images in HTML (Resend may include these)
-  // Some email clients embed images as CID references — we skip those for now
+  // Also check for inline images embedded as base64 data URIs in HTML
+  if (typeof body.html === 'string') {
+    const dataUriRegex = /data:(image\/(?:jpeg|png|gif|webp));base64,([A-Za-z0-9+/=]+)/g;
+    let match;
+    while ((match = dataUriRegex.exec(body.html as string)) !== null) {
+      if (match[2].length > 1000) { // Skip tiny icons/tracking pixels
+        images.push({
+          base64: match[2],
+          mediaType: match[1] as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp',
+          filename: `inline-image-${images.length}.${match[1].split('/')[1]}`,
+        });
+      }
+    }
+  }
 
   return images;
 }
@@ -213,6 +225,13 @@ export async function POST(request: NextRequest) {
 
     // Resend webhook wraps email data in { type: "email.received", data: { ... } }
     const body = rawBody.data && rawBody.type === 'email.received' ? rawBody.data : rawBody;
+
+    // Debug: log top-level keys and attachment info to diagnose what Resend sends
+    const bodyKeys = Object.keys(body);
+    const attachmentInfo = Array.isArray(body.attachments)
+      ? `${body.attachments.length} items: ${(body.attachments as Array<Record<string, unknown>>).map(a => `${a.filename || a.name || 'unnamed'}(${a.content_type || a.contentType || a.type || 'unknown'}, ${typeof a.content === 'string' ? a.content.length : 0} chars)`).join(', ')}`
+      : `no attachments field (keys: ${bodyKeys.join(', ')})`;
+    console.log(`[EMAIL INGEST] Payload keys: [${bodyKeys.join(', ')}] | Attachments: ${attachmentInfo}`);
 
     // Normalize across email providers
     const from = body.from || body.sender || body.envelope?.from || '';
