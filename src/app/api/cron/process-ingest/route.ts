@@ -36,72 +36,142 @@ async function getCityMap(supabase: ReturnType<typeof getSupabaseAdmin>) {
 }
 
 // Extract event details from raw_text using pattern matching
+// Handles both plain email text AND vision-enriched structured text (prefixed with "Event:", "Date:", etc.)
 function parseEventFromText(rawText: string, subject: string | null): {
   name: string | null;
   description: string | null;
   venueName: string | null;
+  venueAddress: string | null;
   date: string | null;
+  startTime: string | null;
+  endTime: string | null;
   tags: string[];
   isFree: boolean;
+  externalUrl: string | null;
+  sourceHandle: string | null;
 } {
   const combined = [subject || '', rawText].join(' ');
   const lower = combined.toLowerCase();
 
-  // Try to extract event name from subject or first meaningful line
+  // Check for vision-enriched structured format (starts with "Event: ...")
+  const isVisionEnriched = /^Event:\s/m.test(rawText);
+
+  // ─── Event Name ────────────────────────────────────────────────────────
   let name: string | null = null;
-  if (subject && subject.length > 3 && subject.toLowerCase() !== 'events') {
-    name = subject;
+  const eventNameMatch = rawText.match(/^Event:\s*(.+)$/m);
+  if (eventNameMatch) {
+    name = eventNameMatch[1].trim();
+  } else if (subject && subject.length > 3 && !['events', 'event', 'fwd: event', 'fwd: events'].includes(subject.toLowerCase().trim())) {
+    name = subject.replace(/^(fwd:|fw:|re:)\s*/i, '').trim();
   } else {
-    // First non-empty line that looks like a title
     const lines = rawText.split('\n').filter(l => l.trim().length > 5 && l.trim().length < 120);
     if (lines.length > 0) {
       name = lines[0].trim().replace(/^(check this|look at|here|fwd:)\s*/i, '').trim();
     }
   }
 
-  // Description: first 300 chars of meaningful text
-  const description = rawText
-    .replace(/https?:\/\/[^\s]+/g, '')
-    .replace(/\[image:[^\]]+\]/g, '')
-    .split('\n')
-    .filter(l => l.trim().length > 10)
-    .slice(0, 3)
-    .join(' ')
-    .substring(0, 300)
-    .trim() || null;
-
-  // Venue detection
-  let venueName: string | null = null;
-  const venuePatterns = [
-    /at\s+([A-Z][A-Za-z\s&']+(?:Park|Stadium|Center|Centre|Beach|Garden|Arena|Hall|Club|Bar|Cafe|Restaurant|Brewery))/,
-    /venue:\s*([^\n]+)/i,
-    /location:\s*([^\n]+)/i,
-  ];
-  for (const pat of venuePatterns) {
-    const match = combined.match(pat);
-    if (match) { venueName = match[1].trim(); break; }
+  // ─── Description ───────────────────────────────────────────────────────
+  let description: string | null = null;
+  const descMatch = rawText.match(/^Description:\s*(.+)$/m);
+  if (descMatch) {
+    description = descMatch[1].trim();
+  } else {
+    description = rawText
+      .replace(/https?:\/\/[^\s]+/g, '')
+      .replace(/\[image:[^\]]+\]/g, '')
+      .replace(/^(Event|Date|Time|Venue|Address|Source|URL|Tags|Description):\s*.+$/gm, '')
+      .split('\n')
+      .filter(l => l.trim().length > 10)
+      .slice(0, 3)
+      .join(' ')
+      .substring(0, 300)
+      .trim() || null;
   }
 
-  // Date detection
-  let date: string | null = null;
-  const datePatterns = [
-    /(\d{4}-\d{2}-\d{2})/,
-    /((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2}(?:,?\s*\d{4})?)/i,
-    /(\d{1,2}\/\d{1,2}\/\d{2,4})/,
-  ];
-  for (const pat of datePatterns) {
-    const match = combined.match(pat);
-    if (match) {
-      const parsed = new Date(match[1]);
-      if (!isNaN(parsed.getTime())) {
-        date = parsed.toISOString().split('T')[0];
-      }
-      break;
+  // ─── Venue ─────────────────────────────────────────────────────────────
+  let venueName: string | null = null;
+  const venueMatch = rawText.match(/^Venue:\s*(.+)$/m);
+  if (venueMatch) {
+    venueName = venueMatch[1].trim();
+  } else {
+    const venuePatterns = [
+      /at\s+([A-Z][A-Za-z\s&']+(?:Park|Stadium|Center|Centre|Beach|Garden|Arena|Hall|Club|Bar|Cafe|Restaurant|Brewery))/,
+      /venue:\s*([^\n]+)/i,
+      /location:\s*([^\n]+)/i,
+    ];
+    for (const pat of venuePatterns) {
+      const match = combined.match(pat);
+      if (match) { venueName = match[1].trim(); break; }
     }
   }
 
-  // Tags
-  const tags: string[] = [];
+  // ─── Venue Address ─────────────────────────────────────────────────────
+  let venueAddress: string | null = null;
+  const addrMatch = rawText.match(/^Address:\s*(.+)$/m);
+  if (addrMatch) venueAddress = addrMatch[1].trim();
+
+  // ─── Date ──────────────────────────────────────────────────────────────
+  let date: string | null = null;
+  const dateLineMatch = rawText.match(/^Date:\s*(.+)$/m);
+  if (dateLineMatch) {
+    const dStr = dateLineMatch[1].trim();
+    // Try ISO format first
+    const isoMatch = dStr.match(/(\d{4}-\d{2}-\d{2})/);
+    if (isoMatch) {
+      date = isoMatch[1];
+    } else {
+      const parsed = new Date(dStr);
+      if (!isNaN(parsed.getTime())) date = parsed.toISOString().split('T')[0];
+    }
+  }
+  if (!date) {
+    const datePatterns = [
+      /(\d{4}-\d{2}-\d{2})/,
+      /((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2}(?:,?\s*\d{4})?)/i,
+      /(\d{1,2}\/\d{1,2}\/\d{2,4})/,
+    ];
+    for (const pat of datePatterns) {
+      const match = combined.match(pat);
+      if (match) {
+        const parsed = new Date(match[1]);
+        if (!isNaN(parsed.getTime())) date = parsed.toISOString().split('T')[0];
+        break;
+      }
+    }
+  }
+
+  // ─── Time ──────────────────────────────────────────────────────────────
+  let startTime: string | null = null;
+  let endTime: string | null = null;
+  const timeMatch = rawText.match(/^Time:\s*(.+)$/m);
+  if (timeMatch) {
+    const timeParts = timeMatch[1].trim().split(/\s*-\s*/);
+    startTime = timeParts[0]?.trim() || null;
+    endTime = timeParts[1]?.trim() || null;
+    // Normalize to HH:MM:SS if needed
+    if (startTime && !startTime.includes(':')) startTime = null;
+    if (endTime && !endTime.includes(':')) endTime = null;
+    if (startTime && startTime.length === 5) startTime += ':00';
+    if (endTime && endTime.length === 5) endTime += ':00';
+  }
+
+  // ─── Source Handle ─────────────────────────────────────────────────────
+  let sourceHandle: string | null = null;
+  const sourceMatch = rawText.match(/^Source:\s*(@?\w+)/m);
+  if (sourceMatch) sourceHandle = sourceMatch[1].trim();
+
+  // ─── External URL ──────────────────────────────────────────────────────
+  let externalUrl: string | null = null;
+  const urlMatch = rawText.match(/^URL:\s*(https?:\/\/[^\s]+)/m);
+  if (urlMatch) externalUrl = urlMatch[1].trim();
+
+  // ─── Tags ──────────────────────────────────────────────────────────────
+  let tags: string[] = [];
+  const tagsMatch = rawText.match(/^Tags:\s*(.+)$/m);
+  if (tagsMatch) {
+    tags = tagsMatch[1].split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
+  }
+  // Also add keyword-detected tags
   if (lower.includes('adoption') || lower.includes('rescue') || lower.includes('foster')) tags.push('adoption');
   if (lower.includes('walk') || lower.includes('hike') || lower.includes('park')) tags.push('outdoor');
   if (lower.includes('festival') || lower.includes('fest')) tags.push('festival');
@@ -109,12 +179,13 @@ function parseEventFromText(rawText: string, subject: string | null): {
   if (lower.includes('sport') || lower.includes('stadium') || lower.includes('game')) tags.push('sports');
   if (lower.includes('charity') || lower.includes('fundraiser')) tags.push('charity');
   if (lower.includes('market') || lower.includes('vendor')) tags.push('market');
+  tags = Array.from(new Set(tags)); // Deduplicate
   if (tags.length === 0) tags.push('community');
 
-  // Free detection
+  // ─── Free detection ────────────────────────────────────────────────────
   const isFree = lower.includes('free') || lower.includes('no cost') || lower.includes('complimentary');
 
-  return { name, description, venueName, date, tags, isFree };
+  return { name, description, venueName, venueAddress, date, startTime, endTime, tags, isFree, externalUrl, sourceHandle };
 }
 
 // Generate a URL-safe slug
@@ -212,6 +283,20 @@ export async function POST(request: NextRequest) {
 
         // Create the event with PENDING status for admin review
         const eventSlug = slugify(parsed.name, parsed.date);
+
+        // Determine timezone from city
+        const cityTimezones: Record<string, string> = {
+          losangeles: 'America/Los_Angeles',
+          nyc: 'America/New_York',
+          london: 'Europe/London',
+          paris: 'Europe/Paris',
+          geneva: 'Europe/Zurich',
+          barcelona: 'Europe/Madrid',
+          sydney: 'Australia/Sydney',
+          tokyo: 'Asia/Tokyo',
+        };
+        const timezone = (item.city && cityTimezones[item.city]) || 'America/Los_Angeles';
+
         const { data: newEvent, error: insertError } = await supabase
           .from('events')
           .insert({
@@ -220,8 +305,12 @@ export async function POST(request: NextRequest) {
             slug: eventSlug,
             description: parsed.description,
             venue_name: parsed.venueName,
+            venue_address: parsed.venueAddress,
             start_date: parsed.date || null,
-            timezone: 'America/Los_Angeles',
+            start_time: parsed.startTime || null,
+            end_time: parsed.endTime || null,
+            external_url: parsed.externalUrl || item.url,
+            timezone,
             tags: parsed.tags,
             is_free: parsed.isFree,
             is_featured: false,
@@ -229,7 +318,7 @@ export async function POST(request: NextRequest) {
             source: 'admin', // valid enum value
             submitter_email: item.submitted_by,
             source_post_url: item.url,
-            source_handle: item.instagram_username,
+            source_handle: parsed.sourceHandle || item.instagram_username,
           })
           .select('id')
           .single();

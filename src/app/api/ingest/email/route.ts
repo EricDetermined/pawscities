@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import Anthropic from '@anthropic-ai/sdk';
 
 function getCronSecret() { return process.env.CRON_SECRET; }
 
@@ -42,17 +43,158 @@ function parseInstagramUrl(url: string): { shortcode?: string; username?: string
   }
 }
 
+// ─── Vision AI: extract event details from screenshot ────────────────────────
+
+interface ExtractedEventData {
+  event_name: string | null;
+  date: string | null;           // ISO format YYYY-MM-DD
+  start_time: string | null;     // HH:MM
+  end_time: string | null;       // HH:MM
+  venue_name: string | null;
+  venue_address: string | null;
+  description: string | null;
+  source_handle: string | null;  // Instagram @handle
+  external_url: string | null;   // Registration/ticket URL
+  tags: string[];
+  city: string | null;           // city slug
+  is_free: boolean;
+  raw_text_summary: string;      // Full text extraction for downstream processing
+}
+
+const VISION_PROMPT = `You are an event data extractor for PawCities, a dog-friendly city guide.
+Analyze this screenshot (typically from an Instagram post or story) and extract all event details.
+
+Return ONLY valid JSON with these fields:
+{
+  "event_name": "Full event name",
+  "date": "YYYY-MM-DD or null if unclear",
+  "start_time": "HH:MM (24h) or null",
+  "end_time": "HH:MM (24h) or null",
+  "venue_name": "Venue/location name or null",
+  "venue_address": "Street address or area or null",
+  "description": "Brief 1-2 sentence description of the event",
+  "source_handle": "@instagram_handle of the poster or null",
+  "external_url": "Any registration/ticket URL visible or null",
+  "tags": ["relevant", "tags"],
+  "city": "city slug from: paris, geneva, london, barcelona, losangeles, nyc, sydney, tokyo — or null",
+  "is_free": true/false,
+  "raw_text_summary": "All readable text from the image transcribed as a paragraph for search/classification"
+}
+
+Important:
+- For dates, assume the current year is 2026 unless specified otherwise
+- Tags should be lowercase, from: adoption, outdoor, festival, meetup, sports, charity, market, community, dog-walking, pack-walk, brunch, fundraiser, wellness
+- The city slug for Los Angeles area (DTLA, Pasadena, Hollywood, etc.) is "losangeles"
+- Extract Instagram handles visible in the image (poster @handle)
+- If the image shows an Instagram post, note the account name as source_handle
+- Transcribe ALL visible text into raw_text_summary for downstream processing`;
+
+async function extractEventFromImage(
+  imageBase64: string,
+  mediaType: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
+): Promise<ExtractedEventData | null> {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    console.error('[EMAIL INGEST] ANTHROPIC_API_KEY not configured — skipping vision processing');
+    return null;
+  }
+
+  try {
+    const anthropic = new Anthropic({ apiKey });
+
+    const response = await anthropic.messages.create({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1024,
+      messages: [
+        {
+          role: 'user',
+          content: [
+            {
+              type: 'image',
+              source: {
+                type: 'base64',
+                media_type: mediaType,
+                data: imageBase64,
+              },
+            },
+            {
+              type: 'text',
+              text: VISION_PROMPT,
+            },
+          ],
+        },
+      ],
+    });
+
+    // Extract JSON from response
+    const text = response.content
+      .filter((b): b is Anthropic.TextBlock => b.type === 'text')
+      .map(b => b.text)
+      .join('');
+
+    // Parse JSON — handle markdown code fences
+    const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/) || [null, text];
+    const parsed = JSON.parse(jsonMatch[1]!.trim()) as ExtractedEventData;
+
+    console.log(`[EMAIL INGEST] Vision extracted: "${parsed.event_name}" on ${parsed.date} at ${parsed.venue_name}`);
+    return parsed;
+  } catch (error) {
+    console.error('[EMAIL INGEST] Vision extraction failed:', error);
+    return null;
+  }
+}
+
+// Extract image attachments from email payload
+function getImageAttachments(body: Record<string, unknown>): Array<{
+  base64: string;
+  mediaType: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp';
+  filename: string;
+}> {
+  const images: Array<{
+    base64: string;
+    mediaType: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp';
+    filename: string;
+  }> = [];
+
+  // Resend format: attachments array with { filename, content_type, content (base64) }
+  const attachments = (body.attachments || []) as Array<{
+    filename?: string;
+    content_type?: string;
+    contentType?: string;
+    content?: string;
+    data?: string;
+  }>;
+
+  const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+  for (const att of attachments) {
+    const contentType = (att.content_type || att.contentType || '').toLowerCase();
+    const base64Data = att.content || att.data || '';
+
+    if (validImageTypes.includes(contentType) && base64Data) {
+      images.push({
+        base64: base64Data.replace(/^data:image\/\w+;base64,/, ''), // Strip data URI prefix if present
+        mediaType: contentType as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp',
+        filename: att.filename || 'attachment.jpg',
+      });
+    }
+  }
+
+  // Also check for inline images in HTML (Resend may include these)
+  // Some email clients embed images as CID references — we skip those for now
+
+  return images;
+}
+
 /**
  * POST /api/ingest/email
  *
- * Webhook handler for inbound emails (Resend, Mailgun, Cloudflare Email Routing).
+ * Webhook handler for inbound emails (Resend).
  * Accepts forwarded emails, extracts URLs and content, classifies, and queues.
+ * Now with Vision AI: reads screenshot attachments to extract event details.
  *
  * Resend webhook format:
- *   { from, to, subject, text, html, headers }
- *
- * Generic format (works with most providers):
- *   { from, subject, text/body, html }
+ *   { type: "email.received", data: { from, to, subject, text, html, attachments } }
  *
  * Auth: webhook secret in query string or X-Webhook-Secret header
  */
@@ -75,7 +217,7 @@ export async function POST(request: NextRequest) {
     // Normalize across email providers
     const from = body.from || body.sender || body.envelope?.from || '';
     const subject = body.subject || '';
-    const textBody = body.text || body['body-plain'] || body.body || '';
+    let textBody = body.text || body['body-plain'] || body.body || '';
     const htmlBody = body.html || body['body-html'] || '';
 
     // Extract sender email
@@ -90,37 +232,82 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Accepted' }); // Return 200 to avoid retries
     }
 
-    // Extract all URLs from subject + body
+    // ─── Vision AI: process image attachments ──────────────────────────────
+    const imageAttachments = getImageAttachments(body);
+    let visionData: ExtractedEventData | null = null;
+
+    if (imageAttachments.length > 0) {
+      console.log(`[EMAIL INGEST] Found ${imageAttachments.length} image attachment(s) — running vision extraction`);
+
+      // Process the first (primary) image — usually the screenshot
+      const primaryImage = imageAttachments[0];
+      visionData = await extractEventFromImage(primaryImage.base64, primaryImage.mediaType);
+
+      if (visionData) {
+        // Enrich textBody with AI-extracted content so downstream processing works
+        const enrichedParts = [
+          visionData.event_name ? `Event: ${visionData.event_name}` : '',
+          visionData.date ? `Date: ${visionData.date}` : '',
+          visionData.start_time ? `Time: ${visionData.start_time}${visionData.end_time ? ` - ${visionData.end_time}` : ''}` : '',
+          visionData.venue_name ? `Venue: ${visionData.venue_name}` : '',
+          visionData.venue_address ? `Address: ${visionData.venue_address}` : '',
+          visionData.description ? `Description: ${visionData.description}` : '',
+          visionData.source_handle ? `Source: ${visionData.source_handle}` : '',
+          visionData.external_url ? `URL: ${visionData.external_url}` : '',
+          visionData.tags.length > 0 ? `Tags: ${visionData.tags.join(', ')}` : '',
+          '',
+          visionData.raw_text_summary || '',
+        ].filter(Boolean).join('\n');
+
+        // Prepend AI-extracted text to existing body
+        textBody = enrichedParts + (textBody ? `\n\n--- Original email text ---\n${textBody}` : '');
+        console.log(`[EMAIL INGEST] Vision enriched text body (${textBody.length} chars)`);
+      }
+    }
+
+    // Extract all URLs from subject + body (now includes AI-extracted URLs)
     const allText = [subject, textBody].filter(Boolean).join(' ');
     const urls = extractUrls(allText);
 
     // If no URLs found, still save the email as raw content
-    const primaryUrl = urls[0] || null;
+    const primaryUrl = visionData?.external_url || urls[0] || null;
     const igData = primaryUrl ? parseInstagramUrl(primaryUrl) : null;
 
-    // Simple classification
+    // Classification — vision data takes priority
     const lower = allText.toLowerCase();
     let classification = 'other';
-    if (igData?.contentType === 'profile') classification = 'influencer';
-    else if (['event', 'festival', 'parade', 'walk', 'meetup', 'adoption', 'fundraiser'].some(k => lower.includes(k))) classification = 'event';
-    else if (igData?.shortcode) classification = 'engagement';
+    if (visionData?.event_name) {
+      classification = 'event'; // If vision found an event, it's an event
+    } else if (igData?.contentType === 'profile') {
+      classification = 'influencer';
+    } else if (['event', 'festival', 'parade', 'walk', 'meetup', 'adoption', 'fundraiser'].some(k => lower.includes(k))) {
+      classification = 'event';
+    } else if (igData?.shortcode) {
+      classification = 'engagement';
+    }
 
-    // City detection
-    const cityKeywords: Record<string, string[]> = {
-      paris: ['paris'], geneva: ['geneva', 'genève'], london: ['london'],
-      barcelona: ['barcelona'], losangeles: ['los angeles', 'la', 'pasadena', 'hollywood'],
-      nyc: ['new york', 'nyc', 'brooklyn'], sydney: ['sydney'], tokyo: ['tokyo'],
-    };
-    let city: string | null = null;
-    for (const [c, kws] of Object.entries(cityKeywords)) {
-      if (kws.some(kw => lower.includes(kw))) { city = c; break; }
+    // City detection — vision data takes priority
+    let city: string | null = visionData?.city || null;
+    if (!city) {
+      const cityKeywords: Record<string, string[]> = {
+        paris: ['paris'], geneva: ['geneva', 'genève'], london: ['london'],
+        barcelona: ['barcelona'], losangeles: ['los angeles', 'la', 'pasadena', 'hollywood', 'dtla'],
+        nyc: ['new york', 'nyc', 'brooklyn'], sydney: ['sydney'], tokyo: ['tokyo'],
+      };
+      for (const [c, kws] of Object.entries(cityKeywords)) {
+        if (kws.some(kw => lower.includes(kw))) { city = c; break; }
+      }
     }
 
     // Platform detection
     let platform = 'email';
-    if (primaryUrl?.includes('instagram.com')) platform = 'instagram';
+    if (visionData?.source_handle) platform = 'instagram'; // Screenshot of IG post
+    else if (primaryUrl?.includes('instagram.com')) platform = 'instagram';
     else if (primaryUrl?.includes('facebook.com')) platform = 'facebook';
     else if (primaryUrl) platform = 'website';
+
+    // Instagram handle from vision
+    const igUsername = visionData?.source_handle?.replace(/^@/, '') || igData?.username || null;
 
     // Insert into ingest_queue
     const supabase = getSupabaseAdmin();
@@ -133,9 +320,9 @@ export async function POST(request: NextRequest) {
         raw_text: textBody.substring(0, 5000), // cap at 5k chars
         subject: subject.substring(0, 500),
         platform,
-        content_type: igData?.contentType || null,
+        content_type: igData?.contentType || (visionData ? 'post' : null),
         instagram_shortcode: igData?.shortcode || null,
-        instagram_username: igData?.username || null,
+        instagram_username: igUsername,
         classification,
         city,
         priority: classification === 'event' ? 'high' : 'normal',
@@ -175,7 +362,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    console.log(`[EMAIL INGEST] Processed email from ${senderEmail}: ${classification} ${city || ''} (${urls.length} URLs)`);
+    console.log(`[EMAIL INGEST] Processed email from ${senderEmail}: ${classification} ${city || ''} (${urls.length} URLs, ${imageAttachments.length} images, vision: ${!!visionData})`);
 
     // Auto-process event items immediately
     let autoProcessed = false;
@@ -200,6 +387,8 @@ export async function POST(request: NextRequest) {
       success: true,
       id: inserted.id,
       urls_found: urls.length,
+      images_found: imageAttachments.length,
+      vision_extracted: !!visionData,
       classification,
       city,
       auto_processed: autoProcessed,
