@@ -151,11 +151,11 @@ type ImageAttachment = {
   filename: string;
 };
 
-async function getImageAttachments(body: Record<string, unknown>): Promise<ImageAttachment[]> {
+async function getImageAttachments(body: Record<string, unknown>, emailId?: string): Promise<ImageAttachment[]> {
   const images: ImageAttachment[] = [];
   const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
-  // Method 1: Check webhook payload for attachments array
+  // Method 1: Check webhook payload for attachments with content (base64 data)
   const attachments = (body.attachments || []) as Array<{
     filename?: string;
     content_type?: string;
@@ -177,6 +177,11 @@ async function getImageAttachments(body: Record<string, unknown>): Promise<Image
     }
   }
 
+  if (images.length > 0) {
+    console.log(`[EMAIL INGEST] Found ${images.length} images in webhook payload`);
+    return images;
+  }
+
   // Method 2: Check for inline base64 data URIs in HTML
   if (typeof body.html === 'string') {
     const dataUriRegex = /data:(image\/(?:jpeg|png|gif|webp));base64,([A-Za-z0-9+/=]+)/g;
@@ -192,49 +197,106 @@ async function getImageAttachments(body: Record<string, unknown>): Promise<Image
     }
   }
 
-  // Method 3: If no images found and we have a Resend email ID, fetch via Resend API
-  // Resend webhook includes email ID — use it to download attachments
-  if (images.length === 0) {
-    const emailId = body.id || body.email_id || body.messageId;
-    const resendApiKey = process.env.RESEND_API_KEY;
+  if (images.length > 0) {
+    console.log(`[EMAIL INGEST] Found ${images.length} inline images in HTML`);
+    return images;
+  }
 
-    if (emailId && resendApiKey) {
-      console.log(`[EMAIL INGEST] No attachments in webhook — fetching email ${emailId} via Resend API`);
-      try {
-        const res = await fetch(`https://api.resend.com/emails/${emailId}`, {
+  // Method 3: Use Resend Receiving Attachments API
+  // Resend webhooks only include attachment METADATA, not content.
+  // We must call the Attachments API to get download_url, then fetch the actual file.
+  // Docs: https://resend.com/docs/dashboard/receiving/attachments
+  const resendApiKey = process.env.RESEND_API_KEY;
+
+  if (emailId && resendApiKey) {
+    console.log(`[EMAIL INGEST] Fetching attachments for received email ${emailId} via Resend API`);
+    try {
+      // Step 1: List attachments for this received email
+      const listRes = await fetch(`https://api.resend.com/emails/${emailId}/attachments`, {
+        headers: { 'Authorization': `Bearer ${resendApiKey}` },
+      });
+
+      if (!listRes.ok) {
+        console.log(`[EMAIL INGEST] Resend attachments list failed: ${listRes.status} ${listRes.statusText}`);
+        // Try alternative endpoint path
+        const altRes = await fetch(`https://api.resend.com/emails/received/${emailId}/attachments`, {
           headers: { 'Authorization': `Bearer ${resendApiKey}` },
         });
-        if (res.ok) {
-          const emailData = await res.json();
-          const apiAttachments = (emailData.attachments || []) as Array<{
-            filename?: string;
-            content_type?: string;
-            content?: string;
-          }>;
-          for (const att of apiAttachments) {
-            const ct = (att.content_type || '').toLowerCase();
-            if (validImageTypes.includes(ct) && att.content) {
-              images.push({
-                base64: att.content,
-                mediaType: ct as ImageAttachment['mediaType'],
-                filename: att.filename || 'api-attachment.jpg',
-              });
-            }
-          }
-          console.log(`[EMAIL INGEST] Resend API returned ${apiAttachments.length} attachments, ${images.length} images`);
-        } else {
-          console.log(`[EMAIL INGEST] Resend API fetch failed: ${res.status} ${res.statusText}`);
+        if (!altRes.ok) {
+          console.log(`[EMAIL INGEST] Resend alt attachments path also failed: ${altRes.status}`);
+          return images;
         }
-      } catch (e) {
-        console.error(`[EMAIL INGEST] Resend API error:`, e);
+        const altData = await altRes.json();
+        console.log(`[EMAIL INGEST] Alt path returned: ${JSON.stringify(altData).substring(0, 500)}`);
+        return await downloadResendAttachments(altData.data || altData, validImageTypes);
       }
-    } else {
-      // Log what we have to help debug
-      const bodyKeys = Object.keys(body);
-      console.log(`[EMAIL INGEST] No images found. Payload keys: [${bodyKeys.join(', ')}]. emailId=${emailId || 'none'}, hasResendKey=${!!resendApiKey}`);
+
+      const attachmentList = await listRes.json();
+      console.log(`[EMAIL INGEST] Resend API returned attachments: ${JSON.stringify(attachmentList).substring(0, 500)}`);
+
+      const attachmentItems = attachmentList.data || attachmentList;
+      return await downloadResendAttachments(
+        Array.isArray(attachmentItems) ? attachmentItems : [],
+        validImageTypes
+      );
+    } catch (e) {
+      console.error(`[EMAIL INGEST] Resend Attachments API error:`, e);
+    }
+  } else {
+    const bodyKeys = Object.keys(body);
+    console.log(`[EMAIL INGEST] No images found. emailId=${emailId || 'none'}, hasResendKey=${!!resendApiKey}, payload keys: [${bodyKeys.join(', ')}]`);
+  }
+
+  return images;
+}
+
+// Download attachments from Resend API response (each has download_url)
+async function downloadResendAttachments(
+  attachmentItems: Array<Record<string, unknown>>,
+  validImageTypes: string[]
+): Promise<ImageAttachment[]> {
+  const images: ImageAttachment[] = [];
+
+  for (const att of attachmentItems) {
+    const contentType = String(att.content_type || att.contentType || att.type || '').toLowerCase();
+    const downloadUrl = String(att.download_url || att.url || '');
+    const filename = String(att.filename || att.name || 'attachment');
+
+    if (!validImageTypes.includes(contentType)) {
+      console.log(`[EMAIL INGEST] Skipping non-image attachment: ${filename} (${contentType})`);
+      continue;
+    }
+
+    if (!downloadUrl) {
+      console.log(`[EMAIL INGEST] No download_url for attachment: ${filename}`);
+      continue;
+    }
+
+    try {
+      console.log(`[EMAIL INGEST] Downloading attachment: ${filename} from ${downloadUrl.substring(0, 80)}...`);
+      const dlRes = await fetch(downloadUrl);
+      if (!dlRes.ok) {
+        console.log(`[EMAIL INGEST] Download failed: ${dlRes.status}`);
+        continue;
+      }
+
+      const buffer = await dlRes.arrayBuffer();
+      const base64 = Buffer.from(buffer).toString('base64');
+
+      if (base64.length > 100) { // Sanity check
+        images.push({
+          base64,
+          mediaType: contentType as ImageAttachment['mediaType'],
+          filename,
+        });
+        console.log(`[EMAIL INGEST] Downloaded ${filename}: ${Math.round(base64.length / 1024)}KB base64`);
+      }
+    } catch (dlError) {
+      console.error(`[EMAIL INGEST] Failed to download ${filename}:`, dlError);
     }
   }
 
+  console.log(`[EMAIL INGEST] Downloaded ${images.length} image attachments from Resend API`);
   return images;
 }
 
@@ -264,14 +326,22 @@ export async function POST(request: NextRequest) {
     const rawBody = await request.json();
 
     // Resend webhook wraps email data in { type: "email.received", data: { ... } }
-    const body = rawBody.data && rawBody.type === 'email.received' ? rawBody.data : rawBody;
+    const isResendWebhook = rawBody.data && rawBody.type === 'email.received';
+    const body = isResendWebhook ? rawBody.data : rawBody;
 
-    // Debug: log top-level keys and attachment info to diagnose what Resend sends
+    // Extract email ID for Resend Attachments API
+    // The email_id is in rawBody.data.email_id (inside the data wrapper)
+    const resendEmailId = isResendWebhook
+      ? (body.email_id || body.id || rawBody.id)
+      : (body.email_id || body.id);
+
+    // Debug: log payload structure
     const bodyKeys = Object.keys(body);
-    const attachmentInfo = Array.isArray(body.attachments)
-      ? `${body.attachments.length} items: ${(body.attachments as Array<Record<string, unknown>>).map(a => `${a.filename || a.name || 'unnamed'}(${a.content_type || a.contentType || a.type || 'unknown'}, ${typeof a.content === 'string' ? a.content.length : 0} chars)`).join(', ')}`
-      : `no attachments field (keys: ${bodyKeys.join(', ')})`;
-    console.log(`[EMAIL INGEST] Payload keys: [${bodyKeys.join(', ')}] | Attachments: ${attachmentInfo}`);
+    const rawKeys = Object.keys(rawBody);
+    const attachmentMeta = Array.isArray(body.attachments)
+      ? `${body.attachments.length} items: ${(body.attachments as Array<Record<string, unknown>>).map(a => `${a.filename || a.name || 'unnamed'}(${a.content_type || a.contentType || a.type || 'unknown'}, hasContent=${!!(a as Record<string, unknown>).content})`).join(', ')}`
+      : 'no attachments field';
+    console.log(`[EMAIL INGEST] Webhook: resend=${isResendWebhook}, emailId=${resendEmailId || 'none'} | body keys: [${bodyKeys.join(', ')}] | raw keys: [${rawKeys.join(', ')}] | Attachments: ${attachmentMeta}`);
 
     // Normalize across email providers
     const from = body.from || body.sender || body.envelope?.from || '';
@@ -292,7 +362,7 @@ export async function POST(request: NextRequest) {
     }
 
     // ─── Vision AI: process image attachments ──────────────────────────────
-    const imageAttachments = await getImageAttachments(body);
+    const imageAttachments = await getImageAttachments(body, resendEmailId as string | undefined);
     let visionData: ExtractedEventData | null = null;
 
     if (imageAttachments.length > 0) {
