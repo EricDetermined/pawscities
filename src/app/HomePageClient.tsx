@@ -491,20 +491,20 @@ export default function HomePageClient({ cities, cityStats, events = [] }: HomeP
       {/* Suggest a City CTA */}
       <section className="py-12 px-4 bg-gray-50">
         <div className="container mx-auto">
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-100 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl border border-orange-200 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <h3 className="font-display text-xl font-bold text-gray-900 mb-1">
-                Don&apos;t see your city?
+                Help Us Expand!
               </h3>
               <p className="text-gray-600 text-sm">
-                Vote for the next city Paw Cities should launch in, or suggest a new one.
+                We&apos;re in 8 cities and growing. Tell us which city you&apos;d love to see next.
               </p>
             </div>
             <Link
               href="/suggest-city"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap text-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-orange-600 text-white rounded-xl font-semibold hover:bg-orange-700 transition-colors whitespace-nowrap text-sm"
             >
-              <span>🌍</span> Suggest a City
+              <span>🐾</span> Request a City
             </Link>
           </div>
         </div>
