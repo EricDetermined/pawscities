@@ -204,43 +204,37 @@ async function getImageAttachments(body: Record<string, unknown>, emailId?: stri
 
   // Method 3: Use Resend Receiving Attachments API
   // Resend webhooks only include attachment METADATA, not content.
-  // We must call the Attachments API to get download_url, then fetch the actual file.
-  // Docs: https://resend.com/docs/dashboard/receiving/attachments
+  // We call GET /emails/receiving/{email_id}/attachments to get download_url for each,
+  // then fetch the actual binary content from those signed URLs.
+  // Docs: https://resend.com/docs/api-reference/emails/list-received-email-attachments
   const resendApiKey = process.env.RESEND_API_KEY;
 
   if (emailId && resendApiKey) {
-    console.log(`[EMAIL INGEST] Fetching attachments for received email ${emailId} via Resend API`);
+    console.log(`[EMAIL INGEST] Fetching attachments for received email ${emailId} via Resend Receiving API`);
     try {
-      // Step 1: List attachments for this received email
-      const listRes = await fetch(`https://api.resend.com/emails/${emailId}/attachments`, {
+      // List attachments for this received email
+      // Correct endpoint: /emails/receiving/{email_id}/attachments (NOT /emails/{id}/attachments which is for sent emails)
+      const listRes = await fetch(`https://api.resend.com/emails/receiving/${emailId}/attachments`, {
         headers: { 'Authorization': `Bearer ${resendApiKey}` },
       });
 
       if (!listRes.ok) {
-        console.log(`[EMAIL INGEST] Resend attachments list failed: ${listRes.status} ${listRes.statusText}`);
-        // Try alternative endpoint path
-        const altRes = await fetch(`https://api.resend.com/emails/received/${emailId}/attachments`, {
-          headers: { 'Authorization': `Bearer ${resendApiKey}` },
-        });
-        if (!altRes.ok) {
-          console.log(`[EMAIL INGEST] Resend alt attachments path also failed: ${altRes.status}`);
-          return images;
-        }
-        const altData = await altRes.json();
-        console.log(`[EMAIL INGEST] Alt path returned: ${JSON.stringify(altData).substring(0, 500)}`);
-        return await downloadResendAttachments(altData.data || altData, validImageTypes);
+        const errText = await listRes.text().catch(() => '');
+        console.log(`[EMAIL INGEST] Resend receiving attachments API failed: ${listRes.status} ${listRes.statusText} — ${errText.substring(0, 200)}`);
+        return images;
       }
 
       const attachmentList = await listRes.json();
-      console.log(`[EMAIL INGEST] Resend API returned attachments: ${JSON.stringify(attachmentList).substring(0, 500)}`);
+      console.log(`[EMAIL INGEST] Resend receiving attachments response: ${JSON.stringify(attachmentList).substring(0, 500)}`);
 
+      // Response shape: { object: "list", data: [{ id, filename, size, content_type, download_url, expires_at }] }
       const attachmentItems = attachmentList.data || attachmentList;
       return await downloadResendAttachments(
         Array.isArray(attachmentItems) ? attachmentItems : [],
         validImageTypes
       );
     } catch (e) {
-      console.error(`[EMAIL INGEST] Resend Attachments API error:`, e);
+      console.error(`[EMAIL INGEST] Resend Receiving Attachments API error:`, e);
     }
   } else {
     const bodyKeys = Object.keys(body);
