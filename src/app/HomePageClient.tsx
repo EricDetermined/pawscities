@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { CityConfig } from '@/lib/cities-config';
 import type { PawEvent } from '@/types';
+import NewsletterSignup from '@/components/NewsletterSignup';
 
 const CATEGORIES = [
   { slug: 'parks', icon: '🌳', label: 'Parks' },
@@ -207,6 +208,28 @@ export default function HomePageClient({ cities, cityStats, events = [] }: HomeP
             </button>
           </div>
 
+          {/* Social Proof Stats */}
+          <div className="flex items-center gap-4 sm:gap-6 mb-5 sm:mb-6 text-white/80 text-xs sm:text-sm">
+            <div className="flex items-center gap-1.5">
+              <span className="text-orange-400 font-bold text-base sm:text-lg">8</span>
+              <span>Cities</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-orange-400 font-bold text-base sm:text-lg">
+                {Object.values(cityStats).reduce((sum, s) => sum + s.count, 0) || '500+'}
+              </span>
+              <span>Places</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-orange-400 font-bold text-base sm:text-lg">{events.length || '50+'}</span>
+              <span>Events</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-orange-400 font-bold text-base sm:text-lg">12</span>
+              <span>Categories</span>
+            </div>
+          </div>
+
           {/* Category Filters — Interactive */}
           <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-1.5 sm:gap-2 text-xs sm:text-sm">
             {CATEGORIES.map((cat) => (
@@ -319,6 +342,18 @@ export default function HomePageClient({ cities, cityStats, events = [] }: HomeP
           </div>
         </section>
       )}
+
+      {/* Newsletter Signup — Primary CTA */}
+      <section className="py-8 px-4 bg-white">
+        <div className="container mx-auto">
+          <NewsletterSignup
+            variant="inline"
+            source="homepage_top"
+            heading="Never Miss a Dog-Friendly Event"
+            subtext="Weekly updates on the best events, new spots, and dog-owner tips across 8 cities worldwide. Join thousands of dog lovers."
+          />
+        </div>
+      </section>
 
       {/* Cities Grid */}
       <section id="cities-section" className="py-16 px-4">
@@ -445,6 +480,14 @@ export default function HomePageClient({ cities, cityStats, events = [] }: HomeP
         </div>
       </section>
 
+      {/* Newsletter Banner — Secondary CTA before business section */}
+      <NewsletterSignup
+        variant="banner"
+        source="homepage_banner"
+        heading="Stay in the Loop"
+        subtext="Get weekly event alerts and dog-friendly tips for your city."
+      />
+
       {/* Suggest a City CTA */}
       <section className="py-12 px-4 bg-gray-50">
         <div className="container mx-auto">
@@ -497,6 +540,9 @@ export default function HomePageClient({ cities, cityStats, events = [] }: HomeP
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-300 py-12 px-4">
         <div className="container mx-auto">
+          <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
+            <NewsletterSignup variant="footer" source="homepage_footer" />
+          </div>
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="text-2xl">🐾</span>

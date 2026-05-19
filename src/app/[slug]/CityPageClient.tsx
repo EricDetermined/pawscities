@@ -8,6 +8,8 @@ import { Badge } from '@/components/ui';
 import type { CityConfig } from '@/lib/cities-config';
 import type { Establishment, CategorySlug, PawEvent } from '@/types';
 import { PremiumCard } from '@/components/ListingBadges';
+import ShareButtons from '@/components/ShareButtons';
+import NewsletterSignup from '@/components/NewsletterSignup';
 
 // Dynamic import for MapView to avoid SSR issues with Leaflet
 const MapView = dynamic(() => import('@/components/map/MapView').then(mod => ({ default: mod.MapView })), {
@@ -313,6 +315,16 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
                             </a>
                           </div>
                         )}
+
+                        {/* Share */}
+                        <div className="pt-1" onClick={(e) => e.stopPropagation()}>
+                          <ShareButtons
+                            url={`https://pawcities.com/${city.slug}#events`}
+                            title={`${event.name} — Dog-Friendly Event in ${city.name}`}
+                            description={event.venueName ? `${event.venueName} · ${formatDateRange(event)}` : formatDateRange(event)}
+                            compact
+                          />
+                        </div>
 
                         {/* Action buttons */}
                         <div className="flex gap-2 pt-1">
@@ -773,6 +785,18 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
               <p className="text-sm text-gray-600">{city.dogRegulations.publicTransport}</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Newsletter Signup */}
+      <section className="py-8 px-4 bg-gray-50 border-t">
+        <div className="container mx-auto">
+          <NewsletterSignup
+            citySlug={city.slug}
+            source={`city_${city.slug}`}
+            heading={`Get ${city.name} Dog-Friendly Updates`}
+            subtext={`Weekly events, new spots, and tips for dog owners in ${city.name}. Free forever.`}
+          />
         </div>
       </section>
 

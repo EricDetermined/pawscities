@@ -172,15 +172,44 @@ export function generateCaption(fact: ContentFact): string {
     'fun': `${fact.icon} ${fact.headline}`,
   };
 
-  // Type-specific CTAs
-  const ctas: Record<string, string> = {
-    'did-you-know': 'Save this for your next trip! \u{1F43E}',
-    'tip': 'Tag a dog parent who needs this \u{1F43E}',
-    'spotlight': 'Know a hidden gem? Drop it in the comments \u{1F447}',
-    'event': 'Tag your dog crew! \u{1F43E}\u{1F389}',
-    'guide': 'Save this \u{1F516} and share with your pack!',
-    'fun': 'Double tap if your pup agrees \u{1F43E}',
+  // Type-specific CTAs — optimized for engagement, saves, and shares
+  const ctaVariants: Record<string, string[]> = {
+    'did-you-know': [
+      'Save this for your next trip! \u{1F43E} Drop a \u{1F43E} if you learned something new.',
+      'Share this with someone planning a trip to ' + (CITY_META[fact.city]?.name || '') + ' \u{1F43E}',
+      'Tag a dog parent who would LOVE this \u{1F447}',
+    ],
+    'tip': [
+      'Tag a dog parent who needs to see this \u{1F43E}',
+      'Save this \u{1F516} — you\'ll thank us later! What\'s your best local dog tip?',
+      'Share this with your dog-walking group chat \u{1F4F2}\u{1F43E}',
+    ],
+    'spotlight': [
+      'Know a hidden gem like this? Drop it in the comments \u{1F447}',
+      'Save \u{1F516} + share with your adventure buddy! Have you been here?',
+      'Tag someone who needs to visit this spot \u{1F43E}',
+    ],
+    'event': [
+      'Tag your dog crew — who\'s going? \u{1F43E}\u{1F389}',
+      'Save this \u{1F516} and share with a friend who\'d love this event!',
+      'Will you be there? Drop a \u{1F43E} in the comments!',
+    ],
+    'guide': [
+      'Save this \u{1F516} and share with your pack! Which spot is your fave?',
+      'Bookmark this for your next visit! \u{1F43E} What would you add to the list?',
+      'Share this with someone planning a dog-friendly trip \u{1F4F2}',
+    ],
+    'fun': [
+      'Double tap if your pup agrees \u{1F43E} Tag a dog parent who gets this!',
+      'Share this with someone who needs a laugh today \u{1F602}\u{1F43E}',
+      'Is this your dog? Drop a \u{1F43E} if so!',
+    ],
   };
+
+  // Pick a CTA variant based on headline hash for consistency
+  const hash = fact.headline.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const variants = ctaVariants[fact.type] || ctaVariants['did-you-know'];
+  const cta = variants[hash % variants.length];
 
   // Core hashtags + type-specific ones
   const baseHashtags = [
@@ -210,7 +239,9 @@ export function generateCaption(fact: ContentFact): string {
     '',
     `Explore dog-friendly ${city.name} at pawcities.com/${city.slug} \u{1F517}`,
     '',
-    ctas[fact.type] || 'Save this for your next trip! \u{1F43E}',
+    `Follow @thepawcities for daily dog-friendly tips across 8 cities \u{1F30D}`,
+    '',
+    cta,
     '',
     hashtags,
   ].join('\n');
@@ -269,11 +300,19 @@ export function generateEventCaption(event: EventCaptionInput): string {
       : firstSentence + (firstSentence.endsWith('.') ? '' : '.');
   }
 
-  // CTA
-  const cta = 'Save this 🔖 and tag your dog crew!';
+  // CTA — varied for engagement
+  const ctaOptions = [
+    'Save this \u{1F516} and tag your dog crew!',
+    'Tag a friend who\'d bring their pup to this! \u{1F43E}',
+    'Will you be there? Drop a \u{1F43E} in the comments!',
+    'Share this with your pack! Who\'s going? \u{1F447}',
+  ];
+  const ctaHash = event.name.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+  const cta = ctaOptions[ctaHash % ctaOptions.length];
 
-  // Link
-  const link = `Discover more events at pawcities.com/${slug} 🔗`;
+  // Link + follow CTA
+  const link = `Discover more events at pawcities.com/${slug} \u{1F517}`;
+  const followCta = 'Follow @thepawcities for daily dog-friendly events \u{1F30D}';
 
   // Hashtags — event-specific + city + base
   const hashtags: string[] = [
@@ -304,6 +343,8 @@ export function generateEventCaption(event: EventCaptionInput): string {
     ...(snippet ? ['', snippet] : []),
     '',
     link,
+    '',
+    followCta,
     '',
     cta,
     '',
