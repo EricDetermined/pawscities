@@ -67,7 +67,10 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json();
+    const rawBody = await request.json();
+
+    // Resend webhook wraps email data in { type: "email.received", data: { ... } }
+    const body = rawBody.data && rawBody.type === 'email.received' ? rawBody.data : rawBody;
 
     // Normalize across email providers
     const from = body.from || body.sender || body.envelope?.from || '';
