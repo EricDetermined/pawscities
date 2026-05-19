@@ -144,19 +144,18 @@ async function extractEventFromImage(
   }
 }
 
-// Extract image attachments from email payload
-function getImageAttachments(body: Record<string, unknown>): Array<{
+// Extract image attachments from email payload + Resend API fallback
+type ImageAttachment = {
   base64: string;
   mediaType: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp';
   filename: string;
-}> {
-  const images: Array<{
-    base64: string;
-    mediaType: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp';
-    filename: string;
-  }> = [];
+};
 
-  // Resend format: attachments array with { filename, content_type, content (base64) }
+async function getImageAttachments(body: Record<string, unknown>): Promise<ImageAttachment[]> {
+  const images: ImageAttachment[] = [];
+  const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+  // Method 1: Check webhook payload for attachments array
   const attachments = (body.attachments || []) as Array<{
     filename?: string;
     content_type?: string;
@@ -165,22 +164,20 @@ function getImageAttachments(body: Record<string, unknown>): Array<{
     data?: string;
   }>;
 
-  const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-
   for (const att of attachments) {
     const contentType = (att.content_type || att.contentType || '').toLowerCase();
     const base64Data = att.content || att.data || '';
 
     if (validImageTypes.includes(contentType) && base64Data) {
       images.push({
-        base64: base64Data.replace(/^data:image\/\w+;base64,/, ''), // Strip data URI prefix if present
-        mediaType: contentType as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp',
+        base64: base64Data.replace(/^data:image\/\w+;base64,/, ''),
+        mediaType: contentType as ImageAttachment['mediaType'],
         filename: att.filename || 'attachment.jpg',
       });
     }
   }
 
-  // Also check for inline images embedded as base64 data URIs in HTML
+  // Method 2: Check for inline base64 data URIs in HTML
   if (typeof body.html === 'string') {
     const dataUriRegex = /data:(image\/(?:jpeg|png|gif|webp));base64,([A-Za-z0-9+/=]+)/g;
     let match;
@@ -188,10 +185,53 @@ function getImageAttachments(body: Record<string, unknown>): Array<{
       if (match[2].length > 1000) { // Skip tiny icons/tracking pixels
         images.push({
           base64: match[2],
-          mediaType: match[1] as 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp',
+          mediaType: match[1] as ImageAttachment['mediaType'],
           filename: `inline-image-${images.length}.${match[1].split('/')[1]}`,
         });
       }
+    }
+  }
+
+  // Method 3: If no images found and we have a Resend email ID, fetch via Resend API
+  // Resend webhook includes email ID — use it to download attachments
+  if (images.length === 0) {
+    const emailId = body.id || body.email_id || body.messageId;
+    const resendApiKey = process.env.RESEND_API_KEY;
+
+    if (emailId && resendApiKey) {
+      console.log(`[EMAIL INGEST] No attachments in webhook — fetching email ${emailId} via Resend API`);
+      try {
+        const res = await fetch(`https://api.resend.com/emails/${emailId}`, {
+          headers: { 'Authorization': `Bearer ${resendApiKey}` },
+        });
+        if (res.ok) {
+          const emailData = await res.json();
+          const apiAttachments = (emailData.attachments || []) as Array<{
+            filename?: string;
+            content_type?: string;
+            content?: string;
+          }>;
+          for (const att of apiAttachments) {
+            const ct = (att.content_type || '').toLowerCase();
+            if (validImageTypes.includes(ct) && att.content) {
+              images.push({
+                base64: att.content,
+                mediaType: ct as ImageAttachment['mediaType'],
+                filename: att.filename || 'api-attachment.jpg',
+              });
+            }
+          }
+          console.log(`[EMAIL INGEST] Resend API returned ${apiAttachments.length} attachments, ${images.length} images`);
+        } else {
+          console.log(`[EMAIL INGEST] Resend API fetch failed: ${res.status} ${res.statusText}`);
+        }
+      } catch (e) {
+        console.error(`[EMAIL INGEST] Resend API error:`, e);
+      }
+    } else {
+      // Log what we have to help debug
+      const bodyKeys = Object.keys(body);
+      console.log(`[EMAIL INGEST] No images found. Payload keys: [${bodyKeys.join(', ')}]. emailId=${emailId || 'none'}, hasResendKey=${!!resendApiKey}`);
     }
   }
 
@@ -252,7 +292,7 @@ export async function POST(request: NextRequest) {
     }
 
     // ─── Vision AI: process image attachments ──────────────────────────────
-    const imageAttachments = getImageAttachments(body);
+    const imageAttachments = await getImageAttachments(body);
     let visionData: ExtractedEventData | null = null;
 
     if (imageAttachments.length > 0) {
