@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-
-// Read at request time, not build time
-function getCronSecret() { return process.env.CRON_SECRET; }
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 function getSupabaseAdmin() {
   return createClient(
@@ -385,13 +383,12 @@ async function storeHealthReport(report: HealthReport) {
 // ——— Main Handler ———————————————————————————————————————————————————————————
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get('secret');
-
-  // FIX: Always require secret match (reject if CRON_SECRET is unset too)
-  if (secret !== getCronSecret()) {
+  // Verify cron secret (supports both Authorization header and query param)
+  if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  const { searchParams } = new URL(request.url);
 
   const skipEmail = searchParams.get('skipEmail') === 'true';
 

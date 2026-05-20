@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 /**
  * POST /api/cron/process-ingest
@@ -201,15 +202,8 @@ function slugify(text: string, date: string | null): string {
 
 export async function POST(request: NextRequest) {
   // Auth check
-  const authHeader = request.headers.get('authorization');
-  const querySecret = request.nextUrl.searchParams.get('secret');
-  const cronSecret = process.env.CRON_SECRET;
-
-  if (cronSecret) {
-    const provided = authHeader?.replace('Bearer ', '') || querySecret;
-    if (provided !== cronSecret) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+  if (!verifyCronAuth(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const supabase = getSupabaseAdmin();

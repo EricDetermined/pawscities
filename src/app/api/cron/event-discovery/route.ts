@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-
-function getCronSecret() { return process.env.CRON_SECRET; }
+import { verifyCronAuth } from '@/lib/cron-auth';
 function getMetaToken() { return process.env.META_PAGE_ACCESS_TOKEN; }
 function getInstagramAccountId() { return process.env.INSTAGRAM_ACCOUNT_ID; }
 function getMetaApiVersion() { return process.env.META_API_VERSION || 'v21.0'; }
@@ -125,9 +124,7 @@ function detectCity(caption: string): string | null {
  * Runs weekly on Mondays at 8 AM UTC.
  */
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get('secret');
-  if (secret !== getCronSecret()) {
+  if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

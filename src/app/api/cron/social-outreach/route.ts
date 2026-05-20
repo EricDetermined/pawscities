@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { verifyCronAuth } from '@/lib/cron-auth';
 // Email sending moved to the unified marketing-digest cron
-
-function getCronSecret() { return process.env.CRON_SECRET; }
 // Read at request time, not build time — avoids empty-string caching on Vercel
 function getMetaToken() { return process.env.META_PAGE_ACCESS_TOKEN; }
 function getInstagramAccountId() { return process.env.INSTAGRAM_ACCOUNT_ID; }
@@ -63,9 +62,7 @@ interface HashtagMedia {
  * Uses Instagram Graph API hashtag search (business accounts only)
  */
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get('secret');
-  if (secret !== getCronSecret()) {
+  if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

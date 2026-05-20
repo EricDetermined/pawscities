@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { searchPlace } from '@/lib/google-places';
-
-function getCronSecret() { return process.env.CRON_SECRET; }
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 function getSupabaseAdmin() {
   return createClient(
@@ -16,9 +15,7 @@ export const maxDuration = 300; // Allow up to 5 minutes for this job
 
 export async function GET(request: NextRequest) {
   // Verify cron secret
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get('secret');
-  if (secret !== getCronSecret()) {
+  if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

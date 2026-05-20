@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 // ─── Config ────────────────────────────────────────────────────────────────────
-
-function getCronSecret() { return process.env.CRON_SECRET; }
 function getAppUrl() { return process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com'; }
 
 function getSupabaseAdmin() {
@@ -131,8 +130,7 @@ ${data.newEstablishments.length > 0 ? `
 
 export async function GET(request: NextRequest) {
   // Auth check
-  const { searchParams } = new URL(request.url);
-  if (searchParams.get('secret') !== getCronSecret()) {
+  if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 

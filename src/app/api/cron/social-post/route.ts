@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { verifyCronAuth } from '@/lib/cron-auth';
 import { publishImagePost } from '@/lib/instagram';
 import {
   CONTENT_BANK,
@@ -10,9 +11,6 @@ import {
 } from '@/lib/social-content';
 
 // ─── Config ────────────────────────────────────────────────────────────────────
-
-// Read at request time, not build time
-function getCronSecret() { return process.env.CRON_SECRET; }
 
 /** How many days ahead to look for upcoming events */
 const EVENT_LOOKAHEAD_DAYS = 14;
@@ -90,12 +88,9 @@ interface EventRow {
  */
 export async function GET(request: NextRequest) {
   // ── Auth ────────────────────────────────────────────────────────────────────
-  const authHeader = request.headers.get('authorization');
-  const cronParam = request.nextUrl.searchParams.get('secret');
   const dryRun = request.nextUrl.searchParams.get('dryRun') === 'true';
 
-  const cronSecret = getCronSecret();
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}` && cronParam !== cronSecret) {
+  if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
