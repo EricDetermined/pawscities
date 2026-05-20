@@ -1,78 +1,118 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 
-interface Stats {
-  totalCities: number;
-  totalEstablishments: number;
-  totalUsers: number;
-  pendingClaims: number;
-  newUsersThisWeek: number;
-  premiumListings: number;
-}
-
-interface Activity {
-  id: string;
-  event_type: string;
-  created_at: string;
-  user_id?: string;
-  establishment_id?: string;
-}
+// ── Types ────────────────────────────────────────────────────────────────────
 
 interface DashboardData {
-  stats: Stats;
-  recentActivities: Activity[];
+  stats: {
+    totalCities: number;
+    totalEstablishments: number;
+    totalUsers: number;
+    pendingClaims: number;
+    newUsersThisWeek: number;
+    premiumListings: number;
+  };
+  events: {
+    pending: number;
+    upcoming: number;
+    total: number;
+  };
+  subscribers: {
+    total: number;
+    newThisWeek: number;
+  };
+  social: {
+    newOpportunities: number;
+    unrepliedComments: number;
+    totalPublished: number;
+    contentRemaining: number;
+    lastPostDate: string | null;
+    recentPosts: {
+      id: string;
+      headline: string;
+      city: string;
+      status: string;
+      likes: number;
+      comments_count: number;
+      created_at: string;
+      error_message?: string;
+    }[];
+  };
+  pendingEventsData: {
+    id: string;
+    name: string;
+    start_date: string;
+    end_date: string | null;
+    venue_name: string | null;
+    source: string;
+    source_handle: string | null;
+    discovery_score: number | null;
+    created_at: string;
+    cities: { name: string; slug: string };
+  }[];
+  recentActivities: {
+    id: string;
+    event_type: string;
+    created_at: string;
+  }[];
 }
 
-const quickActions = [
-  { title: 'View Claims', href: '/admin/claims', icon: '✅', color: 'bg-blue-500' },
-  { title: 'Event Calendar', href: '/admin/events', icon: '📅', color: 'bg-rose-500' },
-  { title: 'Manage Users', href: '/admin/users', icon: '👥', color: 'bg-green-500' },
-  { title: 'View Analytics', href: '/admin/analytics', icon: '📈', color: 'bg-orange-500' },
-  { title: 'Establishments', href: '/admin/establishments', icon: '📍', color: 'bg-purple-500' },
-];
+// ── Main Dashboard ───────────────────────────────────────────────────────────
 
 export default function AdminDashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [actioningEvent, setActioningEvent] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function fetchStats() {
-      try {
-        const response = await fetch('/api/admin/stats');
-        if (!response.ok) {
-          throw new Error('Failed to fetch stats');
-        }
-        const json = await response.json();
-        setData(json);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching stats:', err);
-        setError('Failed to load dashboard data');
-        setData(null);
-      } finally {
-        setLoading(false);
-      }
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch('/api/admin/stats');
+      if (!res.ok) throw new Error('Failed to fetch');
+      const json = await res.json();
+      setData(json);
+      setError(null);
+    } catch {
+      setError('Failed to load dashboard data');
+    } finally {
+      setLoading(false);
     }
-
-    fetchStats();
   }, []);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const handleEventAction = async (eventId: string, action: 'approve' | 'reject') => {
+    setActioningEvent(eventId);
+    try {
+      const res = await fetch(`/api/admin/events/${eventId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action }),
+      });
+      if (res.ok) {
+        fetchData(); // Refresh data after action
+      }
+    } catch {
+      // fail silently — will refresh anyway
+    } finally {
+      setActioningEvent(null);
+    }
+  };
 
   if (loading) {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">Loading dashboard data...</p>
+          <h1 className="text-2xl font-bold text-gray-900">Command Center</h1>
+          <p className="text-gray-500 text-sm">Loading...</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="bg-white rounded-xl border p-6 animate-pulse">
-              <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
-              <div className="h-8 bg-gray-200 rounded w-16 mb-2"></div>
-              <div className="h-3 bg-gray-100 rounded w-32"></div>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="bg-white rounded-xl border p-4 animate-pulse">
+              <div className="h-3 bg-gray-200 rounded w-16 mb-2" />
+              <div className="h-6 bg-gray-200 rounded w-10" />
             </div>
           ))}
         </div>
@@ -83,250 +123,310 @@ export default function AdminDashboard() {
   if (error || !data) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">Welcome to the Paw Cities admin dashboard</p>
-        </div>
+        <h1 className="text-2xl font-bold text-gray-900">Command Center</h1>
         <div className="bg-red-50 border border-red-200 rounded-xl p-6">
-          <p className="text-red-800">
-            {error || 'Failed to load dashboard data'}
-          </p>
+          <p className="text-red-800">{error || 'Failed to load'}</p>
+          <button onClick={() => { setLoading(true); fetchData(); }} className="mt-2 text-sm text-red-600 underline">Retry</button>
         </div>
       </div>
     );
   }
 
+  const totalActionItems = data.events.pending + data.social.unrepliedComments + data.stats.pendingClaims;
+
   return (
     <div className="space-y-6">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600">
-          Welcome to the Paw Cities admin dashboard
-        </p>
-      </div>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          title="Total Cities"
-          value={data.stats.totalCities}
-          subtitle={`${data.stats.totalCities} active`}
-          icon="🏙️"
-          color="bg-blue-500"
-        />
-        <StatCard
-          title="Establishments"
-          value={data.stats.totalEstablishments}
-          subtitle={`${data.stats.premiumListings} premium`}
-          icon="📍"
-          color="bg-green-500"
-        />
-        <StatCard
-          title="Users"
-          value={data.stats.totalUsers}
-          subtitle={`${data.stats.newUsersThisWeek} new this week`}
-          icon="👥"
-          color="bg-purple-500"
-        />
-        <StatCard
-          title="Pending Claims"
-          value={data.stats.pendingClaims}
-          subtitle="awaiting review"
-          icon="✅"
-          color="bg-orange-500"
-        />
-      </div>
-
-      {/* Quick Actions */}
-      <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
-          Quick Actions
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {quickActions.map((action) => (
-            <Link
-              key={action.href}
-              href={action.href}
-              className="flex flex-col items-center p-4 bg-white rounded-xl border hover:shadow-md transition-shadow"
-            >
-              <div
-                className={`w-12 h-12 ${action.color} rounded-full flex items-center justify-center text-2xl mb-2`}
-              >
-                {action.icon}
-              </div>
-              <span className="font-medium text-gray-900 text-center text-sm">
-                {action.title}
-              </span>
-            </Link>
-          ))}
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Command Center</h1>
+          <p className="text-gray-500 text-sm">
+            {totalActionItems > 0
+              ? `${totalActionItems} item${totalActionItems !== 1 ? 's' : ''} need${totalActionItems === 1 ? 's' : ''} attention`
+              : 'All caught up!'}
+          </p>
         </div>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-white rounded-xl border p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Recent Activity
-            </h2>
-            <Link
-              href="/admin/analytics"
-              className="text-sm text-primary-600 hover:text-primary-700"
-            >
-              View all →
-            </Link>
-          </div>
-
-          <div className="space-y-4">
-            {data.recentActivities && data.recentActivities.length > 0 ? (
-              data.recentActivities.slice(0, 6).map((activity) => (
-                <ActivityRow key={activity.id} activity={activity} />
-              ))
-            ) : (
-              <p className="text-sm text-gray-500 text-center py-4">
-                No recent activity
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* Quick Stats */}
-        <div className="bg-white rounded-xl border p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            System Overview
-          </h2>
-
-          <div className="space-y-4">
-            <OverviewItem
-              label="Active Cities"
-              value={data.stats.totalCities}
-              icon="🏙️"
-            />
-            <OverviewItem
-              label="Verified Establishments"
-              value={data.stats.totalEstablishments}
-              icon="✔️"
-            />
-            <OverviewItem
-              label="Premium Listings"
-              value={data.stats.premiumListings}
-              icon="⭐"
-            />
-            <OverviewItem
-              label="Active Users"
-              value={data.stats.totalUsers}
-              icon="👤"
-            />
-            <OverviewItem
-              label="Pending Claims"
-              value={data.stats.pendingClaims}
-              icon="🔔"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function StatCard({
-  title,
-  value,
-  subtitle,
-  icon,
-  color,
-}: {
-  title: string;
-  value: number;
-  subtitle: string;
-  icon: string;
-  color: string;
-}) {
-  return (
-    <div className="bg-white rounded-xl border p-6">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-sm font-medium text-gray-600">{title}</span>
-        <div
-          className={`w-10 h-10 ${color} rounded-lg flex items-center justify-center text-white text-xl`}
+        <button
+          onClick={() => { setLoading(true); fetchData(); }}
+          className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1"
         >
-          {icon}
+          <span>↻</span> Refresh
+        </button>
+      </div>
+
+      {/* ── Stats Ribbon ─────────────────────────────────────────────── */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <MiniStat label="Cities" value={data.stats.totalCities} icon="🏙️" />
+        <MiniStat label="Places" value={data.stats.totalEstablishments} icon="📍" sub={`${data.stats.premiumListings} premium`} />
+        <MiniStat label="Users" value={data.stats.totalUsers} icon="👥" sub={`+${data.stats.newUsersThisWeek} this week`} />
+        <MiniStat label="Subscribers" value={data.subscribers.total} icon="📧" sub={`+${data.subscribers.newThisWeek} this week`} href="/admin/subscribers" />
+        <MiniStat label="Events" value={data.events.total} icon="📅" sub={`${data.events.upcoming} upcoming`} href="/admin/events" />
+        <MiniStat label="IG Posts" value={data.social.totalPublished} icon="📸" sub={`${data.social.contentRemaining} remaining`} href="/admin/social" />
+      </div>
+
+      {/* ── Action Items Row ─────────────────────────────────────────── */}
+      {totalActionItems > 0 && (
+        <div className="flex flex-wrap gap-3">
+          {data.events.pending > 0 && (
+            <ActionBadge count={data.events.pending} label="events to review" color="rose" href="#pending-events" />
+          )}
+          {data.social.unrepliedComments > 0 && (
+            <ActionBadge count={data.social.unrepliedComments} label="unreplied comments" color="blue" href="/admin/social" />
+          )}
+          {data.stats.pendingClaims > 0 && (
+            <ActionBadge count={data.stats.pendingClaims} label="pending claims" color="amber" href="/admin/claims" />
+          )}
+          {data.social.newOpportunities > 0 && (
+            <ActionBadge count={data.social.newOpportunities} label="engagement opportunities" color="green" href="/admin/social" />
+          )}
+        </div>
+      )}
+
+      {/* ── Main Grid ────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        {/* ── Left Column (2/3) ── */}
+        <div className="lg:col-span-2 space-y-6">
+
+          {/* Pending Events — Inline Approval */}
+          <section id="pending-events" className="bg-white rounded-xl border">
+            <div className="flex items-center justify-between p-5 border-b">
+              <div className="flex items-center gap-2">
+                <h2 className="font-semibold text-gray-900">Pending Events</h2>
+                {data.events.pending > 0 && (
+                  <span className="bg-rose-100 text-rose-700 text-xs font-bold px-2 py-0.5 rounded-full">{data.events.pending}</span>
+                )}
+              </div>
+              <Link href="/admin/events" className="text-sm text-orange-600 hover:text-orange-700">View all →</Link>
+            </div>
+            <div className="divide-y">
+              {data.pendingEventsData.length === 0 ? (
+                <div className="p-6 text-center text-gray-400 text-sm">No pending events — all caught up!</div>
+              ) : (
+                data.pendingEventsData.map(event => (
+                  <div key={event.id} className="p-4 flex items-start gap-4 hover:bg-gray-50 transition-colors">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-gray-900 truncate">{event.name}</p>
+                      <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-gray-500">
+                        <span>{(event.cities as { name: string })?.name}</span>
+                        <span>·</span>
+                        <span>{new Date(event.start_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                        {event.venue_name && <><span>·</span><span>{event.venue_name}</span></>}
+                        {event.source_handle && (
+                          <span className="bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">@{event.source_handle}</span>
+                        )}
+                        {event.discovery_score != null && (
+                          <span className="bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">{event.discovery_score}% match</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => handleEventAction(event.id, 'approve')}
+                        disabled={actioningEvent === event.id}
+                        className="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+                      >
+                        {actioningEvent === event.id ? '...' : 'Approve'}
+                      </button>
+                      <button
+                        onClick={() => handleEventAction(event.id, 'reject')}
+                        disabled={actioningEvent === event.id}
+                        className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-lg hover:bg-red-50 hover:text-red-600 disabled:opacity-50 transition-colors"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+
+          {/* Social & Content Pipeline */}
+          <section className="bg-white rounded-xl border">
+            <div className="flex items-center justify-between p-5 border-b">
+              <h2 className="font-semibold text-gray-900">Content & Social</h2>
+              <Link href="/admin/social" className="text-sm text-orange-600 hover:text-orange-700">Open Command Center →</Link>
+            </div>
+
+            {/* Pipeline Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-100">
+              <PipelineStat label="Published" value={data.social.totalPublished} icon="✅" />
+              <PipelineStat label="Content Left" value={data.social.contentRemaining} icon="📝" warn={data.social.contentRemaining < 20} />
+              <PipelineStat label="Engagement Queue" value={data.social.newOpportunities} icon="💬" />
+              <PipelineStat label="Unreplied" value={data.social.unrepliedComments} icon="🔔" warn={data.social.unrepliedComments > 0} />
+            </div>
+
+            {/* Recent Posts */}
+            <div className="p-4">
+              <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-3">Recent Posts</p>
+              {data.social.recentPosts.length === 0 ? (
+                <p className="text-sm text-gray-400">No posts yet</p>
+              ) : (
+                <div className="space-y-2">
+                  {data.social.recentPosts.map(post => (
+                    <div key={post.id} className="flex items-center gap-3 text-sm">
+                      <span className={`w-2 h-2 rounded-full shrink-0 ${post.status === 'published' ? 'bg-green-500' : 'bg-red-400'}`} />
+                      <span className="text-gray-700 truncate flex-1">{post.headline || 'Untitled'}</span>
+                      <span className="text-gray-400 text-xs shrink-0">{post.city}</span>
+                      {post.status === 'published' && (
+                        <span className="text-gray-400 text-xs shrink-0">
+                          {post.likes || 0}❤️ {post.comments_count || 0}💬
+                        </span>
+                      )}
+                      {post.status === 'failed' && (
+                        <span className="text-red-400 text-xs shrink-0">Failed</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+              {data.social.lastPostDate && (
+                <p className="text-xs text-gray-400 mt-3">
+                  Last post: {timeAgo(data.social.lastPostDate)}
+                </p>
+              )}
+            </div>
+          </section>
+        </div>
+
+        {/* ── Right Column (1/3) ── */}
+        <div className="space-y-6">
+
+          {/* Quick Navigation */}
+          <section className="bg-white rounded-xl border p-5">
+            <h2 className="font-semibold text-gray-900 mb-3">Quick Actions</h2>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { label: 'Events', href: '/admin/events', icon: '📅', count: data.events.pending },
+                { label: 'Social', href: '/admin/social', icon: '📱', count: data.social.unrepliedComments },
+                { label: 'Claims', href: '/admin/claims', icon: '✅', count: data.stats.pendingClaims },
+                { label: 'Photos', href: '/admin/photos', icon: '📸' },
+                { label: 'Analytics', href: '/admin/analytics', icon: '📈' },
+                { label: 'Health', href: '/admin/health', icon: '🏥' },
+                { label: 'Users', href: '/admin/users', icon: '👥' },
+                { label: 'Settings', href: '/admin/settings', icon: '⚙️' },
+              ].map(action => (
+                <Link
+                  key={action.href}
+                  href={action.href}
+                  className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+                >
+                  <span className="text-lg">{action.icon}</span>
+                  <span className="text-gray-700 font-medium">{action.label}</span>
+                  {action.count ? (
+                    <span className="ml-auto bg-orange-100 text-orange-700 text-xs font-bold px-1.5 py-0.5 rounded-full">{action.count}</span>
+                  ) : null}
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          {/* Subscriber Snapshot */}
+          <section className="bg-white rounded-xl border p-5">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="font-semibold text-gray-900">Subscribers</h2>
+            </div>
+            <div className="flex items-baseline gap-2 mb-1">
+              <span className="text-3xl font-bold text-gray-900">{data.subscribers.total}</span>
+              <span className="text-sm text-gray-500">active</span>
+            </div>
+            {data.subscribers.newThisWeek > 0 && (
+              <p className="text-sm text-green-600 font-medium">+{data.subscribers.newThisWeek} this week</p>
+            )}
+            {data.subscribers.total === 0 && (
+              <p className="text-sm text-gray-400 mt-1">Newsletter signups will appear here</p>
+            )}
+          </section>
+
+          {/* Events Summary */}
+          <section className="bg-white rounded-xl border p-5">
+            <h2 className="font-semibold text-gray-900 mb-3">Events Overview</h2>
+            <div className="space-y-2">
+              <OverviewRow label="Pending Review" value={data.events.pending} highlight={data.events.pending > 0} />
+              <OverviewRow label="Upcoming" value={data.events.upcoming} />
+              <OverviewRow label="Total Events" value={data.events.total} />
+            </div>
+          </section>
+
+          {/* Platform Overview */}
+          <section className="bg-white rounded-xl border p-5">
+            <h2 className="font-semibold text-gray-900 mb-3">Platform</h2>
+            <div className="space-y-2">
+              <OverviewRow label="Active Cities" value={data.stats.totalCities} />
+              <OverviewRow label="Establishments" value={data.stats.totalEstablishments} />
+              <OverviewRow label="Premium Listings" value={data.stats.premiumListings} />
+              <OverviewRow label="Registered Users" value={data.stats.totalUsers} />
+              <OverviewRow label="New Users (7d)" value={data.stats.newUsersThisWeek} />
+            </div>
+          </section>
         </div>
       </div>
-      <p className="text-3xl font-bold text-gray-900">{value}</p>
-      <p className="text-sm text-gray-500">{subtitle}</p>
     </div>
   );
 }
 
-function ActivityRow({ activity }: { activity: Activity }) {
-  const getActivityIcon = (eventType: string) => {
-    const icons: Record<string, string> = {
-      page_view: '👁️',
-      establishment_view: '📍',
-      search: '🔍',
-      claim_submitted: '✅',
-      user_signup: '👤',
-      review_added: '⭐',
-    };
-    return icons[eventType] || '📝';
+// ── Helper Components ────────────────────────────────────────────────────────
+
+function MiniStat({ label, value, icon, sub, href }: {
+  label: string; value: number; icon: string; sub?: string; href?: string;
+}) {
+  const inner = (
+    <div className={`bg-white rounded-xl border p-4 ${href ? 'hover:shadow-sm transition-shadow cursor-pointer' : ''}`}>
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-xs font-medium text-gray-500">{label}</span>
+        <span className="text-base">{icon}</span>
+      </div>
+      <p className="text-2xl font-bold text-gray-900">{value}</p>
+      {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
+    </div>
+  );
+  return href ? <Link href={href}>{inner}</Link> : inner;
+}
+
+function ActionBadge({ count, label, color, href }: {
+  count: number; label: string; color: string; href: string;
+}) {
+  const colors: Record<string, string> = {
+    rose: 'bg-rose-50 text-rose-700 border-rose-200',
+    blue: 'bg-blue-50 text-blue-700 border-blue-200',
+    amber: 'bg-amber-50 text-amber-700 border-amber-200',
+    green: 'bg-green-50 text-green-700 border-green-200',
   };
-
-  const getActivityLabel = (eventType: string) => {
-    const labels: Record<string, string> = {
-      page_view: 'Page viewed',
-      establishment_view: 'Establishment viewed',
-      search: 'Search performed',
-      claim_submitted: 'Claim submitted',
-      user_signup: 'User signed up',
-      review_added: 'Review added',
-    };
-    return labels[eventType] || 'Activity';
-  };
-
-  const timeAgo = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-
-    if (seconds < 60) return 'just now';
-    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-    return `${Math.floor(seconds / 86400)}d ago`;
-  };
-
   return (
-    <div className="flex items-start gap-3">
-      <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-lg">
-        {getActivityIcon(activity.event_type)}
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-gray-900">
-          {getActivityLabel(activity.event_type)}
-        </p>
-        <p className="text-xs text-gray-400">{timeAgo(activity.created_at)}</p>
-      </div>
-    </div>
+    <Link href={href} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-sm font-medium ${colors[color] || colors.blue}`}>
+      <span className="font-bold">{count}</span> {label}
+    </Link>
   );
 }
 
-function OverviewItem({
-  label,
-  value,
-  icon,
-}: {
-  label: string;
-  value: number;
-  icon: string;
+function PipelineStat({ label, value, icon, warn }: {
+  label: string; value: number; icon: string; warn?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-      <div className="flex items-center gap-2">
-        <span className="text-lg">{icon}</span>
-        <span className="text-sm font-medium text-gray-700">{label}</span>
-      </div>
-      <span className="text-lg font-bold text-gray-900">{value}</span>
+    <div className="bg-white p-4 text-center">
+      <span className="text-lg">{icon}</span>
+      <p className={`text-xl font-bold ${warn ? 'text-orange-600' : 'text-gray-900'}`}>{value}</p>
+      <p className="text-xs text-gray-500">{label}</p>
     </div>
   );
+}
+
+function OverviewRow({ label, value, highlight }: {
+  label: string; value: number; highlight?: boolean;
+}) {
+  return (
+    <div className="flex items-center justify-between py-1">
+      <span className="text-sm text-gray-600">{label}</span>
+      <span className={`text-sm font-bold ${highlight ? 'text-orange-600' : 'text-gray-900'}`}>{value}</span>
+    </div>
+  );
+}
+
+function timeAgo(dateString: string): string {
+  const seconds = Math.floor((Date.now() - new Date(dateString).getTime()) / 1000);
+  if (seconds < 60) return 'just now';
+  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+  return `${Math.floor(seconds / 86400)}d ago`;
 }
