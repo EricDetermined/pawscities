@@ -66,6 +66,7 @@ export default function CreativeReviewPage() {
   const [actioningId, setActioningId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [editingCaption, setEditingCaption] = useState<{ id: string; caption: string } | null>(null);
+  const [editingDate, setEditingDate] = useState<{ id: string; date: string } | null>(null);
 
   const fetchItems = useCallback(async () => {
     try {
@@ -142,6 +143,12 @@ export default function CreativeReviewPage() {
     if (!editingCaption) return;
     await handleAction(editingCaption.id, 'edit', { caption: editingCaption.caption });
     setEditingCaption(null);
+  };
+
+  const handleSaveDate = async () => {
+    if (!editingDate) return;
+    await handleAction(editingDate.id, 'edit', { scheduled_for: editingDate.date });
+    setEditingDate(null);
   };
 
   // ── Render ────────────────────────────────────────────────────────────────
@@ -259,9 +266,38 @@ export default function CreativeReviewPage() {
                       {item.scheduled_for && (
                         <>
                           <span className="text-xs text-gray-400">·</span>
-                          <span className="text-xs text-gray-500">
-                            📅 {new Date(item.scheduled_for + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                          </span>
+                          {editingDate?.id === item.id ? (
+                            <span className="inline-flex items-center gap-1">
+                              <input
+                                type="date"
+                                value={editingDate.date}
+                                onChange={e => setEditingDate({ ...editingDate, date: e.target.value })}
+                                className="text-xs border rounded px-1.5 py-0.5"
+                              />
+                              <button
+                                onClick={handleSaveDate}
+                                className="text-xs text-green-600 hover:text-green-700 font-medium"
+                              >
+                                ✓
+                              </button>
+                              <button
+                                onClick={() => setEditingDate(null)}
+                                className="text-xs text-gray-400 hover:text-gray-600"
+                              >
+                                ✗
+                              </button>
+                            </span>
+                          ) : (
+                            <button
+                              onClick={() => item.status === 'pending_review' || item.status === 'approved'
+                                ? setEditingDate({ id: item.id, date: item.scheduled_for! })
+                                : undefined}
+                              className={`text-xs ${item.status === 'pending_review' || item.status === 'approved' ? 'text-gray-500 hover:text-orange-600 hover:underline cursor-pointer' : 'text-gray-500 cursor-default'}`}
+                              title={item.status === 'pending_review' || item.status === 'approved' ? 'Click to change date' : ''}
+                            >
+                              📅 {new Date(item.scheduled_for + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                            </button>
+                          )}
                         </>
                       )}
                     </div>
