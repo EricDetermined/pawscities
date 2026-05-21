@@ -2,8 +2,7 @@ import { ImageResponse } from 'next/og';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { CONTENT_BANK, CITY_META } from '@/lib/social-content';
-
-function getCronSecret() { return process.env.CRON_SECRET; }
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 function getSupabaseAdmin() {
   return createClient(
@@ -33,14 +32,14 @@ const CITY_BACKGROUNDS: Record<string, string> = {
 };
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get('secret');
-  const index = searchParams.get('index');
-  const preview = searchParams.get('preview') === 'true';
-
-  if (secret !== getCronSecret()) {
+  // Auth: accept both verifyCronAuth (header/query) and legacy ?secret= param
+  if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  const { searchParams } = new URL(request.url);
+  const index = searchParams.get('index');
+  const preview = searchParams.get('preview') === 'true';
 
   const factIndex = index ? parseInt(index) : 0;
   const fact = CONTENT_BANK[factIndex];
@@ -159,7 +158,7 @@ export async function GET(request: NextRequest) {
                   letterSpacing: '2px',
                 }}
               >
-                {fact.type === 'did-you-know' ? 'Did You Know?' : 'Pro Tip'}
+                {fact.type === 'did-you-know' ? 'Did You Know?' : fact.type === 'tip' ? 'Pro Tip' : fact.type === 'spotlight' ? 'Local Spotlight' : fact.type === 'event' ? 'Don\'t Miss' : fact.type === 'guide' ? 'Dog-Friendly Guide' : fact.type === 'fun' ? 'Dog Life' : 'Did You Know?'}
               </span>
             </div>
 

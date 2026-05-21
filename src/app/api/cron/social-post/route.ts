@@ -324,13 +324,13 @@ export async function GET(request: NextRequest) {
     }
 
     // ══════════════════════════════════════════════════════════════════════════
-    // PRIORITY 2: Content bank with branded creatives ONLY
-    // No events to post — fall back to content bank items that have a
-    // pre-stored branded creative in Supabase Storage. If no creative
-    // exists for an item, skip it entirely. NEVER use Google Places photos.
+    // PRIORITY 2: Content bank — generate branded creative on the fly
+    // No events to post — fall back to content bank items. Creatives are
+    // generated dynamically via /api/social/generate-creative (same approach
+    // as event creatives). No pre-stored files required.
     // ══════════════════════════════════════════════════════════════════════════
 
-    console.log('[CONTENT] No unposted events found, checking content bank with branded creatives...');
+    console.log('[CONTENT] No unposted events found, generating content bank post...');
 
     const fact = pickNextContent(postedHeadlines);
     if (!fact) {
@@ -341,98 +341,84 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Check for a pre-generated branded creative in Supabase Storage
     const factIndex = CONTENT_BANK.indexOf(fact);
-    let imageUrl = '';
+    const cityMeta = CITY_META[fact.city];
+    console.log(`[CONTENT] Selected: "${fact.headline}" (${cityMeta?.name || fact.city}, index ${factIndex})`);
 
-    if (factIndex >= 0) {
-      try {
-        const prefix = `${fact.city}-${factIndex}-`;
-        const { data: files } = await supabase.storage
-          .from('photos')
-          .list('social-creatives', {
-            search: prefix,
-            limit: 1,
-          });
+    // ── Step 1: Generate branded creative on the fly ─────────────────────
+    const creativeUrl = `${getBaseUrl()}/api/social/generate-creative?index=${factIndex}&preview=true&secret=${process.env.CRON_SECRET}`;
+    console.log(`[CONTENT] Generating creative for "${fact.headline}"...`);
 
-        if (files && files.length > 0) {
-          const { data: urlData } = supabase.storage
-            .from('photos')
-            .getPublicUrl(`social-creatives/${files[0].name}`);
-
-          if (urlData?.publicUrl) {
-            const testRes = await fetch(urlData.publicUrl, { method: 'HEAD' });
-            if (testRes.ok) {
-              imageUrl = urlData.publicUrl;
-              console.log(`[CONTENT] Using stored branded creative "${files[0].name}" for "${fact.headline}"`);
-            }
-          }
-        }
-      } catch (err) {
-        console.error('[CONTENT] Error checking for branded creative:', err);
-      }
-    }
-
-    // If no branded creative exists, skip this item and try the next ones
-    if (!imageUrl) {
-      console.log(`[CONTENT] No branded creative for "${fact.headline}" — searching for another item with a creative...`);
-
-      // Try remaining content bank items in order
-      const tempPosted = new Set(postedHeadlines);
-      tempPosted.add(fact.headline); // Skip the one we just tried
-
-      let fallbackFact = pickNextContent(tempPosted);
-      while (fallbackFact && !imageUrl) {
-        const fbIndex = CONTENT_BANK.indexOf(fallbackFact);
-        if (fbIndex >= 0) {
-          try {
-            const prefix = `${fallbackFact.city}-${fbIndex}-`;
-            const { data: files } = await supabase.storage
-              .from('photos')
-              .list('social-creatives', {
-                search: prefix,
-                limit: 1,
-              });
-
-            if (files && files.length > 0) {
-              const { data: urlData } = supabase.storage
-                .from('photos')
-                .getPublicUrl(`social-creatives/${files[0].name}`);
-
-              if (urlData?.publicUrl) {
-                const testRes = await fetch(urlData.publicUrl, { method: 'HEAD' });
-                if (testRes.ok) {
-                  imageUrl = urlData.publicUrl;
-                  console.log(`[CONTENT] Found branded creative "${files[0].name}" for fallback "${fallbackFact.headline}"`);
-                  // Use this fact instead
-                  break;
-                }
-              }
-            }
-          } catch {
-            // Continue searching
-          }
-        }
-
-        tempPosted.add(fallbackFact.headline);
-        fallbackFact = pickNextContent(tempPosted);
-      }
-
-      // If we found a fallback with a creative, use it
-      if (imageUrl && fallbackFact) {
-        // Reassign to the fallback fact that has a creative
-        return await publishContentPost(supabase, fallbackFact, imageUrl, postedHeadlines, totalPosted, dryRun);
-      }
-
-      // No content bank items have branded creatives — nothing to post
-      return NextResponse.json({
-        status: 'no_creative',
-        message: 'No events to post and no content bank items have branded creatives. Generate creatives via the admin dashboard.',
-        totalPosted,
+    const creativeRes = await fetch(creativeUrl);
+    if (!creativeRes.ok) {
+      const errText = await creativeRes.text();
+      console.error(`[CONTENT] Creative generation failed (${creativeRes.status}):`, errText);
+      await supabase.from('social_posts').insert({
+        platform: 'instagram',
+        headline: fact.headline,
+        city: fact.city,
+        caption: '',
+        status: 'failed',
+        error_message: `Creative generation failed: HTTP ${creativeRes.status}`,
       });
+      return NextResponse.json({
+        status: 'error',
+        error: `Failed to generate content creative: HTTP ${creativeRes.status}`,
+      }, { status: 500 });
     }
 
-    // We have a branded creative for the primary fact — publish it
+    // ── Step 2: Upload creative to Supabase Storage ──────────────────────
+    const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
+    const storagePath = `instagram-posts/${fact.city}-content-${factIndex}-${Date.now()}.png`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('photos')
+      .upload(storagePath, imgBuffer, {
+        contentType: 'image/png',
+        upsert: true,
+      });
+
+    if (uploadError) {
+      console.error('[CONTENT] Supabase upload error:', uploadError);
+      await supabase.from('social_posts').insert({
+        platform: 'instagram',
+        headline: fact.headline,
+        city: fact.city,
+        caption: '',
+        status: 'failed',
+        error_message: `Storage upload failed: ${uploadError.message}`,
+      });
+      return NextResponse.json({
+        status: 'error',
+        error: `Failed to upload content creative: ${uploadError.message}`,
+      }, { status: 500 });
+    }
+
+    // ── Step 3: Get public URL ───────────────────────────────────────────
+    const { data: publicUrlData } = supabase.storage
+      .from('photos')
+      .getPublicUrl(storagePath);
+
+    const imageUrl = publicUrlData?.publicUrl;
+    if (!imageUrl) {
+      return NextResponse.json({
+        status: 'error',
+        error: 'Failed to get public URL for uploaded creative',
+      }, { status: 500 });
+    }
+
+    // Verify the image is accessible
+    const verifyRes = await fetch(imageUrl, { method: 'HEAD' });
+    if (!verifyRes.ok) {
+      return NextResponse.json({
+        status: 'error',
+        error: `Uploaded creative not accessible: HTTP ${verifyRes.status}`,
+      }, { status: 500 });
+    }
+
+    console.log(`[CONTENT] Creative ready: ${imageUrl}`);
+
+    // ── Step 4: Publish ──────────────────────────────────────────────────
     return await publishContentPost(supabase, fact, imageUrl, postedHeadlines, totalPosted, dryRun);
 
   } catch (error) {
