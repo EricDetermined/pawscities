@@ -3,6 +3,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 
+/* ──────────────── Helpers ──────────────── */
+
+/** Ensure a URL has a protocol prefix so it doesn't become a relative link */
+function ensureUrl(url: string | null | undefined): string {
+  if (!url) return '#';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return `https://${url}`;
+}
+
 /* ──────────────── Types ──────────────── */
 
 interface EventDraft {
@@ -399,7 +408,7 @@ export default function SocialCommandCenter() {
                             </span>
                           </label>
                           <a
-                            href={draft.sourcePostUrl || `https://instagram.com/${draft.sourceHandle.replace('@', '')}`}
+                            href={draft.sourcePostUrl ? ensureUrl(draft.sourcePostUrl) : `https://instagram.com/${draft.sourceHandle.replace('@', '')}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={`text-xs border px-2.5 py-1 rounded-lg font-medium ${replyDone ? 'text-green-600 border-green-300 hover:bg-green-100' : 'text-purple-600 border-purple-300 hover:bg-purple-100'}`}
@@ -641,7 +650,7 @@ export default function SocialCommandCenter() {
 
                 <div className="flex items-center gap-3">
                   {item.sourcePostUrl ? (
-                    <a href={item.sourcePostUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-600 hover:underline font-medium">
+                    <a href={ensureUrl(item.sourcePostUrl)} target="_blank" rel="noopener noreferrer" className="text-sm text-purple-600 hover:underline font-medium">
                       Open Source Post →
                     </a>
                   ) : (
