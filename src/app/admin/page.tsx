@@ -297,6 +297,7 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-2 gap-2">
               {[
                 { label: 'Events', href: '/admin/events', icon: '📅', count: data.events.pending },
+                { label: 'Creatives', href: '/admin/creatives', icon: '🎨' },
                 { label: 'Social', href: '/admin/social', icon: '📱', count: data.social.unrepliedComments },
                 { label: 'Claims', href: '/admin/claims', icon: '✅', count: data.stats.pendingClaims },
                 { label: 'Photos', href: '/admin/photos', icon: '📸' },

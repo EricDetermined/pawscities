@@ -100,6 +100,144 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });
     }
 
+    // ══════════════════════════════════════════════════════════════════════════
+    // PRIORITY 0: Approved creatives from the review queue
+    // These are mascot-driven (Buster & Marley) posts that have been
+    // reviewed and approved in /admin/creatives.
+    // ══════════════════════════════════════════════════════════════════════════
+
+    const today = new Date().toISOString().split('T')[0];
+
+    const { data: approvedCreatives } = await supabase
+      .from('creative_queue')
+      .select('*')
+      .eq('status', 'approved')
+      .lte('scheduled_for', today)
+      .order('scheduled_for', { ascending: true })
+      .limit(1);
+
+    const nextCreative = approvedCreatives?.[0];
+    if (nextCreative) {
+      console.log(`[CREATIVE] Posting approved creative: "${nextCreative.headline}" by ${nextCreative.narrator}`);
+
+      let imageUrl = nextCreative.image_url;
+
+      // If no pre-generated image, fall back to next/og creative
+      if (!imageUrl) {
+        if (nextCreative.content_type === 'content_bank' && nextCreative.content_index != null) {
+          const creativeUrl = `${getBaseUrl()}/api/social/generate-creative?index=${nextCreative.content_index}&preview=true&secret=${process.env.CRON_SECRET}`;
+          const creativeRes = await fetch(creativeUrl);
+          if (creativeRes.ok) {
+            const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
+            const storagePath = `instagram-posts/${nextCreative.city}-mascot-${Date.now()}.png`;
+            const { error: uploadError } = await supabase.storage
+              .from('photos')
+              .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+
+            if (!uploadError) {
+              const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+              imageUrl = urlData?.publicUrl || null;
+            }
+          }
+        } else if (nextCreative.content_type === 'event' && nextCreative.event_id) {
+          // Fetch event and generate event creative
+          const { data: event } = await supabase
+            .from('events')
+            .select('*, cities(slug, name)')
+            .eq('id', nextCreative.event_id)
+            .single();
+
+          if (event) {
+            const creativeParams = new URLSearchParams({
+              name: event.name,
+              city: event.cities?.name || 'City',
+              citySlug: event.cities?.slug || 'losangeles',
+              date: event.start_date,
+            });
+            if (event.venue_name) creativeParams.set('venue', event.venue_name);
+            const creativeRes = await fetch(`${getBaseUrl()}/api/social/event-creative?${creativeParams}`);
+            if (creativeRes.ok) {
+              const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
+              const storagePath = `instagram-posts/${nextCreative.city}-event-mascot-${Date.now()}.png`;
+              const { error: uploadError } = await supabase.storage
+                .from('photos')
+                .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+              if (!uploadError) {
+                const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+                imageUrl = urlData?.publicUrl || null;
+              }
+            }
+          }
+        }
+      }
+
+      if (!imageUrl) {
+        // Mark as failed and move on to next priority
+        await supabase.from('creative_queue')
+          .update({ status: 'failed', error_message: 'Could not generate image' })
+          .eq('id', nextCreative.id);
+        console.log(`[CREATIVE] Failed to generate image for "${nextCreative.headline}", falling through...`);
+      } else {
+        // Verify image accessible
+        const verifyRes = await fetch(imageUrl, { method: 'HEAD' });
+        if (!verifyRes.ok) {
+          await supabase.from('creative_queue')
+            .update({ status: 'failed', error_message: `Image not accessible: HTTP ${verifyRes.status}` })
+            .eq('id', nextCreative.id);
+        } else if (dryRun) {
+          return NextResponse.json({
+            status: 'dry_run',
+            type: 'creative_queue',
+            headline: nextCreative.headline,
+            narrator: nextCreative.narrator,
+            city: nextCreative.city,
+            imageUrl,
+            caption: nextCreative.caption,
+          });
+        } else {
+          // Publish to Instagram
+          const result = await publishImagePost(imageUrl, nextCreative.caption);
+
+          // Log to social_posts
+          const { data: postRow } = await supabase.from('social_posts').insert({
+            platform: 'instagram',
+            post_id: result.postId || null,
+            container_id: result.containerId || null,
+            headline: nextCreative.headline,
+            city: nextCreative.city,
+            caption: nextCreative.caption,
+            image_url: imageUrl,
+            status: result.success ? 'published' : 'failed',
+            error_message: result.error || null,
+          }).select('id').single();
+
+          // Update creative queue status
+          await supabase.from('creative_queue')
+            .update({
+              status: result.success ? 'posted' : 'failed',
+              posted_at: result.success ? new Date().toISOString() : null,
+              social_post_id: postRow?.id || null,
+              image_url: imageUrl,
+              error_message: result.error || null,
+            })
+            .eq('id', nextCreative.id);
+
+          if (result.success) {
+            return NextResponse.json({
+              status: 'published',
+              type: 'creative_queue',
+              postId: result.postId,
+              headline: nextCreative.headline,
+              narrator: nextCreative.narrator,
+              city: nextCreative.city,
+            });
+          }
+          // If failed, fall through to next priority
+          console.log(`[CREATIVE] Instagram publish failed: ${result.error}`);
+        }
+      }
+    }
+
     // ── Load posting history ──────────────────────────────────────────────────
     const { data: publishedPosts } = await supabase
       .from('social_posts')
@@ -134,7 +272,6 @@ export async function GET(request: NextRequest) {
     // PRIORITY 1: Events
     // ══════════════════════════════════════════════════════════════════════════
 
-    const today = new Date().toISOString().split('T')[0];
     const lookahead = new Date();
     lookahead.setDate(lookahead.getDate() + EVENT_LOOKAHEAD_DAYS);
     const lookaheadDate = lookahead.toISOString().split('T')[0];
