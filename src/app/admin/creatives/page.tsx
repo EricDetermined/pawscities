@@ -281,6 +281,14 @@ export default function CreativeReviewPage() {
                           {isActioning ? '...' : '✓ Approve'}
                         </button>
                         <button
+                          onClick={() => handleAction(item.id, 'regenerate')}
+                          disabled={isActioning}
+                          className="px-3 py-1.5 bg-orange-100 text-orange-700 text-xs font-medium rounded-lg hover:bg-orange-200 disabled:opacity-50"
+                          title="Generate a new image with DALL-E"
+                        >
+                          🔄
+                        </button>
+                        <button
                           onClick={() => handleAction(item.id, 'reject')}
                           disabled={isActioning}
                           className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-lg hover:bg-red-50 hover:text-red-600 disabled:opacity-50"

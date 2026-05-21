@@ -6,6 +6,7 @@ import {
   generateCaption,
   pickNextContent,
 } from '@/lib/social-content';
+import { generateAndUploadMascotImage, generateCharacterCaption } from '@/lib/dalle';
 
 // ─── Supabase Admin ────────────────────────────────────────────────────────────
 
@@ -166,6 +167,8 @@ export async function POST(request: NextRequest) {
     const generated: { headline: string; city: string; narrator: string }[] = [];
     const combined = new Set([...postedHeadlines, ...queuedHeadlines]);
 
+    const hasOpenAI = !!process.env.OPENAI_API_KEY;
+
     for (let i = 0; i < count; i++) {
       const fact = pickNextContent(combined);
       if (!fact) break;
@@ -173,13 +176,39 @@ export async function POST(request: NextRequest) {
       combined.add(fact.headline);
       const factIndex = CONTENT_BANK.indexOf(fact);
       const narrator = assignNarrator(fact.type);
-      const caption = rewriteCaption(fact, narrator);
       const imagePrompt = buildImagePrompt(fact, narrator);
+      const cityMeta = CITY_META[fact.city];
 
       // Determine scheduled date (today + i days)
       const schedDate = new Date();
       schedDate.setDate(schedDate.getDate() + i);
       const scheduledFor = schedDate.toISOString().split('T')[0];
+
+      // Try GPT-4o for character-voice caption, fall back to template
+      let caption: string;
+      if (hasOpenAI) {
+        const aiCaption = await generateCharacterCaption(
+          narrator as 'buster' | 'marley' | 'both',
+          fact.headline,
+          fact.body,
+          cityMeta?.name || fact.city,
+          cityMeta?.slug || fact.city,
+          fact.type,
+        );
+        caption = aiCaption || rewriteCaption(fact, narrator);
+      } else {
+        caption = rewriteCaption(fact, narrator);
+      }
+
+      // Try DALL-E 3 for mascot image
+      let imageUrl: string | null = null;
+      if (hasOpenAI) {
+        const storagePath = `mascot-creatives/${fact.city}-${narrator}-${factIndex}-${Date.now()}.png`;
+        const dalleResult = await generateAndUploadMascotImage(imagePrompt, storagePath);
+        if (dalleResult) {
+          imageUrl = dalleResult.publicUrl;
+        }
+      }
 
       const { error: insertError } = await supabase.from('creative_queue').insert({
         content_type: 'content_bank',
@@ -188,11 +217,12 @@ export async function POST(request: NextRequest) {
         city: fact.city,
         headline: fact.headline,
         caption,
+        image_url: imageUrl,
         image_prompt: imagePrompt,
         format: 'city_card',
         status: 'pending_review',
         scheduled_for: scheduledFor,
-        generation_model: process.env.OPENAI_API_KEY ? 'dall-e-3' : 'next-og',
+        generation_model: hasOpenAI ? 'dall-e-3' : 'next-og',
       });
 
       if (!insertError) {
@@ -204,6 +234,7 @@ export async function POST(request: NextRequest) {
       success: true,
       generated: generated.length,
       items: generated,
+      model: hasOpenAI ? 'dall-e-3 + gpt-4o-mini' : 'template (no OpenAI key)',
     });
   }
 
@@ -307,6 +338,39 @@ export async function PATCH(request: NextRequest) {
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json({ success: true, updated: Object.keys(updates) });
+  }
+
+  // ── Regenerate image ────────────────────────────────────────────────────────
+  if (action === 'regenerate') {
+    if (!process.env.OPENAI_API_KEY) {
+      return NextResponse.json({ error: 'No OPENAI_API_KEY configured' }, { status: 400 });
+    }
+
+    // Fetch the creative to get its prompt
+    const { data: creative } = await supabase
+      .from('creative_queue')
+      .select('image_prompt, city, narrator, content_index')
+      .eq('id', id)
+      .single();
+
+    if (!creative?.image_prompt) {
+      return NextResponse.json({ error: 'No image prompt found' }, { status: 404 });
+    }
+
+    const storagePath = `mascot-creatives/${creative.city}-${creative.narrator}-regen-${Date.now()}.png`;
+    const dalleResult = await generateAndUploadMascotImage(creative.image_prompt, storagePath);
+
+    if (!dalleResult) {
+      return NextResponse.json({ error: 'DALL-E generation failed' }, { status: 500 });
+    }
+
+    const { error: updateError } = await supabase
+      .from('creative_queue')
+      .update({ image_url: dalleResult.publicUrl })
+      .eq('id', id);
+
+    if (updateError) return NextResponse.json({ error: updateError.message }, { status: 500 });
+    return NextResponse.json({ success: true, image_url: dalleResult.publicUrl });
   }
 
   // ── Approve all pending ──────────────────────────────────────────────────────
