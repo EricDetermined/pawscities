@@ -215,9 +215,7 @@ export default function AdminDashboard() {
                         {event.source_handle && (
                           <span className="bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">@{event.source_handle}</span>
                         )}
-                        {event.discovery_score != null && (
-                          <span className="bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">{event.discovery_score}% match</span>
-                        )}
+                        {/* discovery_score hidden — manual review makes it redundant */}
                       </div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
