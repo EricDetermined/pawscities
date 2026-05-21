@@ -222,7 +222,7 @@ export async function POST(request: NextRequest) {
         format: 'city_card',
         status: 'pending_review',
         scheduled_for: scheduledFor,
-        generation_model: hasOpenAI ? 'dall-e-3' : 'next-og',
+        generation_model: hasOpenAI ? 'gpt-image-1' : 'next-og',
       });
 
       if (!insertError) {
@@ -275,7 +275,7 @@ export async function POST(request: NextRequest) {
       format: 'event_post',
       status: 'pending_review',
       scheduled_for: event.start_date,
-      generation_model: process.env.OPENAI_API_KEY ? 'dall-e-3' : 'next-og',
+      generation_model: process.env.OPENAI_API_KEY ? 'gpt-image-1' : 'next-og',
     });
 
     if (insertError) {

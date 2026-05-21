@@ -20,8 +20,8 @@ function getSupabaseAdmin() {
 
 export async function generateMascotImage(
   prompt: string,
-  options?: { size?: '1024x1024' | '1792x1024' | '1024x1792'; quality?: 'standard' | 'hd' }
-): Promise<{ url: string; revised_prompt: string } | null> {
+  options?: { size?: '1024x1024' | '1792x1024' | '1024x1792'; quality?: 'low' | 'medium' | 'high' }
+): Promise<{ buffer: Buffer; revised_prompt: string } | null> {
   const openai = getOpenAI();
   if (!openai) {
     console.log('[DALLE] No OPENAI_API_KEY configured, skipping image generation');
@@ -30,23 +30,33 @@ export async function generateMascotImage(
 
   try {
     const response = await openai.images.generate({
-      model: 'dall-e-3',
+      model: 'gpt-image-1',
       prompt,
       n: 1,
       size: options?.size || '1024x1024',
-      quality: options?.quality || 'standard',
-      style: 'vivid',
+      quality: options?.quality || 'high',
     });
 
-    const imageUrl = response.data[0]?.url;
+    // gpt-image-1 returns base64 data
+    const b64 = response.data[0]?.b64_json;
     const revisedPrompt = response.data[0]?.revised_prompt || '';
 
-    if (!imageUrl) {
-      console.error('[DALLE] No image URL in response');
-      return null;
+    if (b64) {
+      return { buffer: Buffer.from(b64, 'base64'), revised_prompt: revisedPrompt };
     }
 
-    return { url: imageUrl, revised_prompt: revisedPrompt };
+    // Fallback: try URL-based response
+    const imageUrl = response.data[0]?.url;
+    if (imageUrl) {
+      const imgRes = await fetch(imageUrl);
+      if (imgRes.ok) {
+        const buf = Buffer.from(await imgRes.arrayBuffer());
+        return { buffer: buf, revised_prompt: revisedPrompt };
+      }
+    }
+
+    console.error('[DALLE] No image data in response');
+    return null;
   } catch (error) {
     console.error('[DALLE] Generation failed:', error);
     return null;
@@ -58,13 +68,13 @@ export async function generateMascotImage(
 export async function generateAndUploadMascotImage(
   prompt: string,
   storagePath: string,
-  options?: { size?: '1024x1024' | '1792x1024' | '1024x1792'; quality?: 'standard' | 'hd' }
+  options?: { size?: '1024x1024' | '1792x1024' | '1024x1792'; quality?: 'low' | 'medium' | 'high' }
 ): Promise<{ publicUrl: string; revised_prompt: string } | null> {
-  // Step 1: Generate with DALL-E
+  // Step 1: Generate image (returns buffer directly)
   const result = await generateMascotImage(prompt, options);
   if (!result) return null;
 
-  // Step 2: Download the generated image
+  // Step 2: Upload to Supabase Storage
   const supabase = getSupabaseAdmin();
   if (!supabase) {
     console.error('[DALLE] No Supabase client');
@@ -72,17 +82,9 @@ export async function generateAndUploadMascotImage(
   }
 
   try {
-    const imageRes = await fetch(result.url);
-    if (!imageRes.ok) {
-      console.error(`[DALLE] Failed to download generated image: HTTP ${imageRes.status}`);
-      return null;
-    }
-    const imageBuffer = Buffer.from(await imageRes.arrayBuffer());
-
-    // Step 3: Upload to Supabase Storage
     const { error: uploadError } = await supabase.storage
       .from('photos')
-      .upload(storagePath, imageBuffer, {
+      .upload(storagePath, result.buffer, {
         contentType: 'image/png',
         upsert: true,
       });
