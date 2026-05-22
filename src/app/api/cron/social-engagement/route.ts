@@ -18,7 +18,7 @@ export const maxDuration = 120; // 2 minutes — more work now with auto-replies
 
 // ─── Sentiment Classification ──────────────────────────────────────────────
 
-type Sentiment = 'positive' | 'question' | 'negative' | 'emoji_only' | 'spam' | 'neutral';
+type Sentiment = 'positive' | 'question' | 'negative' | 'emoji_only' | 'spam' | 'share_request' | 'neutral';
 
 function classifySentiment(text: string): Sentiment {
   const t = (text || '').trim();
@@ -31,6 +31,10 @@ function classifySentiment(text: string): Sentiment {
   // Spam signals
   if (/\b(dm me|check (my|our) (bio|page|profile)|free follow|click (the )?link|giveaway winner|make \$\d|earn money)\b/i.test(lower)) return 'spam';
   if ((lower.match(/@\w+/g) || []).length >= 3) return 'spam'; // Tagging spam
+
+  // Share/repost requests — typically engagement farming accounts
+  if (/\b(repost|re-post|share (this|on|it)|send (this|the) post|can we (share|repost|post)|dürfen wir das reposten|schick mir|send (it|this) to me|post (this|it) (on|to))\b/i.test(lower)) return 'share_request';
+  if (/share on\s*✨/i.test(lower)) return 'share_request';
 
   // Questions
   if (/\?/.test(t) || /\b(where|what|how|when|which|can you|do you|is this|are they|does it|is it)\b/i.test(lower)) return 'question';
@@ -70,6 +74,15 @@ const EMOJI_REPLIES = [
   '✨🐶🧡',
 ];
 
+const SHARE_REQUEST_REPLIES = [
+  'Thanks for the love! Feel free to share with credit to @thepawcities 🐾',
+  'Glad you like it! You\'re welcome to share — just tag us @thepawcities 🧡',
+  'Go for it! Just make sure to credit @thepawcities so others can find us 🐶',
+  'We appreciate the support! Share away with a tag to @thepawcities ✨🐾',
+  'Thanks for wanting to share! A credit/tag to @thepawcities is all we ask 🧡',
+  'That means a lot! Feel free to repost with credit to @thepawcities 🐕',
+];
+
 const NEUTRAL_REPLIES = [
   'Thanks for engaging with us! 🐾',
   'Appreciate you stopping by! 🧡',
@@ -81,7 +94,8 @@ function pickReply(sentiment: Sentiment, commentText: string): string | null {
   if (sentiment === 'question' || sentiment === 'negative' || sentiment === 'spam') return null;
 
   let pool: string[];
-  if (sentiment === 'emoji_only') pool = EMOJI_REPLIES;
+  if (sentiment === 'share_request') pool = SHARE_REQUEST_REPLIES;
+  else if (sentiment === 'emoji_only') pool = EMOJI_REPLIES;
   else if (sentiment === 'positive') pool = POSITIVE_REPLIES;
   else pool = NEUTRAL_REPLIES;
 
