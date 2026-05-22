@@ -106,7 +106,19 @@ interface PerformanceStats {
   contentRemaining: number;
 }
 
-type TabId = 'events' | 'engagement' | 'outreach' | 'invitations' | 'comments' | 'performance';
+interface CalendarItem {
+  id: string;
+  headline: string;
+  narrator: string;
+  city: string;
+  status: string;
+  scheduled_for: string | null;
+  image_url: string | null;
+  caption: string;
+  format: string;
+}
+
+type TabId = 'events' | 'engagement' | 'outreach' | 'invitations' | 'comments' | 'calendar' | 'performance';
 
 /* ──────────────── Helpers ──────────────── */
 
@@ -121,7 +133,7 @@ function copyToClipboard(text: string) {
 /* ──────────────── Component ──────────────── */
 
 export default function SocialCommandCenter() {
-  const [activeTab, setActiveTab] = useState<TabId>('events');
+  const [activeTab, setActiveTab] = useState<TabId>('calendar');
   const [loading, setLoading] = useState(true);
 
   // Data
@@ -132,6 +144,7 @@ export default function SocialCommandCenter() {
   const [comments, setComments] = useState<CommentItem[]>([]);
   const [posts, setPosts] = useState<PostItem[]>([]);
   const [perfStats, setPerfStats] = useState<PerformanceStats | null>(null);
+  const [calendarItems, setCalendarItems] = useState<CalendarItem[]>([]);
 
   // Action tracking
   const [actions, setActions] = useState<ActionRecord[]>([]);
@@ -150,7 +163,7 @@ export default function SocialCommandCenter() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [evRes, oppRes, outRes, invRes, comRes, perfRes, actRes] = await Promise.all([
+      const [evRes, oppRes, outRes, invRes, comRes, perfRes, actRes, calRes] = await Promise.all([
         fetch('/api/admin/social?type=event-drafts').then(r => r.json()),
         fetch('/api/admin/social?type=opportunities').then(r => r.json()),
         fetch('/api/admin/social?type=outreach').then(r => r.json()),
@@ -158,6 +171,7 @@ export default function SocialCommandCenter() {
         fetch('/api/admin/social?type=comments').then(r => r.json()),
         fetch('/api/admin/social?type=performance').then(r => r.json()),
         fetch('/api/admin/social?type=actions').then(r => r.json()),
+        fetch('/api/admin/creatives?limit=30').then(r => r.json()),
       ]);
       setEventDrafts(evRes.drafts || []);
       setOpportunities(oppRes.opportunities || []);
@@ -167,6 +181,7 @@ export default function SocialCommandCenter() {
       setPosts(perfRes.posts || []);
       setPerfStats(perfRes.stats || null);
       setActions(actRes.actions || []);
+      setCalendarItems(calRes.items || []);
     } catch (err) {
       console.error('Failed to fetch social data:', err);
     } finally {
@@ -285,7 +300,11 @@ export default function SocialCommandCenter() {
   const outreachPending = outreach.filter(o => !isActionDone('outreach_reply', o.id));
   const invitationsPending = invitations.filter(i => !isActionDone('invitation_dm', i.id));
 
+  const calendarUpcoming = calendarItems.filter(c => c.status === 'approved' || c.status === 'pending_review');
+  const calendarPosted = calendarItems.filter(c => c.status === 'posted');
+
   const tabs: { id: TabId; label: string; count?: number; icon: string }[] = [
+    { id: 'calendar', label: 'Content Calendar', count: calendarUpcoming.length, icon: '🗓️' },
     { id: 'events', label: 'Event Posts', count: eventsNeedingAction.length, icon: '📅' },
     { id: 'engagement', label: 'Engagement', count: pendingOpps.length, icon: '💬' },
     { id: 'outreach', label: 'Outreach', count: outreachPending.length, icon: '📣' },
@@ -312,7 +331,7 @@ export default function SocialCommandCenter() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Social Command Center</h1>
           <p className="text-sm text-gray-500 mt-1">
-            {eventsNeedingAction.length} events need action &middot; {outreachPending.length} outreach pending &middot; {invitationsPending.length} DMs to send &middot; {unrepliedComments.length} unreplied comments
+            {calendarUpcoming.length} posts scheduled &middot; {eventsNeedingAction.length} events need action &middot; {outreachPending.length} outreach pending &middot; {unrepliedComments.length} unreplied comments
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -343,6 +362,137 @@ export default function SocialCommandCenter() {
           </button>
         ))}
       </div>
+
+      {/* ═══════ CONTENT CALENDAR TAB ═══════ */}
+      {activeTab === 'calendar' && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 flex-1">
+              <p className="text-sm text-orange-800">
+                <strong>Buster &amp; Marley content pipeline</strong> — Approved posts auto-publish daily at 2PM UTC.
+                Review, edit captions, change dates, or regenerate images from here.
+              </p>
+            </div>
+            <Link
+              href="/admin/creatives"
+              className="ml-3 text-sm text-orange-600 hover:text-orange-700 border border-orange-200 px-3 py-1.5 rounded-lg hover:bg-orange-50 whitespace-nowrap"
+            >
+              Full Creative Review →
+            </Link>
+          </div>
+
+          {/* Status summary */}
+          {(() => {
+            const byStatus: Record<string, CalendarItem[]> = {};
+            calendarItems.forEach(item => {
+              if (!byStatus[item.status]) byStatus[item.status] = [];
+              byStatus[item.status].push(item);
+            });
+            const statusLabels: Record<string, { label: string; color: string }> = {
+              pending_review: { label: 'Pending Review', color: 'bg-orange-100 text-orange-700' },
+              approved: { label: 'Approved', color: 'bg-green-100 text-green-700' },
+              posted: { label: 'Posted', color: 'bg-blue-100 text-blue-700' },
+              rejected: { label: 'Rejected', color: 'bg-red-100 text-red-700' },
+              failed: { label: 'Failed', color: 'bg-red-100 text-red-700' },
+            };
+            return (
+              <div className="flex gap-3 flex-wrap">
+                {Object.entries(byStatus).map(([status, items]) => {
+                  const style = statusLabels[status] || { label: status, color: 'bg-gray-100 text-gray-700' };
+                  return (
+                    <span key={status} className={`px-3 py-1 rounded-full text-xs font-medium ${style.color}`}>
+                      {style.label}: {items.length}
+                    </span>
+                  );
+                })}
+              </div>
+            );
+          })()}
+
+          {calendarItems.length === 0 ? (
+            <EmptyState icon="🗓️" message="No scheduled content yet. Generate a batch from the Creative Review page." />
+          ) : (
+            <div className="space-y-3">
+              {calendarItems.map(item => {
+                const narratorStyles: Record<string, { emoji: string; color: string; name: string }> = {
+                  buster: { emoji: '🐕', color: 'bg-amber-100 text-amber-700', name: 'Buster' },
+                  marley: { emoji: '🐩', color: 'bg-blue-100 text-blue-700', name: 'Marley' },
+                  both: { emoji: '🐾', color: 'bg-purple-100 text-purple-700', name: 'Both' },
+                };
+                const n = narratorStyles[item.narrator] || narratorStyles.both;
+                const statusColors: Record<string, string> = {
+                  pending_review: 'text-orange-600',
+                  approved: 'text-green-600',
+                  posted: 'text-blue-600',
+                  rejected: 'text-red-500',
+                  failed: 'text-red-600',
+                };
+
+                return (
+                  <div key={item.id} className="bg-white rounded-xl border hover:shadow-sm transition-shadow p-4 flex items-start gap-4">
+                    {/* Thumbnail */}
+                    <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
+                      {item.image_url ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={item.image_url} alt={item.headline} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-2xl">{n.emoji}</span>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                        <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${n.color}`}>
+                          {n.emoji} {n.name}
+                        </span>
+                        <span className="text-xs text-gray-400">·</span>
+                        <span className="text-xs text-gray-500">{item.city}</span>
+                        <span className="text-xs text-gray-400">·</span>
+                        <span className={`text-xs font-medium ${statusColors[item.status] || 'text-gray-500'}`}>
+                          {item.status === 'pending_review' ? 'Review' : item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                        </span>
+                        {item.scheduled_for && (
+                          <>
+                            <span className="text-xs text-gray-400">·</span>
+                            <span className="text-xs text-gray-500">
+                              📅 {new Date(item.scheduled_for + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                      <p className="font-medium text-gray-900 text-sm truncate">{item.headline}</p>
+                      <p className="text-xs text-gray-500 line-clamp-1 mt-0.5">{item.caption.split('\n')[0]}</p>
+                    </div>
+
+                    {/* Quick actions */}
+                    <div className="flex items-center gap-2 shrink-0">
+                      {item.status === 'pending_review' && (
+                        <button
+                          onClick={async () => {
+                            await fetch('/api/admin/creatives', {
+                              method: 'PATCH',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ id: item.id, action: 'approve' }),
+                            });
+                            fetchData();
+                          }}
+                          className="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700"
+                        >
+                          ✓ Approve
+                        </button>
+                      )}
+                      {item.status === 'posted' && item.image_url && (
+                        <span className="text-xs text-blue-500 font-medium">✓ Live</span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* ═══════ EVENT POSTS TAB ═══════ */}
       {activeTab === 'events' && (
