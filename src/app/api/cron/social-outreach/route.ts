@@ -37,7 +37,7 @@ const ALL_HASHTAGS = [
   'pawcities',
 ];
 
-const HASHTAGS_PER_RUN = 6; // 6/day but many repeat across days, stays under 30 unique/week
+const HASHTAGS_PER_RUN = 4; // 4/day — stay well within Meta's rate limits
 
 interface HashtagMedia {
   id: string;
