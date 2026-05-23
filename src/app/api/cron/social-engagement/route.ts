@@ -33,8 +33,9 @@ function classifySentiment(text: string): Sentiment {
   if ((lower.match(/@\w+/g) || []).length >= 3) return 'spam'; // Tagging spam
 
   // Share/repost requests — typically engagement farming accounts
-  if (/\b(repost|re-post|share (this|on|it)|send (this|the) post|can we (share|repost|post)|dürfen wir das reposten|schick mir|send (it|this) to me|post (this|it) (on|to))\b/i.test(lower)) return 'share_request';
-  if (/share on\s*✨/i.test(lower)) return 'share_request';
+  if (/\b(repost|re-post|share (this|on|it)|send (this|the|me the) post|send (this|the) (post|beitrag)|can we (share|repost|post)|dürfen wir.*reposten|schick mir|send (it|this) to me|post (this|it) (on|to)|send this post please)\b/i.test(lower)) return 'share_request';
+  if (/share on\s*[✨@]/i.test(lower)) return 'share_request';
+  if (/send (this|the) post/i.test(lower)) return 'share_request';
 
   // Questions
   if (/\?/.test(t) || /\b(where|what|how|when|which|can you|do you|is this|are they|does it|is it)\b/i.test(lower)) return 'question';
