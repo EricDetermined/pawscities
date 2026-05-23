@@ -49,59 +49,91 @@ function classifySentiment(text: string): Sentiment {
   return 'neutral';
 }
 
-// ─── Auto-Reply Templates ──────────────────────────────────────────────────
-// Varied, natural responses — Instagram penalizes repetitive bot-like replies
+// ─── AI-Powered Reply Generation ──────────────────────────────────────────
+// Uses GPT-4o-mini to analyze each comment's full intent, tone, and context
+// then crafts a thoughtful, on-brand reply. No more template matching.
 
-const POSITIVE_REPLIES = [
-  'Thank you so much! 🐾 We love sharing the best dog-friendly spots!',
-  'You made our day! Thanks for the love 🧡',
-  'So glad you enjoyed this! More coming soon 🐶',
-  'Thanks for being part of our pack! 🐾✨',
-  'We appreciate you! Stay tuned for more dog-friendly discoveries 🌍',
-  'This means a lot — thank you! 🧡🐕',
-  'You\'re the best! Thanks for following along 🐾',
-  'Thank you! Our community is the best part of what we do 💛',
-  'Love hearing this! More pawsome content on the way 🐶',
-  'Thanks so much! Happy tails to you and your pup 🐕🧡',
-];
+const BRAND_CONTEXT = `You are the social media voice for @thepawcities — a platform helping dog owners discover dog-friendly places in cities worldwide (Paris, London, NYC, LA, Barcelona, Geneva, Sydney, Tokyo).
 
-const EMOJI_REPLIES = [
-  '🧡🐾',
-  '🐶✨ Thank you!',
-  '🐾💛',
-  '🧡🐕',
-  '🙌🐾',
-  '✨🐶🧡',
-];
+BRAND MASCOTS: Buster & Marley are animated characters inspired by the founder's real dogs.
+- Buster: a golden-tan mixed breed, the adventurer — enthusiastic, playful
+- Marley: a golden-apricot goldendoodle, the brains — calm, clever, witty
 
-const SHARE_REQUEST_REPLIES = [
-  'Thanks for the love! Feel free to share with credit to @thepawcities 🐾',
-  'Glad you like it! You\'re welcome to share — just tag us @thepawcities 🧡',
-  'Go for it! Just make sure to credit @thepawcities so others can find us 🐶',
-  'We appreciate the support! Share away with a tag to @thepawcities ✨🐾',
-  'Thanks for wanting to share! A credit/tag to @thepawcities is all we ask 🧡',
-  'That means a lot! Feel free to repost with credit to @thepawcities 🐕',
-];
+VOICE: Warm, genuine, community-focused. Not corporate. Like talking to a fellow dog lover.
 
-const NEUTRAL_REPLIES = [
-  'Thanks for engaging with us! 🐾',
-  'Appreciate you stopping by! 🧡',
-  'Thanks for being part of the Paw Cities community! 🐶',
-];
+REPLY RULES:
+- Read the comment carefully. Understand the FULL intent, emotion, and subtext — not just keywords.
+- Match the energy of the comment. Short casual comments get short replies. Thoughtful comments get thoughtful replies.
+- If someone is skeptical, critical, or sarcastic, NEVER be defensive. Acknowledge their point, then gently reframe positively.
+- If someone questions AI-generated content, own it proudly — the mascots are animated on purpose so they can "travel" to any city. They're inspired by the founder's real dogs.
+- If someone asks to share/repost, be gracious but always request credit/tag to @thepawcities.
+- If someone asks a question about a city or place, give a helpful answer or point them to the bio link.
+- Use 1-2 emojis naturally. Never overdo it.
+- Keep replies under 150 characters for simple comments, up to 300 for substantive ones.
+- NEVER sound like a bot. No "Thanks for engaging!" or generic corporate speak.
+- Each reply must feel like it was written by a human who actually read the comment.
 
-function pickReply(sentiment: Sentiment, commentText: string): string | null {
-  // Don't auto-reply to questions, negatives, or spam
-  if (sentiment === 'question' || sentiment === 'negative' || sentiment === 'spam') return null;
+DO NOT REPLY (return exactly "SKIP") if the comment is:
+- Obvious spam (DM me, check my bio, free followers, etc.)
+- Just tagging other users with no substance
+- In a language you cannot confidently reply in (reply in the comment's language if you can)
 
-  let pool: string[];
-  if (sentiment === 'share_request') pool = SHARE_REQUEST_REPLIES;
-  else if (sentiment === 'emoji_only') pool = EMOJI_REPLIES;
-  else if (sentiment === 'positive') pool = POSITIVE_REPLIES;
-  else pool = NEUTRAL_REPLIES;
+Return ONLY the reply text. No quotes, no explanation, no prefix.`;
 
-  // Use comment text length as a simple hash for variety
-  const idx = (commentText.length + commentText.charCodeAt(0)) % pool.length;
-  return pool[idx];
+async function generateAIReply(
+  commentText: string,
+  commentUsername: string,
+  postCaption: string,
+  sentiment: Sentiment,
+): Promise<string | null> {
+  const openaiKey = process.env.OPENAI_API_KEY;
+  if (!openaiKey) {
+    console.warn('[ENGAGEMENT] No OPENAI_API_KEY — falling back to skip');
+    return null;
+  }
+
+  try {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${openaiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: BRAND_CONTEXT },
+          {
+            role: 'user',
+            content: `POST CAPTION (for context): "${postCaption.substring(0, 300)}"
+
+COMMENT by @${commentUsername}: "${commentText}"
+
+DETECTED SENTIMENT: ${sentiment}
+
+Write a reply to this comment. Remember: read the full intent, not just keywords. If it should not be replied to, return exactly "SKIP".`,
+          },
+        ],
+        temperature: 0.8,
+        max_tokens: 200,
+      }),
+      signal: AbortSignal.timeout(15000),
+    });
+
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content?.trim();
+
+    if (!reply || reply === 'SKIP' || reply.toUpperCase() === 'SKIP') return null;
+
+    // Safety: strip any quotes the model might wrap around the reply
+    const cleaned = reply.replace(/^["']|["']$/g, '').trim();
+    if (cleaned.length < 2 || cleaned.length > 500) return null;
+
+    return cleaned;
+  } catch (err) {
+    console.error('[ENGAGEMENT] AI reply generation failed:', err);
+    return null;
+  }
 }
 
 // ─── Auto-Reply via Instagram Graph API ────────────────────────────────────
@@ -299,11 +331,19 @@ export async function GET(request: NextRequest) {
                 sentiment,
               });
 
-            // ─── Auto-reply logic ─────────────────────────────────
+            // ─── Auto-reply logic (AI-powered) ─────────────────────
             if (autoRepliesSent >= MAX_AUTO_REPLIES_PER_RUN) continue;
 
-            const replyText = pickReply(sentiment, comment.text);
-            if (!replyText) continue; // Questions, negatives, spam — skip
+            // Skip spam — AI handles everything else including questions & nuanced comments
+            if (sentiment === 'spam') continue;
+
+            const replyText = await generateAIReply(
+              comment.text,
+              comment.username,
+              post.caption || '',
+              sentiment,
+            );
+            if (!replyText) continue; // AI decided to skip or generation failed
 
             // Only auto-reply to comments less than 48 hours old
             const commentAge = Date.now() - new Date(comment.timestamp).getTime();
