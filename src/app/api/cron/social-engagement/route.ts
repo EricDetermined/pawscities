@@ -85,6 +85,7 @@ async function generateAIReply(
   commentUsername: string,
   postCaption: string,
   sentiment: Sentiment,
+  postPermalink?: string,
 ): Promise<string | null> {
   const openaiKey = process.env.OPENAI_API_KEY;
   if (!openaiKey) {
@@ -93,6 +94,11 @@ async function generateAIReply(
   }
 
   try {
+    // For share requests, add extra context so AI includes the permalink
+    const shareContext = sentiment === 'share_request' && postPermalink
+      ? `\n\nSHARE REQUEST DETECTED: This account is asking to repost/share our content. Reply warmly granting permission, ask them to credit @thepawcities, and include the post link: ${postPermalink}\nKeep the tone friendly and appreciative — even if they're likely an engagement farming account, treat them graciously. Example tone: "Of course! We'd love that 🐾 Just tag @thepawcities so our community can find you too! Here's the post: [link]"`
+      : '';
+
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -109,13 +115,13 @@ async function generateAIReply(
 
 COMMENT by @${commentUsername}: "${commentText}"
 
-DETECTED SENTIMENT: ${sentiment}
+DETECTED SENTIMENT: ${sentiment}${shareContext}
 
 Write a reply to this comment. Remember: read the full intent, not just keywords. If it should not be replied to, return exactly "SKIP".`,
           },
         ],
         temperature: 0.8,
-        max_tokens: 200,
+        max_tokens: 250,
       }),
       signal: AbortSignal.timeout(15000),
     });
@@ -342,6 +348,7 @@ export async function GET(request: NextRequest) {
               comment.username,
               post.caption || '',
               sentiment,
+              post.permalink,
             );
             if (!replyText) continue; // AI decided to skip or generation failed
 
