@@ -204,7 +204,7 @@ export async function GET(request: NextRequest) {
   let questionsFound = 0;
   let negativesFound = 0;
   let spamFound = 0;
-  const MAX_AUTO_REPLIES_PER_RUN = 15;
+  const MAX_AUTO_REPLIES_PER_RUN = 50; // Meta allows ~60/hr; stay safely under
   const replyErrors: string[] = [];
 
   try {

@@ -37,7 +37,7 @@ const ALL_HASHTAGS = [
   'pawcities',
 ];
 
-const HASHTAGS_PER_RUN = 4; // 4/day * 7 days = 28, safely under 30/week limit
+const HASHTAGS_PER_RUN = 6; // 6/day but many repeat across days, stays under 30 unique/week
 
 interface HashtagMedia {
   id: string;
@@ -153,7 +153,7 @@ export async function GET(request: NextRequest) {
               const comments = post.comments_count || 0;
               return likes >= 10 || comments >= 2;
             })
-            .slice(0, 8); // Top 8 per hashtag
+            .slice(0, 12); // Top 12 per hashtag — more opportunities per scan
 
           console.log(`[OUTREACH] #${tag}: ${mediaData.data.length} total posts, ${topPosts.length} above threshold`);
 
@@ -173,10 +173,13 @@ export async function GET(request: NextRequest) {
               else if (caption.includes('hotel') || caption.includes('travel') || caption.includes('vacation') || caption.includes('flight') || caption.includes('trip')) category = 'travel';
               else if (caption.includes('rescue') || caption.includes('adopt') || caption.includes('shelter') || caption.includes('foster')) category = 'rescue';
 
-              const suggestedReply = generateSuggestedReply(category, tag, post.caption || '');
-
               // Flag high-engagement posts as potential story reposts
               const isStoryWorthy = (post.like_count || 0) >= 100 || (post.comments_count || 0) >= 10;
+              const effectiveCategory = isStoryWorthy ? 'story_repost' : category;
+
+              const suggestedReply = await generateAISuggestedReply(
+                effectiveCategory, tag, post.caption || '',
+              );
 
               await supabase.from('social_opportunities').insert({
                 media_id: post.id,
@@ -186,7 +189,7 @@ export async function GET(request: NextRequest) {
                 likes: post.like_count || 0,
                 comments: post.comments_count || 0,
                 media_type: post.media_type,
-                category: isStoryWorthy ? 'story_repost' : category,
+                category: effectiveCategory,
                 suggested_reply: isStoryWorthy
                   ? `STORY REPOST CANDIDATE: ${suggestedReply}`
                   : suggestedReply,
@@ -244,10 +247,9 @@ export async function GET(request: NextRequest) {
                 .maybeSingle();
 
               if (!existing) {
-                const suggestedReply = generateWatchlistReply(
-                  account.username,
-                  account.relationship || 'peer',
-                  post.caption || ''
+                const suggestedReply = await generateAISuggestedReply(
+                  'watchlist', '', post.caption || '',
+                  account.username, account.relationship || 'peer',
                 );
 
                 await supabase.from('social_opportunities').insert({
@@ -319,57 +321,96 @@ export async function GET(request: NextRequest) {
 }
 
 /**
- * Generate a suggested comment reply based on the content category
+ * Generate AI-powered suggested comment — contextual, empathetic, on-brand
  */
-function generateSuggestedReply(category: string, hashtag: string, caption: string): string {
-  const replies: Record<string, string[]> = {
-    food: [
-      'This looks amazing for dog owners! Is this spot listed on pawcities.com yet? We\'d love to feature it!',
-      'Our community would love to know about this place! Mind if we share it on Paw Cities?',
-      'Dog-friendly dining at its finest! Have you checked out other spots like this on pawcities.com?',
-    ],
-    outdoors: [
-      'What a beautiful spot for dogs! We feature places like this on pawcities.com for dog owners to discover.',
-      'This is exactly the kind of spot our Paw Cities community loves. Off-leash heaven!',
-      'Perfect for an adventure with your pup! We\'re mapping spots like this across 8 cities at pawcities.com',
-    ],
-    travel: [
-      'Traveling with dogs is the best! We\'re building the ultimate guide for dog-friendly travel at pawcities.com',
-      'This is why we built Paw Cities - helping dog owners find places like this around the world!',
-      'Dog-friendly travel goals! Check out pawcities.com for more spots in this city.',
-    ],
-    rescue: [
-      'Thank you for sharing this! The dog community is the best. We love highlighting rescue-friendly spots on pawcities.com',
-      'This warms our hearts! The Paw Cities community supports rescue organizations. Keep up the amazing work!',
-    ],
-    story_repost: [
-      'This is incredible! We\'d love to reshare this with our Paw Cities community. Mind if we feature this on our story?',
-      'Wow, this is exactly the kind of content our dog-loving community needs to see! Can we share this on our story?',
-    ],
-    general: [
-      'Love this! Dog owners need more content like this. Have you seen pawcities.com?',
-      'This is what the dog community is all about! We\'re building something similar at Paw Cities.',
-      'Great content for dog lovers! We\'d love to connect and share resources for the community.',
-    ],
-  };
+async function generateAISuggestedReply(
+  category: string,
+  hashtag: string,
+  caption: string,
+  username?: string,
+  relationship?: string,
+): Promise<string> {
+  const openaiKey = process.env.OPENAI_API_KEY;
+  if (!openaiKey) return generateFallbackReply(category, caption);
 
-  const options = replies[category] || replies.general;
-  const index = caption.length % options.length;
-  return options[index];
+  try {
+    const isWatchlist = !!username && !!relationship;
+    const context = isWatchlist
+      ? `This is from @${username}, a ${relationship} account we follow.`
+      : `Found via #${hashtag} hashtag search. Category: ${category}.`;
+
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${openaiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: `You write outreach comments for @thepawcities on Instagram — a platform helping dog owners discover dog-friendly places in 8 cities worldwide (Paris, London, NYC, LA, Barcelona, Geneva, Sydney, Tokyo).
+
+VOICE: Warm, genuine, empathetic, fun-spirited. You're a fellow dog lover, not a brand pitching. Think of how a friendly dog owner would naturally comment on another dog lover's post.
+
+RULES:
+- Read the caption carefully. Understand what the post is actually about before commenting.
+- Lead with genuine appreciation or empathy for what they shared — never lead with a pitch.
+- Be specific about what you liked in their post. Generic "love this!" comments are spam.
+- Only mention Paw Cities naturally if it's genuinely relevant (e.g., the post is about finding dog-friendly spots). Never force it.
+- If the post is emotional (rescue story, loss, adoption), lead with empathy. NO self-promotion.
+- If it's a business showing their dog-friendly space, compliment something specific about their setup.
+- Keep it under 150 characters for casual posts, up to 250 for substantive ones.
+- Use 1-2 emojis max, naturally placed.
+- NEVER use phrases like "check out our site", "have you seen pawcities.com", or anything that reads as an ad.
+- Sound like a real person, not a marketing team.
+
+${context}
+
+Return ONLY the comment text. No quotes, no explanation.`,
+          },
+          {
+            role: 'user',
+            content: `Post caption: "${caption.substring(0, 400)}"`,
+          },
+        ],
+        temperature: 0.85,
+        max_tokens: 150,
+      }),
+      signal: AbortSignal.timeout(10000),
+    });
+
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content?.trim();
+    if (!reply || reply.length < 5) return generateFallbackReply(category, caption);
+
+    return reply.replace(/^["']|["']$/g, '').trim();
+  } catch (err) {
+    console.error('[OUTREACH] AI reply generation failed:', err);
+    return generateFallbackReply(category, caption);
+  }
 }
 
-/**
- * Generate a more personalized reply for watchlist accounts
- */
+/** Simple fallback if AI is unavailable */
+function generateFallbackReply(category: string, caption: string): string {
+  const replies: Record<string, string[]> = {
+    food: ['This looks like such a great spot for dog owners! 🐾', 'Dog-friendly dining at its finest!'],
+    outdoors: ['What a beautiful spot to explore with your pup! 🌿', 'This is paradise for dogs!'],
+    travel: ['Dog-friendly travel goals! 🌍🐾', 'This is why traveling with dogs is the best!'],
+    rescue: ['This warms our hearts. Thank you for what you do! 🧡', 'The rescue community is incredible. Keep it up!'],
+    general: ['Love this! The dog community is the best 🐶', 'Great content for dog lovers!'],
+  };
+  const options = replies[category] || replies.general;
+  return options[caption.length % options.length];
+}
+
+// Legacy wrapper for non-watchlist calls
+function generateSuggestedReply(category: string, hashtag: string, caption: string): string {
+  // Return a placeholder — the async version will be called where possible
+  return generateFallbackReply(category, caption);
+}
+
 function generateWatchlistReply(username: string, relationship: string, caption: string): string {
-  if (relationship === 'partner') {
-    return `Love this from @${username}! Our Paw Cities community would benefit from this. Mind if we share?`;
-  }
-  if (relationship === 'influencer') {
-    return `Amazing content as always @${username}! We'd love to collaborate and feature this on Paw Cities.`;
-  }
-  if (relationship === 'business') {
-    return `Great to see this @${username}! Are you listed on pawcities.com yet? Free listing for dog-friendly businesses!`;
-  }
-  return `Love what you're sharing @${username}! The dog-friendly community needs more of this.`;
+  return generateFallbackReply('general', caption);
 }
