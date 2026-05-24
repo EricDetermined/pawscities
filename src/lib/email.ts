@@ -476,6 +476,11 @@ export interface MarketingDigestData {
     newDiscovered: number;
     pendingReview: number;
   };
+  // Creative queue health
+  creativeQueue?: {
+    remaining: number;
+    items: { headline: string; narrator: string; city: string; scheduledFor: string }[];
+  };
   // Hashtags scanned
   hashtagsScanned?: string[];
 }
@@ -678,6 +683,28 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
       </p>
       ${data.topContent.topPost ? `<p style="font-size:13px;color:#333;margin:4px 0;">Best performer: <strong>${data.topContent.topPost.likes} likes, ${data.topContent.topPost.comments} comments</strong> — <a href="${data.topContent.topPost.permalink}" style="color:#ea580c;">View →</a></p>` : ''}
     </td></tr>
+
+    ${data.creativeQueue ? (() => {
+      const cq = data.creativeQueue;
+      const isLow = cq.remaining <= 3;
+      const bgColor = isLow ? '#fef3c7' : '#f0fdf4';
+      const borderColor = isLow ? '#f59e0b' : '#86efac';
+      const icon = isLow ? '⚠️' : '✅';
+      const msg = isLow
+        ? `Only <strong>${cq.remaining}</strong> post${cq.remaining === 1 ? '' : 's'} left in the creative queue! <a href="${getAppUrl()}/admin/creatives" style="color:#ea580c;font-weight:700;">Generate a new batch now →</a>`
+        : `<strong>${cq.remaining}</strong> post${cq.remaining === 1 ? '' : 's'} queued and ready to go.`;
+      const itemsList = cq.items.slice(0, 5).map(c =>
+        `<div style="font-size:12px;color:#555;padding:2px 0;">📅 ${c.scheduledFor} · <strong>${c.narrator}</strong> · ${c.city} · ${c.headline}</div>`
+      ).join('');
+      return `
+        ${sectionHeader('🎨', 'Creative Queue', \`\${cq.remaining} post\${cq.remaining === 1 ? '' : 's'} remaining\`)}
+        <tr><td>
+          <div style="background:${bgColor};border:2px solid ${borderColor};border-radius:8px;padding:12px 16px;margin:8px 0;">
+            <p style="margin:0;font-size:14px;">${icon} ${msg}</p>
+            ${itemsList ? `<div style="margin-top:8px;border-top:1px solid ${borderColor};padding-top:8px;">${itemsList}</div>` : ''}
+          </div>
+        </td></tr>`;
+    })() : ''}
 
     <tr><td style="padding:24px 0 0;">
       ${ctaButton('Open Social Command Center', `${getAppUrl()}/admin/social`)}

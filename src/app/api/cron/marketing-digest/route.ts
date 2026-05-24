@@ -145,6 +145,15 @@ export async function GET(request: NextRequest) {
       createdAt: p.created_at,
     }));
 
+    // ─── Creative Queue Health ──────────────────────────
+    const { data: approvedCreatives } = await supabase
+      .from('creative_queue')
+      .select('headline, narrator, city, scheduled_for')
+      .in('status', ['approved', 'pending_review'])
+      .order('scheduled_for', { ascending: true });
+
+    const creativesRemaining = (approvedCreatives || []).length;
+
     // ═══════════════════════════════════════════════════════════════
     // 3. COMMENT ACTIVITY
     // ═══════════════════════════════════════════════════════════════
@@ -319,6 +328,15 @@ export async function GET(request: NextRequest) {
         totalUniqueCommenters,
       },
       events: eventsData,
+      creativeQueue: {
+        remaining: creativesRemaining,
+        items: (approvedCreatives || []).map(c => ({
+          headline: c.headline,
+          narrator: c.narrator,
+          city: c.city,
+          scheduledFor: c.scheduled_for,
+        })),
+      },
     };
 
     const emailResult = await sendMarketingDigest(digestData);
