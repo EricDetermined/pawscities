@@ -696,8 +696,9 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
       const itemsList = cq.items.slice(0, 5).map(c =>
         `<div style="font-size:12px;color:#555;padding:2px 0;">📅 ${c.scheduledFor} · <strong>${c.narrator}</strong> · ${c.city} · ${c.headline}</div>`
       ).join('');
+      const subtitle = cq.remaining + ' post' + (cq.remaining === 1 ? '' : 's') + ' remaining';
       return `
-        ${sectionHeader('🎨', 'Creative Queue', \`\${cq.remaining} post\${cq.remaining === 1 ? '' : 's'} remaining\`)}
+        ${sectionHeader('🎨', 'Creative Queue', subtitle)}
         <tr><td>
           <div style="background:${bgColor};border:2px solid ${borderColor};border-radius:8px;padding:12px 16px;margin:8px 0;">
             <p style="margin:0;font-size:14px;">${icon} ${msg}</p>
