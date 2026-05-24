@@ -198,7 +198,14 @@ export async function publishContainer(
 
 /**
  * Full publish flow: create container → wait for processing → publish
- * Polls the container status up to maxRetries times
+ *
+ * Uses a hybrid approach:
+ *   1. Try polling container status (fast path if Meta API allows it)
+ *   2. If status polling fails with auth errors (Meta Graph API restriction),
+ *      fall back to direct publish with exponential backoff retries
+ *
+ * This handles the Meta API v25.0+ issue where container status polling
+ * returns Authorization Error (subcode 33) even with valid tokens.
  */
 export async function publishImagePost(
   imageUrl: string,
@@ -213,14 +220,22 @@ export async function publishImagePost(
 
   const { containerId } = containerResult;
 
-  // Step 2: Poll for processing completion
+  // Step 2: Try polling for status first (may fail with auth error)
+  let statusPollingWorks = true;
   for (let i = 0; i < maxRetries; i++) {
-    await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds between polls
+    await new Promise(resolve => setTimeout(resolve, 3000));
 
     const status = await checkContainerStatus(containerId);
 
+    // If we get ERROR on the very first poll, it might be an auth issue
+    // rather than an actual container error. Try direct publish instead.
+    if (status === 'ERROR' && i === 0) {
+      console.log('Instagram: status polling returned ERROR on first attempt — trying direct publish fallback');
+      statusPollingWorks = false;
+      break;
+    }
+
     if (status === 'FINISHED') {
-      // Step 3: Publish
       const publishResult = await publishContainer(containerId);
       if ('error' in publishResult) {
         return { success: false, containerId, error: publishResult.error };
@@ -235,15 +250,47 @@ export async function publishImagePost(
     if (status === 'ERROR' || status === 'EXPIRED') {
       return { success: false, containerId, error: `Container status: ${status}` };
     }
-
-    // IN_PROGRESS — keep polling
   }
 
-  return { success: false, containerId, error: 'Container processing timed out' };
+  if (statusPollingWorks) {
+    return { success: false, containerId, error: 'Container processing timed out' };
+  }
+
+  // Step 3: Fallback — direct publish with exponential backoff
+  // Container creation succeeded, so we wait for processing and try to publish
+  console.log('Instagram: using direct publish fallback (status polling unavailable)');
+  const delays = [5000, 8000, 12000, 15000, 20000]; // Total ~60s of waiting
+
+  for (let attempt = 0; attempt < delays.length; attempt++) {
+    await new Promise(resolve => setTimeout(resolve, delays[attempt]));
+
+    const publishResult = await publishContainer(containerId);
+    if (!('error' in publishResult)) {
+      console.log(`Instagram: direct publish succeeded on attempt ${attempt + 1}`);
+      return {
+        success: true,
+        containerId,
+        postId: publishResult.postId,
+      };
+    }
+
+    const errMsg = publishResult.error || '';
+    // If the container isn't ready yet, Meta returns "Media not found or not available"
+    // Keep retrying. But if it's a different error, stop.
+    if (!errMsg.includes('not found') && !errMsg.includes('not available') && !errMsg.includes('not yet ready') && !errMsg.includes('IN_PROGRESS')) {
+      // Check if it's a "media is not ready" style error — retry those
+      if (attempt < delays.length - 1 && (errMsg.includes('9007') || errMsg.includes('2207026'))) {
+        continue; // Known "not ready" error codes
+      }
+      return { success: false, containerId, error: `Direct publish failed: ${errMsg}` };
+    }
+  }
+
+  return { success: false, containerId, error: 'Container processing timed out (direct publish fallback)' };
 }
 
 /**
- * Full carousel publish flow
+ * Full carousel publish flow (with same direct-publish fallback)
  */
 export async function publishCarouselPost(
   imageUrls: string[],
@@ -256,11 +303,17 @@ export async function publishCarouselPost(
   }
 
   const { containerId } = containerResult;
+  let statusPollingWorks = true;
 
   for (let i = 0; i < maxRetries; i++) {
     await new Promise(resolve => setTimeout(resolve, 3000));
 
     const status = await checkContainerStatus(containerId);
+
+    if (status === 'ERROR' && i === 0) {
+      statusPollingWorks = false;
+      break;
+    }
 
     if (status === 'FINISHED') {
       const publishResult = await publishContainer(containerId);
@@ -275,7 +328,21 @@ export async function publishCarouselPost(
     }
   }
 
-  return { success: false, containerId, error: 'Carousel processing timed out' };
+  if (statusPollingWorks) {
+    return { success: false, containerId, error: 'Carousel processing timed out' };
+  }
+
+  // Fallback: direct publish with backoff
+  const delays = [5000, 8000, 12000, 15000, 20000];
+  for (let attempt = 0; attempt < delays.length; attempt++) {
+    await new Promise(resolve => setTimeout(resolve, delays[attempt]));
+    const publishResult = await publishContainer(containerId);
+    if (!('error' in publishResult)) {
+      return { success: true, containerId, postId: publishResult.postId };
+    }
+  }
+
+  return { success: false, containerId, error: 'Carousel processing timed out (direct publish fallback)' };
 }
 
 /**

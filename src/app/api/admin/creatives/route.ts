@@ -19,14 +19,16 @@ function getSupabaseAdmin() {
 
 // ─── Mascot assignment logic ──────────────────────────────────────────────────
 
+// Track narrator alternation within a batch generation run
+let batchNarratorIndex = 0;
+
 function assignNarrator(type: string): 'buster' | 'marley' | 'both' {
-  // Buster: events, guides, adventures
-  if (type === 'event' || type === 'guide') return 'buster';
-  // Marley: facts, tips, spotlights
-  if (type === 'did-you-know' || type === 'tip' || type === 'spotlight') return 'marley';
-  // Fun posts alternate
-  if (type === 'fun') return Math.random() > 0.5 ? 'buster' : 'marley';
-  return 'both';
+  // "both" only for the very first intro post — all others alternate
+  // Force alternation: odd positions get buster, even get marley (or vice versa)
+  // This overrides the type-based logic to ensure visual variety in the feed
+  const narrator: 'buster' | 'marley' = batchNarratorIndex % 2 === 0 ? 'buster' : 'marley';
+  batchNarratorIndex++;
+  return narrator;
 }
 
 // ─── Character voice captions ─────────────────────────────────────────────────
@@ -168,6 +170,16 @@ export async function POST(request: NextRequest) {
     const combined = new Set([...postedHeadlines, ...queuedHeadlines]);
 
     const hasOpenAI = !!process.env.OPENAI_API_KEY;
+
+    // Seed narrator alternation based on last posted/queued narrator
+    const { data: lastNarrator } = await supabase
+      .from('creative_queue')
+      .select('narrator')
+      .in('status', ['approved', 'posted', 'pending_review'])
+      .order('scheduled_for', { ascending: false })
+      .limit(1);
+    // If the last one was marley, start with buster (index 0), and vice versa
+    batchNarratorIndex = (lastNarrator?.[0]?.narrator === 'buster') ? 1 : 0;
 
     for (let i = 0; i < count; i++) {
       const fact = pickNextContent(combined);

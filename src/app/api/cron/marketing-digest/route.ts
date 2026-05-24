@@ -130,6 +130,21 @@ export async function GET(request: NextRequest) {
       permalink: p.permalink || `https://instagram.com/p/${p.post_id || ''}`,
     }));
 
+    // ─── Failed Posts (last 24 hours) ──────────────────
+    const { data: failedPosts } = await supabase
+      .from('social_posts')
+      .select('headline, city, error_message, created_at')
+      .eq('status', 'failed')
+      .gte('created_at', oneDayAgo)
+      .order('created_at', { ascending: false });
+
+    const failedPostsList = (failedPosts || []).map(p => ({
+      headline: p.headline || 'Untitled',
+      city: p.city || 'unknown',
+      errorMessage: p.error_message || 'Unknown error',
+      createdAt: p.created_at,
+    }));
+
     // ═══════════════════════════════════════════════════════════════
     // 3. COMMENT ACTIVITY
     // ═══════════════════════════════════════════════════════════════
@@ -259,6 +274,7 @@ export async function GET(request: NextRequest) {
         count: publishedPosts.length,
         posts: publishedPosts,
       },
+      failedPosts: failedPostsList.length > 0 ? failedPostsList : undefined,
       commentActivity: {
         newComments: comments.length,
         autoReplied: autoReplied.length,
@@ -309,6 +325,7 @@ export async function GET(request: NextRequest) {
 
     const summary = {
       posts: publishedPosts.length,
+      failedPosts: failedPostsList.length,
       newComments: comments.length,
       autoReplied: autoReplied.length,
       questionsForManual: questions.length,

@@ -464,6 +464,13 @@ export interface MarketingDigestData {
     newCommentersToday: number;
     totalUniqueCommenters: number;
   };
+  // Failed posts (last 24 hours)
+  failedPosts?: {
+    headline: string;
+    city: string;
+    errorMessage: string;
+    createdAt: string;
+  }[];
   // Events (if any discovered this week)
   events?: {
     newDiscovered: number;
@@ -609,10 +616,27 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
     ? `<p style="font-size:11px;color:#aaa;margin:4px 0;">Hashtags scanned: ${data.hashtagsScanned.map(h => '#' + h).join(', ')}</p>`
     : '';
 
+  // ─── Failed Posts ──────────────────────────────────
+  const failedPostsHtml = data.failedPosts && data.failedPosts.length > 0
+    ? `${sectionHeader('🚨', 'Failed Posts', `${data.failedPosts.length} post${data.failedPosts.length > 1 ? 's' : ''} failed in the last 24 hours`)}
+       <tr><td>
+         <div style="background:#fef2f2;border:2px solid #ef4444;border-radius:8px;padding:16px;margin:8px 0;">
+           ${data.failedPosts.map(p => `
+             <div style="padding:10px 0;border-bottom:1px solid #fecaca;">
+               <strong style="color:#991b1b;font-size:14px;">${p.headline}</strong>
+               <span style="color:#b91c1c;font-size:12px;margin-left:8px;">(${p.city})</span>
+               <p style="margin:4px 0 0;font-size:13px;color:#7f1d1d;">Error: ${p.errorMessage}</p>
+               <span style="font-size:11px;color:#9ca3af;">${new Date(p.createdAt).toLocaleString()}</span>
+             </div>`).join('')}
+         </div>
+       </td></tr>`
+    : '';
+
   // ─── Assemble the full email ──────────────────────
   const html = baseTemplate(`🐾 Daily Marketing Digest — ${today}`, `
     ${healthBanner}
     ${healthDetailsHtml}
+    ${failedPostsHtml}
     ${quickStats}
 
     ${sectionHeader('📬', 'Posts Published', 'Content posted in the last 24 hours')}
@@ -665,7 +689,10 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
 
   // Subject line reflects what needs attention
   const actionCount = data.commentActivity.questionsNeedingReply + data.commentActivity.negativesNeedingReview;
-  const subject = actionCount > 0
+  const failedCount = data.failedPosts?.length || 0;
+  const subject = failedCount > 0
+    ? `🚨 Paw Cities Daily: ${failedCount} FAILED post${failedCount > 1 ? 's' : ''}, ${data.postsPublished.count} published, ${actionCount} need you`
+    : actionCount > 0
     ? `🐾 Paw Cities Daily: ${data.postsPublished.count} posts, ${data.commentActivity.autoReplied} auto-replies, ${actionCount} need you`
     : `🐾 Paw Cities Daily: ${data.postsPublished.count} posts, ${data.commentActivity.autoReplied} auto-replies — all handled ✅`;
 

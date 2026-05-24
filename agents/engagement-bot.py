@@ -296,6 +296,217 @@ def detect_city(caption, hashtags, location):
     return None
 
 
+# ─── Content Safety Screening ────────────────────────────────────────────────
+# Multi-layered system to prevent commenting on sensitive/inappropriate posts.
+# Layer 1: Fast keyword blocklist (multi-language)
+# Layer 2: AI screening via OpenAI for borderline cases
+# Layer 3: Queue-level gating before comment generation
+
+# Keywords that indicate a post is about death, grief, illness, abuse, or
+# other sensitive topics where a cheerful brand comment would be inappropriate.
+# Organized by language, lowercase. Each list is checked against the caption.
+SENSITIVE_KEYWORDS = {
+    "english": [
+        # Death / loss / grief
+        "passed away", "rest in peace", "r.i.p", "rainbow bridge",
+        "crossed the bridge", "gone too soon", "lost my dog", "lost our dog",
+        "lost my boy", "lost my girl", "lost my best friend",
+        "we lost him", "we lost her", "i lost him", "i lost her",
+        "in memory of", "in memoriam",
+        "farewell", "goodbye forever", "final goodbye", "last day with",
+        "last moments", "put to sleep", "put down", "euthan",
+        "grief", "grieving", "mourning", "heartbroken", "devastated",
+        "miss you", "miss him", "miss her", "miss them",
+        "no longer with us", "left us", "taken from us",
+        "fly high", "forever in my heart", "forever in our hearts",
+        "until we meet again", "wait for me", "watching over",
+        # Illness / medical
+        "diagnosed with", "cancer", "tumor", "tumour", "terminal",
+        "fighting for", "last fight", "emergency surgery", "critical condition",
+        "didn't make it", "didn't survive",
+        # Abuse / rescue from trauma
+        "abused", "beaten", "starved", "neglected", "tortured",
+        "found abandoned", "left to die", "dumped",
+        # Missing / stolen
+        "missing dog", "stolen dog", "dog stolen", "have you seen",
+        "please help find", "lost dog", "dog is lost", "dog is missing",
+        # Controversy / politics
+        "protest", "boycott", "scandal",
+    ],
+    "spanish": [
+        "descansa en paz", "dep ", "en paz descanse",
+        "cruzó el puente", "puente del arcoíris", "se nos fue",
+        "nos ha dejado", "nos dejó", "ya no está", "ya no estas",
+        "falleció", "fallecido", "murió", "ha muerto",
+        "último adiós", "despedida", "adiós para siempre",
+        "te extraño", "te echamos de menos", "duele mucho",
+        "en memoria", "homenaje", "luto",
+        "cáncer", "tumor", "diagnóstico", "terminal",
+        "maltratado", "abandonado", "rescatado de",
+        "perro perdido", "perro robado",
+        "ha dejado de ser", "dejado de ser",
+        "ayudarle a descansar", "compañero de vida",
+        "me vas a faltar", "sigo sin asimilar",
+        "empezado a empeorar", "duele mucho mucho",
+    ],
+    "french": [
+        "repose en paix", "paix à", "parti trop tôt",
+        "nous a quittés", "nous a quitté", "n'est plus",
+        "au revoir", "adieu", "dernier adieu", "derniers moments",
+        "arc-en-ciel", "pont de l'arc-en-ciel",
+        "parti au ciel", "rejoint les étoiles",
+        "tu me manques", "il me manque", "elle me manque",
+        "en mémoire", "hommage", "deuil",
+        "cancer", "tumeur", "euthanasie",
+        "maltraité", "abandonné", "sauvé de",
+        "chien perdu", "chien volé",
+    ],
+    "german": [
+        "ruhe in frieden", "rip ", "regenbogenbrücke",
+        "über die brücke", "von uns gegangen",
+        "hat uns verlassen", "ist gegangen", "letzter tag",
+        "letzter abschied", "abschied nehmen",
+        "vermisse dich", "fehlt mir", "fehlt uns",
+        "im gedenken", "in erinnerung", "trauer",
+        "krebs", "tumor", "eingeschläfert",
+        "misshandelt", "ausgesetzt", "gerettet von",
+        "hund vermisst", "hund gestohlen",
+    ],
+    "japanese": [
+        "虹の橋", "天国へ", "亡くなり", "旅立ち", "お別れ",
+        "安らかに", "最期の", "最後の日",
+        "寂しくなる", "会いたい", "忘れない",
+        "癌", "腫瘍", "安楽死",
+        "虐待", "迷子犬", "行方不明",
+    ],
+    "portuguese": [
+        "descanse em paz", "ponte do arco-íris",
+        "nos deixou", "partiu", "foi embora",
+        "saudade", "luto", "em memória",
+        "último adeus", "despedida",
+    ],
+    "catalan": [
+        "descansa en pau", "ens ha deixat",
+        "pont de l'arc de sant martí",
+    ],
+}
+
+# Flatten all keywords into a single set for fast lookup
+ALL_SENSITIVE_KEYWORDS = set()
+for lang_keywords in SENSITIVE_KEYWORDS.values():
+    ALL_SENSITIVE_KEYWORDS.update(lang_keywords)
+
+
+def screen_post_content(caption, post_id="", username=""):
+    """
+    Screen a post's caption for sensitive content.
+    Returns (is_safe, reason) tuple.
+
+    Layer 1: Keyword blocklist — fast, catches obvious cases.
+    Layer 2: AI screening — catches subtle/contextual cases.
+    """
+    if not caption or len(caption.strip()) < 10:
+        # Very short or empty captions — skip AI screening, allow with caution
+        return True, "no_caption"
+
+    lower = caption.lower()
+
+    # ── Layer 1: Keyword blocklist ──
+    for keyword in ALL_SENSITIVE_KEYWORDS:
+        if keyword in lower:
+            return False, f"keyword_blocked: '{keyword}'"
+
+    # ── Layer 2: AI content screening ──
+    # Only for posts with substantial captions (where context matters)
+    if len(caption) > 50:
+        ai_result = ai_screen_caption(caption, username)
+        if ai_result is not None:
+            return ai_result
+
+    return True, "passed_all_screens"
+
+
+def ai_screen_caption(caption, username=""):
+    """
+    Use OpenAI to assess whether a post is appropriate for brand engagement.
+    Returns (is_safe, reason) or None if AI screening is unavailable.
+    """
+    openai_key = os.environ.get("OPENAI_API_KEY")
+    if not openai_key:
+        # If no API key, rely on keyword screening only
+        return None
+
+    prompt = f"""You are a content safety screener for a dog-friendly brand (@thepawcities).
+Your job is to decide if it's appropriate for our brand to leave a friendly comment on this Instagram post.
+
+REJECT posts about:
+- Death, loss, grief, or memorial tributes for a pet or person
+- Illness, injury, surgery, or medical emergencies
+- Animal abuse, cruelty, neglect, or rescue trauma stories
+- Missing or stolen pets
+- Controversial topics, politics, protests
+- Fundraising/GoFundMe requests for sick or dying animals
+- Any emotional or sad content where a cheerful brand comment would be tone-deaf
+- Posts that are clearly personal/emotional moments not meant for brand engagement
+
+APPROVE posts about:
+- Dog-friendly places, cafes, restaurants, parks, beaches, hotels
+- Happy dogs exploring cities
+- Dog travel, adventures, outings
+- Dog products, gear, toys
+- Cute/funny dog moments
+- Dog training or socialization
+- Dog events or meetups
+
+POST by @{username}:
+"{caption[:600]}"
+
+Reply with EXACTLY one word: SAFE or UNSAFE
+Then on a new line, a brief reason (max 10 words)."""
+
+    try:
+        req_body = json.dumps({
+            "model": "gpt-4o-mini",
+            "messages": [
+                {"role": "user", "content": prompt}
+            ],
+            "temperature": 0.1,
+            "max_tokens": 30,
+        }).encode("utf-8")
+
+        req = urllib.request.Request(
+            "https://api.openai.com/v1/chat/completions",
+            data=req_body,
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {openai_key}",
+            },
+            method="POST",
+        )
+
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            reply = data["choices"][0]["message"]["content"].strip()
+
+            lines = reply.split("\n", 1)
+            verdict = lines[0].strip().upper()
+            reason = lines[1].strip() if len(lines) > 1 else ""
+
+            if verdict == "UNSAFE":
+                return False, f"ai_blocked: {reason}"
+            elif verdict == "SAFE":
+                return True, f"ai_approved: {reason}"
+            else:
+                # Ambiguous response — err on the side of caution
+                print(f"    ⚠️ AI screening ambiguous for @{username}: {reply}")
+                return False, f"ai_ambiguous: {reply[:50]}"
+
+    except Exception as e:
+        # AI screening failed — fall through to keyword-only
+        print(f"    ⚠️ AI screening failed: {e}")
+        return None
+
+
 def generate_comment(post, config):
     """Generate a contextual, non-spammy comment for a post."""
     caption = post.get("caption", "") or ""
@@ -479,6 +690,7 @@ def discover_posts(target_city=None):
 
     filtered = []
     seen_ids = set()
+    safety_blocked = 0
 
     # Load history to avoid re-commenting
     history = load_history()
@@ -506,12 +718,21 @@ def discover_posts(target_city=None):
         if config["discovery"]["skip_private_accounts"] and post.get("isPrivate"):
             continue
 
+        # ── Content safety screening ──
+        caption_text = (post.get("caption") or "")[:500]
+        owner = post.get("ownerUsername", "")
+        is_safe, reason = screen_post_content(caption_text, post_id, owner)
+        if not is_safe:
+            print(f"    🛡️ BLOCKED @{owner}: {reason}")
+            safety_blocked += 1
+            continue
+
         filtered.append({
             "id": post_id,
             "shortcode": post.get("shortCode", ""),
-            "ownerUsername": post.get("ownerUsername", ""),
+            "ownerUsername": owner,
             "ownerId": post.get("ownerId", ""),
-            "caption": (post.get("caption") or "")[:500],
+            "caption": caption_text,
             "hashtags": post.get("hashtags", []),
             "mentions": post.get("mentions", []),
             "locationName": post.get("locationName"),
@@ -522,6 +743,7 @@ def discover_posts(target_city=None):
             "displayUrl": post.get("displayUrl", ""),
             "city": post.get("_city"),
             "discoveredAt": post.get("_discovered_at"),
+            "safetyCheck": reason,
         })
 
     # Sort by engagement
@@ -532,12 +754,15 @@ def discover_posts(target_city=None):
         "generated": datetime.now(timezone.utc).isoformat(),
         "total_raw": len(all_posts),
         "total_filtered": len(filtered),
+        "safety_blocked": safety_blocked,
         "posts": filtered,
     }
     with open(POSTS_FILE, "w") as f:
         json.dump(output, f, indent=2)
 
     print(f"\n  📊 Discovery complete: {len(all_posts)} raw → {len(filtered)} eligible posts")
+    if safety_blocked > 0:
+        print(f"  🛡️ Safety blocked: {safety_blocked} sensitive posts")
     print(f"  💾 Saved to {POSTS_FILE}\n")
 
     # Show top 5
@@ -694,11 +919,18 @@ def discover_following():
         hashtags = post.get("hashtags", [])
         location = post.get("locationName", "")
         city_slug = post.get("_city") or detect_city(caption, hashtags, location)
+        owner = post.get("ownerUsername", "")
+
+        # ── Content safety screening ──
+        is_safe, reason = screen_post_content(caption[:500], post_id, owner)
+        if not is_safe:
+            print(f"    🛡️ BLOCKED @{owner}: {reason}")
+            continue
 
         filtered.append({
             "id": post_id,
             "shortcode": post.get("shortCode", ""),
-            "ownerUsername": post.get("ownerUsername", ""),
+            "ownerUsername": owner,
             "ownerId": post.get("ownerId", ""),
             "caption": caption[:500],
             "hashtags": hashtags,
@@ -712,6 +944,7 @@ def discover_following():
             "city": city_slug,
             "discoveredAt": post.get("_discovered_at"),
             "source": "following",
+            "safetyCheck": reason,
         })
 
     filtered.sort(key=lambda p: p.get("likesCount", 0), reverse=True)
@@ -808,10 +1041,23 @@ def generate_queue():
     recent_hashes = {item.get("comment_hash") for item in queue["items"][-100:]}
 
     new_count = 0
+    blocked_count = 0
     for post in posts:
         post_id = post["id"]
         if post_id in existing_post_ids or post_id in commented_post_ids:
             continue
+
+        # ── Final safety gate: re-screen before generating comment ──
+        # This catches posts that may have been added to discovered-posts.json
+        # before the safety screening was deployed, or edited since discovery.
+        if not post.get("safetyCheck"):
+            caption = post.get("caption", "")
+            owner = post.get("ownerUsername", "")
+            is_safe, reason = screen_post_content(caption, post_id, owner)
+            if not is_safe:
+                print(f"  🛡️ Queue blocked @{owner}: {reason}")
+                blocked_count += 1
+                continue
 
         comment_data = generate_comment(post, config)
 
@@ -847,6 +1093,8 @@ def generate_queue():
     save_queue(queue)
     pending = sum(1 for item in queue["items"] if item["status"] == "pending")
     print(f"\n🐕 Generated {new_count} new comments")
+    if blocked_count > 0:
+        print(f"   🛡️ Safety blocked: {blocked_count} posts (grief/sensitive content)")
     print(f"   Queue: {pending} pending | {queue['stats']['posted']} posted | {queue['stats']['failed']} failed\n")
 
     # Preview first 5
