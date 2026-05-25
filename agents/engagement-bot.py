@@ -38,6 +38,8 @@ Usage:
   python3 engagement-bot.py reply --limit 10            # Send N re-engagement replies
   python3 engagement-bot.py follow-back                 # Follow accounts that replied to us
   python3 engagement-bot.py follow-back --limit 5       # Follow N accounts
+  python3 engagement-bot.py follow-all-followers         # Follow back ALL new followers
+  python3 engagement-bot.py follow-all-followers --limit 30 --dry-run  # Preview mode
 
   # ── Utility ──
   python3 engagement-bot.py stats                       # Show engagement statistics
@@ -2110,6 +2112,159 @@ def follow_engaged_accounts(limit=10):
     print(f"\n  📊 Follow-back complete: {followed_count} new follows\n")
 
 
+# ─── FOLLOW ALL NEW FOLLOWERS ────────────────────────────────────────────────
+
+FOLLOWERS_TRACKER_FILE = ENGAGEMENT_DIR / "followers-tracker.json"
+
+
+def load_followers_tracker():
+    """Load the set of accounts we've already followed back."""
+    if FOLLOWERS_TRACKER_FILE.exists():
+        try:
+            return json.loads(FOLLOWERS_TRACKER_FILE.read_text())
+        except Exception:
+            pass
+    return {"already_followed_back": [], "last_check": None, "total_followed": 0}
+
+
+def save_followers_tracker(data):
+    FOLLOWERS_TRACKER_FILE.write_text(json.dumps(data, indent=2, default=str))
+
+
+def follow_all_new_followers(limit=50, dry_run=False):
+    """Follow back ALL accounts that follow us.
+
+    Unlike follow_engaged_accounts() which only follows people who replied
+    to our comments, this follows every new follower — maximizing early-stage
+    reciprocity and community building.
+
+    Uses instagrapi's user_followers() to get our current follower list,
+    then follows anyone we haven't followed back yet.
+    """
+    print(f"\n🤝 PawCities Follow-Back All Followers")
+    print(f"   {'(DRY RUN)' if dry_run else ''}\n")
+
+    tracker = load_followers_tracker()
+    already_set = set(tracker["already_followed_back"])
+    our_username = os.environ.get("IG_USERNAME", "thepawcities").lower()
+
+    cl = get_ig_client()
+
+    # Get our user ID
+    try:
+        our_info = cl.user_info_by_username(our_username)
+        our_pk = our_info.pk
+        follower_count = getattr(our_info, 'follower_count', None) or getattr(our_info, 'followers_count', 0)
+        following_count = getattr(our_info, 'following_count', None) or getattr(our_info, 'media_count', 0)
+        print(f"  📊 @{our_username}: {follower_count} followers, {following_count} following")
+    except Exception as e:
+        print(f"  ❌ Could not get our account info: {e}")
+        return
+
+    # Get our followers (returns dict of {user_pk: UserShort})
+    print(f"  📥 Fetching follower list...")
+    try:
+        # instagrapi returns a list of UserShort objects
+        followers = cl.user_followers(our_pk, amount=0)  # 0 = all
+        # followers is a dict {pk: UserShort} in newer instagrapi versions
+        if isinstance(followers, dict):
+            follower_list = list(followers.values())
+        else:
+            follower_list = list(followers)
+        print(f"  ✅ Found {len(follower_list)} followers")
+    except Exception as e:
+        print(f"  ❌ Could not fetch followers: {e}")
+        return
+
+    # Get who we already follow (to skip them)
+    print(f"  📥 Fetching who we follow...")
+    try:
+        following = cl.user_following(our_pk, amount=0)
+        if isinstance(following, dict):
+            following_pks = set(following.keys())
+        else:
+            following_pks = {u.pk for u in following}
+        print(f"  ✅ Currently following {len(following_pks)} accounts")
+    except Exception as e:
+        print(f"  ⚠️ Could not fetch following list, will try to follow all: {e}")
+        following_pks = set()
+
+    # Find followers we haven't followed back
+    new_to_follow = []
+    for user in follower_list:
+        username = getattr(user, 'username', str(user))
+        pk = getattr(user, 'pk', None)
+        if username.lower() == our_username:
+            continue
+        if username in already_set:
+            continue
+        if pk and pk in following_pks:
+            # We already follow them — just record it
+            already_set.add(username)
+            continue
+        new_to_follow.append({"username": username, "pk": pk})
+
+    if not new_to_follow:
+        print(f"\n  🎉 All followers already followed back!\n")
+        tracker["last_check"] = datetime.now(timezone.utc).isoformat()
+        save_followers_tracker(tracker)
+        return
+
+    batch = new_to_follow[:limit]
+    print(f"\n  🆕 {len(new_to_follow)} new followers to follow back | Processing top {len(batch)}\n")
+
+    followed_count = 0
+    for i, account in enumerate(batch):
+        username = account["username"]
+        pk = account["pk"]
+
+        if dry_run:
+            print(f"  [DRY] Would follow @{username}")
+            followed_count += 1
+            continue
+
+        try:
+            if not pk:
+                user_info = cl.user_info_by_username(username)
+                pk = user_info.pk
+
+            cl.user_follow(pk)
+            already_set.add(username)
+            followed_count += 1
+            print(f"  ✅ Followed @{username}")
+
+            # Gentle delay between follows
+            if i < len(batch) - 1:
+                delay = random.randint(20, 60)
+                print(f"     ⏳ Waiting {delay}s...")
+                time.sleep(delay)
+
+        except Exception as e:
+            error_str = str(e)
+            if "action_block" in error_str.lower() or "challenge" in error_str.lower():
+                print(f"  ⚠️ @{username}: {error_str[:80]}")
+                print(f"\n  🚨 ACTION BLOCK — stopping. Followed {followed_count} this run.\n")
+                break
+
+            if is_login_error(error_str):
+                print(f"  ⚠️ Session expired: {error_str[:80]}")
+                cl = reauth_ig_client()
+                if cl is None:
+                    print(f"\n  🚨 Cannot re-authenticate — stopping.\n")
+                    break
+                continue
+
+            print(f"  ⚠️ @{username}: {error_str[:80]}")
+
+    # Save state
+    tracker["already_followed_back"] = list(already_set)
+    tracker["last_check"] = datetime.now(timezone.utc).isoformat()
+    tracker["total_followed"] = tracker.get("total_followed", 0) + followed_count
+    save_followers_tracker(tracker)
+
+    print(f"\n  📊 Done: {followed_count} new follows this run | {len(already_set)} total tracked\n")
+
+
 # ─── CLI ─────────────────────────────────────────────────────────────────────
 
 def main():
@@ -2162,6 +2317,11 @@ def main():
     fb_p = subparsers.add_parser("follow-back", help="Follow accounts that engaged with us")
     fb_p.add_argument("--limit", type=int, default=10, help="Max accounts to follow (default 10)")
 
+    # follow-all-followers
+    faf_p = subparsers.add_parser("follow-all-followers", help="Follow back ALL new followers")
+    faf_p.add_argument("--limit", type=int, default=50, help="Max accounts to follow (default 50)")
+    faf_p.add_argument("--dry-run", action="store_true", help="Preview without following")
+
     subparsers.add_parser("reset-failures", help="Reset session-failed items back to pending")
 
     args = parser.parse_args()
@@ -2192,6 +2352,8 @@ def main():
         execute_re_engagements(limit=args.limit)
     elif args.command == "follow-back":
         follow_engaged_accounts(limit=args.limit)
+    elif args.command == "follow-all-followers":
+        follow_all_new_followers(limit=args.limit, dry_run=args.dry_run)
     elif args.command == "reset-failures":
         reset_session_failures()
     else:
