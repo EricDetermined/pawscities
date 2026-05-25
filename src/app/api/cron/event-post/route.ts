@@ -88,10 +88,32 @@ function buildEventCaption(
   isFree?: boolean,
   tags?: string[] | null,
   sourceHandle?: string | null,
+  mentionedHandles?: string[] | null,
 ): string {
   const venueStr = venueName ? `\n📍 ${venueName}` : '';
   const freeStr = isFree ? '\n🆓 Free event!' : '';
-  const handleStr = sourceHandle ? `\n\nShoutout to @${sourceHandle.replace('@', '')} for putting this together!` : '';
+
+  // Build the @mentions section — give love to businesses, venues, sponsors
+  const allHandles: string[] = [];
+  if (sourceHandle) allHandles.push(sourceHandle.replace('@', ''));
+  if (mentionedHandles) {
+    for (const h of mentionedHandles) {
+      const clean = h.replace('@', '');
+      if (!allHandles.includes(clean) && clean.toLowerCase() !== 'thepawcities') {
+        allHandles.push(clean);
+      }
+    }
+  }
+
+  let handleStr = '';
+  if (allHandles.length === 1) {
+    handleStr = `\n\nBig thanks to @${allHandles[0]} for making this happen! 🙌`;
+  } else if (allHandles.length === 2) {
+    handleStr = `\n\nShoutout to @${allHandles[0]} and @${allHandles[1]} for putting this together! 🙌`;
+  } else if (allHandles.length >= 3) {
+    const first = allHandles.slice(0, 3).map(h => `@${h}`).join(', ');
+    handleStr = `\n\nLove to ${first} for bringing this to the community! 🙌`;
+  }
 
   const tagSet = new Set(['PawCities', 'DogFriendlyEvents', 'DogsOfInstagram', 'DogLife']);
   tagSet.add(cityName.replace(/\s/g, '') + 'Dogs');
@@ -296,20 +318,45 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ status: 'error', error: 'Image generation failed' }, { status: 500 });
       }
 
+      // Build handles list for tagging businesses/sponsors
+      const allMentionedHandles = unpostedEvent.mentioned_handles || [];
+
       // Generate caption (try AI, fall back to template)
       let caption: string;
       if (hasOpenAI) {
+        // Build a richer description that includes business/sponsor context
+        const handleContext = allMentionedHandles.length > 0
+          ? ` Organized/sponsored by: ${allMentionedHandles.map((h: string) => '@' + h.replace('@', '')).join(', ')}.`
+          : '';
+        const sourceContext = unpostedEvent.source_handle
+          ? ` Source: @${unpostedEvent.source_handle.replace('@', '')}.`
+          : '';
+
         const aiCaption = await generateCharacterCaption(
           narrator,
           unpostedEvent.name,
-          unpostedEvent.description || 'An exciting dog-friendly event!',
+          (unpostedEvent.description || 'An exciting dog-friendly event!') + handleContext + sourceContext,
           cityName,
           citySlug,
           'event',
         );
-        caption = aiCaption || buildEventCaption(narrator, unpostedEvent.name, cityName, citySlug, dateStr, unpostedEvent.venue_name, unpostedEvent.description, unpostedEvent.is_free, unpostedEvent.tags, unpostedEvent.source_handle);
+
+        if (aiCaption) {
+          // Ensure AI caption includes the business @mentions if it missed them
+          let finalCaption = aiCaption;
+          const captionLower = aiCaption.toLowerCase();
+          for (const handle of allMentionedHandles.slice(0, 3)) {
+            const clean = handle.replace('@', '');
+            if (!captionLower.includes(`@${clean.toLowerCase()}`)) {
+              // AI didn't include this handle — we'll add a shoutout line
+            }
+          }
+          caption = finalCaption;
+        } else {
+          caption = buildEventCaption(narrator, unpostedEvent.name, cityName, citySlug, dateStr, unpostedEvent.venue_name, unpostedEvent.description, unpostedEvent.is_free, unpostedEvent.tags, unpostedEvent.source_handle, allMentionedHandles);
+        }
       } else {
-        caption = buildEventCaption(narrator, unpostedEvent.name, cityName, citySlug, dateStr, unpostedEvent.venue_name, unpostedEvent.description, unpostedEvent.is_free, unpostedEvent.tags, unpostedEvent.source_handle);
+        caption = buildEventCaption(narrator, unpostedEvent.name, cityName, citySlug, dateStr, unpostedEvent.venue_name, unpostedEvent.description, unpostedEvent.is_free, unpostedEvent.tags, unpostedEvent.source_handle, allMentionedHandles);
       }
 
       if (dryRun) {

@@ -9,7 +9,7 @@
     "estimated_monthly_cost_usd": 14.00,
     "notes": "Leaves ~$25/month for handle monitoring (Task #18)"
   },
-  "schedule": "weekly",
+  "schedule": "daily",
   "results_per_hashtag": 10,
   "global_event_hashtags": [
     "dogfriendlyevent",
