@@ -345,10 +345,24 @@ export async function GET(request: NextRequest) {
           // Ensure AI caption includes the business @mentions if it missed them
           let finalCaption = aiCaption;
           const captionLower = aiCaption.toLowerCase();
+          const missingHandles: string[] = [];
           for (const handle of allMentionedHandles.slice(0, 3)) {
             const clean = handle.replace('@', '');
             if (!captionLower.includes(`@${clean.toLowerCase()}`)) {
-              // AI didn't include this handle — we'll add a shoutout line
+              missingHandles.push(clean);
+            }
+          }
+          // Append missing handles as a shoutout before the hashtags
+          if (missingHandles.length > 0) {
+            const shoutout = missingHandles.length === 1
+              ? `\n\nBig thanks to @${missingHandles[0]}! 🙌`
+              : `\nShoutout to ${missingHandles.map(h => '@' + h).join(' & ')}! 🙌`;
+            // Insert before the hashtag block if possible
+            const hashtagIdx = finalCaption.lastIndexOf('\n#');
+            if (hashtagIdx > 0) {
+              finalCaption = finalCaption.substring(0, hashtagIdx) + shoutout + finalCaption.substring(hashtagIdx);
+            } else {
+              finalCaption += shoutout;
             }
           }
           caption = finalCaption;

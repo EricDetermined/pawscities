@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { enrichEventWithAI } from '@/lib/dalle';
+
+export const maxDuration = 120;
 
 /**
  * POST /api/cron/process-ingest
@@ -212,11 +215,11 @@ export async function POST(request: NextRequest) {
   };
 
   try {
-    // Fetch pending event-classified ingest items
+    // Fetch pending event-classified ingest items (both 'event' and 'business_event')
     const { data: pendingItems, error: fetchError } = await supabase
       .from('ingest_queue')
       .select('*')
-      .eq('classification', 'event')
+      .in('classification', ['event', 'business_event'])
       .eq('status', 'pending')
       .order('created_at', { ascending: true })
       .limit(20);
@@ -232,15 +235,103 @@ export async function POST(request: NextRequest) {
     // Load city mapping
     const cityMap = await getCityMap(supabase);
 
+    // Determine timezone from city slug
+    const cityTimezones: Record<string, string> = {
+      losangeles: 'America/Los_Angeles',
+      nyc: 'America/New_York',
+      london: 'Europe/London',
+      paris: 'Europe/Paris',
+      geneva: 'Europe/Zurich',
+      barcelona: 'Europe/Madrid',
+      sydney: 'Australia/Sydney',
+      tokyo: 'Asia/Tokyo',
+    };
+
     for (const item of pendingItems) {
       results.processed++;
 
       try {
-        // Parse event details from raw text
-        const parsed = parseEventFromText(item.raw_text || '', item.subject);
+        // ─── STEP 1: Try AI enrichment first (quality gate) ──────────────
+        // Uses GPT-4o-mini to extract structured data, detect language,
+        // identify businesses/sponsors, and score completeness.
+        // Falls back to regex-based parsing if AI is unavailable or fails.
 
-        if (!parsed.name) {
-          // Can't create event without a name — mark for manual review
+        const aiEnriched = await enrichEventWithAI(
+          item.raw_text || '',
+          item.instagram_username || 'unknown',
+          item.city || null,
+          item.url || null,
+        );
+
+        let eventName: string | null = null;
+        let eventDescription: string | null = null;
+        let venueName: string | null = null;
+        let venueAddress: string | null = null;
+        let eventDate: string | null = null;
+        let startTime: string | null = null;
+        let endTime: string | null = null;
+        let tags: string[] = [];
+        let isFree = false;
+        let externalUrl: string | null = null;
+        let sourceHandle: string | null = null;
+        let mentionedHandles: string[] = [];
+        let qualityScore = 0;
+        let qualityIssues: string[] = [];
+        let localLanguageNote: string | null = null;
+        let detectedCity: string | null = item.city || null;
+
+        if (aiEnriched) {
+          // AI enrichment succeeded — use structured data
+          eventName = aiEnriched.name;
+          eventDescription = aiEnriched.description;
+          venueName = aiEnriched.venueName;
+          venueAddress = aiEnriched.venueAddress;
+          eventDate = aiEnriched.date;
+          startTime = aiEnriched.startTime;
+          endTime = aiEnriched.endTime;
+          tags = aiEnriched.tags;
+          isFree = aiEnriched.isFree;
+          externalUrl = aiEnriched.externalUrl;
+          sourceHandle = aiEnriched.sourceHandle;
+          mentionedHandles = aiEnriched.mentionedHandles;
+          qualityScore = aiEnriched.qualityScore;
+          qualityIssues = aiEnriched.qualityIssues;
+          localLanguageNote = aiEnriched.localLanguageNote;
+          detectedCity = aiEnriched.city || detectedCity;
+
+          console.log(`[PROCESS-INGEST] AI enriched "${eventName}" — quality: ${qualityScore}/100, city: ${detectedCity}, handles: ${mentionedHandles.length}`);
+
+          // Quality gate: skip very low-quality items
+          if (qualityScore < 20) {
+            await supabase
+              .from('ingest_queue')
+              .update({
+                status: 'needs_review',
+                error_message: `Low quality score (${qualityScore}/100): ${qualityIssues.join(', ')}`,
+                processed_at: new Date().toISOString(),
+              })
+              .eq('id', item.id);
+            results.errors.push(`${item.id}: low quality (${qualityScore})`);
+            continue;
+          }
+        } else {
+          // AI unavailable or failed — fall back to regex parsing
+          console.log(`[PROCESS-INGEST] AI enrichment unavailable, using regex parser for ${item.id}`);
+          const parsed = parseEventFromText(item.raw_text || '', item.subject);
+          eventName = parsed.name;
+          eventDescription = parsed.description;
+          venueName = parsed.venueName;
+          venueAddress = parsed.venueAddress;
+          eventDate = parsed.date;
+          startTime = parsed.startTime;
+          endTime = parsed.endTime;
+          tags = parsed.tags;
+          isFree = parsed.isFree;
+          externalUrl = parsed.externalUrl;
+          sourceHandle = parsed.sourceHandle;
+        }
+
+        if (!eventName) {
           await supabase
             .from('ingest_queue')
             .update({
@@ -253,12 +344,11 @@ export async function POST(request: NextRequest) {
           continue;
         }
 
-        // Resolve city
+        // ─── STEP 2: Resolve city ────────────────────────────────────────
         let cityId: string | null = null;
-        if (item.city && cityMap[item.city]) {
-          cityId = cityMap[item.city].id;
+        if (detectedCity && cityMap[detectedCity]) {
+          cityId = cityMap[detectedCity].id;
         } else {
-          // Default to Los Angeles if no city detected
           cityId = cityMap['losangeles']?.id || null;
         }
 
@@ -275,44 +365,38 @@ export async function POST(request: NextRequest) {
           continue;
         }
 
-        // Create the event with PENDING status for admin review
-        const eventSlug = slugify(parsed.name, parsed.date);
+        // ─── STEP 3: Create event with PENDING status ────────────────────
+        const eventSlug = slugify(eventName, eventDate);
+        const timezone = (detectedCity && cityTimezones[detectedCity]) || 'America/Los_Angeles';
 
-        // Determine timezone from city
-        const cityTimezones: Record<string, string> = {
-          losangeles: 'America/Los_Angeles',
-          nyc: 'America/New_York',
-          london: 'Europe/London',
-          paris: 'Europe/Paris',
-          geneva: 'Europe/Zurich',
-          barcelona: 'Europe/Madrid',
-          sydney: 'Australia/Sydney',
-          tokyo: 'Asia/Tokyo',
-        };
-        const timezone = (item.city && cityTimezones[item.city]) || 'America/Los_Angeles';
+        // Build description with local language note if available
+        const fullDescription = localLanguageNote && eventDescription
+          ? `${eventDescription}\n\n${localLanguageNote}`
+          : eventDescription;
 
         const { data: newEvent, error: insertError } = await supabase
           .from('events')
           .insert({
             city_id: cityId,
-            name: parsed.name,
+            name: eventName,
             slug: eventSlug,
-            description: parsed.description,
-            venue_name: parsed.venueName,
-            venue_address: parsed.venueAddress,
-            start_date: parsed.date || null,
-            start_time: parsed.startTime || null,
-            end_time: parsed.endTime || null,
-            external_url: parsed.externalUrl || item.url,
+            description: fullDescription,
+            venue_name: venueName,
+            venue_address: venueAddress,
+            start_date: eventDate || null,
+            start_time: startTime || null,
+            end_time: endTime || null,
+            external_url: externalUrl || item.url,
             timezone,
-            tags: parsed.tags,
-            is_free: parsed.isFree,
+            tags,
+            is_free: isFree,
             is_featured: false,
             status: 'PENDING',
-            source: 'admin', // valid enum value
+            source: 'admin',
             submitter_email: item.submitted_by,
             source_post_url: item.url,
-            source_handle: parsed.sourceHandle || item.instagram_username,
+            source_handle: sourceHandle || item.instagram_username,
+            mentioned_handles: mentionedHandles.length > 0 ? mentionedHandles : null,
           })
           .select('id')
           .single();
@@ -342,7 +426,8 @@ export async function POST(request: NextRequest) {
           .eq('id', item.id);
 
         results.created++;
-        console.log(`[PROCESS-INGEST] Created event "${parsed.name}" (${newEvent.id}) from ingest ${item.id}`);
+        const handleInfo = mentionedHandles.length > 0 ? ` [handles: @${mentionedHandles.slice(0, 3).join(', @')}]` : '';
+        console.log(`[PROCESS-INGEST] Created event "${eventName}" (${newEvent.id}) — quality: ${qualityScore}/100, city: ${detectedCity}${handleInfo}`);
       } catch (itemError) {
         results.errors.push(`${item.id}: ${String(itemError)}`);
       }
