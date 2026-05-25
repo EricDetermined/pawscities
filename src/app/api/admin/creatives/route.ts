@@ -265,16 +265,77 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
 
+    // Check if a creative already exists for this event
+    const { data: existingCreative } = await supabase
+      .from('creative_queue')
+      .select('id, status')
+      .eq('event_id', eventId)
+      .in('status', ['pending_review', 'approved', 'generating'])
+      .limit(1);
+
+    if (existingCreative && existingCreative.length > 0) {
+      return NextResponse.json({
+        success: false,
+        error: `Creative already exists for this event (status: ${existingCreative[0].status})`,
+        existingId: existingCreative[0].id,
+      }, { status: 409 });
+    }
+
     const cityName = event.cities?.name || 'City';
     const citySlug = event.cities?.slug || 'losangeles';
     const metaKey = Object.keys(CITY_META).find(k => CITY_META[k].slug === citySlug) || citySlug;
+    const hasOpenAI = !!process.env.OPENAI_API_KEY;
 
-    const narrator = 'buster'; // Buster handles events
+    // Alternate narrator based on last event creative
+    const { data: lastEventCreative } = await supabase
+      .from('creative_queue')
+      .select('narrator')
+      .eq('content_type', 'event')
+      .in('status', ['approved', 'posted', 'pending_review'])
+      .order('created_at', { ascending: false })
+      .limit(1);
+    const narrator: 'buster' | 'marley' = lastEventCreative?.[0]?.narrator === 'buster' ? 'marley' : 'buster';
+
     const landmarks = CITY_LANDMARKS[metaKey] || CITY_LANDMARKS.paris;
+    const venueContext = event.venue_name ? ` near ${event.venue_name}` : '';
 
-    const imagePrompt = `Pixar/Disney-style cartoon illustration: Buster, a compact golden-tan smooth-coated mixed breed dog with folded ears, big expressive brown eyes, wide happy grin with tongue out, wearing an olive-green collar with orange paw tag, standing excitedly in ${cityName}. Behind him, ${landmarks.landmark}. Bright cheerful atmosphere suggesting a fun dog-friendly event. 1080x1080, no text, no humans.`;
+    const imagePrompt = narrator === 'buster'
+      ? `Pixar/Disney-style cartoon illustration: Buster, a compact golden-tan smooth-coated mixed breed dog with folded ears, big expressive brown eyes, wide happy grin with tongue out, wearing an olive-green collar with a small orange paw-print tag, standing excitedly${venueContext} in ${cityName} with ${landmarks.landmark} in the background. Bright cheerful atmosphere suggesting a fun dog-friendly event. Several happy dogs of different breeds nearby. Warm lighting, cinematic. 1080x1080, no text overlay, no humans.`
+      : `Pixar/Disney-style cartoon illustration: Marley, a fluffy golden-apricot goldendoodle with curly teddy bear coat, soulful intelligent brown eyes, calm gentle smile, wearing a navy blue bandana with a small orange paw-print tag, sitting calmly${venueContext} in ${cityName} with ${landmarks.landmark} in the background. Warm cozy atmosphere, several friendly dogs nearby. Soft lighting, inviting scene. 1080x1080, no text overlay, no humans.`;
 
-    const caption = `📅 ${event.name} in ${cityName}!\n\n🗓 ${event.start_date}\n📍 ${event.venue_name || cityName}\n\n${event.description || 'Don\'t miss this awesome dog-friendly event!'}\n\n${event.is_free ? '🆓 Free event!\n\n' : ''}Find more dog-friendly events at pawcities.com/events\n\nFollow @thepawcities for daily dog-friendly events 🌍\n\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')}`;
+    // Build rich caption using the upgraded multilingual character voice
+    const allHandles = event.mentioned_handles || [];
+    const handleContext = allHandles.length > 0
+      ? ` Organized/sponsored by: ${allHandles.map((h: string) => '@' + h.replace('@', '')).join(', ')}.`
+      : '';
+    const sourceContext = event.source_handle
+      ? ` Source: @${event.source_handle.replace('@', '')}.`
+      : '';
+
+    let caption: string;
+    if (hasOpenAI) {
+      const aiCaption = await generateCharacterCaption(
+        narrator,
+        event.name,
+        (event.description || 'An exciting dog-friendly event!') + handleContext + sourceContext,
+        cityName,
+        citySlug,
+        'event',
+      );
+      caption = aiCaption || `📅 ${event.name} in ${cityName}!\n\n🗓 ${event.start_date}\n📍 ${event.venue_name || cityName}\n\n${event.description || 'Don\'t miss this awesome dog-friendly event!'}\n\nFollow @thepawcities for daily dog-friendly events 🌍\n\n#PawCities #DogFriendlyEvents #DogsOfInstagram`;
+    } else {
+      caption = `📅 ${event.name} in ${cityName}!\n\n🗓 ${event.start_date}\n📍 ${event.venue_name || cityName}\n\n${event.description || 'Don\'t miss this awesome dog-friendly event!'}\n\n${event.is_free ? '🆓 Free event!\n\n' : ''}Find more dog-friendly events at pawcities.com/${citySlug}/events\n\nFollow @thepawcities for daily dog-friendly events 🌍\n\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')}`;
+    }
+
+    // Generate DALL-E image immediately so admin can preview it
+    let imageUrl: string | null = null;
+    if (hasOpenAI) {
+      const storagePath = `mascot-creatives/${metaKey}-event-${narrator}-${Date.now()}.png`;
+      const dalleResult = await generateAndUploadMascotImage(imagePrompt, storagePath);
+      if (dalleResult) {
+        imageUrl = dalleResult.publicUrl;
+      }
+    }
 
     const { error: insertError } = await supabase.from('creative_queue').insert({
       content_type: 'event',
@@ -283,18 +344,26 @@ export async function POST(request: NextRequest) {
       city: metaKey,
       headline: event.name,
       caption,
+      image_url: imageUrl,
       image_prompt: imagePrompt,
       format: 'event_post',
       status: 'pending_review',
       scheduled_for: event.start_date,
-      generation_model: process.env.OPENAI_API_KEY ? 'gpt-image-1' : 'next-og',
+      generation_model: hasOpenAI ? 'gpt-image-1' : 'next-og',
     });
 
     if (insertError) {
       return NextResponse.json({ error: insertError.message }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, event: event.name, city: cityName });
+    return NextResponse.json({
+      success: true,
+      event: event.name,
+      city: cityName,
+      narrator,
+      hasImage: !!imageUrl,
+      message: `Creative generated for "${event.name}" — review at /admin/creatives`,
+    });
   }
 
   return NextResponse.json({ error: 'Unknown action' }, { status: 400 });

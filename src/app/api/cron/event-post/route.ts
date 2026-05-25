@@ -238,178 +238,95 @@ export async function GET(request: NextRequest) {
       : 'buster';
 
     // ══════════════════════════════════════════════════════════════════════════
-    // PRIORITY 1: Upcoming events
+    // PRIORITY 1: Approved event creatives from the creative queue
+    // Events now flow through the creative queue for admin review:
+    //   approve event → auto-generate creative → admin reviews at /admin/creatives
+    //   → admin approves creative → event-post cron publishes it here
     // ══════════════════════════════════════════════════════════════════════════
 
-    const lookahead = new Date();
-    lookahead.setDate(lookahead.getDate() + EVENT_LOOKAHEAD_DAYS);
-    const lookaheadDate = lookahead.toISOString().split('T')[0];
+    const { data: approvedEventCreatives } = await supabase
+      .from('creative_queue')
+      .select('*')
+      .eq('content_type', 'event')
+      .eq('status', 'approved')
+      .lte('scheduled_for', today)
+      .order('scheduled_for', { ascending: true })
+      .limit(1);
 
-    const { data: upcomingEvents } = await supabase
-      .from('events')
-      .select('id, slug, name, description, venue_name, start_date, end_date, start_time, end_time, tags, source_handle, is_free, is_featured, mentioned_handles, cities(slug, name)')
-      .eq('status', 'APPROVED')
-      .gte('start_date', today)
-      .lte('start_date', lookaheadDate)
-      .order('start_date', { ascending: true });
+    const nextEventCreative = approvedEventCreatives?.[0];
 
-    const unpostedEvent = (upcomingEvents as unknown as EventRow[] | null)?.find(
-      (evt) => !postedHeadlines.has(evt.name)
-    );
+    if (nextEventCreative) {
+      console.log(`[EVENT-POST] Publishing approved event creative: "${nextEventCreative.headline}" (${nextEventCreative.narrator})`);
 
-    if (unpostedEvent) {
-      const city = unpostedEvent.cities;
-      const citySlug = city?.slug || 'losangeles';
-      const cityName = city?.name || 'City';
-      const metaKey = getCityMetaKey(citySlug);
+      let imageUrl = nextEventCreative.image_url;
 
-      const dateDisplay = formatEventDate(unpostedEvent.start_date);
-      const timeDisplay = formatEventTime(unpostedEvent.start_time);
-      const dateStr = timeDisplay ? `${dateDisplay} at ${timeDisplay}` : dateDisplay;
-
-      console.log(`[EVENT-POST] Posting event: "${unpostedEvent.name}" in ${cityName} (${narrator})`);
-
-      // Generate mascot image via DALL-E
-      let imageUrl: string | null = null;
-      if (hasOpenAI) {
-        const imagePrompt = buildEventImagePrompt(unpostedEvent.name, cityName, metaKey, narrator, unpostedEvent.venue_name);
-        const storagePath = `mascot-creatives/${metaKey}-event-${narrator}-${Date.now()}.png`;
-        const dalleResult = await generateAndUploadMascotImage(imagePrompt, storagePath);
+      // If no image yet, generate one now
+      if (!imageUrl && hasOpenAI && nextEventCreative.image_prompt) {
+        const storagePath = `mascot-creatives/${nextEventCreative.city}-event-${nextEventCreative.narrator}-${Date.now()}.png`;
+        const dalleResult = await generateAndUploadMascotImage(nextEventCreative.image_prompt, storagePath);
         if (dalleResult) {
           imageUrl = dalleResult.publicUrl;
         }
       }
 
       if (!imageUrl) {
-        // Fallback: use event-creative endpoint (non-mascot branded image)
-        const creativeParams = new URLSearchParams({
-          name: unpostedEvent.name,
-          city: cityName,
-          citySlug,
-          date: dateStr,
-        });
-        if (unpostedEvent.venue_name) creativeParams.set('venue', unpostedEvent.venue_name);
-
-        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
-        const creativeRes = await fetch(`${baseUrl}/api/social/event-creative?${creativeParams}`);
-        if (creativeRes.ok) {
-          const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
-          const storagePath = `instagram-posts/${citySlug}-event-mascot-${Date.now()}.png`;
-          const { error: uploadError } = await supabase.storage
-            .from('photos')
-            .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
-          if (!uploadError) {
-            const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
-            imageUrl = urlData?.publicUrl || null;
-          }
+        console.error('[EVENT-POST] No image for event creative');
+        await supabase.from('creative_queue')
+          .update({ status: 'failed', error_message: 'No image available' })
+          .eq('id', nextEventCreative.id);
+        // Fall through to business spotlight
+      } else {
+        if (dryRun) {
+          return NextResponse.json({
+            status: 'dry_run',
+            type: 'event_creative',
+            narrator: nextEventCreative.narrator,
+            headline: nextEventCreative.headline,
+            city: nextEventCreative.city,
+            imageUrl,
+            caption: nextEventCreative.caption,
+          });
         }
-      }
 
-      if (!imageUrl) {
-        console.error('[EVENT-POST] Could not generate image for event');
+        // Publish to Instagram
+        const result = await publishImagePost(imageUrl, nextEventCreative.caption);
+
+        // Record in social_posts
         await supabase.from('social_posts').insert({
           platform: 'instagram',
-          headline: unpostedEvent.name,
-          city: metaKey,
-          caption: '',
-          status: 'failed',
-          error_message: 'Could not generate event mascot image',
+          post_id: result.postId || null,
+          container_id: result.containerId || null,
+          headline: nextEventCreative.headline,
+          city: nextEventCreative.city,
+          caption: nextEventCreative.caption,
+          image_url: imageUrl,
+          status: result.success ? 'published' : 'failed',
+          error_message: result.error || null,
         });
-        return NextResponse.json({ status: 'error', error: 'Image generation failed' }, { status: 500 });
-      }
 
-      // Build handles list for tagging businesses/sponsors
-      const allMentionedHandles = unpostedEvent.mentioned_handles || [];
+        // Update creative queue status
+        await supabase.from('creative_queue')
+          .update({
+            status: result.success ? 'posted' : 'failed',
+            posted_at: result.success ? new Date().toISOString() : null,
+            image_url: imageUrl,
+            error_message: result.error || null,
+          })
+          .eq('id', nextEventCreative.id);
 
-      // Generate caption (try AI, fall back to template)
-      let caption: string;
-      if (hasOpenAI) {
-        // Build a richer description that includes business/sponsor context
-        const handleContext = allMentionedHandles.length > 0
-          ? ` Organized/sponsored by: ${allMentionedHandles.map((h: string) => '@' + h.replace('@', '')).join(', ')}.`
-          : '';
-        const sourceContext = unpostedEvent.source_handle
-          ? ` Source: @${unpostedEvent.source_handle.replace('@', '')}.`
-          : '';
-
-        const aiCaption = await generateCharacterCaption(
-          narrator,
-          unpostedEvent.name,
-          (unpostedEvent.description || 'An exciting dog-friendly event!') + handleContext + sourceContext,
-          cityName,
-          citySlug,
-          'event',
-        );
-
-        if (aiCaption) {
-          // Ensure AI caption includes the business @mentions if it missed them
-          let finalCaption = aiCaption;
-          const captionLower = aiCaption.toLowerCase();
-          const missingHandles: string[] = [];
-          for (const handle of allMentionedHandles.slice(0, 3)) {
-            const clean = handle.replace('@', '');
-            if (!captionLower.includes(`@${clean.toLowerCase()}`)) {
-              missingHandles.push(clean);
-            }
-          }
-          // Append missing handles as a shoutout before the hashtags
-          if (missingHandles.length > 0) {
-            const shoutout = missingHandles.length === 1
-              ? `\n\nBig thanks to @${missingHandles[0]}! 🙌`
-              : `\nShoutout to ${missingHandles.map(h => '@' + h).join(' & ')}! 🙌`;
-            // Insert before the hashtag block if possible
-            const hashtagIdx = finalCaption.lastIndexOf('\n#');
-            if (hashtagIdx > 0) {
-              finalCaption = finalCaption.substring(0, hashtagIdx) + shoutout + finalCaption.substring(hashtagIdx);
-            } else {
-              finalCaption += shoutout;
-            }
-          }
-          caption = finalCaption;
-        } else {
-          caption = buildEventCaption(narrator, unpostedEvent.name, cityName, citySlug, dateStr, unpostedEvent.venue_name, unpostedEvent.description, unpostedEvent.is_free, unpostedEvent.tags, unpostedEvent.source_handle, allMentionedHandles);
+        if (result.success) {
+          return NextResponse.json({
+            status: 'published',
+            type: 'event_creative',
+            narrator: nextEventCreative.narrator,
+            postId: result.postId,
+            headline: nextEventCreative.headline,
+            city: nextEventCreative.city,
+          });
         }
-      } else {
-        caption = buildEventCaption(narrator, unpostedEvent.name, cityName, citySlug, dateStr, unpostedEvent.venue_name, unpostedEvent.description, unpostedEvent.is_free, unpostedEvent.tags, unpostedEvent.source_handle, allMentionedHandles);
+
+        return NextResponse.json({ status: 'error', type: 'event_creative', error: result.error }, { status: 500 });
       }
-
-      if (dryRun) {
-        return NextResponse.json({
-          status: 'dry_run',
-          type: 'event',
-          narrator,
-          event: { name: unpostedEvent.name, city: cityName, date: dateStr, venue: unpostedEvent.venue_name },
-          imageUrl,
-          caption,
-        });
-      }
-
-      // Publish to Instagram
-      const result = await publishImagePost(imageUrl, caption);
-
-      await supabase.from('social_posts').insert({
-        platform: 'instagram',
-        post_id: result.postId || null,
-        container_id: result.containerId || null,
-        headline: unpostedEvent.name,
-        city: metaKey,
-        caption,
-        image_url: imageUrl,
-        status: result.success ? 'published' : 'failed',
-        error_message: result.error || null,
-      });
-
-      if (result.success) {
-        return NextResponse.json({
-          status: 'published',
-          type: 'event',
-          narrator,
-          postId: result.postId,
-          event: { name: unpostedEvent.name, city: cityName, date: dateStr },
-        });
-      }
-
-      return NextResponse.json({ status: 'error', type: 'event', error: result.error }, { status: 500 });
     }
 
     // ══════════════════════════════════════════════════════════════════════════

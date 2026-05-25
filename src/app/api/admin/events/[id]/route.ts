@@ -110,12 +110,33 @@ export async function PATCH(
 
         if (updateError) throw new Error(updateError.message);
 
-        // TODO: Send approval email to submitter if submitter_email exists
+        // Auto-trigger creative generation for the approved event
+        // This creates a creative_queue entry with pending_review status
+        // so the admin can review the image + caption at /admin/creatives
+        let creativeMessage = '';
+        try {
+          const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+            || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+          const creativeRes = await fetch(`${baseUrl}/api/admin/creatives`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'generate_event', eventId }),
+          });
+          const creativeData = await creativeRes.json();
+          if (creativeData.success) {
+            creativeMessage = ` Creative generated (${creativeData.narrator}) — review at /admin/creatives`;
+          } else {
+            creativeMessage = ` Creative generation note: ${creativeData.error || 'unknown issue'}`;
+          }
+        } catch (creativeError) {
+          console.error('[EVENT-APPROVE] Creative generation failed:', creativeError);
+          creativeMessage = ' (Creative generation failed — generate manually at /admin/creatives)';
+        }
 
         return NextResponse.json({
           id: eventId,
           status: 'APPROVED',
-          message: `Event "${event.name}" approved`,
+          message: `Event "${event.name}" approved.${creativeMessage}`,
         });
       }
 
