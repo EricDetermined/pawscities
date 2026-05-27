@@ -192,15 +192,16 @@ function parseEventFromText(rawText: string, subject: string | null): {
   return { name, description, venueName, venueAddress, date, startTime, endTime, tags, isFree, externalUrl, sourceHandle };
 }
 
-// Generate a URL-safe slug
+// Generate a URL-safe slug with random suffix to avoid duplicates
 function slugify(text: string, date: string | null): string {
   const base = text
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
-    .substring(0, 60);
-  return date ? `${base}-${date}` : base;
+    .substring(0, 50);
+  const suffix = Math.random().toString(36).substring(2, 6);
+  return date ? `${base}-${date}-${suffix}` : `${base}-${suffix}`;
 }
 
 // Shared handler for both GET (Vercel cron) and POST (manual/inline triggers)
@@ -367,7 +368,10 @@ async function handleProcessIngest(request: NextRequest) {
         }
 
         // ─── STEP 3: Create event with PENDING status ────────────────────
-        const eventSlug = slugify(eventName, eventDate);
+        // Default to today if no date extracted (DB requires start_date NOT NULL)
+        const fallbackDate = new Date().toISOString().split('T')[0];
+        const finalDate = eventDate || fallbackDate;
+        const eventSlug = slugify(eventName, finalDate);
         const timezone = (detectedCity && cityTimezones[detectedCity]) || 'America/Los_Angeles';
 
         // Build description with local language note if available
@@ -384,7 +388,7 @@ async function handleProcessIngest(request: NextRequest) {
             description: fullDescription,
             venue_name: venueName,
             venue_address: venueAddress,
-            start_date: eventDate || null,
+            start_date: finalDate,
             start_time: startTime || null,
             end_time: endTime || null,
             external_url: externalUrl || item.url,
