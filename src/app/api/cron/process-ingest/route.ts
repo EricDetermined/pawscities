@@ -203,7 +203,8 @@ function slugify(text: string, date: string | null): string {
   return date ? `${base}-${date}` : base;
 }
 
-export async function POST(request: NextRequest) {
+// Shared handler for both GET (Vercel cron) and POST (manual/inline triggers)
+async function handleProcessIngest(request: NextRequest) {
   // Auth check
   if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -439,4 +440,14 @@ export async function POST(request: NextRequest) {
     console.error('[PROCESS-INGEST] Error:', error);
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
+}
+
+// GET handler — used by Vercel cron (crons always send GET)
+export async function GET(request: NextRequest) {
+  return handleProcessIngest(request);
+}
+
+// POST handler — used by inline triggers (e.g., after email ingest)
+export async function POST(request: NextRequest) {
+  return handleProcessIngest(request);
 }
