@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
         *,
         cities(slug, name)
       `)
-      .order('created_at', { ascending: false })
+      .order('start_date', { ascending: true })
       .range(offset, offset + limit - 1);
 
     if (status !== 'all' && validStatuses.includes(status.toUpperCase())) {

@@ -240,7 +240,7 @@ async function handleProcessIngest(request: NextRequest) {
     // Determine timezone from city slug
     const cityTimezones: Record<string, string> = {
       losangeles: 'America/Los_Angeles',
-      nyc: 'America/New_York',
+      newyork: 'America/New_York',
       london: 'Europe/London',
       paris: 'Europe/Paris',
       geneva: 'Europe/Zurich',
@@ -347,9 +347,21 @@ async function handleProcessIngest(request: NextRequest) {
         }
 
         // ─── STEP 2: Resolve city ────────────────────────────────────────
+        // Map discovery aliases (e.g. 'nyc') to database slugs (e.g. 'newyork')
+        const cityAliases: Record<string, string> = {
+          nyc: 'newyork',
+          ny: 'newyork',
+          la: 'losangeles',
+          ldn: 'london',
+          bcn: 'barcelona',
+        };
+        const resolvedCity = detectedCity
+          ? (cityAliases[detectedCity] || detectedCity)
+          : null;
+
         let cityId: string | null = null;
-        if (detectedCity && cityMap[detectedCity]) {
-          cityId = cityMap[detectedCity].id;
+        if (resolvedCity && cityMap[resolvedCity]) {
+          cityId = cityMap[resolvedCity].id;
         } else {
           cityId = cityMap['losangeles']?.id || null;
         }
@@ -367,7 +379,35 @@ async function handleProcessIngest(request: NextRequest) {
           continue;
         }
 
-        // ─── STEP 3: Create event with PENDING status ────────────────────
+        // ─── STEP 3: Deduplication check ────────────────────────────────
+        // Check if an event with a similar name already exists (any status)
+        // to prevent duplicate processing from multiple hashtag searches
+        const normalizedName = eventName.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const { data: existingEvents } = await supabase
+          .from('events')
+          .select('id, name')
+          .ilike('name', `%${eventName.substring(0, 30)}%`)
+          .limit(10);
+
+        const isDuplicate = existingEvents?.some(existing => {
+          const existingNorm = existing.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+          return existingNorm === normalizedName;
+        });
+
+        if (isDuplicate) {
+          console.log(`[PROCESS-INGEST] Skipping duplicate event "${eventName}" — already exists`);
+          await supabase
+            .from('ingest_queue')
+            .update({
+              status: 'needs_review',
+              error_message: `Duplicate: event "${eventName}" already exists in events table`,
+              processed_at: new Date().toISOString(),
+            })
+            .eq('id', item.id);
+          continue;
+        }
+
+        // ─── STEP 4: Create event with PENDING status ────────────────────
         // Default to today if no date extracted (DB requires start_date NOT NULL)
         const fallbackDate = new Date().toISOString().split('T')[0];
         const finalDate = eventDate || fallbackDate;

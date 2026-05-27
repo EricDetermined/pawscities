@@ -30,7 +30,7 @@ const CITY_HASHTAGS: Record<string, { slug: string; name: string; hashtags: stri
       'pupupevent', 'yappyhourla', 'dogbrunchla', 'doghikela',
     ],
   },
-  nyc: {
+  newyork: {
     slug: 'newyork',
     name: 'New York',
     hashtags: [
@@ -239,7 +239,7 @@ function detectCity(caption: string): string | null {
     losangeles: ['los angeles', 'la ', 'pasadena', 'hollywood', 'santa monica', 'west hollywood',
       'silver lake', 'echo park', 'venice beach', 'huntington beach', 'long beach', 'burbank',
       'glendale', 'culver city', 'dtla', 'downtown la'],
-    nyc: ['new york', 'nyc', 'brooklyn', 'manhattan', 'queens', 'bronx', 'east village',
+    newyork: ['new york', 'nyc', 'brooklyn', 'manhattan', 'queens', 'bronx', 'east village',
       'west village', 'williamsburg', 'bushwick', 'astoria', 'upper west side', 'upper east side'],
     sydney: ['sydney', 'bondi', 'manly', 'newtown', 'surry hills', 'darling harbour',
       'circular quay', 'coogee', 'randwick'],
@@ -267,7 +267,7 @@ function detectCityFromHashtag(hashtag: string): string | null {
   if (lower.includes('london') || lower.includes('ldn')) return 'london';
   if (lower.includes('barcelona') || lower.includes('bcn') || lower.includes('perro')) return 'barcelona';
   if (lower.includes('la') || lower.includes('losangeles') || lower.includes('socal') || lower.includes('pasadena')) return 'losangeles';
-  if (lower.includes('nyc') || lower.includes('newyork') || lower.includes('brooklyn')) return 'nyc';
+  if (lower.includes('nyc') || lower.includes('newyork') || lower.includes('brooklyn')) return 'newyork';
   if (lower.includes('sydney') || lower.includes('bondi') || lower.includes('nsw')) return 'sydney';
   if (lower.includes('tokyo') || lower.includes('東京') || lower.includes('ドッグ') || lower.includes('わんこ')) return 'tokyo';
   if (lower.includes('geneva') || lower.includes('geneve') || lower.includes('swiss') || lower.includes('suisse') || lower.includes('hund')) return 'geneva';
