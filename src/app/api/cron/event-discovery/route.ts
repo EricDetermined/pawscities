@@ -4,6 +4,8 @@ import { verifyCronAuth } from '@/lib/cron-auth';
 function getMetaToken() { return process.env.META_PAGE_ACCESS_TOKEN; }
 function getInstagramAccountId() { return process.env.INSTAGRAM_ACCOUNT_ID; }
 function getMetaApiVersion() { return process.env.META_API_VERSION || 'v21.0'; }
+function getApifyToken() { return process.env.APIFY_TOKEN; }
+function getOpenAIKey() { return process.env.OPENAI_API_KEY; }
 
 function getSupabaseAdmin() {
   return createClient(
@@ -13,7 +15,7 @@ function getSupabaseAdmin() {
   );
 }
 
-export const maxDuration = 120;
+export const maxDuration = 300; // Increased to 5 min for Google Events + Vision scanning
 
 // ─── City-specific hashtags (expanded for deeper discovery) ─────────────────
 // Each city has 8-12 hashtags covering: events, venues, community handles, local dog culture
@@ -158,10 +160,261 @@ const BUSINESS_KEYWORDS = [
   'thank you to our sponsors', 'thanks to', 'shoutout to',
 ];
 
+// ─── Google Events search queries per city (in local language + English) ────
+// Apify Google Events Scraper: codingfrontend~google-events-scraper
+// Each city gets 2 queries: one in English, one in local language for broader coverage
+
+const GOOGLE_EVENT_QUERIES: Record<string, {
+  queries: string[];
+  location: string;
+  gl: string;  // Google country code
+  hl: string;  // Google language code
+}> = {
+  losangeles: {
+    queries: ['dog friendly events Los Angeles', 'dog events LA this month'],
+    location: 'Los Angeles, CA',
+    gl: 'us', hl: 'en',
+  },
+  newyork: {
+    queries: ['dog friendly events New York', 'dog events NYC this month'],
+    location: 'New York, NY',
+    gl: 'us', hl: 'en',
+  },
+  london: {
+    queries: ['dog friendly events London', 'dog events London this month'],
+    location: 'London, UK',
+    gl: 'uk', hl: 'en',
+  },
+  paris: {
+    queries: ['événements chiens Paris', 'dog friendly events Paris'],
+    location: 'Paris, France',
+    gl: 'fr', hl: 'fr',
+  },
+  barcelona: {
+    queries: ['eventos perros Barcelona', 'dog friendly events Barcelona'],
+    location: 'Barcelona, Spain',
+    gl: 'es', hl: 'es',
+  },
+  tokyo: {
+    queries: ['犬 イベント 東京', 'dog friendly events Tokyo'],
+    location: 'Tokyo, Japan',
+    gl: 'jp', hl: 'ja',
+  },
+  sydney: {
+    queries: ['dog friendly events Sydney', 'dog events Sydney this month'],
+    location: 'Sydney, Australia',
+    gl: 'au', hl: 'en',
+  },
+  geneva: {
+    queries: ['événements chiens Genève', 'dog friendly events Geneva'],
+    location: 'Geneva, Switzerland',
+    gl: 'ch', hl: 'fr',
+  },
+};
+
+// ─── Google Events via Apify ────────────────────────────────────────────────
+
+interface ApifyGoogleEvent {
+  title?: string;
+  date?: string;
+  description?: string;
+  link?: string;
+  venue?: string;
+  address?: string;
+  image?: string;
+  thumbnail?: string;
+}
+
+async function discoverGoogleEvents(citySlug: string): Promise<Array<{
+  name: string;
+  date: string | null;
+  description: string | null;
+  venue: string | null;
+  address: string | null;
+  url: string | null;
+  imageUrl: string | null;
+  city: string;
+  source: 'google_events';
+}>> {
+  const APIFY_TOKEN = getApifyToken();
+  if (!APIFY_TOKEN) {
+    console.warn('[GOOGLE-EVENTS] APIFY_TOKEN not configured, skipping');
+    return [];
+  }
+
+  const cityConfig = GOOGLE_EVENT_QUERIES[citySlug];
+  if (!cityConfig) return [];
+
+  const results: Array<{
+    name: string;
+    date: string | null;
+    description: string | null;
+    venue: string | null;
+    address: string | null;
+    url: string | null;
+    imageUrl: string | null;
+    city: string;
+    source: 'google_events';
+  }> = [];
+
+  // Rotate queries daily — use 1 query per city per run to stay within Apify limits
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+  const queryIndex = dayOfYear % cityConfig.queries.length;
+  const query = cityConfig.queries[queryIndex];
+
+  console.log(`[GOOGLE-EVENTS] Searching "${query}" for ${citySlug}`);
+
+  try {
+    const apifyUrl = `https://api.apify.com/v2/acts/codingfrontend~google-events-scraper/run-sync-get-dataset-items?token=${APIFY_TOKEN}`;
+    const res = await fetch(apifyUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query,
+        location: cityConfig.location,
+        gl: cityConfig.gl,
+        hl: cityConfig.hl,
+        maxItems: 20,
+      }),
+      signal: AbortSignal.timeout(60000), // 60s timeout for Apify sync run
+    });
+
+    if (!res.ok) {
+      console.error(`[GOOGLE-EVENTS] Apify returned ${res.status} for ${citySlug}`);
+      return [];
+    }
+
+    const events = (await res.json()) as ApifyGoogleEvent[];
+    console.log(`[GOOGLE-EVENTS] Got ${events.length} results for ${citySlug}`);
+
+    for (const event of events) {
+      if (!event.title) continue;
+
+      // Filter: must be dog-related
+      const titleLower = (event.title || '').toLowerCase();
+      const descLower = (event.description || '').toLowerCase();
+      const combined = titleLower + ' ' + descLower;
+      const dogKeywords = ['dog', 'pup', 'puppy', 'canine', 'pet', 'bark', 'woof', 'paw',
+        'chien', 'perro', 'hund', '犬', 'わんこ', 'ドッグ', 'rescue', 'adoption',
+        'pet-friendly', 'pet friendly', 'four-legged', 'furry friend'];
+      const isDogRelated = dogKeywords.some(kw => combined.includes(kw));
+
+      if (!isDogRelated) continue;
+
+      results.push({
+        name: event.title,
+        date: event.date || null,
+        description: (event.description || '').substring(0, 500),
+        venue: event.venue || null,
+        address: event.address || null,
+        url: event.link || null,
+        imageUrl: event.image || event.thumbnail || null,
+        city: citySlug,
+        source: 'google_events',
+      });
+    }
+  } catch (err) {
+    console.error(`[GOOGLE-EVENTS] Error for ${citySlug}:`, err);
+  }
+
+  return results;
+}
+
+// ─── GPT-4o Vision for Instagram Event Posters ──────────────────────────────
+// For high-scoring Instagram posts with images, send the image to GPT-4o Vision
+// to extract structured event details from posters/flyers
+
+interface VisionEventDetails {
+  eventName: string | null;
+  date: string | null;
+  time: string | null;
+  venue: string | null;
+  address: string | null;
+  organizer: string | null;
+  ticketUrl: string | null;
+  description: string | null;
+  isEventPoster: boolean;
+}
+
+async function scanPosterWithVision(imageUrl: string): Promise<VisionEventDetails | null> {
+  const OPENAI_API_KEY = getOpenAIKey();
+  if (!OPENAI_API_KEY) {
+    console.warn('[VISION] OPENAI_API_KEY not configured, skipping poster scan');
+    return null;
+  }
+
+  try {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini', // cost-effective for poster reading
+        messages: [
+          {
+            role: 'system',
+            content: `You are an event detail extractor for a dog-friendly events platform.
+Analyze the image and determine if it's an event poster/flyer. If it IS an event poster, extract the structured details.
+Respond ONLY with valid JSON, no markdown. Use this exact schema:
+{
+  "isEventPoster": true/false,
+  "eventName": "string or null",
+  "date": "YYYY-MM-DD or descriptive string or null",
+  "time": "HH:MM or descriptive string or null",
+  "venue": "venue name or null",
+  "address": "full address or null",
+  "organizer": "@handle or organization name or null",
+  "ticketUrl": "url or null",
+  "description": "brief 1-2 sentence description or null"
+}
+If it's not an event poster (just a photo of a dog, meme, etc.), set isEventPoster to false and all other fields to null.`,
+          },
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'image_url',
+                image_url: { url: imageUrl, detail: 'low' }, // low detail to save tokens
+              },
+              {
+                type: 'text',
+                text: 'Is this an event poster or flyer? If yes, extract the event details.',
+              },
+            ],
+          },
+        ],
+        max_tokens: 300,
+        temperature: 0,
+      }),
+      signal: AbortSignal.timeout(15000),
+    });
+
+    if (!res.ok) {
+      console.error(`[VISION] OpenAI returned ${res.status}`);
+      return null;
+    }
+
+    const data = await res.json();
+    const content = data.choices?.[0]?.message?.content;
+    if (!content) return null;
+
+    // Parse the JSON response (strip any markdown wrapping)
+    const jsonStr = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const parsed = JSON.parse(jsonStr) as VisionEventDetails;
+    return parsed;
+  } catch (err) {
+    console.error('[VISION] Error scanning poster:', err);
+    return null;
+  }
+}
+
 interface MediaItem {
   id: string;
   caption?: string;
   media_type: string;
+  media_url?: string;
   permalink: string;
   timestamp: string;
   like_count?: number;
@@ -296,9 +549,13 @@ export async function GET(request: NextRequest) {
   const INSTAGRAM_ACCOUNT_ID = getInstagramAccountId();
   const META_API_VERSION = getMetaApiVersion();
 
-  if (!META_PAGE_ACCESS_TOKEN || !INSTAGRAM_ACCOUNT_ID) {
-    console.error('[EVENT-DISCOVERY] Instagram API credentials not configured');
-    return NextResponse.json({ error: 'Instagram API not configured' }, { status: 500 });
+  const instagramConfigured = !!(META_PAGE_ACCESS_TOKEN && INSTAGRAM_ACCOUNT_ID);
+  const apifyConfigured = !!getApifyToken();
+  const visionConfigured = !!getOpenAIKey();
+
+  if (!instagramConfigured && !apifyConfigured) {
+    console.error('[EVENT-DISCOVERY] No discovery channels configured (need Instagram or Apify)');
+    return NextResponse.json({ error: 'No discovery channels configured' }, { status: 500 });
   }
 
   const supabase = getSupabaseAdmin();
@@ -346,9 +603,24 @@ export async function GET(request: NextRequest) {
     hashtag: string;
     mentionedHandles: string[];
     isBusiness: boolean;
+    visionEnriched?: boolean;
+    source?: string;
   }> = [];
 
-  // Search each hashtag
+  // Vision scan budget — limit per run to control OpenAI costs
+  const VISION_SCAN_BUDGET = 5;
+  let visionScansUsed = 0;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CHANNEL 1: Instagram Hashtag Discovery (existing)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (!instagramConfigured) {
+    console.log('[EVENT-DISCOVERY] Instagram not configured, skipping hashtag discovery');
+  }
+
+  // Search each hashtag (only if Instagram is configured)
+  if (instagramConfigured)
   for (const { hashtag, city: hintCity } of selectedHashtags) {
     try {
       // Step 1: Get hashtag ID
@@ -364,7 +636,8 @@ export async function GET(request: NextRequest) {
       const hashtagId = searchData.data[0].id;
 
       // Step 2: Get recent media (increased to 30 per hashtag for better coverage)
-      const mediaUrl = `https://graph.facebook.com/${META_API_VERSION}/${hashtagId}/recent_media?user_id=${INSTAGRAM_ACCOUNT_ID}&fields=id,caption,media_type,permalink,timestamp,like_count,comments_count&limit=30&access_token=${META_PAGE_ACCESS_TOKEN}`;
+      // Include media_url for Vision poster scanning on high-scoring IMAGE posts
+      const mediaUrl = `https://graph.facebook.com/${META_API_VERSION}/${hashtagId}/recent_media?user_id=${INSTAGRAM_ACCOUNT_ID}&fields=id,caption,media_type,media_url,permalink,timestamp,like_count,comments_count&limit=30&access_token=${META_PAGE_ACCESS_TOKEN}`;
       const mediaRes = await fetch(mediaUrl, { signal: AbortSignal.timeout(15000) });
       const mediaData = await mediaRes.json();
 
@@ -377,21 +650,75 @@ export async function GET(request: NextRequest) {
 
       // Step 3: Classify each post
       for (const post of mediaData.data as MediaItem[]) {
-        const score = classifyEventRelevance(post.caption || '', post.like_count || 0);
+        let score = classifyEventRelevance(post.caption || '', post.like_count || 0);
         if (score < 18) continue; // Slightly lower threshold to catch more events
 
         const usernameMatch = post.permalink?.match(/instagram\.com\/([^\/]+)\//);
         const username = usernameMatch?.[1] || 'unknown';
 
         // Detect city from caption first, then fall back to hashtag hint
-        const city = detectCity(post.caption || '') || hintCity || detectCityFromHashtag(hashtag);
+        let city = detectCity(post.caption || '') || hintCity || detectCityFromHashtag(hashtag);
 
         // Extract business/sponsor handles from the caption
         const mentionedHandles = extractMentionedHandles(post.caption || '');
         const isBusiness = isBusinessPost(post.caption || '', username);
 
+        let caption = (post.caption || '').substring(0, 800);
+        let visionEnriched = false;
+
+        // ─── GPT-4o Vision: scan high-scoring IMAGE posts for event poster details ──
+        // Only scan if: Vision is configured, it's an IMAGE, score >= 30 (likely event),
+        // and we haven't hit our per-run Vision budget (max 5 scans to control costs)
+        if (
+          visionConfigured &&
+          post.media_type === 'IMAGE' &&
+          post.media_url &&
+          score >= 30 &&
+          visionScansUsed < VISION_SCAN_BUDGET
+        ) {
+          console.log(`[VISION] Scanning poster for ${post.permalink} (score: ${score})`);
+          const visionResult = await scanPosterWithVision(post.media_url);
+          visionScansUsed++;
+
+          if (visionResult?.isEventPoster) {
+            console.log(`[VISION] Found event poster: "${visionResult.eventName}" at ${visionResult.venue}`);
+            // Boost score significantly — this is a confirmed event poster
+            score = Math.min(score + 25, 100);
+            visionEnriched = true;
+
+            // Build enriched caption with structured data from the poster
+            const enrichedParts: string[] = [];
+            if (visionResult.eventName) enrichedParts.push(`Event: ${visionResult.eventName}`);
+            if (visionResult.date) enrichedParts.push(`Date: ${visionResult.date}`);
+            if (visionResult.time) enrichedParts.push(`Time: ${visionResult.time}`);
+            if (visionResult.venue) enrichedParts.push(`Venue: ${visionResult.venue}`);
+            if (visionResult.address) enrichedParts.push(`Address: ${visionResult.address}`);
+            if (visionResult.organizer) enrichedParts.push(`Organizer: ${visionResult.organizer}`);
+            if (visionResult.ticketUrl) enrichedParts.push(`Tickets: ${visionResult.ticketUrl}`);
+            if (visionResult.description) enrichedParts.push(`Description: ${visionResult.description}`);
+            enrichedParts.push(''); // blank line separator
+            enrichedParts.push(caption); // original caption below
+
+            caption = enrichedParts.join('\n');
+
+            // If Vision found a venue with city info, use that for city detection
+            if (visionResult.address || visionResult.venue) {
+              const visionCity = detectCity(`${visionResult.venue || ''} ${visionResult.address || ''}`);
+              if (visionCity) city = visionCity;
+            }
+
+            // Add organizer as a mentioned handle if it starts with @
+            if (visionResult.organizer && visionResult.organizer.startsWith('@')) {
+              const handle = visionResult.organizer.replace('@', '');
+              if (!mentionedHandles.includes(handle)) {
+                mentionedHandles.push(handle);
+              }
+            }
+          }
+        }
+
         discoveredEvents.push({
-          caption: (post.caption || '').substring(0, 800), // More caption for context
+          caption,
           permalink: post.permalink,
           username,
           city,
@@ -400,6 +727,7 @@ export async function GET(request: NextRequest) {
           hashtag,
           mentionedHandles,
           isBusiness,
+          visionEnriched,
         });
         foundCount++;
       }
@@ -413,9 +741,64 @@ export async function GET(request: NextRequest) {
     await new Promise(r => setTimeout(r, 500));
   }
 
-  // Sort by score descending, take top 30 (increased from 20)
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CHANNEL 2: Google Events via Apify
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  let googleEventsInserted = 0;
+  const googleCityCounts: Record<string, number> = {};
+
+  if (apifyConfigured) {
+    console.log('[GOOGLE-EVENTS] Starting Google Events discovery via Apify...');
+
+    // Rotate cities: scan 4 cities per run (all 8 over 2 days)
+    const allCities = Object.keys(GOOGLE_EVENT_QUERIES);
+    const citiesPerRun = 4;
+    const startIdx = (dayOfYear % 2) * citiesPerRun;
+    const todaysCities = allCities.slice(startIdx, startIdx + citiesPerRun);
+
+    console.log(`[GOOGLE-EVENTS] Today's cities: ${todaysCities.join(', ')}`);
+
+    for (const citySlug of todaysCities) {
+      const googleResults = await discoverGoogleEvents(citySlug);
+
+      for (const gEvent of googleResults) {
+        // Convert Google Events into the same format as Instagram discoveries
+        discoveredEvents.push({
+          caption: [
+            gEvent.name,
+            gEvent.date ? `Date: ${gEvent.date}` : '',
+            gEvent.venue ? `Venue: ${gEvent.venue}` : '',
+            gEvent.address ? `Address: ${gEvent.address}` : '',
+            gEvent.description || '',
+          ].filter(Boolean).join('\n'),
+          permalink: gEvent.url || `https://www.google.com/search?q=${encodeURIComponent(gEvent.name + ' ' + citySlug)}`,
+          username: 'google_events',
+          city: gEvent.city,
+          score: 60, // Google Events are pre-filtered, so high base score
+          likes: 0,
+          hashtag: 'google_events',
+          mentionedHandles: [],
+          isBusiness: false,
+          source: 'google_events',
+        });
+        googleCityCounts[citySlug] = (googleCityCounts[citySlug] || 0) + 1;
+      }
+
+      // Small delay between Apify calls
+      await new Promise(r => setTimeout(r, 1000));
+    }
+
+    googleEventsInserted = Object.values(googleCityCounts).reduce((a, b) => a + b, 0);
+    console.log(`[GOOGLE-EVENTS] Found ${googleEventsInserted} events across ${todaysCities.length} cities`);
+    console.log(`[GOOGLE-EVENTS] City breakdown: ${JSON.stringify(googleCityCounts)}`);
+  } else {
+    console.log('[GOOGLE-EVENTS] APIFY_TOKEN not configured, skipping Google Events');
+  }
+
+  // Sort by score descending, take top 40 (increased to accommodate both channels)
   discoveredEvents.sort((a, b) => b.score - a.score);
-  const topEvents = discoveredEvents.slice(0, 30);
+  const topEvents = discoveredEvents.slice(0, 40);
 
   // Insert into ingest_queue for admin review
   let inserted = 0;
@@ -443,23 +826,26 @@ export async function GET(request: NextRequest) {
       if (existingEvent && existingEvent.length > 0) continue;
 
       // Build a rich subject line with business context
+      const isGoogle = event.source === 'google_events';
+      const sourceLabel = isGoogle ? 'Google Events' : `#${event.hashtag}`;
       const bizTag = event.isBusiness ? ' [BUSINESS]' : '';
+      const visionTag = event.visionEnriched ? ' [POSTER-SCANNED]' : '';
       const handleTag = event.mentionedHandles.length > 0
         ? ` | mentions: @${event.mentionedHandles.slice(0, 3).join(', @')}`
         : '';
 
       await supabase.from('ingest_queue').insert({
-        source: 'event_discovery',
+        source: isGoogle ? 'google_events' : 'event_discovery',
         submitted_by: 'cron:event-discovery',
         url: event.permalink,
         raw_text: event.caption,
-        subject: `Event candidate (score: ${event.score}) from #${event.hashtag}${bizTag}${handleTag}`,
-        platform: 'instagram',
-        content_type: 'post',
-        instagram_username: event.username,
+        subject: `Event candidate (score: ${event.score}) from ${sourceLabel}${bizTag}${visionTag}${handleTag}`,
+        platform: isGoogle ? 'google' : 'instagram',
+        content_type: isGoogle ? 'event_listing' : 'post',
+        instagram_username: isGoogle ? null : event.username,
         classification: event.isBusiness ? 'business_event' : 'event',
         city: event.city,
-        priority: event.score >= 50 ? 'high' : event.isBusiness ? 'high' : 'normal',
+        priority: event.score >= 50 ? 'high' : event.isBusiness ? 'high' : event.visionEnriched ? 'high' : 'normal',
         status: 'pending',
       });
       inserted++;
@@ -472,19 +858,49 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  const summary = `Scanned ${selectedHashtags.length} hashtags across all 8 cities, found ${discoveredEvents.length} event candidates (score >= 18), inserted ${inserted} new items (${businessesFound} business-related)`;
+  const visionEnrichedCount = topEvents.filter(e => e.visionEnriched).length;
+  const googleCount = topEvents.filter(e => e.source === 'google_events').length;
+  const instagramCount = topEvents.filter(e => e.source !== 'google_events').length;
+
+  const summary = [
+    `Scanned ${selectedHashtags.length} hashtags + ${apifyConfigured ? Object.keys(googleCityCounts).length : 0} Google Events cities`,
+    `Found ${discoveredEvents.length} event candidates total`,
+    `Inserted ${inserted} new items (${businessesFound} business-related, ${visionEnrichedCount} poster-scanned, ${googleCount} from Google)`,
+    visionScansUsed > 0 ? `Vision scans used: ${visionScansUsed}/${VISION_SCAN_BUDGET}` : '',
+  ].filter(Boolean).join('. ');
+
   console.log(`[EVENT-DISCOVERY] ${summary}`);
   console.log(`[EVENT-DISCOVERY] City breakdown: ${JSON.stringify(cityCounts)}`);
+  if (Object.keys(googleCityCounts).length > 0) {
+    console.log(`[GOOGLE-EVENTS] City breakdown: ${JSON.stringify(googleCityCounts)}`);
+  }
 
   return NextResponse.json({
     success: true,
-    hashtagsScanned: selectedHashtags.map(h => h.hashtag),
+    channels: {
+      instagram: {
+        configured: instagramConfigured,
+        hashtagsScanned: instagramConfigured ? selectedHashtags.map(h => h.hashtag) : [],
+        candidates: instagramCount,
+      },
+      googleEvents: {
+        configured: apifyConfigured,
+        citiesScanned: apifyConfigured ? Object.keys(googleCityCounts) : [],
+        candidates: googleCount,
+      },
+      vision: {
+        configured: visionConfigured,
+        scansUsed: visionScansUsed,
+        budget: VISION_SCAN_BUDGET,
+        postersFound: visionEnrichedCount,
+      },
+    },
     citiesScanned: Object.keys(CITY_HASHTAGS),
     totalCandidates: discoveredEvents.length,
     inserted,
     businessesFound,
-    cityCounts,
-    topEvents: topEvents.slice(0, 8).map(e => ({
+    cityCounts: { ...cityCounts, ...googleCityCounts },
+    topEvents: topEvents.slice(0, 10).map(e => ({
       permalink: e.permalink,
       username: e.username,
       score: e.score,
@@ -492,6 +908,8 @@ export async function GET(request: NextRequest) {
       hashtag: e.hashtag,
       mentionedHandles: e.mentionedHandles,
       isBusiness: e.isBusiness,
+      visionEnriched: e.visionEnriched || false,
+      source: e.source || 'instagram',
     })),
     summary,
   });
