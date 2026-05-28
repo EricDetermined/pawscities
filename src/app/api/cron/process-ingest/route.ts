@@ -457,29 +457,41 @@ async function handleProcessIngest(request: NextRequest) {
         }
 
         // ─── STEP 4: Create event with PENDING status ────────────────────
-        // If no date could be extracted, flag for manual review instead of
-        // silently defaulting to today (which creates misleading events)
+        // If no date could be extracted, use a generous fallback for Google Events
+        // (admin will fix the date during review) but flag IG items for manual review
+        let finalDate = eventDate;
+        let dateNote = '';
         if (!eventDate) {
-          console.log(`[PROCESS-INGEST] No date for "${eventName}" — flagging for review`);
-          await supabase
-            .from('ingest_queue')
-            .update({
-              status: 'needs_review',
-              error_message: `No event date could be extracted — needs manual date entry`,
-              processed_at: new Date().toISOString(),
-            })
-            .eq('id', item.id);
-          results.errors.push(`${item.id}: no date extracted for "${eventName}"`);
-          continue;
+          const isGoogleSource = item.source === 'google_events';
+          if (isGoogleSource) {
+            // Google Events are real events — use 2 weeks from now as placeholder
+            // Admin will correct during approval
+            const twoWeeksOut = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+            finalDate = twoWeeksOut.toISOString().split('T')[0];
+            dateNote = '\n\n⚠️ Date not extracted — placeholder date set. Please update before approving.';
+            console.log(`[PROCESS-INGEST] No date for Google event "${eventName}" — using placeholder ${finalDate}`);
+          } else {
+            console.log(`[PROCESS-INGEST] No date for "${eventName}" — flagging for review`);
+            await supabase
+              .from('ingest_queue')
+              .update({
+                status: 'needs_review',
+                error_message: `No event date could be extracted — needs manual date entry`,
+                processed_at: new Date().toISOString(),
+              })
+              .eq('id', item.id);
+            results.errors.push(`${item.id}: no date extracted for "${eventName}"`);
+            continue;
+          }
         }
-        const finalDate = eventDate;
         const eventSlug = slugify(eventName, finalDate);
         const timezone = (detectedCity && cityTimezones[detectedCity]) || 'America/Los_Angeles';
 
-        // Build description with local language note if available
-        const fullDescription = localLanguageNote && eventDescription
-          ? `${eventDescription}\n\n${localLanguageNote}`
-          : eventDescription;
+        // Build description with local language note and date note if available
+        let fullDescription = eventDescription || '';
+        if (localLanguageNote) fullDescription += `\n\n${localLanguageNote}`;
+        if (dateNote) fullDescription += dateNote;
+        if (!fullDescription.trim()) fullDescription = null as unknown as string;
 
         const { data: newEvent, error: insertError } = await supabase
           .from('events')

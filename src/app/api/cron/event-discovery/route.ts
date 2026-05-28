@@ -214,15 +214,32 @@ const GOOGLE_EVENT_QUERIES: Record<string, {
 
 // ─── Google Events via Apify ────────────────────────────────────────────────
 
+// Apify Google Events Scraper returns varied field names depending on version
+// We accept all known variations and normalize them
 interface ApifyGoogleEvent {
+  // Title fields
   title?: string;
-  date?: string;
+  name?: string;
+  // Date fields
+  date?: string | { start_date?: string; when?: string };
+  when?: string;
+  // Description
   description?: string;
+  snippet?: string;
+  // Link/URL
   link?: string;
+  url?: string;
+  event_location_map?: { link?: string };
+  // Venue
   venue?: string;
+  location?: string;
+  // Address
   address?: string;
+  // Images
   image?: string;
   thumbnail?: string;
+  // Raw fields (log for debugging)
+  [key: string]: unknown;
 }
 
 async function discoverGoogleEvents(citySlug: string): Promise<Array<{
@@ -289,12 +306,37 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
     const events = (await res.json()) as ApifyGoogleEvent[];
     console.log(`[GOOGLE-EVENTS] Got ${events.length} results for ${citySlug}`);
 
+    // Log first result's keys so we can see the actual shape
+    if (events.length > 0) {
+      const sampleKeys = Object.keys(events[0]).filter(k => events[0][k] != null);
+      console.log(`[GOOGLE-EVENTS] Sample fields: ${sampleKeys.join(', ')}`);
+      console.log(`[GOOGLE-EVENTS] Sample: ${JSON.stringify(events[0]).substring(0, 500)}`);
+    }
+
     for (const event of events) {
-      if (!event.title) continue;
+      // Normalize field names — Apify scrapers use varied schemas
+      const eventTitle = event.title || event.name || '';
+      if (!eventTitle) continue;
+
+      // Normalize date — can be string, object, or in 'when' field
+      let eventDate: string | null = null;
+      if (typeof event.date === 'string') {
+        eventDate = event.date;
+      } else if (typeof event.date === 'object' && event.date) {
+        eventDate = event.date.start_date || event.date.when || null;
+      }
+      if (!eventDate && event.when) {
+        eventDate = String(event.when);
+      }
+
+      // Normalize other fields
+      const eventDescription = event.description || event.snippet || '';
+      const eventVenue = event.venue || (typeof event.location === 'string' ? event.location : null) || null;
+      const eventLink = event.link || event.url || event.event_location_map?.link || null;
 
       // Filter: must be dog-related (strict word-boundary matching to avoid false positives)
-      const titleLower = (event.title || '').toLowerCase();
-      const descLower = (event.description || '').toLowerCase();
+      const titleLower = eventTitle.toLowerCase();
+      const descLower = eventDescription.toLowerCase();
       const combined = titleLower + ' ' + descLower;
 
       // Strong dog signals — word-boundary regex to prevent matching "parking" for "park" etc.
@@ -322,20 +364,20 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
       // Bonus for title-level dog keywords (not just description)
       if (strongDogPatterns.some(p => p.test(titleLower))) googleScore += 10;
       // Bonus for having date info
-      if (event.date) googleScore += 5;
+      if (eventDate) googleScore += 5;
       // Bonus for having venue info
-      if (event.venue) googleScore += 5;
+      if (eventVenue) googleScore += 5;
 
       // Skip if only weak match with low score
       if (!strongMatch && googleScore < 40) continue;
 
       results.push({
-        name: event.title,
-        date: event.date || null,
-        description: (event.description || '').substring(0, 500),
-        venue: event.venue || null,
+        name: eventTitle,
+        date: eventDate,
+        description: eventDescription.substring(0, 500) || null,
+        venue: eventVenue,
         address: event.address || null,
-        url: event.link || null,
+        url: eventLink,
         imageUrl: event.image || event.thumbnail || null,
         city: citySlug,
         source: 'google_events',
