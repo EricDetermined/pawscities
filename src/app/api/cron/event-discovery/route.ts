@@ -235,6 +235,7 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
   imageUrl: string | null;
   city: string;
   source: 'google_events';
+  score: number;
 }>> {
   const APIFY_TOKEN = getApifyToken();
   if (!APIFY_TOKEN) {
@@ -255,6 +256,7 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
     imageUrl: string | null;
     city: string;
     source: 'google_events';
+    score: number;
   }> = [];
 
   // Rotate queries daily — use 1 query per city per run to stay within Apify limits
@@ -290,16 +292,42 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
     for (const event of events) {
       if (!event.title) continue;
 
-      // Filter: must be dog-related
+      // Filter: must be dog-related (strict word-boundary matching to avoid false positives)
       const titleLower = (event.title || '').toLowerCase();
       const descLower = (event.description || '').toLowerCase();
       const combined = titleLower + ' ' + descLower;
-      const dogKeywords = ['dog', 'pup', 'puppy', 'canine', 'pet', 'bark', 'woof', 'paw',
-        'chien', 'perro', 'hund', '犬', 'わんこ', 'ドッグ', 'rescue', 'adoption',
-        'pet-friendly', 'pet friendly', 'four-legged', 'furry friend'];
-      const isDogRelated = dogKeywords.some(kw => combined.includes(kw));
 
-      if (!isDogRelated) continue;
+      // Strong dog signals — word-boundary regex to prevent matching "parking" for "park" etc.
+      const strongDogPatterns = [
+        /\bdog(s|gy|gie)?\b/, /\bpup(py|pies|s)?\b/, /\bcanine\b/, /\bbark\b/,
+        /\bwoof\b/, /\bpaw(s)?\b/, /\bfetch\b/, /\bleash\b/, /\bk-?9\b/, /\bk9\b/,
+        /\bchien(s|ne)?\b/, /\bperro(s)?\b/, /\bhund(e|en)?\b/,
+        /犬/, /わんこ/, /ドッグ/,
+      ];
+      // Weaker signals — match these but require at least one strong signal too
+      const weakDogPatterns = [
+        /\bpet(s)?\b/, /\brescue\b/, /\badoption\b/, /\bfurry\b/,
+        /\bpet[\s-]?friendly\b/, /\bfour[\s-]?legged\b/,
+      ];
+
+      const strongMatch = strongDogPatterns.some(p => p.test(combined));
+      const weakMatch = weakDogPatterns.some(p => p.test(combined));
+
+      if (!strongMatch && !weakMatch) continue;
+
+      // Score the relevance (replaces flat 60 base)
+      let googleScore = 30; // base for being a structured Google Event
+      if (strongMatch) googleScore += 20; // confirmed dog-related
+      if (weakMatch) googleScore += 5;
+      // Bonus for title-level dog keywords (not just description)
+      if (strongDogPatterns.some(p => p.test(titleLower))) googleScore += 10;
+      // Bonus for having date info
+      if (event.date) googleScore += 5;
+      // Bonus for having venue info
+      if (event.venue) googleScore += 5;
+
+      // Skip if only weak match with low score
+      if (!strongMatch && googleScore < 40) continue;
 
       results.push({
         name: event.title,
@@ -311,6 +339,7 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
         imageUrl: event.image || event.thumbnail || null,
         city: citySlug,
         source: 'google_events',
+        score: googleScore,
       });
     }
   } catch (err) {
@@ -651,7 +680,7 @@ export async function GET(request: NextRequest) {
       // Step 3: Classify each post
       for (const post of mediaData.data as MediaItem[]) {
         let score = classifyEventRelevance(post.caption || '', post.like_count || 0);
-        if (score < 18) continue; // Slightly lower threshold to catch more events
+        if (score < 35) continue; // Raised threshold — quality over quantity
 
         const usernameMatch = post.permalink?.match(/instagram\.com\/([^\/]+)\//);
         const username = usernameMatch?.[1] || 'unknown';
@@ -775,7 +804,7 @@ export async function GET(request: NextRequest) {
           permalink: gEvent.url || `https://www.google.com/search?q=${encodeURIComponent(gEvent.name + ' ' + citySlug)}`,
           username: 'google_events',
           city: gEvent.city,
-          score: 60, // Google Events are pre-filtered, so high base score
+          score: gEvent.score, // Dynamic score based on dog-relevance (replaces flat 60)
           likes: 0,
           hashtag: 'google_events',
           mentionedHandles: [],
@@ -800,6 +829,28 @@ export async function GET(request: NextRequest) {
   discoveredEvents.sort((a, b) => b.score - a.score);
   const topEvents = discoveredEvents.slice(0, 40);
 
+  // ── Helper: normalize title for fuzzy dedup ────────────────────────────
+  function normalizeTitle(text: string): string {
+    return text.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+  }
+
+  // ── Helper: check if two normalized titles are similar enough to be dupes
+  function titlesSimilar(a: string, b: string): boolean {
+    if (a === b) return true;
+    if (a.length < 5 || b.length < 5) return false;
+    // One contains the other
+    if (a.includes(b) || b.includes(a)) return true;
+    // First N chars match (catches "Bark in the Park LA" vs "Bark in the Park Los Angeles")
+    const minLen = Math.min(a.length, b.length);
+    const compareLen = Math.min(minLen, 25);
+    if (a.substring(0, compareLen) === b.substring(0, compareLen) && compareLen >= 15) return true;
+    return false;
+  }
+
+  // Track titles we've already inserted this run to catch within-batch dupes
+  const insertedTitles: string[] = [];
+  let skippedDupes = 0;
+
   // Insert into ingest_queue for admin review
   let inserted = 0;
   let businessesFound = 0;
@@ -807,14 +858,14 @@ export async function GET(request: NextRequest) {
 
   for (const event of topEvents) {
     try {
-      // Check for duplicates by permalink
+      // ── Dedup Layer 1: Check permalink URL ─────────────────────────────
       const { data: existing } = await supabase
         .from('ingest_queue')
         .select('id')
         .eq('url', event.permalink)
         .limit(1);
 
-      if (existing && existing.length > 0) continue;
+      if (existing && existing.length > 0) { skippedDupes++; continue; }
 
       // Also check events table for this permalink
       const { data: existingEvent } = await supabase
@@ -823,7 +874,62 @@ export async function GET(request: NextRequest) {
         .eq('source_post_url', event.permalink)
         .limit(1);
 
-      if (existingEvent && existingEvent.length > 0) continue;
+      if (existingEvent && existingEvent.length > 0) { skippedDupes++; continue; }
+
+      // ── Dedup Layer 2: Fuzzy title matching ────────────────────────────
+      // Extract a rough title from the caption (first line or Event: line)
+      const captionLines = event.caption.split('\n').filter(l => l.trim());
+      const roughTitle = captionLines[0]?.replace(/^Event:\s*/i, '').trim() || '';
+      const normalizedTitle = normalizeTitle(roughTitle);
+
+      if (normalizedTitle.length >= 8) {
+        // Check within this batch
+        if (insertedTitles.some(t => titlesSimilar(t, normalizedTitle))) {
+          console.log(`[EVENT-DISCOVERY] Skipping within-batch dupe: "${roughTitle}"`);
+          skippedDupes++;
+          continue;
+        }
+
+        // Check ingest_queue for similar titles (last 14 days)
+        const fourteenDaysAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
+        const searchTerm = roughTitle.substring(0, 30);
+        const { data: similarIngest } = await supabase
+          .from('ingest_queue')
+          .select('id, raw_text')
+          .ilike('raw_text', `%${searchTerm}%`)
+          .gte('created_at', fourteenDaysAgo)
+          .limit(5);
+
+        if (similarIngest && similarIngest.length > 0) {
+          const isDupe = similarIngest.some(item => {
+            const itemFirstLine = (item.raw_text || '').split('\n')[0]?.replace(/^Event:\s*/i, '').trim() || '';
+            return titlesSimilar(normalizeTitle(itemFirstLine), normalizedTitle);
+          });
+          if (isDupe) {
+            console.log(`[EVENT-DISCOVERY] Skipping ingest-queue dupe: "${roughTitle}"`);
+            skippedDupes++;
+            continue;
+          }
+        }
+
+        // Check events table for similar names
+        const { data: similarEvents } = await supabase
+          .from('events')
+          .select('id, name')
+          .ilike('name', `%${searchTerm}%`)
+          .limit(5);
+
+        if (similarEvents && similarEvents.length > 0) {
+          const isDupe = similarEvents.some(ev => titlesSimilar(normalizeTitle(ev.name), normalizedTitle));
+          if (isDupe) {
+            console.log(`[EVENT-DISCOVERY] Skipping events-table dupe: "${roughTitle}"`);
+            skippedDupes++;
+            continue;
+          }
+        }
+
+        insertedTitles.push(normalizedTitle);
+      }
 
       // Build a rich subject line with business context
       const isGoogle = event.source === 'google_events';
@@ -864,8 +970,9 @@ export async function GET(request: NextRequest) {
 
   const summary = [
     `Scanned ${selectedHashtags.length} hashtags + ${apifyConfigured ? Object.keys(googleCityCounts).length : 0} Google Events cities`,
-    `Found ${discoveredEvents.length} event candidates total`,
+    `Found ${discoveredEvents.length} event candidates total (score threshold: 35 for IG, dynamic for Google)`,
     `Inserted ${inserted} new items (${businessesFound} business-related, ${visionEnrichedCount} poster-scanned, ${googleCount} from Google)`,
+    skippedDupes > 0 ? `Skipped ${skippedDupes} duplicates (URL + fuzzy title matching)` : '',
     visionScansUsed > 0 ? `Vision scans used: ${visionScansUsed}/${VISION_SCAN_BUDGET}` : '',
   ].filter(Boolean).join('. ');
 
@@ -898,6 +1005,7 @@ export async function GET(request: NextRequest) {
     citiesScanned: Object.keys(CITY_HASHTAGS),
     totalCandidates: discoveredEvents.length,
     inserted,
+    skippedDupes,
     businessesFound,
     cityCounts: { ...cityCounts, ...googleCityCounts },
     topEvents: topEvents.slice(0, 10).map(e => ({

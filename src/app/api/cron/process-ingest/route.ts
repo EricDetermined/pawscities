@@ -303,8 +303,8 @@ async function handleProcessIngest(request: NextRequest) {
 
           console.log(`[PROCESS-INGEST] AI enriched "${eventName}" — quality: ${qualityScore}/100, city: ${detectedCity}, handles: ${mentionedHandles.length}`);
 
-          // Quality gate: skip very low-quality items
-          if (qualityScore < 20) {
+          // Quality gate: skip low-quality items (raised from 20 to 30)
+          if (qualityScore < 30) {
             await supabase
               .from('ingest_queue')
               .update({
@@ -379,28 +379,77 @@ async function handleProcessIngest(request: NextRequest) {
           continue;
         }
 
-        // ─── STEP 3: Deduplication check ────────────────────────────────
-        // Check if an event with a similar name already exists (any status)
-        // to prevent duplicate processing from multiple hashtag searches
-        const normalizedName = eventName.toLowerCase().replace(/[^a-z0-9]/g, '');
+        // ─── STEP 3: Deduplication check (multi-layer) ────────────────────
+        // Layer A: Exact normalized name match in events table
+        // Layer B: Fuzzy prefix match (first 20 normalized chars)
+        // Layer C: Check other ingest_queue items processed in the same batch
+
+        const normalizedName = eventName.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+        const normalizedCompact = normalizedName.replace(/\s/g, '');
+
+        // Helper: fuzzy similarity check
+        function namesAreSimilar(a: string, b: string): boolean {
+          if (a === b) return true;
+          if (a.length < 5 || b.length < 5) return false;
+          // One contains the other
+          if (a.includes(b) || b.includes(a)) return true;
+          // First N chars match
+          const minLen = Math.min(a.length, b.length);
+          const compareLen = Math.min(minLen, 20);
+          if (a.substring(0, compareLen) === b.substring(0, compareLen) && compareLen >= 12) return true;
+          return false;
+        }
+
+        // Search with shorter prefix for broader candidate matching
+        const searchPrefix = eventName.substring(0, 25).replace(/[%_]/g, '');
         const { data: existingEvents } = await supabase
           .from('events')
           .select('id, name')
-          .ilike('name', `%${eventName.substring(0, 30)}%`)
-          .limit(10);
+          .ilike('name', `%${searchPrefix}%`)
+          .limit(15);
 
         const isDuplicate = existingEvents?.some(existing => {
-          const existingNorm = existing.name.toLowerCase().replace(/[^a-z0-9]/g, '');
-          return existingNorm === normalizedName;
+          const existingNorm = existing.name.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+          const existingCompact = existingNorm.replace(/\s/g, '');
+          return existingCompact === normalizedCompact || namesAreSimilar(existingNorm, normalizedName);
         });
 
         if (isDuplicate) {
-          console.log(`[PROCESS-INGEST] Skipping duplicate event "${eventName}" — already exists`);
+          console.log(`[PROCESS-INGEST] Skipping duplicate event "${eventName}" — similar event already exists`);
           await supabase
             .from('ingest_queue')
             .update({
               status: 'needs_review',
-              error_message: `Duplicate: event "${eventName}" already exists in events table`,
+              error_message: `Duplicate: event "${eventName}" matches existing event in events table`,
+              processed_at: new Date().toISOString(),
+            })
+            .eq('id', item.id);
+          continue;
+        }
+
+        // Also check other ingest_queue items that were already processed into events
+        const { data: recentProcessed } = await supabase
+          .from('ingest_queue')
+          .select('id, raw_text')
+          .eq('status', 'processed')
+          .eq('result_action', 'event_created')
+          .gte('processed_at', new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString())
+          .ilike('raw_text', `%${searchPrefix}%`)
+          .limit(5);
+
+        const isIngestDupe = recentProcessed?.some(prev => {
+          const prevFirstLine = (prev.raw_text || '').split('\n')[0]?.replace(/^Event:\s*/i, '').trim() || '';
+          const prevNorm = prevFirstLine.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+          return namesAreSimilar(prevNorm, normalizedName);
+        });
+
+        if (isIngestDupe) {
+          console.log(`[PROCESS-INGEST] Skipping ingest-queue dupe "${eventName}"`);
+          await supabase
+            .from('ingest_queue')
+            .update({
+              status: 'needs_review',
+              error_message: `Duplicate: similar item already processed in ingest_queue`,
               processed_at: new Date().toISOString(),
             })
             .eq('id', item.id);
@@ -408,9 +457,22 @@ async function handleProcessIngest(request: NextRequest) {
         }
 
         // ─── STEP 4: Create event with PENDING status ────────────────────
-        // Default to today if no date extracted (DB requires start_date NOT NULL)
-        const fallbackDate = new Date().toISOString().split('T')[0];
-        const finalDate = eventDate || fallbackDate;
+        // If no date could be extracted, flag for manual review instead of
+        // silently defaulting to today (which creates misleading events)
+        if (!eventDate) {
+          console.log(`[PROCESS-INGEST] No date for "${eventName}" — flagging for review`);
+          await supabase
+            .from('ingest_queue')
+            .update({
+              status: 'needs_review',
+              error_message: `No event date could be extracted — needs manual date entry`,
+              processed_at: new Date().toISOString(),
+            })
+            .eq('id', item.id);
+          results.errors.push(`${item.id}: no date extracted for "${eventName}"`);
+          continue;
+        }
+        const finalDate = eventDate;
         const eventSlug = slugify(eventName, finalDate);
         const timezone = (detectedCity && cityTimezones[detectedCity]) || 'America/Los_Angeles';
 
