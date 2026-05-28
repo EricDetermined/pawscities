@@ -1040,16 +1040,26 @@ export async function GET(request: NextRequest) {
         insertedTitles.push(normalizedTitle);
       }
 
-      // Build a rich subject line with business context
+      // Build a rich subject line — use actual event name when available
       const isGoogle = event.source === 'google_events';
-      const sourceLabel = isGoogle ? 'Google Events' : `#${event.hashtag}`;
+      const isCurated = event.source === 'curated_scrape';
       const bizTag = event.isBusiness ? ' [BUSINESS]' : '';
       const visionTag = event.visionEnriched ? ' [POSTER-SCANNED]' : '';
       const handleTag = event.mentionedHandles.length > 0
         ? ` | mentions: @${event.mentionedHandles.slice(0, 3).join(', @')}`
         : '';
 
-      const isCurated = event.source === 'curated_scrape';
+      // For curated and Google events, use the actual event name as the subject
+      // so process-ingest doesn't fall back to "Event candidate (score: X)"
+      let subjectLine: string;
+      if (isCurated || isGoogle) {
+        const firstLine = event.caption.split('\n')[0]?.replace(/^Event:\s*/i, '').trim() || '';
+        subjectLine = firstLine || `Event (score: ${event.score})`;
+      } else {
+        const sourceLabel = `#${event.hashtag}`;
+        subjectLine = `Event candidate (score: ${event.score}) from ${sourceLabel}${bizTag}${visionTag}${handleTag}`;
+      }
+
       const sourceValue = isCurated ? 'event_discovery' : (isGoogle ? 'google_events' : 'event_discovery');
       const platformValue = isCurated ? 'website' : (isGoogle ? 'google' : 'instagram');
 
@@ -1058,7 +1068,7 @@ export async function GET(request: NextRequest) {
         submitted_by: 'cron:event-discovery',
         url: event.permalink,
         raw_text: event.caption,
-        subject: `Event candidate (score: ${event.score}) from ${sourceLabel}${bizTag}${visionTag}${handleTag}`,
+        subject: subjectLine,
         platform: platformValue,
         content_type: isCurated ? 'curated_event' : (isGoogle ? 'event_listing' : 'post'),
         instagram_username: (isGoogle || isCurated) ? null : event.username,
