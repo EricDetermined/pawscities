@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { getTodaysSources, scrapeCuratedSource, type ExtractedEvent } from '@/lib/curated-sources';
 function getMetaToken() { return process.env.META_PAGE_ACCESS_TOKEN; }
 function getInstagramAccountId() { return process.env.INSTAGRAM_ACCOUNT_ID; }
 function getMetaApiVersion() { return process.env.META_API_VERSION || 'v21.0'; }
@@ -867,9 +868,74 @@ export async function GET(request: NextRequest) {
     console.log('[GOOGLE-EVENTS] APIFY_TOKEN not configured, skipping Google Events');
   }
 
-  // Sort by score descending, take top 40 (increased to accommodate both channels)
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CHANNEL 3: Curated Sources — trusted dog-event listing sites per city
+  // Scrapes 1 source per city per day, uses GPT-4o-mini to extract events
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  let curatedEventsFound = 0;
+  const curatedCityCounts: Record<string, number> = {};
+  const curatedSourcesScraped: string[] = [];
+  const curatedDirectInserts: Array<{ name: string; city: string; date: string | null }> = [];
+
+  const openaiKey = getOpenAIKey();
+  if (openaiKey) {
+    console.log('[CURATED-SCRAPER] Starting curated source discovery...');
+
+    const todaysSources = getTodaysSources();
+    console.log(`[CURATED-SCRAPER] Today's sources: ${todaysSources.map(s => `${s.citySlug}:${s.source.name}`).join(', ')}`);
+
+    for (const { citySlug, source } of todaysSources) {
+      try {
+        curatedSourcesScraped.push(`${citySlug}:${source.name}`);
+        const extracted = await scrapeCuratedSource(source, citySlug, openaiKey);
+
+        for (const ev of extracted) {
+          // Curated events are high quality — they come pre-parsed with AI
+          // Insert directly into events table as PENDING (skip ingest_queue)
+          curatedEventsFound++;
+          curatedCityCounts[citySlug] = (curatedCityCounts[citySlug] || 0) + 1;
+
+          // Also add to discoveredEvents for dedup tracking and reporting
+          discoveredEvents.push({
+            caption: [
+              ev.name,
+              ev.date ? `Date: ${ev.date}` : '',
+              ev.venueName ? `Venue: ${ev.venueName}` : '',
+              ev.venueAddress ? `Address: ${ev.venueAddress}` : '',
+              ev.description || '',
+            ].filter(Boolean).join('\n'),
+            permalink: ev.externalUrl,
+            username: 'curated_scrape',
+            city: citySlug,
+            score: 80, // High score — curated + AI-verified
+            likes: 0,
+            hashtag: source.name,
+            mentionedHandles: [],
+            isBusiness: false,
+            visionEnriched: false,
+            source: 'curated_scrape',
+          });
+
+          curatedDirectInserts.push({
+            name: ev.name,
+            city: citySlug,
+            date: ev.date,
+          });
+        }
+      } catch (err) {
+        console.error(`[CURATED-SCRAPER] Error scraping ${source.name} for ${citySlug}:`, err);
+      }
+    }
+
+    console.log(`[CURATED-SCRAPER] Found ${curatedEventsFound} events across ${todaysSources.length} sources`);
+  } else {
+    console.log('[CURATED-SCRAPER] OpenAI key not configured, skipping curated sources');
+  }
+
+  // Sort by score descending, take top 50 (increased for 3 channels)
   discoveredEvents.sort((a, b) => b.score - a.score);
-  const topEvents = discoveredEvents.slice(0, 40);
+  const topEvents = discoveredEvents.slice(0, 50);
 
   // ── Helper: normalize title for fuzzy dedup ────────────────────────────
   function normalizeTitle(text: string): string {
@@ -983,15 +1049,19 @@ export async function GET(request: NextRequest) {
         ? ` | mentions: @${event.mentionedHandles.slice(0, 3).join(', @')}`
         : '';
 
+      const isCurated = event.source === 'curated_scrape';
+      const sourceValue = isCurated ? 'event_discovery' : (isGoogle ? 'google_events' : 'event_discovery');
+      const platformValue = isCurated ? 'website' : (isGoogle ? 'google' : 'instagram');
+
       const { error: insertError } = await supabase.from('ingest_queue').insert({
-        source: isGoogle ? 'google_events' : 'event_discovery',
+        source: sourceValue,
         submitted_by: 'cron:event-discovery',
         url: event.permalink,
         raw_text: event.caption,
         subject: `Event candidate (score: ${event.score}) from ${sourceLabel}${bizTag}${visionTag}${handleTag}`,
-        platform: isGoogle ? 'google' : 'instagram',
-        content_type: isGoogle ? 'event_listing' : 'post',
-        instagram_username: isGoogle ? null : event.username,
+        platform: platformValue,
+        content_type: isCurated ? 'curated_event' : (isGoogle ? 'event_listing' : 'post'),
+        instagram_username: (isGoogle || isCurated) ? null : event.username,
         classification: event.isBusiness ? 'business_event' : 'event',
         city: event.city,
         priority: event.score >= 50 ? 'high' : event.isBusiness ? 'high' : event.visionEnriched ? 'high' : 'normal',
@@ -1014,14 +1084,15 @@ export async function GET(request: NextRequest) {
 
   const visionEnrichedCount = topEvents.filter(e => e.visionEnriched).length;
   const googleCount = topEvents.filter(e => e.source === 'google_events').length;
-  const instagramCount = topEvents.filter(e => e.source !== 'google_events').length;
+  const curatedCount = topEvents.filter(e => e.source === 'curated_scrape').length;
+  const instagramCount = topEvents.filter(e => !e.source || e.source === 'instagram').length;
 
   const summary = [
-    `Scanned ${selectedHashtags.length} hashtags + ${apifyConfigured ? Object.keys(googleCityCounts).length : 0} Google Events cities`,
-    `Found ${discoveredEvents.length} event candidates total (score threshold: 35 for IG, dynamic for Google)`,
-    `Inserted ${inserted} new items (${businessesFound} business-related, ${visionEnrichedCount} poster-scanned, ${googleCount} from Google)`,
-    skippedDupes > 0 ? `Skipped ${skippedDupes} duplicates (URL + fuzzy title matching)` : '',
-    visionScansUsed > 0 ? `Vision scans used: ${visionScansUsed}/${VISION_SCAN_BUDGET}` : '',
+    `Scanned ${selectedHashtags.length} hashtags + ${apifyConfigured ? Object.keys(googleCityCounts).length : 0} Google cities + ${curatedSourcesScraped.length} curated sources`,
+    `Found ${discoveredEvents.length} candidates (IG: ${instagramCount}, Google: ${googleCount}, Curated: ${curatedCount})`,
+    `Inserted ${inserted} new items (${businessesFound} business, ${visionEnrichedCount} poster-scanned, ${curatedEventsFound} curated)`,
+    skippedDupes > 0 ? `Skipped ${skippedDupes} duplicates` : '',
+    visionScansUsed > 0 ? `Vision: ${visionScansUsed}/${VISION_SCAN_BUDGET}` : '',
   ].filter(Boolean).join('. ');
 
   console.log(`[EVENT-DISCOVERY] ${summary}`);
@@ -1049,6 +1120,12 @@ export async function GET(request: NextRequest) {
         budget: VISION_SCAN_BUDGET,
         postersFound: visionEnrichedCount,
       },
+      curatedSources: {
+        configured: !!openaiKey,
+        sourcesScraped: curatedSourcesScraped,
+        eventsFound: curatedEventsFound,
+        directInserts: curatedDirectInserts.slice(0, 10),
+      },
     },
     citiesScanned: Object.keys(CITY_HASHTAGS),
     totalCandidates: discoveredEvents.length,
@@ -1056,7 +1133,7 @@ export async function GET(request: NextRequest) {
     skippedDupes,
     insertErrors: insertErrors.length > 0 ? insertErrors.slice(0, 10) : undefined,
     businessesFound,
-    cityCounts: { ...cityCounts, ...googleCityCounts },
+    cityCounts: { ...cityCounts, ...googleCityCounts, ...curatedCityCounts },
     topEvents: topEvents.slice(0, 10).map(e => ({
       permalink: e.permalink,
       username: e.username,

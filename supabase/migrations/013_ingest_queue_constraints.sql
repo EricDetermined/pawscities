@@ -4,7 +4,7 @@
 -- 1. Add 'event_discovery' and 'google_events' as valid sources
 ALTER TABLE ingest_queue DROP CONSTRAINT IF EXISTS ingest_queue_source_check;
 ALTER TABLE ingest_queue ADD CONSTRAINT ingest_queue_source_check
-  CHECK (source IN ('share_sheet', 'email', 'manual', 'agent', 'event_discovery', 'google_events'));
+  CHECK (source IN ('share_sheet', 'email', 'manual', 'agent', 'event_discovery', 'google_events', 'curated_scrape'));
 
 -- 2. Add 'business_event' as valid classification
 ALTER TABLE ingest_queue DROP CONSTRAINT IF EXISTS ingest_queue_classification_check;
