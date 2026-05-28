@@ -26,26 +26,26 @@ function getBaseUrl(): string {
 // ═══════════════════════════════════════════════════════════════════════════════
 // GET /api/cron/social-post
 //
-// UNIFIED daily Instagram posting cron for @thepawcities.
-// Runs at 14:00 UTC daily.
+// UNIFIED Instagram posting cron for @thepawcities.
+// Runs TWICE daily with slot preferences:
+//   - 10:00 UTC  ?prefer=content_bank  → morning fun fact (Buster/Marley)
+//   - 16:00 UTC  ?prefer=event         → afternoon event post (mascot creative)
 //
-// ONE pipeline, ONE queue:
-//   creative_queue (status='approved', scheduled_for <= today)
-//     → picks the next approved creative regardless of content_type
-//     → publishes to Instagram
-//     → logs to social_posts
-//     → marks creative as 'posted'
+// Each run posts exactly 1 item from creative_queue.
+// The `prefer` param controls which content_type to try first:
+//   - If preferred type has approved creatives → pick that
+//   - If not → fall back to any approved creative
+//   - If nothing → skip (no post this slot)
 //
 // All content flows through creative_queue with admin review:
-//   - Content bank fun facts → generated in batch → reviewed → approved
-//   - Events → auto-generated on approval → reviewed → approved
+//   - Content bank fun facts → batch generated → reviewed → approved
+//   - Events → discovered → approved → mascot creative auto-generated → reviewed → approved
 //   - Business spotlights → generated → reviewed → approved
-//
-// No more bypassing the queue. No more two crons fighting over Instagram.
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export async function GET(request: NextRequest) {
   const dryRun = request.nextUrl.searchParams.get('dryRun') === 'true';
+  const prefer = request.nextUrl.searchParams.get('prefer'); // 'content_bank' | 'event' | null
 
   if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -59,24 +59,57 @@ export async function GET(request: NextRequest) {
 
     const today = new Date().toISOString().split('T')[0];
     const hasOpenAI = !!process.env.OPENAI_API_KEY;
+    const slot = prefer || 'any';
 
     // ══════════════════════════════════════════════════════════════════════════
-    // Fetch next approved creative — ANY content type
-    // Priority: events with nearest start_date first, then by scheduled_for
+    // Fetch approved creatives — prefer the requested content_type if set
+    //
+    // Strategy:
+    //   1. Try preferred type first (if set)
+    //   2. Fall back to any approved creative
+    //   This ensures we always post *something* even if the preferred
+    //   type has nothing ready, while naturally splitting fun facts
+    //   and events across morning/afternoon slots.
     // ══════════════════════════════════════════════════════════════════════════
 
-    const { data: approvedCreatives } = await supabase
-      .from('creative_queue')
-      .select('*')
-      .eq('status', 'approved')
-      .lte('scheduled_for', today)
-      .order('scheduled_for', { ascending: true })
-      .limit(5); // Fetch a few in case the first one fails
+    let approvedCreatives: Record<string, unknown>[] | null = null;
+
+    // Step 1: Try preferred type
+    if (prefer && ['content_bank', 'event'].includes(prefer)) {
+      const { data } = await supabase
+        .from('creative_queue')
+        .select('*')
+        .eq('status', 'approved')
+        .eq('content_type', prefer)
+        .lte('scheduled_for', today)
+        .order('scheduled_for', { ascending: true })
+        .limit(5);
+      if (data && data.length > 0) {
+        approvedCreatives = data;
+        console.log(`[SOCIAL-POST] Slot=${slot}: Found ${data.length} preferred "${prefer}" creatives`);
+      }
+    }
+
+    // Step 2: Fall back to any type
+    if (!approvedCreatives || approvedCreatives.length === 0) {
+      const { data } = await supabase
+        .from('creative_queue')
+        .select('*')
+        .eq('status', 'approved')
+        .lte('scheduled_for', today)
+        .order('scheduled_for', { ascending: true })
+        .limit(5);
+      approvedCreatives = data;
+      if (prefer && data && data.length > 0) {
+        console.log(`[SOCIAL-POST] Slot=${slot}: No "${prefer}" creatives, falling back to ${data[0].content_type}`);
+      }
+    }
 
     if (!approvedCreatives || approvedCreatives.length === 0) {
-      console.log('[SOCIAL-POST] No approved creatives scheduled for today');
+      console.log(`[SOCIAL-POST] Slot=${slot}: No approved creatives scheduled for today`);
       return NextResponse.json({
         status: 'skipped',
+        slot,
         reason: 'No approved creatives ready to post. Generate and approve content in /admin/creatives.',
       });
     }
@@ -219,9 +252,10 @@ export async function GET(request: NextRequest) {
         .eq('id', creative.id);
 
       if (result.success) {
-        console.log(`[SOCIAL-POST] Published: "${creative.headline}" (${creative.content_type}) via ${creative.narrator}`);
+        console.log(`[SOCIAL-POST] Slot=${slot}: Published "${creative.headline}" (${creative.content_type}) via ${creative.narrator}`);
         return NextResponse.json({
           status: 'published',
+          slot,
           type: creative.content_type,
           postId: result.postId,
           headline: creative.headline,

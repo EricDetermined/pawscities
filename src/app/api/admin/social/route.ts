@@ -295,17 +295,70 @@ export async function GET(request: NextRequest) {
 
   /* --- Summary: counts for all sections --- */
   if (type === 'summary') {
-    const [opps, comments, events] = await Promise.all([
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const [opps, comments, events, pendingEvts, recentDiscovery] = await Promise.all([
       db.from('social_opportunities').select('id', { count: 'exact', head: true }).eq('status', 'new'),
       db.from('social_comments').select('id', { count: 'exact', head: true }).eq('replied', false),
       db.from('events').select('id', { count: 'exact', head: true }).eq('status', 'APPROVED').gte('start_date', new Date().toISOString().split('T')[0]),
+      db.from('events').select('id', { count: 'exact', head: true }).eq('status', 'PENDING'),
+      db.from('ingest_queue').select('id', { count: 'exact', head: true }).gte('created_at', oneDayAgo),
     ]);
 
     return NextResponse.json({
       opportunities: opps.count || 0,
       unrepliedComments: comments.count || 0,
       upcomingEvents: events.count || 0,
+      pendingEvents: pendingEvts.count || 0,
+      recentDiscoveries: recentDiscovery.count || 0,
     });
+  }
+
+  /* --- Discovery: recent ingest_queue items (daily event captures) --- */
+  if (type === 'discovery') {
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const { data: ingestItems } = await db
+      .from('ingest_queue')
+      .select('*')
+      .gte('created_at', sevenDaysAgo)
+      .order('created_at', { ascending: false })
+      .limit(100);
+
+    // Group by date and source for summary
+    const items = ingestItems || [];
+    const byDate: Record<string, typeof items> = {};
+    const bySource: Record<string, number> = {};
+    const byCity: Record<string, number> = {};
+    for (const item of items) {
+      const date = new Date(item.created_at).toISOString().split('T')[0];
+      if (!byDate[date]) byDate[date] = [];
+      byDate[date].push(item);
+      const src = item.source || 'unknown';
+      bySource[src] = (bySource[src] || 0) + 1;
+      const city = item.city_slug || 'unknown';
+      byCity[city] = (byCity[city] || 0) + 1;
+    }
+
+    return NextResponse.json({
+      items,
+      summary: {
+        total: items.length,
+        byDate,
+        bySource,
+        byCity,
+      },
+    });
+  }
+
+  /* --- Pending Events: events awaiting approval --- */
+  if (type === 'pending-events') {
+    const { data: pendingEvents } = await db
+      .from('events')
+      .select('*, cities!inner(name, slug)')
+      .eq('status', 'PENDING')
+      .order('created_at', { ascending: false })
+      .limit(50);
+
+    return NextResponse.json({ events: pendingEvents || [] });
   }
 
   /* --- Action tracking: load completed actions --- */
@@ -344,6 +397,64 @@ export async function PATCH(request: NextRequest) {
       .update({ replied, replied_at: replied ? new Date().toISOString() : null })
       .eq('id', id);
     return NextResponse.json({ success: true });
+  }
+
+  /* --- Event approve/reject (inline from dashboard) --- */
+  if (type === 'event-action' && id) {
+    const { action: eventAction, reviewNotes } = body;
+    if (!eventAction || !['approve', 'reject'].includes(eventAction)) {
+      return NextResponse.json({ error: 'Invalid event action' }, { status: 400 });
+    }
+
+    // Verify event exists and is PENDING
+    const { data: event, error: eventError } = await db
+      .from('events')
+      .select('id, status, name')
+      .eq('id', id)
+      .single();
+    if (eventError || !event) {
+      return NextResponse.json({ error: 'Event not found' }, { status: 404 });
+    }
+    if (event.status !== 'PENDING') {
+      return NextResponse.json({ error: 'Only pending events can be actioned' }, { status: 400 });
+    }
+
+    const newStatus = eventAction === 'approve' ? 'APPROVED' : 'REJECTED';
+    await db
+      .from('events')
+      .update({
+        status: newStatus,
+        reviewed_at: new Date().toISOString(),
+        review_notes: reviewNotes || null,
+      })
+      .eq('id', id);
+
+    // If approved, auto-trigger creative generation
+    let creativeMessage = '';
+    if (eventAction === 'approve') {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+          || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+        const creativeRes = await fetch(`${baseUrl}/api/admin/creatives`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'generate_event', eventId: id }),
+        });
+        const creativeData = await creativeRes.json();
+        creativeMessage = creativeData.success
+          ? ` Creative generated (${creativeData.narrator})`
+          : ` Creative note: ${creativeData.error || 'unknown'}`;
+      } catch {
+        creativeMessage = ' (Creative generation failed)';
+      }
+    }
+
+    return NextResponse.json({
+      success: true,
+      id,
+      status: newStatus,
+      message: `Event "${event.name}" ${eventAction}d.${creativeMessage}`,
+    });
   }
 
   /* --- Toggle a social action (checkbox tracking) --- */

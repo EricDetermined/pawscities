@@ -14,28 +14,6 @@ function ensureUrl(url: string | null | undefined): string {
 
 /* ──────────────── Types ──────────────── */
 
-interface EventDraft {
-  id: string;
-  name: string;
-  cityName: string;
-  citySlug: string;
-  venueName: string | null;
-  venueAddress: string | null;
-  startDate: string;
-  endDate: string | null;
-  tags: string[];
-  sourceHandle: string | null;
-  sourcePostUrl: string | null;
-  isFeatured: boolean;
-  isFree: boolean;
-  description: string | null;
-  caption: string;
-  imageUrl: string | null;
-  creativeUrl: string;
-  engagementReplies: string[];
-  alreadyPosted: boolean;
-}
-
 interface Opportunity {
   id: string;
   permalink: string;
@@ -118,7 +96,36 @@ interface CalendarItem {
   format: string;
 }
 
-type TabId = 'events' | 'engagement' | 'outreach' | 'invitations' | 'comments' | 'calendar' | 'performance';
+interface DiscoveryItem {
+  id: string;
+  source: string;
+  classification: string;
+  city_slug: string;
+  raw_data: Record<string, unknown>;
+  status: string;
+  created_at: string;
+  processed_at: string | null;
+  error_message: string | null;
+}
+
+interface PendingEvent {
+  id: string;
+  name: string;
+  description: string | null;
+  venue_name: string | null;
+  venue_address: string | null;
+  start_date: string;
+  end_date: string | null;
+  source_handle: string | null;
+  source_post_url: string | null;
+  image_url: string | null;
+  tags: string[];
+  is_free: boolean;
+  created_at: string;
+  cities: { name: string; slug: string };
+}
+
+type TabId = 'pipeline' | 'calendar' | 'engagement' | 'outreach' | 'invitations' | 'comments' | 'performance';
 
 /* ──────────────── Helpers ──────────────── */
 
@@ -133,11 +140,10 @@ function copyToClipboard(text: string) {
 /* ──────────────── Component ──────────────── */
 
 export default function SocialCommandCenter() {
-  const [activeTab, setActiveTab] = useState<TabId>('calendar');
+  const [activeTab, setActiveTab] = useState<TabId>('pipeline');
   const [loading, setLoading] = useState(true);
 
   // Data
-  const [eventDrafts, setEventDrafts] = useState<EventDraft[]>([]);
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [outreach, setOutreach] = useState<OutreachItem[]>([]);
   const [invitations, setInvitations] = useState<InvitationItem[]>([]);
@@ -145,14 +151,15 @@ export default function SocialCommandCenter() {
   const [posts, setPosts] = useState<PostItem[]>([]);
   const [perfStats, setPerfStats] = useState<PerformanceStats | null>(null);
   const [calendarItems, setCalendarItems] = useState<CalendarItem[]>([]);
+  const [discoveryItems, setDiscoveryItems] = useState<DiscoveryItem[]>([]);
+  const [discoverySummary, setDiscoverySummary] = useState<{ total: number; bySource: Record<string, number>; byCity: Record<string, number> } | null>(null);
+  const [pendingEvents, setPendingEventsData] = useState<PendingEvent[]>([]);
+  const [approvingEvent, setApprovingEvent] = useState<string | null>(null);
 
   // Action tracking
   const [actions, setActions] = useState<ActionRecord[]>([]);
 
   // UI state
-  const [publishing, setPublishing] = useState<string | null>(null);
-  const [publishResult, setPublishResult] = useState<{ id: string; success: boolean; permalink?: string; error?: string } | null>(null);
-  const [expandedCaption, setExpandedCaption] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Quick DM composer state
@@ -163,8 +170,7 @@ export default function SocialCommandCenter() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [evRes, oppRes, outRes, invRes, comRes, perfRes, actRes, calRes] = await Promise.all([
-        fetch('/api/admin/social?type=event-drafts').then(r => r.json()),
+      const [oppRes, outRes, invRes, comRes, perfRes, actRes, calRes, discRes, pendRes] = await Promise.all([
         fetch('/api/admin/social?type=opportunities').then(r => r.json()),
         fetch('/api/admin/social?type=outreach').then(r => r.json()),
         fetch('/api/admin/social?type=invitations').then(r => r.json()),
@@ -172,8 +178,9 @@ export default function SocialCommandCenter() {
         fetch('/api/admin/social?type=performance').then(r => r.json()),
         fetch('/api/admin/social?type=actions').then(r => r.json()),
         fetch('/api/admin/creatives?limit=30').then(r => r.json()),
+        fetch('/api/admin/social?type=discovery').then(r => r.json()),
+        fetch('/api/admin/social?type=pending-events').then(r => r.json()),
       ]);
-      setEventDrafts(evRes.drafts || []);
       setOpportunities(oppRes.opportunities || []);
       setOutreach(outRes.outreach || []);
       setInvitations(invRes.invitations || []);
@@ -182,6 +189,9 @@ export default function SocialCommandCenter() {
       setPerfStats(perfRes.stats || null);
       setActions(actRes.actions || []);
       setCalendarItems(calRes.items || []);
+      setDiscoveryItems(discRes.items || []);
+      setDiscoverySummary(discRes.summary || null);
+      setPendingEventsData(pendRes.events || []);
     } catch (err) {
       console.error('Failed to fetch social data:', err);
     } finally {
@@ -192,36 +202,6 @@ export default function SocialCommandCenter() {
   useEffect(() => { fetchData(); }, [fetchData]);
 
   /* --- Actions --- */
-
-  const publishPost = async (draft: EventDraft) => {
-    setPublishing(draft.id);
-    setPublishResult(null);
-    try {
-      // Use the full creative URL (absolute) for Instagram to fetch
-      const creativeImageUrl = `https://pawcities.com${draft.creativeUrl}`;
-      const res = await fetch('/api/admin/social', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'publish',
-          caption: draft.caption,
-          imageUrl: creativeImageUrl,
-          headline: draft.name,
-          city: draft.citySlug,
-          eventId: draft.id,
-        }),
-      });
-      const data = await res.json();
-      setPublishResult({ id: draft.id, success: data.success, permalink: data.permalink, error: data.error });
-      if (data.success) {
-        setEventDrafts(prev => prev.map(d => d.id === draft.id ? { ...d, alreadyPosted: true } : d));
-      }
-    } catch (err) {
-      setPublishResult({ id: draft.id, success: false, error: String(err) });
-    } finally {
-      setPublishing(null);
-    }
-  };
 
   const markEngaged = async (id: string) => {
     await fetch('/api/admin/social', {
@@ -256,6 +236,26 @@ export default function SocialCommandCenter() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  const handleEventAction = async (eventId: string, action: 'approve' | 'reject') => {
+    setApprovingEvent(eventId);
+    try {
+      const res = await fetch('/api/admin/social', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'event-action', id: eventId, action }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setPendingEventsData(prev => prev.filter(e => e.id !== eventId));
+        fetchData(); // Refresh all counts
+      }
+    } catch (err) {
+      console.error('Event action failed:', err);
+    } finally {
+      setApprovingEvent(null);
+    }
+  };
+
   /** Check if an action is completed */
   const isActionDone = (entityType: string, entityId: string): boolean => {
     return actions.some(a => a.entity_type === entityType && a.entity_id === entityId && a.completed);
@@ -287,25 +287,16 @@ export default function SocialCommandCenter() {
     });
   };
 
-  /* --- Counts (factor in action tracking) --- */
-  const pendingEvents = eventDrafts.filter(d => !d.alreadyPosted);
-  // Events with incomplete actions (either reply or post not done)
-  const eventsNeedingAction = pendingEvents.filter(d => {
-    const replyDone = !d.sourceHandle || isActionDone('event_reply', d.id);
-    const postDone = d.alreadyPosted || isActionDone('event_post', d.id);
-    return !replyDone || !postDone;
-  });
+  /* --- Counts --- */
   const pendingOpps = opportunities.filter(o => o.status === 'new');
   const unrepliedComments = comments.filter(c => !c.replied);
   const outreachPending = outreach.filter(o => !isActionDone('outreach_reply', o.id));
   const invitationsPending = invitations.filter(i => !isActionDone('invitation_dm', i.id));
-
   const calendarUpcoming = calendarItems.filter(c => c.status === 'approved' || c.status === 'pending_review');
-  const calendarPosted = calendarItems.filter(c => c.status === 'posted');
 
   const tabs: { id: TabId; label: string; count?: number; icon: string }[] = [
+    { id: 'pipeline', label: 'Pipeline', count: pendingEvents.length, icon: '🔄' },
     { id: 'calendar', label: 'Content Calendar', count: calendarUpcoming.length, icon: '🗓️' },
-    { id: 'events', label: 'Event Posts', count: eventsNeedingAction.length, icon: '📅' },
     { id: 'engagement', label: 'Engagement', count: pendingOpps.length, icon: '💬' },
     { id: 'outreach', label: 'Outreach', count: outreachPending.length, icon: '📣' },
     { id: 'invitations', label: 'Invitations', count: invitationsPending.length, icon: '🤝' },
@@ -331,7 +322,8 @@ export default function SocialCommandCenter() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Social Command Center</h1>
           <p className="text-sm text-gray-500 mt-1">
-            {calendarUpcoming.length} posts scheduled &middot; {eventsNeedingAction.length} events need action &middot; {outreachPending.length} outreach pending &middot; {unrepliedComments.length} unreplied comments
+            {pendingEvents.length > 0 && <><span className="text-orange-600 font-medium">{pendingEvents.length} events to review</span> &middot; </>}
+            {calendarUpcoming.length} posts scheduled &middot; {discoveryItems.length} discovered (7d) &middot; {unrepliedComments.length} unreplied
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -362,6 +354,180 @@ export default function SocialCommandCenter() {
           </button>
         ))}
       </div>
+
+      {/* ═══════ PIPELINE TAB ═══════ */}
+      {activeTab === 'pipeline' && (
+        <div className="space-y-6">
+          {/* ── Pipeline Flow Visualization ── */}
+          <div className="bg-white rounded-xl border border-gray-200 p-5">
+            <h3 className="text-sm font-semibold text-gray-700 mb-4">Pipeline Flow</h3>
+            <div className="flex items-center gap-2 flex-wrap">
+              {[
+                { label: 'Discovered', count: discoverySummary?.total || 0, color: 'bg-indigo-100 text-indigo-700 border-indigo-200', sub: '7 days' },
+                { label: 'Pending Review', count: pendingEvents.length, color: pendingEvents.length > 0 ? 'bg-orange-100 text-orange-700 border-orange-300 ring-2 ring-orange-200' : 'bg-orange-50 text-orange-600 border-orange-200', sub: 'events' },
+                { label: 'Approved Events', count: calendarItems.filter(c => c.status === 'approved' && c.format === 'event').length, color: 'bg-green-100 text-green-700 border-green-200', sub: 'in queue' },
+                { label: 'Creative Review', count: calendarItems.filter(c => c.status === 'pending_review').length, color: 'bg-purple-100 text-purple-700 border-purple-200', sub: 'creatives' },
+                { label: 'Ready to Post', count: calendarItems.filter(c => c.status === 'approved').length, color: 'bg-emerald-100 text-emerald-700 border-emerald-200', sub: 'creatives' },
+                { label: 'Posted', count: calendarItems.filter(c => c.status === 'posted').length, color: 'bg-blue-100 text-blue-700 border-blue-200', sub: 'all time' },
+              ].map((step, i) => (
+                <div key={step.label} className="flex items-center gap-2">
+                  {i > 0 && <span className="text-gray-300 text-lg">→</span>}
+                  <div className={`rounded-lg border px-3 py-2 text-center min-w-[100px] ${step.color}`}>
+                    <p className="text-xl font-bold">{step.count}</p>
+                    <p className="text-xs font-medium">{step.label}</p>
+                    <p className="text-xs opacity-60">{step.sub}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Discovery Summary ── */}
+          <div className="bg-white rounded-xl border border-gray-200 p-5">
+            <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+              <span>🔍</span> Recent Discoveries
+              <span className="text-xs font-normal text-gray-400">(last 7 days)</span>
+            </h3>
+
+            {discoverySummary && discoverySummary.total > 0 ? (
+              <>
+                <div className="flex gap-4 mb-4 flex-wrap">
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">By Source</p>
+                    <div className="flex gap-2 flex-wrap">
+                      {Object.entries(discoverySummary.bySource).map(([source, count]) => {
+                        const sourceStyles: Record<string, string> = {
+                          instagram: 'bg-pink-100 text-pink-700',
+                          google_events: 'bg-blue-100 text-blue-700',
+                          vision: 'bg-purple-100 text-purple-700',
+                          manual: 'bg-gray-100 text-gray-600',
+                        };
+                        return (
+                          <span key={source} className={`px-2 py-1 rounded-full text-xs font-medium ${sourceStyles[source] || 'bg-gray-100 text-gray-600'}`}>
+                            {source === 'google_events' ? 'Google' : source}: {count}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 mb-1">By City</p>
+                    <div className="flex gap-2 flex-wrap">
+                      {Object.entries(discoverySummary.byCity).sort(([,a], [,b]) => b - a).map(([city, count]) => (
+                        <span key={city} className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                          {city}: {count}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recent discovery items */}
+                <div className="space-y-2 max-h-80 overflow-y-auto">
+                  {discoveryItems.slice(0, 20).map(item => {
+                    const rawData = item.raw_data || {};
+                    const title = (rawData.title || rawData.name || rawData.caption || 'Untitled') as string;
+                    const sourceLabel = item.source === 'google_events' ? 'Google' : item.source;
+                    const statusColor = item.status === 'processed' ? 'text-green-600' : item.status === 'failed' ? 'text-red-500' : 'text-gray-400';
+                    return (
+                      <div key={item.id} className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-50 border border-gray-100">
+                        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.status === 'processed' ? 'bg-green-400' : item.status === 'failed' ? 'bg-red-400' : 'bg-gray-300'}`} />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-gray-900 truncate">{title.slice(0, 80)}</p>
+                          <p className="text-xs text-gray-400">
+                            {sourceLabel} &middot; {item.city_slug} &middot; {new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                          </p>
+                        </div>
+                        <span className={`text-xs font-medium ${statusColor}`}>{item.status}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              <EmptyState icon="🔍" message="No discoveries in the last 7 days. The event discovery cron runs daily at 8 AM UTC." />
+            )}
+          </div>
+
+          {/* ── Pending Event Approval ── */}
+          <div className="bg-white rounded-xl border border-gray-200 p-5">
+            <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+              <span>⏳</span> Events Awaiting Approval
+              {pendingEvents.length > 0 && (
+                <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-700">{pendingEvents.length}</span>
+              )}
+            </h3>
+
+            {pendingEvents.length === 0 ? (
+              <p className="text-sm text-gray-500 py-4 text-center">No events pending review. All caught up!</p>
+            ) : (
+              <div className="space-y-3">
+                {pendingEvents.map(event => (
+                  <div key={event.id} className="border border-orange-200 rounded-lg p-4 bg-orange-50/50">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">{event.cities?.name || 'Unknown'}</span>
+                          <span className="text-xs text-gray-400">{formatDate(event.start_date)}{event.end_date ? ` - ${formatDate(event.end_date)}` : ''}</span>
+                          {event.is_free && <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">Free</span>}
+                          {event.source_handle && (
+                            <a href={event.source_post_url ? ensureUrl(event.source_post_url) : `https://instagram.com/${event.source_handle.replace('@', '')}`}
+                               target="_blank" rel="noopener noreferrer"
+                               className="text-xs text-purple-500 hover:underline">via {event.source_handle}</a>
+                          )}
+                        </div>
+                        <h4 className="font-semibold text-gray-900">{event.name}</h4>
+                        {event.venue_name && <p className="text-sm text-gray-600 mt-0.5">📍 {event.venue_name}{event.venue_address ? `, ${event.venue_address}` : ''}</p>}
+                        {event.description && <p className="text-sm text-gray-500 mt-1 line-clamp-2">{event.description}</p>}
+                        {event.tags && event.tags.length > 0 && (
+                          <div className="flex gap-1 mt-2 flex-wrap">
+                            {event.tags.map(tag => (
+                              <span key={tag} className="text-xs px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">#{tag}</span>
+                            ))}
+                          </div>
+                        )}
+                        <p className="text-xs text-gray-400 mt-2">Discovered {new Date(event.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                      </div>
+
+                      {/* Thumbnail if available */}
+                      {event.image_url && (
+                        <div className="w-20 h-20 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 bg-gray-100">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={event.image_url} alt={event.name} className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Action buttons */}
+                    <div className="flex items-center gap-3 mt-3 pt-3 border-t border-orange-200">
+                      <button
+                        onClick={() => handleEventAction(event.id, 'approve')}
+                        disabled={approvingEvent === event.id}
+                        className="flex items-center gap-1.5 px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+                      >
+                        {approvingEvent === event.id ? '...' : '✓ Approve'}
+                      </button>
+                      <button
+                        onClick={() => handleEventAction(event.id, 'reject')}
+                        disabled={approvingEvent === event.id}
+                        className="flex items-center gap-1.5 px-4 py-2 bg-white text-red-600 text-sm font-medium rounded-lg border border-red-200 hover:bg-red-50 disabled:opacity-50 transition-colors"
+                      >
+                        ✗ Reject
+                      </button>
+                      {event.source_post_url && (
+                        <a href={ensureUrl(event.source_post_url)} target="_blank" rel="noopener noreferrer"
+                           className="text-xs text-gray-500 hover:text-gray-700 border border-gray-200 px-3 py-2 rounded-lg hover:bg-gray-50 ml-auto">
+                          View Source →
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* ═══════ CONTENT CALENDAR TAB ═══════ */}
       {activeTab === 'calendar' && (
@@ -490,208 +656,6 @@ export default function SocialCommandCenter() {
                 );
               })}
             </div>
-          )}
-        </div>
-      )}
-
-      {/* ═══════ EVENT POSTS TAB ═══════ */}
-      {activeTab === 'events' && (
-        <div className="space-y-4">
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
-            <p className="text-sm text-blue-800">
-              <strong>Step 1: Engage with the source</strong> — Reply to the original post where we found each event. This builds relationships and drives traffic.
-              <br /><strong>Step 2: Post your own</strong> — Publish a branded creative with the city skyline + event details to your feed.
-              <br /><span className="text-blue-600">Use the checkboxes to track which steps you&apos;ve completed.</span>
-            </p>
-          </div>
-
-          {pendingEvents.length === 0 ? (
-            <EmptyState icon="📅" message="All events have been posted! Add more events to generate new post drafts." />
-          ) : (
-            <>
-              {/* Sort: uncompleted first, then completed */}
-              {[...pendingEvents].sort((a, b) => {
-                const aDone = (!a.sourceHandle || isActionDone('event_reply', a.id)) && (a.alreadyPosted || isActionDone('event_post', a.id));
-                const bDone = (!b.sourceHandle || isActionDone('event_reply', b.id)) && (b.alreadyPosted || isActionDone('event_post', b.id));
-                if (aDone === bDone) return 0;
-                return aDone ? 1 : -1;
-              }).map(draft => {
-                const replyDone = isActionDone('event_reply', draft.id);
-                const postDone = draft.alreadyPosted || isActionDone('event_post', draft.id);
-                const allDone = (!draft.sourceHandle || replyDone) && postDone;
-
-                return (
-                  <div key={draft.id} className={`bg-white rounded-xl border overflow-hidden transition-all ${allDone ? 'border-green-200 opacity-75' : draft.isFeatured ? 'border-orange-300 ring-1 ring-orange-100' : 'border-gray-200'}`}>
-                    {/* Event header bar */}
-                    <div className="px-5 pt-4 pb-3">
-                      <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        {allDone && <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">All Done</span>}
-                        {draft.isFeatured && !allDone && <span className="text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-medium">Featured</span>}
-                        {draft.isFree && <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-medium">Free</span>}
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-medium">{draft.cityName}</span>
-                        <span className="text-xs text-gray-400">{formatDate(draft.startDate)}{draft.endDate ? ` - ${formatDate(draft.endDate)}` : ''}</span>
-                      </div>
-                      <h3 className={`font-semibold ${allDone ? 'text-gray-500 line-through' : 'text-gray-900'}`}>{draft.name}</h3>
-                      {draft.venueName && <p className="text-sm text-gray-600 mt-0.5">📍 {draft.venueName}{draft.venueAddress ? `, ${draft.venueAddress}` : ''}</p>}
-                      {draft.tags.length > 0 && (
-                        <div className="flex gap-1 mt-2 flex-wrap">
-                          {draft.tags.map(tag => (
-                            <span key={tag} className="text-xs px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">#{tag}</span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* ── SECTION 1: Engage with Source (Primary) ── */}
-                    {draft.sourceHandle && draft.engagementReplies.length > 0 && (
-                      <div className={`border-t border-b px-5 py-4 ${replyDone ? 'bg-green-50 border-green-200' : 'bg-purple-50 border-purple-200'}`}>
-                        <div className="flex items-center gap-3 mb-3">
-                          <label className="flex items-center gap-2 cursor-pointer group">
-                            <input
-                              type="checkbox"
-                              checked={replyDone}
-                              onChange={() => toggleAction('event_reply', draft.id)}
-                              className="w-4 h-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
-                            />
-                            <span className={`text-sm font-semibold ${replyDone ? 'text-green-700 line-through' : 'text-purple-800'}`}>
-                              Step 1: Reply to {draft.sourceHandle}
-                            </span>
-                          </label>
-                          <a
-                            href={draft.sourcePostUrl ? ensureUrl(draft.sourcePostUrl) : `https://instagram.com/${draft.sourceHandle.replace('@', '')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`text-xs border px-2.5 py-1 rounded-lg font-medium ${replyDone ? 'text-green-600 border-green-300 hover:bg-green-100' : 'text-purple-600 border-purple-300 hover:bg-purple-100'}`}
-                          >
-                            Open Post →
-                          </a>
-                          {replyDone && <span className="text-xs text-green-600">✓ Done</span>}
-                        </div>
-                        {!replyDone && (
-                          <div className="space-y-2">
-                            {draft.engagementReplies.map((reply, i) => (
-                              <div key={i} className="bg-white border border-purple-200 rounded-lg p-3 flex items-start gap-3">
-                                <div className="flex-1">
-                                  <p className="text-sm text-gray-700">{reply}</p>
-                                </div>
-                                <button
-                                  onClick={() => handleCopy(reply, `reply-${draft.id}-${i}`)}
-                                  className="text-xs text-purple-600 border border-purple-300 px-2.5 py-1 rounded hover:bg-purple-50 whitespace-nowrap font-medium"
-                                >
-                                  {copiedId === `reply-${draft.id}-${i}` ? '✓ Copied' : 'Copy'}
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* No source handle — show note */}
-                    {!draft.sourceHandle && (
-                      <div className="bg-gray-50 border-t border-b border-gray-200 px-5 py-3">
-                        <p className="text-xs text-gray-500">No source handle — this event was added manually. Skip to posting your own creative below.</p>
-                      </div>
-                    )}
-
-                    {/* ── SECTION 2: Post Your Own (Secondary) ── */}
-                    <div className="px-5 py-4">
-                      <div className="flex items-center gap-3 mb-3">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={postDone}
-                            onChange={() => toggleAction('event_post', draft.id)}
-                            className="w-4 h-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
-                          />
-                          <span className={`text-sm font-semibold ${postDone ? 'text-green-700 line-through' : 'text-gray-700'}`}>
-                            {draft.sourceHandle ? 'Step 2: ' : ''}Post to @thepawcities
-                          </span>
-                        </label>
-                        {postDone && <span className="text-xs text-green-600">{isActionDone('event_post_skip', draft.id) ? '✓ Skipped' : '✓ Done'}</span>}
-                        {!postDone && (
-                          <button
-                            onClick={() => toggleAction('event_post', draft.id)}
-                            className="text-xs text-gray-400 hover:text-gray-600 border border-gray-200 px-2 py-0.5 rounded hover:bg-gray-50 ml-auto"
-                            title="Skip posting — marks this as done without publishing"
-                          >
-                            Skip
-                          </button>
-                        )}
-                      </div>
-
-                      {!postDone && (
-                        <div className="flex gap-4">
-                          {/* Creative preview */}
-                          <div className="w-40 h-40 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 bg-gray-100">
-                            <img
-                              src={draft.creativeUrl}
-                              alt={`Creative for ${draft.name}`}
-                              className="w-full h-full object-cover"
-                              loading="lazy"
-                            />
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            {/* Caption preview */}
-                            <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3">
-                              <div className="flex items-center justify-between mb-1">
-                                <p className="text-xs font-medium text-gray-500">Caption:</p>
-                                <button onClick={() => handleCopy(draft.caption, `caption-${draft.id}`)} className="text-xs text-orange-600 hover:underline">
-                                  {copiedId === `caption-${draft.id}` ? 'Copied!' : 'Copy'}
-                                </button>
-                              </div>
-                              <p className="text-sm text-gray-700 whitespace-pre-line">
-                                {expandedCaption === draft.id ? draft.caption : draft.caption.slice(0, 150) + (draft.caption.length > 150 ? '...' : '')}
-                              </p>
-                              {draft.caption.length > 150 && (
-                                <button onClick={() => setExpandedCaption(expandedCaption === draft.id ? null : draft.id)} className="text-xs text-orange-500 mt-1">
-                                  {expandedCaption === draft.id ? 'Less' : 'More'}
-                                </button>
-                              )}
-                            </div>
-
-                            {/* Publish actions */}
-                            <div className="flex items-center gap-3">
-                              <button
-                                onClick={() => publishPost(draft)}
-                                disabled={publishing === draft.id}
-                                className="flex items-center gap-1.5 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                              >
-                                {publishing === draft.id ? (
-                                  <><span className="animate-spin">⏳</span> Publishing...</>
-                                ) : (
-                                  <>📸 Publish</>
-                                )}
-                              </button>
-                              <a
-                                href={draft.creativeUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-xs text-gray-500 hover:text-gray-700 border border-gray-200 px-3 py-2 rounded-lg hover:bg-gray-50"
-                              >
-                                Preview Creative
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Publish result */}
-                      {publishResult?.id === draft.id && (
-                        <div className={`mt-3 p-3 rounded-lg text-sm ${publishResult.success ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
-                          {publishResult.success ? (
-                            <>✅ Published! <a href={publishResult.permalink} target="_blank" rel="noopener noreferrer" className="underline font-medium">View on Instagram</a></>
-                          ) : (
-                            <>❌ Failed: {publishResult.error}</>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </>
           )}
         </div>
       )}
