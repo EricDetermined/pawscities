@@ -850,6 +850,7 @@ export async function GET(request: NextRequest) {
   // Track titles we've already inserted this run to catch within-batch dupes
   const insertedTitles: string[] = [];
   let skippedDupes = 0;
+  const insertErrors: string[] = [];
 
   // Insert into ingest_queue for admin review
   let inserted = 0;
@@ -940,7 +941,7 @@ export async function GET(request: NextRequest) {
         ? ` | mentions: @${event.mentionedHandles.slice(0, 3).join(', @')}`
         : '';
 
-      await supabase.from('ingest_queue').insert({
+      const { error: insertError } = await supabase.from('ingest_queue').insert({
         source: isGoogle ? 'google_events' : 'event_discovery',
         submitted_by: 'cron:event-discovery',
         url: event.permalink,
@@ -954,6 +955,11 @@ export async function GET(request: NextRequest) {
         priority: event.score >= 50 ? 'high' : event.isBusiness ? 'high' : event.visionEnriched ? 'high' : 'normal',
         status: 'pending',
       });
+      if (insertError) {
+        console.error(`[EVENT-DISCOVERY] DB insert failed for "${event.permalink}":`, insertError.message);
+        insertErrors.push(`${event.city}: ${insertError.message}`);
+        continue;
+      }
       inserted++;
       if (event.isBusiness) businessesFound++;
       if (event.city) {
@@ -1006,6 +1012,7 @@ export async function GET(request: NextRequest) {
     totalCandidates: discoveredEvents.length,
     inserted,
     skippedDupes,
+    insertErrors: insertErrors.length > 0 ? insertErrors.slice(0, 10) : undefined,
     businessesFound,
     cityCounts: { ...cityCounts, ...googleCityCounts },
     topEvents: topEvents.slice(0, 10).map(e => ({
