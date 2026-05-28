@@ -476,10 +476,12 @@ export interface MarketingDigestData {
     newDiscovered: number;
     pendingReview: number;
   };
-  // Creative queue health
+  // Creative queue health (unified pipeline)
   creativeQueue?: {
     remaining: number;
-    items: { headline: string; narrator: string; city: string; scheduledFor: string }[];
+    needsReview: number;
+    postedYesterday: { headline: string; narrator: string; city: string; contentType: string }[];
+    items: { headline: string; narrator: string; city: string; scheduledFor: string; contentType?: string; status?: string }[];
   };
   // Hashtags scanned
   hashtagsScanned?: string[];
@@ -690,16 +692,36 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
       const bgColor = isLow ? '#fef3c7' : '#f0fdf4';
       const borderColor = isLow ? '#f59e0b' : '#86efac';
       const icon = isLow ? '⚠️' : '✅';
+
+      // Yesterday's posts from the creative pipeline
+      const postedHtml = cq.postedYesterday && cq.postedYesterday.length > 0
+        ? `<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:6px;padding:10px 12px;margin:8px 0;">
+            <p style="margin:0 0 6px;font-size:13px;font-weight:600;color:#166534;">✅ Posted yesterday from creative queue:</p>
+            ${cq.postedYesterday.map(c =>
+              `<div style="font-size:12px;color:#555;padding:2px 0;">🎭 <strong>${c.narrator}</strong> · ${c.city} · ${c.contentType} · ${c.headline}</div>`
+            ).join('')}
+          </div>`
+        : '';
+
+      // Needs review alert
+      const reviewHtml = cq.needsReview > 0
+        ? `<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;padding:10px 12px;margin:8px 0;">
+            <p style="margin:0;font-size:13px;">🔍 <strong>${cq.needsReview}</strong> creative${cq.needsReview === 1 ? '' : 's'} waiting for your review — <a href="${getAppUrl()}/admin/creatives" style="color:#ea580c;font-weight:700;">Review now →</a></p>
+          </div>`
+        : '';
+
       const msg = isLow
-        ? `Only <strong>${cq.remaining}</strong> post${cq.remaining === 1 ? '' : 's'} left in the creative queue! <a href="${getAppUrl()}/admin/creatives" style="color:#ea580c;font-weight:700;">Generate a new batch now →</a>`
-        : `<strong>${cq.remaining}</strong> post${cq.remaining === 1 ? '' : 's'} queued and ready to go.`;
+        ? `Only <strong>${cq.remaining}</strong> approved post${cq.remaining === 1 ? '' : 's'} left! <a href="${getAppUrl()}/admin/creatives" style="color:#ea580c;font-weight:700;">Generate a new batch →</a>`
+        : `<strong>${cq.remaining}</strong> approved post${cq.remaining === 1 ? '' : 's'} queued and ready to go.`;
       const itemsList = cq.items.slice(0, 5).map(c =>
-        `<div style="font-size:12px;color:#555;padding:2px 0;">📅 ${c.scheduledFor} · <strong>${c.narrator}</strong> · ${c.city} · ${c.headline}</div>`
+        `<div style="font-size:12px;color:#555;padding:2px 0;">📅 ${c.scheduledFor} · <strong>${c.narrator}</strong> · ${c.city} · ${c.contentType || 'content'} · ${c.headline}</div>`
       ).join('');
-      const subtitle = cq.remaining + ' post' + (cq.remaining === 1 ? '' : 's') + ' remaining';
+      const subtitle = cq.remaining + ' approved, ' + (cq.needsReview || 0) + ' needs review';
       return `
-        ${sectionHeader('🎨', 'Creative Queue', subtitle)}
+        ${sectionHeader('🎨', 'Content Pipeline', subtitle)}
         <tr><td>
+          ${postedHtml}
+          ${reviewHtml}
           <div style="background:${bgColor};border:2px solid ${borderColor};border-radius:8px;padding:12px 16px;margin:8px 0;">
             <p style="margin:0;font-size:14px;">${icon} ${msg}</p>
             ${itemsList ? `<div style="margin-top:8px;border-top:1px solid ${borderColor};padding-top:8px;">${itemsList}</div>` : ''}

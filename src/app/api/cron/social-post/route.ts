@@ -2,92 +2,49 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { publishImagePost } from '@/lib/instagram';
-import {
-  CONTENT_BANK,
-  CITY_META,
-  generateCaption,
-  generateEventCaption,
-  pickNextContent,
-} from '@/lib/social-content';
+import { generateAndUploadMascotImage } from '@/lib/dalle';
 
 // ─── Config ────────────────────────────────────────────────────────────────────
 
-/** How many days ahead to look for upcoming events */
-const EVENT_LOOKAHEAD_DAYS = 14;
-
-// ─── Supabase Admin ────────────────────────────────────────────────────────────
+export const maxDuration = 120;
 
 function getSupabaseAdmin() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !serviceKey) return null;
-  return createClient(url, serviceKey);
+  return createClient(url, serviceKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
 }
 
-// ─── Helpers ───────────────────────────────────────────────────────────────────
-
-/** Get the deployment base URL for internal API calls */
 function getBaseUrl(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   return 'http://localhost:3000';
 }
 
-/** Format an event date for display (e.g. "Sat, Jun 14") */
-function formatEventDate(dateStr: string): string {
-  const d = new Date(dateStr + 'T00:00:00');
-  return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-}
+// ═══════════════════════════════════════════════════════════════════════════════
+// GET /api/cron/social-post
+//
+// UNIFIED daily Instagram posting cron for @thepawcities.
+// Runs at 14:00 UTC daily.
+//
+// ONE pipeline, ONE queue:
+//   creative_queue (status='approved', scheduled_for <= today)
+//     → picks the next approved creative regardless of content_type
+//     → publishes to Instagram
+//     → logs to social_posts
+//     → marks creative as 'posted'
+//
+// All content flows through creative_queue with admin review:
+//   - Content bank fun facts → generated in batch → reviewed → approved
+//   - Events → auto-generated on approval → reviewed → approved
+//   - Business spotlights → generated → reviewed → approved
+//
+// No more bypassing the queue. No more two crons fighting over Instagram.
+// ═══════════════════════════════════════════════════════════════════════════════
 
-/** Format time for display (e.g. "2:00 PM") */
-function formatEventTime(timeStr: string | null): string {
-  if (!timeStr) return '';
-  const [h, m] = timeStr.split(':').map(Number);
-  const ampm = h >= 12 ? 'PM' : 'AM';
-  const hour = h % 12 || 12;
-  return `${hour}:${String(m).padStart(2, '0')} ${ampm}`;
-}
-
-// ─── Event row type from Supabase query ────────────────────────────────────────
-
-interface EventRow {
-  id: string;
-  slug: string;
-  name: string;
-  description: string | null;
-  venue_name: string | null;
-  venue_address: string | null;
-  start_date: string;
-  end_date: string | null;
-  start_time: string | null;
-  end_time: string | null;
-  tags: string[] | null;
-  source_handle: string | null;
-  is_free: boolean;
-  is_featured: boolean;
-  status: string;
-  cities: { slug: string; name: string } | null;
-}
-
-// ─── Main Route ────────────────────────────────────────────────────────────────
-
-/**
- * GET /api/cron/social-post
- *
- * Events-first Instagram posting cron for @thepawcities.
- *
- * Priority 1: Post upcoming APPROVED events (next 14 days) that haven't
- *             been posted yet. Uses branded event creatives (city skyline +
- *             text overlay) which ALWAYS match the content.
- *
- * Priority 2: Fall back to content bank items ONLY if they have a
- *             pre-stored branded creative in Supabase Storage. Never uses
- *             Google Places photos — images must match post content.
- *
- * Max 1 post per invocation. Auth via CRON_SECRET.
- */
 export async function GET(request: NextRequest) {
-  // ── Auth ────────────────────────────────────────────────────────────────────
   const dryRun = request.nextUrl.searchParams.get('dryRun') === 'true';
 
   if (!verifyCronAuth(request)) {
@@ -100,13 +57,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });
     }
 
-    // ══════════════════════════════════════════════════════════════════════════
-    // PRIORITY 0: Approved creatives from the review queue
-    // These are mascot-driven (Buster & Marley) posts that have been
-    // reviewed and approved in /admin/creatives.
-    // ══════════════════════════════════════════════════════════════════════════
-
     const today = new Date().toISOString().split('T')[0];
+    const hasOpenAI = !!process.env.OPENAI_API_KEY;
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // Fetch next approved creative — ANY content type
+    // Priority: events with nearest start_date first, then by scheduled_for
+    // ══════════════════════════════════════════════════════════════════════════
 
     const { data: approvedCreatives } = await supabase
       .from('creative_queue')
@@ -114,37 +71,56 @@ export async function GET(request: NextRequest) {
       .eq('status', 'approved')
       .lte('scheduled_for', today)
       .order('scheduled_for', { ascending: true })
-      .limit(1);
+      .limit(5); // Fetch a few in case the first one fails
 
-    const nextCreative = approvedCreatives?.[0];
-    if (nextCreative) {
-      console.log(`[CREATIVE] Posting approved creative: "${nextCreative.headline}" by ${nextCreative.narrator}`);
+    if (!approvedCreatives || approvedCreatives.length === 0) {
+      console.log('[SOCIAL-POST] No approved creatives scheduled for today');
+      return NextResponse.json({
+        status: 'skipped',
+        reason: 'No approved creatives ready to post. Generate and approve content in /admin/creatives.',
+      });
+    }
 
-      let imageUrl = nextCreative.image_url;
+    // Try each creative until one succeeds
+    for (const creative of approvedCreatives) {
+      console.log(`[SOCIAL-POST] Attempting: "${creative.headline}" (${creative.content_type}, ${creative.narrator})`);
 
-      // If no pre-generated image, fall back to next/og creative
+      let imageUrl = creative.image_url;
+
+      // ── Generate image if missing ────────────────────────────────────────
       if (!imageUrl) {
-        if (nextCreative.content_type === 'content_bank' && nextCreative.content_index != null) {
-          const creativeUrl = `${getBaseUrl()}/api/social/generate-creative?index=${nextCreative.content_index}&preview=true&secret=${process.env.CRON_SECRET}`;
-          const creativeRes = await fetch(creativeUrl);
-          if (creativeRes.ok) {
-            const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
-            const storagePath = `instagram-posts/${nextCreative.city}-mascot-${Date.now()}.png`;
-            const { error: uploadError } = await supabase.storage
-              .from('photos')
-              .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
-
-            if (!uploadError) {
-              const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
-              imageUrl = urlData?.publicUrl || null;
-            }
+        if (creative.image_prompt && hasOpenAI) {
+          // Use DALL-E to generate from the stored prompt
+          const storagePath = `mascot-creatives/${creative.city}-${creative.content_type}-${creative.narrator}-${Date.now()}.png`;
+          const dalleResult = await generateAndUploadMascotImage(creative.image_prompt, storagePath);
+          if (dalleResult) {
+            imageUrl = dalleResult.publicUrl;
           }
-        } else if (nextCreative.content_type === 'event' && nextCreative.event_id) {
-          // Fetch event and generate event creative
+        } else if (creative.content_type === 'content_bank' && creative.content_index != null) {
+          // Fallback: generate via next/og creative endpoint
+          const creativeEndpoint = `${getBaseUrl()}/api/social/generate-creative?index=${creative.content_index}&preview=true&secret=${process.env.CRON_SECRET}`;
+          try {
+            const creativeRes = await fetch(creativeEndpoint);
+            if (creativeRes.ok) {
+              const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
+              const storagePath = `instagram-posts/${creative.city}-content-${creative.content_index}-${Date.now()}.png`;
+              const { error: uploadError } = await supabase.storage
+                .from('photos')
+                .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+              if (!uploadError) {
+                const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+                imageUrl = urlData?.publicUrl || null;
+              }
+            }
+          } catch (err) {
+            console.error(`[SOCIAL-POST] Creative generation failed:`, err);
+          }
+        } else if (creative.content_type === 'event' && creative.event_id) {
+          // Fallback: generate event creative via endpoint
           const { data: event } = await supabase
             .from('events')
             .select('*, cities(slug, name)')
-            .eq('id', nextCreative.event_id)
+            .eq('id', creative.event_id)
             .single();
 
           if (event) {
@@ -155,481 +131,118 @@ export async function GET(request: NextRequest) {
               date: event.start_date,
             });
             if (event.venue_name) creativeParams.set('venue', event.venue_name);
-            const creativeRes = await fetch(`${getBaseUrl()}/api/social/event-creative?${creativeParams}`);
-            if (creativeRes.ok) {
-              const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
-              const storagePath = `instagram-posts/${nextCreative.city}-event-mascot-${Date.now()}.png`;
-              const { error: uploadError } = await supabase.storage
-                .from('photos')
-                .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
-              if (!uploadError) {
-                const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
-                imageUrl = urlData?.publicUrl || null;
+            try {
+              const creativeRes = await fetch(`${getBaseUrl()}/api/social/event-creative?${creativeParams}`);
+              if (creativeRes.ok) {
+                const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
+                const storagePath = `instagram-posts/${creative.city}-event-${Date.now()}.png`;
+                const { error: uploadError } = await supabase.storage
+                  .from('photos')
+                  .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+                if (!uploadError) {
+                  const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+                  imageUrl = urlData?.publicUrl || null;
+                }
               }
+            } catch (err) {
+              console.error(`[SOCIAL-POST] Event creative generation failed:`, err);
             }
           }
         }
       }
 
+      // ── No image? Mark failed and try next ───────────────────────────────
       if (!imageUrl) {
-        // Mark as failed and move on to next priority
+        console.error(`[SOCIAL-POST] No image for "${creative.headline}", marking failed`);
         await supabase.from('creative_queue')
           .update({ status: 'failed', error_message: 'Could not generate image' })
-          .eq('id', nextCreative.id);
-        console.log(`[CREATIVE] Failed to generate image for "${nextCreative.headline}", falling through...`);
-      } else {
-        // Verify image accessible
-        const verifyRes = await fetch(imageUrl, { method: 'HEAD' });
+          .eq('id', creative.id);
+        continue;
+      }
+
+      // ── Verify image accessible ──────────────────────────────────────────
+      try {
+        const verifyRes = await fetch(imageUrl, { method: 'HEAD', signal: AbortSignal.timeout(10000) });
         if (!verifyRes.ok) {
+          console.error(`[SOCIAL-POST] Image not accessible (HTTP ${verifyRes.status}) for "${creative.headline}"`);
           await supabase.from('creative_queue')
             .update({ status: 'failed', error_message: `Image not accessible: HTTP ${verifyRes.status}` })
-            .eq('id', nextCreative.id);
-        } else if (dryRun) {
-          return NextResponse.json({
-            status: 'dry_run',
-            type: 'creative_queue',
-            headline: nextCreative.headline,
-            narrator: nextCreative.narrator,
-            city: nextCreative.city,
-            imageUrl,
-            caption: nextCreative.caption,
-          });
-        } else {
-          // Publish to Instagram
-          const result = await publishImagePost(imageUrl, nextCreative.caption);
-
-          // Log to social_posts
-          const { data: postRow } = await supabase.from('social_posts').insert({
-            platform: 'instagram',
-            post_id: result.postId || null,
-            container_id: result.containerId || null,
-            headline: nextCreative.headline,
-            city: nextCreative.city,
-            caption: nextCreative.caption,
-            image_url: imageUrl,
-            status: result.success ? 'published' : 'failed',
-            error_message: result.error || null,
-          }).select('id').single();
-
-          // Update creative queue status
-          await supabase.from('creative_queue')
-            .update({
-              status: result.success ? 'posted' : 'failed',
-              posted_at: result.success ? new Date().toISOString() : null,
-              social_post_id: postRow?.id || null,
-              image_url: imageUrl,
-              error_message: result.error || null,
-            })
-            .eq('id', nextCreative.id);
-
-          if (result.success) {
-            return NextResponse.json({
-              status: 'published',
-              type: 'creative_queue',
-              postId: result.postId,
-              headline: nextCreative.headline,
-              narrator: nextCreative.narrator,
-              city: nextCreative.city,
-            });
-          }
-          // If failed, fall through to next priority
-          console.log(`[CREATIVE] Instagram publish failed: ${result.error}`);
+            .eq('id', creative.id);
+          continue;
         }
-      }
-    }
-
-    // ── Load posting history ──────────────────────────────────────────────────
-    const { data: publishedPosts } = await supabase
-      .from('social_posts')
-      .select('headline')
-      .eq('status', 'published');
-
-    const postedHeadlines = new Set(
-      (publishedPosts || []).map((p: { headline: string }) => p.headline)
-    );
-    const totalPosted = postedHeadlines.size;
-
-    // Also skip headlines that have failed 3+ times
-    const { data: failedPosts } = await supabase
-      .from('social_posts')
-      .select('headline')
-      .eq('status', 'failed');
-
-    if (failedPosts) {
-      const failCounts: Record<string, number> = {};
-      for (const p of failedPosts) {
-        failCounts[p.headline] = (failCounts[p.headline] || 0) + 1;
-      }
-      for (const [headline, count] of Object.entries(failCounts)) {
-        if (count >= 3) {
-          postedHeadlines.add(headline);
-          console.log(`Skipping "${headline}" — failed ${count} times`);
-        }
-      }
-    }
-
-    // ══════════════════════════════════════════════════════════════════════════
-    // PRIORITY 1: Events
-    // ══════════════════════════════════════════════════════════════════════════
-
-    const lookahead = new Date();
-    lookahead.setDate(lookahead.getDate() + EVENT_LOOKAHEAD_DAYS);
-    const lookaheadDate = lookahead.toISOString().split('T')[0];
-
-    // Fetch approved events in the next 14 days, joined with city info
-    const { data: upcomingEvents, error: eventsError } = await supabase
-      .from('events')
-      .select('id, slug, name, description, venue_name, venue_address, start_date, end_date, start_time, end_time, tags, source_handle, is_free, is_featured, status, cities(slug, name)')
-      .eq('status', 'APPROVED')
-      .gte('start_date', today)
-      .lte('start_date', lookaheadDate)
-      .order('start_date', { ascending: true });
-
-    if (eventsError) {
-      console.error('Error fetching events:', eventsError);
-    }
-
-    // Find the first event that hasn't been posted yet
-    const unpostedEvent = (upcomingEvents as EventRow[] | null)?.find(
-      (evt) => !postedHeadlines.has(evt.name)
-    );
-
-    if (unpostedEvent) {
-      const city = unpostedEvent.cities;
-      const citySlug = city?.slug || 'losangeles';
-      const cityName = city?.name || 'City';
-
-      // Map Supabase city slug to CITY_META key (e.g. "newyork" -> "nyc")
-      const metaKey = Object.keys(CITY_META).find(
-        k => CITY_META[k].slug === citySlug
-      ) || citySlug;
-
-      console.log(`[EVENT] Posting event: "${unpostedEvent.name}" in ${cityName}`);
-
-      // ── Step 1: Generate branded creative via event-creative endpoint ──────
-      const dateDisplay = formatEventDate(unpostedEvent.start_date);
-      const timeDisplay = formatEventTime(unpostedEvent.start_time);
-      const dateStr = timeDisplay ? `${dateDisplay} at ${timeDisplay}` : dateDisplay;
-
-      const creativeParams = new URLSearchParams({
-        name: unpostedEvent.name,
-        city: cityName,
-        citySlug,
-        date: dateStr,
-      });
-      if (unpostedEvent.venue_name) creativeParams.set('venue', unpostedEvent.venue_name);
-      if (unpostedEvent.tags?.length) creativeParams.set('tags', unpostedEvent.tags.join(','));
-      if (unpostedEvent.is_free) creativeParams.set('free', 'true');
-
-      const creativeUrl = `${getBaseUrl()}/api/social/event-creative?${creativeParams.toString()}`;
-      console.log(`[EVENT] Fetching creative from: ${creativeUrl}`);
-
-      const creativeRes = await fetch(creativeUrl);
-      if (!creativeRes.ok) {
-        const errText = await creativeRes.text();
-        console.error(`[EVENT] Creative generation failed (${creativeRes.status}):`, errText);
-        await supabase.from('social_posts').insert({
-          platform: 'instagram',
-          headline: unpostedEvent.name,
-          city: metaKey,
-          caption: '',
-          status: 'failed',
-          error_message: `Creative generation failed: HTTP ${creativeRes.status}`,
-        });
-        return NextResponse.json({
-          status: 'error',
-          error: `Failed to generate event creative: HTTP ${creativeRes.status}`,
-        }, { status: 500 });
+      } catch {
+        await supabase.from('creative_queue')
+          .update({ status: 'failed', error_message: 'Image verification timed out' })
+          .eq('id', creative.id);
+        continue;
       }
 
-      // ── Step 2: Upload creative to Supabase Storage ─────────────────────────
-      const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
-      const storagePath = `instagram-posts/${citySlug}-event-${unpostedEvent.slug}-${Date.now()}.png`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('photos')
-        .upload(storagePath, imgBuffer, {
-          contentType: 'image/png',
-          upsert: true,
-        });
-
-      if (uploadError) {
-        console.error('[EVENT] Supabase upload error:', uploadError);
-        await supabase.from('social_posts').insert({
-          platform: 'instagram',
-          headline: unpostedEvent.name,
-          city: metaKey,
-          caption: '',
-          status: 'failed',
-          error_message: `Storage upload failed: ${uploadError.message}`,
-        });
-        return NextResponse.json({
-          status: 'error',
-          error: `Failed to upload event creative: ${uploadError.message}`,
-        }, { status: 500 });
-      }
-
-      // ── Step 3: Get public URL ──────────────────────────────────────────────
-      const { data: publicUrlData } = supabase.storage
-        .from('photos')
-        .getPublicUrl(storagePath);
-
-      const imageUrl = publicUrlData?.publicUrl;
-      if (!imageUrl) {
-        return NextResponse.json({
-          status: 'error',
-          error: 'Failed to get public URL for uploaded creative',
-        }, { status: 500 });
-      }
-
-      // Verify the image is accessible
-      const verifyRes = await fetch(imageUrl, { method: 'HEAD' });
-      if (!verifyRes.ok) {
-        return NextResponse.json({
-          status: 'error',
-          error: `Uploaded creative not accessible: HTTP ${verifyRes.status}`,
-        }, { status: 500 });
-      }
-
-      // ── Step 4: Generate caption ────────────────────────────────────────────
-      const caption = generateEventCaption({
-        name: unpostedEvent.name,
-        cityName,
-        citySlug: metaKey,
-        venueName: unpostedEvent.venue_name,
-        dateDisplay: dateStr,
-        tags: unpostedEvent.tags || [],
-        isFree: unpostedEvent.is_free,
-        description: unpostedEvent.description,
-      });
-
-      // ── Dry run? ────────────────────────────────────────────────────────────
+      // ── Dry run ──────────────────────────────────────────────────────────
       if (dryRun) {
         return NextResponse.json({
           status: 'dry_run',
-          type: 'event',
-          event: {
-            name: unpostedEvent.name,
-            city: cityName,
-            date: dateStr,
-            venue: unpostedEvent.venue_name,
-          },
+          type: creative.content_type,
+          headline: creative.headline,
+          narrator: creative.narrator,
+          city: creative.city,
           imageUrl,
-          caption,
-          totalPosted,
+          caption: creative.caption,
+          scheduledFor: creative.scheduled_for,
         });
       }
 
-      // ── Step 5: Publish to Instagram ────────────────────────────────────────
-      const result = await publishImagePost(imageUrl, caption);
+      // ── Publish to Instagram ─────────────────────────────────────────────
+      const result = await publishImagePost(imageUrl, creative.caption);
 
-      // ── Step 6: Log to social_posts ─────────────────────────────────────────
-      await supabase.from('social_posts').insert({
+      // ── Log to social_posts ──────────────────────────────────────────────
+      const { data: postRow } = await supabase.from('social_posts').insert({
         platform: 'instagram',
         post_id: result.postId || null,
         container_id: result.containerId || null,
-        headline: unpostedEvent.name,
-        city: metaKey,
-        caption,
+        headline: creative.headline,
+        city: creative.city,
+        caption: creative.caption,
         image_url: imageUrl,
         status: result.success ? 'published' : 'failed',
         error_message: result.error || null,
-      });
+      }).select('id').single();
 
-      if (!result.success) {
+      // ── Update creative_queue ────────────────────────────────────────────
+      await supabase.from('creative_queue')
+        .update({
+          status: result.success ? 'posted' : 'failed',
+          posted_at: result.success ? new Date().toISOString() : null,
+          social_post_id: postRow?.id || null,
+          image_url: imageUrl,
+          error_message: result.error || null,
+        })
+        .eq('id', creative.id);
+
+      if (result.success) {
+        console.log(`[SOCIAL-POST] Published: "${creative.headline}" (${creative.content_type}) via ${creative.narrator}`);
         return NextResponse.json({
-          status: 'error',
-          type: 'event',
-          error: result.error,
-          event: { name: unpostedEvent.name, city: cityName },
-          imageUrl,
-        }, { status: 500 });
+          status: 'published',
+          type: creative.content_type,
+          postId: result.postId,
+          headline: creative.headline,
+          narrator: creative.narrator,
+          city: creative.city,
+          scheduledFor: creative.scheduled_for,
+        });
       }
 
-      return NextResponse.json({
-        status: 'published',
-        type: 'event',
-        postId: result.postId,
-        event: {
-          name: unpostedEvent.name,
-          city: cityName,
-          date: dateStr,
-          venue: unpostedEvent.venue_name,
-        },
-        totalPosted: totalPosted + 1,
-      });
+      // Failed to publish — try next creative
+      console.error(`[SOCIAL-POST] Instagram publish failed for "${creative.headline}": ${result.error}`);
     }
 
-    // ══════════════════════════════════════════════════════════════════════════
-    // PRIORITY 2: Content bank — generate branded creative on the fly
-    // No events to post — fall back to content bank items. Creatives are
-    // generated dynamically via /api/social/generate-creative (same approach
-    // as event creatives). No pre-stored files required.
-    // ══════════════════════════════════════════════════════════════════════════
-
-    console.log('[CONTENT] No unposted events found, generating content bank post...');
-
-    const fact = pickNextContent(postedHeadlines);
-    if (!fact) {
-      return NextResponse.json({
-        status: 'exhausted',
-        message: 'All events posted and all content bank pieces used. Time to create new content!',
-        totalPosted,
-      });
-    }
-
-    const factIndex = CONTENT_BANK.indexOf(fact);
-    const cityMeta = CITY_META[fact.city];
-    console.log(`[CONTENT] Selected: "${fact.headline}" (${cityMeta?.name || fact.city}, index ${factIndex})`);
-
-    // ── Step 1: Generate branded creative on the fly ─────────────────────
-    const creativeUrl = `${getBaseUrl()}/api/social/generate-creative?index=${factIndex}&preview=true&secret=${process.env.CRON_SECRET}`;
-    console.log(`[CONTENT] Generating creative for "${fact.headline}"...`);
-
-    const creativeRes = await fetch(creativeUrl);
-    if (!creativeRes.ok) {
-      const errText = await creativeRes.text();
-      console.error(`[CONTENT] Creative generation failed (${creativeRes.status}):`, errText);
-      await supabase.from('social_posts').insert({
-        platform: 'instagram',
-        headline: fact.headline,
-        city: fact.city,
-        caption: '',
-        status: 'failed',
-        error_message: `Creative generation failed: HTTP ${creativeRes.status}`,
-      });
-      return NextResponse.json({
-        status: 'error',
-        error: `Failed to generate content creative: HTTP ${creativeRes.status}`,
-      }, { status: 500 });
-    }
-
-    // ── Step 2: Upload creative to Supabase Storage ──────────────────────
-    const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
-    const storagePath = `instagram-posts/${fact.city}-content-${factIndex}-${Date.now()}.png`;
-
-    const { error: uploadError } = await supabase.storage
-      .from('photos')
-      .upload(storagePath, imgBuffer, {
-        contentType: 'image/png',
-        upsert: true,
-      });
-
-    if (uploadError) {
-      console.error('[CONTENT] Supabase upload error:', uploadError);
-      await supabase.from('social_posts').insert({
-        platform: 'instagram',
-        headline: fact.headline,
-        city: fact.city,
-        caption: '',
-        status: 'failed',
-        error_message: `Storage upload failed: ${uploadError.message}`,
-      });
-      return NextResponse.json({
-        status: 'error',
-        error: `Failed to upload content creative: ${uploadError.message}`,
-      }, { status: 500 });
-    }
-
-    // ── Step 3: Get public URL ───────────────────────────────────────────
-    const { data: publicUrlData } = supabase.storage
-      .from('photos')
-      .getPublicUrl(storagePath);
-
-    const imageUrl = publicUrlData?.publicUrl;
-    if (!imageUrl) {
-      return NextResponse.json({
-        status: 'error',
-        error: 'Failed to get public URL for uploaded creative',
-      }, { status: 500 });
-    }
-
-    // Verify the image is accessible
-    const verifyRes = await fetch(imageUrl, { method: 'HEAD' });
-    if (!verifyRes.ok) {
-      return NextResponse.json({
-        status: 'error',
-        error: `Uploaded creative not accessible: HTTP ${verifyRes.status}`,
-      }, { status: 500 });
-    }
-
-    console.log(`[CONTENT] Creative ready: ${imageUrl}`);
-
-    // ── Step 4: Publish ──────────────────────────────────────────────────
-    return await publishContentPost(supabase, fact, imageUrl, postedHeadlines, totalPosted, dryRun);
-
-  } catch (error) {
-    console.error('Social post cron error:', error);
-    return NextResponse.json({ error: String(error) }, { status: 500 });
-  }
-}
-
-// ─── Helper: publish a content bank post ───────────────────────────────────────
-
-async function publishContentPost(
-  supabase: ReturnType<typeof createClient>,
-  fact: (typeof CONTENT_BANK)[number],
-  imageUrl: string,
-  postedHeadlines: Set<string>,
-  totalPosted: number,
-  dryRun: boolean,
-): Promise<NextResponse> {
-  const cityMeta = CITY_META[fact.city];
-  const caption = generateCaption(fact);
-
-  if (dryRun) {
-    return NextResponse.json({
-      status: 'dry_run',
-      type: 'content_bank',
-      fact: {
-        city: fact.city,
-        cityName: cityMeta?.name,
-        headline: fact.headline,
-        body: fact.body,
-      },
-      imageUrl,
-      caption,
-      totalPosted,
-      remainingContent: CONTENT_BANK.length - postedHeadlines.size,
-    });
-  }
-
-  // Publish to Instagram
-  const result = await publishImagePost(imageUrl, caption);
-
-  // Log to Supabase
-  await supabase.from('social_posts').insert({
-    platform: 'instagram',
-    post_id: result.postId || null,
-    container_id: result.containerId || null,
-    headline: fact.headline,
-    city: fact.city,
-    caption,
-    image_url: imageUrl,
-    status: result.success ? 'published' : 'failed',
-    error_message: result.error || null,
-  });
-
-  if (!result.success) {
+    // All creatives failed
     return NextResponse.json({
       status: 'error',
-      type: 'content_bank',
-      error: result.error,
-      fact: { city: fact.city, headline: fact.headline },
-      imageUrl,
+      error: `All ${approvedCreatives.length} approved creatives failed to publish`,
     }, { status: 500 });
-  }
 
-  return NextResponse.json({
-    status: 'published',
-    type: 'content_bank',
-    postId: result.postId,
-    fact: {
-      city: fact.city,
-      cityName: cityMeta?.name,
-      headline: fact.headline,
-    },
-    totalPosted: totalPosted + 1,
-    remainingContent: CONTENT_BANK.length - postedHeadlines.size - 1,
-  });
+  } catch (error) {
+    console.error('[SOCIAL-POST] Fatal error:', error);
+    return NextResponse.json({ error: String(error) }, { status: 500 });
+  }
 }

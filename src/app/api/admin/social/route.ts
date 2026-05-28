@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ comments: data || [] });
   }
 
-  /* --- Event-based post drafts --- */
+  /* --- Event-based post drafts (unified with creative_queue) --- */
   if (type === 'event-drafts') {
     // Fetch upcoming approved events
     const { data: events } = await db
@@ -56,7 +56,27 @@ export async function GET(request: NextRequest) {
       .order('start_date', { ascending: true })
       .limit(20);
 
-    // Fetch already-posted event names to avoid duplicates
+    // Fetch creative_queue entries for these events — this connects the pipeline
+    const eventIds = (events || []).map((e: Record<string, unknown>) => e.id as string);
+    const { data: eventCreatives } = eventIds.length > 0
+      ? await db
+          .from('creative_queue')
+          .select('id, event_id, status, headline, caption, image_url, narrator, scheduled_for, posted_at, error_message, social_post_id')
+          .eq('content_type', 'event')
+          .in('event_id', eventIds)
+      : { data: [] };
+
+    // Build a map: event_id → latest creative
+    const creativeMap: Record<string, Record<string, unknown>> = {};
+    for (const c of (eventCreatives || [])) {
+      const eid = c.event_id as string;
+      // Keep the most recent creative per event
+      if (!creativeMap[eid] || (c.status === 'approved' || c.status === 'posted')) {
+        creativeMap[eid] = c;
+      }
+    }
+
+    // Fetch already-posted event names
     const { data: postedPosts } = await db
       .from('social_posts')
       .select('headline')
@@ -66,9 +86,11 @@ export async function GET(request: NextRequest) {
     const drafts = (events || []).map((event: Record<string, unknown>) => {
       const cityName = (event.cities as Record<string, string>)?.name || 'Unknown';
       const citySlug = (event.cities as Record<string, string>)?.slug || '';
-      const alreadyPosted = postedSet.has(event.name as string);
+      const eventId = event.id as string;
+      const creative = creativeMap[eventId] || null;
+      const alreadyPosted = postedSet.has(event.name as string) || creative?.status === 'posted';
 
-      // Generate caption for this event
+      // Use creative caption if available, otherwise generate one
       const startDate = new Date(event.start_date as string);
       const dateStr = startDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
       const endDate = event.end_date ? new Date(event.end_date as string) : null;
@@ -79,14 +101,16 @@ export async function GET(request: NextRequest) {
       const tags = (event.tags as string[]) || [];
       const tagStr = tags.map((t: string) => `#${t.replace(/[- ]/g, '')}`).join(' ');
 
-      const caption = `📅 ${event.name} in ${cityName}!\n\n` +
+      const caption = creative?.caption as string || (
+        `📅 ${event.name} in ${cityName}!\n\n` +
         `🗓 ${dateRange}\n` +
         (event.venue_name ? `📍 ${event.venue_name}${event.venue_address ? `, ${event.venue_address}` : ''}\n` : '') +
         (event.description ? `\n${(event.description as string).slice(0, 200)}\n` : '') +
         (event.is_free ? '\n🆓 Free event!\n' : '') +
         `\nFind more dog-friendly events at pawcities.com/events\n` +
         (event.source_handle ? `\n📸 h/t ${event.source_handle}\n` : '') +
-        `\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')} ${tagStr}`;
+        `\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')} ${tagStr}`
+      );
 
       // Generate witty reply suggestions for the source post
       const handle = event.source_handle as string | null;
@@ -125,10 +149,20 @@ export async function GET(request: NextRequest) {
         isFree: event.is_free,
         description: event.description,
         caption,
-        imageUrl: event.image_url || null,
+        imageUrl: (creative?.image_url as string) || event.image_url || null,
         creativeUrl,
         engagementReplies,
         alreadyPosted,
+        // ── Creative pipeline status (new unified fields) ──
+        creative: creative ? {
+          id: creative.id,
+          status: creative.status, // generating, pending_review, approved, posted, failed, rejected
+          narrator: creative.narrator,
+          scheduledFor: creative.scheduled_for,
+          postedAt: creative.posted_at,
+          errorMessage: creative.error_message,
+          imageUrl: creative.image_url,
+        } : null,
       };
     });
 

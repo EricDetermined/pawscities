@@ -145,14 +145,29 @@ export async function GET(request: NextRequest) {
       createdAt: p.created_at,
     }));
 
-    // ─── Creative Queue Health ──────────────────────────
+    // ─── Creative Queue Health (unified pipeline view) ──────────────────
+    // What's queued up and ready
     const { data: approvedCreatives } = await supabase
       .from('creative_queue')
-      .select('headline, narrator, city, scheduled_for')
+      .select('headline, narrator, city, scheduled_for, content_type, status')
       .in('status', ['approved', 'pending_review'])
       .order('scheduled_for', { ascending: true });
 
     const creativesRemaining = (approvedCreatives || []).length;
+
+    // What was posted yesterday from the creative pipeline
+    const { data: postedCreatives } = await supabase
+      .from('creative_queue')
+      .select('headline, narrator, city, content_type, posted_at, social_post_id')
+      .eq('status', 'posted')
+      .gte('posted_at', oneDayAgo)
+      .order('posted_at', { ascending: false });
+
+    // What needs review (pending_review)
+    const { count: needsReviewCount } = await supabase
+      .from('creative_queue')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'pending_review');
 
     // ═══════════════════════════════════════════════════════════════
     // 3. COMMENT ACTIVITY
@@ -330,11 +345,20 @@ export async function GET(request: NextRequest) {
       events: eventsData,
       creativeQueue: {
         remaining: creativesRemaining,
+        needsReview: needsReviewCount || 0,
+        postedYesterday: (postedCreatives || []).map(c => ({
+          headline: c.headline,
+          narrator: c.narrator,
+          city: c.city,
+          contentType: c.content_type,
+        })),
         items: (approvedCreatives || []).map(c => ({
           headline: c.headline,
           narrator: c.narrator,
           city: c.city,
           scheduledFor: c.scheduled_for,
+          contentType: c.content_type,
+          status: c.status,
         })),
       },
     };
