@@ -125,7 +125,7 @@ interface PendingEvent {
   cities: { name: string; slug: string };
 }
 
-type TabId = 'pipeline' | 'calendar' | 'engagement' | 'outreach' | 'invitations' | 'comments' | 'performance';
+type TabId = 'pipeline' | 'calendar' | 'engagement' | 'outreach' | 'invitations' | 'comments' | 'performance' | 'operations';
 
 /* ──────────────── Helpers ──────────────── */
 
@@ -302,6 +302,7 @@ export default function SocialCommandCenter() {
     { id: 'invitations', label: 'Invitations', count: invitationsPending.length, icon: '🤝' },
     { id: 'comments', label: 'Comments', count: unrepliedComments.length, icon: '💭' },
     { id: 'performance', label: 'Performance', icon: '📊' },
+    { id: 'operations', label: 'Operations', icon: '⚡' },
   ];
 
   if (loading) {
@@ -996,6 +997,185 @@ export default function SocialCommandCenter() {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* ═══════ OPERATIONS TAB ═══════ */}
+      {activeTab === 'operations' && (
+        <OperationsPanel />
+      )}
+    </div>
+  );
+}
+
+/* ──────────────── Operations Panel ──────────────── */
+
+function OperationsPanel() {
+  const [queueStats, setQueueStats] = useState<{
+    unreplied: number;
+    total: number;
+    bySentiment: Record<string, number>;
+    oldestUnrepliedHoursAgo: number | null;
+  } | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [running, setRunning] = useState<string | null>(null);
+  const [result, setResult] = useState<{ action: string; data: Record<string, unknown> } | null>(null);
+  const [replyLimit, setReplyLimit] = useState(25);
+
+  const fetchStats = useCallback(async () => {
+    try {
+      const res = await fetch('/api/admin/social/operations');
+      const data = await res.json();
+      setQueueStats(data.queue);
+    } catch { /* ignore */ }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { fetchStats(); }, [fetchStats]);
+
+  const runOperation = async (action: string) => {
+    setRunning(action);
+    setResult(null);
+    try {
+      const res = await fetch('/api/admin/social/operations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action, limit: replyLimit }),
+      });
+      const data = await res.json();
+      setResult({ action, data });
+      // Refresh stats after operation
+      await fetchStats();
+    } catch (err) {
+      setResult({ action, data: { error: String(err) } });
+    }
+    setRunning(null);
+  };
+
+  if (loading) return <div className="text-center text-gray-400 py-12">Loading queue stats...</div>;
+
+  return (
+    <div className="space-y-6">
+      {/* Queue Status */}
+      <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <h3 className="text-sm font-semibold text-gray-700 mb-4">Comment Queue Status</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+          <StatCard label="Unreplied" value={queueStats?.unreplied || 0} color="orange" />
+          <StatCard label="Total Comments" value={queueStats?.total || 0} color="gray" />
+          <StatCard label="Questions" value={queueStats?.bySentiment?.question || 0} color="blue" />
+          <StatCard label="Oldest (hrs)" value={queueStats?.oldestUnrepliedHoursAgo || 0} color={
+            (queueStats?.oldestUnrepliedHoursAgo || 0) > 48 ? 'red' : 'green'
+          } />
+        </div>
+        {queueStats?.bySentiment && Object.keys(queueStats.bySentiment).length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {Object.entries(queueStats.bySentiment).map(([sentiment, count]) => (
+              <span key={sentiment} className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
+                {sentiment}: {count}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Action Buttons */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Reply from Queue */}
+        <div className="bg-white rounded-xl border-2 border-blue-200 p-6">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-2xl">💬</span>
+            <h3 className="text-lg font-semibold text-gray-900">Reply from Queue</h3>
+          </div>
+          <p className="text-sm text-gray-500 mb-4">
+            Reply to the next batch of unreplied comments already in the queue.
+            No new scraping — just processes what&apos;s there.
+          </p>
+          <div className="flex items-center gap-3 mb-4">
+            <label className="text-sm text-gray-600">Replies:</label>
+            <select
+              value={replyLimit}
+              onChange={(e) => setReplyLimit(Number(e.target.value))}
+              className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+            >
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={50}>50 (max)</option>
+            </select>
+          </div>
+          <button
+            onClick={() => runOperation('reply_queue')}
+            disabled={running !== null || (queueStats?.unreplied || 0) === 0}
+            className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {running === 'reply_queue' ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="animate-spin">⏳</span> Replying...
+              </span>
+            ) : (
+              `Reply to ${Math.min(replyLimit, queueStats?.unreplied || 0)} Comments`
+            )}
+          </button>
+        </div>
+
+        {/* Full Scrape + Reply */}
+        <div className="bg-white rounded-xl border-2 border-orange-200 p-6">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-2xl">🔄</span>
+            <h3 className="text-lg font-semibold text-gray-900">Fresh Scrape + Reply</h3>
+          </div>
+          <p className="text-sm text-gray-500 mb-4">
+            Full pipeline: purge stale comments (&gt;48hrs), scrape fresh comments
+            from Instagram, then auto-reply to new ones. Takes 2-4 minutes.
+          </p>
+          <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-4">
+            <p className="text-xs text-amber-700">
+              Purges unreplied comments older than 48 hours before scraping fresh ones.
+            </p>
+          </div>
+          <button
+            onClick={() => runOperation('scrape_and_reply')}
+            disabled={running !== null}
+            className="w-full py-3 px-4 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {running === 'scrape_and_reply' ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="animate-spin">⏳</span> Scraping &amp; Replying...
+              </span>
+            ) : (
+              'Scrape Fresh + Auto-Reply'
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Purge Stale Button */}
+      <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-sm font-semibold text-gray-700">Purge Stale Comments</h3>
+            <p className="text-xs text-gray-400 mt-1">
+              Clear unreplied comments older than 48 hours (too old for Instagram to accept replies).
+            </p>
+          </div>
+          <button
+            onClick={() => runOperation('purge_stale')}
+            disabled={running !== null}
+            className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 transition-colors"
+          >
+            {running === 'purge_stale' ? 'Purging...' : 'Purge Stale'}
+          </button>
+        </div>
+      </div>
+
+      {/* Result Display */}
+      {result && (
+        <div className={`rounded-xl border p-5 ${result.data.error ? 'bg-red-50 border-red-200' : 'bg-green-50 border-green-200'}`}>
+          <h3 className="text-sm font-semibold mb-2">
+            {result.data.error ? '❌ Error' : '✅ Operation Complete'}: {result.action}
+          </h3>
+          <pre className="text-xs text-gray-700 whitespace-pre-wrap overflow-x-auto max-h-60">
+            {JSON.stringify(result.data, null, 2)}
+          </pre>
         </div>
       )}
     </div>
