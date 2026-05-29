@@ -69,7 +69,7 @@ export const CURATED_SOURCES: Record<string, CuratedSource[]> = {
       url: 'https://thedogvine.com/whats-on/',
       name: 'The Dogvine London',
       language: 'en',
-      linkPattern: 'thedogvine\\.com/.+',
+      linkPattern: 'thedogvine\\.com/(?!feed|comments|wp-|tag|category|author)[^/]+',
       maxEvents: 8,
     },
     {
@@ -159,9 +159,10 @@ export function extractEventLinks(html: string, source: CuratedSource): string[]
   while ((match = linkRegex.exec(html)) !== null) {
     let href = match[1];
 
-    // Skip anchors, JS, mailto, media files
+    // Skip anchors, JS, mailto, media files, and common non-event paths
     if (href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:')) continue;
     if (/\.(jpg|jpeg|png|gif|svg|css|js|ico|woff|pdf)(\?|$)/i.test(href)) continue;
+    if (/\/(feed|rss|comments\/feed|wp-json|wp-admin|wp-content|wp-includes|tag\/|category\/|author\/|page\/\d|login|signup|cart|checkout)\b/i.test(href)) continue;
 
     // Make absolute
     if (href.startsWith('/')) {
@@ -217,14 +218,16 @@ export async function extractEventWithAI(
   language: string,
   openaiKey: string,
 ): Promise<ExtractedEvent | null> {
-  // Truncate to ~3000 chars to stay within budget
-  const truncated = pageText.substring(0, 3000);
+  // Truncate to ~4000 chars for better date/venue extraction
+  const truncated = pageText.substring(0, 4000);
 
-  const systemPrompt = `You extract structured dog-friendly event data from web pages.
+  const today = new Date().toISOString().split('T')[0];
+  const systemPrompt = `You extract structured dog-friendly event data from web pages. Today is ${today}.
+
 Return a JSON object with these fields:
 - name: event name in English (translate if needed)
 - name_original: event name in original language (if different)
-- date: start date as YYYY-MM-DD (null if not found)
+- date: start date as YYYY-MM-DD (null ONLY if truly no date is mentioned anywhere)
 - end_date: end date as YYYY-MM-DD (null if single day or not found)
 - description: 1-2 sentence English description (max 200 chars)
 - venue_name: venue name (null if not found)
@@ -232,7 +235,13 @@ Return a JSON object with these fields:
 - is_free: boolean
 - tags: array of 2-4 relevant tags (e.g. "festival", "adoption", "outdoor", "charity")
 - is_dog_event: boolean — true if this is actually a dog/pet-related event
-- is_upcoming: boolean — true if the event date is in the future (after May 2026)
+- is_upcoming: boolean — true if the event date is in the future (after ${today})
+
+IMPORTANT date extraction tips:
+- Look for dates in ANY format: "Jun 14, 2026", "14/06/2026", "June 14", "Saturday June 14th", etc.
+- BringFido pages often have dates like "Sat Jun 14 2026" near the event title
+- If only a month/day is given without year, assume the next occurrence (2026 or 2027)
+- Recurring events (e.g. "every Saturday"): use the next upcoming date
 
 If the page is NOT about a specific event (e.g. it's a general article, business listing, or directory), set is_dog_event to false.
 Respond with ONLY the JSON object, no markdown.`;
