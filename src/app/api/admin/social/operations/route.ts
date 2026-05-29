@@ -76,9 +76,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'CRON_SECRET not configured' }, { status: 500 });
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : 'http://localhost:3000';
+  // Build base URL from request headers (works in both local and Vercel)
+  const host = request.headers.get('host') || 'pawcities.com';
+  const protocol = host.includes('localhost') ? 'http' : 'https';
+  const baseUrl = `${protocol}://${host}`;
 
   const results: {
     action: string;
@@ -92,15 +93,26 @@ export async function POST(request: NextRequest) {
     // Full pipeline: purge stale unreplied → scrape fresh comments → auto-reply
     if (action === 'scrape_and_reply') {
       // Step 1: Purge stale unreplied comments (older than 48 hours)
-      // These are too old to reply to and would clutter the queue
       const purgeResult = await purgeStaleComments(getSupabaseAdmin());
       results.purgeResult = purgeResult;
 
       // Step 2: Run the engagement cron (scrapes + auto-replies)
-      const scrapeRes = await fetch(`${baseUrl}/api/cron/social-engagement`, {
+      const scrapeUrl = `${baseUrl}/api/cron/social-engagement`;
+      console.log(`[OPERATIONS] Calling engagement cron at: ${scrapeUrl}`);
+      const scrapeRes = await fetch(scrapeUrl, {
         headers: { Authorization: `Bearer ${cronSecret}` },
         signal: AbortSignal.timeout(240000), // 4 min timeout
       });
+
+      if (!scrapeRes.ok) {
+        const text = await scrapeRes.text();
+        return NextResponse.json({
+          success: false,
+          error: `Engagement cron returned ${scrapeRes.status}: ${text.substring(0, 200)}`,
+          purgeResult: results.purgeResult,
+        }, { status: 500 });
+      }
+
       results.scrapeResult = await scrapeRes.json();
 
       return NextResponse.json({ success: true, ...results });

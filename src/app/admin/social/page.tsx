@@ -1021,6 +1021,8 @@ function OperationsPanel() {
   const [running, setRunning] = useState<string | null>(null);
   const [result, setResult] = useState<{ action: string; data: Record<string, unknown> } | null>(null);
   const [replyLimit, setReplyLimit] = useState(25);
+  const [progressLog, setProgressLog] = useState<string[]>([]);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   const fetchStats = useCallback(async () => {
     try {
@@ -1033,9 +1035,30 @@ function OperationsPanel() {
 
   useEffect(() => { fetchStats(); }, [fetchStats]);
 
+  // Timer for elapsed time during operations
+  useEffect(() => {
+    if (!running) return;
+    setElapsedSeconds(0);
+    const interval = setInterval(() => setElapsedSeconds(s => s + 1), 1000);
+    return () => clearInterval(interval);
+  }, [running]);
+
+  const addLog = (msg: string) => setProgressLog(prev => [...prev, `[${new Date().toLocaleTimeString()}] ${msg}`]);
+
   const runOperation = async (action: string) => {
     setRunning(action);
     setResult(null);
+    setProgressLog([]);
+
+    if (action === 'scrape_and_reply') {
+      addLog('Starting full pipeline...');
+      addLog('Step 1/3: Purging stale comments (>48hrs)...');
+    } else if (action === 'reply_queue') {
+      addLog(`Starting reply to ${replyLimit} comments from queue...`);
+    } else if (action === 'purge_stale') {
+      addLog('Purging stale unreplied comments...');
+    }
+
     try {
       const res = await fetch('/api/admin/social/operations', {
         method: 'POST',
@@ -1043,10 +1066,30 @@ function OperationsPanel() {
         body: JSON.stringify({ action, limit: replyLimit }),
       });
       const data = await res.json();
+
+      // Parse result for user-friendly log entries
+      if (data.purgeResult) {
+        addLog(`Purged ${data.purgeResult.purged || 0} stale comments`);
+      }
+      if (action === 'scrape_and_reply' && data.scrapeResult) {
+        const sr = data.scrapeResult as Record<string, unknown>;
+        addLog('Step 2/3: Scraped Instagram for new comments');
+        addLog(`Step 3/3: Auto-replied to comments`);
+        if (sr.newComments !== undefined) addLog(`New comments found: ${sr.newComments}`);
+        if (sr.autoRepliesSent !== undefined) addLog(`Auto-replies sent: ${sr.autoRepliesSent}`);
+        if (sr.questionsFound !== undefined) addLog(`Questions flagged: ${sr.questionsFound}`);
+      }
+      if (action === 'reply_queue' && data.replyResult) {
+        const rr = data.replyResult as Record<string, unknown>;
+        addLog(`Processed ${rr.total || 0} comments`);
+        addLog(`Replied: ${rr.replied || 0} | Skipped: ${rr.skipped || 0} | Errors: ${rr.errors || 0}`);
+      }
+
+      addLog(data.success ? 'Done!' : `Error: ${data.error || 'Unknown'}`);
       setResult({ action, data });
-      // Refresh stats after operation
       await fetchStats();
     } catch (err) {
+      addLog(`Error: ${String(err)}`);
       setResult({ action, data: { error: String(err) } });
     }
     setRunning(null);
@@ -1109,7 +1152,7 @@ function OperationsPanel() {
           >
             {running === 'reply_queue' ? (
               <span className="flex items-center justify-center gap-2">
-                <span className="animate-spin">⏳</span> Replying...
+                <span className="animate-spin">⏳</span> Replying... ({elapsedSeconds}s)
               </span>
             ) : (
               `Reply to ${Math.min(replyLimit, queueStats?.unreplied || 0)} Comments`
@@ -1139,7 +1182,7 @@ function OperationsPanel() {
           >
             {running === 'scrape_and_reply' ? (
               <span className="flex items-center justify-center gap-2">
-                <span className="animate-spin">⏳</span> Scraping &amp; Replying...
+                <span className="animate-spin">⏳</span> Scraping &amp; Replying... ({elapsedSeconds}s)
               </span>
             ) : (
               'Scrape Fresh + Auto-Reply'
@@ -1167,16 +1210,40 @@ function OperationsPanel() {
         </div>
       </div>
 
-      {/* Result Display */}
-      {result && (
-        <div className={`rounded-xl border p-5 ${result.data.error ? 'bg-red-50 border-red-200' : 'bg-green-50 border-green-200'}`}>
-          <h3 className="text-sm font-semibold mb-2">
-            {result.data.error ? '❌ Error' : '✅ Operation Complete'}: {result.action}
-          </h3>
-          <pre className="text-xs text-gray-700 whitespace-pre-wrap overflow-x-auto max-h-60">
+      {/* Live Progress Log */}
+      {(progressLog.length > 0 || running) && (
+        <div className="bg-gray-900 rounded-xl border border-gray-700 p-5">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-300 flex items-center gap-2">
+              {running && <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />}
+              {running ? 'Running...' : 'Complete'}
+              {running && <span className="text-gray-500 text-xs">({elapsedSeconds}s)</span>}
+            </h3>
+            {!running && progressLog.length > 0 && (
+              <button onClick={() => setProgressLog([])} className="text-xs text-gray-500 hover:text-gray-300">Clear</button>
+            )}
+          </div>
+          <div className="font-mono text-xs text-green-400 space-y-1 max-h-48 overflow-y-auto">
+            {progressLog.map((line, i) => (
+              <div key={i} className={line.includes('Error') ? 'text-red-400' : line.includes('Done') ? 'text-green-300 font-bold' : ''}>
+                {line}
+              </div>
+            ))}
+            {running && <div className="text-gray-500 animate-pulse">▌</div>}
+          </div>
+        </div>
+      )}
+
+      {/* Detailed Result */}
+      {result && !running && (
+        <details className="rounded-xl border border-gray-200 bg-white">
+          <summary className={`p-4 cursor-pointer text-sm font-medium ${result.data.error ? 'text-red-600' : 'text-green-700'}`}>
+            {result.data.error ? '❌ Error details' : '✅ Full result details'} — click to expand
+          </summary>
+          <pre className="text-xs text-gray-600 p-4 pt-0 whitespace-pre-wrap overflow-x-auto max-h-60">
             {JSON.stringify(result.data, null, 2)}
           </pre>
-        </div>
+        </details>
       )}
     </div>
   );
