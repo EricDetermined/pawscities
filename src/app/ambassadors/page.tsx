@@ -1,5 +1,8 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import AmbassadorPageClient from './AmbassadorPageClient';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Become an Ambassador - Paw Cities',
