@@ -1,0 +1,227 @@
+#!/bin/bash
+# ─────────────────────────────────────────────────────────────
+# paw — PawCities shortcut commands
+#
+# Install:
+#   chmod +x agents/paw
+#   ln -sf "$(pwd)/agents/paw" /usr/local/bin/paw
+#
+# Usage:
+#   paw engage 25         Post 25 outbound comments from queue
+#   paw engage            Full pipeline: discover + generate + post 50
+#   paw engage replies    Monitor replies + re-engage + follow-back
+#   paw replies           Reply to 25 inbound comments on our posts (Vercel)
+#   paw replies 50        Reply to 50 inbound comments
+#   paw scrape            Fresh scrape + auto-reply on our posts (Vercel)
+#   paw purge             Purge stale inbound comments (>48hrs)
+#   paw status            Show queue stats for both systems
+# ─────────────────────────────────────────────────────────────
+
+set -e
+
+# Find project root (look for package.json)
+if [ -f "$(dirname "$0")/../package.json" ]; then
+  PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+elif [ -f "./package.json" ]; then
+  PROJECT_DIR="$(pwd)"
+elif [ -f "$HOME/pawscities/package.json" ]; then
+  PROJECT_DIR="$HOME/pawscities"
+else
+  echo "❌ Can't find pawscities project. Run from the project folder or set up the symlink."
+  exit 1
+fi
+
+# Load env
+if [ -f "$PROJECT_DIR/.env.engagement" ]; then
+  export $(grep -v '^#' "$PROJECT_DIR/.env.engagement" | xargs) 2>/dev/null
+fi
+if [ -f "$PROJECT_DIR/.env.local" ]; then
+  CRON_SECRET=$(grep CRON_SECRET "$PROJECT_DIR/.env.local" 2>/dev/null | cut -d= -f2)
+fi
+
+SITE_URL="https://pawcities.com"
+CMD="${1:-help}"
+ARG2="$2"
+ARG3="$3"
+
+# ─── Colors ─────────────────────────────────────────────────
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+header() {
+  echo ""
+  echo -e "${BOLD}🐾 PawCities${NC} — $(date '+%A %B %d, %I:%M %p')"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+}
+
+# ═════════════════════════════════════════════════════════════
+# COMMANDS
+# ═════════════════════════════════════════════════════════════
+
+case "$CMD" in
+
+  # ─── Outbound Engagement (runs locally on Mac) ──────────
+  engage|e)
+    header
+    # Pass remaining args to run-engagement.sh
+    shift
+    echo -e "${ORANGE}▶ Outbound Engagement Bot${NC} (runs on your Mac)"
+    echo ""
+    exec "$PROJECT_DIR/agents/run-engagement.sh" "$@"
+    ;;
+
+  # ─── Inbound Replies (runs on Vercel) ───────────────────
+  replies|r)
+    header
+    LIMIT="${ARG2:-25}"
+    echo -e "${BLUE}▶ Inbound Reply Bot${NC} (Vercel) — replying to $LIMIT comments on our posts"
+    echo ""
+
+    RESULT=$(curl -s -X POST "$SITE_URL/api/admin/social/operations" \
+      -H "Content-Type: application/json" \
+      -d "{\"action\": \"reply_queue\", \"limit\": $LIMIT}")
+
+    # Parse and display
+    SUCCESS=$(echo "$RESULT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('success',''))" 2>/dev/null)
+    if [ "$SUCCESS" = "True" ]; then
+      echo "$RESULT" | python3 -c "
+import json, sys
+d = json.load(sys.stdin)
+r = d.get('replyResult', {})
+print(f'  ✅ Processed: {r.get(\"total\", 0)} comments')
+print(f'  💬 Replied:   {r.get(\"replied\", 0)}')
+print(f'  ⏭️  Skipped:   {r.get(\"skipped\", 0)}')
+print(f'  ❌ Errors:    {r.get(\"errors\", 0)}')
+print()
+details = r.get('details', [])
+for d in details:
+    icon = '✅' if d['status'] == 'replied' else '⏭️' if d['status'] == 'skipped' else '❌'
+    print(f'  {icon} @{d[\"username\"]:25s} {d[\"preview\"]}...')
+" 2>/dev/null
+    else
+      echo -e "${RED}  ❌ Error:${NC}"
+      echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    fi
+    ;;
+
+  # ─── Fresh Scrape + Reply (runs on Vercel) ──────────────
+  scrape|s)
+    header
+    echo -e "${ORANGE}▶ Fresh Scrape + Auto-Reply${NC} (Vercel)"
+    echo "  Purging stale → Scraping Instagram → Auto-replying..."
+    echo ""
+
+    RESULT=$(curl -s -X POST "$SITE_URL/api/admin/social/operations" \
+      -H "Content-Type: application/json" \
+      -d '{"action": "scrape_and_reply"}' \
+      --max-time 300)
+
+    SUCCESS=$(echo "$RESULT" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('success',''))" 2>/dev/null)
+    if [ "$SUCCESS" = "True" ]; then
+      echo "$RESULT" | python3 -c "
+import json, sys
+d = json.load(sys.stdin)
+purge = d.get('purgeResult', {})
+scrape = d.get('scrapeResult', {})
+print(f'  🗑️  Purged:       {purge.get(\"purged\", 0)} stale comments')
+print(f'  📡 New comments:  {scrape.get(\"newComments\", \"?\")}')
+print(f'  💬 Auto-replies:  {scrape.get(\"autoRepliesSent\", \"?\")}')
+print(f'  ❓ Questions:     {scrape.get(\"questionsFound\", \"?\")}')
+print(f'  🚫 Spam caught:   {scrape.get(\"spamFound\", \"?\")}')
+" 2>/dev/null
+    else
+      echo -e "${RED}  ❌ Error:${NC}"
+      echo "$RESULT" | python3 -m json.tool 2>/dev/null || echo "$RESULT"
+    fi
+    ;;
+
+  # ─── Purge Stale ────────────────────────────────────────
+  purge|p)
+    header
+    echo -e "${BLUE}▶ Purging stale comments${NC} (>48hrs)"
+    echo ""
+
+    RESULT=$(curl -s -X POST "$SITE_URL/api/admin/social/operations" \
+      -H "Content-Type: application/json" \
+      -d '{"action": "purge_stale"}')
+
+    echo "$RESULT" | python3 -c "
+import json, sys
+d = json.load(sys.stdin)
+purge = d.get('purgeResult', {})
+print(f'  🗑️  Purged {purge.get(\"purged\", 0)} stale comments')
+" 2>/dev/null
+    ;;
+
+  # ─── Status ─────────────────────────────────────────────
+  status|st)
+    header
+
+    # Outbound queue (local)
+    echo -e "${ORANGE}▶ Outbound Queue${NC} (local Mac)"
+    if [ -f "$PROJECT_DIR/data/engagement/comment-queue.json" ]; then
+      python3 -c "
+import json
+with open('$PROJECT_DIR/data/engagement/comment-queue.json') as f:
+    q = json.load(f)
+pending = [c for c in q if c.get('status') == 'pending']
+posted = [c for c in q if c.get('status') == 'posted']
+failed = [c for c in q if c.get('status') == 'failed']
+cities = {}
+for c in pending:
+    city = c.get('city', 'unknown')
+    cities[city] = cities.get(city, 0) + 1
+print(f'  Pending: {len(pending)} | Posted: {len(posted)} | Failed: {len(failed)}')
+if cities:
+    top = sorted(cities.items(), key=lambda x: -x[1])[:5]
+    print(f'  Top cities: {\"  \".join(f\"{c}: {n}\" for c, n in top)}')
+" 2>/dev/null
+    else
+      echo "  No queue file found"
+    fi
+
+    echo ""
+
+    # Inbound queue (Vercel)
+    echo -e "${BLUE}▶ Inbound Queue${NC} (Vercel)"
+    STATS=$(curl -s "$SITE_URL/api/admin/social/operations")
+    echo "$STATS" | python3 -c "
+import json, sys
+d = json.load(sys.stdin).get('queue', {})
+print(f'  Unreplied: {d.get(\"unreplied\", 0)} | Total: {d.get(\"total\", 0)}')
+oldest = d.get('oldestUnrepliedHoursAgo')
+if oldest:
+    print(f'  Oldest unreplied: {oldest}h ago{\" ⚠️ STALE\" if oldest > 48 else \"\"}')
+by_sent = d.get('bySentiment', {})
+if by_sent:
+    parts = [f'{k}: {v}' for k, v in sorted(by_sent.items(), key=lambda x: -x[1])]
+    print(f'  By sentiment: {\"  \".join(parts)}')
+" 2>/dev/null
+    ;;
+
+  # ─── Help ───────────────────────────────────────────────
+  help|h|--help|-h|*)
+    echo ""
+    echo -e "${BOLD}🐾 paw${NC} — PawCities command shortcuts"
+    echo ""
+    echo -e "${ORANGE}Outbound${NC} (comments on other accounts, runs on your Mac):"
+    echo "  paw engage              Full pipeline: discover + generate + post 50"
+    echo "  paw engage 25           Post 25 from queue only"
+    echo "  paw engage 25 run       Post 25, skip discovery"
+    echo "  paw engage replies      Monitor replies + re-engage"
+    echo ""
+    echo -e "${BLUE}Inbound${NC} (replies to comments on our posts, runs on Vercel):"
+    echo "  paw replies             Reply to 25 comments on our posts"
+    echo "  paw replies 50          Reply to 50 comments"
+    echo "  paw scrape              Fresh scrape + auto-reply"
+    echo "  paw purge               Clear stale comments (>48hrs)"
+    echo ""
+    echo -e "${GREEN}Status${NC}:"
+    echo "  paw status              Show both queues"
+    echo ""
+    ;;
+esac
