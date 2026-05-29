@@ -755,6 +755,55 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
   return result;
 }
 
+// ——— Ambassador Invite Email ————————————————————————————————————————————————
+
+export async function sendAmbassadorInvite(
+  to: string,
+  recipientName: string,
+  inviteCode: string,
+  city?: string,
+  tier?: string,
+): Promise<EmailResult> {
+  const inviteUrl = `${getAppUrl()}/ambassadors?invite=${inviteCode}`;
+
+  const tierNames: Record<string, string> = {
+    explorer: 'Explorer',
+    trailblazer: 'Trailblazer',
+    pack_leader: 'Pack Leader',
+  };
+
+  const tierLine = tier ? `<p style="font-size:14px;color:#7c5a2e;margin:4px 0;">Suggested tier: <strong>${tierNames[tier] || tier}</strong></p>` : '';
+  const cityLine = city ? `<p style="font-size:14px;color:#7c5a2e;margin:4px 0;">City: <strong>${city}</strong></p>` : '';
+
+  const html = baseTemplate('You\'re Invited to Become a Paw Cities Ambassador!', `
+<p>Hi${recipientName ? ` ${recipientName}` : ''},</p>
+
+<p>We'd love for you to join the <strong>Paw Cities Ambassador Program</strong> — a community of dog lovers who help make their cities more dog-friendly.</p>
+
+<div style="background:#fef3e8;padding:16px 20px;border-radius:10px;margin:20px 0;">
+  <p style="font-size:14px;color:#7c5a2e;margin:0 0 4px;">Your personal invite code:</p>
+  <p style="font-size:24px;font-weight:700;color:#ea580c;margin:4px 0;letter-spacing:2px;">${inviteCode}</p>
+  ${cityLine}
+  ${tierLine}
+</div>
+
+<p>As an ambassador, you'll:</p>
+<ul style="padding-left:20px;margin:12px 0;">
+  <li style="margin:6px 0;">Help discover and verify dog-friendly spots in your city</li>
+  <li style="margin:6px 0;">Earn commissions on business subscriptions you bring in (15-25%)</li>
+  <li style="margin:6px 0;">Get an exclusive Paw Cities Ambassador badge</li>
+  <li style="margin:6px 0;">Join a global network of dog-loving city explorers</li>
+</ul>
+
+${ctaButton('Apply Now', inviteUrl)}
+
+<p style="font-size:13px;color:#888;">This invite link is personal to you. Click the button above or paste this URL in your browser:</p>
+<p style="font-size:13px;color:#ea580c;word-break:break-all;">${inviteUrl}</p>
+`);
+
+  return sendEmail(to, `You're invited to the Paw Cities Ambassador Program!`, html);
+}
+
 // ——— Health Report Email (kept for standalone health checks) ————————————————
 
 interface HealthCheck {

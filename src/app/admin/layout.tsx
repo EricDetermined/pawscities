@@ -62,6 +62,11 @@ const navItems = [
     icon: '\u{1F4E7}',
   },
   {
+    title: 'Ambassadors',
+    href: '/admin/ambassadors',
+    icon: '\u{1F43E}',
+  },
+  {
     title: 'Analytics',
     href: '/admin/analytics',
     icon: '\u{1F4C8}',
