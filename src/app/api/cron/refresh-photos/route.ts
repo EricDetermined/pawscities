@@ -21,12 +21,16 @@ export async function GET(request: NextRequest) {
 
   const supabase = getSupabaseAdmin();
 
-  // Fetch all establishments that have a google_place_id (these are Google-matched)
+  // Fetch establishments that either:
+  // 1. Have a google_place_id (refresh existing photos), OR
+  // 2. Have no photos at all (try to find them on Google for the first time)
+  // This ensures establishments that missed initial enrichment get retried.
   const { data: establishments, error: fetchError } = await supabase
     .from('establishments')
-    .select('id, name, address, google_place_id, photo_refs, city_id, dog_features')
-    .not('google_place_id', 'is', null)
+    .select('id, name, address, google_place_id, photo_refs, city_id, dog_features, listing_type')
     .eq('status', 'ACTIVE')
+    .or('google_place_id.not.is.null,photo_refs.is.null')
+    .neq('listing_type', 'online') // Online-only listings have no physical presence to photograph
     .order('updated_at', { ascending: true }) // Oldest-updated first
     .limit(60); // Process 60 at a time — daily runs cover all ~350 establishments per week
 
@@ -110,8 +114,19 @@ export async function GET(request: NextRequest) {
           details.push({ name: est.name, status: 'unchanged' });
         }
       } else {
-        failed++;
-        details.push({ name: est.name, status: 'no_google_match' });
+        // No Google match found
+        if (!est.google_place_id) {
+          // First-time attempt — bump updated_at so we retry later (back of queue)
+          skipped++;
+          await supabase
+            .from('establishments')
+            .update({ updated_at: new Date().toISOString() })
+            .eq('id', est.id);
+          details.push({ name: est.name, status: 'no_google_match_first_try' });
+        } else {
+          failed++;
+          details.push({ name: est.name, status: 'no_google_match' });
+        }
       }
 
       // Rate limiting: 150ms between requests to stay within Google API quotas
