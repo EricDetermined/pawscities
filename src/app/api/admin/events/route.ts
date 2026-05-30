@@ -52,13 +52,24 @@ export async function GET(request: NextRequest) {
     const { count: totalCount } = await countQuery;
 
     // Data query
+    // APPROVED/REJECTED: most recently reviewed first (latest approvals on top)
+    // PENDING: soonest events first (most urgent to review)
+    // All/other: newest created first
+    const upperStatus = status.toUpperCase();
+    const sortField = (upperStatus === 'APPROVED' || upperStatus === 'REJECTED')
+      ? 'reviewed_at'
+      : upperStatus === 'PENDING'
+        ? 'start_date'
+        : 'created_at';
+    const sortAsc = upperStatus === 'PENDING';
+
     let query = supabase
       .from('events')
       .select(`
         *,
         cities(slug, name)
       `)
-      .order('start_date', { ascending: true })
+      .order(sortField, { ascending: sortAsc, nullsFirst: false })
       .range(offset, offset + limit - 1);
 
     if (status !== 'all' && validStatuses.includes(status.toUpperCase())) {
