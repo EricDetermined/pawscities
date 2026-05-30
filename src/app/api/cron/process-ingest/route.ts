@@ -192,6 +192,14 @@ function parseEventFromText(rawText: string, subject: string | null): {
   return { name, description, venueName, venueAddress, date, startTime, endTime, tags, isFree, externalUrl, sourceHandle };
 }
 
+// Check if a handle value is an actual Instagram handle (not a system label)
+const NON_HANDLES = new Set(['unknown', '@unknown', 'google_events', 'curated_scrape', 'admin', '']);
+function isUsefulHandle(handle: string | null | undefined): boolean {
+  if (!handle) return false;
+  const clean = handle.toLowerCase().trim();
+  return !NON_HANDLES.has(clean) && clean.length >= 3;
+}
+
 // Generate a URL-safe slug with random suffix to avoid duplicates
 function slugify(text: string, date: string | null): string {
   const base = text
@@ -519,7 +527,7 @@ async function handleProcessIngest(request: NextRequest) {
             source: 'admin',
             submitter_email: item.submitted_by,
             source_post_url: item.url,
-            source_handle: sourceHandle || item.instagram_username,
+            source_handle: isUsefulHandle(sourceHandle) ? sourceHandle : (isUsefulHandle(item.instagram_username) ? item.instagram_username : null),
             mentioned_handles: mentionedHandles.length > 0 ? mentionedHandles : null,
           })
           .select('id')
