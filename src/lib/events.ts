@@ -57,7 +57,7 @@ function getToday(): string {
 /**
  * Homepage events: cross-city showcase.
  * Returns a small curated set of upcoming events across ALL cities.
- * - Only approved events
+ * - APPROVED + PENDING events (PENDING must have venue_name + external_url)
  * - Only future events (start_date >= today)
  * - Featured events first, then by date
  * - Limited to `limit` results (default 6)
@@ -72,7 +72,9 @@ export async function getHomepageEvents(limit: number = 6): Promise<PawEvent[]> 
       *,
       cities(slug, name)
     `)
-    .eq('status', 'APPROVED')
+    .in('status', ['APPROVED', 'PENDING'])
+    .not('venue_name', 'is', null)
+    .not('external_url', 'is', null)
     .gte('start_date', today)
     .order('is_featured', { ascending: false })
     .order('start_date', { ascending: true })
@@ -88,8 +90,8 @@ export async function getHomepageEvents(limit: number = 6): Promise<PawEvent[]> 
 
 /**
  * City events: full calendar for a specific city.
- * Returns all upcoming approved events for the given city slug.
- * - Only approved events
+ * Returns all upcoming events for the given city slug.
+ * - APPROVED + PENDING events (PENDING must have venue_name + external_url)
  * - Only future events (start_date >= today)
  * - Ordered by date ascending
  * - Paginated with limit/offset
@@ -122,7 +124,9 @@ export async function getCityEvents(
       cities(slug, name)
     `, { count: 'exact' })
     .eq('city_id', city.id)
-    .eq('status', 'APPROVED')
+    .in('status', ['APPROVED', 'PENDING'])
+    .not('venue_name', 'is', null)
+    .not('external_url', 'is', null)
     .gte('start_date', today)
     .order('start_date', { ascending: true })
     .range(offset, offset + limit - 1);
@@ -141,6 +145,7 @@ export async function getCityEvents(
 /**
  * Get a single event by city slug and event slug.
  * Includes past events (for direct links / SEO).
+ * Shows APPROVED + PENDING events (so users can access event details via URL).
  */
 export async function getEventBySlug(
   citySlug: string,
@@ -164,7 +169,7 @@ export async function getEventBySlug(
     `)
     .eq('city_id', city.id)
     .eq('slug', eventSlug)
-    .eq('status', 'APPROVED')
+    .in('status', ['APPROVED', 'PENDING'])
     .single();
 
   if (error || !data) return null;
@@ -174,6 +179,7 @@ export async function getEventBySlug(
 /**
  * Count upcoming events per city.
  * Used for showing event count badges on the homepage city cards.
+ * Includes both APPROVED and PENDING events with sufficient data.
  */
 export async function getEventCountsByCity(): Promise<Record<string, number>> {
   const supabase = getSupabaseAdmin();
@@ -185,14 +191,16 @@ export async function getEventCountsByCity(): Promise<Record<string, number>> {
       city_id,
       cities(slug)
     `)
-    .eq('status', 'APPROVED')
+    .in('status', ['APPROVED', 'PENDING'])
+    .not('venue_name', 'is', null)
+    .not('external_url', 'is', null)
     .gte('start_date', today);
 
   if (error || !data) return {};
 
   const counts: Record<string, number> = {};
   for (const row of data) {
-    const city = row.cities as { slug: string } | null;
+    const city = row.cities as unknown as { slug: string } | null;
     if (city?.slug) {
       counts[city.slug] = (counts[city.slug] || 0) + 1;
     }

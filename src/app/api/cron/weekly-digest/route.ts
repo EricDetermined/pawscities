@@ -177,7 +177,7 @@ export async function GET(request: NextRequest) {
   // Group events by city slug
   const eventsByCity: Record<string, { name: string; date: string; venue: string | null; isFree: boolean }[]> = {};
   for (const event of (events || [])) {
-    const citySlug = (event.cities as { slug: string })?.slug || 'unknown';
+    const citySlug = (event.cities as unknown as { slug: string })?.slug || 'unknown';
     if (!eventsByCity[citySlug]) eventsByCity[citySlug] = [];
     const d = new Date(event.start_date + 'T00:00:00');
     eventsByCity[citySlug].push({
@@ -199,11 +199,11 @@ export async function GET(request: NextRequest) {
 
   const spotsByCity: Record<string, { name: string; category: string }[]> = {};
   for (const spot of (newSpots || [])) {
-    const citySlug = (spot.cities as { slug: string })?.slug || 'unknown';
+    const citySlug = (spot.cities as unknown as { slug: string })?.slug || 'unknown';
     if (!spotsByCity[citySlug]) spotsByCity[citySlug] = [];
     spotsByCity[citySlug].push({
       name: spot.name,
-      category: (spot.categories as { name: string })?.name || 'Other',
+      category: (spot.categories as unknown as { name: string })?.name || 'Other',
     });
   }
 

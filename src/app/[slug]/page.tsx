@@ -117,7 +117,7 @@ function dbToEstablishment(dbEst: Record<string, unknown>, citySlug: string, cit
     dogFeatures,
     amenities: [],
     neighborhood: undefined,
-    tier: (dbEst.tier as string) || 'free',
+    tier: ((dbEst.tier as string) || 'free') as 'free' | 'claimed' | 'premium',
     isVerified: (dbEst.is_verified as boolean) || false,
     isFeatured: (dbEst.is_featured as boolean) || false,
     createdAt: (dbEst.created_at as string) || new Date().toISOString(),

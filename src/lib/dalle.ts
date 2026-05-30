@@ -38,15 +38,15 @@ export async function generateMascotImage(
     });
 
     // gpt-image-1 returns base64 data
-    const b64 = response.data[0]?.b64_json;
-    const revisedPrompt = response.data[0]?.revised_prompt || '';
+    const b64 = response.data?.[0]?.b64_json;
+    const revisedPrompt = response.data?.[0]?.revised_prompt || '';
 
     if (b64) {
       return { buffer: Buffer.from(b64, 'base64'), revised_prompt: revisedPrompt };
     }
 
     // Fallback: try URL-based response
-    const imageUrl = response.data[0]?.url;
+    const imageUrl = response.data?.[0]?.url;
     if (imageUrl) {
       const imgRes = await fetch(imageUrl);
       if (imgRes.ok) {

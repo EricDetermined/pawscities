@@ -1,9 +1,11 @@
 import React from 'react';
-import { useSession } from '@supabase/auth-helpers-next';
 import { createClient } from '@supabase/supabase-js';
 
 export async function ProfileInfo() {
-  const supabase = createClient();
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 
   const {
     data: { user },

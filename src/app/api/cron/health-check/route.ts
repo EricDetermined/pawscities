@@ -427,7 +427,7 @@ export async function GET(request: NextRequest) {
   // Email: Only send standalone health email for CRITICAL issues or if explicitly requested
   // The unified marketing-digest cron (12 PM UTC) now includes health status daily
   const forceEmail = searchParams.get('forceEmail') === 'true';
-  let emailResult = { success: false, error: 'skipped — use marketing digest' };
+  let emailResult: { success: boolean; error?: string } = { success: false, error: 'skipped — use marketing digest' };
   if (!skipEmail && (forceEmail || overall === 'critical')) {
     emailResult = await sendHealthReport(report);
     if (!emailResult.success) {

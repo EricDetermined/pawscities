@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'A/components/ui/card';
+import { Card } from '@/components/ui/card';
 
 export default function DogDetail() {
   return (

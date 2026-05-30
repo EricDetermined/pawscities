@@ -319,8 +319,8 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
                         {/* Share */}
                         <div className="pt-1" onClick={(e) => e.stopPropagation()}>
                           <ShareButtons
-                            url={`https://pawcities.com/${city.slug}#events`}
-                            title={`${event.name} — Dog-Friendly Event in ${city.name}`}
+                            url={`https://pawcities.com/${citySlug}#events`}
+                            title={`${event.name} — Dog-Friendly Event in ${cityName}`}
                             description={event.venueName ? `${event.venueName} · ${formatDateRange(event)}` : formatDateRange(event)}
                             compact
                           />

@@ -118,14 +118,14 @@ export async function GET(request: NextRequest) {
     for (const creative of approvedCreatives) {
       console.log(`[SOCIAL-POST] Attempting: "${creative.headline}" (${creative.content_type}, ${creative.narrator})`);
 
-      let imageUrl = creative.image_url;
+      let imageUrl = creative.image_url as string | null;
 
       // ── Generate image if missing ────────────────────────────────────────
       if (!imageUrl) {
         if (creative.image_prompt && hasOpenAI) {
           // Use DALL-E to generate from the stored prompt
           const storagePath = `mascot-creatives/${creative.city}-${creative.content_type}-${creative.narrator}-${Date.now()}.png`;
-          const dalleResult = await generateAndUploadMascotImage(creative.image_prompt, storagePath);
+          const dalleResult = await generateAndUploadMascotImage(creative.image_prompt as string, storagePath);
           if (dalleResult) {
             imageUrl = dalleResult.publicUrl;
           }
@@ -225,7 +225,7 @@ export async function GET(request: NextRequest) {
       }
 
       // ── Publish to Instagram ─────────────────────────────────────────────
-      const result = await publishImagePost(imageUrl, creative.caption);
+      const result = await publishImagePost(imageUrl as string, creative.caption as string);
 
       // ── Log to social_posts ──────────────────────────────────────────────
       const { data: postRow } = await supabase.from('social_posts').insert({

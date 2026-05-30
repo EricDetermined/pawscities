@@ -42,6 +42,7 @@ export function MapView({
       L = leaflet.default;
 
       // Import CSS
+      // @ts-ignore -- CSS import handled by bundler
       await import('leaflet/dist/leaflet.css');
 
       if (!mapRef.current || mapInstanceRef.current) return;
@@ -102,7 +103,7 @@ export function MapView({
       const isSelected = place.id === selectedId;
 
       // Create custom icon
-      const customIcon = L.divIcon({
+      const customIcon = L!.divIcon({
         className: 'custom-marker',
         html: `
           <div class="marker-pin ${isSelected ? 'selected' : ''}" style="background-color: ${color}">
@@ -114,7 +115,7 @@ export function MapView({
         popupAnchor: [0, -40],
       });
 
-      const marker = L.marker([place.latitude, place.longitude], { icon: customIcon })
+      const marker = L!.marker([place.latitude, place.longitude], { icon: customIcon })
         .addTo(map);
 
       // Create popup content with Get Directions button

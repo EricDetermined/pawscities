@@ -74,7 +74,7 @@ export async function GET() {
 
       if (establishments) {
         for (const est of establishments) {
-          const citySlug = (est.cities)?.slug;
+          const citySlug = (est.cities as unknown as { slug: string })?.slug;
           if (!citySlug) continue;
 
           const lastmod = est.updated_at

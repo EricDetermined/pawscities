@@ -40,14 +40,16 @@ export async function GET(request: NextRequest) {
     // Today's date in UTC — the core filter that prevents past events
     const today = new Date().toISOString().split('T')[0];
 
-    // Build query: only approved events with start_date >= today
+    // Build query: approved + pending events with sufficient data, start_date >= today
     let query = supabase
       .from('events')
       .select(`
         *,
         cities!inner(slug, name)
       `, { count: 'exact' })
-      .eq('status', 'APPROVED')
+      .in('status', ['APPROVED', 'PENDING'])
+      .not('venue_name', 'is', null)
+      .not('external_url', 'is', null)
       .gte('start_date', today)
       .order('start_date', { ascending: true })
       .range(offset, offset + limit - 1);

@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       message: 'Welcome to Paw Cities! You\'ll receive our weekly digest with the best dog-friendly events and places.',
-      subscriber: { id: data.id, email: data.email, citySlug: data.city_slug },
+      subscriber: { id: data!.id, email: data!.email, citySlug: data!.city_slug },
     });
   } catch (err) {
     console.error('[SUBSCRIBE] Error:', err);

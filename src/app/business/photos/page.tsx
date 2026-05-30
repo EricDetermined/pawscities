@@ -171,7 +171,7 @@ export default function PhotosPage() {
             Upload photos to showcase your business ({activePhotos.length}/{maxPhotos} used)
           </p>
         </div>
-        <TierBadge tier={tier} />
+        <TierBadge tier={tier as 'free' | 'premium'} />
       </div>
 
       {/* Success Message */}
