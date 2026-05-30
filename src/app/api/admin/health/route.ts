@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { NextResponse } from 'next/server';
 
 function getCronSecret() { return process.env.CRON_SECRET; }
