@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
 
 interface Establishment {
@@ -51,7 +51,9 @@ const DOG_FEATURE_OPTIONS = [
 
 export default function ClaimBusinessPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { user } = useAuth();
+  const referralCode = searchParams.get('ref') || null;
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Establishment[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -198,6 +200,7 @@ export default function ClaimBusinessPage() {
           contactPhone: claimForm.contactPhone,
           verificationMethod: claimForm.verificationMethod,
           verificationDoc: claimForm.verificationDoc || null,
+          referredBy: referralCode,
         }),
       });
       const data = await res.json();
@@ -221,7 +224,7 @@ export default function ClaimBusinessPage() {
       const res = await fetch('/api/business/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newForm),
+        body: JSON.stringify({ ...newForm, referredBy: referralCode }),
       });
       const data = await res.json();
       if (res.ok) {

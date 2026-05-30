@@ -85,6 +85,7 @@ export async function POST(request: NextRequest) {
     contactPhone,
     verificationMethod,
     verificationDoc,
+    referredBy,
   } = await request.json();
 
   if (!establishmentId || !businessName || !contactName || !contactEmail) {
@@ -266,6 +267,7 @@ export async function POST(request: NextRequest) {
       verification_method: effectiveVerificationMethod,
       verification_notes: verificationDoc || null,
       status: 'PENDING',
+      referred_by: referredBy || null,
     })
     .select()
     .single();

@@ -32,6 +32,16 @@ interface Application {
   referral_code: string | null;
 }
 
+interface ReferredBusiness {
+  id: string;
+  business_name: string;
+  contact_name: string;
+  contact_email: string;
+  status: string;
+  referred_by: string;
+  created_at: string;
+}
+
 const CITIES = ['Geneva', 'Paris', 'London', 'Los Angeles', 'New York City', 'Barcelona', 'Sydney', 'Tokyo'];
 const TIERS = [
   { value: '', label: 'No preference' },
@@ -56,8 +66,9 @@ const STATUS_COLORS: Record<string, string> = {
 export default function AmbassadorsAdminPage() {
   const [invites, setInvites] = useState<Invite[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
+  const [referredBusinesses, setReferredBusinesses] = useState<ReferredBusiness[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'invites' | 'applications'>('invites');
+  const [activeTab, setActiveTab] = useState<'invites' | 'applications' | 'referrals'>('invites');
 
   // New invite form
   const [recipientName, setRecipientName] = useState('');
@@ -82,6 +93,7 @@ export default function AmbassadorsAdminPage() {
         const data = await res.json();
         setInvites(data.invites || []);
         setApplications(data.applications || []);
+        setReferredBusinesses(data.referredBusinesses || []);
       }
     } catch (err) {
       console.error('Failed to fetch ambassador data:', err);
@@ -347,6 +359,16 @@ export default function AmbassadorsAdminPage() {
             </span>
           )}
         </button>
+        <button
+          onClick={() => setActiveTab('referrals')}
+          className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            activeTab === 'referrals'
+              ? 'bg-white text-gray-900 shadow-sm'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Referrals ({referredBusinesses.length})
+        </button>
       </div>
 
       {/* Invites Tab */}
@@ -419,6 +441,69 @@ export default function AmbassadorsAdminPage() {
                           >
                             Copy Link
                           </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Referrals Tab */}
+      {activeTab === 'referrals' && (
+        <div className="bg-white rounded-xl border overflow-hidden">
+          {referredBusinesses.length === 0 ? (
+            <div className="p-8 text-center text-gray-400">
+              <p className="mb-2">No referred businesses yet.</p>
+              <p className="text-xs">When an ambassador shares their referral link and a business signs up, it will appear here.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b bg-gray-50">
+                    <th className="text-left p-3 font-medium text-gray-600">Business</th>
+                    <th className="text-left p-3 font-medium text-gray-600">Contact</th>
+                    <th className="text-left p-3 font-medium text-gray-600">Referred By</th>
+                    <th className="text-left p-3 font-medium text-gray-600">Claim Status</th>
+                    <th className="text-left p-3 font-medium text-gray-600">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {referredBusinesses.map(biz => {
+                    // Try to find the ambassador who owns this referral code
+                    const ambassador = applications.find(a => a.referral_code === biz.referred_by);
+                    return (
+                      <tr key={biz.id} className="border-b hover:bg-gray-50">
+                        <td className="p-3 font-medium text-gray-900">{biz.business_name}</td>
+                        <td className="p-3">
+                          <div className="text-gray-900">{biz.contact_name}</div>
+                          <div className="text-gray-400 text-xs">{biz.contact_email}</div>
+                        </td>
+                        <td className="p-3">
+                          <code className="text-orange-600 font-mono text-xs bg-orange-50 px-2 py-1 rounded">
+                            {biz.referred_by}
+                          </code>
+                          {ambassador && (
+                            <div className="text-xs text-gray-500 mt-1">
+                              {ambassador.full_name} ({ambassador.city})
+                            </div>
+                          )}
+                        </td>
+                        <td className="p-3">
+                          <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                            biz.status === 'APPROVED' ? 'bg-green-100 text-green-700'
+                              : biz.status === 'PENDING' ? 'bg-yellow-100 text-yellow-700'
+                              : 'bg-red-100 text-red-700'
+                          }`}>
+                            {biz.status}
+                          </span>
+                        </td>
+                        <td className="p-3 text-gray-400 text-xs">
+                          {new Date(biz.created_at).toLocaleDateString()}
                         </td>
                       </tr>
                     );

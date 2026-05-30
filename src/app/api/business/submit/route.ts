@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, address, cityId, categoryId, description, phone, website: rawWebsite, contactName, contactEmail, dogFeatures, listingType: rawListingType, serviceArea } = body;
+    const { name, address, cityId, categoryId, description, phone, website: rawWebsite, contactName, contactEmail, dogFeatures, listingType: rawListingType, serviceArea, referredBy } = body;
     // Normalize website URL - ensure https:// prefix
     const website = rawWebsite ? (rawWebsite.match(/^https?:\/\//) ? rawWebsite : `https://${rawWebsite}`) : '';
     // Normalize listing type - default to storefront
@@ -221,6 +221,7 @@ export async function POST(request: Request) {
         review_count: 0,
         price_level: 2,
         ...(dogFeatures && Object.keys(dogFeatures).length > 0 && { dog_features: dogFeatures }),
+        referred_by: referredBy || null,
       })
       .select('id')
       .single();
@@ -304,6 +305,7 @@ export async function POST(request: Request) {
         contact_phone: phone || null,
         verification_method: 'business_submission',
         status: 'PENDING',
+        referred_by: referredBy || null,
       });
 
     if (claimError) {
