@@ -350,7 +350,12 @@ export async function POST(request: NextRequest) {
       image_prompt: imagePrompt,
       format: 'event_post',
       status: 'pending_review',
-      scheduled_for: event.start_date,
+      // Schedule 3 days before the event so followers can plan ahead
+      scheduled_for: (() => {
+        const eventDate = new Date(event.start_date + 'T00:00:00Z');
+        eventDate.setUTCDate(eventDate.getUTCDate() - 3);
+        return eventDate.toISOString().split('T')[0];
+      })(),
       generation_model: hasOpenAI ? 'gpt-image-1' : 'next-og',
     });
 
