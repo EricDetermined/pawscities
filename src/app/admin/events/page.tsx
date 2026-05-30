@@ -35,18 +35,21 @@ interface EventsResponse {
 
 export default function AdminEventsPage() {
   const [status, setStatus] = useState<string>('PENDING');
+  const [page, setPage] = useState(1);
   const [data, setData] = useState<EventsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
-  const fetchEvents = async () => {
+  const fetchEvents = async (p?: number) => {
     try {
       setLoading(true);
+      const currentPage = p ?? page;
       const url = new URL('/api/admin/events', window.location.origin);
       if (status !== 'all') {
         url.searchParams.set('status', status);
       }
+      url.searchParams.set('page', String(currentPage));
 
       const response = await fetch(url.toString());
       if (!response.ok) throw new Error('Failed to fetch events');
@@ -63,8 +66,13 @@ export default function AdminEventsPage() {
   };
 
   useEffect(() => {
-    fetchEvents();
+    setPage(1);
+    fetchEvents(1);
   }, [status]);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [page]);
 
   const handleAction = async (eventId: string, action: string, reviewNotes?: string) => {
     setActionLoading(eventId);
@@ -356,15 +364,45 @@ export default function AdminEventsPage() {
             </div>
           )}
 
-          {/* Pagination Info */}
-          {data.events.length > 0 && (
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <p>
-                Showing {data.events.length} of {data.pagination.total} events
+          {/* Pagination */}
+          {data.events.length > 0 && data.pagination.pages > 1 && (
+            <div className="flex items-center justify-between text-sm">
+              <p className="text-gray-600">
+                Showing {(data.pagination.page - 1) * data.pagination.limit + 1}–{Math.min(data.pagination.page * data.pagination.limit, data.pagination.total)} of {data.pagination.total} events
               </p>
-              <p>
-                Page {data.pagination.page} of {data.pagination.pages}
-              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setPage(1)}
+                  disabled={page <= 1}
+                  className="px-2.5 py-1.5 border rounded-lg text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                >
+                  First
+                </button>
+                <button
+                  onClick={() => setPage(page - 1)}
+                  disabled={page <= 1}
+                  className="px-3 py-1.5 border rounded-lg text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                >
+                  ← Prev
+                </button>
+                <span className="px-3 py-1.5 text-gray-700 font-medium">
+                  Page {data.pagination.page} of {data.pagination.pages}
+                </span>
+                <button
+                  onClick={() => setPage(page + 1)}
+                  disabled={page >= data.pagination.pages}
+                  className="px-3 py-1.5 border rounded-lg text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                >
+                  Next →
+                </button>
+                <button
+                  onClick={() => setPage(data.pagination.pages)}
+                  disabled={page >= data.pagination.pages}
+                  className="px-2.5 py-1.5 border rounded-lg text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                >
+                  Last
+                </button>
+              </div>
             </div>
           )}
         </>
