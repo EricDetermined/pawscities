@@ -45,7 +45,7 @@ const TIERS = [
     ],
     perks: [
       'Everything in Explorer, plus:',
-      '15–25% commission on paid subscriptions',
+      '20% commission (first 3 months)',
       '10% ongoing revenue share',
       'Event access & networking',
     ],
@@ -368,7 +368,7 @@ export default function AmbassadorPageClient() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Earn Real Rewards</h3>
               <p className="text-gray-600 leading-relaxed">
-                Earn commission on every business you bring to Paw Cities as a paid subscriber. Up to 25% on subscriptions plus ongoing revenue share.
+                Earn commission on every business you bring to Paw Cities as a paid subscriber. 20% for the first 3 months, then 10% ongoing revenue share.
               </p>
             </div>
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100">
@@ -730,7 +730,7 @@ export default function AmbassadorPageClient() {
               },
               {
                 q: 'How do I earn commission?',
-                a: 'You get a unique referral link. When a business subscribes to a paid Paw Cities plan through your link, you earn 15–25% of the first 3 months\' revenue, plus 10% ongoing as long as they stay subscribed.',
+                a: 'You get a unique referral link. When a business subscribes to a paid Paw Cities plan through your link, you earn 20% of the first 3 months\' revenue, then 10% ongoing as long as they stay subscribed.',
               },
               {
                 q: 'Can I be an ambassador in a city not listed?',
