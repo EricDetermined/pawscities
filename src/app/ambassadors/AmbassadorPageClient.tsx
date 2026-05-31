@@ -707,8 +707,8 @@ export default function AmbassadorPageClient() {
 
               <p className="text-xs text-gray-500 text-center">
                 Questions? Email us at{' '}
-                <a href="mailto:ambassadors@pawcities.com" className="text-orange-600 font-medium">
-                  ambassadors@pawcities.com
+                <a href="mailto:eric@pawcities.com" className="text-orange-600 font-medium">
+                  eric@pawcities.com
                 </a>
               </p>
             </form>
