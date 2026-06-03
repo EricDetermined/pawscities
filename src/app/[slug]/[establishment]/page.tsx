@@ -25,7 +25,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const city = getCityConfig(params.slug);
-  let place = await getEstablishment(params.slug, params.establishment);
+  const metaCitySlug = city?.slug || params.slug;
+  let place = await getEstablishment(metaCitySlug, params.establishment);
   if (!place) {
     try {
       const supabase = getSupabaseAdmin();
@@ -69,7 +70,10 @@ export default async function EstablishmentPage({ params }: Props) {
   const city = getCityConfig(params.slug);
   if (!city) notFound();
 
-  let place = await getEstablishment(params.slug, params.establishment);
+  // Use canonical slug from config for DB queries (handles hyphenated URL slugs)
+  const citySlug = city.slug;
+
+  let place = await getEstablishment(citySlug, params.establishment);
 
   // If not in research JSON, check the database (user-submitted businesses)
   if (!place) {
@@ -119,7 +123,7 @@ export default async function EstablishmentPage({ params }: Props) {
         }
 
         place = {
-          id: dbEst.id, slug: dbEst.slug, citySlug: params.slug,
+          id: dbEst.id, slug: dbEst.slug, citySlug: citySlug,
           categorySlug: catSlug as CategorySlug,
           name: dbEst.name, description: dbEst.description || '',
           address: dbEst.address || '', latitude: dbEst.latitude || city.latitude,
@@ -143,7 +147,7 @@ export default async function EstablishmentPage({ params }: Props) {
 
   if (!place) notFound();
 
-  const allPlaces = await getCityEstablishments(params.slug);
+  const allPlaces = await getCityEstablishments(citySlug);
   const similar = allPlaces
     .filter(e => e.categorySlug === place!.categorySlug && e.id !== place!.id)
     .slice(0, 3);

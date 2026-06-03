@@ -156,7 +156,11 @@ export const PRICING = {
 };
 
 export function getCityConfig(slug: string): CityConfig | undefined {
-  return CITIES[slug.toLowerCase()];
+  const lower = slug.toLowerCase();
+  // Direct match first, then try adding hyphens for multi-word cities
+  // This handles both old slugs (losangeles) and new canonical slugs (los-angeles)
+  return CITIES[lower]
+    || Object.values(CITIES).find(c => c.slug.replace(/-/g, '') === lower.replace(/-/g, ''));
 }
 
 export function getAllCitySlugs(): string[] {

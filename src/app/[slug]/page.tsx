@@ -136,6 +136,10 @@ export default async function CityPage({ params }: CityPageProps) {
   const city = getCityConfig(params.slug);
   if (!city) notFound();
 
+  // Use canonical slug from config (e.g. 'losangeles') for all DB queries,
+  // since URL slug may be hyphenated (e.g. 'los-angeles')
+  const citySlug = city.slug;
+
   let establishments: Establishment[] = [];
   let usedDb = false;
 
@@ -145,7 +149,7 @@ export default async function CityPage({ params }: CityPageProps) {
     const { data: cityRecord } = await supabase
       .from('cities')
       .select('id')
-      .eq('slug', params.slug)
+      .eq('slug', citySlug)
       .single();
 
     if (cityRecord) {
@@ -160,7 +164,7 @@ export default async function CityPage({ params }: CityPageProps) {
 
       if (dbEstablishments && dbEstablishments.length > 0) {
         for (const dbEst of dbEstablishments) {
-          const est = dbToEstablishment(dbEst, params.slug, city.latitude, city.longitude);
+          const est = dbToEstablishment(dbEst, citySlug, city.latitude, city.longitude);
           if (est) establishments.push(est);
         }
         usedDb = true;
@@ -172,7 +176,7 @@ export default async function CityPage({ params }: CityPageProps) {
 
   // Fallback: if DB returned no results, use research JSON files
   if (!usedDb || establishments.length === 0) {
-    const baseEstablishments = await getCityEstablishments(params.slug);
+    const baseEstablishments = await getCityEstablishments(citySlug);
     establishments = await enrichEstablishmentsWithUserPhotos(baseEstablishments);
   }
 
@@ -185,9 +189,9 @@ export default async function CityPage({ params }: CityPageProps) {
   // Fetch upcoming events for this city
   let cityEvents: Awaited<ReturnType<typeof getCityEvents>> = { events: [], total: 0 };
   try {
-    cityEvents = await getCityEvents(params.slug, { limit: 20 });
+    cityEvents = await getCityEvents(citySlug, { limit: 20 });
   } catch (e) {
-    console.error(`Failed to fetch events for ${params.slug}:`, e);
+    console.error(`Failed to fetch events for ${citySlug}:`, e);
   }
 
   // JSON-LD: BreadcrumbList + ItemList for the city
