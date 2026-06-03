@@ -21,23 +21,44 @@ export async function GET(request: NextRequest) {
 
   const supabase = getSupabaseAdmin();
 
-  // Fetch establishments that either:
-  // 1. Have a google_place_id (refresh existing photos), OR
-  // 2. Have no photos at all (try to find them on Google for the first time)
-  // This ensures establishments that missed initial enrichment get retried.
-  const { data: establishments, error: fetchError } = await supabase
+  // PRIORITY 1: Establishments with no photos yet — these need initial enrichment
+  const { data: needPhotos, error: needPhotosError } = await supabase
     .from('establishments')
     .select('id, name, address, google_place_id, photo_refs, city_id, dog_features, listing_type')
     .eq('status', 'ACTIVE')
-    .or('google_place_id.not.is.null,photo_refs.is.null')
-    .neq('listing_type', 'online') // Online-only listings have no physical presence to photograph
-    .order('updated_at', { ascending: true }) // Oldest-updated first
-    .limit(60); // Process 60 at a time — daily runs cover all ~350 establishments per week
+    .is('photo_refs', null)
+    .neq('listing_type', 'online')
+    .order('updated_at', { ascending: true })
+    .limit(60);
 
-  if (fetchError) {
-    console.error('Failed to fetch establishments:', fetchError);
+  if (needPhotosError) {
+    console.error('Failed to fetch photo-less establishments:', needPhotosError);
     return NextResponse.json({ error: 'Failed to fetch establishments' }, { status: 500 });
   }
+
+  // PRIORITY 2: Fill remaining slots with establishments that already have photos (refresh cycle)
+  const remainingSlots = 60 - (needPhotos?.length || 0);
+  let refreshEstablishments: typeof needPhotos = [];
+
+  if (remainingSlots > 0) {
+    const { data: refreshData, error: refreshError } = await supabase
+      .from('establishments')
+      .select('id, name, address, google_place_id, photo_refs, city_id, dog_features, listing_type')
+      .eq('status', 'ACTIVE')
+      .not('photo_refs', 'is', null)
+      .not('google_place_id', 'is', null)
+      .neq('listing_type', 'online')
+      .order('updated_at', { ascending: true })
+      .limit(remainingSlots);
+
+    if (refreshError) {
+      console.error('Failed to fetch refresh establishments:', refreshError);
+    } else {
+      refreshEstablishments = refreshData || [];
+    }
+  }
+
+  const establishments = [...(needPhotos || []), ...refreshEstablishments];
 
   if (!establishments || establishments.length === 0) {
     return NextResponse.json({ success: true, message: 'No establishments to refresh', updated: 0 });
@@ -138,7 +159,9 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  const summary = `Photo refresh: ${updated} updated, ${skipped} unchanged, ${failed} failed out of ${establishments.length}`;
+  const needPhotosCount = needPhotos?.length || 0;
+  const refreshCount = refreshEstablishments?.length || 0;
+  const summary = `Photo refresh: ${updated} updated, ${skipped} unchanged, ${failed} failed out of ${establishments.length} (${needPhotosCount} needing photos, ${refreshCount} refresh)`;
   console.log(summary);
 
   return NextResponse.json({
@@ -148,6 +171,8 @@ export async function GET(request: NextRequest) {
     skipped,
     failed,
     total: establishments.length,
+    needPhotosCount,
+    refreshCount,
     details,
     timestamp: new Date().toISOString(),
   });
