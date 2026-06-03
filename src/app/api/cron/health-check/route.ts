@@ -261,35 +261,62 @@ async function checkInstagramPosting(): Promise<CheckResult> {
   }
 }
 
-/** Check that key site pages are responding */
+/** Check that ALL city pages and key site pages are responding */
 async function checkSitePages(): Promise<CheckResult> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
-  const pages = ['/', '/paris', '/london', '/sydney'];
+
+  // CRITICAL: Check EVERY city page, not just a few.
+  // Include both canonical slugs and hyphenated alternatives for multi-word cities.
+  const pages = [
+    '/',                // Homepage
+    '/geneva',          // Single-word cities
+    '/paris',
+    '/london',
+    '/barcelona',
+    '/sydney',
+    '/tokyo',
+    '/losangeles',      // Multi-word cities (canonical)
+    '/newyork',
+    '/los-angeles',     // Multi-word cities (hyphenated — user-typed URLs)
+    '/new-york',
+    '/ambassadors',     // Key feature pages
+    '/for-business',
+  ];
   const results: { page: string; status: number; ok: boolean }[] = [];
 
-  for (const page of pages) {
-    try {
-      const res = await fetch(`${baseUrl}${page}`, {
-        method: 'HEAD',
-        signal: AbortSignal.timeout(10000),
-        redirect: 'follow',
-      });
-      results.push({ page, status: res.status, ok: res.ok });
-    } catch {
-      results.push({ page, status: 0, ok: false });
-    }
+  // Run checks in parallel (with concurrency limit of 4 to avoid self-DDoS)
+  const batchSize = 4;
+  for (let i = 0; i < pages.length; i += batchSize) {
+    const batch = pages.slice(i, i + batchSize);
+    const batchResults = await Promise.all(
+      batch.map(async (page) => {
+        try {
+          const res = await fetch(`${baseUrl}${page}`, {
+            method: 'HEAD',
+            signal: AbortSignal.timeout(10000),
+            redirect: 'follow',
+          });
+          return { page, status: res.status, ok: res.ok };
+        } catch {
+          return { page, status: 0, ok: false };
+        }
+      })
+    );
+    results.push(...batchResults);
   }
 
   const failures = results.filter(r => !r.ok);
   if (failures.length === 0) {
-    return { name: 'Site Pages', status: 'healthy', message: `All ${pages.length} pages responding`, details: { results } };
+    return { name: 'Site Pages', status: 'healthy', message: `All ${pages.length} pages responding (${pages.length} checked)`, details: { results } };
   }
 
-  const status: CheckStatus = failures.length >= 3 ? 'critical' : 'warning';
+  // Any city page 404 is critical — these are our core product pages
+  const cityFailures = failures.filter(f => f.page !== '/' && f.page !== '/ambassadors' && f.page !== '/for-business');
+  const status: CheckStatus = cityFailures.length > 0 ? 'critical' : failures.length >= 3 ? 'critical' : 'warning';
   return {
     name: 'Site Pages',
     status,
-    message: `${failures.length}/${pages.length} pages failing: ${failures.map(f => f.page).join(', ')}`,
+    message: `${failures.length}/${pages.length} pages failing: ${failures.map(f => `${f.page} (${f.status})`).join(', ')}`,
     details: { results },
   };
 }

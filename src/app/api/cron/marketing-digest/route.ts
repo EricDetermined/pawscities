@@ -102,6 +102,45 @@ export async function GET(request: NextRequest) {
       healthChecks.push({ name: 'Email Service', status: 'critical', message: 'RESEND_API_KEY missing' });
     }
 
+    // Site pages — check ALL city pages so 404s get flagged in the daily email
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+      const cityPages = [
+        '/', '/geneva', '/paris', '/london', '/barcelona', '/sydney', '/tokyo',
+        '/losangeles', '/newyork', '/los-angeles', '/new-york',
+      ];
+      const pageResults = await Promise.all(
+        cityPages.map(async (page) => {
+          try {
+            const res = await fetch(`${baseUrl}${page}`, {
+              method: 'HEAD',
+              signal: AbortSignal.timeout(8000),
+              redirect: 'follow',
+            });
+            return { page, status: res.status, ok: res.ok };
+          } catch {
+            return { page, status: 0, ok: false };
+          }
+        })
+      );
+      const pageFailures = pageResults.filter(r => !r.ok);
+      if (pageFailures.length > 0) {
+        healthChecks.push({
+          name: 'Site Pages',
+          status: 'critical',
+          message: `${pageFailures.length} pages DOWN: ${pageFailures.map(f => `${f.page} (${f.status})`).join(', ')}`,
+        });
+      } else {
+        healthChecks.push({
+          name: 'Site Pages',
+          status: 'healthy',
+          message: `All ${cityPages.length} pages responding`,
+        });
+      }
+    } catch {
+      healthChecks.push({ name: 'Site Pages', status: 'warning', message: 'Page check failed' });
+    }
+
     const hasCritical = healthChecks.some(c => c.status === 'critical');
     const hasWarning = healthChecks.some(c => c.status === 'warning');
     const healthOverall = hasCritical ? 'critical' as const : hasWarning ? 'warning' as const : 'healthy' as const;
