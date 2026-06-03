@@ -56,16 +56,19 @@ function getToday(): string {
 
 /**
  * Homepage events: cross-city showcase.
- * Returns a small curated set of upcoming events across ALL cities.
- * - APPROVED + PENDING events (PENDING must have venue_name + external_url)
+ * Returns a curated set of upcoming events across ALL cities.
+ * - APPROVED + PENDING events with a venue name
  * - Only future events (start_date >= today)
- * - Featured events first, then by date
- * - Limited to `limit` results (default 6)
+ * - Sorted by date (soonest first) so the homepage always feels current
+ * - City diversity: max 2 events per city initially, then fills remaining slots
+ * - Featured badge still displays on featured events in the UI
+ * - Limited to `limit` results (default 8)
  */
-export async function getHomepageEvents(limit: number = 6): Promise<PawEvent[]> {
+export async function getHomepageEvents(limit: number = 8): Promise<PawEvent[]> {
   const supabase = getSupabaseAdmin();
   const today = getToday();
 
+  // Fetch more than needed so we can curate for city diversity
   const { data, error } = await supabase
     .from('events')
     .select(`
@@ -74,18 +77,47 @@ export async function getHomepageEvents(limit: number = 6): Promise<PawEvent[]> 
     `)
     .in('status', ['APPROVED', 'PENDING'])
     .not('venue_name', 'is', null)
-    .not('external_url', 'is', null)
     .gte('start_date', today)
-    .order('is_featured', { ascending: false })
     .order('start_date', { ascending: true })
-    .limit(limit);
+    .limit(30);
 
   if (error) {
     console.error('Failed to fetch homepage events:', error);
     return [];
   }
 
-  return (data || []).map(mapEvent);
+  if (!data || data.length === 0) return [];
+
+  // Curate for city diversity: pick up to 2 per city first, then fill remaining
+  const maxPerCityFirstPass = 2;
+  const cityCount: Record<string, number> = {};
+  const selected: typeof data = [];
+  const overflow: typeof data = [];
+
+  for (const event of data) {
+    const cityId = event.city_id || 'unknown';
+    const count = cityCount[cityId] || 0;
+    if (count < maxPerCityFirstPass) {
+      selected.push(event);
+      cityCount[cityId] = count + 1;
+    } else {
+      overflow.push(event);
+    }
+    if (selected.length >= limit) break;
+  }
+
+  // Fill remaining slots from overflow if needed
+  if (selected.length < limit) {
+    for (const event of overflow) {
+      selected.push(event);
+      if (selected.length >= limit) break;
+    }
+  }
+
+  // Re-sort by date for display
+  selected.sort((a, b) => (a.start_date || '').localeCompare(b.start_date || ''));
+
+  return selected.map(mapEvent);
 }
 
 /**

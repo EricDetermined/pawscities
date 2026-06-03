@@ -46,7 +46,7 @@ export default async function HomePage() {
   // Fetch upcoming events for the homepage banner
   let homepageEvents: Awaited<ReturnType<typeof getHomepageEvents>> = [];
   try {
-    homepageEvents = await getHomepageEvents(6);
+    homepageEvents = await getHomepageEvents(8);
   } catch (e) {
     console.error('Failed to fetch homepage events:', e);
   }
