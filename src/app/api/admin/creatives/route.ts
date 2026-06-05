@@ -9,6 +9,7 @@ import {
   pickNextContent,
 } from '@/lib/social-content';
 import { generateAndUploadMascotImage, generateCharacterCaption } from '@/lib/dalle';
+import { getVisualStyle, shouldUseMascot, shouldUseTextCard, getCaptionStyle, type VisualStyle } from '@/lib/visual-strategy';
 
 // ─── Supabase Admin ────────────────────────────────────────────────────────────
 
@@ -189,54 +190,87 @@ export async function POST(request: NextRequest) {
 
       combined.add(fact.headline);
       const factIndex = CONTENT_BANK.indexOf(fact);
-      const narrator = assignNarrator(fact.type);
-      const imagePrompt = buildImagePrompt(fact, narrator);
       const cityMeta = CITY_META[fact.city];
+      const cityName = cityMeta?.name || fact.city;
+      const citySlug = cityMeta?.slug || fact.city;
+
+      // ── Visual Style Routing ──────────────────────────────────────────
+      // Route content to the right visual approach based on type
+      const visualStyle: VisualStyle = getVisualStyle(fact.type);
+
+      // Narrator assignment: only needed for mascot style
+      const narrator = shouldUseMascot(fact.type) ? assignNarrator(fact.type) : 'buster';
 
       // Determine scheduled date (today + i days)
       const schedDate = new Date();
       schedDate.setDate(schedDate.getDate() + i);
       const scheduledFor = schedDate.toISOString().split('T')[0];
 
-      // Try GPT-4o for character-voice caption, fall back to template
+      // ── Caption Generation (style-aware) ──────────────────────────────
+      const captionStyle = getCaptionStyle(visualStyle);
       let caption: string;
-      if (hasOpenAI) {
+      if (captionStyle === 'character' && hasOpenAI) {
+        // Mascot posts: use character voice (Buster/Marley personality)
         const aiCaption = await generateCharacterCaption(
           narrator as 'buster' | 'marley' | 'both',
           fact.headline,
           fact.body,
-          cityMeta?.name || fact.city,
-          cityMeta?.slug || fact.city,
+          cityName,
+          citySlug,
           fact.type,
         );
         caption = aiCaption || rewriteCaption(fact, narrator);
+      } else if (captionStyle === 'informational' || captionStyle === 'complementary') {
+        // Photo/text card posts: clean informational caption, no character voice
+        const typeEmoji = fact.type === 'spotlight' ? '⭐' : fact.type === 'event' ? '📅' : fact.type === 'tip' ? '💡' : fact.type === 'guide' ? '📍' : '🐾';
+        caption = `${typeEmoji} ${fact.headline}\n\n${fact.body}\n\nDiscover more at pawcities.com/${citySlug}\n\nFollow @thepawcities for daily dog-friendly content! 🌍\n\n#PawCities #DogFriendly${cityName.replace(/\s/g, '')} #DogsOfInstagram #DogFriendly #DogLife`;
       } else {
         caption = rewriteCaption(fact, narrator);
       }
 
-      // Try DALL-E 3 for mascot image
+      // ── Image Generation (style-aware) ─────────────────────────────────
       let imageUrl: string | null = null;
-      if (hasOpenAI) {
+      let imagePrompt: string | null = null;
+
+      if (visualStyle === 'mascot' && hasOpenAI) {
+        // DALL-E mascot illustration — only for did-you-know and fun types
+        imagePrompt = buildImagePrompt(fact, narrator);
         const storagePath = `mascot-creatives/${fact.city}-${narrator}-${factIndex}-${Date.now()}.png`;
         const dalleResult = await generateAndUploadMascotImage(imagePrompt, storagePath);
         if (dalleResult) {
           imageUrl = dalleResult.publicUrl;
         }
+      } else if (visualStyle === 'photo' && fact.placeName) {
+        // Real photo via Google Places — for spotlights with a specific business
+        // Image will be fetched at post time via the photo proxy
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+        try {
+          // Search for the place and get a photo
+          const { searchPlace } = await import('@/lib/google-places');
+          const result = await searchPlace(fact.placeName);
+          if (result?.photos?.[0]?.name) {
+            imageUrl = `${baseUrl}/api/places/photo?name=${encodeURIComponent(result.photos[0].name)}&maxWidth=1080`;
+          }
+        } catch {
+          console.log(`[CREATIVE] Could not fetch photo for "${fact.placeName}", will use text card fallback`);
+        }
       }
+      // text_card and photo fallback: image generated at post time via OG endpoints
+      // Store null imageUrl — the social-post cron will generate via the right endpoint
 
       const { error: insertError } = await supabase.from('creative_queue').insert({
         content_type: 'content_bank',
         content_index: factIndex,
-        narrator,
+        narrator: shouldUseMascot(fact.type) ? narrator : null,
         city: fact.city,
         headline: fact.headline,
         caption,
         image_url: imageUrl,
         image_prompt: imagePrompt,
-        format: 'city_card',
+        format: visualStyle,  // 'mascot', 'photo', or 'text_card'
         status: 'pending_review',
         scheduled_for: scheduledFor,
-        generation_model: hasOpenAI ? 'gpt-image-1' : 'next-og',
+        generation_model: visualStyle === 'mascot' && hasOpenAI ? 'gpt-image-1' : 'next-og',
       });
 
       if (!insertError) {
@@ -288,67 +322,71 @@ export async function POST(request: NextRequest) {
     const metaKey = Object.keys(CITY_META).find(k => CITY_META[k].slug === citySlug) || citySlug;
     const hasOpenAI = !!process.env.OPENAI_API_KEY;
 
-    // Alternate narrator based on last event creative
-    const { data: lastEventCreative } = await supabase
-      .from('creative_queue')
-      .select('narrator')
-      .eq('content_type', 'event')
-      .in('status', ['approved', 'posted', 'pending_review'])
-      .order('created_at', { ascending: false })
-      .limit(1);
-    const narrator: 'buster' | 'marley' = lastEventCreative?.[0]?.narrator === 'buster' ? 'marley' : 'buster';
+    // ── PHOTO-FIRST strategy for events ─────────────────────────────────
+    // Events use real photography or cityscape overlays — NOT mascots.
+    // This looks professional for sponsors and clearly communicates
+    // "real event happening on a real date."
 
-    const landmarks = CITY_LANDMARKS[metaKey] || CITY_LANDMARKS.paris;
-    const venueContext = event.venue_name ? ` near ${event.venue_name}` : '';
-
-    const imagePrompt = narrator === 'buster'
-      ? `Pixar/Disney-style cartoon illustration: Buster, a compact golden-tan smooth-coated mixed breed dog with folded ears, big expressive brown eyes, wide happy grin with tongue out, wearing an olive-green collar with a small orange paw-print tag, standing excitedly${venueContext} in ${cityName} with ${landmarks.landmark} in the background. Bright cheerful atmosphere suggesting a fun dog-friendly event. Several happy dogs of different breeds nearby. Warm lighting, cinematic. 1080x1080, no text overlay, no humans.`
-      : `Pixar/Disney-style cartoon illustration: Marley, a fluffy golden-apricot goldendoodle with curly teddy bear coat, soulful intelligent brown eyes, calm gentle smile, wearing a navy blue bandana with a small orange paw-print tag, sitting calmly${venueContext} in ${cityName} with ${landmarks.landmark} in the background. Warm cozy atmosphere, several friendly dogs nearby. Soft lighting, inviting scene. 1080x1080, no text overlay, no humans.`;
-
-    // Build rich caption using the upgraded multilingual character voice
+    // Build clean, informational caption (no character voice for events)
     const allHandles = event.mentioned_handles || [];
-    const handleContext = allHandles.length > 0
-      ? ` Organized/sponsored by: ${allHandles.map((h: string) => '@' + h.replace('@', '')).join(', ')}.`
+    const handleMentions = allHandles.length > 0
+      ? `\n\n${allHandles.map((h: string) => '@' + h.replace('@', '')).join(' ')}`
       : '';
-    const sourceContext = event.source_handle
-      ? ` Source: @${event.source_handle.replace('@', '')}.`
+    const sourceMention = event.source_handle
+      ? `\nvia @${event.source_handle.replace('@', '')}`
       : '';
 
-    let caption: string;
-    if (hasOpenAI) {
-      const aiCaption = await generateCharacterCaption(
-        narrator,
-        event.name,
-        (event.description || 'An exciting dog-friendly event!') + handleContext + sourceContext,
-        cityName,
-        citySlug,
-        'event',
-      );
-      caption = aiCaption || `📅 ${event.name} in ${cityName}!\n\n🗓 ${event.start_date}\n📍 ${event.venue_name || cityName}\n\n${event.description || 'Don\'t miss this awesome dog-friendly event!'}\n\nFollow @thepawcities for daily dog-friendly events 🌍\n\n#PawCities #DogFriendlyEvents #DogsOfInstagram`;
-    } else {
-      caption = `📅 ${event.name} in ${cityName}!\n\n🗓 ${event.start_date}\n📍 ${event.venue_name || cityName}\n\n${event.description || 'Don\'t miss this awesome dog-friendly event!'}\n\n${event.is_free ? '🆓 Free event!\n\n' : ''}Find more dog-friendly events at pawcities.com/${citySlug}/events\n\nFollow @thepawcities for daily dog-friendly events 🌍\n\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')}`;
+    const freeTag = event.is_free ? '🆓 Free event!\n\n' : '';
+    const caption = `📅 ${event.name}\n\n🗓 ${event.start_date}${event.venue_name ? `\n📍 ${event.venue_name}` : ''}\n\n${event.description || 'Don\'t miss this dog-friendly event!'}\n\n${freeTag}Find more events at pawcities.com/${citySlug}${handleMentions}${sourceMention}\n\nFollow @thepawcities for dog-friendly events worldwide 🌍\n\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')}`;
+
+    // Try to get a real image: event source image → Google Places venue photo → cityscape overlay
+    let imageUrl: string | null = null;
+    const imagePrompt: string | null = null;
+
+    // Strategy 1: Use event's own image if available
+    if (event.image_url) {
+      imageUrl = event.image_url;
     }
 
-    // Generate DALL-E image immediately so admin can preview it
-    let imageUrl: string | null = null;
-    if (hasOpenAI) {
-      const storagePath = `mascot-creatives/${metaKey}-event-${narrator}-${Date.now()}.png`;
-      const dalleResult = await generateAndUploadMascotImage(imagePrompt, storagePath);
-      if (dalleResult) {
-        imageUrl = dalleResult.publicUrl;
+    // Strategy 2: Try Google Places photo of the venue
+    if (!imageUrl && event.venue_name) {
+      try {
+        const { searchPlace } = await import('@/lib/google-places');
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+        const result = await searchPlace(`${event.venue_name} ${cityName}`);
+        if (result?.photos?.[0]?.name) {
+          // Download and store in Supabase for Instagram API compatibility
+          const photoProxyUrl = `${baseUrl}/api/places/photo?name=${encodeURIComponent(result.photos[0].name)}&maxWidth=1080`;
+          const photoRes = await fetch(photoProxyUrl, { signal: AbortSignal.timeout(15000) });
+          if (photoRes.ok) {
+            const imgBuffer = Buffer.from(await photoRes.arrayBuffer());
+            const storagePath = `event-photos/${metaKey}-event-${Date.now()}.jpg`;
+            const { error: uploadError } = await supabase.storage
+              .from('photos')
+              .upload(storagePath, imgBuffer, { contentType: 'image/jpeg', upsert: true });
+            if (!uploadError) {
+              const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+              imageUrl = urlData?.publicUrl || null;
+            }
+          }
+        }
+      } catch (err) {
+        console.log(`[CREATIVE] Venue photo lookup failed for "${event.venue_name}":`, err);
       }
     }
+    // Strategy 3: Cityscape overlay generated at post time via event-creative endpoint
+    // imageUrl stays null — social-post cron will generate via /api/social/event-creative
 
     const { error: insertError } = await supabase.from('creative_queue').insert({
       content_type: 'event',
       event_id: eventId,
-      narrator,
+      narrator: null,  // No mascot narrator for photo-based events
       city: metaKey,
       headline: event.name,
       caption,
       image_url: imageUrl,
       image_prompt: imagePrompt,
-      format: 'event_post',
+      format: 'photo',  // Photo-based visual style
       status: 'pending_review',
       // Schedule 3 days before the event so followers can plan ahead
       scheduled_for: (() => {
@@ -356,7 +394,7 @@ export async function POST(request: NextRequest) {
         eventDate.setUTCDate(eventDate.getUTCDate() - 3);
         return eventDate.toISOString().split('T')[0];
       })(),
-      generation_model: hasOpenAI ? 'gpt-image-1' : 'next-og',
+      generation_model: 'photo-first',
     });
 
     if (insertError) {
@@ -367,7 +405,7 @@ export async function POST(request: NextRequest) {
       success: true,
       event: event.name,
       city: cityName,
-      narrator,
+      format: 'photo',
       hasImage: !!imageUrl,
       message: `Creative generated for "${event.name}" — review at /admin/creatives`,
     });

@@ -74,6 +74,22 @@ export async function GET(request: NextRequest) {
 
     let approvedCreatives: Record<string, unknown>[] | null = null;
 
+    // ── Grid Diversity: Check recent post formats ─────────────────────────
+    // Fetch the last 2 posted formats so we can avoid visual monotony
+    let recentFormats: string[] = [];
+    try {
+      const { data: recentPosts } = await supabase
+        .from('social_posts')
+        .select('format')
+        .eq('status', 'published')
+        .order('created_at', { ascending: false })
+        .limit(2);
+      recentFormats = (recentPosts || []).map((p: { format: string }) => p.format).filter(Boolean);
+    } catch {
+      // format column may not exist yet — grid diversity still works via creative_queue.format
+      console.log('[SOCIAL-POST] Could not read recent formats from social_posts (column may not exist yet)');
+    }
+
     // Step 1: Try preferred type
     if (prefer && ['content_bank', 'event'].includes(prefer)) {
       const { data } = await supabase
@@ -83,7 +99,7 @@ export async function GET(request: NextRequest) {
         .eq('content_type', prefer)
         .lte('scheduled_for', today)
         .order('scheduled_for', { ascending: true })
-        .limit(5);
+        .limit(10);
       if (data && data.length > 0) {
         approvedCreatives = data;
         console.log(`[SOCIAL-POST] Slot=${slot}: Found ${data.length} preferred "${prefer}" creatives`);
@@ -98,7 +114,7 @@ export async function GET(request: NextRequest) {
         .eq('status', 'approved')
         .lte('scheduled_for', today)
         .order('scheduled_for', { ascending: true })
-        .limit(5);
+        .limit(10);
       approvedCreatives = data;
       if (prefer && data && data.length > 0) {
         console.log(`[SOCIAL-POST] Slot=${slot}: No "${prefer}" creatives, falling back to ${data[0].content_type}`);
@@ -114,23 +130,109 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    // ── Grid Diversity: Re-sort candidates to prefer different visual style ──
+    // If the last 2 posts used the same format, strongly prefer a different one
+    if (recentFormats.length >= 2 && recentFormats[0] === recentFormats[1]) {
+      const avoidFormat = recentFormats[0];
+      // Put different-format creatives first
+      approvedCreatives.sort((a, b) => {
+        const aMatch = (a.format === avoidFormat) ? 1 : 0;
+        const bMatch = (b.format === avoidFormat) ? 1 : 0;
+        return aMatch - bMatch; // Different formats sort first
+      });
+      console.log(`[SOCIAL-POST] Grid diversity: last 2 posts were "${avoidFormat}", preferring different visual style`);
+    } else if (recentFormats.length >= 1) {
+      // Mild preference: don't repeat the exact same format as last post
+      const lastFormat = recentFormats[0];
+      approvedCreatives.sort((a, b) => {
+        const aMatch = (a.format === lastFormat) ? 1 : 0;
+        const bMatch = (b.format === lastFormat) ? 1 : 0;
+        return aMatch - bMatch;
+      });
+    }
+
     // Try each creative until one succeeds
     for (const creative of approvedCreatives) {
-      console.log(`[SOCIAL-POST] Attempting: "${creative.headline}" (${creative.content_type}, ${creative.narrator})`);
+      console.log(`[SOCIAL-POST] Attempting: "${creative.headline}" (${creative.content_type}, format: ${creative.format || 'legacy'})`);
 
       let imageUrl = creative.image_url as string | null;
 
-      // ── Generate image if missing ────────────────────────────────────────
+      // ── Generate image if missing (visual-style-aware) ──────────────────
       if (!imageUrl) {
-        if (creative.image_prompt && hasOpenAI) {
-          // Use DALL-E to generate from the stored prompt
+        const format = (creative.format as string) || 'mascot';
+
+        if (format === 'mascot' && creative.image_prompt && hasOpenAI) {
+          // MASCOT: DALL-E illustration of Buster/Marley
           const storagePath = `mascot-creatives/${creative.city}-${creative.content_type}-${creative.narrator}-${Date.now()}.png`;
           const dalleResult = await generateAndUploadMascotImage(creative.image_prompt as string, storagePath);
           if (dalleResult) {
             imageUrl = dalleResult.publicUrl;
           }
+        } else if (format === 'text_card') {
+          // TEXT CARD: Bold orange/white branded card via OG endpoint
+          const cityMeta = creative.city ? (await import('@/lib/social-content')).CITY_META[creative.city as string] : null;
+          const params = new URLSearchParams({
+            headline: (creative.headline as string) || 'Dog-Friendly Tip',
+            city: cityMeta?.name || (creative.city as string) || 'City',
+            citySlug: cityMeta?.slug || (creative.city as string) || 'losangeles',
+            type: (creative.content_type as string) === 'content_bank' ? 'tip' : (creative.content_type as string) || 'tip',
+          });
+          // Extract icon from caption if available
+          const captionStr = creative.caption as string || '';
+          const iconMatch = captionStr.match(/^(\p{Emoji_Presentation}|\p{Emoji}️)/u);
+          if (iconMatch) params.set('icon', iconMatch[0]);
+          try {
+            const cardRes = await fetch(`${getBaseUrl()}/api/social/text-card-creative?${params}`);
+            if (cardRes.ok) {
+              const imgBuffer = Buffer.from(await cardRes.arrayBuffer());
+              const storagePath = `text-cards/${creative.city}-${Date.now()}.png`;
+              const { error: uploadError } = await supabase.storage
+                .from('photos')
+                .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+              if (!uploadError) {
+                const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+                imageUrl = urlData?.publicUrl || null;
+              }
+            }
+          } catch (err) {
+            console.error(`[SOCIAL-POST] Text card generation failed:`, err);
+          }
+        } else if (format === 'photo' && creative.content_type === 'event' && creative.event_id) {
+          // PHOTO: Event cityscape overlay via existing event-creative endpoint
+          const { data: event } = await supabase
+            .from('events')
+            .select('*, cities(slug, name)')
+            .eq('id', creative.event_id)
+            .single();
+
+          if (event) {
+            const creativeParams = new URLSearchParams({
+              name: event.name,
+              city: event.cities?.name || 'City',
+              citySlug: event.cities?.slug || 'losangeles',
+              date: event.start_date,
+            });
+            if (event.venue_name) creativeParams.set('venue', event.venue_name);
+            if (event.is_free) creativeParams.set('free', 'true');
+            try {
+              const creativeRes = await fetch(`${getBaseUrl()}/api/social/event-creative?${creativeParams}`);
+              if (creativeRes.ok) {
+                const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
+                const storagePath = `event-photos/${creative.city}-event-${Date.now()}.png`;
+                const { error: uploadError } = await supabase.storage
+                  .from('photos')
+                  .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+                if (!uploadError) {
+                  const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+                  imageUrl = urlData?.publicUrl || null;
+                }
+              }
+            } catch (err) {
+              console.error(`[SOCIAL-POST] Event creative generation failed:`, err);
+            }
+          }
         } else if (creative.content_type === 'content_bank' && creative.content_index != null) {
-          // Fallback: generate via next/og creative endpoint
+          // LEGACY fallback: generate via generate-creative endpoint
           const creativeEndpoint = `${getBaseUrl()}/api/social/generate-creative?index=${creative.content_index}&preview=true&secret=${process.env.CRON_SECRET}`;
           try {
             const creativeRes = await fetch(creativeEndpoint);
@@ -146,40 +248,7 @@ export async function GET(request: NextRequest) {
               }
             }
           } catch (err) {
-            console.error(`[SOCIAL-POST] Creative generation failed:`, err);
-          }
-        } else if (creative.content_type === 'event' && creative.event_id) {
-          // Fallback: generate event creative via endpoint
-          const { data: event } = await supabase
-            .from('events')
-            .select('*, cities(slug, name)')
-            .eq('id', creative.event_id)
-            .single();
-
-          if (event) {
-            const creativeParams = new URLSearchParams({
-              name: event.name,
-              city: event.cities?.name || 'City',
-              citySlug: event.cities?.slug || 'losangeles',
-              date: event.start_date,
-            });
-            if (event.venue_name) creativeParams.set('venue', event.venue_name);
-            try {
-              const creativeRes = await fetch(`${getBaseUrl()}/api/social/event-creative?${creativeParams}`);
-              if (creativeRes.ok) {
-                const imgBuffer = Buffer.from(await creativeRes.arrayBuffer());
-                const storagePath = `instagram-posts/${creative.city}-event-${Date.now()}.png`;
-                const { error: uploadError } = await supabase.storage
-                  .from('photos')
-                  .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
-                if (!uploadError) {
-                  const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
-                  imageUrl = urlData?.publicUrl || null;
-                }
-              }
-            } catch (err) {
-              console.error(`[SOCIAL-POST] Event creative generation failed:`, err);
-            }
+            console.error(`[SOCIAL-POST] Legacy creative generation failed:`, err);
           }
         }
       }
@@ -228,7 +297,8 @@ export async function GET(request: NextRequest) {
       const result = await publishImagePost(imageUrl as string, creative.caption as string);
 
       // ── Log to social_posts ──────────────────────────────────────────────
-      const { data: postRow } = await supabase.from('social_posts').insert({
+      // Build social post record — include format if the column exists
+      const postRecord: Record<string, unknown> = {
         platform: 'instagram',
         post_id: result.postId || null,
         container_id: result.containerId || null,
@@ -236,9 +306,20 @@ export async function GET(request: NextRequest) {
         city: creative.city,
         caption: creative.caption,
         image_url: imageUrl,
+        format: creative.format || 'mascot',  // Track visual style for grid diversity
         status: result.success ? 'published' : 'failed',
         error_message: result.error || null,
-      }).select('id').single();
+      };
+      let postRow: { id: string } | null = null;
+      const { data: insertedRow, error: postInsertErr } = await supabase.from('social_posts').insert(postRecord).select('id').single();
+      if (postInsertErr && postInsertErr.message?.includes('format')) {
+        // Column doesn't exist yet — retry without format field
+        delete postRecord.format;
+        const { data: retryRow } = await supabase.from('social_posts').insert(postRecord).select('id').single();
+        postRow = retryRow;
+      } else {
+        postRow = insertedRow;
+      }
 
       // ── Update creative_queue ────────────────────────────────────────────
       await supabase.from('creative_queue')
