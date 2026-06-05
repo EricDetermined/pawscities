@@ -152,6 +152,50 @@ export const CONTENT_BANK: ContentFact[] = [
   { city: 'tokyo', type: 'spotlight', headline: 'Komazawa Olympic Dog Park', body: 'Tokyo\'s largest dedicated dog park has separate areas for small and large dogs, agility equipment, and a café with a front-row view of the action. Weekend mornings are legendary.', icon: '\u{1F3DF}\u{1F436}', placeName: 'Komazawa Olympic Park Dog Run Tokyo' },
   { city: 'paris', type: 'spotlight', headline: 'Canal Saint-Martin: Paris\'s Chillest Dog Walk', body: 'The tree-lined canal banks are where Parisian dog owners gather at golden hour. Iron bridges, quiet water reflections, and your pup socializing with every passing bichon.', icon: '\u{1F309}\u{1F43E}', placeName: 'Canal Saint-Martin Paris' },
   { city: 'london', type: 'fun', headline: 'The Queen\'s Corgis Changed British Dog Culture', body: 'The Royal Corgis made the breed a national icon. Today London has more corgis per capita than any city on earth. You can\'t walk through Hyde Park without seeing one.', icon: '\u{1F451}\u{1F436}' },
+
+  // ════════════════════════════════════════════════════════════════
+  // WAVE 3 — Tips & Guides Heavy (for text_card visual variety)
+  // ════════════════════════════════════════════════════════════════
+
+  // ─── PARIS ────────────────────────────────────────────────────
+  { city: 'paris', type: 'tip', headline: 'Avoid Dog Fines: Know the Leash Zones', body: 'Paris parks have specific leash vs off-leash sections marked by signs. The fine for off-leash in a leash zone? Up to €150. Look for the green "espace canin" signs.', icon: '⚠️🐾' },
+  { city: 'paris', type: 'guide', headline: 'Dog-Friendly Shopping in Paris', body: 'Le Bon Marché, Galeries Lafayette, and most boutiques on Rue du Faubourg Saint-Honoré welcome well-behaved dogs. Your pup can judge French fashion in person.', icon: '🛍🐾' },
+  { city: 'paris', type: 'tip', headline: 'Free Water Bowls at Every Paris Fountain', body: 'Paris has 1,200+ public drinking fountains (Wallace fountains) and most have a low basin designed specifically for dogs. Hydration sorted on every walk.', icon: '💧🐾' },
+
+  // ─── GENEVA ───────────────────────────────────────────────────
+  { city: 'geneva', type: 'tip', headline: 'Register Your Dog Within 10 Days', body: 'Moving to Geneva with a dog? Swiss law requires registration within 10 days of arrival. The annual dog tax is CHF 80-160 depending on the commune.', icon: '📋🐾' },
+  { city: 'geneva', type: 'guide', headline: '3 Dog-Friendly Day Trips From Geneva', body: 'Yvoire medieval village (30 min), Annecy lakeside walk (45 min), Lavaux vineyard trails (1 hr). All welcome dogs and all have stunning Alpine views.', icon: '🚗🐾' },
+  { city: 'geneva', type: 'fun', headline: 'Geneva Dogs Have Their Own Insurance', body: 'Swiss dog liability insurance is basically mandatory — and it covers everything from chewed shoes to escaped-dog incidents. Your pup is better insured than most freelancers.', icon: '📄🐾' },
+
+  // ─── LONDON ───────────────────────────────────────────────────
+  { city: 'london', type: 'tip', headline: 'Carry Your Dog on Escalators — It\'s the Law', body: 'TfL rules say dogs must be carried on escalators to protect their paws from getting caught. Small dog? Carry them. Big dog? Take the lift or stairs.', icon: '🚇🐾' },
+  { city: 'london', type: 'guide', headline: 'Top 5 Dog-Friendly Pubs in London', body: 'The Chesham Arms (Hackney), The Scolt Head (Dalston), The Baring (Islington), The Flask (Hampstead), The Ship (Wandsworth). Dog menus, water bowls, and treats at all five.', icon: '🍺🐾' },
+  { city: 'london', type: 'tip', headline: 'Book Dog-Friendly Hotels Early in London', body: 'Only about 40% of London hotels accept dogs, and they fill up fast. Kimpton, The Hoxton, and Premier Inn are reliably dog-friendly. Book at least 2 weeks ahead.', icon: '🏨🐾' },
+
+  // ─── BARCELONA ────────────────────────────────────────────────
+  { city: 'barcelona', type: 'tip', headline: 'Muzzle Required on Barcelona Metro', body: 'Dogs over 5kg must wear a muzzle on Barcelona public transit. Soft basket muzzles are fine — buy one at any pet shop on Carrer de Pelai before you ride.', icon: '🚇🐾' },
+  { city: 'barcelona', type: 'guide', headline: 'Dog-Friendly Neighborhoods in Barcelona', body: 'Gràcia has the most off-leash parks. Barceloneta has beach access. El Born has pet-friendly cafés everywhere. Eixample has wide sidewalks. Pick your vibe.', icon: '🏘🐾' },
+  { city: 'barcelona', type: 'fun', headline: 'Barcelona Has a Dog Mayor', body: 'The neighborhood of Poble Sec once elected a dog as its honorary mayor. Campaign promise: more fire hydrants. Won by a landslide of tail wags.', icon: '🗳🐾' },
+
+  // ─── LOS ANGELES ──────────────────────────────────────────────
+  { city: 'losangeles', type: 'tip', headline: 'Avoid Midday Hikes: Paw Burn is Real', body: 'LA pavement hits 150°F in summer sun. If you can\'t hold your hand on the ground for 7 seconds, it\'s too hot for paws. Stick to early morning or sunset hikes.', icon: '🌡🐾' },
+  { city: 'losangeles', type: 'guide', headline: 'Dog-Friendly Patios: Silver Lake Edition', body: 'Sawyer, All Day Baby, Pine & Crane, Botanica — Silver Lake has the best dog-friendly patio scene in LA. Most have water bowls and shade structures built in.', icon: '☀️🐾' },
+  { city: 'losangeles', type: 'tip', headline: 'LA Requires a Dog License by 4 Months', body: 'All dogs in LA must be licensed by 4 months old. It\'s $20/year for spayed/neutered dogs, $100 for unaltered. Penalties for no license can be steep.', icon: '📄🐾' },
+
+  // ─── NEW YORK CITY ────────────────────────────────────────────
+  { city: 'nyc', type: 'tip', headline: 'Alternate Side Parking = Prime Dog Walking', body: 'During alternate side parking hours, NYC streets are quieter and sidewalks emptier. Seasoned dog owners time their walks to these windows. Pro move.', icon: '🚗🐾' },
+  { city: 'nyc', type: 'guide', headline: 'Best Dog Runs in Brooklyn — Ranked', body: 'Prospect Park (biggest), McCarren Park (most social), Hillside Dog Park (best views), Fort Greene Park (quietest mornings). Brooklyn takes dog runs seriously.', icon: '🏆🐾' },
+  { city: 'nyc', type: 'fun', headline: 'NYC Has Professional Dog Nannies', body: 'Not walkers — nannies. They take your dog to playdates, enrichment classes, and even dog-friendly museums. Starting at $35/hour. Manhattan parenting has gone full circle.', icon: '👶🐾' },
+
+  // ─── SYDNEY ───────────────────────────────────────────────────
+  { city: 'sydney', type: 'tip', headline: 'Check Tick Season Before Bush Walks', body: 'Paralysis ticks are a serious risk in Sydney bushland from August to March. Tick prevention medication is essential before any walk north of the bridge.', icon: '🩺🐾' },
+  { city: 'sydney', type: 'guide', headline: 'Sydney Harbour Dog Walk: The Full Route', body: 'Start at Bradleys Head, walk to Taronga Zoo wharf, ferry to Circular Quay, then along to the Opera House. 90 minutes of harbour views with your best mate.', icon: '🌊🐾' },
+  { city: 'sydney', type: 'fun', headline: 'Sydney Cafés Do "Puppuccinos" Better', body: 'Forget Starbucks — Sydney baristas whip up proper puppuccinos with dog-safe oat milk foam and a bone-shaped biscuit on the side. Your pup has taste.', icon: '☕🐾' },
+
+  // ─── TOKYO ────────────────────────────────────────────────────
+  { city: 'tokyo', type: 'tip', headline: 'Dog Cafés vs Dog Runs: Know the Difference', body: 'Dog cafés charge ¥1,000-2,000/hour and provide resident dogs to play with. Dog runs are free outdoor parks for your own dog. Both are everywhere in Tokyo.', icon: '🏷🐾' },
+  { city: 'tokyo', type: 'guide', headline: 'Dog-Friendly Shopping in Daikanyama', body: 'Daikanyama T-Site bookstore, the Sunday farmers market, and boutiques along Hachiman-dori all welcome dogs. It\'s Tokyo\'s most stylish neighborhood for a dog stroll.', icon: '🛍🐾' },
+  { city: 'tokyo', type: 'fun', headline: 'Japanese Dogs Have Better Raincoats Than You', body: 'Tokyo pet stores sell designer raincoats, UV-blocking sunwear, and heated winter jackets for dogs. The pet fashion industry in Japan is a $2 billion market.', icon: '🧥🐾' },
 ];
 
 /**
