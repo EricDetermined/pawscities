@@ -407,6 +407,9 @@ export function generateEventCaption(event: EventCaptionInput): string {
  * @param postedHeadlines - Set of headlines that have already been posted
  * @returns The next fact to post, or null if all content has been used
  */
+// Track which visual style was last picked in this batch to enforce variety
+let lastPickedStyle: string | null = null;
+
 export function pickNextContent(postedHeadlines: Set<string>): ContentFact | null {
   // Count how many posts per city have been made
   const cityPostCounts: Record<string, number> = {};
@@ -425,13 +428,32 @@ export function pickNextContent(postedHeadlines: Set<string>): ContentFact | nul
     (a, b) => (cityPostCounts[a] || 0) - (cityPostCounts[b] || 0)
   );
 
+  // Visual style mapping for diversity
+  const typeToStyle: Record<string, string> = {
+    'did-you-know': 'mascot', 'fun': 'mascot',
+    'spotlight': 'photo', 'event': 'photo',
+    'tip': 'text_card', 'guide': 'text_card',
+  };
+
   // Try each city in order of fewest posts
   for (const city of sortedCities) {
     const available = CONTENT_BANK.filter(
       f => f.city === city && !postedHeadlines.has(f.headline)
     );
     if (available.length > 0) {
-      return available[0];
+      // Prefer a DIFFERENT visual style than the last pick for grid diversity
+      if (lastPickedStyle && available.length > 1) {
+        const different = available.filter(f => typeToStyle[f.type] !== lastPickedStyle);
+        if (different.length > 0) {
+          const pick = different[Math.floor(Math.random() * different.length)];
+          lastPickedStyle = typeToStyle[pick.type] || 'mascot';
+          return pick;
+        }
+      }
+      // Fallback: random pick from available for variety
+      const pick = available[Math.floor(Math.random() * available.length)];
+      lastPickedStyle = typeToStyle[pick.type] || 'mascot';
+      return pick;
     }
   }
 
