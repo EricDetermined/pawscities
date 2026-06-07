@@ -88,15 +88,15 @@ function buildImagePrompt(fact: typeof CONTENT_BANK[number], narrator: string): 
   const landmarks = CITY_LANDMARKS[fact.city] || CITY_LANDMARKS.paris;
 
   if (narrator === 'buster') {
-    return `Pixar/Disney-style cartoon illustration: Buster, a compact golden-tan smooth-coated mixed breed dog with folded ears, big expressive brown eyes, wide happy grin with tongue out, wearing an olive-green collar with a small orange paw-print tag, ${landmarks.activity_buster} in front of ${landmarks.landmark} in ${cityName}. Bright, colorful, cinematic with warm lighting. Background shows recognizable ${cityName} architecture. Instagram square format 1080x1080. No text overlay, no humans.`;
+    return `Pixar/Disney-style cartoon illustration: Buster, a small compact stocky mixed breed dog with a short smooth golden-honey coat, broad round face, warm expressive dark brown eyes, floppy rose-shaped ears that fold down, dark nose, wide happy grin with tongue hanging out. He wears an olive-green collar with a small orange paw-print tag. He is ${landmarks.activity_buster} in front of ${landmarks.landmark} in ${cityName}. Bright, colorful, cinematic with warm lighting. Background shows recognizable ${cityName} architecture. Instagram square format 1080x1080. No text overlay, no humans.`;
   }
 
   if (narrator === 'marley') {
-    return `Pixar/Disney-style cartoon illustration: Marley, a fluffy golden-apricot goldendoodle with curly teddy bear coat, soulful intelligent brown eyes, calm gentle smile, wearing a navy blue bandana with a small orange paw-print tag, relaxing in ${landmarks.setting_marley} in ${cityName}. Soft warm lighting, cozy atmosphere. Background hints at ${cityName} culture. Instagram square format 1080x1080. No text overlay, no humans.`;
+    return `Pixar/Disney-style cartoon illustration: Marley, a medium-sized shaggy cockapoo-type dog with a wavy tousled cream-white coat with golden highlights, long scruffy fur around face and ears, soulful dark eyes peeking through a curtain of facial fur, dark nose partially hidden by shaggy fur, gentle wise expression. He wears a navy blue bandana with a small orange paw-print tag. He is relaxing in ${landmarks.setting_marley} in ${cityName}. Soft warm lighting, cozy atmosphere. Background hints at ${cityName} culture. Instagram square format 1080x1080. No text overlay, no humans.`;
   }
 
   // Both
-  return `Pixar/Disney-style cartoon illustration: Two cartoon dogs together in ${cityName}. On the left: Buster, a compact golden-tan smooth-coated dog with folded ears, happy grin, olive-green collar with orange paw tag. On the right: Marley, a fluffy golden-apricot goldendoodle with curly coat, calm smile, navy blue bandana with orange paw tag. They are ${landmarks.activity_buster} with ${landmarks.landmark} in the background. Warm lighting, bright colors. 1080x1080, no text, no humans.`;
+  return `Pixar/Disney-style cartoon illustration: Two cartoon dogs together in ${cityName}. On the left: Buster, a small stocky dog with short smooth golden-honey coat, broad round face, floppy rose ears, big happy grin with tongue out, olive-green collar with orange paw tag. On the right: Marley, a medium shaggy cream-white cockapoo with tousled wavy fur, scruffy face, gentle wise eyes peeking through facial fur, navy blue bandana with orange paw tag. They are ${landmarks.activity_buster} with ${landmarks.landmark} in the background. Warm lighting, bright colors. 1080x1080, no text, no humans.`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
