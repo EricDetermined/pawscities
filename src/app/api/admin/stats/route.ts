@@ -23,7 +23,13 @@ export async function GET(request: NextRequest) {
     const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
     const today = new Date().toISOString().split('T')[0];
 
-    // ── Run all queries in parallel for speed ──────────────────────────
+    // ── Run all queries in parallel, tolerating individual failures ────
+    const safe = <T,>(promise: Promise<T>, label: string): Promise<T & { _label?: string }> =>
+      promise.catch((err) => {
+        console.error(`[admin/stats] Query failed: ${label}`, err);
+        return { data: null, count: 0, error: err, _label: label } as T & { _label?: string };
+      });
+
     const [
       cities, establishments, users, pendingClaims, newUsers, premium,
       recentActivity,
@@ -33,43 +39,43 @@ export async function GET(request: NextRequest) {
       recentPosts, pendingEventsData,
     ] = await Promise.all([
       // Core stats
-      supabase.from('cities').select('*', { count: 'exact', head: true }),
-      supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('status', 'ACTIVE'),
-      supabase.from('users').select('*', { count: 'exact', head: true }).eq('is_suspended', false),
-      supabase.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'PENDING'),
-      supabase.from('users').select('*', { count: 'exact', head: true }).gte('created_at', oneWeekAgo),
-      supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('tier', 'premium'),
+      safe(supabase.from('cities').select('*', { count: 'exact', head: true }), 'cities'),
+      safe(supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('status', 'ACTIVE'), 'establishments'),
+      safe(supabase.from('users').select('*', { count: 'exact', head: true }).eq('is_suspended', false), 'users'),
+      safe(supabase.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'PENDING'), 'pendingClaims'),
+      safe(supabase.from('users').select('*', { count: 'exact', head: true }).gte('created_at', oneWeekAgo), 'newUsers'),
+      safe(supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('tier', 'premium'), 'premium'),
 
       // Recent activity
-      supabase.from('analytics_events')
+      safe(supabase.from('analytics_events')
         .select('id, event_type, created_at, user_id, establishment_id')
-        .order('created_at', { ascending: false }).limit(10),
+        .order('created_at', { ascending: false }).limit(10), 'recentActivity'),
 
       // Events stats
-      supabase.from('events').select('*', { count: 'exact', head: true }).eq('status', 'PENDING'),
-      supabase.from('events').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED').gte('start_date', today),
-      supabase.from('events').select('*', { count: 'exact', head: true }),
+      safe(supabase.from('events').select('*', { count: 'exact', head: true }).eq('status', 'PENDING'), 'pendingEvents'),
+      safe(supabase.from('events').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED').gte('start_date', today), 'approvedEvents'),
+      safe(supabase.from('events').select('*', { count: 'exact', head: true }), 'totalEvents'),
 
       // Subscriber stats (use admin client for service_role access)
-      admin ? admin.from('subscribers').select('*', { count: 'exact', head: true }).eq('status', 'active') : Promise.resolve({ count: 0 }),
-      admin ? admin.from('subscribers').select('*', { count: 'exact', head: true }).eq('status', 'active').gte('created_at', oneWeekAgo) : Promise.resolve({ count: 0 }),
+      safe(admin ? admin.from('subscribers').select('*', { count: 'exact', head: true }).eq('status', 'active') : Promise.resolve({ count: 0, data: null, error: null }), 'subscribers'),
+      safe(admin ? admin.from('subscribers').select('*', { count: 'exact', head: true }).eq('status', 'active').gte('created_at', oneWeekAgo) : Promise.resolve({ count: 0, data: null, error: null }), 'newSubscribers'),
 
       // Social queue stats
-      supabase.from('social_opportunities').select('*', { count: 'exact', head: true }).eq('status', 'new'),
-      supabase.from('social_comments').select('*', { count: 'exact', head: true }).eq('replied', false),
-      supabase.from('social_posts').select('*', { count: 'exact', head: true }).eq('status', 'published'),
+      safe(supabase.from('social_opportunities').select('*', { count: 'exact', head: true }).eq('status', 'new'), 'socialOpportunities'),
+      safe(supabase.from('social_comments').select('*', { count: 'exact', head: true }).eq('replied', false), 'unrepliedComments'),
+      safe(supabase.from('social_posts').select('*', { count: 'exact', head: true }).eq('status', 'published'), 'socialPosts'),
 
       // Recent social posts (last 5)
-      supabase.from('social_posts')
+      safe(supabase.from('social_posts')
         .select('id, headline, city, status, likes, comments_count, created_at, error_message')
-        .order('created_at', { ascending: false }).limit(5),
+        .order('created_at', { ascending: false }).limit(5), 'recentPosts'),
 
       // Pending events for inline approval (last 10)
-      supabase.from('events')
+      safe(supabase.from('events')
         .select('id, name, start_date, end_date, venue_name, source, source_handle, discovery_score, created_at, cities!inner(name, slug)')
         .eq('status', 'PENDING')
         .order('created_at', { ascending: false })
-        .limit(10),
+        .limit(10), 'pendingEventsData'),
     ]);
 
     // Compute content remaining
