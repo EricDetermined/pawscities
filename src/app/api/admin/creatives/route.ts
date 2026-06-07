@@ -339,43 +339,42 @@ export async function POST(request: NextRequest) {
     const freeTag = event.is_free ? '🆓 Free event!\n\n' : '';
     const caption = `📅 ${event.name}\n\n🗓 ${event.start_date}${event.venue_name ? `\n📍 ${event.venue_name}` : ''}\n\n${event.description || 'Don\'t miss this dog-friendly event!'}\n\n${freeTag}Find more events at pawcities.com/${citySlug}${handleMentions}${sourceMention}\n\nFollow @thepawcities for dog-friendly events worldwide 🌍\n\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')}`;
 
-    // Try to get a real image: event source image → Google Places venue photo → cityscape overlay
+    // ── Branded event creative with dog photography ──────────────────────
+    // Always use our OG event-creative endpoint: dog photo background with
+    // event name, date, and venue overlaid. Consistent, on-brand look.
     let imageUrl: string | null = null;
     const imagePrompt: string | null = null;
 
-    // Strategy 1: Use event's own image if available
-    if (event.image_url) {
-      imageUrl = event.image_url;
-    }
-
-    // Strategy 2: Try Google Places photo of the venue
-    if (!imageUrl && event.venue_name) {
-      try {
-        const { searchPlace } = await import('@/lib/google-places');
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
-        const result = await searchPlace(`${event.venue_name} ${cityName}`);
-        if (result?.photos?.[0]?.name) {
-          // Download and store in Supabase for Instagram API compatibility
-          const photoProxyUrl = `${baseUrl}/api/places/photo?name=${encodeURIComponent(result.photos[0].name)}&maxWidth=1080`;
-          const photoRes = await fetch(photoProxyUrl, { signal: AbortSignal.timeout(15000) });
-          if (photoRes.ok) {
-            const imgBuffer = Buffer.from(await photoRes.arrayBuffer());
-            const storagePath = `event-photos/${metaKey}-event-${Date.now()}.jpg`;
-            const { error: uploadError } = await supabase.storage
-              .from('photos')
-              .upload(storagePath, imgBuffer, { contentType: 'image/jpeg', upsert: true });
-            if (!uploadError) {
-              const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
-              imageUrl = urlData?.publicUrl || null;
-            }
-          }
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+        || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+      const dateStr = new Date(event.start_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const ogParams = new URLSearchParams({
+        name: event.name,
+        city: cityName,
+        citySlug,
+        date: dateStr,
+        ...(event.venue_name ? { venue: event.venue_name } : {}),
+        ...(event.is_free ? { free: 'true' } : {}),
+      });
+      const ogUrl = `${baseUrl}/api/social/event-creative?${ogParams}`;
+      const ogRes = await fetch(ogUrl, { signal: AbortSignal.timeout(20000) });
+      if (ogRes.ok) {
+        const imgBuffer = Buffer.from(await ogRes.arrayBuffer());
+        const safeName = event.name.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 50);
+        const storagePath = `event-creatives/${citySlug}-${safeName}-${Date.now()}.png`;
+        const { error: uploadError } = await supabase.storage
+          .from('photos')
+          .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+        if (!uploadError) {
+          const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+          imageUrl = urlData?.publicUrl || null;
         }
-      } catch (err) {
-        console.log(`[CREATIVE] Venue photo lookup failed for "${event.venue_name}":`, err);
       }
+    } catch (err) {
+      console.log(`[CREATIVE] OG event-creative generation failed for "${event.name}":`, err);
     }
-    // Strategy 3: Cityscape overlay generated at post time via event-creative endpoint
-    // imageUrl stays null — social-post cron will generate via /api/social/event-creative
+    // If OG endpoint fails, imageUrl stays null — social-post cron will generate at post time
 
     const { error: insertError } = await supabase.from('creative_queue').insert({
       content_type: 'event',
