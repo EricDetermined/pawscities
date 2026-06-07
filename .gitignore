@@ -47,3 +47,36 @@ outputs/paws-cities/tsconfig.tsbuildinfo
 
 # Downloaded posted creatives (local archive)
 instagram_launch_posts/posted/
+
+# ─── Operational safety: never commit these ─────────────────────────
+# Environment files (catch-all for any .env variant)
+.env.*
+!.env.example
+
+# Engagement bot data & logs
+.env.engagement
+data/engagement/
+agents/__pycache__/
+
+# Generated mascot images (large PNGs — stored in Supabase, not git)
+mascot-*.png
+
+# Document outputs (kept locally, not in repo)
+*.docx
+paw-cities-marketing-audit.docx
+buster-marley-production-guide.docx
+PawCities-Ambassador-*.docx
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Enrichment outputs (ephemeral reports)
+outputs/re-enrich-report-*.json
+
+# Research & competitor notes (local reference only)
+competitor-notes/
+data/influencer-tracker.json
+
+# Temporary scripts (one-off generators)
+generate-mascots.js
