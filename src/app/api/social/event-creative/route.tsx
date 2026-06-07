@@ -5,44 +5,44 @@ import { NextRequest, NextResponse } from 'next/server';
 // Real dogs in appealing settings — cafes, parks, beaches, city walks
 const DOG_SCENE_PHOTOS: Record<string, string[]> = {
   paris: [
-    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=640&h=640&fit=crop&crop=faces&q=75',
   ],
   geneva: [
-    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=640&h=640&fit=crop&crop=faces&q=75',
   ],
   london: [
-    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=640&h=640&fit=crop&crop=faces&q=75',
   ],
   barcelona: [
-    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=640&h=640&fit=crop&crop=faces&q=75',
   ],
   losangeles: [
-    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=640&h=640&fit=crop&crop=faces&q=75',
   ],
   newyork: [
-    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=640&h=640&fit=crop&crop=faces&q=75',
   ],
   sydney: [
-    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=640&h=640&fit=crop&crop=faces&q=75',
   ],
   tokyo: [
-    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1080&h=1080&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=640&h=640&fit=crop&crop=faces&q=75',
+    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=640&h=640&fit=crop&crop=faces&q=75',
   ],
 };
 
