@@ -114,6 +114,7 @@ export async function GET(request: NextRequest) {
   let query = supabase
     .from('creative_queue')
     .select('*')
+    .order('scheduled_for', { ascending: true, nullsFirst: false })
     .order('created_at', { ascending: false })
     .limit(limit);
 
