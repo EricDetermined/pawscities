@@ -291,7 +291,11 @@ export async function GET(request: NextRequest) {
     }
   );
 
-  return imageResponse;
+  // Consume the stream inside try-catch to catch Satori rendering errors
+  const buffer = await imageResponse.arrayBuffer();
+  return new Response(buffer, {
+    headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, immutable, no-transform, max-age=31536000' },
+  });
   } catch (error: any) {
     return NextResponse.json(
       { error: error?.message || 'Unknown error', stack: error?.stack?.split('\n').slice(0, 5) },
