@@ -261,7 +261,7 @@ export async function POST(request: NextRequest) {
       const { error: insertError } = await supabase.from('creative_queue').insert({
         content_type: 'content_bank',
         content_index: factIndex,
-        narrator: shouldUseMascot(fact.type) ? narrator : null,
+        narrator,
         city: fact.city,
         headline: fact.headline,
         caption,
@@ -380,7 +380,7 @@ export async function POST(request: NextRequest) {
     const { error: insertError } = await supabase.from('creative_queue').insert({
       content_type: 'event',
       event_id: eventId,
-      narrator: null,  // No mascot narrator for photo-based events
+      narrator: Math.random() > 0.5 ? 'buster' : 'marley',  // Alternate narrators for feed variety
       city: metaKey,
       headline: event.name,
       caption,
