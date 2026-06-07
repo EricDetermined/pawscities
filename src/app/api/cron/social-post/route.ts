@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
-import { publishImagePost } from '@/lib/instagram';
+import { publishImagePost, publishCarouselPost } from '@/lib/instagram';
 import { generateAndUploadMascotImage } from '@/lib/dalle';
 
 // ─── Config ────────────────────────────────────────────────────────────────────
@@ -294,7 +294,33 @@ export async function GET(request: NextRequest) {
       }
 
       // ── Publish to Instagram ─────────────────────────────────────────────
-      const result = await publishImagePost(imageUrl as string, creative.caption as string);
+      // Carousel posts use publishCarouselPost with multiple image URLs
+      let result;
+      if (creative.format === 'carousel') {
+        // Get carousel URLs: try carousel_urls column, then image_prompt JSON fallback
+        let carouselUrls: string[] = [];
+        if (Array.isArray(creative.carousel_urls) && creative.carousel_urls.length > 0) {
+          carouselUrls = creative.carousel_urls;
+        } else if (creative.image_prompt) {
+          try {
+            const parsed = JSON.parse(creative.image_prompt as string);
+            if (Array.isArray(parsed)) carouselUrls = parsed;
+          } catch {
+            // Not JSON — not a carousel URL list
+          }
+        }
+
+        if (carouselUrls.length >= 2) {
+          console.log(`[SOCIAL-POST] Publishing carousel with ${carouselUrls.length} slides for "${creative.headline}"`);
+          result = await publishCarouselPost(carouselUrls, creative.caption as string);
+        } else {
+          // Fallback: publish as single image if we can't get carousel URLs
+          console.log(`[SOCIAL-POST] Carousel only has ${carouselUrls.length} URLs, falling back to single image`);
+          result = await publishImagePost(imageUrl as string, creative.caption as string);
+        }
+      } else {
+        result = await publishImagePost(imageUrl as string, creative.caption as string);
+      }
 
       // ── Log to social_posts ──────────────────────────────────────────────
       // Build social post record — include format if the column exists
