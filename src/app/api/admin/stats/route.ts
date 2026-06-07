@@ -24,10 +24,10 @@ export async function GET(request: NextRequest) {
     const today = new Date().toISOString().split('T')[0];
 
     // ── Run all queries in parallel, tolerating individual failures ────
-    const safe = <T,>(promise: Promise<T>, label: string): Promise<T & { _label?: string }> =>
-      promise.catch((err) => {
+    const safe = <T,>(promise: PromiseLike<T>, label: string): Promise<T> =>
+      Promise.resolve(promise).catch((err) => {
         console.error(`[admin/stats] Query failed: ${label}`, err);
-        return { data: null, count: 0, error: err, _label: label } as T & { _label?: string };
+        return { data: null, count: 0, error: err } as unknown as T;
       });
 
     const [
@@ -115,8 +115,12 @@ export async function GET(request: NextRequest) {
       pendingEventsData: pendingEventsData.data || [],
       recentActivities: recentActivity.data || [],
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Admin stats error:', error);
-    return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
+    return NextResponse.json({
+      error: 'Failed to fetch stats',
+      debug: error?.message || String(error),
+      stack: error?.stack?.split('\n').slice(0, 5),
+    }, { status: 500 });
   }
 }
