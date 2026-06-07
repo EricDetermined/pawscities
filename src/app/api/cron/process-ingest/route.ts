@@ -257,10 +257,38 @@ async function handleProcessIngest(request: NextRequest) {
       tokyo: 'Asia/Tokyo',
     };
 
+    // Non-event URL patterns — blog posts, travel guides, business listings, profiles
+    const JUNK_URL_PATTERNS = [
+      /agoda\.com\/travel-guides/i,
+      /tripadvisor\.com/i,
+      /timeout\.com.*things-to-do/i,
+      /lonely\s?planet\.com/i,
+      /\/travel-guides?\//i,
+      /\/best-.*places/i,
+      /srperro\.com\/negocios/i,    // business listings, not events
+      /instagram\.com\/[^/]+\/?$/i, // IG profile pages (not posts)
+      /facebook\.com\/[^/]+\/?$/i,  // FB profile pages (not events)
+    ];
+
     for (const item of pendingItems) {
       results.processed++;
 
       try {
+        // ─── STEP 0: URL-based junk filter ──────────────────────────────
+        const itemUrl = item.url || '';
+        if (itemUrl && JUNK_URL_PATTERNS.some(p => p.test(itemUrl))) {
+          console.log(`[PROCESS-INGEST] Skipping non-event URL: ${itemUrl}`);
+          await supabase
+            .from('ingest_queue')
+            .update({
+              status: 'processed',
+              error_message: `Non-event content (blog/guide/profile URL) — auto-rejected`,
+              processed_at: new Date().toISOString(),
+            })
+            .eq('id', item.id);
+          continue;
+        }
+
         // ─── STEP 1: Try AI enrichment first (quality gate) ──────────────
         // Uses GPT-4o-mini to extract structured data, detect language,
         // identify businesses/sponsors, and score completeness.

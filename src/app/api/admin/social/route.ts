@@ -336,7 +336,7 @@ export async function GET(request: NextRequest) {
       byDate[date].push(item);
       const src = item.source || 'unknown';
       bySource[src] = (bySource[src] || 0) + 1;
-      const city = item.city_slug || 'unknown';
+      const city = item.city || 'unknown';
       byCity[city] = (byCity[city] || 0) + 1;
     }
 

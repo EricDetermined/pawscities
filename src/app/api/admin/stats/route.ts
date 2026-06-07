@@ -57,8 +57,8 @@ export async function GET(request: NextRequest) {
       safe(supabase.from('events').select('*', { count: 'exact', head: true }), 'totalEvents'),
 
       // Subscriber stats (use admin client for service_role access)
-      safe(admin ? admin.from('subscribers').select('*', { count: 'exact', head: true }).eq('status', 'active') : Promise.resolve({ count: 0, data: null, error: null }), 'subscribers'),
-      safe(admin ? admin.from('subscribers').select('*', { count: 'exact', head: true }).eq('status', 'active').gte('created_at', oneWeekAgo) : Promise.resolve({ count: 0, data: null, error: null }), 'newSubscribers'),
+      safe(admin ? admin.from('subscribers').select('*', { count: 'exact', head: true }).eq('status', 'active') : Promise.resolve({ count: 0, data: null, error: null, status: 200, statusText: 'OK' } as any), 'subscribers'),
+      safe(admin ? admin.from('subscribers').select('*', { count: 'exact', head: true }).eq('status', 'active').gte('created_at', oneWeekAgo) : Promise.resolve({ count: 0, data: null, error: null, status: 200, statusText: 'OK' } as any), 'newSubscribers'),
 
       // Social queue stats
       safe(supabase.from('social_opportunities').select('*', { count: 'exact', head: true }).eq('status', 'new'), 'socialOpportunities'),
@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
 
       // Pending events for inline approval (last 10)
       safe(supabase.from('events')
-        .select('id, name, start_date, end_date, venue_name, source, source_handle, discovery_score, created_at, cities!inner(name, slug)')
+        .select('id, name, start_date, end_date, venue_name, source, source_handle, external_url, discovery_score, created_at, cities!inner(name, slug)')
         .eq('status', 'PENDING')
         .order('created_at', { ascending: false })
         .limit(10), 'pendingEventsData'),

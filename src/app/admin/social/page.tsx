@@ -100,8 +100,10 @@ interface DiscoveryItem {
   id: string;
   source: string;
   classification: string;
-  city_slug: string;
-  raw_data: Record<string, unknown>;
+  city: string;
+  subject: string | null;
+  raw_text: string | null;
+  url: string | null;
   status: string;
   created_at: string;
   processed_at: string | null;
@@ -426,20 +428,27 @@ export default function SocialCommandCenter() {
                 {/* Recent discovery items */}
                 <div className="space-y-2 max-h-80 overflow-y-auto">
                   {discoveryItems.slice(0, 20).map(item => {
-                    const rawData = item.raw_data || {};
-                    const title = (rawData.title || rawData.name || rawData.caption || 'Untitled') as string;
+                    const title = item.subject || item.raw_text?.split('\n')[0]?.slice(0, 80) || 'Untitled';
                     const sourceLabel = item.source === 'google_events' ? 'Google' : item.source;
-                    const statusColor = item.status === 'processed' ? 'text-green-600' : item.status === 'failed' ? 'text-red-500' : 'text-gray-400';
+                    const statusColor = item.status === 'processed' ? 'text-green-600' : item.status === 'needs_review' ? 'text-amber-600' : item.status === 'failed' ? 'text-red-500' : 'text-gray-400';
                     return (
                       <div key={item.id} className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-50 border border-gray-100">
-                        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.status === 'processed' ? 'bg-green-400' : item.status === 'failed' ? 'bg-red-400' : 'bg-gray-300'}`} />
+                        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.status === 'processed' ? 'bg-green-400' : item.status === 'needs_review' ? 'bg-amber-400' : item.status === 'failed' ? 'bg-red-400' : 'bg-gray-300'}`} />
                         <div className="flex-1 min-w-0">
                           <p className="text-sm text-gray-900 truncate">{title.slice(0, 80)}</p>
-                          <p className="text-xs text-gray-400">
-                            {sourceLabel} &middot; {item.city_slug} &middot; {new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                          </p>
+                          <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                            <span>{sourceLabel}</span>
+                            <span>&middot;</span>
+                            <span>{item.city || 'unknown'}</span>
+                            <span>&middot;</span>
+                            <span>{new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                            {item.url && (
+                              <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline ml-1">↗</a>
+                            )}
+                          </div>
+                          {item.error_message && <p className="text-xs text-amber-500 mt-0.5 truncate">{item.error_message}</p>}
                         </div>
-                        <span className={`text-xs font-medium ${statusColor}`}>{item.status}</span>
+                        <span className={`text-xs font-medium whitespace-nowrap ${statusColor}`}>{item.status}</span>
                       </div>
                     );
                   })}

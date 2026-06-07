@@ -48,6 +48,7 @@ interface DashboardData {
     venue_name: string | null;
     source: string;
     source_handle: string | null;
+    external_url: string | null;
     discovery_score: number | null;
     created_at: string;
     cities: { name: string; slug: string };
@@ -203,7 +204,13 @@ export default function AdminDashboard() {
               {data.pendingEventsData.length === 0 ? (
                 <div className="p-6 text-center text-gray-400 text-sm">No pending events — all caught up!</div>
               ) : (
-                data.pendingEventsData.map(event => (
+                data.pendingEventsData.map(event => {
+                  const missingFields = [];
+                  if (!event.source_handle) missingFields.push('handle');
+                  if (!event.external_url) missingFields.push('url');
+                  if (!event.venue_name) missingFields.push('venue');
+                  const isReady = missingFields.length === 0;
+                  return (
                   <div key={event.id} className="p-4 flex items-start gap-4 hover:bg-gray-50 transition-colors">
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-gray-900 truncate">{event.name}</p>
@@ -212,17 +219,39 @@ export default function AdminDashboard() {
                         <span>·</span>
                         <span>{new Date(event.start_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
                         {event.venue_name && <><span>·</span><span>{event.venue_name}</span></>}
-                        {event.source_handle && (
-                          <span className="bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded">@{event.source_handle}</span>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                        {event.source_handle ? (
+                          <a href={`https://instagram.com/${event.source_handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer"
+                             className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded hover:bg-purple-100">@{event.source_handle}</a>
+                        ) : (
+                          <span className="text-xs bg-red-50 text-red-500 px-1.5 py-0.5 rounded">no handle</span>
                         )}
-                        {/* discovery_score hidden — manual review makes it redundant */}
+                        {event.external_url ? (
+                          <a href={event.external_url} target="_blank" rel="noopener noreferrer"
+                             className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded hover:bg-blue-100 truncate max-w-[180px]">
+                            {new URL(event.external_url).hostname.replace('www.', '')} ↗
+                          </a>
+                        ) : (
+                          <span className="text-xs bg-red-50 text-red-500 px-1.5 py-0.5 rounded">no url</span>
+                        )}
+                        {!event.venue_name && (
+                          <span className="text-xs bg-red-50 text-red-500 px-1.5 py-0.5 rounded">no venue</span>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
+                      <Link
+                        href={`/admin/events?edit=${event.id}`}
+                        className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-200 transition-colors"
+                      >
+                        Edit
+                      </Link>
                       <button
                         onClick={() => handleEventAction(event.id, 'approve')}
-                        disabled={actioningEvent === event.id}
-                        className="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+                        disabled={actioningEvent === event.id || !isReady}
+                        title={!isReady ? `Missing: ${missingFields.join(', ')}` : 'Approve event'}
+                        className={`px-3 py-1.5 text-white text-xs font-medium rounded-lg disabled:opacity-50 transition-colors ${isReady ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-300 cursor-not-allowed'}`}
                       >
                         {actioningEvent === event.id ? '...' : 'Approve'}
                       </button>
@@ -235,7 +264,8 @@ export default function AdminDashboard() {
                       </button>
                     </div>
                   </div>
-                ))
+                  );
+                })
               )}
             </div>
           </section>
