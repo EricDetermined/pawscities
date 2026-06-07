@@ -74,7 +74,6 @@ const BRAND_ORANGE = '#f97316';
  *   free     - "true" if free event (optional)
  */
 export async function GET(request: NextRequest) {
-  try {
   const { searchParams } = new URL(request.url);
   const name = searchParams.get('name') || 'Dog-Friendly Event';
   const city = searchParams.get('city') || 'City';
@@ -293,15 +292,5 @@ export async function GET(request: NextRequest) {
     }
   );
 
-  // Consume the stream inside try-catch to catch Satori rendering errors
-  const buffer = await imageResponse.arrayBuffer();
-  return new Response(buffer, {
-    headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, immutable, no-transform, max-age=31536000' },
-  });
-  } catch (error: any) {
-    return NextResponse.json(
-      { error: error?.message || 'Unknown error', stack: error?.stack?.split('\n').slice(0, 5) },
-      { status: 500 }
-    );
-  }
+  return imageResponse;
 }
