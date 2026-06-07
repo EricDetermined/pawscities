@@ -106,6 +106,8 @@ export async function GET(request: NextRequest) {
         {/* City background */}
         <img
           src={bgImage}
+          width={1080}
+          height={1080}
           style={{
             position: 'absolute',
             top: 0,
