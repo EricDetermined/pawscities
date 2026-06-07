@@ -241,12 +241,39 @@ export async function POST(request: NextRequest) {
         if (dalleResult) {
           imageUrl = dalleResult.publicUrl;
         }
+      } else if (visualStyle === 'text_card') {
+        // ── Text card: branded dog photo + text overlay via OG endpoint ────
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+          || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+        try {
+          const ogParams = new URLSearchParams({
+            headline: fact.headline,
+            body: (fact.body || '').slice(0, 120),
+            city: cityName,
+            citySlug,
+            type: fact.type,
+          });
+          const ogUrl = `${baseUrl}/api/social/text-card-creative?${ogParams}`;
+          const ogRes = await fetch(ogUrl, { signal: AbortSignal.timeout(20000) });
+          if (ogRes.ok) {
+            const imgBuffer = Buffer.from(await ogRes.arrayBuffer());
+            const safeName = fact.headline.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 50);
+            const storagePath = `text-card-creatives/${citySlug}-${safeName}-${Date.now()}.png`;
+            const { error: uploadError } = await supabase.storage
+              .from('photos')
+              .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+            if (!uploadError) {
+              const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+              imageUrl = urlData?.publicUrl || null;
+            }
+          }
+        } catch (err) {
+          console.log(`[CREATIVE] Text card generation failed for "${fact.headline}":`, err);
+        }
       } else if (visualStyle === 'photo' && fact.placeName) {
-        // Real photo via Google Places — for spotlights with a specific business
-        // Image will be fetched at post time via the photo proxy
+        // ── Spotlight photo: real business photo via Google Places ─────────
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
         try {
-          // Search for the place and get a photo
           const { searchPlace } = await import('@/lib/google-places');
           const result = await searchPlace(fact.placeName);
           if (result?.photos?.[0]?.name) {
@@ -256,8 +283,8 @@ export async function POST(request: NextRequest) {
           console.log(`[CREATIVE] Could not fetch photo for "${fact.placeName}", will use text card fallback`);
         }
       }
-      // text_card and photo fallback: image generated at post time via OG endpoints
-      // Store null imageUrl — the social-post cron will generate via the right endpoint
+      // mascot fallback (no OpenAI key) or photo fallback (no place): null imageUrl is OK,
+      // the social-post cron will generate via OG endpoint at post time
 
       const { error: insertError } = await supabase.from('creative_queue').insert({
         content_type: 'content_bank',
