@@ -1,5 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
+import { pickDogPhoto } from '@/lib/dog-photos';
 
 const BRAND_ORANGE = '#f97316';
 const BRAND_DARK = '#1a1a2e';
@@ -16,84 +17,6 @@ const CITY_ACCENTS: Record<string, string> = {
   sydney: '#0284c7',
   tokyo: '#e11d48',
 };
-
-// ─── Curated dog photography (Unsplash, free to use) ────────────────────────
-// Beautiful real dog photos organized by city. Each city has 4 options —
-// we pick one based on a hash of the headline for consistent variety.
-const DOG_PHOTOS: Record<string, string[]> = {
-  paris: [
-    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
-  ],
-  london: [
-    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=600&fit=crop&crop=faces',
-  ],
-  barcelona: [
-    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=600&fit=crop&crop=faces',
-  ],
-  losangeles: [
-    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=1080&h=600&fit=crop&crop=faces',
-  ],
-  nyc: [
-    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
-  ],
-  newyork: [
-    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
-  ],
-  sydney: [
-    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=600&fit=crop&crop=faces',
-  ],
-  tokyo: [
-    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=1080&h=600&fit=crop&crop=faces',
-  ],
-  geneva: [
-    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=600&fit=crop&crop=faces',
-    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=600&fit=crop&crop=faces',
-  ],
-};
-
-// Default dog photos for unknown cities
-const DEFAULT_DOG_PHOTOS = [
-  'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
-  'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=600&fit=crop&crop=faces',
-  'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=600&fit=crop&crop=faces',
-  'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=600&fit=crop&crop=faces',
-];
-
-/** Simple hash to deterministically pick a photo based on headline text */
-function pickPhoto(headline: string, citySlug: string): string {
-  let hash = 0;
-  for (let i = 0; i < headline.length; i++) {
-    hash = ((hash << 5) - hash + headline.charCodeAt(i)) | 0;
-  }
-  const photos = DOG_PHOTOS[citySlug] || DEFAULT_DOG_PHOTOS;
-  return photos[Math.abs(hash) % photos.length];
-}
 
 /**
  * GET /api/social/text-card-creative
@@ -120,7 +43,7 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get('type') || 'tip';
 
   const accent = CITY_ACCENTS[citySlug] || BRAND_ORANGE;
-  const dogPhoto = pickPhoto(headline, citySlug);
+  const dogPhoto = pickDogPhoto(headline, citySlug, 'wide');
 
   // Truncate text for readability
   const displayHeadline = headline.length > 55 ? headline.slice(0, 52) + '...' : headline;
