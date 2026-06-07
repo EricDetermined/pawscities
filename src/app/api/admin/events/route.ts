@@ -52,16 +52,11 @@ export async function GET(request: NextRequest) {
     const { count: totalCount } = await countQuery;
 
     // Data query
-    // APPROVED/REJECTED: most recently reviewed first (latest approvals on top)
-    // PENDING: soonest events first (most urgent to review)
-    // All/other: newest created first
+    // All tabs: chronological by start_date ascending (soonest events on top)
+    // REJECTED: most recently reviewed first (review history)
     const upperStatus = status.toUpperCase();
-    const sortField = (upperStatus === 'APPROVED' || upperStatus === 'REJECTED')
-      ? 'reviewed_at'
-      : upperStatus === 'PENDING'
-        ? 'start_date'
-        : 'created_at';
-    const sortAsc = upperStatus === 'PENDING';
+    const sortField = upperStatus === 'REJECTED' ? 'reviewed_at' : 'start_date';
+    const sortAsc = upperStatus !== 'REJECTED';
 
     let query = supabase
       .from('events')
