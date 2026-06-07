@@ -12,21 +12,102 @@ const CITY_ACCENTS: Record<string, string> = {
   barcelona: '#ea580c',
   losangeles: '#0891b2',
   newyork: '#059669',
+  nyc: '#059669',
   sydney: '#0284c7',
   tokyo: '#e11d48',
 };
+
+// ─── Curated dog photography (Unsplash, free to use) ────────────────────────
+// Beautiful real dog photos organized by city. Each city has 4 options —
+// we pick one based on a hash of the headline for consistent variety.
+const DOG_PHOTOS: Record<string, string[]> = {
+  paris: [
+    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
+  ],
+  london: [
+    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=600&fit=crop&crop=faces',
+  ],
+  barcelona: [
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=600&fit=crop&crop=faces',
+  ],
+  losangeles: [
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=1080&h=600&fit=crop&crop=faces',
+  ],
+  nyc: [
+    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
+  ],
+  newyork: [
+    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
+  ],
+  sydney: [
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=600&fit=crop&crop=faces',
+  ],
+  tokyo: [
+    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=1080&h=600&fit=crop&crop=faces',
+  ],
+  geneva: [
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=600&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=600&fit=crop&crop=faces',
+  ],
+};
+
+// Default dog photos for unknown cities
+const DEFAULT_DOG_PHOTOS = [
+  'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=600&fit=crop&crop=faces',
+  'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=600&fit=crop&crop=faces',
+  'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=600&fit=crop&crop=faces',
+  'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=600&fit=crop&crop=faces',
+];
+
+/** Simple hash to deterministically pick a photo based on headline text */
+function pickPhoto(headline: string, citySlug: string): string {
+  let hash = 0;
+  for (let i = 0; i < headline.length; i++) {
+    hash = ((hash << 5) - hash + headline.charCodeAt(i)) | 0;
+  }
+  const photos = DOG_PHOTOS[citySlug] || DEFAULT_DOG_PHOTOS;
+  return photos[Math.abs(hash) % photos.length];
+}
 
 /**
  * GET /api/social/text-card-creative
  *
  * Generates a branded 1080x1080 text card for tip/guide posts.
- * Bold Paw Cities orange with white text — clean, instantly recognizable.
+ * Top half: beautiful real dog photography
+ * Bottom half: branded text content on dark background
+ * Smooth gradient blend between photo and text
  *
  * Query params:
  *   headline  - Main headline text (required)
  *   body      - Supporting body text (optional, truncated to fit)
  *   city      - City name for display (required)
- *   citySlug  - City slug for accent color (required)
+ *   citySlug  - City slug for accent color & photo selection (required)
  *   type      - Content type: tip, guide, did-you-know (required)
  *   icon      - Emoji icon to display (optional)
  */
@@ -37,14 +118,14 @@ export async function GET(request: NextRequest) {
   const city = searchParams.get('city') || 'City';
   const citySlug = searchParams.get('citySlug') || 'losangeles';
   const type = searchParams.get('type') || 'tip';
-  const icon = searchParams.get('icon') || '🐾';
 
   const accent = CITY_ACCENTS[citySlug] || BRAND_ORANGE;
+  const dogPhoto = pickPhoto(headline, citySlug);
 
   // Truncate text for readability
   const displayHeadline = headline.length > 55 ? headline.slice(0, 52) + '...' : headline;
-  const displayBody = body.length > 140 ? body.slice(0, 137) + '...' : body;
-  const headlineFontSize = displayHeadline.length > 35 ? '48px' : displayHeadline.length > 25 ? '56px' : '64px';
+  const displayBody = body.length > 120 ? body.slice(0, 117) + '...' : body;
+  const headlineFontSize = displayHeadline.length > 40 ? '44px' : displayHeadline.length > 30 ? '50px' : '56px';
 
   // Type label
   const typeLabels: Record<string, string> = {
@@ -70,6 +151,32 @@ export async function GET(request: NextRequest) {
           overflow: 'hidden',
         }}
       >
+        {/* ─── Dog photo (top half) ─────────────────────────────────────── */}
+        <img
+          src={dogPhoto}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '1080px',
+            height: '600px',
+            objectFit: 'cover',
+          }}
+        />
+
+        {/* Gradient blend from photo to dark background */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '1080px',
+            height: '620px',
+            background: 'linear-gradient(180deg, rgba(26,26,46,0.1) 0%, rgba(26,26,46,0.2) 40%, rgba(26,26,46,0.7) 70%, rgba(26,26,46,1) 90%)',
+            display: 'flex',
+          }}
+        />
+
         {/* Top accent bar */}
         <div
           style={{
@@ -79,41 +186,19 @@ export async function GET(request: NextRequest) {
             width: '1080px',
             height: '8px',
             background: BRAND_ORANGE,
+            display: 'flex',
           }}
         />
 
-        {/* Decorative paw pattern (subtle) */}
+        {/* ─── Type badge + city (top left, over photo) ──────────────────── */}
         <div
           style={{
             position: 'absolute',
-            top: '60px',
-            right: '60px',
-            fontSize: '120px',
-            opacity: 0.08,
-            display: 'flex',
-          }}
-        >
-          🐾
-        </div>
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '120px',
-            left: '40px',
-            fontSize: '80px',
-            opacity: 0.06,
-            display: 'flex',
-          }}
-        >
-          🐾
-        </div>
-
-        {/* Type label badge */}
-        <div
-          style={{
+            top: '40px',
+            left: '60px',
             display: 'flex',
             alignItems: 'center',
-            margin: '80px 80px 0 80px',
+            gap: '14px',
           }}
         >
           <div
@@ -121,9 +206,9 @@ export async function GET(request: NextRequest) {
               display: 'flex',
               background: BRAND_ORANGE,
               color: 'white',
-              padding: '12px 28px',
+              padding: '10px 22px',
               borderRadius: '30px',
-              fontSize: '24px',
+              fontSize: '22px',
               fontWeight: 700,
               letterSpacing: '2px',
             }}
@@ -133,10 +218,12 @@ export async function GET(request: NextRequest) {
           <div
             style={{
               display: 'flex',
-              color: accent,
-              fontSize: '24px',
+              background: 'rgba(0,0,0,0.5)',
+              color: 'white',
+              padding: '10px 20px',
+              borderRadius: '30px',
+              fontSize: '20px',
               fontWeight: 600,
-              marginLeft: '20px',
               letterSpacing: '1px',
             }}
           >
@@ -144,76 +231,89 @@ export async function GET(request: NextRequest) {
           </div>
         </div>
 
-        {/* Main icon */}
+        {/* ─── Text content (bottom half) ────────────────────────────────── */}
         <div
           style={{
+            position: 'absolute',
+            bottom: '100px',
+            left: 0,
+            width: '1080px',
             display: 'flex',
-            margin: '50px 80px 0 80px',
-            fontSize: '72px',
+            flexDirection: 'column',
+            padding: '0 70px',
           }}
         >
-          {icon}
-        </div>
-
-        {/* Headline */}
-        <div
-          style={{
-            display: 'flex',
-            margin: '30px 80px 0 80px',
-            color: 'white',
-            fontSize: headlineFontSize,
-            fontWeight: 800,
-            lineHeight: 1.2,
-            maxWidth: '920px',
-          }}
-        >
-          {displayHeadline}
-        </div>
-
-        {/* Body text */}
-        {displayBody && (
+          {/* Headline */}
           <div
             style={{
               display: 'flex',
-              margin: '30px 80px 0 80px',
-              color: '#d1d5db',
-              fontSize: '30px',
-              lineHeight: 1.5,
-              maxWidth: '920px',
+              color: 'white',
+              fontSize: headlineFontSize,
+              fontWeight: 800,
+              lineHeight: 1.25,
+              maxWidth: '940px',
             }}
           >
-            {displayBody}
+            {displayHeadline}
           </div>
-        )}
 
-        {/* Bottom bar — brand + CTA */}
+          {/* Body text */}
+          {displayBody && (
+            <div
+              style={{
+                display: 'flex',
+                marginTop: '18px',
+                color: '#d1d5db',
+                fontSize: '26px',
+                lineHeight: 1.5,
+                maxWidth: '900px',
+              }}
+            >
+              {displayBody}
+            </div>
+          )}
+
+          {/* City accent underline */}
+          <div
+            style={{
+              display: 'flex',
+              marginTop: '24px',
+              width: '80px',
+              height: '4px',
+              background: accent,
+              borderRadius: '2px',
+            }}
+          />
+        </div>
+
+        {/* ─── Bottom bar — brand + CTA ──────────────────────────────────── */}
         <div
           style={{
             position: 'absolute',
             bottom: 0,
             left: 0,
             width: '1080px',
-            height: '100px',
-            background: 'rgba(249, 115, 22, 0.15)',
+            height: '90px',
+            background: 'rgba(249, 115, 22, 0.12)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '0 80px',
+            padding: '0 70px',
           }}
         >
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
+              gap: '10px',
             }}
           >
-            <div style={{ display: 'flex', fontSize: '32px' }}>🐾</div>
+            <div style={{ display: 'flex', fontSize: '28px' }}>🐾</div>
             <div
               style={{
                 display: 'flex',
                 color: BRAND_ORANGE,
-                fontSize: '28px',
+                fontSize: '24px',
                 fontWeight: 700,
               }}
             >
@@ -224,10 +324,10 @@ export async function GET(request: NextRequest) {
             style={{
               display: 'flex',
               color: '#9ca3af',
-              fontSize: '22px',
+              fontSize: '20px',
             }}
           >
-            pawcities.com
+            pawcities.com/{citySlug}
           </div>
         </div>
       </div>

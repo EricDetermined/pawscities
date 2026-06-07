@@ -1,17 +1,60 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest, NextResponse } from 'next/server';
 
-// City background images (Unsplash, free to use, 1080x1080 crop)
-const CITY_BACKGROUNDS: Record<string, string> = {
-  paris: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1080&h=1080&fit=crop',
-  geneva: 'https://images.unsplash.com/photo-1752405165625-15bc2e842f05?w=1080&h=1080&fit=crop',
-  london: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1080&h=1080&fit=crop',
-  barcelona: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=1080&h=1080&fit=crop',
-  losangeles: 'https://images.unsplash.com/photo-1534190760961-74e8c1c5c3da?w=1080&h=1080&fit=crop',
-  newyork: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=1080&h=1080&fit=crop',
-  sydney: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1080&h=1080&fit=crop',
-  tokyo: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1080&h=1080&fit=crop',
+// Dog-friendly scene backgrounds (Unsplash, free to use)
+// Real dogs in appealing settings — cafes, parks, beaches, city walks
+const DOG_SCENE_PHOTOS: Record<string, string[]> = {
+  paris: [
+    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=1080&fit=crop&crop=faces',
+  ],
+  geneva: [
+    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=1080&fit=crop&crop=faces',
+  ],
+  london: [
+    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1080&h=1080&fit=crop&crop=faces',
+  ],
+  barcelona: [
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=1080&fit=crop&crop=faces',
+  ],
+  losangeles: [
+    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1477884213360-7e9d7dcc8f9b?w=1080&h=1080&fit=crop&crop=faces',
+  ],
+  newyork: [
+    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=1080&fit=crop&crop=faces',
+  ],
+  sydney: [
+    'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1544568100-847a948585b9?w=1080&h=1080&fit=crop&crop=faces',
+  ],
+  tokyo: [
+    'https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=1080&h=1080&fit=crop&crop=faces',
+    'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1080&h=1080&fit=crop&crop=faces',
+  ],
 };
+
+/** Pick a dog photo deterministically based on event name */
+function pickDogScene(eventName: string, citySlug: string): string {
+  let hash = 0;
+  for (let i = 0; i < eventName.length; i++) {
+    hash = ((hash << 5) - hash + eventName.charCodeAt(i)) | 0;
+  }
+  const photos = DOG_SCENE_PHOTOS[citySlug] || DOG_SCENE_PHOTOS.losangeles;
+  return photos[Math.abs(hash) % photos.length];
+}
 
 const BRAND_ORANGE = '#f97316';
 
@@ -40,7 +83,7 @@ export async function GET(request: NextRequest) {
   const tags = searchParams.get('tags') || '';
   const isFree = searchParams.get('free') === 'true';
 
-  const bgImage = CITY_BACKGROUNDS[citySlug] || CITY_BACKGROUNDS.losangeles;
+  const bgImage = pickDogScene(name, citySlug);
   const tagList = tags ? tags.split(',').slice(0, 4) : [];
 
   // Truncate long event names
