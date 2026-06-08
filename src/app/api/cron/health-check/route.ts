@@ -365,6 +365,175 @@ async function checkPhotoProxy(): Promise<CheckResult> {
   }
 }
 
+/** Check that yesterday's posts actually went through (2 per day expected) */
+async function checkYesterdayPosts(): Promise<CheckResult> {
+  try {
+    const supabase = getSupabaseAdmin();
+    const now = new Date();
+    const yesterday = new Date(now);
+    yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+    const dayBefore = new Date(now);
+    dayBefore.setUTCDate(dayBefore.getUTCDate() - 2);
+
+    const yStr = yesterday.toISOString().split('T')[0];
+    const dbStr = dayBefore.toISOString().split('T')[0];
+
+    // Count posts from yesterday
+    const { data: yesterdayPosts } = await supabase
+      .from('social_posts')
+      .select('id, headline, status, posted_at')
+      .gte('posted_at', `${yStr}T00:00:00Z`)
+      .lt('posted_at', `${now.toISOString().split('T')[0]}T00:00:00Z`);
+
+    const published = (yesterdayPosts || []).filter(p => p.status === 'published');
+    const failed = (yesterdayPosts || []).filter(p => p.status === 'failed');
+
+    if (published.length >= 2) {
+      return {
+        name: 'Yesterday Posts',
+        status: 'healthy',
+        message: `${published.length} posts published yesterday (${yStr})`,
+        details: { date: yStr, published: published.length, failed: failed.length, posts: published.map(p => p.headline) },
+      };
+    }
+
+    if (published.length === 1) {
+      return {
+        name: 'Yesterday Posts',
+        status: 'warning',
+        message: `Only 1 of 2 expected posts published yesterday (${yStr}) — missed a slot`,
+        details: { date: yStr, published: published.length, failed: failed.length },
+      };
+    }
+
+    return {
+      name: 'Yesterday Posts',
+      status: 'critical',
+      message: `No posts published yesterday (${yStr}) — posting pipeline may be down`,
+      details: { date: yStr, published: 0, failed: failed.length },
+    };
+  } catch (err) {
+    return { name: 'Yesterday Posts', status: 'warning', message: `Check failed: ${String(err)}` };
+  }
+}
+
+/** Check creative queue has enough approved content for the next 7 days */
+async function checkCreativeQueueDepth(): Promise<CheckResult> {
+  try {
+    const supabase = getSupabaseAdmin();
+
+    // Count approved creatives ready to post
+    const { count: approvedCount } = await supabase
+      .from('creative_queue')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'approved');
+
+    // Count pending_review creatives (backlog)
+    const { count: pendingCount } = await supabase
+      .from('creative_queue')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'pending_review');
+
+    const approved = approvedCount || 0;
+    const pending = pendingCount || 0;
+
+    // We post 2/day, so need 14 approved for 7 days
+    if (approved >= 14) {
+      return {
+        name: 'Creative Queue',
+        status: 'healthy',
+        message: `${approved} approved creatives (${Math.floor(approved / 2)} days of content), ${pending} pending review`,
+        details: { approved, pending, daysOfContent: Math.floor(approved / 2) },
+      };
+    }
+
+    if (approved >= 6) {
+      return {
+        name: 'Creative Queue',
+        status: 'warning',
+        message: `Only ${approved} approved creatives (${Math.floor(approved / 2)} days) — generate more soon`,
+        details: { approved, pending, daysOfContent: Math.floor(approved / 2) },
+      };
+    }
+
+    return {
+      name: 'Creative Queue',
+      status: 'critical',
+      message: `Only ${approved} approved creatives — will run dry in ${Math.floor(approved / 2)} days!`,
+      details: { approved, pending, daysOfContent: Math.floor(approved / 2) },
+    };
+  } catch (err) {
+    return { name: 'Creative Queue', status: 'warning', message: `Check failed: ${String(err)}` };
+  }
+}
+
+/** Check that key crons have produced recent output */
+async function checkCronExecution(): Promise<CheckResult> {
+  try {
+    const supabase = getSupabaseAdmin();
+    const issues: string[] = [];
+    const twoDaysAgo = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
+
+    // Check social posting cron: should have posts in the last 48h
+    const { count: recentPosts } = await supabase
+      .from('social_posts')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'published')
+      .gte('posted_at', twoDaysAgo);
+    if ((recentPosts || 0) === 0) {
+      issues.push('social-post: no posts in 48h');
+    }
+
+    // Check event discovery: should have ingested events recently
+    const { count: recentEvents } = await supabase
+      .from('events')
+      .select('*', { count: 'exact', head: true })
+      .gte('created_at', twoDaysAgo);
+    // Discovery doesn't always find events, so just warn
+    if ((recentEvents || 0) === 0) {
+      // Not critical — discovery may not find new events every day
+    }
+
+    // Check health-check itself: should have recent entries
+    const { count: recentHealth } = await supabase
+      .from('health_checks')
+      .select('*', { count: 'exact', head: true })
+      .gte('timestamp', twoDaysAgo);
+    if ((recentHealth || 0) === 0) {
+      issues.push('health-check: no records in 48h (possible table issue)');
+    }
+
+    // Check photo refresh: establishments should have recent updates
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { count: recentRefresh } = await supabase
+      .from('establishments')
+      .select('*', { count: 'exact', head: true })
+      .gte('updated_at', oneDayAgo);
+    if ((recentRefresh || 0) === 0) {
+      issues.push('refresh-photos: no establishment updates in 24h');
+    }
+
+    if (issues.length === 0) {
+      return {
+        name: 'Cron Execution',
+        status: 'healthy',
+        message: 'All monitored crons produced recent output',
+        details: { recentPosts, recentHealth, recentRefresh },
+      };
+    }
+
+    const status: CheckStatus = issues.some(i => i.includes('social-post')) ? 'critical' : 'warning';
+    return {
+      name: 'Cron Execution',
+      status,
+      message: issues.join('; '),
+      details: { recentPosts, recentHealth, recentRefresh, issues },
+    };
+  } catch (err) {
+    return { name: 'Cron Execution', status: 'warning', message: `Check failed: ${String(err)}` };
+  }
+}
+
 /** Check Resend email service */
 async function checkEmailService(): Promise<CheckResult> {
   if (!process.env.RESEND_API_KEY) {
@@ -426,6 +595,9 @@ export async function GET(request: NextRequest) {
     checkDatabase(),
     checkPhotoFreshness(),
     checkInstagramPosting(),
+    checkYesterdayPosts(),
+    checkCreativeQueueDepth(),
+    checkCronExecution(),
     checkSitePages(),
     checkPhotoProxy(),
     checkEmailService(),
