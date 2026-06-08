@@ -130,6 +130,51 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    // ── Auto-expire event creatives whose event date has passed ──────────────
+    // An event creative should never post AFTER the event has already happened.
+    // Check each event creative's linked event start_date and reject stale ones.
+    const eventCreatives = approvedCreatives.filter(c => c.content_type === 'event' && c.event_id);
+    if (eventCreatives.length > 0) {
+      const eventIds = eventCreatives.map(c => c.event_id as string);
+      const { data: events } = await supabase
+        .from('events')
+        .select('id, start_date')
+        .in('id', eventIds);
+
+      const eventDates = new Map((events || []).map(e => [e.id, e.start_date]));
+
+      for (const creative of eventCreatives) {
+        const eventDate = eventDates.get(creative.event_id as string);
+        if (eventDate && eventDate < today) {
+          // Event already happened — reject this creative
+          console.log(`[SOCIAL-POST] Auto-expiring "${creative.headline}" — event date ${eventDate} has passed`);
+          await supabase.from('creative_queue')
+            .update({ status: 'rejected', rejection_reason: `Event date (${eventDate}) has passed — auto-expired` })
+            .eq('id', creative.id);
+        }
+      }
+
+      // Remove expired creatives from the candidate list
+      const expiredIds = new Set(
+        eventCreatives
+          .filter(c => {
+            const d = eventDates.get(c.event_id as string);
+            return d && d < today;
+          })
+          .map(c => c.id)
+      );
+      approvedCreatives = approvedCreatives.filter(c => !expiredIds.has(c.id));
+
+      if (approvedCreatives.length === 0) {
+        console.log(`[SOCIAL-POST] Slot=${slot}: All candidates expired (past events)`);
+        return NextResponse.json({
+          status: 'skipped',
+          slot,
+          reason: 'All approved creatives were for past events and have been auto-expired.',
+        });
+      }
+    }
+
     // ── Grid Diversity: Re-sort candidates to prefer different visual style ──
     // If the last 2 posts used the same format, strongly prefer a different one
     if (recentFormats.length >= 2 && recentFormats[0] === recentFormats[1]) {
