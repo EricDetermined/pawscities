@@ -27,11 +27,14 @@ function getBaseUrl(): string {
 // GET /api/cron/social-post
 //
 // UNIFIED Instagram posting cron for @thepawcities.
-// Runs TWICE daily with slot preferences:
-//   - 10:00 UTC  ?prefer=content_bank  → morning fun fact (Buster/Marley)
-//   - 16:00 UTC  ?prefer=event         → afternoon event post (mascot creative)
+// Runs up to 4× daily with slot preferences:
+//   - 09:00 UTC  ?prefer=event&max=3      → morning event batch
+//   - 13:00 UTC  ?prefer=content_bank     → midday content post
+//   - 17:00 UTC  ?prefer=event&max=3      → afternoon event batch
+//   - 21:00 UTC  ?prefer=content_bank     → evening content post
 //
-// Each run posts exactly 1 item from creative_queue.
+// Each run posts up to `max` items (default 1) from creative_queue.
+// Event posts with approaching deadlines are always prioritized first.
 // The `prefer` param controls which content_type to try first:
 //   - If preferred type has approved creatives → pick that
 //   - If not → fall back to any approved creative
@@ -39,13 +42,14 @@ function getBaseUrl(): string {
 //
 // All content flows through creative_queue with admin review:
 //   - Content bank fun facts → batch generated → reviewed → approved
-//   - Events → discovered → approved → mascot creative auto-generated → reviewed → approved
+//   - Events → discovered → approved → creative auto-generated → reviewed → approved
 //   - Business spotlights → generated → reviewed → approved
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export async function GET(request: NextRequest) {
   const dryRun = request.nextUrl.searchParams.get('dryRun') === 'true';
   const prefer = request.nextUrl.searchParams.get('prefer'); // 'content_bank' | 'event' | null
+  const maxPosts = Math.min(parseInt(request.nextUrl.searchParams.get('max') || '1', 10) || 1, 5);
 
   if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -60,17 +64,15 @@ export async function GET(request: NextRequest) {
     const today = new Date().toISOString().split('T')[0];
     const hasOpenAI = !!process.env.OPENAI_API_KEY;
     const slot = prefer || 'any';
+    const published: { headline: string; type: string; postId: string }[] = [];
 
     // ══════════════════════════════════════════════════════════════════════════
-    // Fetch approved creatives — prefer the requested content_type if set
-    //
-    // Strategy:
-    //   1. Try preferred type first (if set)
-    //   2. Fall back to any approved creative
-    //   This ensures we always post *something* even if the preferred
-    //   type has nothing ready, while naturally splitting fun facts
-    //   and events across morning/afternoon slots.
+    // Multi-post loop: post up to `max` items per cron run.
+    // Each iteration re-queries for fresh candidates (since the pool shrinks).
+    // Event creatives with approaching deadlines are always sorted first.
     // ══════════════════════════════════════════════════════════════════════════
+
+    for (let postNum = 0; postNum < maxPosts; postNum++) {
 
     let approvedCreatives: Record<string, unknown>[] | null = null;
 
@@ -86,7 +88,6 @@ export async function GET(request: NextRequest) {
         .limit(2);
       recentFormats = (recentPosts || []).map((p: { format: string }) => p.format).filter(Boolean);
     } catch {
-      // format column may not exist yet — grid diversity still works via creative_queue.format
       console.log('[SOCIAL-POST] Could not read recent formats from social_posts (column may not exist yet)');
     }
 
@@ -102,7 +103,7 @@ export async function GET(request: NextRequest) {
         .limit(10);
       if (data && data.length > 0) {
         approvedCreatives = data;
-        console.log(`[SOCIAL-POST] Slot=${slot}: Found ${data.length} preferred "${prefer}" creatives`);
+        console.log(`[SOCIAL-POST] Slot=${slot} [${postNum + 1}/${maxPosts}]: Found ${data.length} preferred "${prefer}" creatives`);
       }
     }
 
@@ -117,22 +118,16 @@ export async function GET(request: NextRequest) {
         .limit(10);
       approvedCreatives = data;
       if (prefer && data && data.length > 0) {
-        console.log(`[SOCIAL-POST] Slot=${slot}: No "${prefer}" creatives, falling back to ${data[0].content_type}`);
+        console.log(`[SOCIAL-POST] Slot=${slot} [${postNum + 1}/${maxPosts}]: No "${prefer}" creatives, falling back to ${data[0].content_type}`);
       }
     }
 
     if (!approvedCreatives || approvedCreatives.length === 0) {
-      console.log(`[SOCIAL-POST] Slot=${slot}: No approved creatives scheduled for today`);
-      return NextResponse.json({
-        status: 'skipped',
-        slot,
-        reason: 'No approved creatives ready to post. Generate and approve content in /admin/creatives.',
-      });
+      console.log(`[SOCIAL-POST] Slot=${slot} [${postNum + 1}/${maxPosts}]: No more approved creatives`);
+      break; // No more candidates — exit loop
     }
 
     // ── Auto-expire event creatives whose event date has passed ──────────────
-    // An event creative should never post AFTER the event has already happened.
-    // Check each event creative's linked event start_date and reject stale ones.
     const eventCreatives = approvedCreatives.filter(c => c.content_type === 'event' && c.event_id);
     if (eventCreatives.length > 0) {
       const eventIds = eventCreatives.map(c => c.event_id as string);
@@ -146,7 +141,6 @@ export async function GET(request: NextRequest) {
       for (const creative of eventCreatives) {
         const eventDate = eventDates.get(creative.event_id as string);
         if (eventDate && eventDate < today) {
-          // Event already happened — reject this creative
           console.log(`[SOCIAL-POST] Auto-expiring "${creative.headline}" — event date ${eventDate} has passed`);
           await supabase.from('creative_queue')
             .update({ status: 'rejected', rejection_reason: `Event date (${eventDate}) has passed — auto-expired` })
@@ -154,7 +148,6 @@ export async function GET(request: NextRequest) {
         }
       }
 
-      // Remove expired creatives from the candidate list
       const expiredIds = new Set(
         eventCreatives
           .filter(c => {
@@ -166,37 +159,49 @@ export async function GET(request: NextRequest) {
       approvedCreatives = approvedCreatives.filter(c => !expiredIds.has(c.id));
 
       if (approvedCreatives.length === 0) {
-        console.log(`[SOCIAL-POST] Slot=${slot}: All candidates expired (past events)`);
-        return NextResponse.json({
-          status: 'skipped',
-          slot,
-          reason: 'All approved creatives were for past events and have been auto-expired.',
+        console.log(`[SOCIAL-POST] Slot=${slot} [${postNum + 1}/${maxPosts}]: All candidates expired (past events)`);
+        break;
+      }
+
+      // ── Urgency sort: event creatives with soonest event date go first ──
+      // This ensures we never miss posting an event because content was ahead in queue
+      approvedCreatives.sort((a, b) => {
+        const aIsEvent = a.content_type === 'event' && a.event_id;
+        const bIsEvent = b.content_type === 'event' && b.event_id;
+        const aDate = aIsEvent ? (eventDates.get(a.event_id as string) || '9999') : '9999';
+        const bDate = bIsEvent ? (eventDates.get(b.event_id as string) || '9999') : '9999';
+        // Events with closest deadlines come first; content sorts to the end
+        return aDate < bDate ? -1 : aDate > bDate ? 1 : 0;
+      });
+    }
+
+    // ── Grid Diversity: Re-sort candidates to prefer different visual style ──
+    // Only apply grid diversity when there are NO event creatives in the pool.
+    // When events are present, they've already been urgency-sorted by event date
+    // above, and deadline priority overrides format diversity.
+    const hasEventCreativesInPool = approvedCreatives.some(c => c.content_type === 'event' && c.event_id);
+
+    if (!hasEventCreativesInPool) {
+      if (recentFormats.length >= 2 && recentFormats[0] === recentFormats[1]) {
+        const avoidFormat = recentFormats[0];
+        approvedCreatives.sort((a, b) => {
+          const aMatch = (a.format === avoidFormat) ? 1 : 0;
+          const bMatch = (b.format === avoidFormat) ? 1 : 0;
+          return aMatch - bMatch;
+        });
+        console.log(`[SOCIAL-POST] Grid diversity: last 2 posts were "${avoidFormat}", preferring different visual style`);
+      } else if (recentFormats.length >= 1) {
+        const lastFormat = recentFormats[0];
+        approvedCreatives.sort((a, b) => {
+          const aMatch = (a.format === lastFormat) ? 1 : 0;
+          const bMatch = (b.format === lastFormat) ? 1 : 0;
+          return aMatch - bMatch;
         });
       }
     }
 
-    // ── Grid Diversity: Re-sort candidates to prefer different visual style ──
-    // If the last 2 posts used the same format, strongly prefer a different one
-    if (recentFormats.length >= 2 && recentFormats[0] === recentFormats[1]) {
-      const avoidFormat = recentFormats[0];
-      // Put different-format creatives first
-      approvedCreatives.sort((a, b) => {
-        const aMatch = (a.format === avoidFormat) ? 1 : 0;
-        const bMatch = (b.format === avoidFormat) ? 1 : 0;
-        return aMatch - bMatch; // Different formats sort first
-      });
-      console.log(`[SOCIAL-POST] Grid diversity: last 2 posts were "${avoidFormat}", preferring different visual style`);
-    } else if (recentFormats.length >= 1) {
-      // Mild preference: don't repeat the exact same format as last post
-      const lastFormat = recentFormats[0];
-      approvedCreatives.sort((a, b) => {
-        const aMatch = (a.format === lastFormat) ? 1 : 0;
-        const bMatch = (b.format === lastFormat) ? 1 : 0;
-        return aMatch - bMatch;
-      });
-    }
-
     // Try each creative until one succeeds
+    let postedThisIteration = false;
     for (const creative of approvedCreatives) {
       console.log(`[SOCIAL-POST] Attempting: "${creative.headline}" (${creative.content_type}, format: ${creative.format || 'legacy'})`);
 
@@ -404,28 +409,52 @@ export async function GET(request: NextRequest) {
         .eq('id', creative.id);
 
       if (result.success) {
-        console.log(`[SOCIAL-POST] Slot=${slot}: Published "${creative.headline}" (${creative.content_type}) via ${creative.narrator}`);
-        return NextResponse.json({
-          status: 'published',
-          slot,
-          type: creative.content_type,
+        console.log(`[SOCIAL-POST] Slot=${slot} [${postNum + 1}/${maxPosts}]: Published "${creative.headline}" (${creative.content_type}) via ${creative.narrator}`);
+        published.push({
+          headline: creative.headline as string,
+          type: creative.content_type as string,
           postId: result.postId,
-          headline: creative.headline,
-          narrator: creative.narrator,
-          city: creative.city,
-          scheduledFor: creative.scheduled_for,
         });
+        postedThisIteration = true;
+        break; // Move to next iteration of the multi-post loop
       }
 
-      // Failed to publish — try next creative
+      // Failed to publish — try next creative in this iteration
       console.error(`[SOCIAL-POST] Instagram publish failed for "${creative.headline}": ${result.error}`);
     }
 
-    // All creatives failed
+    if (!postedThisIteration && published.length === 0) {
+      // First iteration failed entirely — report error
+      return NextResponse.json({
+        status: 'error',
+        error: `All approved creatives failed to publish`,
+      }, { status: 500 });
+    }
+
+    if (!postedThisIteration) {
+      // Subsequent iteration couldn't find a working creative — stop
+      console.log(`[SOCIAL-POST] Slot=${slot}: Stopping after ${published.length} posts (no more candidates succeeded)`);
+      break;
+    }
+
+    } // end multi-post loop
+
+    // ── Return summary ──────────────────────────────────────────────────────
+    if (published.length === 0) {
+      return NextResponse.json({
+        status: 'skipped',
+        slot,
+        reason: 'No approved creatives ready to post.',
+      });
+    }
+
     return NextResponse.json({
-      status: 'error',
-      error: `All ${approvedCreatives.length} approved creatives failed to publish`,
-    }, { status: 500 });
+      status: 'published',
+      slot,
+      count: published.length,
+      maxPosts,
+      posts: published,
+    });
 
   } catch (error) {
     console.error('[SOCIAL-POST] Fatal error:', error);
