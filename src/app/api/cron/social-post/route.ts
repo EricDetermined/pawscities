@@ -413,7 +413,7 @@ export async function GET(request: NextRequest) {
         published.push({
           headline: creative.headline as string,
           type: creative.content_type as string,
-          postId: result.postId,
+          postId: result.postId || '',
         });
         postedThisIteration = true;
         break; // Move to next iteration of the multi-post loop

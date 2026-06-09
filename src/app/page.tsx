@@ -1,6 +1,6 @@
 import { CITIES } from '@/lib/cities-config';
 import { getCityEstablishments } from '@/lib/data';
-import { getHomepageEvents } from '@/lib/events';
+import { getHomepageEvents, getTotalUpcomingEventCount } from '@/lib/events';
 import HomePageClient from './HomePageClient';
 
 // Force dynamic rendering since getCityEstablishments may access Supabase
@@ -43,13 +43,17 @@ export default async function HomePage() {
     console.error('Failed to build city stats:', e);
   }
 
-  // Fetch upcoming events for the homepage banner
+  // Fetch upcoming events for the homepage banner + total count for stats
   let homepageEvents: Awaited<ReturnType<typeof getHomepageEvents>> = [];
+  let totalEventCount = 0;
   try {
-    homepageEvents = await getHomepageEvents(8);
+    [homepageEvents, totalEventCount] = await Promise.all([
+      getHomepageEvents(8),
+      getTotalUpcomingEventCount(),
+    ]);
   } catch (e) {
     console.error('Failed to fetch homepage events:', e);
   }
 
-  return <HomePageClient cities={cities} cityStats={cityStats} events={homepageEvents} />;
+  return <HomePageClient cities={cities} cityStats={cityStats} events={homepageEvents} totalEventCount={totalEventCount} />;
 }

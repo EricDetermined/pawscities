@@ -27,6 +27,7 @@ interface HomePageClientProps {
   cities: CityConfig[];
   cityStats: Record<string, CityStats>;
   events?: PawEvent[];
+  totalEventCount?: number;
 }
 
 function formatEventDate(dateStr: string): { day: string; month: string; weekday: string } {
@@ -38,7 +39,7 @@ function formatEventDate(dateStr: string): { day: string; month: string; weekday
   };
 }
 
-export default function HomePageClient({ cities, cityStats, events = [] }: HomePageClientProps) {
+export default function HomePageClient({ cities, cityStats, events = [], totalEventCount = 0 }: HomePageClientProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -221,7 +222,7 @@ export default function HomePageClient({ cities, cityStats, events = [] }: HomeP
               <span>Places</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="text-orange-400 font-bold text-base sm:text-lg">{events.length || '50+'}</span>
+              <span className="text-orange-400 font-bold text-base sm:text-lg">{totalEventCount || events.length || '50+'}</span>
               <span>Events</span>
             </div>
             <div className="flex items-center gap-1.5">

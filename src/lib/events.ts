@@ -123,10 +123,12 @@ export async function getHomepageEvents(limit: number = 8): Promise<PawEvent[]> 
 /**
  * City events: full calendar for a specific city.
  * Returns all upcoming events for the given city slug.
- * - APPROVED + PENDING events (PENDING must have venue_name + external_url)
+ * - APPROVED + PENDING events with a venue name
  * - Only future events (start_date >= today)
  * - Ordered by date ascending
  * - Paginated with limit/offset
+ * Note: external_url is NOT required — events from Instagram/manual
+ * entry often lack URLs but are still valid.
  */
 export async function getCityEvents(
   citySlug: string,
@@ -158,7 +160,6 @@ export async function getCityEvents(
     .eq('city_id', city.id)
     .in('status', ['APPROVED', 'PENDING'])
     .not('venue_name', 'is', null)
-    .not('external_url', 'is', null)
     .gte('start_date', today)
     .order('start_date', { ascending: true })
     .range(offset, offset + limit - 1);
@@ -211,7 +212,9 @@ export async function getEventBySlug(
 /**
  * Count upcoming events per city.
  * Used for showing event count badges on the homepage city cards.
- * Includes both APPROVED and PENDING events with sufficient data.
+ * Includes both APPROVED and PENDING events with a venue name.
+ * Note: external_url is NOT required — many manually-added events
+ * from Instagram don't have one and should still count.
  */
 export async function getEventCountsByCity(): Promise<Record<string, number>> {
   const supabase = getSupabaseAdmin();
@@ -225,7 +228,6 @@ export async function getEventCountsByCity(): Promise<Record<string, number>> {
     `)
     .in('status', ['APPROVED', 'PENDING'])
     .not('venue_name', 'is', null)
-    .not('external_url', 'is', null)
     .gte('start_date', today);
 
   if (error || !data) return {};
@@ -238,4 +240,27 @@ export async function getEventCountsByCity(): Promise<Record<string, number>> {
     }
   }
   return counts;
+}
+
+/**
+ * Total count of upcoming events across ALL cities.
+ * Used for the homepage hero stat counter.
+ * More permissive than city-level counts — includes any APPROVED/PENDING
+ * future event, even without venue_name (some events are TBD location).
+ */
+export async function getTotalUpcomingEventCount(): Promise<number> {
+  const supabase = getSupabaseAdmin();
+  const today = getToday();
+
+  const { count, error } = await supabase
+    .from('events')
+    .select('id', { count: 'exact', head: true })
+    .in('status', ['APPROVED', 'PENDING'])
+    .gte('start_date', today);
+
+  if (error) {
+    console.error('Failed to count upcoming events:', error);
+    return 0;
+  }
+  return count || 0;
 }
