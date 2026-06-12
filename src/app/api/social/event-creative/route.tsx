@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest, NextResponse } from 'next/server';
-import { pickDogPhoto } from '@/lib/dog-photos';
+import { pickContextualDogPhoto } from '@/lib/dog-photos';
 
 const BRAND_ORANGE = '#f97316';
 
@@ -8,7 +8,13 @@ const BRAND_ORANGE = '#f97316';
  * GET /api/social/event-creative
  *
  * Generates a branded 1080x1080 Instagram creative for an event,
- * using the city skyline as background with event details overlaid.
+ * using a contextually selected dog photo as background with event
+ * details overlaid.
+ *
+ * Contextual selection considers:
+ *   - Breed keywords in event name (Corgi Parade → Corgi photo)
+ *   - City setting preferences (Geneva → lake/mountain dogs)
+ *   - Activity vibes from event name (Hike Club → active outdoor dog)
  *
  * Query params:
  *   name     - Event name (required)
@@ -18,6 +24,8 @@ const BRAND_ORANGE = '#f97316';
  *   venue    - Venue name (optional)
  *   tags     - Comma-separated tags (optional)
  *   free     - "true" if free event (optional)
+ *   desc     - Event description for richer matching (optional)
+ *   breed    - Explicit breed hint (optional, overrides detection)
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -28,8 +36,16 @@ export async function GET(request: NextRequest) {
   const venue = searchParams.get('venue') || '';
   const tags = searchParams.get('tags') || '';
   const isFree = searchParams.get('free') === 'true';
+  const desc = searchParams.get('desc') || '';
+  const breedHint = searchParams.get('breed') || '';
 
-  const bgImage = pickDogPhoto(name, citySlug, 'square');
+  const bgImage = pickContextualDogPhoto({
+    text: name,
+    citySlug,
+    description: desc || undefined,
+    tags: tags ? tags.split(',') : undefined,
+    breedHint: breedHint || undefined,
+  }, 'square');
   const tagList = tags ? tags.split(',').slice(0, 4) : [];
 
   // Truncate long event names

@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
-import { pickDogPhoto } from '@/lib/dog-photos';
+import { pickContextualDogPhoto } from '@/lib/dog-photos';
 
 const BRAND_ORANGE = '#f97316';
 const BRAND_DARK = '#1a1a2e';
@@ -43,7 +43,11 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get('type') || 'tip';
 
   const accent = CITY_ACCENTS[citySlug] || BRAND_ORANGE;
-  const dogPhoto = pickDogPhoto(headline, citySlug, 'wide');
+  const dogPhoto = pickContextualDogPhoto({
+    text: headline,
+    citySlug,
+    description: body || undefined,
+  }, 'wide');
 
   // Truncate text for readability
   const displayHeadline = headline.length > 55 ? headline.slice(0, 52) + '...' : headline;

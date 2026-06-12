@@ -10,6 +10,7 @@ import {
 } from '@/lib/social-content';
 import { generateAndUploadMascotImage, generateCharacterCaption } from '@/lib/dalle';
 import { getVisualStyle, shouldUseMascot, shouldUseTextCard, getCaptionStyle, type VisualStyle } from '@/lib/visual-strategy';
+import { detectBreeds } from '@/lib/dog-photos';
 
 // ─── Supabase Admin ────────────────────────────────────────────────────────────
 
@@ -350,12 +351,35 @@ export async function POST(request: NextRequest) {
     const metaKey = Object.keys(CITY_META).find(k => CITY_META[k].slug === citySlug) || citySlug;
     const hasOpenAI = !!process.env.OPENAI_API_KEY;
 
-    // ── PHOTO-FIRST strategy for events ─────────────────────────────────
-    // Events use real photography or cityscape overlays — NOT mascots.
-    // This looks professional for sponsors and clearly communicates
-    // "real event happening on a real date."
+    // ── MASCOT ROTATION: Decide photo vs mascot ─────────────────────────
+    // Check recent event creatives to determine if we should use a mascot
+    // illustration instead of photography. Target: ~1 in 4 event creatives
+    // uses a mascot for grid variety and brand personality.
+    const { data: recentEventCreatives } = await supabase
+      .from('creative_queue')
+      .select('format, narrator')
+      .eq('content_type', 'event')
+      .in('status', ['pending_review', 'approved', 'posted'])
+      .order('created_at', { ascending: false })
+      .limit(4);
 
-    // Build clean, informational caption (no character voice for events)
+    const recentFormats = (recentEventCreatives || []).map(c => c.format);
+    const recentPhotoCount = recentFormats.filter(f => f === 'photo').length;
+    // Use mascot if the last 3+ event creatives were all photos AND we have OpenAI
+    const useMascot = hasOpenAI && recentPhotoCount >= 3;
+    const visualStyle: VisualStyle = useMascot ? 'mascot' : 'photo';
+
+    // Pick narrator — alternate based on last used
+    const lastNarrator = (recentEventCreatives || []).find(c => c.narrator)?.narrator;
+    const narrator = useMascot
+      ? (lastNarrator === 'buster' ? 'marley' : 'buster')
+      : (Math.random() > 0.5 ? 'buster' : 'marley');
+
+    // ── Detect breed from event name/description for photo matching ──────
+    const eventText = `${event.name} ${event.description || ''} ${(event.tags || []).join(' ')}`;
+    const detectedBreeds = detectBreeds(eventText);
+
+    // ── Build caption ────────────────────────────────────────────────────
     const allHandles = event.mentioned_handles || [];
     const handleMentions = allHandles.length > 0
       ? `\n\n${allHandles.map((h: string) => '@' + h.replace('@', '')).join(' ')}`
@@ -363,65 +387,101 @@ export async function POST(request: NextRequest) {
     const sourceMention = event.source_handle
       ? `\nvia @${event.source_handle.replace('@', '')}`
       : '';
-
     const freeTag = event.is_free ? '🆓 Free event!\n\n' : '';
-    const caption = `📅 ${event.name}\n\n🗓 ${event.start_date}${event.venue_name ? `\n📍 ${event.venue_name}` : ''}\n\n${event.description || 'Don\'t miss this dog-friendly event!'}\n\n${freeTag}Find more events at pawcities.com/${citySlug}${handleMentions}${sourceMention}\n\nFollow @thepawcities for dog-friendly events worldwide 🌍\n\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')}`;
 
-    // ── Branded event creative with dog photography ──────────────────────
-    // Always use our OG event-creative endpoint: dog photo background with
-    // event name, date, and venue overlaid. Consistent, on-brand look.
-    let imageUrl: string | null = null;
-    const imagePrompt: string | null = null;
-
-    try {
-      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
-        || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
-      const dateStr = new Date(event.start_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      const ogParams = new URLSearchParams({
-        name: event.name,
-        city: cityName,
+    let caption: string;
+    if (useMascot && hasOpenAI) {
+      // Mascot events get character voice captions
+      const aiCaption = await generateCharacterCaption(
+        narrator as 'buster' | 'marley' | 'both',
+        event.name,
+        event.description || 'A dog-friendly event you won\'t want to miss!',
+        cityName,
         citySlug,
-        date: dateStr,
-        ...(event.venue_name ? { venue: event.venue_name } : {}),
-        ...(event.is_free ? { free: 'true' } : {}),
-      });
-      const ogUrl = `${baseUrl}/api/social/event-creative?${ogParams}`;
-      const ogRes = await fetch(ogUrl, { signal: AbortSignal.timeout(20000) });
-      if (ogRes.ok) {
-        const imgBuffer = Buffer.from(await ogRes.arrayBuffer());
-        const safeName = event.name.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 50);
-        const storagePath = `event-creatives/${citySlug}-${safeName}-${Date.now()}.png`;
-        const { error: uploadError } = await supabase.storage
-          .from('photos')
-          .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
-        if (!uploadError) {
-          const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
-          imageUrl = urlData?.publicUrl || null;
-        }
-      }
-    } catch (err) {
-      console.log(`[CREATIVE] OG event-creative generation failed for "${event.name}":`, err);
+        'event',
+      );
+      caption = aiCaption || `📅 ${event.name}\n\n🗓 ${event.start_date}${event.venue_name ? `\n📍 ${event.venue_name}` : ''}\n\n${event.description || 'Don\'t miss this dog-friendly event!'}\n\n${freeTag}Find more events at pawcities.com/${citySlug}${handleMentions}${sourceMention}\n\nFollow @thepawcities for dog-friendly events worldwide 🌍\n\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')}`;
+    } else {
+      // Photo events get clean, informational captions
+      caption = `📅 ${event.name}\n\n🗓 ${event.start_date}${event.venue_name ? `\n📍 ${event.venue_name}` : ''}\n\n${event.description || 'Don\'t miss this dog-friendly event!'}\n\n${freeTag}Find more events at pawcities.com/${citySlug}${handleMentions}${sourceMention}\n\nFollow @thepawcities for dog-friendly events worldwide 🌍\n\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')}`;
     }
-    // If OG endpoint fails, imageUrl stays null — social-post cron will generate at post time
+
+    // ── Generate image ───────────────────────────────────────────────────
+    let imageUrl: string | null = null;
+    let imagePrompt: string | null = null;
+
+    if (useMascot) {
+      // ── MASCOT illustration via DALL-E ──────────────────────────────────
+      // Build a prompt that includes breed-specific and city-specific elements
+      const breedDesc = detectedBreeds.length > 0
+        ? `surrounded by ${detectedBreeds[0]}s`
+        : '';
+      const landmarks = CITY_LANDMARKS[metaKey] || CITY_LANDMARKS.paris;
+
+      if (narrator === 'buster') {
+        imagePrompt = `Pixar/Disney-style cartoon illustration: Buster, a small compact stocky mixed breed dog with a short smooth golden-honey coat, broad round face, warm expressive dark brown eyes, floppy rose-shaped ears that fold down, dark nose, wide happy grin with tongue hanging out. He wears an olive-green collar with a small orange paw-print tag. He is at a lively outdoor dog event ${breedDesc} in ${cityName}, with ${landmarks.landmark} in the background. Festive atmosphere with bunting flags. Instagram square format 1080x1080. No text overlay, no humans.`;
+      } else {
+        imagePrompt = `Pixar/Disney-style cartoon illustration: Marley, a medium-sized shaggy cockapoo-type dog with a wavy tousled cream-white coat with golden highlights, long scruffy fur around face and ears, soulful dark eyes peeking through a curtain of facial fur, dark nose partially hidden by shaggy fur, gentle wise expression. He wears a navy blue bandana with a small orange paw-print tag. He is relaxing at a dog-friendly event ${breedDesc} in ${cityName}, with ${landmarks.landmark} in the background. Warm inviting atmosphere. Instagram square format 1080x1080. No text overlay, no humans.`;
+      }
+
+      const storagePath = `mascot-creatives/${citySlug}-${narrator}-event-${Date.now()}.png`;
+      const dalleResult = await generateAndUploadMascotImage(imagePrompt, storagePath);
+      if (dalleResult) {
+        imageUrl = dalleResult.publicUrl;
+      }
+    } else {
+      // ── PHOTO creative via OG endpoint (with contextual dog selection) ──
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+          || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+        const dateStr = new Date(event.start_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const ogParams = new URLSearchParams({
+          name: event.name,
+          city: cityName,
+          citySlug,
+          date: dateStr,
+          ...(event.venue_name ? { venue: event.venue_name } : {}),
+          ...(event.is_free ? { free: 'true' } : {}),
+          // Pass contextual hints for smart photo selection
+          ...(event.description ? { desc: event.description.slice(0, 200) } : {}),
+          ...(detectedBreeds.length > 0 ? { breed: detectedBreeds[0] } : {}),
+        });
+        const ogUrl = `${baseUrl}/api/social/event-creative?${ogParams}`;
+        const ogRes = await fetch(ogUrl, { signal: AbortSignal.timeout(20000) });
+        if (ogRes.ok) {
+          const imgBuffer = Buffer.from(await ogRes.arrayBuffer());
+          const safeName = event.name.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 50);
+          const storagePath = `event-creatives/${citySlug}-${safeName}-${Date.now()}.png`;
+          const { error: uploadError } = await supabase.storage
+            .from('photos')
+            .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+          if (!uploadError) {
+            const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+            imageUrl = urlData?.publicUrl || null;
+          }
+        }
+      } catch (err) {
+        console.log(`[CREATIVE] OG event-creative generation failed for "${event.name}":`, err);
+      }
+    }
 
     const { error: insertError } = await supabase.from('creative_queue').insert({
       content_type: 'event',
       event_id: eventId,
-      narrator: Math.random() > 0.5 ? 'buster' : 'marley',  // Alternate narrators for feed variety
+      narrator,
       city: metaKey,
       headline: event.name,
       caption,
       image_url: imageUrl,
       image_prompt: imagePrompt,
-      format: 'photo',  // Photo-based visual style
+      format: visualStyle,
       status: 'pending_review',
-      // Schedule 3 days before the event so followers can plan ahead
       scheduled_for: (() => {
         const eventDate = new Date(event.start_date + 'T00:00:00Z');
         eventDate.setUTCDate(eventDate.getUTCDate() - 3);
         return eventDate.toISOString().split('T')[0];
       })(),
-      generation_model: 'photo-first',
+      generation_model: useMascot ? 'gpt-image-1' : 'contextual-photo',
     });
 
     if (insertError) {
@@ -432,9 +492,12 @@ export async function POST(request: NextRequest) {
       success: true,
       event: event.name,
       city: cityName,
-      format: 'photo',
+      format: visualStyle,
+      narrator,
+      usedMascot: useMascot,
+      detectedBreeds,
       hasImage: !!imageUrl,
-      message: `Creative generated for "${event.name}" — review at /admin/creatives`,
+      message: `Creative generated for "${event.name}" (${visualStyle}${detectedBreeds.length > 0 ? `, breed: ${detectedBreeds[0]}` : ''}) — review at /admin/creatives`,
     });
   }
 
