@@ -106,11 +106,11 @@ const CITY_HASHTAGS: Record<string, { slug: string; name: string; hashtags: stri
 };
 
 const GLOBAL_EVENT_HASHTAGS = [
-  'dogevent', 'dogfestival', 'dogmeetup', 'dogwalk',
-  'dogadoption', 'dogrescueevent', 'petadoption',
+  'dogmeetup', 'dogfriendlycafe', 'dogfriendly',
+  'dogadoption', 'dogrescue', 'petadoptionevent',
   'dogfriendlyevent', 'barkinthpark', 'pupupevent',
   'yappyhour', 'dogbrunch', 'dogfriendlyvenue',
-  'dogsofinstagram', 'petfriendlyevent',
+  'dogsofinstagram', 'petfriendlyevent', 'dogday',
 ];
 
 // ─── Event classification (expanded) ────────────────────────────────────────
