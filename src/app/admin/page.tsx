@@ -13,16 +13,11 @@ interface DashboardData {
     pendingClaims: number;
     newUsersThisWeek: number;
     premiumListings: number;
+    pendingPhotos: number;
+    pendingValidation: number;
   };
-  events: {
-    pending: number;
-    upcoming: number;
-    total: number;
-  };
-  subscribers: {
-    total: number;
-    newThisWeek: number;
-  };
+  events: { pending: number; upcoming: number; total: number };
+  subscribers: { total: number; newThisWeek: number };
   social: {
     newOpportunities: number;
     unrepliedComments: number;
@@ -30,34 +25,38 @@ interface DashboardData {
     contentRemaining: number;
     lastPostDate: string | null;
     recentPosts: {
-      id: string;
-      headline: string;
-      city: string;
-      status: string;
-      likes: number;
-      comments_count: number;
-      created_at: string;
+      id: string; headline: string; city: string; status: string;
+      likes: number; comments_count: number; created_at: string;
       error_message?: string;
     }[];
   };
+  creatives: {
+    pendingReview: number;
+    approved: number;
+    postedThisWeek: number;
+  };
+  discovery: {
+    needsReview: number;
+    pending: number;
+  };
   pendingEventsData: {
-    id: string;
-    name: string;
-    start_date: string;
-    end_date: string | null;
-    venue_name: string | null;
-    source: string;
-    source_handle: string | null;
-    external_url: string | null;
-    discovery_score: number | null;
-    created_at: string;
-    cities: { name: string; slug: string };
+    id: string; name: string; start_date: string; end_date: string | null;
+    venue_name: string | null; source: string; source_handle: string | null;
+    external_url: string | null; discovery_score: number | null;
+    created_at: string; cities: { name: string; slug: string };
   }[];
-  recentActivities: {
-    id: string;
-    event_type: string;
-    created_at: string;
+  pendingCreativesData: {
+    id: string; headline: string; caption: string; content_type: string;
+    format: string; city_slug: string; image_url: string | null;
+    status: string; created_at: string;
   }[];
+  discoveryData: {
+    id: string; subject: string; url: string; city: string | null;
+    platform: string | null; content_type: string | null;
+    priority: string | null; status: string; created_at: string;
+    raw_text: string | null;
+  }[];
+  recentActivities: { id: string; event_type: string; created_at: string }[];
 }
 
 // ── Main Dashboard ───────────────────────────────────────────────────────────
@@ -66,7 +65,8 @@ export default function AdminDashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [actioningEvent, setActioningEvent] = useState<string | null>(null);
+  const [actioningId, setActioningId] = useState<string | null>(null);
+  const [expandedDiscovery, setExpandedDiscovery] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
     try {
@@ -84,33 +84,54 @@ export default function AdminDashboard() {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
+  // ── Action handlers ────────────────────────────────────────────────────
+
   const handleEventAction = async (eventId: string, action: 'approve' | 'reject') => {
-    setActioningEvent(eventId);
+    setActioningId(eventId);
     try {
       const res = await fetch(`/api/admin/events/${eventId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action }),
       });
-      if (res.ok) {
-        fetchData(); // Refresh data after action
-      }
-    } catch {
-      // fail silently — will refresh anyway
-    } finally {
-      setActioningEvent(null);
-    }
+      if (res.ok) fetchData();
+    } catch { /* silent */ } finally { setActioningId(null); }
   };
+
+  const handleCreativeAction = async (creativeId: string, action: 'approve' | 'reject') => {
+    setActioningId(creativeId);
+    try {
+      const res = await fetch('/api/admin/creatives', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: creativeId, action }),
+      });
+      if (res.ok) fetchData();
+    } catch { /* silent */ } finally { setActioningId(null); }
+  };
+
+  const handleBulkApproveCreatives = async () => {
+    if (!data?.pendingCreativesData?.length) return;
+    setActioningId('bulk');
+    try {
+      const res = await fetch('/api/admin/creatives', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'approve_all' }),
+      });
+      if (res.ok) fetchData();
+    } catch { /* silent */ } finally { setActioningId(null); }
+  };
+
+  // ── Loading / Error states ─────────────────────────────────────────────
 
   if (loading) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Command Center</h1>
-          <p className="text-gray-500 text-sm">Loading...</p>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-          {[...Array(6)].map((_, i) => (
+        <h1 className="text-2xl font-bold text-gray-900">Command Center</h1>
+        <p className="text-gray-500 text-sm">Loading...</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[...Array(4)].map((_, i) => (
             <div key={i} className="bg-white rounded-xl border p-4 animate-pulse">
               <div className="h-3 bg-gray-200 rounded w-16 mb-2" />
               <div className="h-6 bg-gray-200 rounded w-10" />
@@ -133,18 +154,29 @@ export default function AdminDashboard() {
     );
   }
 
-  const totalActionItems = data.events.pending + data.social.unrepliedComments + data.stats.pendingClaims;
+  // ── Compute attention items ────────────────────────────────────────────
+
+  const attentionItems = [
+    { count: data.creatives.pendingReview, label: 'creatives to review', color: 'purple', href: '#pending-creatives' },
+    { count: data.discovery.needsReview, label: 'discovery items', color: 'blue', href: '#discovery-queue' },
+    { count: data.events.pending, label: 'events to approve', color: 'rose', href: '#pending-events' },
+    { count: data.stats.pendingClaims, label: 'business claims', color: 'amber', href: '/admin/claims' },
+    { count: data.stats.pendingPhotos, label: 'photos to moderate', color: 'green', href: '/admin/photos' },
+    { count: data.stats.pendingValidation, label: 'places to validate', color: 'cyan', href: '/admin/validation' },
+  ].filter(item => item.count > 0);
+
+  const totalAttention = attentionItems.reduce((sum, item) => sum + item.count, 0);
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* ── Header ─────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Command Center</h1>
           <p className="text-gray-500 text-sm">
-            {totalActionItems > 0
-              ? `${totalActionItems} item${totalActionItems !== 1 ? 's' : ''} need${totalActionItems === 1 ? 's' : ''} attention`
-              : 'All caught up!'}
+            {totalAttention > 0
+              ? `${totalAttention} item${totalAttention !== 1 ? 's' : ''} need${totalAttention === 1 ? 's' : ''} your attention`
+              : 'All caught up — nothing needs review!'}
           </p>
         </div>
         <button
@@ -155,41 +187,104 @@ export default function AdminDashboard() {
         </button>
       </div>
 
-      {/* ── Stats Ribbon ─────────────────────────────────────────────── */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        <MiniStat label="Cities" value={data.stats.totalCities} icon="🏙️" />
-        <MiniStat label="Places" value={data.stats.totalEstablishments} icon="📍" sub={`${data.stats.premiumListings} premium`} />
-        <MiniStat label="Users" value={data.stats.totalUsers} icon="👥" sub={`+${data.stats.newUsersThisWeek} this week`} />
-        <MiniStat label="Subscribers" value={data.subscribers.total} icon="📧" sub={`+${data.subscribers.newThisWeek} this week`} href="/admin/subscribers" />
-        <MiniStat label="Events" value={data.events.total} icon="📅" sub={`${data.events.upcoming} upcoming`} href="/admin/events" />
-        <MiniStat label="IG Posts" value={data.social.totalPublished} icon="📸" sub={`${data.social.contentRemaining} remaining`} href="/admin/social" />
-      </div>
-
-      {/* ── Action Items Row ─────────────────────────────────────────── */}
-      {totalActionItems > 0 && (
-        <div className="flex flex-wrap gap-3">
-          {data.events.pending > 0 && (
-            <ActionBadge count={data.events.pending} label="events to review" color="rose" href="#pending-events" />
-          )}
-          {data.social.unrepliedComments > 0 && (
-            <ActionBadge count={data.social.unrepliedComments} label="unreplied comments" color="blue" href="/admin/social" />
-          )}
-          {data.stats.pendingClaims > 0 && (
-            <ActionBadge count={data.stats.pendingClaims} label="pending claims" color="amber" href="/admin/claims" />
-          )}
-          {data.social.newOpportunities > 0 && (
-            <ActionBadge count={data.social.newOpportunities} label="engagement opportunities" color="green" href="/admin/social" />
-          )}
+      {/* ── Attention Banner ───────────────────────────────────────────── */}
+      {attentionItems.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {attentionItems.map(item => (
+            <ActionBadge key={item.label} count={item.count} label={item.label} color={item.color} href={item.href} />
+          ))}
         </div>
       )}
 
-      {/* ── Main Grid ────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* ── Pipeline Health Ribbon ─────────────────────────────────────── */}
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        <MiniStat label="Approved Queue" value={data.creatives.approved} icon="✅" sub="ready to post" warn={data.creatives.approved < 14} />
+        <MiniStat label="Posted (7d)" value={data.creatives.postedThisWeek} icon="📸" />
+        <MiniStat label="Upcoming Events" value={data.events.upcoming} icon="📅" sub={`${data.events.total} total`} href="/admin/events" />
+        <MiniStat label="Subscribers" value={data.subscribers.total} icon="📧" sub={`+${data.subscribers.newThisWeek} this week`} href="/admin/subscribers" />
+        <MiniStat label="Places" value={data.stats.totalEstablishments} icon="📍" sub={`${data.stats.premiumListings} premium`} />
+        <MiniStat label="Users" value={data.stats.totalUsers} icon="👥" sub={`+${data.stats.newUsersThisWeek} this week`} />
+      </div>
 
-        {/* ── Left Column (2/3) ── */}
-        <div className="lg:col-span-2 space-y-6">
+      {/* ── Main Two-Column Layout ─────────────────────────────────────── */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-          {/* Pending Events — Inline Approval */}
+        {/* ── Left Column (2/3): Action queues ── */}
+        <div className="xl:col-span-2 space-y-6">
+
+          {/* ──────── PENDING CREATIVES ──────── */}
+          <section id="pending-creatives" className="bg-white rounded-xl border">
+            <div className="flex items-center justify-between p-5 border-b">
+              <div className="flex items-center gap-2">
+                <h2 className="font-semibold text-gray-900">Pending Creatives</h2>
+                {data.creatives.pendingReview > 0 && (
+                  <span className="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-full">{data.creatives.pendingReview}</span>
+                )}
+              </div>
+              <div className="flex items-center gap-3">
+                {data.pendingCreativesData.length > 0 && (
+                  <button
+                    onClick={handleBulkApproveCreatives}
+                    disabled={actioningId === 'bulk'}
+                    className="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+                  >
+                    {actioningId === 'bulk' ? 'Approving...' : `Approve All ${data.pendingCreativesData.length}`}
+                  </button>
+                )}
+                <Link href="/admin/creatives" className="text-sm text-orange-600 hover:text-orange-700">View all →</Link>
+              </div>
+            </div>
+
+            {data.pendingCreativesData.length === 0 ? (
+              <div className="p-6 text-center text-gray-400 text-sm">No creatives waiting for review</div>
+            ) : (
+              <div className="divide-y">
+                {data.pendingCreativesData.map(creative => (
+                  <div key={creative.id} className="p-4 flex items-start gap-4 hover:bg-gray-50 transition-colors">
+                    {/* Thumbnail */}
+                    {creative.image_url ? (
+                      <img src={creative.image_url} alt="" className="w-16 h-16 rounded-lg object-cover shrink-0 border" />
+                    ) : (
+                      <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400 shrink-0 border">
+                        <span className="text-2xl">🎨</span>
+                      </div>
+                    )}
+
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-gray-900 text-sm truncate">{creative.headline || 'Untitled'}</p>
+                      <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-gray-500">
+                        <span className="px-1.5 py-0.5 bg-gray-100 rounded">{creative.content_type}</span>
+                        <span className="px-1.5 py-0.5 bg-gray-100 rounded">{creative.format}</span>
+                        <span>{creative.city_slug}</span>
+                      </div>
+                      {creative.caption && (
+                        <p className="text-xs text-gray-400 mt-1 line-clamp-2">{creative.caption}</p>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => handleCreativeAction(creative.id, 'approve')}
+                        disabled={actioningId === creative.id}
+                        className="px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+                      >
+                        {actioningId === creative.id ? '...' : 'Approve'}
+                      </button>
+                      <button
+                        onClick={() => handleCreativeAction(creative.id, 'reject')}
+                        disabled={actioningId === creative.id}
+                        className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-lg hover:bg-red-50 hover:text-red-600 disabled:opacity-50 transition-colors"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          {/* ──────── PENDING EVENTS ──────── */}
           <section id="pending-events" className="bg-white rounded-xl border">
             <div className="flex items-center justify-between p-5 border-b">
               <div className="flex items-center gap-2">
@@ -202,90 +297,153 @@ export default function AdminDashboard() {
             </div>
             <div className="divide-y">
               {data.pendingEventsData.length === 0 ? (
-                <div className="p-6 text-center text-gray-400 text-sm">No pending events — all caught up!</div>
+                <div className="p-6 text-center text-gray-400 text-sm">
+                  No pending events — discovery auto-approves high-confidence events.
+                  <br />
+                  <span className="text-xs">Low-confidence items appear in the Discovery Queue below.</span>
+                </div>
               ) : (
                 data.pendingEventsData.map(event => {
-                  const missingFields = [];
+                  const missingFields: string[] = [];
                   if (!event.source_handle) missingFields.push('handle');
                   if (!event.external_url) missingFields.push('url');
                   if (!event.venue_name) missingFields.push('venue');
                   const isReady = missingFields.length === 0;
                   return (
-                  <div key={event.id} className="p-4 flex items-start gap-4 hover:bg-gray-50 transition-colors">
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-900 truncate">{event.name}</p>
-                      <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-gray-500">
-                        <span>{(event.cities as { name: string })?.name}</span>
-                        <span>·</span>
-                        <span>{new Date(event.start_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                        {event.venue_name && <><span>·</span><span>{event.venue_name}</span></>}
+                    <div key={event.id} className="p-4 flex items-start gap-4 hover:bg-gray-50 transition-colors">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-gray-900 truncate">{event.name}</p>
+                        <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-gray-500">
+                          <span>{(event.cities as { name: string })?.name}</span>
+                          <span>·</span>
+                          <span>{new Date(event.start_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                          {event.venue_name && <><span>·</span><span>{event.venue_name}</span></>}
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                          {event.source_handle ? (
+                            <a href={`https://instagram.com/${event.source_handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer"
+                               className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded hover:bg-purple-100">@{event.source_handle}</a>
+                          ) : (
+                            <span className="text-xs bg-red-50 text-red-500 px-1.5 py-0.5 rounded">no handle</span>
+                          )}
+                          {event.external_url ? (
+                            <a href={event.external_url} target="_blank" rel="noopener noreferrer"
+                               className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded hover:bg-blue-100 truncate max-w-[180px]">
+                              {(() => { try { return new URL(event.external_url).hostname.replace('www.', ''); } catch { return 'link'; } })()} ↗
+                            </a>
+                          ) : (
+                            <span className="text-xs bg-red-50 text-red-500 px-1.5 py-0.5 rounded">no url</span>
+                          )}
+                        </div>
                       </div>
-                      <div className="flex flex-wrap items-center gap-2 mt-1.5">
-                        {event.source_handle ? (
-                          <a href={`https://instagram.com/${event.source_handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer"
-                             className="text-xs bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded hover:bg-purple-100">@{event.source_handle}</a>
-                        ) : (
-                          <span className="text-xs bg-red-50 text-red-500 px-1.5 py-0.5 rounded">no handle</span>
-                        )}
-                        {event.external_url ? (
-                          <a href={event.external_url} target="_blank" rel="noopener noreferrer"
-                             className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded hover:bg-blue-100 truncate max-w-[180px]">
-                            {new URL(event.external_url).hostname.replace('www.', '')} ↗
-                          </a>
-                        ) : (
-                          <span className="text-xs bg-red-50 text-red-500 px-1.5 py-0.5 rounded">no url</span>
-                        )}
-                        {!event.venue_name && (
-                          <span className="text-xs bg-red-50 text-red-500 px-1.5 py-0.5 rounded">no venue</span>
-                        )}
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button
+                          onClick={() => handleEventAction(event.id, 'approve')}
+                          disabled={actioningId === event.id || !isReady}
+                          title={!isReady ? `Missing: ${missingFields.join(', ')}` : 'Approve event'}
+                          className={`px-3 py-1.5 text-white text-xs font-medium rounded-lg disabled:opacity-50 transition-colors ${isReady ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-300 cursor-not-allowed'}`}
+                        >
+                          {actioningId === event.id ? '...' : 'Approve'}
+                        </button>
+                        <button
+                          onClick={() => handleEventAction(event.id, 'reject')}
+                          disabled={actioningId === event.id}
+                          className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-lg hover:bg-red-50 hover:text-red-600 disabled:opacity-50 transition-colors"
+                        >
+                          Reject
+                        </button>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <Link
-                        href={`/admin/events?edit=${event.id}`}
-                        className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-200 transition-colors"
-                      >
-                        Edit
-                      </Link>
-                      <button
-                        onClick={() => handleEventAction(event.id, 'approve')}
-                        disabled={actioningEvent === event.id || !isReady}
-                        title={!isReady ? `Missing: ${missingFields.join(', ')}` : 'Approve event'}
-                        className={`px-3 py-1.5 text-white text-xs font-medium rounded-lg disabled:opacity-50 transition-colors ${isReady ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-300 cursor-not-allowed'}`}
-                      >
-                        {actioningEvent === event.id ? '...' : 'Approve'}
-                      </button>
-                      <button
-                        onClick={() => handleEventAction(event.id, 'reject')}
-                        disabled={actioningEvent === event.id}
-                        className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-lg hover:bg-red-50 hover:text-red-600 disabled:opacity-50 transition-colors"
-                      >
-                        Reject
-                      </button>
-                    </div>
-                  </div>
                   );
                 })
               )}
             </div>
           </section>
 
-          {/* Social & Content Pipeline */}
+          {/* ──────── DISCOVERY QUEUE ──────── */}
+          <section id="discovery-queue" className="bg-white rounded-xl border">
+            <div className="flex items-center justify-between p-5 border-b">
+              <div className="flex items-center gap-2">
+                <h2 className="font-semibold text-gray-900">Discovery Queue</h2>
+                {data.discovery.needsReview > 0 && (
+                  <span className="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-0.5 rounded-full">{data.discovery.needsReview}</span>
+                )}
+              </div>
+              <Link href="/admin/social" className="text-sm text-orange-600 hover:text-orange-700">Open Social Hub →</Link>
+            </div>
+            <div className="divide-y">
+              {data.discoveryData.length === 0 ? (
+                <div className="p-6 text-center text-gray-400 text-sm">No discovery items need review</div>
+              ) : (
+                data.discoveryData.map(item => (
+                  <div key={item.id} className="hover:bg-gray-50 transition-colors">
+                    <div
+                      className="p-4 flex items-start gap-4 cursor-pointer"
+                      onClick={() => setExpandedDiscovery(expandedDiscovery === item.id ? null : item.id)}
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-gray-900 text-sm truncate">{item.subject}</p>
+                        <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-gray-500">
+                          {item.city && <span className="px-1.5 py-0.5 bg-gray-100 rounded">{item.city}</span>}
+                          {item.platform && <span className="px-1.5 py-0.5 bg-gray-100 rounded">{item.platform}</span>}
+                          {item.priority === 'high' && <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 rounded">high priority</span>}
+                          <span className="text-gray-400">{timeAgo(item.created_at)}</span>
+                        </div>
+                      </div>
+                      <div className="shrink-0 text-gray-400">
+                        <svg className={`w-4 h-4 transition-transform ${expandedDiscovery === item.id ? 'rotate-180' : ''}`}
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Expanded detail view */}
+                    {expandedDiscovery === item.id && (
+                      <div className="px-4 pb-4 space-y-3">
+                        {item.raw_text && (
+                          <div className="bg-gray-50 rounded-lg p-3">
+                            <p className="text-xs text-gray-600 whitespace-pre-wrap line-clamp-6">{item.raw_text}</p>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-3">
+                          {item.url && (
+                            <a href={item.url} target="_blank" rel="noopener noreferrer"
+                               className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1">
+                              View source ↗
+                            </a>
+                          )}
+                          <span className="text-xs text-gray-400">
+                            Status: {item.status} · Type: {item.content_type || 'unknown'}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+            {data.discovery.needsReview > data.discoveryData.length && (
+              <div className="p-3 border-t text-center">
+                <Link href="/admin/social" className="text-xs text-orange-600 hover:text-orange-700">
+                  +{data.discovery.needsReview - data.discoveryData.length} more items in the full queue →
+                </Link>
+              </div>
+            )}
+          </section>
+
+          {/* ──────── SOCIAL & CONTENT PIPELINE ──────── */}
           <section className="bg-white rounded-xl border">
             <div className="flex items-center justify-between p-5 border-b">
-              <h2 className="font-semibold text-gray-900">Content & Social</h2>
-              <Link href="/admin/social" className="text-sm text-orange-600 hover:text-orange-700">Open Command Center →</Link>
+              <h2 className="font-semibold text-gray-900">Content Pipeline</h2>
+              <Link href="/admin/social" className="text-sm text-orange-600 hover:text-orange-700">Social Hub →</Link>
             </div>
-
-            {/* Pipeline Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-100">
               <PipelineStat label="Published" value={data.social.totalPublished} icon="✅" />
               <PipelineStat label="Content Left" value={data.social.contentRemaining} icon="📝" warn={data.social.contentRemaining < 20} />
-              <PipelineStat label="Engagement Queue" value={data.social.newOpportunities} icon="💬" />
-              <PipelineStat label="Unreplied" value={data.social.unrepliedComments} icon="🔔" warn={data.social.unrepliedComments > 0} />
+              <PipelineStat label="Ready to Post" value={data.creatives.approved} icon="📤" warn={data.creatives.approved < 14} />
+              <PipelineStat label="Pending Review" value={data.creatives.pendingReview} icon="👀" warn={data.creatives.pendingReview > 0} />
             </div>
-
-            {/* Recent Posts */}
             <div className="p-4">
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-3">Recent Posts</p>
               {data.social.recentPosts.length === 0 ? (
@@ -302,38 +460,41 @@ export default function AdminDashboard() {
                           {post.likes || 0}❤️ {post.comments_count || 0}💬
                         </span>
                       )}
-                      {post.status === 'failed' && (
-                        <span className="text-red-400 text-xs shrink-0">Failed</span>
-                      )}
                     </div>
                   ))}
                 </div>
               )}
               {data.social.lastPostDate && (
-                <p className="text-xs text-gray-400 mt-3">
-                  Last post: {timeAgo(data.social.lastPostDate)}
-                </p>
+                <p className="text-xs text-gray-400 mt-3">Last post: {timeAgo(data.social.lastPostDate)}</p>
               )}
             </div>
           </section>
         </div>
 
-        {/* ── Right Column (1/3) ── */}
+        {/* ── Right Column (1/3): Overview panels ── */}
         <div className="space-y-6">
+
+          {/* Your Role Explainer */}
+          <section className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-200 p-5">
+            <h2 className="font-semibold text-gray-900 mb-2">Your Role</h2>
+            <div className="space-y-2 text-sm text-gray-600">
+              <p><span className="font-medium text-gray-800">You review.</span> Approve creatives before they post. Review discovered events. Moderate photos.</p>
+              <p><span className="font-medium text-gray-800">Automation handles.</span> Event discovery, creative generation, scheduling, posting, photo enrichment — all run on cron.</p>
+            </div>
+          </section>
 
           {/* Quick Navigation */}
           <section className="bg-white rounded-xl border p-5">
-            <h2 className="font-semibold text-gray-900 mb-3">Quick Actions</h2>
+            <h2 className="font-semibold text-gray-900 mb-3">Quick Links</h2>
             <div className="grid grid-cols-2 gap-2">
               {[
                 { label: 'Events', href: '/admin/events', icon: '📅', count: data.events.pending },
-                { label: 'Creatives', href: '/admin/creatives', icon: '🎨' },
-                { label: 'Social', href: '/admin/social', icon: '📱', count: data.social.unrepliedComments },
+                { label: 'Creatives', href: '/admin/creatives', icon: '🎨', count: data.creatives.pendingReview },
+                { label: 'Social Hub', href: '/admin/social', icon: '📱' },
                 { label: 'Claims', href: '/admin/claims', icon: '✅', count: data.stats.pendingClaims },
-                { label: 'Photos', href: '/admin/photos', icon: '📸' },
+                { label: 'Photos', href: '/admin/photos', icon: '📸', count: data.stats.pendingPhotos },
                 { label: 'Analytics', href: '/admin/analytics', icon: '📈' },
                 { label: 'Health', href: '/admin/health', icon: '🏥' },
-                { label: 'Users', href: '/admin/users', icon: '👥' },
                 { label: 'Settings', href: '/admin/settings', icon: '⚙️' },
               ].map(action => (
                 <Link
@@ -351,23 +512,6 @@ export default function AdminDashboard() {
             </div>
           </section>
 
-          {/* Subscriber Snapshot */}
-          <section className="bg-white rounded-xl border p-5">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-semibold text-gray-900">Subscribers</h2>
-            </div>
-            <div className="flex items-baseline gap-2 mb-1">
-              <span className="text-3xl font-bold text-gray-900">{data.subscribers.total}</span>
-              <span className="text-sm text-gray-500">active</span>
-            </div>
-            {data.subscribers.newThisWeek > 0 && (
-              <p className="text-sm text-green-600 font-medium">+{data.subscribers.newThisWeek} this week</p>
-            )}
-            {data.subscribers.total === 0 && (
-              <p className="text-sm text-gray-400 mt-1">Newsletter signups will appear here</p>
-            )}
-          </section>
-
           {/* Events Summary */}
           <section className="bg-white rounded-xl border p-5">
             <h2 className="font-semibold text-gray-900 mb-3">Events Overview</h2>
@@ -378,16 +522,36 @@ export default function AdminDashboard() {
             </div>
           </section>
 
-          {/* Platform Overview */}
+          {/* Pipeline Summary */}
           <section className="bg-white rounded-xl border p-5">
-            <h2 className="font-semibold text-gray-900 mb-3">Platform</h2>
+            <h2 className="font-semibold text-gray-900 mb-3">Creative Pipeline</h2>
             <div className="space-y-2">
-              <OverviewRow label="Active Cities" value={data.stats.totalCities} />
-              <OverviewRow label="Establishments" value={data.stats.totalEstablishments} />
-              <OverviewRow label="Premium Listings" value={data.stats.premiumListings} />
-              <OverviewRow label="Registered Users" value={data.stats.totalUsers} />
-              <OverviewRow label="New Users (7d)" value={data.stats.newUsersThisWeek} />
+              <OverviewRow label="Pending Review" value={data.creatives.pendingReview} highlight={data.creatives.pendingReview > 0} />
+              <OverviewRow label="Approved (queue)" value={data.creatives.approved} />
+              <OverviewRow label="Posted (7 days)" value={data.creatives.postedThisWeek} />
+              <OverviewRow label="Days of content" value={Math.floor(data.creatives.approved / 4)} warn={data.creatives.approved < 14} />
             </div>
+          </section>
+
+          {/* Discovery Summary */}
+          <section className="bg-white rounded-xl border p-5">
+            <h2 className="font-semibold text-gray-900 mb-3">Discovery</h2>
+            <div className="space-y-2">
+              <OverviewRow label="Needs Review" value={data.discovery.needsReview} highlight={data.discovery.needsReview > 0} />
+              <OverviewRow label="Processing" value={data.discovery.pending} />
+            </div>
+          </section>
+
+          {/* Subscriber Snapshot */}
+          <section className="bg-white rounded-xl border p-5">
+            <h2 className="font-semibold text-gray-900 mb-3">Subscribers</h2>
+            <div className="flex items-baseline gap-2 mb-1">
+              <span className="text-3xl font-bold text-gray-900">{data.subscribers.total}</span>
+              <span className="text-sm text-gray-500">active</span>
+            </div>
+            {data.subscribers.newThisWeek > 0 && (
+              <p className="text-sm text-green-600 font-medium">+{data.subscribers.newThisWeek} this week</p>
+            )}
           </section>
         </div>
       </div>
@@ -397,16 +561,16 @@ export default function AdminDashboard() {
 
 // ── Helper Components ────────────────────────────────────────────────────────
 
-function MiniStat({ label, value, icon, sub, href }: {
-  label: string; value: number; icon: string; sub?: string; href?: string;
+function MiniStat({ label, value, icon, sub, href, warn }: {
+  label: string; value: number; icon: string; sub?: string; href?: string; warn?: boolean;
 }) {
   const inner = (
-    <div className={`bg-white rounded-xl border p-4 ${href ? 'hover:shadow-sm transition-shadow cursor-pointer' : ''}`}>
+    <div className={`bg-white rounded-xl border p-4 ${href ? 'hover:shadow-sm transition-shadow cursor-pointer' : ''} ${warn ? 'border-orange-200' : ''}`}>
       <div className="flex items-center justify-between mb-1">
         <span className="text-xs font-medium text-gray-500">{label}</span>
         <span className="text-base">{icon}</span>
       </div>
-      <p className="text-2xl font-bold text-gray-900">{value}</p>
+      <p className={`text-2xl font-bold ${warn ? 'text-orange-600' : 'text-gray-900'}`}>{value}</p>
       {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
     </div>
   );
@@ -421,11 +585,13 @@ function ActionBadge({ count, label, color, href }: {
     blue: 'bg-blue-50 text-blue-700 border-blue-200',
     amber: 'bg-amber-50 text-amber-700 border-amber-200',
     green: 'bg-green-50 text-green-700 border-green-200',
+    purple: 'bg-purple-50 text-purple-700 border-purple-200',
+    cyan: 'bg-cyan-50 text-cyan-700 border-cyan-200',
   };
   return (
-    <Link href={href} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-sm font-medium ${colors[color] || colors.blue}`}>
+    <a href={href} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-sm font-medium transition-colors hover:opacity-80 ${colors[color] || colors.blue}`}>
       <span className="font-bold">{count}</span> {label}
-    </Link>
+    </a>
   );
 }
 
@@ -441,13 +607,13 @@ function PipelineStat({ label, value, icon, warn }: {
   );
 }
 
-function OverviewRow({ label, value, highlight }: {
-  label: string; value: number; highlight?: boolean;
+function OverviewRow({ label, value, highlight, warn }: {
+  label: string; value: number; highlight?: boolean; warn?: boolean;
 }) {
   return (
     <div className="flex items-center justify-between py-1">
       <span className="text-sm text-gray-600">{label}</span>
-      <span className={`text-sm font-bold ${highlight ? 'text-orange-600' : 'text-gray-900'}`}>{value}</span>
+      <span className={`text-sm font-bold ${highlight ? 'text-orange-600' : warn ? 'text-orange-600' : 'text-gray-900'}`}>{value}</span>
     </div>
   );
 }

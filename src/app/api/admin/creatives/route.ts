@@ -515,6 +515,17 @@ export async function PATCH(request: NextRequest) {
   const body = await request.json();
   const { id, action } = body;
 
+  // ── Approve all pending (no id required) ────────────────────────────────────
+  if (action === 'approve_all') {
+    const { error, count } = await supabase
+      .from('creative_queue')
+      .update({ status: 'approved' })
+      .eq('status', 'pending_review');
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ success: true, approved: count });
+  }
+
   if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
 
   // ── Approve ──────────────────────────────────────────────────────────────────
@@ -587,17 +598,6 @@ export async function PATCH(request: NextRequest) {
 
     if (updateError) return NextResponse.json({ error: updateError.message }, { status: 500 });
     return NextResponse.json({ success: true, image_url: dalleResult.publicUrl });
-  }
-
-  // ── Approve all pending ──────────────────────────────────────────────────────
-  if (action === 'approve_all') {
-    const { error, count } = await supabase
-      .from('creative_queue')
-      .update({ status: 'approved' })
-      .eq('status', 'pending_review');
-
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json({ success: true, approved: count });
   }
 
   return NextResponse.json({ error: 'Unknown action' }, { status: 400 });

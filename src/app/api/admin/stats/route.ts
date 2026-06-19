@@ -37,6 +37,16 @@ export async function GET(request: NextRequest) {
       subscribers, newSubscribers,
       socialOpportunities, unrepliedComments, socialPosts,
       recentPosts, pendingEventsData,
+      // Creative queue stats
+      pendingCreatives, approvedCreatives, postedCreatives7d,
+      pendingCreativesData,
+      // Ingest/discovery queue stats
+      ingestNeedsReview, ingestPending,
+      ingestNeedsReviewData,
+      // Photo moderation
+      pendingPhotos,
+      // Validation queue
+      pendingValidation,
     ] = await Promise.all([
       // Core stats
       safe(supabase.from('cities').select('*', { count: 'exact', head: true }), 'cities'),
@@ -76,6 +86,35 @@ export async function GET(request: NextRequest) {
         .eq('status', 'PENDING')
         .order('created_at', { ascending: false })
         .limit(10), 'pendingEventsData'),
+
+      // Creative queue stats
+      safe(supabase.from('creative_queue').select('*', { count: 'exact', head: true }).eq('status', 'pending_review'), 'pendingCreatives'),
+      safe(supabase.from('creative_queue').select('*', { count: 'exact', head: true }).eq('status', 'approved'), 'approvedCreatives'),
+      safe(supabase.from('creative_queue').select('*', { count: 'exact', head: true }).eq('status', 'posted').gte('posted_at', oneWeekAgo), 'postedCreatives7d'),
+
+      // Pending creatives data for inline approval (last 12)
+      safe(supabase.from('creative_queue')
+        .select('id, headline, caption, content_type, format, city_slug, image_url, status, created_at')
+        .eq('status', 'pending_review')
+        .order('created_at', { ascending: false })
+        .limit(12), 'pendingCreativesData'),
+
+      // Ingest/discovery queue stats
+      safe(supabase.from('ingest_queue').select('*', { count: 'exact', head: true }).eq('status', 'needs_review'), 'ingestNeedsReview'),
+      safe(supabase.from('ingest_queue').select('*', { count: 'exact', head: true }).eq('status', 'pending'), 'ingestPending'),
+
+      // Ingest needs_review data for inline review (last 10)
+      safe(supabase.from('ingest_queue')
+        .select('id, subject, url, city, platform, content_type, priority, status, created_at, raw_text')
+        .eq('status', 'needs_review')
+        .order('created_at', { ascending: false })
+        .limit(10), 'ingestNeedsReviewData'),
+
+      // Photo moderation count
+      safe(supabase.from('establishment_photos').select('*', { count: 'exact', head: true }).eq('status', 'pending'), 'pendingPhotos'),
+
+      // Validation queue count
+      safe(supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('status', 'PENDING'), 'pendingValidation'),
     ]);
 
     // Compute content remaining
@@ -94,6 +133,8 @@ export async function GET(request: NextRequest) {
         pendingClaims: pendingClaims.count || 0,
         newUsersThisWeek: newUsers.count || 0,
         premiumListings: premium.count || 0,
+        pendingPhotos: pendingPhotos.count || 0,
+        pendingValidation: pendingValidation.count || 0,
       },
       events: {
         pending: pendingEvents.count || 0,
@@ -112,7 +153,18 @@ export async function GET(request: NextRequest) {
         lastPostDate,
         recentPosts: recentPosts.data || [],
       },
+      creatives: {
+        pendingReview: pendingCreatives.count || 0,
+        approved: approvedCreatives.count || 0,
+        postedThisWeek: postedCreatives7d.count || 0,
+      },
+      discovery: {
+        needsReview: ingestNeedsReview.count || 0,
+        pending: ingestPending.count || 0,
+      },
       pendingEventsData: pendingEventsData.data || [],
+      pendingCreativesData: pendingCreativesData.data || [],
+      discoveryData: ingestNeedsReviewData.data || [],
       recentActivities: recentActivity.data || [],
     });
   } catch (error: any) {
