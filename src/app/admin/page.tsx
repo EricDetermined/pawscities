@@ -67,6 +67,11 @@ export default function AdminDashboard() {
   const [error, setError] = useState<string | null>(null);
   const [actioningId, setActioningId] = useState<string | null>(null);
   const [expandedDiscovery, setExpandedDiscovery] = useState<string | null>(null);
+  const [creatingEventForId, setCreatingEventForId] = useState<string | null>(null);
+  const [eventForm, setEventForm] = useState<{
+    name: string; citySlug: string; startDate: string; endDate: string;
+    venueName: string; venueAddress: string; externalUrl: string; description: string;
+  }>({ name: '', citySlug: '', startDate: '', endDate: '', venueName: '', venueAddress: '', externalUrl: '', description: '' });
 
   const fetchData = useCallback(async () => {
     try {
@@ -146,6 +151,47 @@ export default function AdminDashboard() {
       });
       if (res.ok) fetchData();
     } catch { /* silent */ } finally { setActioningId(null); }
+  };
+
+  const openCreateEventForm = (item: DashboardData['discoveryData'][0]) => {
+    setCreatingEventForId(item.id);
+    setExpandedDiscovery(item.id);
+    const cityAliases: Record<string, string> = { nyc: 'newyork', ny: 'newyork', la: 'losangeles', 'los angeles': 'losangeles' };
+    const rawCity = (item.city || '').toLowerCase().trim();
+    const citySlug = cityAliases[rawCity] || rawCity;
+    setEventForm({
+      name: item.subject || '',
+      citySlug,
+      startDate: '',
+      endDate: '',
+      venueName: '',
+      venueAddress: '',
+      externalUrl: item.url || '',
+      description: item.raw_text?.slice(0, 500) || '',
+    });
+  };
+
+  const handleCreateEvent = async (itemId: string) => {
+    if (!eventForm.name || !eventForm.startDate || !eventForm.citySlug) {
+      alert('Name, city, and start date are required');
+      return;
+    }
+    setActioningId(itemId);
+    try {
+      const res = await fetch(`/api/admin/ingest/${itemId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'create_event', ...eventForm }),
+      });
+      if (res.ok) {
+        setCreatingEventForId(null);
+        fetchData();
+      } else {
+        const d = await res.json();
+        alert(d.error || 'Failed to create event');
+      }
+    } catch { alert('Failed to create event'); }
+    finally { setActioningId(null); }
   };
 
   // ── Loading / Error states ─────────────────────────────────────────────
@@ -411,11 +457,14 @@ export default function AdminDashboard() {
               {data.discoveryData.length === 0 ? (
                 <div className="p-6 text-center text-gray-400 text-sm">No discovery items need review</div>
               ) : (
-                data.discoveryData.map(item => (
-                  <div key={item.id} className="hover:bg-gray-50 transition-colors">
+                data.discoveryData.map(item => {
+                  const isExpanded = expandedDiscovery === item.id;
+                  const isCreating = creatingEventForId === item.id;
+                  return (
+                  <div key={item.id} className={`transition-colors ${isCreating ? 'bg-green-50/30' : 'hover:bg-gray-50'}`}>
                     <div
                       className="p-4 flex items-start gap-4 cursor-pointer"
-                      onClick={() => setExpandedDiscovery(expandedDiscovery === item.id ? null : item.id)}
+                      onClick={() => setExpandedDiscovery(isExpanded ? null : item.id)}
                     >
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-gray-900 text-sm truncate">{item.subject}</p>
@@ -429,11 +478,10 @@ export default function AdminDashboard() {
                       {item.status === 'needs_review' && (
                         <div className="flex items-center gap-1.5 shrink-0" onClick={e => e.stopPropagation()}>
                           <button
-                            onClick={() => handleIngestAction(item.id, 'reprocess')}
-                            disabled={actioningId === item.id}
-                            className="px-2 py-1 text-xs font-medium text-blue-600 bg-blue-50 rounded hover:bg-blue-100 disabled:opacity-50 transition-colors"
+                            onClick={() => isCreating ? setCreatingEventForId(null) : openCreateEventForm(item)}
+                            className={`px-2 py-1 text-xs font-medium rounded transition-colors ${isCreating ? 'text-gray-600 bg-gray-200' : 'text-green-700 bg-green-100 hover:bg-green-200'}`}
                           >
-                            {actioningId === item.id ? '...' : 'Reprocess'}
+                            {isCreating ? 'Cancel' : 'Create Event'}
                           </button>
                           <button
                             onClick={() => handleIngestAction(item.id, 'dismiss')}
@@ -458,7 +506,7 @@ export default function AdminDashboard() {
                         </div>
                       )}
                       <div className="shrink-0 text-gray-400">
-                        <svg className={`w-4 h-4 transition-transform ${expandedDiscovery === item.id ? 'rotate-180' : ''}`}
+                        <svg className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
@@ -466,28 +514,118 @@ export default function AdminDashboard() {
                     </div>
 
                     {/* Expanded detail view */}
-                    {expandedDiscovery === item.id && (
+                    {isExpanded && (
                       <div className="px-4 pb-4 space-y-3">
-                        {item.raw_text && (
+                        {item.raw_text && !isCreating && (
                           <div className="bg-gray-50 rounded-lg p-3">
                             <p className="text-xs text-gray-600 whitespace-pre-wrap line-clamp-6">{item.raw_text}</p>
                           </div>
                         )}
-                        <div className="flex items-center gap-3">
-                          {item.url && (
-                            <a href={item.url} target="_blank" rel="noopener noreferrer"
-                               className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                              View source ↗
-                            </a>
-                          )}
-                          <span className="text-xs text-gray-400">
-                            Status: {item.status} · Type: {item.content_type || 'unknown'}
-                          </span>
-                        </div>
+                        {!isCreating && (
+                          <div className="flex items-center gap-3">
+                            {item.url && (
+                              <a href={item.url} target="_blank" rel="noopener noreferrer"
+                                 className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1">
+                                View source ↗
+                              </a>
+                            )}
+                            <span className="text-xs text-gray-400">
+                              Status: {item.status} · Type: {item.content_type || 'unknown'}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Inline Create Event form */}
+                        {isCreating && (
+                          <div className="border-t border-green-200 pt-3">
+                            <div className="grid grid-cols-2 gap-2 mb-2">
+                              <div>
+                                <label className="text-xs text-gray-500">Event Name *</label>
+                                <input
+                                  type="text" value={eventForm.name}
+                                  onChange={e => setEventForm(f => ({ ...f, name: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg focus:ring-1 focus:ring-green-400 focus:border-green-400"
+                                  placeholder="Event name"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500">City *</label>
+                                <select
+                                  value={eventForm.citySlug}
+                                  onChange={e => setEventForm(f => ({ ...f, citySlug: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg focus:ring-1 focus:ring-green-400 focus:border-green-400"
+                                >
+                                  <option value="">Select city</option>
+                                  <option value="newyork">New York</option>
+                                  <option value="london">London</option>
+                                  <option value="paris">Paris</option>
+                                  <option value="tokyo">Tokyo</option>
+                                  <option value="sydney">Sydney</option>
+                                  <option value="losangeles">Los Angeles</option>
+                                  <option value="barcelona">Barcelona</option>
+                                  <option value="geneva">Geneva</option>
+                                </select>
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500">Start Date *</label>
+                                <input
+                                  type="date" value={eventForm.startDate}
+                                  onChange={e => setEventForm(f => ({ ...f, startDate: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg focus:ring-1 focus:ring-green-400 focus:border-green-400"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500">End Date</label>
+                                <input
+                                  type="date" value={eventForm.endDate}
+                                  onChange={e => setEventForm(f => ({ ...f, endDate: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg focus:ring-1 focus:ring-green-400 focus:border-green-400"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500">Venue</label>
+                                <input
+                                  type="text" value={eventForm.venueName}
+                                  onChange={e => setEventForm(f => ({ ...f, venueName: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg"
+                                  placeholder="Venue name"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500">URL</label>
+                                <input
+                                  type="text" value={eventForm.externalUrl}
+                                  onChange={e => setEventForm(f => ({ ...f, externalUrl: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg"
+                                  placeholder="https://..."
+                                />
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-end gap-2 mt-2">
+                              <span className="text-xs text-gray-400 mr-auto">
+                                {!eventForm.name ? '⚠ Name required' : !eventForm.startDate ? '⚠ Date required' : !eventForm.citySlug ? '⚠ City required' : '✓ Ready to create'}
+                              </span>
+                              <button
+                                onClick={() => setCreatingEventForId(null)}
+                                className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                              >
+                                Cancel
+                              </button>
+                              <button
+                                onClick={() => handleCreateEvent(item.id)}
+                                disabled={actioningId === item.id || !eventForm.name || !eventForm.startDate || !eventForm.citySlug}
+                                className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                              >
+                                {actioningId === item.id ? 'Creating...' : 'Create & Approve Event'}
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
-                ))
+                  );
+                })
               )}
             </div>
             {data.discovery.needsReview > data.discoveryData.length && (

@@ -291,6 +291,53 @@ export default function SocialCommandCenter() {
 
   // Ingest queue action handler
   const [actioningIngestId, setActioningIngestId] = useState<string | null>(null);
+  const [creatingEventForId, setCreatingEventForId] = useState<string | null>(null);
+  const [eventForm, setEventForm] = useState<{
+    name: string; citySlug: string; startDate: string; endDate: string;
+    venueName: string; venueAddress: string; externalUrl: string; description: string;
+  }>({ name: '', citySlug: '', startDate: '', endDate: '', venueName: '', venueAddress: '', externalUrl: '', description: '' });
+
+  const openCreateEventForm = (item: DiscoveryItem) => {
+    setCreatingEventForId(item.id);
+    // Pre-fill from whatever data the discovery item has
+    const cityAliases: Record<string, string> = { nyc: 'newyork', ny: 'newyork', la: 'losangeles', 'los angeles': 'losangeles' };
+    const rawCity = (item.city || '').toLowerCase().trim();
+    const citySlug = cityAliases[rawCity] || rawCity;
+    setEventForm({
+      name: item.subject || '',
+      citySlug,
+      startDate: '',
+      endDate: '',
+      venueName: '',
+      venueAddress: '',
+      externalUrl: item.url || '',
+      description: item.raw_text?.slice(0, 500) || '',
+    });
+  };
+
+  const handleCreateEvent = async (itemId: string) => {
+    if (!eventForm.name || !eventForm.startDate || !eventForm.citySlug) {
+      alert('Name, city, and start date are required');
+      return;
+    }
+    setActioningIngestId(itemId);
+    try {
+      const res = await fetch(`/api/admin/ingest/${itemId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'create_event', ...eventForm }),
+      });
+      if (res.ok) {
+        setCreatingEventForId(null);
+        setDiscoveryItems(prev => prev.filter(d => d.id !== itemId));
+        fetchData();
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Failed to create event');
+      }
+    } catch { alert('Failed to create event'); }
+    finally { setActioningIngestId(null); }
+  };
 
   const handleIngestAction = async (itemId: string, action: 'dismiss' | 'reprocess') => {
     setActioningIngestId(itemId);
@@ -479,58 +526,147 @@ export default function SocialCommandCenter() {
                 </div>
 
                 {/* Recent discovery items */}
-                <div className="space-y-2 max-h-80 overflow-y-auto">
+                <div className="space-y-2 max-h-[500px] overflow-y-auto">
                   {discoveryItems.slice(0, 20).map(item => {
                     const title = item.subject || item.raw_text?.split('\n')[0]?.slice(0, 80) || 'Untitled';
                     const sourceLabel = item.source === 'google_events' ? 'Google' : item.source;
+                    const isExpanded = creatingEventForId === item.id;
                     return (
-                      <div key={item.id} className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-50 border border-gray-100">
-                        <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.status === 'processed' ? 'bg-green-400' : item.status === 'needs_review' ? 'bg-amber-400' : item.status === 'failed' ? 'bg-red-400' : 'bg-gray-300'}`} />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm text-gray-900 truncate">{title.slice(0, 80)}</p>
-                          <div className="flex items-center gap-1.5 text-xs text-gray-400">
-                            <span>{sourceLabel}</span>
-                            <span>&middot;</span>
-                            <span>{item.city || 'unknown'}</span>
-                            <span>&middot;</span>
-                            <span>{new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
-                            {item.url && (
-                              <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline ml-1">↗</a>
-                            )}
+                      <div key={item.id} className={`rounded-lg border ${isExpanded ? 'border-green-300 bg-green-50/30' : 'border-gray-100 hover:bg-gray-50'}`}>
+                        <div className="flex items-center gap-3 py-2 px-3">
+                          <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.status === 'processed' ? 'bg-green-400' : item.status === 'needs_review' ? 'bg-amber-400' : item.status === 'failed' ? 'bg-red-400' : 'bg-gray-300'}`} />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm text-gray-900 truncate">{title.slice(0, 80)}</p>
+                            <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                              <span>{sourceLabel}</span>
+                              <span>&middot;</span>
+                              <span>{item.city || 'unknown'}</span>
+                              <span>&middot;</span>
+                              <span>{new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+                              {item.url && (
+                                <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline ml-1">↗</a>
+                              )}
+                            </div>
+                            {item.error_message && <p className="text-xs text-amber-500 mt-0.5 truncate">{item.error_message}</p>}
                           </div>
-                          {item.error_message && <p className="text-xs text-amber-500 mt-0.5 truncate">{item.error_message}</p>}
+                          {item.status === 'needs_review' ? (
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <button
+                                onClick={() => isExpanded ? setCreatingEventForId(null) : openCreateEventForm(item)}
+                                className={`px-2 py-1 text-xs font-medium rounded transition-colors ${isExpanded ? 'text-gray-600 bg-gray-200' : 'text-green-700 bg-green-100 hover:bg-green-200'}`}
+                              >
+                                {isExpanded ? 'Cancel' : 'Create Event'}
+                              </button>
+                              <button
+                                onClick={() => handleIngestAction(item.id, 'dismiss')}
+                                disabled={actioningIngestId === item.id}
+                                className="px-2 py-1 text-xs font-medium text-gray-500 bg-gray-100 rounded hover:bg-red-50 hover:text-red-600 disabled:opacity-50 transition-colors"
+                              >
+                                Dismiss
+                              </button>
+                            </div>
+                          ) : item.status === 'processed' ? (
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <span className="text-xs text-green-600 font-medium">Processed</span>
+                              <button
+                                onClick={() => handleIngestAction(item.id, 'dismiss')}
+                                disabled={actioningIngestId === item.id}
+                                className="px-1 py-0.5 text-xs text-gray-400 hover:text-red-500 disabled:opacity-50 transition-colors"
+                                title="Remove from list"
+                              >
+                                x
+                              </button>
+                            </div>
+                          ) : (
+                            <span className={`text-xs font-medium whitespace-nowrap ${item.status === 'failed' ? 'text-red-500' : 'text-gray-400'}`}>{item.status}</span>
+                          )}
                         </div>
-                        {item.status === 'needs_review' ? (
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <button
-                              onClick={() => handleIngestAction(item.id, 'reprocess')}
-                              disabled={actioningIngestId === item.id}
-                              className="px-2 py-1 text-xs font-medium text-blue-600 bg-blue-50 rounded hover:bg-blue-100 disabled:opacity-50 transition-colors"
-                            >
-                              {actioningIngestId === item.id ? '...' : 'Reprocess'}
-                            </button>
-                            <button
-                              onClick={() => handleIngestAction(item.id, 'dismiss')}
-                              disabled={actioningIngestId === item.id}
-                              className="px-2 py-1 text-xs font-medium text-gray-500 bg-gray-100 rounded hover:bg-red-50 hover:text-red-600 disabled:opacity-50 transition-colors"
-                            >
-                              Dismiss
-                            </button>
+
+                        {/* Inline Create Event form */}
+                        {isExpanded && (
+                          <div className="px-3 pb-3 pt-1 border-t border-green-200">
+                            <div className="grid grid-cols-2 gap-2 mb-2">
+                              <div>
+                                <label className="text-xs text-gray-500">Event Name *</label>
+                                <input
+                                  type="text" value={eventForm.name}
+                                  onChange={e => setEventForm(f => ({ ...f, name: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg focus:ring-1 focus:ring-green-400 focus:border-green-400"
+                                  placeholder="Event name"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500">City *</label>
+                                <select
+                                  value={eventForm.citySlug}
+                                  onChange={e => setEventForm(f => ({ ...f, citySlug: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg focus:ring-1 focus:ring-green-400 focus:border-green-400"
+                                >
+                                  <option value="">Select city</option>
+                                  <option value="newyork">New York</option>
+                                  <option value="london">London</option>
+                                  <option value="paris">Paris</option>
+                                  <option value="tokyo">Tokyo</option>
+                                  <option value="sydney">Sydney</option>
+                                  <option value="losangeles">Los Angeles</option>
+                                  <option value="barcelona">Barcelona</option>
+                                  <option value="geneva">Geneva</option>
+                                </select>
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500">Start Date *</label>
+                                <input
+                                  type="date" value={eventForm.startDate}
+                                  onChange={e => setEventForm(f => ({ ...f, startDate: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg focus:ring-1 focus:ring-green-400 focus:border-green-400"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500">End Date</label>
+                                <input
+                                  type="date" value={eventForm.endDate}
+                                  onChange={e => setEventForm(f => ({ ...f, endDate: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg focus:ring-1 focus:ring-green-400 focus:border-green-400"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500">Venue</label>
+                                <input
+                                  type="text" value={eventForm.venueName}
+                                  onChange={e => setEventForm(f => ({ ...f, venueName: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg"
+                                  placeholder="Venue name"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-xs text-gray-500">URL</label>
+                                <input
+                                  type="text" value={eventForm.externalUrl}
+                                  onChange={e => setEventForm(f => ({ ...f, externalUrl: e.target.value }))}
+                                  className="w-full px-2 py-1.5 text-sm border rounded-lg"
+                                  placeholder="https://..."
+                                />
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-end gap-2 mt-2">
+                              <span className="text-xs text-gray-400 mr-auto">
+                                {!eventForm.name ? '⚠ Name required' : !eventForm.startDate ? '⚠ Date required' : !eventForm.citySlug ? '⚠ City required' : '✓ Ready to create'}
+                              </span>
+                              <button
+                                onClick={() => setCreatingEventForId(null)}
+                                className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                              >
+                                Cancel
+                              </button>
+                              <button
+                                onClick={() => handleCreateEvent(item.id)}
+                                disabled={actioningIngestId === item.id || !eventForm.name || !eventForm.startDate || !eventForm.citySlug}
+                                className="px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                              >
+                                {actioningIngestId === item.id ? 'Creating...' : 'Create & Approve Event'}
+                              </button>
+                            </div>
                           </div>
-                        ) : item.status === 'processed' ? (
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <span className="text-xs text-green-600 font-medium">Processed</span>
-                            <button
-                              onClick={() => handleIngestAction(item.id, 'dismiss')}
-                              disabled={actioningIngestId === item.id}
-                              className="px-1 py-0.5 text-xs text-gray-400 hover:text-red-500 disabled:opacity-50 transition-colors"
-                              title="Remove from list"
-                            >
-                              x
-                            </button>
-                          </div>
-                        ) : (
-                          <span className={`text-xs font-medium whitespace-nowrap ${item.status === 'failed' ? 'text-red-500' : 'text-gray-400'}`}>{item.status}</span>
                         )}
                       </div>
                     );
