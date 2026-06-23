@@ -218,7 +218,7 @@ async function replyToQueue(
   const postIds = [...new Set(candidates.map(c => c.post_id))];
   const { data: posts } = await supabase
     .from('social_posts')
-    .select('post_id, caption, permalink')
+    .select('post_id, caption')
     .in('post_id', postIds);
   const postMap = new Map(posts?.map(p => [p.post_id, p]) || []);
 
@@ -231,7 +231,7 @@ async function replyToQueue(
       comment.username,
       post?.caption || '',
       comment.sentiment || 'neutral',
-      post?.permalink,
+      undefined,
       OPENAI_KEY,
     );
 

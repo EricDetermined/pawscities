@@ -475,6 +475,7 @@ export interface MarketingDigestData {
   events?: {
     newDiscovered: number;
     pendingReview: number;
+    discoveryNeedsReview?: number;
   };
   // Creative queue health (unified pipeline)
   creativeQueue?: {
@@ -612,9 +613,11 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
     ? `${sectionHeader('📅', 'Events', 'Weekly discovery results')}
        <tr><td style="padding:8px 0;">
          <p style="font-size:13px;color:#333;margin:4px 0;">
-           ${data.events.newDiscovered} new event candidates discovered · ${data.events.pendingReview} pending review
+           ${data.events.newDiscovered} new event candidates discovered${data.events.pendingReview > 0 ? ` · <strong>${data.events.pendingReview} pending approval</strong>` : ''}${data.events.discoveryNeedsReview ? ` · ${data.events.discoveryNeedsReview} discovery items to review` : ''}
          </p>
-         ${ctaButton('Review Events', `${getAppUrl()}/admin/events`)}
+         ${data.events.pendingReview > 0
+           ? ctaButton('Approve Pending Events', `${getAppUrl()}/admin/events`)
+           : ctaButton('Review on Dashboard', `${getAppUrl()}/admin`)}
        </td></tr>`
     : '';
 

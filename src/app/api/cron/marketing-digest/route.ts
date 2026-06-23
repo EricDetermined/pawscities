@@ -154,20 +154,46 @@ export async function GET(request: NextRequest) {
     // ═══════════════════════════════════════════════════════════════
     const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
-    const { data: recentPosts } = await supabase
-      .from('social_posts')
-      .select('headline, city, likes, comments_count, permalink, post_id')
-      .eq('status', 'published')
-      .gte('created_at', oneDayAgo)
-      .order('created_at', { ascending: false });
+    // Query creative_queue for posts published in last 24h (authoritative source)
+    // The social_posts table has schema drift issues; creative_queue is always updated by the posting cron
+    const { data: recentPostedCreatives } = await supabase
+      .from('creative_queue')
+      .select('headline, city, posted_at, social_post_id, narrator, content_type')
+      .eq('status', 'posted')
+      .gte('posted_at', oneDayAgo)
+      .order('posted_at', { ascending: false });
 
-    const publishedPosts = (recentPosts || []).map(p => ({
-      headline: p.headline || 'Untitled',
-      city: p.city || 'unknown',
-      likes: p.likes || 0,
-      comments: p.comments_count || 0,
-      permalink: p.permalink || `https://instagram.com/p/${p.post_id || ''}`,
-    }));
+    // Look up engagement stats from social_posts for any that have them
+    const socialPostIds = (recentPostedCreatives || [])
+      .map(c => c.social_post_id)
+      .filter(Boolean);
+
+    let engagementMap: Record<string, { likes: number; comments: number }> = {};
+    if (socialPostIds.length > 0) {
+      const { data: socialPosts } = await supabase
+        .from('social_posts')
+        .select('id, likes, comments_count')
+        .in('id', socialPostIds);
+      if (socialPosts) {
+        for (const sp of socialPosts) {
+          engagementMap[sp.id] = {
+            likes: sp.likes || 0,
+            comments: sp.comments_count || 0,
+          };
+        }
+      }
+    }
+
+    const publishedPosts = (recentPostedCreatives || []).map(p => {
+      const engagement = engagementMap[p.social_post_id] || { likes: 0, comments: 0 };
+      return {
+        headline: p.headline || 'Untitled',
+        city: p.city || 'unknown',
+        likes: engagement.likes,
+        comments: engagement.comments,
+        permalink: 'https://www.instagram.com/thepawcities/',
+      };
+    });
 
     // ─── Failed Posts (last 24 hours) ──────────────────
     const { data: failedPosts } = await supabase
@@ -194,13 +220,8 @@ export async function GET(request: NextRequest) {
 
     const creativesRemaining = (approvedCreatives || []).length;
 
-    // What was posted yesterday from the creative pipeline
-    const { data: postedCreatives } = await supabase
-      .from('creative_queue')
-      .select('headline, narrator, city, content_type, posted_at, social_post_id')
-      .eq('status', 'posted')
-      .gte('posted_at', oneDayAgo)
-      .order('posted_at', { ascending: false });
+    // Reuse the already-fetched posted creatives from the "Posts Published" section above
+    const postedCreatives = recentPostedCreatives;
 
     // What needs review (pending_review)
     const { count: needsReviewCount } = await supabase
@@ -237,7 +258,7 @@ export async function GET(request: NextRequest) {
     // ═══════════════════════════════════════════════════════════════
     const { data: allPosts } = await supabase
       .from('social_posts')
-      .select('likes, comments_count, permalink, caption, engagement_score')
+      .select('likes, comments_count, caption, engagement_score, post_id')
       .eq('status', 'published')
       .not('post_id', 'is', null);
 
@@ -317,10 +338,17 @@ export async function GET(request: NextRequest) {
       .select('*', { count: 'exact', head: true })
       .eq('status', 'PENDING');
 
-    if ((newEventCount || 0) > 0 || (pendingEventCount || 0) > 0) {
+    // Count discovery items that need review (ingest_queue)
+    const { count: discoveryNeedsReviewCount } = await supabase
+      .from('ingest_queue')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'needs_review');
+
+    if ((newEventCount || 0) > 0 || (pendingEventCount || 0) > 0 || (discoveryNeedsReviewCount || 0) > 0) {
       eventsData = {
         newDiscovered: newEventCount || 0,
         pendingReview: pendingEventCount || 0,
+        discoveryNeedsReview: discoveryNeedsReviewCount || 0,
       };
     }
 
@@ -358,7 +386,7 @@ export async function GET(request: NextRequest) {
         avgLikes,
         avgComments,
         topPost: topPost ? {
-          permalink: topPost.permalink || '',
+          permalink: 'https://www.instagram.com/thepawcities/',
           likes: topPost.likes || 0,
           comments: topPost.comments_count || 0,
           caption: (topPost.caption || '').substring(0, 150),
