@@ -123,6 +123,31 @@ export default function AdminDashboard() {
     } catch { /* silent */ } finally { setActioningId(null); }
   };
 
+  const handleIngestAction = async (itemId: string, action: 'dismiss' | 'reprocess') => {
+    setActioningId(itemId);
+    try {
+      const res = await fetch(`/api/admin/ingest/${itemId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action }),
+      });
+      if (res.ok) fetchData();
+    } catch { /* silent */ } finally { setActioningId(null); }
+  };
+
+  const handleBulkDismissIngest = async () => {
+    if (!data?.discoveryData?.length) return;
+    setActioningId('bulk-ingest');
+    try {
+      const res = await fetch('/api/admin/ingest', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'dismiss_all' }),
+      });
+      if (res.ok) fetchData();
+    } catch { /* silent */ } finally { setActioningId(null); }
+  };
+
   // ── Loading / Error states ─────────────────────────────────────────────
 
   if (loading) {
@@ -369,7 +394,18 @@ export default function AdminDashboard() {
                   <span className="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-0.5 rounded-full">{data.discovery.needsReview}</span>
                 )}
               </div>
-              <Link href="/admin/social" className="text-sm text-orange-600 hover:text-orange-700">Open Social Hub →</Link>
+              <div className="flex items-center gap-2">
+                {data.discoveryData.filter(d => d.status === 'needs_review').length > 0 && (
+                  <button
+                    onClick={handleBulkDismissIngest}
+                    disabled={actioningId === 'bulk-ingest'}
+                    className="text-xs text-gray-500 hover:text-red-600 px-2 py-1 rounded hover:bg-red-50 disabled:opacity-50 transition-colors"
+                  >
+                    {actioningId === 'bulk-ingest' ? 'Dismissing...' : 'Dismiss All'}
+                  </button>
+                )}
+                <Link href="/admin/social" className="text-sm text-orange-600 hover:text-orange-700">Open Social Hub →</Link>
+              </div>
             </div>
             <div className="divide-y">
               {data.discoveryData.length === 0 ? (
@@ -390,6 +426,37 @@ export default function AdminDashboard() {
                           <span className="text-gray-400">{timeAgo(item.created_at)}</span>
                         </div>
                       </div>
+                      {item.status === 'needs_review' && (
+                        <div className="flex items-center gap-1.5 shrink-0" onClick={e => e.stopPropagation()}>
+                          <button
+                            onClick={() => handleIngestAction(item.id, 'reprocess')}
+                            disabled={actioningId === item.id}
+                            className="px-2 py-1 text-xs font-medium text-blue-600 bg-blue-50 rounded hover:bg-blue-100 disabled:opacity-50 transition-colors"
+                          >
+                            {actioningId === item.id ? '...' : 'Reprocess'}
+                          </button>
+                          <button
+                            onClick={() => handleIngestAction(item.id, 'dismiss')}
+                            disabled={actioningId === item.id}
+                            className="px-2 py-1 text-xs font-medium text-gray-500 bg-gray-100 rounded hover:bg-red-50 hover:text-red-600 disabled:opacity-50 transition-colors"
+                          >
+                            Dismiss
+                          </button>
+                        </div>
+                      )}
+                      {item.status === 'processed' && (
+                        <div className="flex items-center gap-1.5 shrink-0" onClick={e => e.stopPropagation()}>
+                          <span className="text-xs text-green-600 font-medium">Processed</span>
+                          <button
+                            onClick={() => handleIngestAction(item.id, 'dismiss')}
+                            disabled={actioningId === item.id}
+                            className="px-2 py-1 text-xs text-gray-400 hover:text-red-500 disabled:opacity-50 transition-colors"
+                            title="Remove from list"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      )}
                       <div className="shrink-0 text-gray-400">
                         <svg className={`w-4 h-4 transition-transform ${expandedDiscovery === item.id ? 'rotate-180' : ''}`}
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">

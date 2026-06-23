@@ -289,6 +289,48 @@ export default function SocialCommandCenter() {
     });
   };
 
+  // Ingest queue action handler
+  const [actioningIngestId, setActioningIngestId] = useState<string | null>(null);
+
+  const handleIngestAction = async (itemId: string, action: 'dismiss' | 'reprocess') => {
+    setActioningIngestId(itemId);
+    try {
+      const res = await fetch(`/api/admin/ingest/${itemId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action }),
+      });
+      if (res.ok) {
+        // Optimistic: remove item from local state
+        setDiscoveryItems(prev => prev.filter(d => d.id !== itemId));
+        fetchData();
+      }
+    } catch (err) {
+      console.error('Ingest action failed:', err);
+    } finally {
+      setActioningIngestId(null);
+    }
+  };
+
+  const handleBulkDismissIngest = async () => {
+    setActioningIngestId('bulk');
+    try {
+      const res = await fetch('/api/admin/ingest', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'dismiss_all' }),
+      });
+      if (res.ok) {
+        setDiscoveryItems(prev => prev.filter(d => d.status !== 'needs_review'));
+        fetchData();
+      }
+    } catch (err) {
+      console.error('Bulk dismiss failed:', err);
+    } finally {
+      setActioningIngestId(null);
+    }
+  };
+
   /* --- Counts --- */
   const pendingOpps = opportunities.filter(o => o.status === 'new');
   const unrepliedComments = comments.filter(c => !c.replied);
@@ -387,10 +429,21 @@ export default function SocialCommandCenter() {
 
           {/* ── Discovery Summary ── */}
           <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-              <span>🔍</span> Recent Discoveries
-              <span className="text-xs font-normal text-gray-400">(last 7 days)</span>
-            </h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                <span>🔍</span> Recent Discoveries
+                <span className="text-xs font-normal text-gray-400">(last 7 days)</span>
+              </h3>
+              {discoveryItems.some(d => d.status === 'needs_review') && (
+                <button
+                  onClick={handleBulkDismissIngest}
+                  disabled={actioningIngestId === 'bulk'}
+                  className="text-xs text-gray-500 hover:text-red-600 px-2 py-1 rounded hover:bg-red-50 disabled:opacity-50 transition-colors"
+                >
+                  {actioningIngestId === 'bulk' ? 'Dismissing...' : 'Dismiss All Reviewed'}
+                </button>
+              )}
+            </div>
 
             {discoverySummary && discoverySummary.total > 0 ? (
               <>
@@ -430,7 +483,6 @@ export default function SocialCommandCenter() {
                   {discoveryItems.slice(0, 20).map(item => {
                     const title = item.subject || item.raw_text?.split('\n')[0]?.slice(0, 80) || 'Untitled';
                     const sourceLabel = item.source === 'google_events' ? 'Google' : item.source;
-                    const statusColor = item.status === 'processed' ? 'text-green-600' : item.status === 'needs_review' ? 'text-amber-600' : item.status === 'failed' ? 'text-red-500' : 'text-gray-400';
                     return (
                       <div key={item.id} className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-50 border border-gray-100">
                         <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.status === 'processed' ? 'bg-green-400' : item.status === 'needs_review' ? 'bg-amber-400' : item.status === 'failed' ? 'bg-red-400' : 'bg-gray-300'}`} />
@@ -448,7 +500,38 @@ export default function SocialCommandCenter() {
                           </div>
                           {item.error_message && <p className="text-xs text-amber-500 mt-0.5 truncate">{item.error_message}</p>}
                         </div>
-                        <span className={`text-xs font-medium whitespace-nowrap ${statusColor}`}>{item.status}</span>
+                        {item.status === 'needs_review' ? (
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <button
+                              onClick={() => handleIngestAction(item.id, 'reprocess')}
+                              disabled={actioningIngestId === item.id}
+                              className="px-2 py-1 text-xs font-medium text-blue-600 bg-blue-50 rounded hover:bg-blue-100 disabled:opacity-50 transition-colors"
+                            >
+                              {actioningIngestId === item.id ? '...' : 'Reprocess'}
+                            </button>
+                            <button
+                              onClick={() => handleIngestAction(item.id, 'dismiss')}
+                              disabled={actioningIngestId === item.id}
+                              className="px-2 py-1 text-xs font-medium text-gray-500 bg-gray-100 rounded hover:bg-red-50 hover:text-red-600 disabled:opacity-50 transition-colors"
+                            >
+                              Dismiss
+                            </button>
+                          </div>
+                        ) : item.status === 'processed' ? (
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="text-xs text-green-600 font-medium">Processed</span>
+                            <button
+                              onClick={() => handleIngestAction(item.id, 'dismiss')}
+                              disabled={actioningIngestId === item.id}
+                              className="px-1 py-0.5 text-xs text-gray-400 hover:text-red-500 disabled:opacity-50 transition-colors"
+                              title="Remove from list"
+                            >
+                              x
+                            </button>
+                          </div>
+                        ) : (
+                          <span className={`text-xs font-medium whitespace-nowrap ${item.status === 'failed' ? 'text-red-500' : 'text-gray-400'}`}>{item.status}</span>
+                        )}
                       </div>
                     );
                   })}
