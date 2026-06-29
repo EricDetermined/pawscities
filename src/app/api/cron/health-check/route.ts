@@ -534,6 +534,54 @@ async function checkCronExecution(): Promise<CheckResult> {
   }
 }
 
+/** Auto-archive past APPROVED events and report */
+async function checkAndCleanPastEvents(): Promise<CheckResult> {
+  try {
+    const supabase = getSupabaseAdmin();
+    const today = new Date().toISOString().split('T')[0];
+
+    // Find past APPROVED events
+    const { data: pastEvents } = await supabase
+      .from('events')
+      .select('id, name, start_date')
+      .eq('status', 'APPROVED')
+      .lt('start_date', today);
+
+    if (!pastEvents || pastEvents.length === 0) {
+      return {
+        name: 'Past Event Cleanup',
+        status: 'healthy',
+        message: 'No stale past events — all APPROVED events are upcoming',
+      };
+    }
+
+    // Auto-archive them to CANCELLED with a review note
+    let archived = 0;
+    for (const ev of pastEvents) {
+      const { error } = await supabase
+        .from('events')
+        .update({
+          status: 'CANCELLED',
+          review_notes: 'Auto-archived by daily health check: event date has passed',
+        })
+        .eq('id', ev.id);
+      if (!error) archived++;
+    }
+
+    return {
+      name: 'Past Event Cleanup',
+      status: 'warning',
+      message: `Archived ${archived} past events (were still APPROVED after their dates)`,
+      details: {
+        archived,
+        events: pastEvents.map(e => `${e.name} (${e.start_date})`).slice(0, 5),
+      },
+    };
+  } catch (err) {
+    return { name: 'Past Event Cleanup', status: 'warning', message: `Check failed: ${String(err)}` };
+  }
+}
+
 /** Check Resend email service */
 async function checkEmailService(): Promise<CheckResult> {
   if (!process.env.RESEND_API_KEY) {
@@ -601,6 +649,7 @@ export async function GET(request: NextRequest) {
     checkSitePages(),
     checkPhotoProxy(),
     checkEmailService(),
+    checkAndCleanPastEvents(),
   ]);
 
   // Determine overall status
