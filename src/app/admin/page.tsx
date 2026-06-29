@@ -34,6 +34,8 @@ interface DashboardData {
     pendingReview: number;
     approved: number;
     postedThisWeek: number;
+    totalPosted: number;
+    failed: number;
   };
   discovery: {
     needsReview: number;
@@ -47,7 +49,7 @@ interface DashboardData {
   }[];
   pendingCreativesData: {
     id: string; headline: string; caption: string; content_type: string;
-    format: string; city_slug: string; image_url: string | null;
+    format: string; city: string; image_url: string | null;
     status: string; created_at: string;
   }[];
   discoveryData: {
@@ -91,6 +93,8 @@ export default function AdminDashboard() {
 
   // ── Action handlers ────────────────────────────────────────────────────
 
+  const [statusMessage, setStatusMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+
   const handleEventAction = async (eventId: string, action: 'approve' | 'reject') => {
     setActioningId(eventId);
     try {
@@ -99,8 +103,17 @@ export default function AdminDashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action }),
       });
-      if (res.ok) fetchData();
-    } catch { /* silent */ } finally { setActioningId(null); }
+      const result = await res.json();
+      if (res.ok) {
+        setStatusMessage({ text: result.message || `Event ${action}d`, type: 'success' });
+        setTimeout(() => setStatusMessage(null), 6000);
+        fetchData();
+      } else {
+        setStatusMessage({ text: result.error || 'Failed', type: 'error' });
+        setTimeout(() => setStatusMessage(null), 5000);
+      }
+    } catch { setStatusMessage({ text: 'Network error', type: 'error' }); setTimeout(() => setStatusMessage(null), 5000); }
+    finally { setActioningId(null); }
   };
 
   const handleCreativeAction = async (creativeId: string, action: 'approve' | 'reject') => {
@@ -229,8 +242,9 @@ export default function AdminDashboard() {
 
   const attentionItems = [
     { count: data.creatives.pendingReview, label: 'creatives to review', color: 'purple', href: '#pending-creatives' },
-    { count: data.discovery.needsReview, label: 'discovery items', color: 'blue', href: '#discovery-queue' },
     { count: data.events.pending, label: 'events to approve', color: 'rose', href: '#pending-events' },
+    { count: data.discovery.needsReview, label: 'discovery items', color: 'blue', href: '#discovery-queue' },
+    { count: data.creatives.failed, label: 'failed creatives', color: 'red', href: '/admin/creatives' },
     { count: data.stats.pendingClaims, label: 'business claims', color: 'amber', href: '/admin/claims' },
     { count: data.stats.pendingPhotos, label: 'photos to moderate', color: 'green', href: '/admin/photos' },
     { count: data.stats.pendingValidation, label: 'places to validate', color: 'cyan', href: '/admin/validation' },
@@ -258,6 +272,14 @@ export default function AdminDashboard() {
         </button>
       </div>
 
+      {/* ── Status Toast ─────────────────────────────────────────────── */}
+      {statusMessage && (
+        <div className={`rounded-lg px-4 py-3 text-sm font-medium flex items-center justify-between ${statusMessage.type === 'success' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+          <span>{statusMessage.text}</span>
+          <button onClick={() => setStatusMessage(null)} className="text-gray-400 hover:text-gray-600 ml-4">×</button>
+        </div>
+      )}
+
       {/* ── Attention Banner ───────────────────────────────────────────── */}
       {attentionItems.length > 0 && (
         <div className="flex flex-wrap gap-2">
@@ -269,8 +291,8 @@ export default function AdminDashboard() {
 
       {/* ── Pipeline Health Ribbon ─────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-        <MiniStat label="Approved Queue" value={data.creatives.approved} icon="✅" sub="ready to post" warn={data.creatives.approved < 14} />
-        <MiniStat label="Posted (7d)" value={data.creatives.postedThisWeek} icon="📸" />
+        <MiniStat label="Posts in Bank" value={data.creatives.approved} icon="✅" sub="ready to post" warn={data.creatives.approved < 14} />
+        <MiniStat label="Posted (7d)" value={data.creatives.postedThisWeek} icon="📸" sub={`${data.creatives.totalPosted} total`} />
         <MiniStat label="Upcoming Events" value={data.events.upcoming} icon="📅" sub={`${data.events.total} total`} href="/admin/events" />
         <MiniStat label="Subscribers" value={data.subscribers.total} icon="📧" sub={`+${data.subscribers.newThisWeek} this week`} href="/admin/subscribers" />
         <MiniStat label="Places" value={data.stats.totalEstablishments} icon="📍" sub={`${data.stats.premiumListings} premium`} />
@@ -326,7 +348,7 @@ export default function AdminDashboard() {
                       <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-gray-500">
                         <span className="px-1.5 py-0.5 bg-gray-100 rounded">{creative.content_type}</span>
                         <span className="px-1.5 py-0.5 bg-gray-100 rounded">{creative.format}</span>
-                        <span>{creative.city_slug}</span>
+                        <span>{creative.city}</span>
                       </div>
                       {creative.caption && (
                         <p className="text-xs text-gray-400 mt-1 line-clamp-2">{creative.caption}</p>
@@ -410,9 +432,9 @@ export default function AdminDashboard() {
                       <div className="flex items-center gap-2 shrink-0">
                         <button
                           onClick={() => handleEventAction(event.id, 'approve')}
-                          disabled={actioningId === event.id || !isReady}
-                          title={!isReady ? `Missing: ${missingFields.join(', ')}` : 'Approve event'}
-                          className={`px-3 py-1.5 text-white text-xs font-medium rounded-lg disabled:opacity-50 transition-colors ${isReady ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-300 cursor-not-allowed'}`}
+                          disabled={actioningId === event.id}
+                          title={!isReady ? `Warning — missing: ${missingFields.join(', ')}` : 'Approve event'}
+                          className="px-3 py-1.5 text-white text-xs font-medium rounded-lg disabled:opacity-50 transition-colors bg-green-600 hover:bg-green-700"
                         >
                           {actioningId === event.id ? '...' : 'Approve'}
                         </button>

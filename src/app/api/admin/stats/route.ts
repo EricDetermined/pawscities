@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       socialOpportunities, unrepliedComments, socialPosts,
       recentPosts, pendingEventsData,
       // Creative queue stats
-      pendingCreatives, approvedCreatives, postedCreatives7d,
+      pendingCreatives, approvedCreatives, postedCreatives7d, totalPosted, failedCreatives,
       pendingCreativesData,
       // Ingest/discovery queue stats
       ingestNeedsReview, ingestPending,
@@ -80,21 +80,23 @@ export async function GET(request: NextRequest) {
         .select('id, headline, city, status, likes, comments_count, created_at, error_message')
         .order('created_at', { ascending: false }).limit(5), 'recentPosts'),
 
-      // Pending events for inline approval (last 10)
+      // Pending events for inline approval — soonest first
       safe(supabase.from('events')
         .select('id, name, start_date, end_date, venue_name, source, source_handle, external_url, discovery_score, created_at, cities!inner(name, slug)')
         .eq('status', 'PENDING')
-        .order('created_at', { ascending: false })
+        .order('start_date', { ascending: true })
         .limit(10), 'pendingEventsData'),
 
       // Creative queue stats
       safe(supabase.from('creative_queue').select('*', { count: 'exact', head: true }).eq('status', 'pending_review'), 'pendingCreatives'),
       safe(supabase.from('creative_queue').select('*', { count: 'exact', head: true }).eq('status', 'approved'), 'approvedCreatives'),
       safe(supabase.from('creative_queue').select('*', { count: 'exact', head: true }).eq('status', 'posted').gte('posted_at', oneWeekAgo), 'postedCreatives7d'),
+      safe(supabase.from('creative_queue').select('*', { count: 'exact', head: true }).eq('status', 'posted'), 'totalPosted'),
+      safe(supabase.from('creative_queue').select('*', { count: 'exact', head: true }).eq('status', 'failed'), 'failedCreatives'),
 
       // Pending creatives data for inline approval (last 12)
       safe(supabase.from('creative_queue')
-        .select('id, headline, caption, content_type, format, city_slug, image_url, status, created_at')
+        .select('id, headline, caption, content_type, format, city, image_url, status, created_at')
         .eq('status', 'pending_review')
         .order('created_at', { ascending: false })
         .limit(12), 'pendingCreativesData'),
@@ -157,6 +159,8 @@ export async function GET(request: NextRequest) {
         pendingReview: pendingCreatives.count || 0,
         approved: approvedCreatives.count || 0,
         postedThisWeek: postedCreatives7d.count || 0,
+        totalPosted: totalPosted.count || 0,
+        failed: failedCreatives.count || 0,
       },
       discovery: {
         needsReview: ingestNeedsReview.count || 0,
