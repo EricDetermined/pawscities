@@ -22,6 +22,13 @@ export interface CuratedSource {
   linkPattern: string;
   /** Max events to scrape per run from this source */
   maxEvents: number;
+  /**
+   * If true, this source is a competitor aggregator (e.g. BringFido).
+   * The scraper will extract the original event organizer URL from each page
+   * and use that instead of the aggregator URL. Events without an original
+   * source URL are skipped entirely — we never link our audience to competitors.
+   */
+  isAggregator?: boolean;
 }
 
 export const CURATED_SOURCES: Record<string, CuratedSource[]> = {
@@ -32,6 +39,7 @@ export const CURATED_SOURCES: Record<string, CuratedSource[]> = {
       language: 'en',
       linkPattern: '/event/\\d+',
       maxEvents: 8,
+      isAggregator: true,
     },
     {
       url: 'https://sidewalkdog.com/los-angeles-ca/events',
@@ -50,18 +58,26 @@ export const CURATED_SOURCES: Record<string, CuratedSource[]> = {
   ],
   newyork: [
     {
-      url: 'https://www.bringfido.com/event/city/new_york_ny_us/',
-      name: 'BringFido NYC',
-      language: 'en',
-      linkPattern: '/event/\\d+',
-      maxEvents: 8,
-    },
-    {
       url: 'https://www.eventbrite.com/d/ny--new-york/dog-events/',
       name: 'Eventbrite NYC Dogs',
       language: 'en',
       linkPattern: '/e/',
       maxEvents: 8,
+    },
+    {
+      url: 'https://sidewalkdog.com/new-york-ny/events',
+      name: 'Sidewalk Dog NYC',
+      language: 'en',
+      linkPattern: '/events/',
+      maxEvents: 6,
+    },
+    {
+      url: 'https://www.bringfido.com/event/city/new_york_ny_us/',
+      name: 'BringFido NYC',
+      language: 'en',
+      linkPattern: '/event/\\d+',
+      maxEvents: 8,
+      isAggregator: true,
     },
   ],
   london: [
@@ -89,20 +105,36 @@ export const CURATED_SOURCES: Record<string, CuratedSource[]> = {
       maxEvents: 8,
     },
     {
+      url: 'https://www.eventbrite.fr/d/france--paris/dog-events/',
+      name: 'Eventbrite Paris Dogs',
+      language: 'fr',
+      linkPattern: '/e/',
+      maxEvents: 6,
+    },
+    {
       url: 'https://www.bringfido.com/event/country/france/',
       name: 'BringFido France',
       language: 'en',
       linkPattern: '/event/\\d+',
       maxEvents: 6,
+      isAggregator: true,
     },
   ],
   barcelona: [
+    {
+      url: 'https://www.eventbrite.es/d/spain--barcelona/dog-events/',
+      name: 'Eventbrite Barcelona Dogs',
+      language: 'es',
+      linkPattern: '/e/',
+      maxEvents: 6,
+    },
     {
       url: 'https://www.bringfido.com/attraction/city/barcelona_es/',
       name: 'BringFido Barcelona',
       language: 'en',
       linkPattern: '/event/\\d+|/attraction/\\d+',
       maxEvents: 6,
+      isAggregator: true,
     },
   ],
   tokyo: [
@@ -139,11 +171,19 @@ export const CURATED_SOURCES: Record<string, CuratedSource[]> = {
   ],
   geneva: [
     {
+      url: 'https://www.eventbrite.com/d/switzerland--geneva/dog-events/',
+      name: 'Eventbrite Geneva Dogs',
+      language: 'en',
+      linkPattern: '/e/',
+      maxEvents: 6,
+    },
+    {
       url: 'https://www.bringfido.com/event/country/switzerland/',
       name: 'BringFido Switzerland',
       language: 'en',
       linkPattern: '/event/\\d+',
       maxEvents: 6,
+      isAggregator: true,
     },
   ],
 };
@@ -216,6 +256,10 @@ export interface ExtractedEvent {
 /**
  * Use GPT-4o-mini to extract structured event data from page text.
  * Returns null if the page doesn't contain an actual event.
+ *
+ * When isAggregator is true, the AI also extracts the original event
+ * organizer URL (e.g. Eventbrite, Facebook, official website) so we
+ * link to the source rather than the competitor aggregator.
  */
 export async function extractEventWithAI(
   pageText: string,
@@ -224,11 +268,21 @@ export async function extractEventWithAI(
   sourceName: string,
   language: string,
   openaiKey: string,
+  isAggregator: boolean = false,
 ): Promise<ExtractedEvent | null> {
   // Truncate to ~4000 chars for better date/venue extraction
   const truncated = pageText.substring(0, 4000);
 
   const today = new Date().toISOString().split('T')[0];
+
+  const aggregatorInstructions = isAggregator ? `
+- official_url: The ORIGINAL event organizer's URL (NOT the current page URL). Look for:
+  * "Website" or "Visit Website" links (e.g. Eventbrite, Facebook, official event page)
+  * Links that go to eventbrite.com, facebook.com/events, meetup.com, or organizer domains
+  * Any URL that points to the actual event host rather than this aggregator page
+  * Set to null if you cannot find an original source URL
+  IMPORTANT: This is critical — we MUST link to the event source, not this aggregator site.` : '';
+
   const systemPrompt = `You extract structured dog-friendly event data from web pages. Today is ${today}.
 
 Return a JSON object with these fields:
@@ -242,7 +296,7 @@ Return a JSON object with these fields:
 - is_free: boolean
 - tags: array of 2-4 relevant tags (e.g. "festival", "adoption", "outdoor", "charity")
 - is_dog_event: boolean — true if this is actually a dog/pet-related event
-- is_upcoming: boolean — true if the event date is in the future (after ${today})
+- is_upcoming: boolean — true if the event date is in the future (after ${today})${aggregatorInstructions}
 
 IMPORTANT date extraction tips:
 - Look for dates in ANY format: "Jun 14, 2026", "14/06/2026", "June 14", "Saturday June 14th", etc.
@@ -298,6 +352,19 @@ Respond with ONLY the JSON object, no markdown.`;
 
     if (!parsed.name) return null;
 
+    // For aggregator sources, we MUST have an original URL — never link to competitors
+    let finalUrl = pageUrl;
+    if (isAggregator) {
+      const officialUrl = parsed.official_url;
+      if (officialUrl && typeof officialUrl === 'string' && officialUrl.startsWith('http')) {
+        finalUrl = officialUrl;
+        console.log(`[CURATED-SCRAPER] Found original source: "${parsed.name}" → ${officialUrl}`);
+      } else {
+        console.log(`[CURATED-SCRAPER] Skipping aggregator event without original source: "${parsed.name}" (${pageUrl})`);
+        return null;
+      }
+    }
+
     return {
       name: parsed.name,
       date: parsed.date || null,
@@ -307,7 +374,7 @@ Respond with ONLY the JSON object, no markdown.`;
       venueAddress: parsed.venue_address || null,
       isFree: !!parsed.is_free,
       tags: Array.isArray(parsed.tags) ? parsed.tags : [],
-      externalUrl: pageUrl,
+      externalUrl: finalUrl,
       city: citySlug,
       source: sourceName,
       language,
@@ -375,15 +442,29 @@ export async function scrapeCuratedSource(
             if (!pageRes.ok) return null;
 
             const html = await pageRes.text();
-            // Strip HTML tags to get plain text for AI
-            const plainText = html
+            // Strip scripts/styles first
+            let cleaned = html
               .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
-              .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
-              .replace(/<[^>]+>/g, ' ')
-              .replace(/\s+/g, ' ')
-              .trim();
+              .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
 
-            return extractEventWithAI(plainText, url, citySlug, source.name, source.language, openaiKey);
+            let pageContent: string;
+            if (source.isAggregator) {
+              // For aggregators, preserve href URLs so the AI can find
+              // the original event source (e.g. "Website" links)
+              pageContent = cleaned
+                .replace(/<a[^>]+href=["']([^"']+)["'][^>]*>/gi, ' [LINK: $1] ')
+                .replace(/<[^>]+>/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+            } else {
+              // For direct sources, strip all HTML tags
+              pageContent = cleaned
+                .replace(/<[^>]+>/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+            }
+
+            return extractEventWithAI(pageContent, url, citySlug, source.name, source.language, openaiKey, !!source.isAggregator);
           } catch (err) {
             console.error(`[CURATED-SCRAPER] Page fetch error for ${url}:`, err);
             return null;
