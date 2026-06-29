@@ -129,6 +129,13 @@ export const CURATED_SOURCES: Record<string, CuratedSource[]> = {
       linkPattern: 'whatson\\.cityofsydney.+/events/',
       maxEvents: 6,
     },
+    {
+      url: 'https://petcarecommunity.com.au/pet-events/',
+      name: 'Pet Care Community AU',
+      language: 'en',
+      linkPattern: 'petcarecommunity\\.com\\.au/pet-events/[\\w-]+',
+      maxEvents: 8,
+    },
   ],
   geneva: [
     {
