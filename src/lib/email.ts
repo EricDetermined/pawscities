@@ -591,7 +591,8 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
           <span style="font-size:11px;color:#ea580c;font-weight:600;text-transform:uppercase;">${o.category} · ${o.likes} likes</span>
           <p style="margin:4px 0;font-size:13px;color:#333;">${o.caption.substring(0, 120)}${o.caption.length > 120 ? '...' : ''}</p>
           <p style="margin:2px 0;font-size:12px;color:#ea580c;font-style:italic;">"${o.suggestedReply.substring(0, 100)}${o.suggestedReply.length > 100 ? '...' : ''}"</p>
-          <a href="${o.permalink}" style="font-size:12px;color:#ea580c;">Engage on Instagram →</a>
+          <a href="${getAppUrl()}/admin/social?tab=engagement" style="font-size:12px;color:#ea580c;font-weight:600;">Reply via Dashboard →</a>
+          ${o.permalink ? `<a href="${o.permalink}" style="font-size:11px;color:#888;margin-left:8px;">View on Instagram</a>` : ''}
         </td></tr>`).join('')
     : '<tr><td style="padding:10px 12px;color:#888;font-size:13px;">No new opportunities found today.</td></tr>';
 

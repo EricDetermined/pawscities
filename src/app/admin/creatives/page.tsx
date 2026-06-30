@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -58,6 +59,7 @@ const STATUS_STYLES: Record<string, { label: string; dot: string; bg: string }> 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 
 export default function CreativeReviewPage() {
+  const router = useRouter();
   const [items, setItems] = useState<CreativeItem[]>([]);
   const [counts, setCounts] = useState<StatusCounts | null>(null);
   const [loading, setLoading] = useState(true);
@@ -73,6 +75,10 @@ export default function CreativeReviewPage() {
       const params = new URLSearchParams({ limit: '30' });
       if (filter && filter !== 'all') params.set('status', filter);
       const res = await fetch(`/api/admin/creatives?${params}`);
+      if (res.status === 401) {
+        router.push('/login?redirect=/admin/creatives');
+        return;
+      }
       const json = await res.json();
       setItems(json.items || []);
       setCounts(json.counts || null);
@@ -81,7 +87,7 @@ export default function CreativeReviewPage() {
     } finally {
       setLoading(false);
     }
-  }, [filter]);
+  }, [filter, router]);
 
   useEffect(() => { fetchItems(); }, [fetchItems]);
 

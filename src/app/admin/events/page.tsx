@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface EventRow {
   id: string;
@@ -34,6 +35,7 @@ interface EventsResponse {
 }
 
 export default function AdminEventsPage() {
+  const router = useRouter();
   const [status, setStatus] = useState<string>('PENDING');
   const [page, setPage] = useState(1);
   const [data, setData] = useState<EventsResponse | null>(null);
@@ -52,13 +54,17 @@ export default function AdminEventsPage() {
       url.searchParams.set('page', String(currentPage));
 
       const response = await fetch(url.toString());
+      if (response.status === 401) {
+        router.push('/login?redirect=/admin/events');
+        return;
+      }
       if (!response.ok) throw new Error('Failed to fetch events');
       const json = await response.json();
       setData(json);
       setError(null);
     } catch (err) {
       console.error('Error fetching events:', err);
-      setError('Failed to load events');
+      setError('Failed to load events. You may need to log in first.');
       setData(null);
     } finally {
       setLoading(false);

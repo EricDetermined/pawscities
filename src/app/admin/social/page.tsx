@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 /* ──────────────── Helpers ──────────────── */
@@ -142,7 +143,12 @@ function copyToClipboard(text: string) {
 /* ──────────────── Component ──────────────── */
 
 export default function SocialCommandCenter() {
-  const [activeTab, setActiveTab] = useState<TabId>('pipeline');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get('tab');
+  const validTabs: TabId[] = ['pipeline', 'calendar', 'engagement', 'outreach', 'invitations', 'comments', 'performance', 'operations'];
+  const initialTab: TabId = tabParam && validTabs.includes(tabParam as TabId) ? (tabParam as TabId) : 'pipeline';
+  const [activeTab, setActiveTab] = useState<TabId>(initialTab);
   const [loading, setLoading] = useState(true);
 
   // Data
@@ -169,19 +175,28 @@ export default function SocialCommandCenter() {
   const [quickDmCity, setQuickDmCity] = useState('');
   const [quickDmContext, setQuickDmContext] = useState('');
 
+  const authFetch = useCallback(async (url: string) => {
+    const r = await fetch(url);
+    if (r.status === 401) {
+      router.push('/login?redirect=/admin/social');
+      throw new Error('AUTH_REDIRECT');
+    }
+    return r.json();
+  }, [router]);
+
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const [oppRes, outRes, invRes, comRes, perfRes, actRes, calRes, discRes, pendRes] = await Promise.all([
-        fetch('/api/admin/social?type=opportunities').then(r => r.json()),
-        fetch('/api/admin/social?type=outreach').then(r => r.json()),
-        fetch('/api/admin/social?type=invitations').then(r => r.json()),
-        fetch('/api/admin/social?type=comments').then(r => r.json()),
-        fetch('/api/admin/social?type=performance').then(r => r.json()),
-        fetch('/api/admin/social?type=actions').then(r => r.json()),
-        fetch('/api/admin/creatives?limit=30').then(r => r.json()),
-        fetch('/api/admin/social?type=discovery').then(r => r.json()),
-        fetch('/api/admin/social?type=pending-events').then(r => r.json()),
+        authFetch('/api/admin/social?type=opportunities'),
+        authFetch('/api/admin/social?type=outreach'),
+        authFetch('/api/admin/social?type=invitations'),
+        authFetch('/api/admin/social?type=comments'),
+        authFetch('/api/admin/social?type=performance'),
+        authFetch('/api/admin/social?type=actions'),
+        authFetch('/api/admin/creatives?limit=30'),
+        authFetch('/api/admin/social?type=discovery'),
+        authFetch('/api/admin/social?type=pending-events'),
       ]);
       setOpportunities(oppRes.opportunities || []);
       setOutreach(outRes.outreach || []);
@@ -195,6 +210,7 @@ export default function SocialCommandCenter() {
       setDiscoverySummary(discRes.summary || null);
       setPendingEventsData(pendRes.events || []);
     } catch (err) {
+      if (err instanceof Error && err.message === 'AUTH_REDIRECT') return;
       console.error('Failed to fetch social data:', err);
     } finally {
       setLoading(false);

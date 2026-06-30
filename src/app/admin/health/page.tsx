@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
 type CheckStatus = 'healthy' | 'warning' | 'critical';
 
@@ -54,6 +55,7 @@ const serviceIcons: Record<string, string> = {
 };
 
 export default function HealthDashboard() {
+  const router = useRouter();
   const [report, setReport] = useState<HealthReport | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -66,6 +68,10 @@ export default function HealthDashboard() {
 
     try {
       const res = await fetch('/api/admin/health');
+      if (res.status === 401) {
+        router.push('/login?redirect=/admin/health');
+        return;
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data: HealthReport = await res.json();
       setReport(data);
@@ -77,7 +83,7 @@ export default function HealthDashboard() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     fetchHealth();

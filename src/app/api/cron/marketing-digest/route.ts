@@ -168,17 +168,18 @@ export async function GET(request: NextRequest) {
       .map(c => c.social_post_id)
       .filter(Boolean);
 
-    let engagementMap: Record<string, { likes: number; comments: number }> = {};
+    let engagementMap: Record<string, { likes: number; comments: number; postId?: string }> = {};
     if (socialPostIds.length > 0) {
       const { data: socialPosts } = await supabase
         .from('social_posts')
-        .select('id, likes, comments_count')
+        .select('id, likes, comments_count, post_id')
         .in('id', socialPostIds);
       if (socialPosts) {
         for (const sp of socialPosts) {
           engagementMap[sp.id] = {
             likes: sp.likes || 0,
             comments: sp.comments_count || 0,
+            postId: sp.post_id || undefined,
           };
         }
       }
@@ -186,12 +187,16 @@ export async function GET(request: NextRequest) {
 
     const publishedPosts = (recentPostedCreatives || []).map(p => {
       const engagement = engagementMap[p.social_post_id] || { likes: 0, comments: 0 };
+      // Construct actual Instagram post URL from post_id, fallback to profile
+      const permalink = engagement.postId
+        ? `https://www.instagram.com/p/${engagement.postId}/`
+        : 'https://www.instagram.com/thepawcities/';
       return {
         headline: p.headline || 'Untitled',
         city: p.city || 'unknown',
         likes: engagement.likes,
         comments: engagement.comments,
-        permalink: 'https://www.instagram.com/thepawcities/',
+        permalink,
       };
     });
 
@@ -386,7 +391,9 @@ export async function GET(request: NextRequest) {
         avgLikes,
         avgComments,
         topPost: topPost ? {
-          permalink: 'https://www.instagram.com/thepawcities/',
+          permalink: topPost.post_id
+            ? `https://www.instagram.com/p/${topPost.post_id}/`
+            : 'https://www.instagram.com/thepawcities/',
           likes: topPost.likes || 0,
           comments: topPost.comments_count || 0,
           caption: (topPost.caption || '').substring(0, 150),
