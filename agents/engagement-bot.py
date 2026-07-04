@@ -83,23 +83,27 @@ ENGAGEMENT_DIR.mkdir(parents=True, exist_ok=True)
 # ─── Config ──────────────────────────────────────────────────────────────────
 
 DEFAULT_CONFIG = {
-    "version": "1.0",
-    "daily_cap": 50,
+    "version": "2.0",
+    "daily_cap": 15,
     "ramp_schedule": {
-        "week_1": 50,
-        "week_2": 80,
-        "week_3": 120,
-        "week_4": 180,
-        "week_5_plus": 250
+        "week_1": 8,
+        "week_2": 12,
+        "week_3": 15,
+        "week_4": 18,
+        "week_5": 20,
+        "week_6_plus": 25
     },
     "timing": {
-        "min_delay_seconds": 45,
-        "max_delay_seconds": 120,
-        "batch_size": 20,
-        "batch_break_min_seconds": 300,
-        "batch_break_max_seconds": 600,
+        "min_delay_seconds": 90,
+        "max_delay_seconds": 300,
+        "batch_size": 4,
+        "batch_break_min_seconds": 900,
+        "batch_break_max_seconds": 2400,
         "active_hours_start": 7,
         "active_hours_end": 23,
+        "session_max_minutes": 90,
+        "likes_per_comment_min": 1,
+        "likes_per_comment_max": 3,
         "timezone": "UTC"
     },
     "discovery": {
@@ -176,63 +180,95 @@ def load_config():
 
 COMMENT_TEMPLATES = {
     "appreciation": [
-        "Love this! {city_ref}is such a great spot for dogs 🐾",
-        "This made our day! Nothing better than seeing happy pups out exploring 💛",
+        "Love this! {city_ref}is such a great spot for dogs",
+        "This made our day! Nothing better than seeing happy pups out exploring",
         "What a beautiful {place_type}! Your dog looks like they're having the best time",
-        "This is exactly why we love {city_ref}— so many dog-friendly gems to discover!",
-        "Adorable! We're always looking for places like this to share with dog owners 🐕",
+        "This is exactly why we love {city_ref}— so many dog-friendly gems to discover",
+        "Adorable! We're always looking for places like this to share with dog owners",
         "Such a great find! More dog parents need to know about spots like this",
         "Your pup is living the dream! {city_ref}has so many great options for dogs",
-        "This looks amazing! We love discovering dog-friendly spots like this 🙌",
+        "This looks amazing! We love discovering dog-friendly spots like this",
+        "What an incredible spot! Your dog clearly knows how to pick the best places",
+        "Absolutely love this vibe. Dog-friendly places like this deserve more recognition",
+        "This just brightened our whole feed. Dogs and good vibes go hand in hand",
+        "So wholesome! Always makes our day to see dogs enjoying new places",
+        "The look on your pup's face is priceless. What a great spot",
+        "Can't get over how happy your dog looks here. Pure joy",
+        "This is everything. Dogs really do make every outing better",
+        "What a gem of a {place_type}! Your pup looks right at home",
     ],
     "question": [
-        "Love this! Do they provide water bowls for dogs too? 💧",
+        "Love this! Do they provide water bowls for dogs too?",
         "This looks incredible! Is this spot usually busy with dogs or more of a hidden gem?",
-        "Amazing shot! How did your pup handle the {context}? Ours would go crazy 😂",
+        "Amazing shot! How did your pup handle the {context}? Ours would go crazy",
         "Such a great vibe! Do you visit here often with your dog?",
         "Beautiful! Is this place easy to get to with a bigger dog?",
         "Love the energy here! Any tips for first-time visitors with dogs?",
-    ],
-    "recommendation": [
-        "Great choice! If you love this, you should check out more spots in {city_ref}on pawcities.com 🐾",
-        "Perfect spot! We feature places like this on Paw Cities — always great to see them getting love",
-        "This is why we built pawcities.com — to help dog owners find amazing places like this! Love it 🧡",
-        "Another reason to love {city_ref}! We've mapped tons of dog-friendly spots there at pawcities.com",
+        "How does your pup do in new places? Mine takes a while to warm up",
+        "This looks so relaxed! Is it usually this chill with dogs around?",
+        "Love the setup! Do they have outdoor seating that works for dogs?",
+        "How long have you been going here? Looks like a regular spot for you two",
+        "Such a cute pup! How old are they?",
+        "This place looks perfect. Did you stumble on it or was it recommended?",
     ],
     "empathy": [
-        "We know that look — pure happiness! Dogs just make everything better 💛",
+        "We know that look — pure happiness! Dogs just make everything better",
         "That face says it all! Nothing beats a good adventure with your best friend",
-        "This is what it's all about — making memories with our four-legged family 🐾",
-        "Your dog is living their best life and honestly, we're here for it 😍",
+        "This is what it's all about — making memories with our four-legged family",
+        "Your dog is living their best life and honestly, we're here for it",
+        "The bond between you two really shows in this photo. So sweet",
+        "There's nothing like seeing a happy dog in their element. Warms the heart",
+        "Dogs have this amazing way of making every ordinary moment feel special",
+        "You can tell your pup feels so safe and loved. Beautiful to see",
+        "This is the content we live for. Happy dogs, happy humans",
+        "The tail wag energy is coming right through the screen",
     ],
     "local_knowledge": [
         "Such a great spot in {city_name}! Have you explored the {area} area too?",
         "{city_name} is so underrated for dog-friendly adventures — love seeing this!",
         "One of the best things about {city_name} is how dog-friendly it is. Great find!",
+        "{city_name} keeps getting more dog-friendly every year. Love to see it!",
+        "There are so many hidden gems for dogs in {city_name}. This is a great one",
+        "The dog scene in {city_name} is really growing. Such a good find",
     ],
     # Non-English templates
     "french": [
-        "Magnifique ! Votre chien a l'air tellement heureux 🐾💛",
+        "Magnifique ! Votre chien a l'air tellement heureux",
         "On adore ! {city_name} est vraiment top pour les chiens",
-        "Trop mignon ! Merci de partager ces endroits dog-friendly 🧡",
-        "Super trouvaille ! Les toutous méritent les meilleurs endroits 🐕",
+        "Trop mignon ! Merci de partager ces endroits dog-friendly",
+        "Super trouvaille ! Les toutous méritent les meilleurs endroits",
+        "Quelle belle balade ! Votre chien a l'air ravi",
+        "C'est tellement chouette de voir des endroits aussi accueillants pour les chiens",
+        "Votre toutou a vraiment trouvé son coin préféré on dirait",
+        "Ça fait plaisir de voir ça ! Les chiens sont les bienvenus partout",
     ],
     "spanish": [
-        "¡Qué bonito! Tu perro se ve muy feliz aquí 🐾",
+        "¡Qué bonito! Tu perro se ve muy feliz aquí",
         "¡Increíble lugar! {city_name} tiene sitios geniales para perros",
-        "Nos encanta ver lugares así de dog-friendly 🧡",
-        "¡Qué descubrimiento! Los perritos merecen los mejores paseos 🐕",
+        "Nos encanta ver lugares así de dog-friendly",
+        "¡Qué descubrimiento! Los perritos merecen los mejores paseos",
+        "Se nota que tu perro la está pasando genial. ¡Qué lindo!",
+        "Me encanta este sitio. Los perros se lo merecen todo",
+        "¡Qué alegría ver lugares donde los perros son bienvenidos!",
+        "Tu perro tiene cara de felicidad total. ¡Precioso!",
     ],
     "japanese": [
-        "最高ですね！ワンちゃんもとっても楽しそう🐾",
-        "素敵な場所！{city_name}はワンコに優しい街ですね💛",
-        "めちゃくちゃかわいい！犬と一緒にお出かけ最高ですね🐕",
-        "こういうドッグフレンドリーな場所、もっと知りたいです🧡",
+        "最高ですね！ワンちゃんもとっても楽しそう",
+        "素敵な場所！{city_name}はワンコに優しい街ですね",
+        "めちゃくちゃかわいい！犬と一緒にお出かけ最高ですね",
+        "こういうドッグフレンドリーな場所、もっと知りたいです",
+        "ワンちゃんの表情が最高です！楽しんでますね",
+        "こんな素敵な場所があるんですね。愛犬と行ってみたい",
+        "犬と一緒に楽しめる場所、本当にありがたいですよね",
+        "幸せそうなワンちゃんの写真、癒されます",
     ],
     "german": [
-        "Wunderschön! Euer Hund sieht so glücklich aus 🐾",
-        "Toll! {city_name} ist wirklich hundefreundlich 💛",
-        "So schön! Hunde verdienen die besten Abenteuer 🐕",
+        "Wunderschön! Euer Hund sieht so glücklich aus",
+        "Toll! {city_name} ist wirklich hundefreundlich",
+        "So schön! Hunde verdienen die besten Abenteuer",
+        "Was für ein toller Ort! Euer Hund fühlt sich sichtlich wohl",
+        "Das sieht nach einem perfekten Tag mit Hund aus",
+        "Hundefreundliche Orte wie dieser verdienen mehr Aufmerksamkeit",
     ],
 }
 
@@ -522,13 +558,12 @@ def generate_comment(post, config):
     city_name = config["cities"].get(city_slug, {}).get("name", "") if city_slug else ""
 
     # Pick template category with weighted randomness
-    # Mostly appreciation/empathy (brand-safe), occasionally questions or recommendations
+    # Mostly appreciation/empathy (brand-safe), occasionally questions or local knowledge
     category_weights = {
-        "appreciation": 35,
-        "empathy": 25,
+        "appreciation": 40,
+        "empathy": 30,
         "question": 20,
         "local_knowledge": 10,
-        "recommendation": 10,
     }
 
     # Use language-specific templates when applicable
@@ -569,10 +604,17 @@ def generate_comment(post, config):
         area=area or "the neighborhood",
     )
 
-    # Add slight variation: occasionally add/remove emoji, change punctuation
-    if random.random() < 0.3:
-        extra_emojis = ["🐶", "❤️", "✨", "🙌", "😊", "🌟", "💕", "🎉"]
+    # Add slight variation: occasionally add emoji, vary punctuation
+    # Only ~20% of comments get an emoji to look more natural
+    if random.random() < 0.2:
+        extra_emojis = ["🐶", "❤️", "✨", "🙌", "😊", "🌟", "💕", "🎉", "🐾", "💛", "🧡", "😍", "🐕"]
         comment += " " + random.choice(extra_emojis)
+
+    # Vary ending punctuation for naturalness
+    if random.random() < 0.15 and comment.endswith("."):
+        comment = comment[:-1] + "!"
+    elif random.random() < 0.1 and not comment[-1] in ".!?":
+        comment += random.choice([".", "!", ""])
 
     # Ensure we don't repeat the same comment on the same post
     comment_hash = hashlib.md5(f"{username}:{comment[:30]}".encode()).hexdigest()[:8]
@@ -1134,6 +1176,64 @@ def show_queue():
     print(f"  📊 Today: {today_posted}/{config['daily_cap']} comments posted\n")
 
 
+# ─── Human-Like Timing ──────────────────────────────────────────────────────
+
+import math
+
+def human_delay(min_s, max_s):
+    """Generate a human-like delay using log-normal distribution.
+
+    Real humans browse in bursts: sometimes they engage quickly on 2-3 posts
+    in a row, then disappear for 10-20 minutes. A uniform random distribution
+    looks robotic. Log-normal gives frequent short gaps with occasional long
+    pauses, which mimics real scrolling behavior.
+    """
+    # Log-normal: most delays cluster near min_s, with a long tail toward max_s
+    mu = math.log(min_s + (max_s - min_s) * 0.3)  # median closer to the low end
+    sigma = 0.6  # spread — higher = more variance
+    delay = random.lognormvariate(mu, sigma)
+    # Clamp to our bounds
+    return max(min_s, min(max_s, delay))
+
+
+def like_nearby_posts(cl, media_pk, config):
+    """Like 1-3 posts near the target to simulate organic browsing.
+
+    Instagram's ML models look for accounts that ONLY comment without any
+    other interactions. Mixing in likes makes the activity pattern look
+    like a real person scrolling their feed.
+    """
+    timing = config.get("timing", {})
+    like_min = timing.get("likes_per_comment_min", 1)
+    like_max = timing.get("likes_per_comment_max", 3)
+    num_likes = random.randint(like_min, like_max)
+
+    liked = 0
+    try:
+        # Like the post we're about to comment on (natural behavior)
+        cl.media_like(media_pk)
+        liked += 1
+        time.sleep(random.uniform(1.5, 4.0))
+
+        # Optionally like a few more from the same user or related posts
+        if num_likes > 1:
+            try:
+                user_pk = cl.media_info(media_pk).user.pk
+                user_medias = cl.user_medias(user_pk, amount=5)
+                # Like 1-2 other recent posts from the same user
+                for media in random.sample(user_medias[:5], min(num_likes - 1, len(user_medias[:5]))):
+                    if str(media.pk) != str(media_pk):
+                        cl.media_like(media.pk)
+                        liked += 1
+                        time.sleep(random.uniform(2.0, 6.0))
+            except Exception:
+                pass  # Non-critical — continue even if extra likes fail
+    except Exception:
+        pass  # Non-critical — continue to commenting even if likes fail
+
+    return liked
+
+
 # ─── Instagram Execution ─────────────────────────────────────────────────────
 
 # Module-level client reference for session reuse + re-auth
@@ -1281,12 +1381,21 @@ def execute_comments(dry_run=False, limit=None):
     timing = config["timing"]
     posted_in_batch = 0
     total_posted = 0
+    total_likes = 0
+    session_start = time.time()
+    session_max_s = timing.get("session_max_minutes", 90) * 60
 
     for item in pending[:batch_count]:
+        # Session time limit — stop if we've been running too long
+        elapsed = time.time() - session_start
+        if elapsed > session_max_s and not dry_run:
+            print(f"\n  ⏰ Session time limit ({timing.get('session_max_minutes', 90)}m) reached — stopping for today.")
+            break
+
         # Batch break
         if posted_in_batch >= timing["batch_size"]:
             break_time = random.randint(timing["batch_break_min_seconds"], timing["batch_break_max_seconds"])
-            print(f"\n  ☕ Batch break: {break_time}s ({posted_in_batch} comments sent)...\n")
+            print(f"\n  ☕ Batch break: {int(break_time/60)}m{break_time%60}s ({posted_in_batch} comments sent)...\n")
             if not dry_run:
                 time.sleep(break_time)
             posted_in_batch = 0
@@ -1300,6 +1409,13 @@ def execute_comments(dry_run=False, limit=None):
             try:
                 # Get the media PK from shortcode
                 media_pk = cl.media_pk_from_code(item["post_shortcode"])
+
+                # Like the post and a few others first (organic browsing behavior)
+                likes = like_nearby_posts(cl, media_pk, config)
+                total_likes += likes
+                if likes:
+                    print(f"     ❤️ Liked {likes} post{'s' if likes > 1 else ''}")
+
                 comment_obj = cl.media_comment(media_pk, item["comment_text"])
 
                 # Extract comment ID for reply tracking
@@ -1393,10 +1509,14 @@ def execute_comments(dry_run=False, limit=None):
                     queue["stats"]["failed"] += 1
                     print(f"     ❌ Failed: {error_str[:100]}")
 
-        # Random delay between comments
+        # Human-like delay between comments (log-normal distribution)
         if not dry_run and total_posted < batch_count:
-            delay = random.randint(timing["min_delay_seconds"], timing["max_delay_seconds"])
-            print(f"     ⏳ Waiting {delay}s...")
+            delay = human_delay(timing["min_delay_seconds"], timing["max_delay_seconds"])
+            delay_int = int(delay)
+            if delay_int >= 60:
+                print(f"     ⏳ Waiting {delay_int//60}m{delay_int%60}s...")
+            else:
+                print(f"     ⏳ Waiting {delay_int}s...")
             time.sleep(delay)
 
     # Reset items that failed due to session issues back to pending
@@ -1413,8 +1533,10 @@ def execute_comments(dry_run=False, limit=None):
     save_queue(queue)
     save_history(history)
 
-    print(f"\n  📊 Batch complete: {total_posted} {'previewed' if dry_run else 'posted'}")
-    print(f"     Today total: {today_posted + (total_posted if not dry_run else 0)}/{daily_cap}\n")
+    elapsed_min = int((time.time() - session_start) / 60)
+    print(f"\n  📊 Batch complete: {total_posted} {'previewed' if dry_run else 'posted'}, {total_likes} likes")
+    print(f"     Today total: {today_posted + (total_posted if not dry_run else 0)}/{daily_cap}")
+    print(f"     Session duration: {elapsed_min}m\n")
 
 
 def test_comment():
@@ -1796,28 +1918,29 @@ def monitor_replies(max_check=50):
 
 RE_ENGAGEMENT_TEMPLATES = {
     "thanks": [
-        "Thank you so much! We're always looking for great spots to share with dog owners 🐾",
-        "Thanks! We love connecting with fellow dog lovers 💛",
-        "Appreciate it! Your pup is adorable by the way 🐕",
-        "That means a lot! We're building a community of dog-friendly spots at pawcities.com 🧡",
+        "Thank you so much! We're always on the lookout for great dog-friendly spots",
+        "Thanks! We love connecting with fellow dog lovers",
+        "Appreciate it! Your pup is adorable by the way",
+        "That means a lot! Love this community of dog owners",
     ],
     "answer_question": [
-        "Great question! We actually cover tips like this on pawcities.com — check it out! 🐾",
+        "Great question! We've heard really good things about that spot",
         "We've been there a few times — always a great experience with dogs!",
-        "Totally! It's one of the best spots we've found. Dog owners love it 💛",
+        "Totally! It's one of the best spots we've found. Dog owners love it",
+        "From what we've seen, it's really accommodating for dogs of all sizes",
     ],
     "enthusiastic": [
-        "Right?! So many amazing dog-friendly places to discover! Follow us for more 🐾",
-        "We're so glad you agree! We share spots like this every week 🐕",
-        "YES! That's exactly what we think too. Dog owners deserve great resources 💛",
+        "Right?! So many amazing dog-friendly places out there",
+        "We're so glad you agree! Always great to meet fellow dog explorers",
+        "YES! That's exactly what we think too. Dogs deserve the best",
     ],
     "local_tip": [
-        "If you love this spot, there are so many more to discover! Check pawcities.com for {city_ref} 🐾",
-        "Great taste! We've mapped tons of dog-friendly gems in {city_ref}at pawcities.com 🧡",
+        "If you love this spot, {city_ref}has so many more gems like it!",
+        "Great taste! {city_ref}is really becoming a top dog-friendly destination",
     ],
     "follow_invite": [
-        "So glad you liked it! Follow us for daily dog-friendly discoveries 🐾",
-        "Thanks for the love! We share spots like this across 8 cities — follow along! 🐕",
+        "So glad you liked it! We're always sharing dog-friendly discoveries",
+        "Thanks for the love! Always great connecting with dog owners like you",
     ],
 }
 
@@ -1970,10 +2093,11 @@ def execute_re_engagements(limit=20):
 
             print(f"  ✅ @{item['replier_username']} — {item['response_text'][:50]}...")
 
-            # Delay between re-engagements (shorter than cold comments — these are warm)
+            # Delay between re-engagements (warm leads, but still be careful)
             if posted < len(batch):
-                delay = random.randint(30, 75)
-                print(f"     ⏳ Waiting {delay}s...")
+                delay = human_delay(60, 180)
+                delay_int = int(delay)
+                print(f"     ⏳ Waiting {delay_int}s...")
                 time.sleep(delay)
 
         except Exception as e:
@@ -2084,10 +2208,11 @@ def follow_engaged_accounts(limit=10):
             print(f"  ✅ @{username} ({account['interaction_count']} interactions, {cities_str})")
             print(f"     Last reply: \"{account['sample_reply'][:60]}\"")
 
-            # Delay between follows (be gentle)
+            # Delay between follows (conservative — follows are high-risk actions)
             if followed_count < len(batch):
-                delay = random.randint(30, 90)
-                print(f"     ⏳ Waiting {delay}s...")
+                delay = human_delay(60, 180)
+                delay_int = int(delay)
+                print(f"     ⏳ Waiting {delay_int}s...")
                 time.sleep(delay)
 
         except Exception as e:
@@ -2233,10 +2358,11 @@ def follow_all_new_followers(limit=50, dry_run=False):
             followed_count += 1
             print(f"  ✅ Followed @{username}")
 
-            # Gentle delay between follows
+            # Conservative delay between follows
             if i < len(batch) - 1:
-                delay = random.randint(20, 60)
-                print(f"     ⏳ Waiting {delay}s...")
+                delay = human_delay(45, 120)
+                delay_int = int(delay)
+                print(f"     ⏳ Waiting {delay_int}s...")
                 time.sleep(delay)
 
         except Exception as e:

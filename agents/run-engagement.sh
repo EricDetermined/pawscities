@@ -6,19 +6,22 @@
 #   1. (Monday) Scrape posts from 188 followed accounts
 #   2. Discover fresh posts across all 8 cities (Apify ~$0.50)
 #   3. Generate contextual comments for each post
-#   4. Execute comments with human-like timing (~90 min)
+#   4. Execute comments with human-like timing and likes mixed in
 #   5. Monitor replies to past comments
 #   6. Generate & send re-engagement replies
-#   7. Follow-back accounts that engaged with us
-#   8. Print stats when done
+#   7. Print stats when done
+#
+# IMPORTANT: Follow-back is now a SEPARATE session (run on different days).
+# Running comments + follows in the same session is a bot detection signal.
 #
 # Your Mac won't sleep while this runs (caffeinate).
 # Switching to another macOS user account is fine — it keeps going.
 #
 # Usage:
-#   ./agents/run-engagement.sh           # Full pipeline, 50 comments
-#   ./agents/run-engagement.sh 25        # Full pipeline, 25 comments
+#   ./agents/run-engagement.sh           # Full pipeline, 15 comments (safe cap)
+#   ./agents/run-engagement.sh 10        # Full pipeline, 10 comments
 #   ./agents/run-engagement.sh replies   # Only reply monitoring + re-engagement
+#   ./agents/run-engagement.sh follows   # Only follow-back (run separately!)
 # ─────────────────────────────────────────────────────────────
 
 set -e
@@ -58,7 +61,7 @@ LOG_FILE="$LOG_DIR/run-$(date +%Y-%m-%d).log"
 #   ./run-engagement.sh run 25       → run-only, 25 comments
 #   ./run-engagement.sh replies      → reply monitoring only
 MODE="full"
-LIMIT=50
+LIMIT=15
 
 for arg in "$@"; do
   if [[ "$arg" =~ ^[0-9]+$ ]]; then
@@ -67,6 +70,8 @@ for arg in "$@"; do
     MODE="run"
   elif [ "$arg" = "replies" ]; then
     MODE="replies"
+  elif [ "$arg" = "follows" ]; then
+    MODE="follows"
   elif [ "$arg" = "full" ]; then
     MODE="full"
   fi
@@ -115,7 +120,7 @@ caffeinate -i bash -c "
   # PHASE 2: INBOUND (monitor replies + re-engage + follow)
   # ════════════════════════════════════════════════════════════
 
-  if [ '$MODE' != 'run' ]; then
+  if [ '$MODE' = 'full' ] || [ '$MODE' = 'replies' ]; then
     echo '🔔 Monitoring replies to our comments...'
     python3 agents/engagement-bot.py monitor-replies 2>&1 | tee -a '$LOG_FILE'
     echo ''
@@ -125,11 +130,22 @@ caffeinate -i bash -c "
     echo ''
 
     echo '💬 Sending re-engagement replies...'
-    python3 agents/engagement-bot.py reply --limit 20 2>&1 | tee -a '$LOG_FILE'
+    python3 agents/engagement-bot.py reply --limit 10 2>&1 | tee -a '$LOG_FILE'
+    echo ''
+  fi
+
+  # ════════════════════════════════════════════════════════════
+  # PHASE 2.5: FOLLOW-BACK (separate session — run on different days)
+  # Combining comments + follows in the same session is a bot signal.
+  # ════════════════════════════════════════════════════════════
+
+  if [ '$MODE' = 'follows' ]; then
+    echo '👥 Following back engaged accounts (separate session)...'
+    python3 agents/engagement-bot.py follow-back --limit 5 2>&1 | tee -a '$LOG_FILE'
     echo ''
 
-    echo '👥 Following back engaged accounts...'
-    python3 agents/engagement-bot.py follow-back --limit 10 2>&1 | tee -a '$LOG_FILE'
+    echo '🤝 Following back new followers...'
+    python3 agents/engagement-bot.py follow-all-followers --limit 10 2>&1 | tee -a '$LOG_FILE'
     echo ''
   fi
 
