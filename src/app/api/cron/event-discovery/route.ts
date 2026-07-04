@@ -165,53 +165,124 @@ const BUSINESS_KEYWORDS = [
 // Apify Google Events Scraper: codingfrontend~google-events-scraper
 // Each city gets 2 queries: one in English, one in local language for broader coverage
 
+// Build time-aware queries: inject current month/season for better Google results
+function getCurrentSeasonalTerms(): { month: string; nextMonth: string; season: string; year: string } {
+  const now = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const month = months[now.getMonth()];
+  const nextMonth = months[(now.getMonth() + 1) % 12];
+  const year = now.getFullYear().toString();
+  const monthNum = now.getMonth();
+  const season = monthNum >= 2 && monthNum <= 4 ? 'spring' : monthNum >= 5 && monthNum <= 7 ? 'summer' : monthNum >= 8 && monthNum <= 10 ? 'fall' : 'winter';
+  return { month, nextMonth, season, year };
+}
+
 const GOOGLE_EVENT_QUERIES: Record<string, {
   queries: string[];
   location: string;
   gl: string;  // Google country code
   hl: string;  // Google language code
-}> = {
-  losangeles: {
-    queries: ['dog friendly events Los Angeles', 'dog events LA this month'],
-    location: 'Los Angeles, CA',
-    gl: 'us', hl: 'en',
-  },
-  newyork: {
-    queries: ['dog friendly events New York', 'dog events NYC this month'],
-    location: 'New York, NY',
-    gl: 'us', hl: 'en',
-  },
-  london: {
-    queries: ['dog friendly events London', 'dog events London this month'],
-    location: 'London, UK',
-    gl: 'uk', hl: 'en',
-  },
-  paris: {
-    queries: ['événements chiens Paris', 'dog friendly events Paris'],
-    location: 'Paris, France',
-    gl: 'fr', hl: 'fr',
-  },
-  barcelona: {
-    queries: ['eventos perros Barcelona', 'dog friendly events Barcelona'],
-    location: 'Barcelona, Spain',
-    gl: 'es', hl: 'es',
-  },
-  tokyo: {
-    queries: ['犬 イベント 東京', 'dog friendly events Tokyo'],
-    location: 'Tokyo, Japan',
-    gl: 'jp', hl: 'ja',
-  },
-  sydney: {
-    queries: ['dog friendly events Sydney', 'dog events Sydney this month'],
-    location: 'Sydney, Australia',
-    gl: 'au', hl: 'en',
-  },
-  geneva: {
-    queries: ['événements chiens Genève', 'dog friendly events Geneva'],
-    location: 'Geneva, Switzerland',
-    gl: 'ch', hl: 'fr',
-  },
-};
+}> = (() => {
+  const { month, nextMonth, season, year } = getCurrentSeasonalTerms();
+  return {
+    losangeles: {
+      queries: [
+        'dog friendly events Los Angeles',
+        `dog events Los Angeles ${month} ${year}`,
+        `${season} dog events LA`,
+        'dog adoption events Los Angeles this weekend',
+        'pet friendly festivals Los Angeles',
+        `dog meetup Los Angeles ${nextMonth} ${year}`,
+      ],
+      location: 'Los Angeles, CA',
+      gl: 'us', hl: 'en',
+    },
+    newyork: {
+      queries: [
+        'dog friendly events New York',
+        `dog events NYC ${month} ${year}`,
+        `${season} dog events New York City`,
+        'dog adoption events NYC this weekend',
+        'pet friendly festivals New York',
+        `dog meetup NYC ${nextMonth} ${year}`,
+      ],
+      location: 'New York, NY',
+      gl: 'us', hl: 'en',
+    },
+    london: {
+      queries: [
+        'dog friendly events London',
+        `dog events London ${month} ${year}`,
+        `${season} dog shows UK`,
+        'dog friendly festivals London this weekend',
+        'pet events London upcoming',
+        `dog meetup London ${nextMonth} ${year}`,
+      ],
+      location: 'London, UK',
+      gl: 'uk', hl: 'en',
+    },
+    paris: {
+      queries: [
+        'événements chiens Paris',
+        'dog friendly events Paris',
+        `sorties chien Paris ${month.toLowerCase()} ${year}`,
+        'exposition canine Paris prochainement',
+        `balade canine Paris ${year}`,
+        'fête des animaux Paris',
+      ],
+      location: 'Paris, France',
+      gl: 'fr', hl: 'fr',
+    },
+    barcelona: {
+      queries: [
+        'eventos perros Barcelona',
+        'dog friendly events Barcelona',
+        `eventos mascotas Barcelona ${month.toLowerCase()} ${year}`,
+        'feria mascotas Barcelona',
+        'paseo canino Barcelona',
+        `actividades perros Barcelona ${year}`,
+      ],
+      location: 'Barcelona, Spain',
+      gl: 'es', hl: 'es',
+    },
+    tokyo: {
+      queries: [
+        '犬 イベント 東京',
+        'dog friendly events Tokyo',
+        `犬イベント 東京 ${year}年`,
+        'ドッグフェス 東京 今月',
+        'ペットイベント 東京',
+        `わんこイベント 関東 ${year}`,
+      ],
+      location: 'Tokyo, Japan',
+      gl: 'jp', hl: 'ja',
+    },
+    sydney: {
+      queries: [
+        'dog friendly events Sydney',
+        `dog events Sydney ${month} ${year}`,
+        'pet festivals Sydney upcoming',
+        'dog show Sydney this month',
+        'dog friendly markets Sydney',
+        `dog events NSW ${nextMonth} ${year}`,
+      ],
+      location: 'Sydney, Australia',
+      gl: 'au', hl: 'en',
+    },
+    geneva: {
+      queries: [
+        'événements chiens Genève',
+        'dog friendly events Geneva',
+        `sorties chien Genève ${month.toLowerCase()} ${year}`,
+        'exposition canine Suisse romande',
+        `événements animaux Genève ${year}`,
+        'hundeschau Schweiz',
+      ],
+      location: 'Geneva, Switzerland',
+      gl: 'ch', hl: 'fr',
+    },
+  };
+})();
 
 // ─── Google Events via Apify ────────────────────────────────────────────────
 
@@ -371,6 +442,18 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
 
       // Skip if only weak match with low score
       if (!strongMatch && googleScore < 40) continue;
+
+      // ── Pre-filter: reject obviously past events before they hit the ingest queue ──
+      // Google Events often returns results from 2023-2025; catch them early
+      if (eventDate) {
+        const pastYearPattern = /\b(2019|2020|2021|2022|2023|2024|2025)\b/;
+        const currentYear = new Date().getFullYear();
+        const pastMatch = eventDate.match(pastYearPattern);
+        if (pastMatch && parseInt(pastMatch[1]) < currentYear) {
+          console.log(`[GOOGLE-EVENTS] Skipping past event (${pastMatch[1]}): "${eventTitle}"`);
+          continue;
+        }
+      }
 
       results.push({
         name: eventTitle,

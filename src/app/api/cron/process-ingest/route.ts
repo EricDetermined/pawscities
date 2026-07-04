@@ -552,7 +552,7 @@ async function handleProcessIngest(request: NextRequest) {
             is_free: isFree,
             is_featured: false,
             status: 'PENDING',
-            source: 'admin',
+            source: item.submitted_by === 'cron:event-discovery' ? 'discovery_agent' : 'admin',
             submitter_email: item.submitted_by,
             source_post_url: item.url,
             source_handle: isUsefulHandle(sourceHandle) ? sourceHandle : (isUsefulHandle(item.instagram_username) ? item.instagram_username : null),
