@@ -196,6 +196,55 @@ export const CONTENT_BANK: ContentFact[] = [
   { city: 'tokyo', type: 'tip', headline: 'Dog Cafés vs Dog Runs: Know the Difference', body: 'Dog cafés charge ¥1,000-2,000/hour and provide resident dogs to play with. Dog runs are free outdoor parks for your own dog. Both are everywhere in Tokyo.', icon: '🏷🐾' },
   { city: 'tokyo', type: 'guide', headline: 'Dog-Friendly Shopping in Daikanyama', body: 'Daikanyama T-Site bookstore, the Sunday farmers market, and boutiques along Hachiman-dori all welcome dogs. It\'s Tokyo\'s most stylish neighborhood for a dog stroll.', icon: '🛍🐾' },
   { city: 'tokyo', type: 'fun', headline: 'Japanese Dogs Have Better Raincoats Than You', body: 'Tokyo pet stores sell designer raincoats, UV-blocking sunwear, and heated winter jackets for dogs. The pet fashion industry in Japan is a $2 billion market.', icon: '🧥🐾' },
+
+  // ─── JULY 2026 REFILL (32 new facts) ─────────────────────────
+  // PARIS
+  { city: 'paris', type: 'tip', headline: 'Terrace Culture: Dogs Get a Seat', body: 'Most Parisian café terraces happily welcome dogs — many waiters bring a water bowl before you even ask. Indoors is at the owner\'s discretion, so terrace season is prime dog season.', icon: '☕🐾' },
+  { city: 'paris', type: 'guide', headline: 'Bois de Vincennes: Paris\'s Biggest Dog Day Out', body: 'At nearly 1,000 hectares, the Bois de Vincennes is Paris\'s largest green space — wooded trails, lakes, and endless sniffing territory make it the city\'s best full-day dog outing.', icon: '🌳🐾' },
+  { city: 'paris', type: 'tip', headline: 'Taking the TGV With Your Dog', body: 'Dogs ride French trains with their own pet ticket: small dogs travel in a carrier for a few euros, larger dogs pay a reduced fare and must be leashed and muzzled. Weekend in Provence, anyone?', icon: '🚄🐾' },
+  { city: 'paris', type: 'fun', headline: 'The Poodle: France\'s Icon, Germany\'s Invention', body: 'The poodle is the unofficial dog of France — but it was originally bred in Germany as a water retriever. "Pudel" means "to splash." The French just made it fabulous.', icon: '🐩✨' },
+
+  // GENEVA
+  { city: 'geneva', type: 'tip', headline: 'Yes, Geneva Has a Dog Tax', body: 'Swiss cantons charge an annual dog tax, and Geneva is no exception — every dog must be registered with the canton. The upside: it funds some of Europe\'s best-kept parks and dog infrastructure.', icon: '💰🐾' },
+  { city: 'geneva', type: 'guide', headline: 'Bois de la Bâtie: Geneva\'s Forest Escape', body: 'Perched above where the Rhône and Arve rivers meet, Bois de la Bâtie offers shaded forest paths and open lawns — a favorite escape for Geneva dogs just minutes from the city center.', icon: '🌲🐾' },
+  { city: 'geneva', type: 'fun', headline: 'Barry: Switzerland\'s Greatest Hero Was a Dog', body: 'Barry the St. Bernard rescued more than 40 people in the Swiss Alps in the early 1800s. Two centuries later, the St. Bernard remains Switzerland\'s national dog and a symbol of alpine rescue.', icon: '🏔🐕' },
+  { city: 'geneva', type: 'tip', headline: 'Fondue Is Not for Dogs', body: 'Sharing is caring — except with fondue. Cheese overload, garlic, and wine make it a no-go for pups. Pack dog treats for your restaurant nights so your co-pilot doesn\'t feel left out.', icon: '🫕🚫' },
+
+  // LONDON
+  { city: 'london', type: 'guide', headline: 'Hampstead Heath: 800 Acres of Dog Heaven', body: 'London\'s wildest green space lets dogs roam off-lead across most of its 800 acres — woodland trails, meadows, and swimming spots included. Arguably the best dog walk in any world capital.', icon: '🌳🐾' },
+  { city: 'london', type: 'tip', headline: 'Royal Parks: Know Before You Go', body: 'All eight Royal Parks welcome dogs, but rules vary — Richmond and Bushy Park require leads near deer, and some wildlife areas are off-limits. Check signage and enjoy 5,000 acres of royal walkies.', icon: '👑🐾' },
+  { city: 'london', type: 'fun', headline: 'The World\'s First Kennel Club Was Born Here', body: 'London founded The Kennel Club in 1873 — the world\'s first. Dog shows, breed standards, and pedigree records as we know them all trace back to a meeting in a Pall Mall apartment.', icon: '🏛🐕' },
+  { city: 'london', type: 'spotlight', headline: 'Battersea: The World\'s Most Famous Rescue', body: 'Battersea Dogs & Cats Home has been rehoming London\'s strays since 1860 — over 3 million animals and counting. Visit, volunteer, or adopt a true Londoner.', icon: '🏠❤️', placeName: 'Battersea Dogs and Cats Home London' },
+
+  // BARCELONA
+  { city: 'barcelona', type: 'tip', headline: 'Riding the Barcelona Metro With Your Dog', body: 'Dogs are welcome on the Barcelona metro with a leash and muzzle — just avoid peak commuter hours when restrictions apply. One more reason Barcelona is Europe\'s most dog-practical city.', icon: '🚇🐾' },
+  { city: 'barcelona', type: 'guide', headline: 'Llevant: Barcelona\'s Summer Dog Beach', body: 'Every summer, a section of Platja de Llevant becomes Barcelona\'s official dog beach — one of the few big-city beaches in Europe where dogs can swim in season. Arrive early for a good spot.', icon: '🏖🐕' },
+  { city: 'barcelona', type: 'did-you-know', headline: 'In Spain, Pets Are Legally Family', body: 'Since 2022, Spanish law recognizes animals as sentient family members — courts can even decide shared custody of a dog in a divorce. Spain takes the "family member" thing literally.', icon: '⚖️🐾' },
+  { city: 'barcelona', type: 'spotlight', headline: 'Montjuïc: Trails, Gardens and Harbour Views', body: 'The hillside paths of Montjuïc mix gardens, castle views, and Mediterranean panoramas — one of Barcelona\'s most underrated leashed dog walks, minutes from the city center.', icon: '🏰🐾', placeName: 'Parc de Montjuïc Barcelona' },
+
+  // LOS ANGELES
+  { city: 'losangeles', type: 'guide', headline: 'Lake Hollywood: The Easy Scenic Loop', body: 'The 3.2-mile paved loop around the Hollywood Reservoir is flat, shaded in stretches, and serves up postcard views of the Hollywood Sign — a perfect leashed walk for dogs of any fitness level.', icon: '🌄🐾' },
+  { city: 'losangeles', type: 'tip', headline: 'The 7-Second Asphalt Test', body: 'LA sun turns pavement into a griddle. Press the back of your hand to the asphalt for 7 seconds — if it\'s too hot for you, it\'s too hot for paws. Hike early, hydrate often.', icon: '🌡🐾' },
+  { city: 'losangeles', type: 'spotlight', headline: 'Angel City Brewery: Pups on the Patio and Beyond', body: 'Downtown LA\'s Angel City Brewery is famously dog-friendly — pups are welcome as you sample local craft beer. Water bowls provided; tail wags encouraged.', icon: '🍺🐾', placeName: 'Angel City Brewery Los Angeles' },
+  { city: 'losangeles', type: 'fun', headline: 'Hollywood\'s First Superstar Was a Dog', body: 'Rin Tin Tin, a German Shepherd rescued from a WWI battlefield, became one of Hollywood\'s biggest box-office stars of the 1920s — reportedly saving Warner Bros. from bankruptcy.', icon: '🎬🐕' },
+
+  // NYC
+  { city: 'nyc', type: 'tip', headline: 'Subway Rule: If It Fits, It Rides', body: 'NYC subway rules say dogs must be in a container — which is why New Yorkers famously carry huskies in IKEA bags and duffels. If your dog fits in the bag, your dog rides the train.', icon: '🚇🐕' },
+  { city: 'nyc', type: 'guide', headline: 'Hudson River Park: Dog Runs With Skyline Views', body: 'Hudson River Park runs 4 miles along Manhattan\'s west side with multiple dog runs along the way — river breezes, sunset views, and post-zoomies waterfront strolls included.', icon: '🌇🐾' },
+  { city: 'nyc', type: 'spotlight', headline: 'Washington Square\'s Separate Small-Dog Run', body: 'Washington Square Park has a dedicated run just for small dogs — so the little ones get their zoomies without being bowled over. Big-dog run right next door.', icon: '🐕🤏', placeName: 'Washington Square Park New York' },
+  { city: 'nyc', type: 'fun', headline: 'Balto Has Stood in Central Park Since 1925', body: 'The bronze statue of Balto — the sled dog who helped deliver lifesaving serum to Nome, Alaska — has watched over Central Park for a century. His nose is polished gold from millions of pats.', icon: '🗽🐕' },
+
+  // SYDNEY
+  { city: 'sydney', type: 'guide', headline: 'Sirius Cove: Mosman\'s Harbour Dog Beach', body: 'Sirius Cove Reserve is a calm harbourside beach where Sydney dogs paddle with a view across the water — check the posted off-leash hours and bring a towel for the ride home.', icon: '🌊🐕' },
+  { city: 'sydney', type: 'tip', headline: 'Public Transport: Plan Ahead for Big Dogs', body: 'In Sydney, only assistance dogs ride trains; small pets in secure carriers may board buses, ferries and light rail at staff discretion. For big dogs, it\'s pet taxis or your own wheels.', icon: '🚆🐾' },
+  { city: 'sydney', type: 'fun', headline: 'Australia\'s Dog Fence Stretches 5,600 km', body: 'The Dingo Fence — built to protect sheep country — runs about 5,600 km across Australia, making it one of the longest structures ever built. Australia does not do dogs by halves.', icon: '🦘🐕' },
+  { city: 'sydney', type: 'did-you-know', headline: 'Nearly Half of Aussie Homes Have a Dog', body: 'Australia has one of the highest dog ownership rates in the world — close to half of all households share their home with a dog. In Sydney, the dog beach crowds prove it.', icon: '🏡🐕' },
+
+  // TOKYO
+  { city: 'tokyo', type: 'tip', headline: 'Small Dogs Ride Tokyo Trains — In a Case', body: 'JR and most Tokyo rail lines allow small dogs in enclosed carriers within strict size limits, usually for a small fee. Bigger dogs travel by car or pet taxi — this is a small-dog megacity.', icon: '🚃🐾' },
+  { city: 'tokyo', type: 'guide', headline: 'Odaiba: A Full Dog Day by the Bay', body: 'Odaiba\'s waterfront promenades, seaside park lawns, and pet-welcoming outdoor malls make it Tokyo\'s easiest all-day dog outing — with Rainbow Bridge views for the photos.', icon: '🌉🐾' },
+  { city: 'tokyo', type: 'fun', headline: 'Japan\'s Native Dogs Are National Monuments', body: 'Japan\'s six native breeds — including the Shiba Inu and Akita — are officially designated natural monuments, protected as living cultural treasures. The Shiba smirk is government-certified.', icon: '🇯🇵🐕' },
+  { city: 'tokyo', type: 'did-you-know', headline: 'Japan Has More Pets Than Children', body: 'Registered cats and dogs in Japan outnumber children under 15 — a statistic that explains Tokyo\'s pet strollers, dog cafés, and department-store pet floors.', icon: '👶🐕' },
 ];
 
 /**
