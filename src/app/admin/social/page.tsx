@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -142,7 +142,15 @@ function copyToClipboard(text: string) {
 
 /* ──────────────── Component ──────────────── */
 
-export default function SocialCommandCenter() {
+export default function SocialCommandCenterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>}>
+      <SocialCommandCenter />
+    </Suspense>
+  );
+}
+
+function SocialCommandCenter() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab');
