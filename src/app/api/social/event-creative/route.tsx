@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest, NextResponse } from 'next/server';
-import { pickContextualDogPhoto } from '@/lib/dog-photos';
+import { pickContextualDogPhotoWithId, photoUrlFromId } from '@/lib/dog-photos';
 
 const BRAND_ORANGE = '#f97316';
 
@@ -38,14 +38,29 @@ export async function GET(request: NextRequest) {
   const isFree = searchParams.get('free') === 'true';
   const desc = searchParams.get('desc') || '';
   const breedHint = searchParams.get('breed') || '';
+  // Dedup controls: `photo` forces a specific Unsplash id; `recent` is a
+  // comma-separated list of ids to avoid so the grid stays visually varied.
+  const forcedPhoto = searchParams.get('photo') || '';
+  const recentParam = searchParams.get('recent') || '';
+  const recentIds = recentParam ? recentParam.split(',').map(s => s.trim()).filter(Boolean) : undefined;
 
-  const bgImage = pickContextualDogPhoto({
-    text: name,
-    citySlug,
-    description: desc || undefined,
-    tags: tags ? tags.split(',') : undefined,
-    breedHint: breedHint || undefined,
-  }, 'square');
+  let bgImage: string;
+  let chosenPhotoId: string;
+  if (forcedPhoto) {
+    chosenPhotoId = forcedPhoto;
+    bgImage = photoUrlFromId(forcedPhoto, 'square');
+  } else {
+    const picked = pickContextualDogPhotoWithId({
+      text: name,
+      citySlug,
+      description: desc || undefined,
+      tags: tags ? tags.split(',') : undefined,
+      breedHint: breedHint || undefined,
+      recentlyUsedPhotoIds: recentIds,
+    }, 'square');
+    bgImage = picked.url;
+    chosenPhotoId = picked.photoId;
+  }
   const tagList = tags ? tags.split(',').slice(0, 4) : [];
 
   // Truncate long event names
@@ -251,6 +266,7 @@ export async function GET(request: NextRequest) {
     {
       width: 1080,
       height: 1080,
+      headers: { 'X-Photo-Id': chosenPhotoId },
     }
   );
 

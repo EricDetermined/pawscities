@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
-import { pickContextualDogPhoto } from '@/lib/dog-photos';
+import { pickContextualDogPhotoWithId, photoUrlFromId } from '@/lib/dog-photos';
 
 const BRAND_ORANGE = '#f97316';
 const BRAND_DARK = '#1a1a2e';
@@ -41,13 +41,28 @@ export async function GET(request: NextRequest) {
   const city = searchParams.get('city') || 'City';
   const citySlug = searchParams.get('citySlug') || 'losangeles';
   const type = searchParams.get('type') || 'tip';
+  // Dedup controls: `photo` forces a specific Unsplash id; `recent` is a
+  // comma-separated list of ids to avoid so the grid stays visually varied.
+  const forcedPhoto = searchParams.get('photo') || '';
+  const recentParam = searchParams.get('recent') || '';
+  const recentIds = recentParam ? recentParam.split(',').map(s => s.trim()).filter(Boolean) : undefined;
 
   const accent = CITY_ACCENTS[citySlug] || BRAND_ORANGE;
-  const dogPhoto = pickContextualDogPhoto({
-    text: headline,
-    citySlug,
-    description: body || undefined,
-  }, 'wide');
+  let dogPhoto: string;
+  let chosenPhotoId: string;
+  if (forcedPhoto) {
+    chosenPhotoId = forcedPhoto;
+    dogPhoto = photoUrlFromId(forcedPhoto, 'wide');
+  } else {
+    const picked = pickContextualDogPhotoWithId({
+      text: headline,
+      citySlug,
+      description: body || undefined,
+      recentlyUsedPhotoIds: recentIds,
+    }, 'wide');
+    dogPhoto = picked.url;
+    chosenPhotoId = picked.photoId;
+  }
 
   // Truncate text for readability
   const displayHeadline = headline.length > 55 ? headline.slice(0, 52) + '...' : headline;
@@ -262,6 +277,7 @@ export async function GET(request: NextRequest) {
     {
       width: 1080,
       height: 1080,
+      headers: { 'X-Photo-Id': chosenPhotoId },
     }
   );
 }

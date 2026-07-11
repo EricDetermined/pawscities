@@ -364,6 +364,21 @@ export function pickContextualDogPhotoWithId(
 }
 
 /**
+ * Build the sized Unsplash URL for a specific photo id.
+ * Used when a caller wants to FORCE a particular (e.g. de-duplicated) photo
+ * onto a creative rather than letting the picker choose randomly.
+ */
+export function photoUrlFromId(
+  photoId: string,
+  format: 'square' | 'wide' = 'wide'
+): string {
+  const dims = format === 'square'
+    ? 'w=640&h=640&fit=crop&crop=faces&q=75'
+    : 'w=1080&h=600&fit=crop&crop=faces&q=75';
+  return `${BASE}/${photoId}?${dims}`;
+}
+
+/**
  * Legacy hash-based selection — kept for backward compatibility
  * and as fallback when no contextual signals match.
  */
