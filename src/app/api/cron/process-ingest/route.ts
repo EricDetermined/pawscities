@@ -526,6 +526,33 @@ async function handleProcessIngest(request: NextRequest) {
           continue;
         }
 
+        // ─── QUALITY GATE: require a way for users to find more details ──────────
+        // An event is only worth posting if a user can learn more from it — i.e. it
+        // has EITHER a real official/details link OR a social handle. If it has
+        // neither, sending people to Paw Cities for details we don't have is a dead
+        // end, so auto-reject it here (never enters the events table / posting queue).
+        const resolvedHandle = isUsefulHandle(sourceHandle)
+          ? sourceHandle
+          : (isUsefulHandle(item.instagram_username) ? item.instagram_username : null);
+        const hasHandle = !!resolvedHandle || (mentionedHandles && mentionedHandles.length > 0);
+        const candidateUrl = (externalUrl || item.url || '').trim();
+        // A synthesized Google-search fallback isn't a real details page.
+        const hasRealLink = candidateUrl.length > 0 && !/google\.[a-z.]+\/search/i.test(candidateUrl);
+        if (!hasHandle && !hasRealLink) {
+          console.log(`[PROCESS-INGEST] Auto-rejecting "${eventName}" — no official link and no social handle (nowhere for users to find details)`);
+          await supabase
+            .from('ingest_queue')
+            .update({
+              status: 'processed',
+              result_action: 'auto_rejected_no_source',
+              error_message: 'No official link or social handle — auto-rejected (users would have nowhere to find event details)',
+              processed_at: new Date().toISOString(),
+            })
+            .eq('id', item.id);
+          results.errors.push(`${item.id}: no link/handle for "${eventName}" — auto-rejected`);
+          continue;
+        }
+
         const eventSlug = slugify(eventName, finalDate);
         const timezone = (detectedCity && cityTimezones[detectedCity]) || 'America/Los_Angeles';
 
