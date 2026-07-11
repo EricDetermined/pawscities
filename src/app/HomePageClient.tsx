@@ -212,7 +212,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
           {/* Social Proof Stats */}
           <div className="flex items-center gap-4 sm:gap-6 mb-5 sm:mb-6 text-white/80 text-xs sm:text-sm">
             <div className="flex items-center gap-1.5">
-              <span className="text-orange-400 font-bold text-base sm:text-lg">8</span>
+              <span className="text-orange-400 font-bold text-base sm:text-lg">{cities.length}</span>
               <span>Cities</span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -443,9 +443,9 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
               <div className="text-4xl mb-4">🌍</div>
-              <h3 className="font-semibold text-lg mb-2">8 Global Cities</h3>
+              <h3 className="font-semibold text-lg mb-2">{cities.length} Global Cities</h3>
               <p className="text-gray-600">
-                From Paris to Tokyo, discover dog-friendly spots wherever you travel.
+                From Paris to Atlanta, discover dog-friendly spots wherever you travel.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">

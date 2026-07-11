@@ -128,7 +128,7 @@ export const CITIES: Record<string, CityConfig> = {
     languages: ['en'],
     description: 'Discover dog-friendly patios, breweries, parks, and BeltLine trails across Atlanta.',
     descriptionFr: 'Decouvrez les terrasses, brasseries, parcs et sentiers accueillant les chiens a Atlanta.',
-    heroImage: 'https://images.unsplash.com/photo-1561078284-5dbf862fb94d?w=800&h=600&fit=crop',
+    heroImage: 'https://pawcities.com/api/places/photo?name=places%2FChIJS7N6gJcF9YgRcA0ZDr8Ay20%2Fphotos%2FAaVGc3ngijrP7_Yqj6DVxmfDhuVQzZ5csEWkerAAHxY7yGt4NDV1U02953jjpnoMHXzu7AJpJLtlFywg4fSjCUZKZ3ospLhEoAWahqKmEPbBPFDyJVHt2eCbvj9rJDiseYg8W0LiFYElUuVsBiZ9sod510JvRJYr4rt7c4R1VvnGP8at3p8xkjx8Z39gM1S6_x63HKxfvTO1AofYpSRF7kzmycjlX78bRR_ysfbxMfyUna5KdMIeXcBqMBXYHrVHdhtk9KHHF0LhwpKThaOHerip1JsAWwv8rPaiwQaF2Lf_dqaMT-R9apUOH5ZX0EhlauUmHx6zJjoaMb8aTmZTxR3_z2hBv3CLtG3DGKtdBVKgPhJ7EbIIiNxYRtkOYk-NiFLsQfRJJSQBqzEH5l1lwpeUvZ5YkKmPuTrYejUWrWBZeIRb0A&maxWidth=1600',
     isActive: true, emergencyVetSearch: 'emergency vet 24h atlanta',
     dogRegulations: { leashRequired: true, offLeashAreas: true,
       publicTransport: 'Small dogs in carriers allowed on MARTA; service animals always welcome.',

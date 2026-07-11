@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { getActiveCities } from '@/lib/cities-config';
 
 interface NewsletterSignupProps {
   /** Pre-select a city (e.g., on city pages) */
@@ -56,7 +57,7 @@ export default function NewsletterSignup({
   };
 
   const defaultHeading = 'Get the Best Dog-Friendly Spots Weekly';
-  const defaultSubtext = 'Events, new places, and dog tips — delivered to your inbox every week. Join dog lovers across 8 cities.';
+  const defaultSubtext = `Events, new places, and dog tips — delivered to your inbox every week. Join dog lovers across ${getActiveCities().length} cities.`;
 
   const h = heading || defaultHeading;
   const sub = subtext || defaultSubtext;
