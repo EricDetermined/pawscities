@@ -129,6 +129,7 @@ export async function GET(request: NextRequest) {
 
     // ── Auto-expire event creatives whose event date has passed ──────────────
     const eventCreatives = approvedCreatives.filter(c => c.content_type === 'event' && c.event_id);
+    let eventDates = new Map<string, string>();
     if (eventCreatives.length > 0) {
       const eventIds = eventCreatives.map(c => c.event_id as string);
       const { data: events } = await supabase
@@ -136,7 +137,7 @@ export async function GET(request: NextRequest) {
         .select('id, start_date')
         .in('id', eventIds);
 
-      const eventDates = new Map((events || []).map(e => [e.id, e.start_date]));
+      eventDates = new Map((events || []).map(e => [e.id, e.start_date]));
 
       for (const creative of eventCreatives) {
         const eventDate = eventDates.get(creative.event_id as string);
@@ -176,28 +177,52 @@ export async function GET(request: NextRequest) {
     }
 
     // ── Grid Diversity: Re-sort candidates to prefer different visual style ──
-    // Only apply grid diversity when there are NO event creatives in the pool.
-    // When events are present, they've already been urgency-sorted by event date
-    // above, and deadline priority overrides format diversity.
-    const hasEventCreativesInPool = approvedCreatives.some(c => c.content_type === 'event' && c.event_id);
+    // Apply diversity to ALL candidates including events. Only truly urgent
+    // events (within 48 hours) override diversity preferences.
+    const now = new Date();
+    const urgentThreshold = new Date(now.getTime() + 48 * 60 * 60 * 1000).toISOString().split('T')[0];
 
-    if (!hasEventCreativesInPool) {
-      if (recentFormats.length >= 2 && recentFormats[0] === recentFormats[1]) {
-        const avoidFormat = recentFormats[0];
-        approvedCreatives.sort((a, b) => {
-          const aMatch = (a.format === avoidFormat) ? 1 : 0;
-          const bMatch = (b.format === avoidFormat) ? 1 : 0;
-          return aMatch - bMatch;
-        });
-        console.log(`[SOCIAL-POST] Grid diversity: last 2 posts were "${avoidFormat}", preferring different visual style`);
-      } else if (recentFormats.length >= 1) {
-        const lastFormat = recentFormats[0];
-        approvedCreatives.sort((a, b) => {
-          const aMatch = (a.format === lastFormat) ? 1 : 0;
-          const bMatch = (b.format === lastFormat) ? 1 : 0;
-          return aMatch - bMatch;
-        });
-      }
+    if (recentFormats.length >= 2 && recentFormats[0] === recentFormats[1]) {
+      const avoidFormat = recentFormats[0];
+      approvedCreatives.sort((a, b) => {
+        // Urgent events (within 48h) always come first regardless of format
+        const aUrgent = a.content_type === 'event' && a.event_id && eventCreatives.length > 0;
+        const bUrgent = b.content_type === 'event' && b.event_id && eventCreatives.length > 0;
+        const aEventDate = aUrgent ? (eventDates?.get(a.event_id as string) || '9999') : '9999';
+        const bEventDate = bUrgent ? (eventDates?.get(b.event_id as string) || '9999') : '9999';
+        const aIsUrgent = aEventDate <= urgentThreshold;
+        const bIsUrgent = bEventDate <= urgentThreshold;
+        if (aIsUrgent && !bIsUrgent) return -1;
+        if (!aIsUrgent && bIsUrgent) return 1;
+
+        // Then prefer different format from recent posts
+        const aMatch = (a.format === avoidFormat) ? 1 : 0;
+        const bMatch = (b.format === avoidFormat) ? 1 : 0;
+        return aMatch - bMatch;
+      });
+      console.log(`[SOCIAL-POST] Grid diversity: last 2 posts were "${avoidFormat}", preferring different visual style`);
+    } else if (recentFormats.length >= 1) {
+      const lastFormat = recentFormats[0];
+      approvedCreatives.sort((a, b) => {
+        const aMatch = (a.format === lastFormat) ? 1 : 0;
+        const bMatch = (b.format === lastFormat) ? 1 : 0;
+        return aMatch - bMatch;
+      });
+    }
+
+    // Also fetch recently used photo IDs to avoid repeating the same dog photo
+    let recentPhotoIds: string[] = [];
+    try {
+      const { data: recentPhotoPosts } = await supabase
+        .from('social_posts')
+        .select('photo_id')
+        .eq('status', 'published')
+        .not('photo_id', 'is', null)
+        .order('created_at', { ascending: false })
+        .limit(10);
+      recentPhotoIds = (recentPhotoPosts || []).map((p: { photo_id: string }) => p.photo_id).filter(Boolean);
+    } catch {
+      // photo_id column may not exist yet — that's fine
     }
 
     // Try each creative until one succeeds
@@ -373,7 +398,13 @@ export async function GET(request: NextRequest) {
       }
 
       // ── Log to social_posts ──────────────────────────────────────────────
-      // Build social post record — include format if the column exists
+      // Build social post record — include format and photo_id for grid diversity tracking
+      // Extract photo_id from image_url if it's an Unsplash photo
+      let photoId: string | null = null;
+      if (imageUrl) {
+        const unsplashMatch = (imageUrl as string).match(/images\.unsplash\.com\/(photo-[^?]+)/);
+        if (unsplashMatch) photoId = unsplashMatch[1];
+      }
       const postRecord: Record<string, unknown> = {
         platform: 'instagram',
         post_id: result.postId || null,
@@ -383,14 +414,16 @@ export async function GET(request: NextRequest) {
         caption: creative.caption,
         image_url: imageUrl,
         format: creative.format || 'mascot',  // Track visual style for grid diversity
+        photo_id: photoId,                    // Track specific photo for dedup
         status: result.success ? 'published' : 'failed',
         error_message: result.error || null,
       };
       let postRow: { id: string } | null = null;
       const { data: insertedRow, error: postInsertErr } = await supabase.from('social_posts').insert(postRecord).select('id').single();
-      if (postInsertErr && postInsertErr.message?.includes('format')) {
-        // Column doesn't exist yet — retry without format field
+      if (postInsertErr) {
+        // Column(s) may not exist yet — retry without optional columns
         delete postRecord.format;
+        delete postRecord.photo_id;
         const { data: retryRow } = await supabase.from('social_posts').insert(postRecord).select('id').single();
         postRow = retryRow;
       } else {

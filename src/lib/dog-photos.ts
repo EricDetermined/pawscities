@@ -14,8 +14,8 @@
 
 // ─── Photo Metadata Types ─────────────────────────────────────────────────────
 
-type Setting = 'field' | 'snow' | 'urban' | 'park' | 'beach' | 'cafe' | 'water' | 'forest' | 'portrait' | 'home';
-type Vibe = 'active' | 'relaxed' | 'playful' | 'elegant' | 'cozy';
+type Setting = 'field' | 'snow' | 'urban' | 'park' | 'beach' | 'cafe' | 'water' | 'forest' | 'portrait' | 'home' | 'trail';
+type Vibe = 'active' | 'relaxed' | 'playful' | 'elegant' | 'cozy' | 'curious';
 
 interface DogPhoto {
   id: string;
@@ -60,6 +60,41 @@ const DOG_PHOTOS: DogPhoto[] = [
   { id: 'photo-1537151625747-768eb6cf92b2', breed: 'mixed', breedAliases: ['mutt', 'rescue', 'shelter', 'mixed breed'], setting: 'park', vibe: 'playful' },
   { id: 'photo-1598411646852-ee3fdc0e5789', breed: 'poodle', breedAliases: ['poodles', 'doodle', 'goldendoodle', 'labradoodle'], setting: 'cafe', vibe: 'elegant' },
   { id: 'photo-1694230093349-ba54f5e88aa1', breed: 'mixed', breedAliases: ['mutt', 'rescue', 'shelter'], setting: 'beach', vibe: 'relaxed' },
+  { id: 'photo-1587300003388-59208cc962cb', breed: 'cavalier king charles spaniel', breedAliases: ['cavalier', 'king charles', 'spaniel', 'ckcs'], setting: 'park', vibe: 'relaxed' },
+  { id: 'photo-1558788353-f76d92f33ddc', breed: 'australian shepherd', breedAliases: ['aussie', 'australian', 'aussie shepherd'], setting: 'field', vibe: 'active' },
+  { id: 'photo-1530281700549-e82e7bf110d6', breed: 'golden retriever', breedAliases: ['golden', 'retriever', 'goldie'], setting: 'water', vibe: 'playful' },
+  { id: 'photo-1548199973-03cce0bbc87b', breed: 'german shepherd', breedAliases: ['german', 'shepherd', 'gsd', 'alsatian'], setting: 'forest', vibe: 'active' },
+  { id: 'photo-1477884213360-7e9d7dcc8f9b', breed: 'puppy mixed', breedAliases: ['puppy', 'pup', 'mixed breed', 'mutt'], setting: 'home', vibe: 'cozy' },
+  { id: 'photo-1587559073078-6d2c1ac9beae', breed: 'pomeranian', breedAliases: ['pom', 'spitz', 'pomeranian'], setting: 'portrait', vibe: 'elegant' },
+  { id: 'photo-1583337130417-13219ce08bcd', breed: 'yorkshire terrier', breedAliases: ['yorkie', 'yorkshire', 'terrier'], setting: 'home', vibe: 'cozy' },
+  { id: 'photo-1568572933382-74d440642117', breed: 'pitbull', breedAliases: ['pit bull', 'pittie', 'bully', 'american pitbull'], setting: 'urban', vibe: 'active' },
+  { id: 'photo-1588022274642-f238f77ec193', breed: 'jack russell', breedAliases: ['jack russell terrier', 'jrt', 'russell terrier'], setting: 'beach', vibe: 'playful' },
+  { id: 'photo-1583511655826-05700d52f4d9', breed: 'golden retriever', breedAliases: ['golden', 'retriever', 'goldie'], setting: 'snow', vibe: 'active' },
+  { id: 'photo-1601758228041-f3b2795255f1', breed: 'maltese', breedAliases: ['maltese', 'maltipoo', 'white lap dog'], setting: 'cafe', vibe: 'elegant' },
+  { id: 'photo-1596492784531-6e6eb5ea9993', breed: 'border collie', breedAliases: ['collie', 'sheepdog', 'herding'], setting: 'field', vibe: 'active' },
+  { id: 'photo-1576201836106-db1758fd1c97', breed: 'maltipoo', breedAliases: ['maltipoo', 'malti-poo', 'poodle mix', 'doodle'], setting: 'park', vibe: 'playful' },
+  { id: 'photo-1535930749574-1399327ce78f', breed: 'labrador', breedAliases: ['lab', 'labrador retriever', 'yellow lab'], setting: 'beach', vibe: 'active' },
+  { id: 'photo-1546421845-6471bdcf3edf', breed: 'corgi', breedAliases: ['welsh corgi', 'pembroke', 'cardigan', 'corg'], setting: 'urban', vibe: 'playful' },
+  { id: 'photo-1588943211346-0908a1fb0b01', breed: 'husky', breedAliases: ['siberian husky', 'malamute', 'sled dog', 'arctic'], setting: 'snow', vibe: 'elegant' },
+  { id: 'photo-1587764379990-bcc0c1ef9c3d', breed: 'french bulldog', breedAliases: ['frenchie', 'french bull', 'bulldog'], setting: 'park', vibe: 'relaxed' },
+  { id: 'photo-1560807707-8cc77767d783', breed: 'rottweiler', breedAliases: ['rottie', 'rottweiler', 'rott'], setting: 'forest', vibe: 'active' },
+  { id: 'photo-1504595403791-c75482ef15eb', breed: 'mixed breed', breedAliases: ['mutt', 'rescue', 'shelter', 'mixed'], setting: 'beach', vibe: 'relaxed' },
+  { id: 'photo-1522276498395-f4f68f7f8454', breed: 'shiba inu', breedAliases: ['shiba', 'inu', 'japanese dog'], setting: 'urban', vibe: 'elegant' },
+  { id: 'photo-1518717758536-85ae29035b6d', breed: 'german shepherd', breedAliases: ['german', 'shepherd', 'gsd', 'alsatian'], setting: 'park', vibe: 'active' },
+  { id: 'photo-1586671267731-da2cf3ceeb80', breed: 'chihuahua', breedAliases: ['chi', 'chihuahua', 'chi-chi'], setting: 'home', vibe: 'cozy' },
+  { id: 'photo-1583512603805-3cc6b41f3edb', breed: 'golden retriever', breedAliases: ['golden', 'retriever', 'goldie'], setting: 'park', vibe: 'playful' },
+  { id: 'photo-1561037404-61cd46aa615b', breed: 'great dane', breedAliases: ['dane', 'great dane', 'gentle giant'], setting: 'field', vibe: 'elegant' },
+  { id: 'photo-1554692918-08fa0fdc9db3', breed: 'boxer', breedAliases: ['boxer', 'boxers'], setting: 'park', vibe: 'active' },
+  { id: 'photo-1552053831-71594a27632d', breed: 'labrador puppy', breedAliases: ['lab', 'puppy', 'labrador', 'lab puppy'], setting: 'home', vibe: 'playful' },
+  { id: 'photo-1593134257782-e89567b7718a', breed: 'samoyed', breedAliases: ['sammy', 'white fluffy', 'spitz', 'samoyed'], setting: 'snow', vibe: 'playful' },
+  { id: 'photo-1548658166-136d9f6a5c3e', breed: 'mixed breed', breedAliases: ['mutt', 'rescue', 'shelter', 'mixed'], setting: 'cafe', vibe: 'relaxed' },
+  { id: 'photo-1541364983171-a8ba01e95cfc', breed: 'english bulldog', breedAliases: ['bulldog', 'english bull', 'british bulldog'], setting: 'urban', vibe: 'relaxed' },
+  { id: 'photo-1596662951482-0c4ba74a6df6', breed: 'australian shepherd', breedAliases: ['aussie', 'australian', 'aussie shepherd'], setting: 'water', vibe: 'active' },
+  { id: 'photo-1595435934249-5df7ed86e1c0', breed: 'bichon frise', breedAliases: ['bichon', 'frise', 'bichon frise'], setting: 'portrait', vibe: 'elegant' },
+  { id: 'photo-1517423440428-a5a00ad493e8', breed: 'mixed terrier', breedAliases: ['terrier', 'mixed terrier', 'terrier mix'], setting: 'forest', vibe: 'playful' },
+  { id: 'photo-1537151625747-768eb6cf92b3', breed: 'mixed breed', breedAliases: ['mutt', 'rescue', 'shelter', 'mixed'], setting: 'park', vibe: 'active' },
+  { id: 'photo-1551717743-49959800-shel', breed: 'shetland sheepdog', breedAliases: ['sheltie', 'shetland', 'sheepdog', 'miniature collie'], setting: 'trail', vibe: 'curious' },
+  { id: 'photo-1587402092301-725e37c70fd8', breed: 'beagle', breedAliases: ['beagles', 'hound'], setting: 'trail', vibe: 'curious' },
 ];
 
 // ─── City → Preferred Settings Map ────────────────────────────────────────────
@@ -69,7 +104,7 @@ const CITY_SETTINGS: Record<string, Setting[]> = {
   paris:       ['cafe', 'urban', 'elegant' as Setting, 'park'],
   london:      ['park', 'urban', 'cafe', 'field'],
   barcelona:   ['beach', 'urban', 'park', 'cafe'],
-  geneva:      ['water', 'snow', 'park', 'forest'],
+  geneva:      ['water', 'snow', 'park', 'forest', 'trail'],
 
   // US cities
   losangeles:  ['beach', 'park', 'field', 'urban'],
@@ -84,8 +119,11 @@ const CITY_SETTINGS: Record<string, Setting[]> = {
 
 const ACTIVITY_VIBES: Record<string, Vibe[]> = {
   // Active events
-  hike:     ['active'],
-  walk:     ['active'],
+  hike:     ['active', 'curious'],
+  walk:     ['active', 'curious'],
+  explore:  ['curious', 'active'],
+  sniff:    ['curious', 'playful'],
+  trail:    ['active', 'curious'],
   run:      ['active'],
   agility:  ['active'],
   fetch:    ['active', 'playful'],
@@ -195,6 +233,8 @@ interface PhotoContext {
   tags?: string[];
   /** Optional: explicit breed hint (overrides detection) */
   breedHint?: string;
+  /** Optional: photo IDs used recently — these will be excluded to prevent repetition */
+  recentlyUsedPhotoIds?: string[];
 }
 
 /**
@@ -234,28 +274,45 @@ function scorePhoto(photo: DogPhoto, ctx: {
 }
 
 /**
- * Pick the most contextually relevant dog photo.
+ * Pick a contextually relevant dog photo with recency-aware selection.
  *
  * Scoring priority:
  *   1. Breed match (Corgi Parade → Corgi photo)     +10
  *   2. City setting (Geneva → water/snow/mountain)   +3
  *   3. Activity vibe (Hike Club → active dog)        +2
  *
- * When multiple photos tie, uses FNV-1a hash for deterministic
- * tiebreaking so the same event always gets the same photo.
+ * Selection improvements (v2):
+ *   - Excludes recently-used photo IDs to prevent grid repetition
+ *   - Uses RANDOM tiebreaking instead of deterministic hash
+ *   - Falls back gracefully: if all top-scored photos were recently used,
+ *     picks from second-tier scores before reusing
  *
- * Falls back to pure hash selection when no context signals exist.
+ * Returns both the URL and the selected photo ID for tracking.
  */
 export function pickContextualDogPhoto(
   context: PhotoContext,
   format: 'square' | 'wide' = 'wide'
 ): string {
+  const result = pickContextualDogPhotoWithId(context, format);
+  return result.url;
+}
+
+/**
+ * Same as pickContextualDogPhoto but also returns the photo ID
+ * so callers can track which photo was used for dedup.
+ */
+export function pickContextualDogPhotoWithId(
+  context: PhotoContext,
+  format: 'square' | 'wide' = 'wide'
+): { url: string; photoId: string } {
   const searchText = [
     context.text,
     context.description || '',
     ...(context.tags || []),
     context.breedHint || '',
   ].join(' ');
+
+  const recentIds = new Set(context.recentlyUsedPhotoIds || []);
 
   // Detect contextual signals
   const detectedBreeds = context.breedHint
@@ -269,30 +326,41 @@ export function pickContextualDogPhoto(
     photo,
     idx,
     score: scorePhoto(photo, { detectedBreeds, preferredSettings, preferredVibes }),
+    isRecent: recentIds.has(photo.id),
   }));
 
-  // Sort by score descending
-  scored.sort((a, b) => b.score - a.score);
+  // Sort by: not-recent first, then score descending
+  scored.sort((a, b) => {
+    // Penalize recently used photos (push them to the end)
+    if (a.isRecent !== b.isRecent) return a.isRecent ? 1 : -1;
+    return b.score - a.score;
+  });
 
+  // Take top candidates: prefer non-recent with good scores
   const topScore = scored[0].score;
+  let candidates = scored.filter(s => s.score >= topScore - 1 && !s.isRecent);
 
-  if (topScore > 0) {
-    // Get all photos tied at top score
-    const topCandidates = scored.filter(s => s.score === topScore);
-
-    // Deterministic pick among tied candidates using hash
-    const hash = fnv1a(`${context.text}::${context.citySlug}`);
-    const pick = topCandidates[hash % topCandidates.length];
-
-    const dims = format === 'square'
-      ? 'w=640&h=640&fit=crop&crop=faces&q=75'
-      : 'w=1080&h=600&fit=crop&crop=faces&q=75';
-
-    return `${BASE}/${pick.photo.id}?${dims}`;
+  // If all good candidates were recently used, allow reuse but still prefer best scores
+  if (candidates.length === 0) {
+    candidates = scored.filter(s => s.score >= topScore - 1);
   }
 
-  // No contextual signals — fall back to pure hash (legacy behavior)
-  return pickDogPhoto(context.text, context.citySlug, format);
+  // If still empty (shouldn't happen), take all
+  if (candidates.length === 0) {
+    candidates = scored;
+  }
+
+  // RANDOM pick among candidates (not deterministic hash)
+  const pick = candidates[Math.floor(Math.random() * candidates.length)];
+
+  const dims = format === 'square'
+    ? 'w=640&h=640&fit=crop&crop=faces&q=75'
+    : 'w=1080&h=600&fit=crop&crop=faces&q=75';
+
+  return {
+    url: `${BASE}/${pick.photo.id}?${dims}`,
+    photoId: pick.photo.id,
+  };
 }
 
 /**

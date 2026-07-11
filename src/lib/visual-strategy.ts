@@ -17,20 +17,35 @@ export type ContentType = 'did-you-know' | 'tip' | 'spotlight' | 'event' | 'guid
 
 // ─── Content Type → Visual Style Mapping ─────────────────────────────────────
 
-const STYLE_MAP: Record<ContentType, VisualStyle> = {
-  'did-you-know': 'mascot',     // Mascots bring personality to fun facts
-  'fun':          'mascot',     // Perfect for playful mascot illustrations
-  'spotlight':    'photo',      // Real business photos = credibility
-  'event':        'photo',      // Real event images = professionalism for sponsors
-  'tip':          'text_card',  // Clean branded cards for quick-read tips
-  'guide':        'text_card',  // Clean branded cards for guides/rankings
+// Primary style (used most often) and alternates (used ~25% of time for variety)
+const STYLE_MAP: Record<ContentType, { primary: VisualStyle; alternates: VisualStyle[] }> = {
+  'did-you-know': { primary: 'mascot',    alternates: ['text_card'] },
+  'fun':          { primary: 'mascot',    alternates: ['text_card', 'photo'] },
+  'spotlight':    { primary: 'photo',     alternates: ['text_card'] },
+  'event':        { primary: 'photo',     alternates: ['mascot'] },  // mascot rotation handled separately
+  'tip':          { primary: 'text_card', alternates: ['photo'] },
+  'guide':        { primary: 'text_card', alternates: ['photo', 'mascot'] },
 };
 
 /**
  * Get the visual style for a content type.
+ * Uses primary style ~75% of the time, alternates ~25% for grid variety.
+ * Pass forceDefault=true to always get the primary (for backward compat).
  */
-export function getVisualStyle(contentType: string): VisualStyle {
-  return STYLE_MAP[contentType as ContentType] || 'mascot';
+export function getVisualStyle(contentType: string, forceDefault = false): VisualStyle {
+  const mapping = STYLE_MAP[contentType as ContentType];
+  if (!mapping) return 'mascot';
+
+  if (forceDefault || mapping.alternates.length === 0) {
+    return mapping.primary;
+  }
+
+  // ~25% chance of alternate style for visual variety
+  if (Math.random() < 0.25) {
+    return mapping.alternates[Math.floor(Math.random() * mapping.alternates.length)];
+  }
+
+  return mapping.primary;
 }
 
 /**

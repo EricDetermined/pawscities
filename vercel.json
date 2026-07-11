@@ -64,6 +64,10 @@
     {
       "path": "/api/cron/weekly-roundup",
       "schedule": "0 14 * * 0"
+    },
+    {
+      "path": "/api/cron/creative-oversight",
+      "schedule": "0 6 * * *"
     }
   ]
 }
