@@ -186,6 +186,17 @@ export async function POST(request: NextRequest) {
     // If the last one was marley, start with buster (index 0), and vice versa
     batchNarratorIndex = (lastNarrator?.[0]?.narrator === 'buster') ? 1 : 0;
 
+    // Photos already used by queued/recent creatives — avoid repeating any of them
+    // (and avoid repeats within this batch) so the grid stays visually varied.
+    const { data: usedPhotoRows } = await supabase
+      .from('creative_queue')
+      .select('photo_id')
+      .in('status', ['pending_review', 'approved', 'posted'])
+      .not('photo_id', 'is', null)
+      .order('created_at', { ascending: false })
+      .limit(40);
+    const usedPhotoIds: string[] = (usedPhotoRows || []).map(r => r.photo_id).filter(Boolean) as string[];
+
     for (let i = 0; i < count; i++) {
       const fact = pickNextContent(combined);
       if (!fact) break;
@@ -233,6 +244,7 @@ export async function POST(request: NextRequest) {
       // ── Image Generation (style-aware) ─────────────────────────────────
       let imageUrl: string | null = null;
       let imagePrompt: string | null = null;
+      let photoId: string | null = null;
 
       if (visualStyle === 'mascot' && hasOpenAI) {
         // DALL-E mascot illustration — only for did-you-know and fun types
@@ -254,9 +266,12 @@ export async function POST(request: NextRequest) {
             citySlug,
             type: fact.type,
           });
+          if (usedPhotoIds.length > 0) ogParams.set('recent', usedPhotoIds.join(','));
           const ogUrl = `${baseUrl}/api/social/text-card-creative?${ogParams}`;
           const ogRes = await fetch(ogUrl, { signal: AbortSignal.timeout(20000) });
           if (ogRes.ok) {
+            photoId = ogRes.headers.get('x-photo-id');
+            if (photoId) usedPhotoIds.push(photoId);
             const imgBuffer = Buffer.from(await ogRes.arrayBuffer());
             const safeName = fact.headline.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 50);
             const storagePath = `text-card-creatives/${citySlug}-${safeName}-${Date.now()}.png`;
@@ -296,6 +311,7 @@ export async function POST(request: NextRequest) {
         caption,
         image_url: imageUrl,
         image_prompt: imagePrompt,
+        photo_id: photoId,
         format: visualStyle,  // 'mascot', 'photo', or 'text_card'
         status: 'pending_review',
         scheduled_for: scheduledFor,
@@ -406,9 +422,20 @@ export async function POST(request: NextRequest) {
       caption = `📅 ${event.name}\n\n🗓 ${event.start_date}${event.venue_name ? `\n📍 ${event.venue_name}` : ''}\n\n${event.description || 'Don\'t miss this dog-friendly event!'}\n\n${freeTag}Find more events at pawcities.com/${citySlug}${handleMentions}${sourceMention}\n\nFollow @thepawcities for dog-friendly events worldwide 🌍\n\n#PawCities #DogFriendlyEvents #DogEvents #DogsOfInstagram #${cityName.replace(/\s/g, '')}`;
     }
 
+    // Photos already used by queued/recent creatives — avoid repeating any of them.
+    const { data: usedPhotoRows } = await supabase
+      .from('creative_queue')
+      .select('photo_id')
+      .in('status', ['pending_review', 'approved', 'posted'])
+      .not('photo_id', 'is', null)
+      .order('created_at', { ascending: false })
+      .limit(40);
+    const usedPhotoIds: string[] = (usedPhotoRows || []).map(r => r.photo_id).filter(Boolean) as string[];
+
     // ── Generate image ───────────────────────────────────────────────────
     let imageUrl: string | null = null;
     let imagePrompt: string | null = null;
+    let photoId: string | null = null;
 
     if (useMascot) {
       // ── MASCOT illustration via DALL-E ──────────────────────────────────
@@ -446,9 +473,11 @@ export async function POST(request: NextRequest) {
           ...(event.description ? { desc: event.description.slice(0, 200) } : {}),
           ...(detectedBreeds.length > 0 ? { breed: detectedBreeds[0] } : {}),
         });
+        if (usedPhotoIds.length > 0) ogParams.set('recent', usedPhotoIds.join(','));
         const ogUrl = `${baseUrl}/api/social/event-creative?${ogParams}`;
         const ogRes = await fetch(ogUrl, { signal: AbortSignal.timeout(20000) });
         if (ogRes.ok) {
+          photoId = ogRes.headers.get('x-photo-id');
           const imgBuffer = Buffer.from(await ogRes.arrayBuffer());
           const safeName = event.name.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 50);
           const storagePath = `event-creatives/${citySlug}-${safeName}-${Date.now()}.png`;
@@ -474,6 +503,7 @@ export async function POST(request: NextRequest) {
       caption,
       image_url: imageUrl,
       image_prompt: imagePrompt,
+      photo_id: photoId,
       format: visualStyle,
       status: 'pending_review',
       scheduled_for: (() => {

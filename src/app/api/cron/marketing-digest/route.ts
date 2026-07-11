@@ -158,7 +158,7 @@ export async function GET(request: NextRequest) {
         fetch(`${baseUrl}/api/cron/health-check?secret=${cronSecret}&skipEmail=true`, {
           signal: AbortSignal.timeout(45000),
         }),
-        fetch(`${baseUrl}/api/cron/creative-oversight?secret=${cronSecret}`, {
+        fetch(`${baseUrl}/api/cron/creative-oversight?secret=${cronSecret}&dryRun=true`, {
           signal: AbortSignal.timeout(45000),
         }),
       ]);

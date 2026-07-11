@@ -43,6 +43,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  // dryRun=true → audit and score only, take NO write actions (used by the
+  // daily digest so it can report grid health without double-acting).
+  const dryRun = request.nextUrl.searchParams.get('dryRun') === 'true';
+
   try {
     const supabase = getSupabaseAdmin();
     if (!supabase) {
@@ -244,30 +248,124 @@ export async function GET(request: NextRequest) {
     // 4. AUTO-ACTIONS: Flag issues that need human review
     // ══════════════════════════════════════════════════════════════════════════
 
-    // For now, log issues. In the future, auto-regenerate flagged creatives.
-    for (const issue of issues) {
-      if (issue.action === 'regenerate' && issue.creativeIds?.length) {
-        // Mark the creative as needing regeneration
-        for (const cid of issue.creativeIds) {
-          await supabase
-            .from('creative_queue')
-            .update({
-              status: 'pending_review',
-              error_message: `[OVERSIGHT] ${issue.description}`,
-            })
-            .eq('id', cid)
-            .eq('status', 'approved'); // Only downgrade approved items
+    let photosSwapped = 0;
+    if (!dryRun) {
+      for (const issue of issues) {
+        if (issue.action === 'regenerate' && issue.creativeIds?.length) {
+          // Mark the creative as needing regeneration
+          for (const cid of issue.creativeIds) {
+            await supabase
+              .from('creative_queue')
+              .update({
+                status: 'pending_review',
+                error_message: `[OVERSIGHT] ${issue.description}`,
+              })
+              .eq('id', cid)
+              .eq('status', 'approved'); // Only downgrade approved items
+          }
+          actions.push(`Flagged ${issue.creativeIds.length} creative(s) for review: ${issue.description}`);
         }
-        actions.push(`Flagged ${issue.creativeIds.length} creative(s) for review: ${issue.description}`);
+      }
+
+      // ════════════════════════════════════════════════════════════════════════
+      // AUTO-SWAP: replace duplicate dog photos on upcoming EVENT creatives in
+      // place with a fresh, unique photo (re-render → re-upload → update row).
+      // Event creatives can be faithfully re-rendered from the events table, so
+      // this is safe; failures are non-destructive (row left untouched).
+      // ════════════════════════════════════════════════════════════════════════
+      const swapDetails: string[] = [];
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+
+        // Photos already committed (recently posted) — never reuse these.
+        const { data: postedRows } = await supabase
+          .from('creative_queue')
+          .select('photo_id')
+          .eq('status', 'posted')
+          .not('photo_id', 'is', null)
+          .order('posted_at', { ascending: false })
+          .limit(24);
+        const usedIds = new Set<string>(
+          (postedRows || []).map(r => r.photo_id).filter(Boolean) as string[]
+        );
+
+        // Upcoming event creatives that carry a tracked dog photo.
+        const { data: upcoming } = await supabase
+          .from('creative_queue')
+          .select('id, event_id, photo_id, headline, scheduled_for')
+          .in('status', ['approved', 'pending_review'])
+          .eq('content_type', 'event')
+          .eq('format', 'photo')
+          .not('photo_id', 'is', null)
+          .order('scheduled_for', { ascending: true });
+
+        for (const cr of (upcoming || [])) {
+          const pid = cr.photo_id as string;
+          if (!usedIds.has(pid)) { usedIds.add(pid); continue; } // first occurrence is fine
+          if (!cr.event_id) continue;
+
+          const { data: ev } = await supabase
+            .from('events')
+            .select('name, start_date, venue_name, is_free, description, cities(slug, name)')
+            .eq('id', cr.event_id)
+            .single();
+          if (!ev) continue;
+          const cityRel = Array.isArray(ev.cities) ? ev.cities[0] : ev.cities;
+          const cityName = cityRel?.name || 'City';
+          const citySlug = cityRel?.slug || 'losangeles';
+          const dateStr = new Date(ev.start_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          const params = new URLSearchParams({
+            name: ev.name,
+            city: cityName,
+            citySlug,
+            date: dateStr,
+            ...(ev.venue_name ? { venue: ev.venue_name } : {}),
+            ...(ev.is_free ? { free: 'true' } : {}),
+            ...(ev.description ? { desc: String(ev.description).slice(0, 200) } : {}),
+            recent: Array.from(usedIds).join(','),
+          });
+
+          try {
+            const res = await fetch(`${baseUrl}/api/social/event-creative?${params}`, { signal: AbortSignal.timeout(20000) });
+            if (!res.ok) continue;
+            const newPhotoId = res.headers.get('x-photo-id');
+            const buf = Buffer.from(await res.arrayBuffer());
+            const safe = String(ev.name).toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 50);
+            const path = `event-creatives/${citySlug}-${safe}-swap-${Date.now()}.png`;
+            const { error: upErr } = await supabase.storage
+              .from('photos')
+              .upload(path, buf, { contentType: 'image/png', upsert: true });
+            if (upErr) continue;
+            const { data: urlData } = supabase.storage.from('photos').getPublicUrl(path);
+            const newUrl = urlData?.publicUrl;
+            if (!newUrl) continue;
+            await supabase
+              .from('creative_queue')
+              .update({ image_url: newUrl, photo_id: newPhotoId })
+              .eq('id', cr.id);
+            if (newPhotoId) usedIds.add(newPhotoId);
+            photosSwapped++;
+            swapDetails.push(`"${cr.headline}" → unique photo`);
+          } catch {
+            // non-destructive: leave the row as-is on any failure
+          }
+        }
+      } catch (e) {
+        console.warn('[CREATIVE-OVERSIGHT] Auto-swap step failed:', e);
+      }
+      if (photosSwapped > 0) {
+        actions.push(`Auto-swapped ${photosSwapped} duplicate event photo(s): ${swapDetails.join('; ')}`);
       }
     }
 
-    console.log(`[CREATIVE-OVERSIGHT] Grid health: ${gridHealth} (${gridHealthScore}/100) — ${issues.length} issues found, ${actions.length} actions taken`);
+    console.log(`[CREATIVE-OVERSIGHT] Grid health: ${gridHealth} (${gridHealthScore}/100) — ${issues.length} issues found, ${actions.length} actions taken, ${photosSwapped} photos swapped${dryRun ? ' (dryRun)' : ''}`);
 
     return NextResponse.json({
       status: 'ok',
       gridHealth,
       gridHealthScore,
+      photosSwapped,
+      dryRun,
       summary: {
         recentPostsAudited: recentPosts?.length || 0,
         pendingCreativesAudited: pendingCreatives?.length || 0,
