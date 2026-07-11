@@ -26,6 +26,7 @@ const CITY_FILE_MAP: Record<string, string> = {
   newyork: 'nyc-places',
   sydney: 'sydney-places',
   tokyo: 'tokyo-places',
+  atlanta: 'atlanta-places',
 };
 
 // Normalize category from research data to DB category slugs

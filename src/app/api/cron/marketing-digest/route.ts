@@ -113,7 +113,7 @@ export async function GET(request: NextRequest) {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
       const cityPages = [
         '/', '/geneva', '/paris', '/london', '/barcelona', '/sydney', '/tokyo',
-        '/losangeles', '/newyork', '/los-angeles', '/new-york',
+        '/losangeles', '/newyork', '/atlanta', '/los-angeles', '/new-york',
       ];
       const pageResults = await Promise.all(
         cityPages.map(async (page) => {

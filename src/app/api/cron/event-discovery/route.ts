@@ -23,6 +23,15 @@ export const maxDuration = 300; // Increased to 5 min for Google Events + Vision
 // The cron rotates through these daily so every city gets scanned every day
 
 const CITY_HASHTAGS: Record<string, { slug: string; name: string; hashtags: string[] }> = {
+  atlanta: {
+    slug: 'atlanta',
+    name: 'Atlanta',
+    hashtags: [
+      'dogfriendlyatlanta', 'atlantadogs', 'atldogs', 'dogsofatlanta',
+      'beltlinedogs', 'atlantadogpark', 'dogfriendlyatl', 'atldogmom',
+      'piedmontparkatl', 'atlantapets', 'atldogsofinstagram', 'fetchpark',
+    ],
+  },
   losangeles: {
     slug: 'losangeles',
     name: 'Los Angeles',

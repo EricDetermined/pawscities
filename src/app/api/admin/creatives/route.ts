@@ -81,6 +81,7 @@ const CITY_LANDMARKS: Record<string, { landmark: string; activity_buster: string
   nyc: { landmark: 'the Central Park skyline', activity_buster: 'running through an open meadow', setting_marley: 'a cozy Brooklyn brownstone window' },
   sydney: { landmark: 'the Sydney Opera House', activity_buster: 'sitting on the harbour steps', setting_marley: 'a waterfront café with harbour views' },
   tokyo: { landmark: 'the Shibuya Crossing', activity_buster: 'sitting near the Hachiko statue', setting_marley: 'a traditional Japanese tea house' },
+  atlanta: { landmark: 'the Atlanta skyline beyond Piedmont Park', activity_buster: 'strolling along the BeltLine Eastside Trail', setting_marley: 'a sunny Midtown patio near Ponce City Market' },
 };
 
 function buildImagePrompt(fact: typeof CONTENT_BANK[number], narrator: string): string {

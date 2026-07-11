@@ -12,6 +12,7 @@ const CITY_SLUGS = [
   'barcelona',
   'sydney',
   'tokyo',
+  'atlanta',
 ];
 
 // Static pages

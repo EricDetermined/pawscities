@@ -24,10 +24,11 @@ export const CITY_META: Record<string, { name: string; country: string; emoji: s
   nyc: { name: 'New York City', country: 'United States', emoji: '\u{1F1FA}\u{1F1F8}', slug: 'newyork' },
   sydney: { name: 'Sydney', country: 'Australia', emoji: '\u{1F1E6}\u{1F1FA}', slug: 'sydney' },
   tokyo: { name: 'Tokyo', country: 'Japan', emoji: '\u{1F1EF}\u{1F1F5}', slug: 'tokyo' },
+  atlanta: { name: 'Atlanta', country: 'United States', emoji: '\u{1F1FA}\u{1F1F8}', slug: 'atlanta' },
 };
 
 // City rotation order for balanced posting
-const CITY_ROTATION = ['barcelona', 'tokyo', 'paris', 'nyc', 'geneva', 'london', 'losangeles', 'sydney'];
+const CITY_ROTATION = ['barcelona', 'tokyo', 'paris', 'nyc', 'geneva', 'london', 'losangeles', 'sydney', 'atlanta'];
 
 export const CONTENT_BANK: ContentFact[] = [
   // PARIS

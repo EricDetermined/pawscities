@@ -122,6 +122,18 @@ export const CITIES: Record<string, CityConfig> = {
       publicTransport: 'Small dogs in carriers (under 10kg) allowed on trains and buses.',
       publicTransportFr: 'Petits chiens en sac (moins de 10kg) autorises dans les trains et bus.' }
   },
+  atlanta: {
+    slug: 'atlanta', name: 'Atlanta', nameFr: 'Atlanta', country: 'United States', countryCode: 'US',
+    timezone: 'America/New_York', currency: 'USD', latitude: 33.7490, longitude: -84.3880, zoomLevel: 11,
+    languages: ['en'],
+    description: 'Discover dog-friendly patios, breweries, parks, and BeltLine trails across Atlanta.',
+    descriptionFr: 'Decouvrez les terrasses, brasseries, parcs et sentiers accueillant les chiens a Atlanta.',
+    heroImage: 'https://images.unsplash.com/photo-1561078284-5dbf862fb94d?w=800&h=600&fit=crop',
+    isActive: true, emergencyVetSearch: 'emergency vet 24h atlanta',
+    dogRegulations: { leashRequired: true, offLeashAreas: true,
+      publicTransport: 'Small dogs in carriers allowed on MARTA; service animals always welcome.',
+      publicTransportFr: 'Petits chiens en sac autorises dans le MARTA; animaux d\'assistance toujours bienvenus.' }
+  },
 };
 
 export const CATEGORIES = [

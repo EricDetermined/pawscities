@@ -22,6 +22,7 @@ const CITY_DATA_MAP: Record<string, string> = {
   barcelona: 'barcelona-places',
   sydney: 'sydney-places',
   tokyo: 'tokyo-places',
+  atlanta: 'atlanta-places',
 };
 
 function hashString(str: string): number {

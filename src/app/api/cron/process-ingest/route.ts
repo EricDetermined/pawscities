@@ -255,6 +255,7 @@ async function handleProcessIngest(request: NextRequest) {
       barcelona: 'Europe/Madrid',
       sydney: 'Australia/Sydney',
       tokyo: 'Asia/Tokyo',
+      atlanta: 'America/New_York',
     };
 
     // Non-event URL patterns — blog posts, travel guides, business listings, profiles

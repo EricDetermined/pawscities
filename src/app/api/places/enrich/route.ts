@@ -12,6 +12,7 @@ const CITY_DATA_MAP: Record<string, { file: string; cityName: string; lat: numbe
   barcelona: { file: 'barcelona-places', cityName: 'Barcelona Spain', lat: 41.3851, lng: 2.1734 },
   sydney: { file: 'sydney-places', cityName: 'Sydney Australia', lat: -33.8688, lng: 151.2093 },
   tokyo: { file: 'tokyo-places', cityName: 'Tokyo Japan', lat: 35.6762, lng: 139.6503 },
+  atlanta: { file: 'atlanta-places', cityName: 'Atlanta Georgia', lat: 33.7490, lng: -84.3880 },
 };
 
 interface RawPlace {

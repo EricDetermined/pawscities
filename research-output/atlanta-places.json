@@ -1,0 +1,1805 @@
+{
+  "city": "atlanta",
+  "places": [
+    {
+      "name": "Park Tavern",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "50 dog-friendly patio tables beside Piedmont Park with water stations",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Cypress Street Pint & Plate",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Beloved gastropub with a spacious dog-friendly patio and 17 taps",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Bistro Niko",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Buckhead",
+      "description": "Upscale French cafe with an outdoor patio that welcomes dogs",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Ladybird Grove & Mess Hall",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Eastside BeltLine",
+      "description": "Outdoor BeltLine bar with a puppy menu, partnered with Atlanta Humane Society",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Publico Tap & Kitchen",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "BeltLine",
+      "description": "Top brunch spot on the BeltLine, proudly dog-friendly",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Paris on Ponce",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Eclectic venue, dog-friendly with a water station and live music",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Two Urban Licks",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Old Fourth Ward",
+      "description": "Wood-fired dining with a dog-welcoming patio near the BeltLine",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Fox Bros Bar-B-Q",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Candler Park",
+      "description": "Atlanta BBQ institution with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Manuel's Tavern",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Poncey-Highland",
+      "description": "Historic neighborhood tavern with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "The Porter Beer Bar",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Little Five Points",
+      "description": "Craft beer bar with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Ration & Dram",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Kirkwood",
+      "description": "Neighborhood gastropub with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "The Albert",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Inman Park",
+      "description": "Cozy pub with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Argosy",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "East Atlanta Village",
+      "description": "Gastropub with dogs welcome on the patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Leon's Full Service",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Decatur",
+      "description": "Gastropub in a former service station with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Brick Store Pub",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Decatur",
+      "description": "Beloved craft-beer pub with dog-friendly outdoor seating",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "The Iberian Pig",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Decatur",
+      "description": "Spanish tapas with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Barcelona Wine Bar",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Inman Park",
+      "description": "Tapas and wine with a large dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Cooks & Soldiers",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "West Midtown",
+      "description": "Basque restaurant with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "The Optimist",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "West Midtown",
+      "description": "Seafood destination with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "JCT Kitchen & Bar",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Westside",
+      "description": "Southern kitchen with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "West Egg Cafe",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Westside",
+      "description": "Popular brunch cafe with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Antico Pizza Napoletana",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Westside",
+      "description": "Neapolitan pizza with a dog-friendly courtyard",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Little Bear",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Summerhill",
+      "description": "Chef-driven spot with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Georgia Beer Garden",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Old Fourth Ward",
+      "description": "Outdoor beer garden where dogs are welcome",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "The Vortex Bar & Grill",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Little Five Points",
+      "description": "Iconic burger joint with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Victory Sandwich Bar",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Inman Park",
+      "description": "Sandwiches and drinks with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Taqueria del Sol",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Westside",
+      "description": "Fast-casual Tex-Mex with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Park Grounds",
+      "category": "cafes",
+      "address": "",
+      "neighborhood": "Reynoldstown",
+      "description": "Coffeehouse with a fenced dog play area",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Dr. Bombay's Underwater Tea Party",
+      "category": "cafes",
+      "address": "",
+      "neighborhood": "Candler Park",
+      "description": "Quirky tea house that welcomes dogs",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Chrome Yellow Trading Co.",
+      "category": "cafes",
+      "address": "",
+      "neighborhood": "Old Fourth Ward",
+      "description": "Coffee and goods shop, dog-friendly",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Condesa Coffee",
+      "category": "cafes",
+      "address": "",
+      "neighborhood": "Old Fourth Ward",
+      "description": "Neighborhood cafe with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Aurora Coffee",
+      "category": "cafes",
+      "address": "",
+      "neighborhood": "Little Five Points",
+      "description": "Longtime local coffee shop, dogs welcome",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Hodgepodge Coffeehouse",
+      "category": "cafes",
+      "address": "",
+      "neighborhood": "East Atlanta Village",
+      "description": "Community coffeehouse with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Refuge Coffee Co.",
+      "category": "cafes",
+      "address": "",
+      "neighborhood": "Clarkston",
+      "description": "Coffee with dog-friendly outdoor seating",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Muchacho",
+      "category": "cafes",
+      "address": "",
+      "neighborhood": "Reynoldstown",
+      "description": "Coffee and tacos with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Fire Maker Brewing Co.",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "West Midtown",
+      "description": "Brewery with a private on-site dog park; dogs welcome inside and out",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "SweetWater Brewing Company",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Armour",
+      "description": "Atlanta staple with a dog-friendly patio and 24 taps",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Monday Night Brewing",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "West Midtown",
+      "description": "Dog-friendly patio, tours and tastings",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "New Realm Brewing",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Eastside BeltLine",
+      "description": "Taproom right on the BeltLine's Eastside Trail",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Scofflaw Brewing Co.",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Northwest Atlanta",
+      "description": "Welcoming brewery with dogs allowed on the patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Bold Monk Brewing",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "West End",
+      "description": "Southern cuisine and a terrace that welcomes dogs",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Orpheus Brewing",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Dog-friendly taproom near Piedmont Park",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Pontoon Brewing",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Sandy Springs",
+      "description": "Dog-friendly patio and 200+ award-winning beers",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "BrewDog Atlanta",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Scottish craft-beer chain with pet-friendly outdoor seating",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Wild Heaven Beer",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Avondale Estates",
+      "description": "Dog-friendly taproom and patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Wrecking Bar Brewpub",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Little Five Points",
+      "description": "Brewpub with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Eventide Brewing",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Grant Park",
+      "description": "Neighborhood taproom, dogs welcome",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Three Taverns Brewery",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Decatur",
+      "description": "Dog-friendly taproom",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Second Self Beer Company",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Westside",
+      "description": "Dog-friendly taproom",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Torched Hop Brewing",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Brewpub with a dog-friendly patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Round Trip Brewing",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Underwood Hills",
+      "description": "Dog-friendly taproom",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Elsewhere Brewing",
+      "category": "restaurants",
+      "address": "",
+      "neighborhood": "Grant Park",
+      "description": "Dog-friendly taproom and patio",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Fetch Park Old Fourth Ward",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Old Fourth Ward",
+      "description": "Off-leash dog park with a full bar and restaurant; Bark Rangers on duty",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Fetch Park The Works",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "West Midtown",
+      "description": "Dog park and bar at The Works development",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Fetch Park Buckhead",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Buckhead Village",
+      "description": "Off-leash dog park with a bar in Buckhead Village",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Piedmont Park Dog Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "3-acre fenced dog park with a small-dog section and water spigots",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Freedom Barkway Dog Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "Old Fourth Ward",
+      "description": "Popular BeltLine-adjacent off-leash park",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Oakhurst Dog Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "Decatur",
+      "description": "Off-leash field plus a wooded trail",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Brookhaven Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "Brookhaven",
+      "description": "Fenced dog park with nature and exercise trails",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Mason Mill Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "DeKalb County",
+      "description": "Large off-leash area with wooded terrain",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Grant Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "Grant Park",
+      "description": "Historic park popular with dog owners",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Candler Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "Candler Park",
+      "description": "Green space with a dog-friendly area",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Historic Fourth Ward Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "Old Fourth Ward",
+      "description": "BeltLine park with green space and a splash pad",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Newtown Dream Dog Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "Johns Creek",
+      "description": "Large suburban off-leash dog park",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Leita Thompson Memorial Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "Roswell",
+      "description": "Trails and a dog park",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Atlanta BeltLine Eastside Trail",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Old Fourth Ward",
+      "description": "22-mile multi-use trail lined with dog-friendly spots",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Chattahoochee River National Recreation Area",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Sandy Springs",
+      "description": "Riverside trails; dogs allowed on leash",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Sweetwater Creek State Park",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Lithia Springs",
+      "description": "Forest trails past mill ruins; dogs on leash",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Lullwater Preserve",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Druid Hills",
+      "description": "Wooded trails, a lake and a waterfall",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Morningside Nature Preserve",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Morningside",
+      "description": "Off-leash trails through wooded parkland",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Cochran Shoals Trail",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Sandy Springs",
+      "description": "Popular riverside trail for dogs",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Stone Mountain Park",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Stone Mountain",
+      "description": "Leashed trails around the mountain",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Westside Park",
+      "category": "parks",
+      "address": "",
+      "neighborhood": "Grove Park",
+      "description": "Atlanta's largest park with open green space",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "shadeAvailable": true,
+        "waterBowl": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Kimpton Sylvan Hotel",
+      "category": "hotels",
+      "address": "",
+      "neighborhood": "Buckhead",
+      "description": "No pet fee, any size; dog beds, bowls and treats provided",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true,
+        "dogBeds": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Kimpton Shane Hotel",
+      "category": "hotels",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "No fee; Pampered Pooch package near Piedmont Park",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true,
+        "dogBeds": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Four Seasons Hotel Atlanta",
+      "category": "hotels",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Dogs welcome with in-room bowls and VIP paws amenities",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true,
+        "dogBeds": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Hyatt Centric Buckhead",
+      "category": "hotels",
+      "address": "",
+      "neighborhood": "Buckhead",
+      "description": "Two dogs any size, no fee; beds and bowls provided",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true,
+        "dogBeds": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Loews Atlanta Hotel",
+      "category": "hotels",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Two pets any size; dog-friendly near Piedmont Park",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true,
+        "dogBeds": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Hotel Clermont",
+      "category": "hotels",
+      "address": "",
+      "neighborhood": "Poncey-Highland",
+      "description": "Boutique hotel that welcomes dogs",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true,
+        "dogBeds": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "The Georgian Terrace Hotel",
+      "category": "hotels",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Historic pet-friendly hotel across from the Fox Theatre",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true,
+        "dogBeds": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Epicurean Atlanta",
+      "category": "hotels",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Autograph Collection hotel, pet-friendly",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true,
+        "dogBeds": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "W Atlanta Midtown",
+      "category": "hotels",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Pet-friendly hotel in the heart of Midtown",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true,
+        "dogBeds": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Hotel Indigo Atlanta Midtown",
+      "category": "hotels",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Boutique dog-friendly hotel",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true,
+        "dogBeds": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Barking Hound Village",
+      "category": "daycare",
+      "address": "",
+      "neighborhood": "Old Fourth Ward",
+      "description": "Daycare, boarding and grooming; voted among Atlanta's best",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "K-9 Coach",
+      "category": "daycare",
+      "address": "",
+      "neighborhood": "Smyrna",
+      "description": "Daycare, boarding, grooming and training with certified specialists",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Central Bark",
+      "category": "daycare",
+      "address": "",
+      "neighborhood": "Brookhaven",
+      "description": "Enrichment daycare, grooming and boarding",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Wagging Tails Atlanta",
+      "category": "daycare",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Daycare, boarding, training and grooming since 2000",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Bark & Board",
+      "category": "daycare",
+      "address": "",
+      "neighborhood": "West Midtown",
+      "description": "Boarding, daycare and grooming near Piedmont Park",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "The Piedmont Bark",
+      "category": "daycare",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Dog daycare and boarding",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Camp Bow Wow Atlanta",
+      "category": "daycare",
+      "address": "",
+      "neighborhood": "Atlanta",
+      "description": "Dog daycare and overnight boarding",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Frolick Dogs",
+      "category": "daycare",
+      "address": "",
+      "neighborhood": "Atlanta",
+      "description": "Indoor dog gym and daycare",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Wag-A-Lot",
+      "category": "daycare",
+      "address": "",
+      "neighborhood": "Brookhaven",
+      "description": "Daycare, boarding and grooming",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Park Pet Supply",
+      "category": "shops",
+      "address": "",
+      "neighborhood": "Virginia-Highland",
+      "description": "Holistic pet store with a self-serve dog wash",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "City Dog Market",
+      "category": "shops",
+      "address": "",
+      "neighborhood": "Brookhaven",
+      "description": "Premium pet supplies and self-serve wash",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Bark Fifth Avenue",
+      "category": "shops",
+      "address": "",
+      "neighborhood": "Buckhead",
+      "description": "Upscale pet boutique",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Sassy Paws Pet Boutique",
+      "category": "shops",
+      "address": "",
+      "neighborhood": "Atlanta",
+      "description": "Specialty dog accessories and treats",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Taj Ma-Hound",
+      "category": "shops",
+      "address": "",
+      "neighborhood": "Atlanta",
+      "description": "Curated independent pet boutique",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "The Whole Dog Market",
+      "category": "shops",
+      "address": "",
+      "neighborhood": "Ansley",
+      "description": "Natural and organic pet food and supplies",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Hollywood Feed",
+      "category": "shops",
+      "address": "",
+      "neighborhood": "Midtown",
+      "description": "Premium pet food and supplies",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Highland Pet Supply",
+      "category": "shops",
+      "address": "",
+      "neighborhood": "Virginia-Highland",
+      "description": "Neighborhood pet store in the BeltLine corridor",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Woof Gang Bakery & Grooming",
+      "category": "bakeries",
+      "address": "",
+      "neighborhood": "Buckhead",
+      "description": "Pet bakery treats and grooming",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Ponce City Market",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Old Fourth Ward",
+      "description": "Historic food hall and marketplace; dogs welcome outdoors, BeltLine entrance",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Krog Street Market",
+      "category": "activities",
+      "address": "",
+      "neighborhood": "Inman Park",
+      "description": "Food hall with dog-friendly patios and BeltLine access",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "shadeAvailable": true,
+        "waterBowl": false,
+        "outdoorSeating": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Pike Nurseries",
+      "category": "shops",
+      "address": "",
+      "neighborhood": "Atlanta",
+      "description": "Garden center that welcomes leashed dogs",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": true
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "MedVet Atlanta",
+      "category": "vets",
+      "address": "",
+      "neighborhood": "Buckhead",
+      "description": "24/7 emergency and specialty veterinary care",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "The Village Vets Decatur",
+      "category": "vets",
+      "address": "",
+      "neighborhood": "Decatur",
+      "description": "24-hour emergency vet, AAHA-accredited",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "BluePearl Pet Hospital",
+      "category": "vets",
+      "address": "",
+      "neighborhood": "West Midtown",
+      "description": "Westside specialty and emergency hospital",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Inman Park Animal Hospital",
+      "category": "vets",
+      "address": "",
+      "neighborhood": "Inman Park",
+      "description": "Full-service neighborhood vet in the BeltLine corridor",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Atlanta Dog Trainer",
+      "category": "trainers",
+      "address": "",
+      "neighborhood": "Atlanta",
+      "description": "Expert training, boarding and daycare",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    },
+    {
+      "name": "Sit Means Sit Atlanta",
+      "category": "trainers",
+      "address": "",
+      "neighborhood": "Atlanta",
+      "description": "Off-leash training specialists",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "waterBowl": true,
+        "treats": false
+      },
+      "confidence": 80,
+      "source": "atlanta-launch-report",
+      "enriched": false
+    }
+  ]
+}

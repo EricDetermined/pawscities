@@ -277,6 +277,7 @@ async function checkSitePages(): Promise<CheckResult> {
     '/tokyo',
     '/losangeles',      // Multi-word cities (canonical)
     '/newyork',
+    '/atlanta',         // 9th city
     '/los-angeles',     // Multi-word cities (hyphenated — user-typed URLs)
     '/new-york',
     '/ambassadors',     // Key feature pages

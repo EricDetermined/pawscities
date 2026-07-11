@@ -113,6 +113,7 @@ const CITY_SETTINGS: Record<string, Setting[]> = {
   // Asia-Pacific
   tokyo:       ['urban', 'portrait', 'cafe', 'park'],
   sydney:      ['beach', 'park', 'water', 'field'],
+  atlanta:     ['park', 'urban', 'field', 'trail'],
 };
 
 // ─── Activity Keywords → Vibe Map ─────────────────────────────────────────────
