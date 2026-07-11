@@ -43,11 +43,17 @@ export async function GET(request: NextRequest) {
 
   const supabase = getSupabaseAdmin();
 
+  // When true, compute everything and return JSON but DON'T send the email.
+  // Used by the in-app monitor so the daily email is sent by exactly one trigger.
+  const skipEmail = request.nextUrl.searchParams.get('skipEmail') === 'true';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+  const cronSecret = process.env.CRON_SECRET || '';
+
   try {
     // ═══════════════════════════════════════════════════════════════
-    // 1. SYSTEM HEALTH — Quick inline checks
+    // 1. SYSTEM HEALTH — Quick inline checks (fallback if the full suite is unreachable)
     // ═══════════════════════════════════════════════════════════════
-    const healthChecks: { name: string; status: 'healthy' | 'warning' | 'critical'; message: string }[] = [];
+    let healthChecks: { name: string; status: 'healthy' | 'warning' | 'critical'; message: string }[] = [];
 
     // Instagram token
     if (META_PAGE_ACCESS_TOKEN && INSTAGRAM_ACCOUNT_ID) {
@@ -139,6 +145,64 @@ export async function GET(request: NextRequest) {
       }
     } catch {
       healthChecks.push({ name: 'Site Pages', status: 'warning', message: 'Page check failed' });
+    }
+
+    // ─── Pull the COMPREHENSIVE health suite + creative grid audit ──────────────
+    // The dedicated health-check endpoint runs deep ops validation the inline
+    // checks above don't cover (yesterday's posts, creative-queue depth, cron
+    // execution, IG posting history, photo proxy, etc.). We fetch it with
+    // skipEmail=true so it never sends its own email — this digest is the one email.
+    let creativeGrid: MarketingDigestData['creativeGrid'] | undefined;
+    if (cronSecret) {
+      const [hcResult, coResult] = await Promise.allSettled([
+        fetch(`${baseUrl}/api/cron/health-check?secret=${cronSecret}&skipEmail=true`, {
+          signal: AbortSignal.timeout(45000),
+        }),
+        fetch(`${baseUrl}/api/cron/creative-oversight?secret=${cronSecret}`, {
+          signal: AbortSignal.timeout(45000),
+        }),
+      ]);
+
+      // Replace inline checks with the full suite when available
+      if (hcResult.status === 'fulfilled' && hcResult.value.ok) {
+        try {
+          const hc = await hcResult.value.json();
+          if (Array.isArray(hc.checks) && hc.checks.length > 0) {
+            healthChecks = hc.checks.map((c: { name: string; status: 'healthy' | 'warning' | 'critical'; message: string }) => ({
+              name: c.name,
+              status: c.status,
+              message: c.message,
+            }));
+          }
+        } catch (e) {
+          console.warn('[MARKETING-DIGEST] Could not parse health-check suite, using inline checks:', e);
+        }
+      }
+
+      // Add creative grid diversity from the oversight audit
+      if (coResult.status === 'fulfilled' && coResult.value.ok) {
+        try {
+          const co = await coResult.value.json();
+          if (typeof co.gridHealthScore === 'number') {
+            const topIssues = (co.issues || [])
+              .filter((i: { severity: string }) => i.severity === 'high' || i.severity === 'medium')
+              .slice(0, 5)
+              .map((i: { description: string }) => i.description);
+            creativeGrid = {
+              score: co.gridHealthScore,
+              status: co.gridHealth || 'unknown',
+              issuesFound: co.summary?.issuesFound ?? (co.issues || []).length,
+              topIssues,
+            };
+            // Surface a low grid score as a health check so it rolls into overall status
+            if (co.gridHealthScore < 50) {
+              healthChecks.push({ name: 'Creative Grid', status: 'warning', message: `Grid diversity ${co.gridHealthScore}/100 — ${creativeGrid.issuesFound} issue(s)` });
+            }
+          }
+        } catch (e) {
+          console.warn('[MARKETING-DIGEST] Could not parse creative-oversight audit:', e);
+        }
+      }
     }
 
     const hasCritical = healthChecks.some(c => c.status === 'critical');
@@ -435,9 +499,12 @@ export async function GET(request: NextRequest) {
           status: c.status,
         })),
       },
+      creativeGrid,
     };
 
-    const emailResult = await sendMarketingDigest(digestData);
+    const emailResult = skipEmail
+      ? { success: false, error: 'skipped (skipEmail=true)' }
+      : await sendMarketingDigest(digestData);
 
     const summary = {
       posts: publishedPosts.length,
@@ -448,6 +515,8 @@ export async function GET(request: NextRequest) {
       outreachOpportunities: (newOpps || []).length,
       communityVIPs: vips.length,
       healthStatus: healthOverall,
+      gridHealthScore: creativeGrid?.score ?? null,
+      emailSkipped: skipEmail,
       emailDelivered: emailResult.success,
       emailError: emailResult.error || null,
     };

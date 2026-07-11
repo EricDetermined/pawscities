@@ -486,6 +486,13 @@ export interface MarketingDigestData {
   };
   // Hashtags scanned
   hashtagsScanned?: string[];
+  // Creative grid diversity (from creative-oversight audit)
+  creativeGrid?: {
+    score: number;         // 0-100
+    status: string;        // healthy | needs_attention | poor
+    issuesFound: number;
+    topIssues: string[];
+  };
 }
 
 function sectionHeader(emoji: string, title: string, subtitle?: string): string {
@@ -729,6 +736,24 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
           <div style="background:${bgColor};border:2px solid ${borderColor};border-radius:8px;padding:12px 16px;margin:8px 0;">
             <p style="margin:0;font-size:14px;">${icon} ${msg}</p>
             ${itemsList ? `<div style="margin-top:8px;border-top:1px solid ${borderColor};padding-top:8px;">${itemsList}</div>` : ''}
+          </div>
+        </td></tr>`;
+    })() : ''}
+
+    ${data.creativeGrid ? (() => {
+      const g = data.creativeGrid;
+      const bg = g.score >= 80 ? '#f0fdf4' : g.score >= 50 ? '#fef3c7' : '#fef2f2';
+      const border = g.score >= 80 ? '#86efac' : g.score >= 50 ? '#f59e0b' : '#fecaca';
+      const icon = g.score >= 80 ? '✅' : g.score >= 50 ? '⚠️' : '🚨';
+      const issuesList = g.topIssues.length > 0
+        ? `<ul style="margin:8px 0 0;padding-left:18px;">${g.topIssues.map(i => `<li style="font-size:12px;color:#555;padding:2px 0;">${i}</li>`).join('')}</ul>`
+        : '';
+      return `
+        ${sectionHeader('🖼️', 'Grid Diversity', `Score ${g.score}/100 · ${g.status.replace(/_/g, ' ')}`)}
+        <tr><td>
+          <div style="background:${bg};border:2px solid ${border};border-radius:8px;padding:12px 16px;margin:8px 0;">
+            <p style="margin:0;font-size:14px;">${icon} Grid diversity score: <strong>${g.score}/100</strong> — ${g.issuesFound} issue${g.issuesFound === 1 ? '' : 's'} detected</p>
+            ${issuesList}
           </div>
         </td></tr>`;
     })() : ''}
