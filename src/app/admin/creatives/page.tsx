@@ -16,6 +16,7 @@ interface CreativeItem {
   headline: string;
   caption: string;
   image_url: string | null;
+  carousel_urls: string[] | null;
   image_prompt: string;
   format: string;
   status: string;
@@ -38,7 +39,7 @@ interface StatusCounts {
 
 const CITY_NAMES: Record<string, string> = {
   paris: 'Paris', geneva: 'Geneva', london: 'London', barcelona: 'Barcelona',
-  losangeles: 'Los Angeles', nyc: 'New York', sydney: 'Sydney', tokyo: 'Tokyo',
+  losangeles: 'Los Angeles', nyc: 'New York', newyork: 'New York', sydney: 'Sydney', tokyo: 'Tokyo', atlanta: 'Atlanta',
 };
 
 const NARRATOR_LABELS: Record<string, { name: string; emoji: string; color: string }> = {
@@ -351,6 +352,29 @@ export default function CreativeReviewPage() {
                 {/* Expanded detail */}
                 {isExpanded && (
                   <div className="border-t bg-gray-50 p-4 space-y-4">
+                    {/* Carousel / image slides */}
+                    {(() => {
+                      const slides = [item.image_url, ...(Array.isArray(item.carousel_urls) ? item.carousel_urls : [])].filter(Boolean) as string[];
+                      if (slides.length === 0) return null;
+                      return (
+                        <div>
+                          <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
+                            {slides.length > 1 ? `Carousel — ${slides.length} slides` : 'Image'}
+                          </p>
+                          <div className="flex gap-3 overflow-x-auto pb-2">
+                            {slides.map((url, i) => (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="shrink-0 group/slide">
+                                <img src={url} alt={`slide ${i + 1}`} className="h-56 w-56 object-cover rounded-lg border group-hover/slide:ring-2 group-hover/slide:ring-orange-400" />
+                                <span className="block text-center text-xs text-gray-400 mt-1">{i === 0 ? '1 · Cover' : `${i + 1}`}</span>
+                              </a>
+                            ))}
+                          </div>
+                          <p className="text-xs text-gray-400">Tap any slide to open it full-size in a new tab.</p>
+                        </div>
+                      );
+                    })()}
+
                     {/* Caption preview / edit */}
                     <div>
                       <div className="flex items-center justify-between mb-2">
