@@ -354,7 +354,10 @@ export default function CreativeReviewPage() {
                   <div className="border-t bg-gray-50 p-4 space-y-4">
                     {/* Carousel / image slides */}
                     {(() => {
-                      const slides = [item.image_url, ...(Array.isArray(item.carousel_urls) ? item.carousel_urls : [])].filter(Boolean) as string[];
+                      // carousel_urls already includes the cover as slide 1; only fall back to image_url when there's no carousel.
+                      const slides = (Array.isArray(item.carousel_urls) && item.carousel_urls.length > 0
+                        ? item.carousel_urls
+                        : [item.image_url]).filter(Boolean) as string[];
                       if (slides.length === 0) return null;
                       return (
                         <div>
