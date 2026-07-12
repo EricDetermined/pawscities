@@ -137,7 +137,7 @@ export async function PATCH(
             source_handle: item.source || null,
             source_post_url: item.url || null,
             status: 'APPROVED',
-            source: 'admin_ingest',
+            source: 'admin',
           })
           .select('id, slug, name')
           .single();
