@@ -288,8 +288,11 @@ def detect_language(caption):
     """Simple language detection based on character analysis."""
     if not caption:
         return "english"
-    # Japanese
-    if any('぀' <= c <= 'ヿ' or '一' <= c <= '鿿' for c in caption[:200]):
+    # Japanese — require SEVERAL CJK/kana chars. A lone character (e.g. the
+    # katakana in the meme hashtag "fypシ", or a decorative symbol) must not
+    # flip an otherwise-English post to Japanese and trigger a Japanese comment.
+    cjk = sum(1 for c in caption if '぀' <= c <= 'ヿ' or '一' <= c <= '鿿')
+    if cjk >= 4:
         return "japanese"
     # French indicators
     french_words = ["chien", "toutou", "promenade", "balade", "magnifique", "endroit", "mignon"]
@@ -318,20 +321,30 @@ def detect_place_type(caption, hashtags):
 def detect_city(caption, hashtags, location):
     """Try to detect which city the post is about."""
     text = ((caption or "") + " " + " ".join(hashtags or []) + " " + (location or "")).lower()
+    # NOTE: signals must be specific enough not to false-match everyday words in
+    # other languages. Bare tokens like "la " (French/Spanish article) or "uk "
+    # match constantly and are banned — use "los angeles", "losangeles", "#la",
+    # "dtla", etc. instead. Ambiguity is resolved by requiring a UNIQUE match:
+    # if the text matches more than one city, we return None rather than guess
+    # (guessing is exactly how a French Paris post got labelled "Los Angeles").
     city_signals = {
-        "los-angeles": ["los angeles", "la ", "socal", "hollywood", "santa monica", "venice beach"],
-        "new-york-city": ["new york", "nyc", "brooklyn", "manhattan", "queens", "bronx"],
-        "london": ["london", "uk ", "england", "brixton", "shoreditch", "camden"],
-        "barcelona": ["barcelona", "bcn", "cataluña", "catalunya"],
-        "paris": ["paris", "parisien", "montmartre", "marais"],
-        "tokyo": ["tokyo", "東京", "渋谷", "新宿", "代々木"],
-        "geneva": ["geneva", "genève", "geneve", "suisse", "swiss", "switzerland", "zürich", "zurich"],
-        "sydney": ["sydney", "bondi", "manly", "australia"],
+        "los-angeles": ["los angeles", "losangeles", "socal", "hollywood",
+                         "santa monica", "venice beach", "dtla", "silver lake",
+                         "echo park", "#la ", "#ladogs", "dogsofla"],
+        "new-york-city": ["new york", "newyork", "nyc", "brooklyn", "manhattan",
+                          "queens", "the bronx"],
+        "london": ["london", "england", "brixton", "shoreditch", "camden",
+                   "hampstead", "marylebone", "notting hill"],
+        "barcelona": ["barcelona", "bcn", "cataluña", "catalunya", "catalonia"],
+        "paris": ["paris", "parisien", "parisienne", "montmartre", "marais"],
+        "tokyo": ["tokyo", "東京", "渋谷", "新宿", "代々木", "お台場"],
+        "geneva": ["geneva", "genève", "geneve", "suisse", "swiss", "switzerland",
+                   "zürich", "zurich"],
+        "sydney": ["sydney", "bondi", "manly", "australia", "nsw"],
     }
-    for city_slug, signals in city_signals.items():
-        if any(s in text for s in signals):
-            return city_slug
-    return None
+    matched = [slug for slug, signals in city_signals.items()
+               if any(s in text for s in signals)]
+    return matched[0] if len(matched) == 1 else None
 
 
 # ─── Content Safety Screening ────────────────────────────────────────────────
@@ -545,6 +558,135 @@ Then on a new line, a brief reason (max 10 words)."""
         return None
 
 
+def ai_generate_comment(post, ctx):
+    """
+    Write a GENUINE, per-post comment tailored to the actual photo AND caption,
+    using OpenAI's vision-capable models.
+
+    When a displayUrl (image) is available, uses gpt-4o with vision so the AI
+    actually SEES the dog, the venue, the setting — producing comments that
+    reference visual details a real person would notice ("love those floppy ears",
+    "that patio looks amazing"). Falls back to text-only gpt-4o-mini when no
+    image is available.
+
+    Returns the comment text (str) on success, or None when AI is unavailable,
+    the caption is too thin to tailor to, or generation fails — in which case
+    generate_comment() falls back to the template bank below.
+
+    Guardrails preserved from the template path:
+      - Only names a city when our content-corroborated detection confirmed one.
+      - Matches the post's language.
+      - No hashtags / links / @mentions / follow-or-visit pitches.
+    """
+    openai_key = os.environ.get("OPENAI_API_KEY")
+    if not openai_key:
+        return None
+
+    caption = (post.get("caption") or "").strip()
+    image_url = (post.get("displayUrl") or "").strip()
+
+    # With no caption AND no image, nothing to react to.
+    if len(caption) < 15 and not image_url:
+        return None
+
+    username = post.get("ownerUsername", "")
+    location = (post.get("locationName") or "").strip()
+    language = ctx.get("language", "english")
+    place_type = ctx.get("place_type", "spot")
+    city_name = ctx.get("city_name") or ""
+    is_place_post = ctx.get("is_place_post", False)
+
+    lang_label = {
+        "english": "English", "french": "French", "spanish": "Spanish",
+        "japanese": "Japanese", "german": "German",
+    }.get(language, "the same language the post is written in")
+
+    if city_name:
+        city_rule = f'- You MAY refer to the city as "{city_name}" if it fits naturally, but never force it.'
+    else:
+        city_rule = "- Do NOT name any city, neighborhood, or country — the location is not confirmed."
+
+    if is_place_post and place_type != "spot":
+        place_line = f"- This post is about a visitable {place_type}; you can react to the place itself."
+    else:
+        place_line = "- This may be a dog portrait or a moment rather than a specific venue — react to the dog/mood, don't assume a place to visit."
+
+    # Build image-aware instructions when we have a photo
+    if image_url:
+        image_instruction = """- You can SEE the photo. Reference something VISUAL you notice — the dog's expression, breed features, the setting, colors, food, scenery, or the vibe. A comment that reacts to what's IN the image feels genuinely human.
+- Combine visual details with caption context for the most authentic comment."""
+    else:
+        image_instruction = "- Reference something SPECIFIC from the caption (the place, the business, the activity, the dog, the experience)."
+
+    prompt_text = f"""You write Instagram comments for @thepawcities, a brand that helps people discover dog-friendly places — cafes, restaurants, parks, beaches and hotels — across major cities.
+
+Write ONE genuine comment reacting to the specific post below. It must read like a real person on the Paw Cities team who actually looked at THIS exact post — not a reused template.
+
+RULES:
+- Respond in {lang_label}.
+{image_instruction}
+- Be concrete, never generic filler. Avoid vague praise like "so cute!" or "love this!" — say WHAT specifically you love.
+- Warm, natural, conversational. One sentence, ideally under 18 words.
+- No hashtags, no links, no @mentions, no asking them to follow or visit our page, no sales pitch.
+- At most one emoji, only if it truly fits. Usually none.
+{city_rule}
+{place_line}
+- Never invent facts not shown in the post or photo.
+
+POST by @{username}{f' (tagged location: {location})' if location else ''}:
+\"{caption[:700]}\""""
+
+    try:
+        # Build message content — multimodal when image is available
+        if image_url:
+            # Use vision-capable model for image + text
+            model = os.environ.get("OPENAI_VISION_MODEL", "gpt-4o")
+            content = [
+                {"type": "text", "text": prompt_text},
+                {"type": "image_url", "image_url": {"url": image_url, "detail": "low"}},
+            ]
+        else:
+            # Text-only fallback
+            model = os.environ.get("OPENAI_COMMENT_MODEL", "gpt-4o-mini")
+            content = prompt_text
+
+        req_body = json.dumps({
+            "model": model,
+            "messages": [{"role": "user", "content": content}],
+            "temperature": 0.9,
+            "max_tokens": 80,
+        }).encode("utf-8")
+
+        req = urllib.request.Request(
+            "https://api.openai.com/v1/chat/completions",
+            data=req_body,
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {openai_key}",
+            },
+            method="POST",
+        )
+
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            text = data["choices"][0]["message"]["content"].strip()
+
+        # Strip accidental wrapping quotes / whitespace.
+        text = text.strip().strip('"').strip("'").strip()
+
+        # Reject empties, over-long output, or model refusals.
+        if not text or len(text) > 280:
+            return None
+        low = text.lower()
+        if low.startswith(("i cannot", "i can't", "i'm sorry", "sorry,", "as an ai")):
+            return None
+        return text
+
+    except Exception as e:
+        print(f"    ⚠️ AI comment generation failed: {e}")
+        return None
+
+
 def generate_comment(post, config):
     """Generate a contextual, non-spammy comment for a post."""
     caption = post.get("caption", "") or ""
@@ -554,8 +696,60 @@ def generate_comment(post, config):
 
     language = detect_language(caption)
     place_type = detect_place_type(caption, hashtags)
-    city_slug = post.get("city") or detect_city(caption, hashtags, location)
+
+    # Is this post actually about a VISITABLE PLACE (cafe/park/beach/hotel/...)?
+    # Many posts are dog portraits, themed shots (e.g. World Cup jerseys) or
+    # event/group photos — for those, "Is this spot easy to get to?" or "hidden
+    # gems... this is a great one" read as nonsense. We only allow place/question
+    # templates when there's real evidence of a venue: a detected place type, a
+    # venue-type hashtag, or a specific (non-city) tagged location.
+    _venue_tag_words = ("cafe", "café", "restaurant", "beach", "park", "hotel",
+                        "bar", "pub", "brewery", "resort", "trail", "patio",
+                        "garden", "museum", "gallery", "market", "winery",
+                        "vineyard", "shop", "store", "farm")
+    _tag_blob = " ".join(hashtags or []).lower()
+    _loc = (location or "").strip()
+    is_place_post = (
+        place_type != "spot"
+        or any(w in _tag_blob for w in _venue_tag_words)
+        or (bool(_loc) and "," in _loc)  # "Venue Name, City" style tag
+    )
+
+    # City must be CORROBORATED by the post's own content (caption / hashtags /
+    # location) before we ever put a city name in a comment. The scrape-batch
+    # stamp (post["city"]) only records which hashtag bucket surfaced the post —
+    # and because every city bucket also scrapes GLOBAL tags (#dogcafe,
+    # #travelwithdog, ...), a post from anywhere in the world can land in the
+    # "london" or "nyc" bucket. That stamp is therefore NOT evidence of location
+    # and must never drive comment wording. Content wins; unverified stamp is
+    # ignored for wording (it can still be used for routing/analytics elsewhere).
+    detected_city = detect_city(caption, hashtags, location)
+    city_slug = detected_city
+    city_confirmed = city_slug is not None
     city_name = config["cities"].get(city_slug, {}).get("name", "") if city_slug else ""
+
+    # ── Genuine per-post generation (preferred) ─────────────────────────────
+    # Rather than slot-filling one of a few dozen recycled lines, ask the model
+    # to write a comment that reacts to THIS specific post — reusing the context
+    # we just detected (language, place type, confirmed city) as guardrails.
+    # Falls through to the template bank below whenever AI is unavailable, the
+    # caption is too thin, or generation fails.
+    ai_text = ai_generate_comment(post, {
+        "language": language,
+        "place_type": place_type,
+        "city_name": city_name if city_confirmed else "",
+        "is_place_post": is_place_post,
+    })
+    if ai_text:
+        comment_hash = hashlib.md5(f"{username}:{ai_text[:30]}".encode()).hexdigest()[:8]
+        return {
+            "text": ai_text,
+            "category": "ai_generated",
+            "language": language,
+            "hash": comment_hash,
+            "place_type": place_type,
+            "detected_city": city_slug,
+        }
 
     # Pick template category with weighted randomness
     # Mostly appreciation/empathy (brand-safe), occasionally questions or local knowledge
@@ -576,6 +770,18 @@ def generate_comment(post, config):
     elif language == "german":
         category_weights = {"german": 60, "appreciation": 25, "empathy": 15}
 
+    # local_knowledge leans entirely on a city name / area — only offer it when
+    # the city is actually confirmed from the post's own content.
+    if not city_confirmed:
+        category_weights.pop("local_knowledge", None)
+
+    # question / local_knowledge both assume the post is about a visitable place.
+    # On portraits, themed shots and event photos, drop them and lean on
+    # appreciation/empathy (which are about the dog/moment, not a venue).
+    if not is_place_post:
+        category_weights.pop("question", None)
+        category_weights.pop("local_knowledge", None)
+
     # Weighted random selection
     categories = list(category_weights.keys())
     weights = list(category_weights.values())
@@ -590,18 +796,64 @@ def generate_comment(post, config):
             break
 
     templates = COMMENT_TEMPLATES.get(chosen_category, COMMENT_TEMPLATES["appreciation"])
+
+    # Work out `area` (a distinct sub-neighborhood) up front, because template
+    # eligibility depends on it. area is only trustworthy when we have a
+    # confirmed city AND a real location string that (a) doesn't resolve to a
+    # DIFFERENT city, and (b) isn't just the city name repeated — otherwise the
+    # {area} template reads redundantly: "great spot in Los Angeles! ... the Los
+    # Angeles area too?".
+    city_ref = f"{city_name} " if city_name else ""
+    area = ""
+    if city_confirmed and location:
+        candidate = location.split(",")[0].strip()
+        same_as_city = candidate.lower() == (city_name or "").lower()
+        if candidate and not same_as_city and detect_city(candidate, [], candidate) in (None, city_slug):
+            area = candidate
+
+    # Filter templates by what we can actually fill:
+    #  - no confirmed city  -> drop anything naming a city or area (would read
+    #    ungrammatically or name the wrong place).
+    #  - confirmed city but no distinct area -> drop only {area} templates.
+    def _needs_city(t):
+        return "{city_ref}" in t or "{city_name}" in t
+    def _needs_area(t):
+        return "{area}" in t
+    if not city_confirmed:
+        templates = [t for t in templates if not _needs_city(t) and not _needs_area(t)] or [
+            t for t in COMMENT_TEMPLATES["appreciation"] if not _needs_city(t) and not _needs_area(t)
+        ]
+    elif not area:
+        filtered = [t for t in templates if not _needs_area(t)]
+        if filtered:
+            templates = filtered
+
+    # On non-place posts, also drop any remaining template that assumes a
+    # visitable venue ("spot", "place", "get to here", "hidden gem", ...) and
+    # fall back to dog/moment-focused empathy lines that fit any post.
+    if not is_place_post:
+        _place_words = ("spot", "place", "gem", " here", "find", "discover",
+                        "recognition", "visit", "get to", "outdoor seat",
+                        "busy with dogs", "chill with dogs", "warm up",
+                        "tips for", "going here", "stumble", "at home")
+        def _assumes_place(t):
+            tl = t.lower()
+            return any(w in tl for w in _place_words)
+        non_place = [t for t in templates if not _assumes_place(t)]
+        if not non_place:
+            non_place = [t for t in COMMENT_TEMPLATES["empathy"] if not _assumes_place(t)]
+        templates = non_place or templates
     template = random.choice(templates)
 
-    # Fill in placeholders
-    city_ref = f"{city_name} " if city_name else ""
-    area = location.split(",")[0] if location else city_name
+    if not area:
+        area = city_name or "the neighborhood"
 
     comment = template.format(
         city_ref=city_ref,
         city_name=city_name or "this city",
         place_type=place_type,
         context=place_type,
-        area=area or "the neighborhood",
+        area=area,
     )
 
     # Add slight variation: occasionally add emoji, vary punctuation
@@ -785,7 +1037,14 @@ def discover_posts(target_city=None):
             "timestamp": post.get("timestamp"),
             "url": post.get("url", ""),
             "displayUrl": post.get("displayUrl", ""),
+            # `city` is the scrape BUCKET (which hashtag set surfaced this post),
+            # NOT proof of location — it also includes global tags. `detectedCity`
+            # is the city actually corroborated by the post's own content and is
+            # what comment wording should rely on (see generate_comment).
             "city": post.get("_city"),
+            "detectedCity": detect_city(
+                caption_text, post.get("hashtags", []), post.get("locationName")
+            ),
             "discoveredAt": post.get("_discovered_at"),
             "safetyCheck": reason,
         })
