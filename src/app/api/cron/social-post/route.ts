@@ -23,6 +23,78 @@ function getBaseUrl(): string {
   return 'http://localhost:3000';
 }
 
+// ─── Carousel Image Validation ────────────────────────────────────────────────
+// Instagram's Content Publishing API only supports JPEG for carousel children.
+// This pre-validates each URL and converts PNGs to JPEG via sharp + Supabase storage.
+
+async function validateCarouselImages(urls: string[]): Promise<string[]> {
+  const supabase = getSupabaseAdmin();
+  const validatedUrls: string[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let sharpFn: any = null;
+  try {
+    // Dynamic require — sharp is optional, only needed for PNG→JPEG conversion
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    sharpFn = require('sharp');
+  } catch {
+    console.warn('[SOCIAL-POST] sharp not available — skipping PNG conversion');
+  }
+
+  for (const url of urls) {
+    try {
+      // HEAD request to check content type
+      const headRes = await fetch(url, { method: 'HEAD' });
+      const contentType = headRes.headers.get('content-type') || '';
+
+      if (contentType.includes('image/jpeg') || contentType.includes('image/jpg')) {
+        validatedUrls.push(url);
+      } else if (contentType.includes('image/png') || url.endsWith('.png')) {
+        if (!sharpFn || !supabase) {
+          console.warn(`[SOCIAL-POST] Cannot convert PNG — sharp or supabase missing, using original`);
+          validatedUrls.push(url);
+          continue;
+        }
+        console.log(`[SOCIAL-POST] Converting PNG carousel image to JPEG: ${url.slice(0, 80)}...`);
+        const imgRes = await fetch(url);
+        if (!imgRes.ok) {
+          console.warn(`[SOCIAL-POST] Failed to fetch image: ${url}`);
+          validatedUrls.push(url);
+          continue;
+        }
+        const pngBuffer = Buffer.from(await imgRes.arrayBuffer());
+        // Convert PNG to JPEG with white background (flatten alpha)
+        const jpegBuffer = await sharpFn(pngBuffer)
+          .flatten({ background: { r: 255, g: 255, b: 255 } })
+          .jpeg({ quality: 92 })
+          .toBuffer();
+
+        const filename = `carousel-converted-${Date.now()}.jpg`;
+        const storagePath = `launch-cards/${filename}`;
+        const { error: uploadError } = await supabase.storage
+          .from('photos')
+          .upload(storagePath, jpegBuffer, { contentType: 'image/jpeg', upsert: true });
+
+        if (!uploadError) {
+          const { data: publicUrl } = supabase.storage.from('photos').getPublicUrl(storagePath);
+          console.log(`[SOCIAL-POST] Converted PNG→JPEG: ${publicUrl.publicUrl}`);
+          validatedUrls.push(publicUrl.publicUrl);
+        } else {
+          console.warn(`[SOCIAL-POST] Upload failed: ${uploadError.message}, using original`);
+          validatedUrls.push(url);
+        }
+      } else {
+        console.warn(`[SOCIAL-POST] Unknown image format: ${contentType} — ${url.slice(0, 80)}`);
+        validatedUrls.push(url);
+      }
+    } catch (err) {
+      console.warn(`[SOCIAL-POST] Image validation error: ${err}`);
+      validatedUrls.push(url);
+    }
+  }
+
+  return validatedUrls;
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // GET /api/cron/social-post
 //
@@ -386,8 +458,11 @@ export async function GET(request: NextRequest) {
         }
 
         if (carouselUrls.length >= 2) {
-          console.log(`[SOCIAL-POST] Publishing carousel with ${carouselUrls.length} slides for "${creative.headline}"`);
-          result = await publishCarouselPost(carouselUrls, creative.caption as string);
+          // Pre-validate carousel images: Instagram requires JPEG for carousel children
+          // Convert any PNG/non-JPEG images to JPEG via our conversion endpoint
+          const validatedUrls = await validateCarouselImages(carouselUrls);
+          console.log(`[SOCIAL-POST] Publishing carousel with ${validatedUrls.length} slides for "${creative.headline}"`);
+          result = await publishCarouselPost(validatedUrls, creative.caption as string);
         } else {
           // Fallback: publish as single image if we can't get carousel URLs
           console.log(`[SOCIAL-POST] Carousel only has ${carouselUrls.length} URLs, falling back to single image`);

@@ -21,6 +21,12 @@ export async function GET(request: NextRequest) {
 
   const supabase = getSupabaseAdmin();
 
+  // Cost optimization: reduced batch size (was 60) and added 30-day freshness gate
+  // to minimize Google Places Text Search API calls
+  const BATCH_SIZE = 15;
+  const FRESHNESS_DAYS = 30;
+  const freshnessDate = new Date(Date.now() - FRESHNESS_DAYS * 24 * 60 * 60 * 1000).toISOString();
+
   // PRIORITY 1: Establishments with no photos yet — these need initial enrichment
   const { data: needPhotos, error: needPhotosError } = await supabase
     .from('establishments')
@@ -29,15 +35,16 @@ export async function GET(request: NextRequest) {
     .is('photo_refs', null)
     .neq('listing_type', 'online')
     .order('updated_at', { ascending: true })
-    .limit(60);
+    .limit(BATCH_SIZE);
 
   if (needPhotosError) {
     console.error('Failed to fetch photo-less establishments:', needPhotosError);
     return NextResponse.json({ error: 'Failed to fetch establishments' }, { status: 500 });
   }
 
-  // PRIORITY 2: Fill remaining slots with establishments that already have photos (refresh cycle)
-  const remainingSlots = 60 - (needPhotos?.length || 0);
+  // PRIORITY 2: Fill remaining slots with stale establishments that already have photos
+  // Only refresh establishments not checked in the last FRESHNESS_DAYS days
+  const remainingSlots = BATCH_SIZE - (needPhotos?.length || 0);
   let refreshEstablishments: typeof needPhotos = [];
 
   if (remainingSlots > 0) {
@@ -48,6 +55,7 @@ export async function GET(request: NextRequest) {
       .not('photo_refs', 'is', null)
       .not('google_place_id', 'is', null)
       .neq('listing_type', 'online')
+      .lt('updated_at', freshnessDate)
       .order('updated_at', { ascending: true })
       .limit(remainingSlots);
 
