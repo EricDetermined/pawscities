@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentDbUser, getServiceClient } from '@/lib/community';
+import { sendPackRequestEmail } from '@/lib/email';
 
 /**
  * Pack = mutual connection (request + approval).
@@ -100,6 +101,16 @@ export async function POST(request: NextRequest) {
   });
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // Notify the addressee — without this the request is invisible until they open /feed
+  const [{ data: addressee }, { data: requester }] = await Promise.all([
+    admin.from('users').select('email').eq('id', userId).single(),
+    admin.from('users').select('name').eq('id', viewer.id).single(),
+  ]);
+  if (addressee?.email) {
+    sendPackRequestEmail(addressee.email, requester?.name || 'A fellow dog lover')
+      .catch(err => console.error('[PACK] Notification email failed:', err));
   }
 
   return NextResponse.json({ status: 'requested' }, { status: 201 });

@@ -60,6 +60,10 @@ export async function updateSession(request: NextRequest) {
   // Refresh session if it exists
   const { data: { user } } = await supabase.auth.getUser();
 
+  // Ambassador/referral attribution: persist ?ref= from any landing URL for 30 days
+  // so signups and subscriptions can credit the referrer (see resolveSignupExtras).
+  const refParam = request.nextUrl.searchParams.get('ref');
+
   // Gate account-only pages: send logged-out visitors to login with a return path
   // (prevents e.g. filling the whole "Add a Dog" form only to hit a 401 on submit)
   const { pathname } = request.nextUrl;
@@ -67,7 +71,15 @@ export async function updateSession(request: NextRequest) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = '/login';
     loginUrl.search = `?redirect=${encodeURIComponent(pathname)}`;
-    return NextResponse.redirect(loginUrl);
+    const redirect = NextResponse.redirect(loginUrl);
+    if (refParam) {
+      redirect.cookies.set('pc_ref', refParam.slice(0, 50), { maxAge: 60 * 60 * 24 * 30, path: '/' });
+    }
+    return redirect;
+  }
+
+  if (refParam) {
+    response.cookies.set('pc_ref', refParam.slice(0, 50), { maxAge: 60 * 60 * 24 * 30, path: '/' });
   }
 
   return response;

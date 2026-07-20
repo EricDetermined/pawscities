@@ -31,6 +31,24 @@ export async function GET(request: NextRequest) {
 
   const supabase = await createClient();
 
+  // First-time users (no users row yet) get routed through onboarding
+  async function postAuthDestination(fallback: string): Promise<string> {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: dbUser } = await supabase
+          .from('users')
+          .select('id')
+          .eq('supabase_id', user.id)
+          .maybeSingle();
+        if (!dbUser) return '/welcome';
+      }
+    } catch {
+      // fall through to the requested destination
+    }
+    return fallback;
+  }
+
   // Token hash flow (from email templates) — no PKCE cookie needed
   if (token_hash && type) {
     const otpType = getOtpType(type);
@@ -43,7 +61,7 @@ export async function GET(request: NextRequest) {
       if (type === 'recovery') {
         return NextResponse.redirect(new URL('/reset-password', requestUrl.origin));
       }
-      return NextResponse.redirect(new URL(next, requestUrl.origin));
+      return NextResponse.redirect(new URL(await postAuthDestination(next), requestUrl.origin));
     }
 
     // Log error for debugging
@@ -58,7 +76,7 @@ export async function GET(request: NextRequest) {
       if (type === 'recovery') {
         return NextResponse.redirect(new URL('/reset-password', requestUrl.origin));
       }
-      return NextResponse.redirect(new URL(next, requestUrl.origin));
+      return NextResponse.redirect(new URL(await postAuthDestination(next), requestUrl.origin));
     }
 
     console.error('exchangeCodeForSession error:', error.message);

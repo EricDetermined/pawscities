@@ -24,6 +24,7 @@ export default function SubmitEventPage() {
     venueName: '',
     venueAddress: '',
     externalUrl: '',
+    instagramHandle: '',
     startDate: '',
     endDate: '',
     startTime: '',
@@ -53,6 +54,16 @@ export default function SubmitEventPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Every event needs an actionable contact: link, Instagram, or venue
+    if (!form.externalUrl.trim() && !form.instagramHandle.trim() && !form.venueName.trim()) {
+      setResult({
+        success: false,
+        message: 'Please add at least one way for people to act on this event: an event link, an Instagram handle, or the venue name.',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     setResult(null);
 
@@ -188,6 +199,23 @@ export default function SubmitEventPage() {
                   className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
                 />
                 <p className="text-xs text-gray-400 mt-1">Link to tickets, registration, or event details</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Instagram Handle
+                </label>
+                <input
+                  type="text"
+                  value={form.instagramHandle}
+                  onChange={(e) => updateField('instagramHandle', e.target.value)}
+                  placeholder="@organizer_or_venue"
+                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                />
+                <p className="text-xs text-gray-400 mt-1">
+                  The organizer&apos;s or venue&apos;s Instagram — so attendees can reach out.
+                  <span className="text-orange-600"> Every event needs at least one of: link, Instagram, or venue name.</span>
+                </p>
               </div>
 
               <div>

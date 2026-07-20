@@ -73,6 +73,17 @@ export default async function EstablishmentPage({ params }: Props) {
   // Use canonical slug from config for DB queries (handles hyphenated URL slugs)
   const citySlug = city.slug;
 
+  // Claimed status (works for both research-JSON and DB-sourced listings)
+  let isClaimed = false;
+  try {
+    const { data: claimRow } = await getSupabaseAdmin()
+      .from('establishments')
+      .select('claimed_by')
+      .eq('slug', params.establishment)
+      .maybeSingle();
+    isClaimed = !!claimRow?.claimed_by;
+  } catch { /* default to showing the claim CTA */ }
+
   let place = await getEstablishment(citySlug, params.establishment);
 
   // If not in research JSON, check the database (user-submitted businesses)
@@ -388,6 +399,23 @@ export default async function EstablishmentPage({ params }: Props) {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Claim CTA — the highest-intent moment for a business owner is finding their own listing */}
+            {!isClaimed && (
+              <div className="bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 rounded-xl p-5">
+                <h3 className="font-semibold text-gray-900 mb-1">Is this your business? 🏪</h3>
+                <p className="text-sm text-gray-600 mb-3">
+                  Claim this free listing to update your info, respond to reviews, and post events
+                  for {city.name}&apos;s dog community.
+                </p>
+                <a
+                  href={`/business/claim?q=${encodeURIComponent(place.name)}`}
+                  className="inline-block px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors"
+                >
+                  Claim this listing
+                </a>
+              </div>
+            )}
+
             {/* Contact Info */}
             <div className="bg-white rounded-xl p-6 shadow-sm">
               <h3 className="font-semibold mb-4">Contact Info</h3>

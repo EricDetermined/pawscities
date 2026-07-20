@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { sendSubscriberWelcome } from '@/lib/email';
 
 // ─── Supabase Admin (service role for subscriber writes) ──────────────────────
 
@@ -66,7 +67,8 @@ export async function POST(request: NextRequest) {
       data = result.data;
       error = result.error;
     } else {
-      // New subscriber
+      // New subscriber — attribute ambassador referral from the pc_ref cookie
+      const referredBy = request.cookies.get('pc_ref')?.value?.slice(0, 50) || null;
       const result = await supabase
         .from('subscribers')
         .insert({
@@ -76,6 +78,7 @@ export async function POST(request: NextRequest) {
           source: source || 'website',
           status: 'active',
           confirmed_at: new Date().toISOString(),
+          referred_by: referredBy,
         })
         .select('id, email, city_slug')
         .single();
@@ -89,6 +92,19 @@ export async function POST(request: NextRequest) {
     }
 
     console.log(`[SUBSCRIBE] New subscriber: ${normalizedEmail} (city: ${citySlug || 'none'}, source: ${source || 'website'})`);
+
+    // Welcome email at the moment of highest intent (fire-and-forget)
+    const cityNames: Record<string, string> = {};
+    if (citySlug) {
+      const { data: city } = await supabase
+        .from('cities')
+        .select('name')
+        .eq('slug', citySlug)
+        .maybeSingle();
+      if (city) cityNames[citySlug] = city.name;
+    }
+    sendSubscriberWelcome(normalizedEmail, citySlug ? cityNames[citySlug] : null, citySlug || null)
+      .catch(err => console.error('[SUBSCRIBE] Welcome email failed:', err));
 
     return NextResponse.json({
       message: 'Welcome to Paw Cities! You\'ll receive our weekly digest with the best dog-friendly events and places.',

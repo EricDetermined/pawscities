@@ -48,8 +48,10 @@ export async function GET(request: NextRequest) {
         cities!inner(slug, name)
       `, { count: 'exact' })
       .in('status', ['APPROVED', 'PENDING'])
-      .not('venue_name', 'is', null)
-      .not('external_url', 'is', null)
+      // Every displayed event needs at least one ACTIONABLE contact path —
+      // a link, an Instagram handle, or a named venue. (Requiring all of them
+      // silently hid legitimate approved events.)
+      .or('external_url.not.is.null,source_handle.not.is.null,venue_name.not.is.null')
       .gte('start_date', today)
       .order('start_date', { ascending: true })
       .range(offset, offset + limit - 1);
@@ -154,6 +156,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Every event needs an actionable next step for attendees: a link,
+    // an Instagram handle, or a named venue. A bare date + vague location
+    // erodes trust in the events board.
+    const instagramHandle = typeof body.instagramHandle === 'string'
+      ? body.instagramHandle.trim().replace(/^@+/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/\/+$/, '')
+      : '';
+    if (!body.externalUrl && !instagramHandle && !body.venueName) {
+      return NextResponse.json(
+        { error: 'Please include at least one way for people to act on this event: a link, an Instagram handle, or the venue name.' },
+        { status: 400 }
+      );
+    }
+
     // Validate date is not in the past
     const today = new Date().toISOString().split('T')[0];
     if (startDate < today) {
@@ -230,6 +245,7 @@ export async function POST(request: NextRequest) {
         end_time: body.endTime || null,
         timezone: body.timezone || null,
         image_url: body.imageUrl || null,
+        source_handle: instagramHandle ? `@${instagramHandle}` : null,
         tags: body.tags || [],
         status: 'PENDING',
         source: 'user_submission',

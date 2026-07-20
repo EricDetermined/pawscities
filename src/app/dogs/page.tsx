@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { CommunityDirectoryClient } from './CommunityDirectoryClient';
 
 export const metadata: Metadata = {
@@ -8,5 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function DogsDirectoryPage() {
-  return <CommunityDirectoryClient />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50" />}>
+      <CommunityDirectoryClient />
+    </Suspense>
+  );
 }

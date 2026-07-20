@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
 
-  const { establishmentId, dogId, note, rating } = await request.json();
+  const { establishmentId, dogId, note, rating, photo } = await request.json();
   if (!establishmentId) {
     return NextResponse.json({ error: 'Establishment ID is required' }, { status: 400 });
   }
@@ -96,6 +96,7 @@ export async function POST(request: NextRequest) {
       dog_id: dogId || null,
       note: note || null,
       rating: rating || null,
+      photo: photo || null,
     })
     .select()
     .single();

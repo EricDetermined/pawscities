@@ -10,7 +10,12 @@ interface AuthContextType {
   dbRole: string | null; // 'USER' | 'BUSINESS' | 'ADMIN' | null
   isLoading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
-  signUp: (email: string, password: string, name?: string) => Promise<{ error: Error | null }>;
+  signUp: (
+    email: string,
+    password: string,
+    name?: string,
+    extras?: { homeCity?: string | null; referredBy?: string | null }
+  ) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
 }
@@ -93,13 +98,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { error };
   };
 
-  const signUp = async (email: string, password: string, name?: string) => {
+  const signUp = async (
+    email: string,
+    password: string,
+    name?: string,
+    extras?: { homeCity?: string | null; referredBy?: string | null }
+  ) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
           name,
+          // Applied to the users row on first login (see ensureUserExtras)
+          ...(extras?.homeCity ? { home_city_slug: extras.homeCity } : {}),
+          ...(extras?.referredBy ? { referred_by: extras.referredBy } : {}),
         },
       },
     });

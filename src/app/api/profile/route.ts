@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
+import { resolveSignupExtras } from '@/lib/community';
 
 function getSupabaseAdmin() {
   return createAdminClient(
@@ -26,6 +27,7 @@ export async function GET() {
     .single();
 
   if (!dbUser) {
+    const extras = await resolveSignupExtras(supabaseAdmin, user.user_metadata);
     const { data: newUser } = await supabaseAdmin
       .from('users')
       .insert({
@@ -33,6 +35,7 @@ export async function GET() {
         email: user.email || '',
         name: user.user_metadata?.name || user.email?.split('@')[0] || 'Dog Lover',
         avatar: user.user_metadata?.avatar_url,
+        ...extras,
       })
       .select('*')
       .single();

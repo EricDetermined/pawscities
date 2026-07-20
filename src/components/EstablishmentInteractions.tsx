@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import AddReviewModal from '@/components/reviews/AddReviewModal';
+import CheckInModal from '@/components/checkins/CheckInModal';
 
 interface Review {
   id: string;
@@ -38,7 +39,7 @@ export default function EstablishmentInteractions({
   const [isFavorited, setIsFavorited] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [checkedIn, setCheckedIn] = useState(false);
-  const [checkInLoading, setCheckInLoading] = useState(false);
+  const [showCheckInModal, setShowCheckInModal] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [loginPromptAction, setLoginPromptAction] = useState('');
   const [copied, setCopied] = useState(false);
@@ -113,21 +114,7 @@ export default function EstablishmentInteractions({
   };
 
   const handleCheckIn = () => {
-    requireAuth('check in', async () => {
-      setCheckInLoading(true);
-      try {
-        const res = await fetch('/api/checkins', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ establishmentId }),
-        });
-        if (res.ok) {
-          setCheckedIn(true);
-          setTimeout(() => setCheckedIn(false), 3000);
-        }
-      } catch {}
-      setCheckInLoading(false);
-    });
+    requireAuth('check in', () => setShowCheckInModal(true));
   };
 
   const handleShare = (platform: string) => {
@@ -194,7 +181,6 @@ export default function EstablishmentInteractions({
         </button>
         <button
           onClick={handleCheckIn}
-          disabled={checkInLoading}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
             checkedIn
               ? 'bg-green-50 text-green-600 border border-green-200'
@@ -324,6 +310,19 @@ export default function EstablishmentInteractions({
           </button>
         </div>
       </div>
+
+      {/* Check-in Modal */}
+      {showCheckInModal && (
+        <CheckInModal
+          establishmentId={establishmentId}
+          establishmentName={establishmentName}
+          onClose={() => setShowCheckInModal(false)}
+          onCheckedIn={() => {
+            setCheckedIn(true);
+            setTimeout(() => setCheckedIn(false), 4000);
+          }}
+        />
+      )}
 
       {/* Review Modal */}
       {showReviewModal && (

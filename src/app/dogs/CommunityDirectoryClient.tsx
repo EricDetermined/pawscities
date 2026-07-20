@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 interface DirectoryDog {
   id: string;
@@ -39,10 +40,11 @@ function dogAge(birthDate: string | null): string | null {
 }
 
 export function CommunityDirectoryClient() {
+  const searchParams = useSearchParams();
   const [dogs, setDogs] = useState<DirectoryDog[]>([]);
   const [cities, setCities] = useState<CityOption[]>([]);
   const [total, setTotal] = useState(0);
-  const [city, setCity] = useState<string>('');
+  const [city, setCity] = useState<string>(searchParams.get('city') || '');
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);

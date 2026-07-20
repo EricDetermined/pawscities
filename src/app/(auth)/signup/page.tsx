@@ -1,18 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
+
+function getRefCookie(): string | null {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(/(?:^|;\s*)pc_ref=([^;]+)/);
+  return match ? decodeURIComponent(match[1]) : null;
+}
 
 export default function SignUpPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [homeCity, setHomeCity] = useState('');
+  const [cities, setCities] = useState<{ slug: string; name: string }[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/cities')
+      .then(res => res.json())
+      .then(data => setCities(data.cities || []))
+      .catch(() => {});
+  }, []);
 
   const router = useRouter();
   const { signUp, signInWithGoogle } = useAuth();
@@ -34,7 +49,10 @@ export default function SignUpPage() {
     setIsLoading(true);
 
     try {
-      const { error } = await signUp(email, password, name);
+      const { error } = await signUp(email, password, name, {
+        homeCity: homeCity || null,
+        referredBy: getRefCookie(),
+      });
 
       if (error) {
         console.error('Signup error:', error.message);
@@ -123,6 +141,26 @@ export default function SignUpPage() {
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                 placeholder="you@example.com"
               />
+            </div>
+
+            <div>
+              <label htmlFor="homeCity" className="block text-sm font-medium text-gray-700 mb-1">
+                Your City
+              </label>
+              <select
+                id="homeCity"
+                value={homeCity}
+                onChange={(e) => setHomeCity(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors bg-white"
+              >
+                <option value="">Choose your city...</option>
+                {cities.map((c) => (
+                  <option key={c.slug} value={c.slug}>{c.name}</option>
+                ))}
+              </select>
+              <p className="mt-1 text-xs text-gray-500">
+                So we can connect you with dogs and events near you
+              </p>
             </div>
 
             <div>

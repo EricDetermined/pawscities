@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentDbUser, getServiceClient } from '@/lib/community';
+import { sendNewFollowerEmail } from '@/lib/email';
 
 /**
  * POST /api/community/follow   { userId }  — follow a user (instant, one-way)
@@ -22,12 +23,20 @@ export async function POST(request: NextRequest) {
 
   const { data: target } = await admin
     .from('users')
-    .select('id')
+    .select('id, email, name')
     .eq('id', userId)
     .single();
   if (!target) {
     return NextResponse.json({ error: 'User not found' }, { status: 404 });
   }
+
+  // Was this follow already in place? (Determines whether to notify.)
+  const { data: existing } = await admin
+    .from('follows')
+    .select('id')
+    .eq('follower_id', viewer.id)
+    .eq('following_id', userId)
+    .maybeSingle();
 
   const { error } = await admin
     .from('follows')
@@ -38,6 +47,17 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // Notify on a genuinely new follow (fire-and-forget)
+  if (!existing && target.email) {
+    const { data: follower } = await admin
+      .from('users')
+      .select('name')
+      .eq('id', viewer.id)
+      .single();
+    sendNewFollowerEmail(target.email, follower?.name || 'A fellow dog lover')
+      .catch(err => console.error('[FOLLOW] Notification email failed:', err));
   }
 
   return NextResponse.json({ following: true }, { status: 201 });

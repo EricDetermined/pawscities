@@ -160,6 +160,22 @@ export default function ClaimPageClient() {
     }
   }, [selectedEstablishment?.website, claimForm.contactEmail]);
 
+  // Prefill + auto-search when arriving from a listing's "Claim this listing" CTA (?q=Name)
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q && q.trim().length >= 2) {
+      setSearchQuery(q);
+      setIsSearching(true);
+      setHasSearched(true);
+      fetch(`/api/business/search?q=${encodeURIComponent(q.trim())}`)
+        .then(res => res.json())
+        .then(data => setSearchResults(data.establishments || []))
+        .catch(() => setSearchResults([]))
+        .finally(() => setIsSearching(false));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSearch = async () => {
     if (searchQuery.trim().length < 2) return;
     setIsSearching(true);

@@ -897,3 +897,66 @@ export async function sendHealthReport(report: HealthReportData): Promise<EmailR
   }
   return result;
 }
+
+// ─── Community & Subscriber Emails (P0: engagement loops) ────────────────────
+
+/** Welcome email at the moment of newsletter signup — links drive an immediate second session. */
+export async function sendSubscriberWelcome(
+  email: string,
+  cityName?: string | null,
+  citySlug?: string | null
+): Promise<EmailResult> {
+  const appUrl = getAppUrl();
+  const cityBit = cityName ? ` in ${cityName}` : '';
+  const cityUrl = citySlug ? `${appUrl}/${citySlug}` : appUrl;
+  const html = baseTemplate('Welcome to Paw Cities! 🐾', `
+<p>You're in! Every week we'll send you the best dog-friendly spots, upcoming events, and what's new${cityBit}.</p>
+<p>No need to wait for the first digest — here's what's happening right now:</p>
+<table cellpadding="0" cellspacing="0" style="margin:16px 0;width:100%;">
+<tr><td style="padding:10px 16px;background:#fff7ed;border-radius:8px;">
+  <a href="${cityUrl}" style="color:#ea580c;font-weight:600;text-decoration:none;">📍 Explore dog-friendly places${cityBit} →</a>
+</td></tr>
+<tr><td style="height:8px;"></td></tr>
+<tr><td style="padding:10px 16px;background:#fff7ed;border-radius:8px;">
+  <a href="${cityUrl}#events" style="color:#ea580c;font-weight:600;text-decoration:none;">📅 See upcoming events →</a>
+</td></tr>
+<tr><td style="height:8px;"></td></tr>
+<tr><td style="padding:10px 16px;background:#fff7ed;border-radius:8px;">
+  <a href="${appUrl}/dogs${citySlug ? `?city=${citySlug}` : ''}" style="color:#ea580c;font-weight:600;text-decoration:none;">🐶 Meet the local dogs →</a>
+</td></tr>
+</table>
+<p>Have a dog? <a href="${appUrl}/signup" style="color:#ea580c;">Create a free account</a> to give them a profile, check in at spots, and join the community.</p>
+<p style="font-size:13px;color:#9ca3af;">Your first weekly digest arrives this week. You can unsubscribe anytime from any email.</p>
+`);
+  return sendEmail(email, `Welcome to Paw Cities${cityBit}! 🐾`, html);
+}
+
+/** Notifies a user that someone followed them — reciprocity is the core community loop. */
+export async function sendNewFollowerEmail(
+  toEmail: string,
+  followerName: string
+): Promise<EmailResult> {
+  const appUrl = getAppUrl();
+  const html = baseTemplate('You have a new follower! 🐾', `
+<p><strong>${followerName}</strong> is now following you on Paw Cities.</p>
+<p>They'll see your check-ins and reviews in their feed. Check out their dogs and follow back to build your pack!</p>
+${ctaButton('See Your Feed', `${appUrl}/feed`)}
+<p style="font-size:13px;color:#9ca3af;">You're receiving this because someone interacted with your Paw Cities community profile.</p>
+`);
+  return sendEmail(toEmail, `${followerName} started following you on Paw Cities 🐾`, html);
+}
+
+/** Notifies a user of a pack request — the request is invisible without this. */
+export async function sendPackRequestEmail(
+  toEmail: string,
+  requesterName: string
+): Promise<EmailResult> {
+  const appUrl = getAppUrl();
+  const html = baseTemplate('Pack request 🐕', `
+<p><strong>${requesterName}</strong> wants to join packs with you on Paw Cities.</p>
+<p>Packs are mutual connections — you both agree, and you'll see each other's adventures in your feeds.</p>
+${ctaButton('Accept or Decline', `${appUrl}/feed`)}
+<p style="font-size:13px;color:#9ca3af;">You're receiving this because someone sent you a pack request on Paw Cities.</p>
+`);
+  return sendEmail(toEmail, `${requesterName} wants to join packs with you 🐕`, html);
+}
