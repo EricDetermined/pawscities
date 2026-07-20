@@ -605,6 +605,202 @@ async function checkEmailService(): Promise<CheckResult> {
   }
 }
 
+/** Audit establishment data quality — flag listings missing key fields */
+async function checkEstablishmentQuality(): Promise<CheckResult> {
+  try {
+    const supabase = getSupabaseAdmin();
+
+    const { count: totalActive } = await supabase
+      .from('establishments')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'ACTIVE');
+
+    const total = totalActive || 0;
+
+    // Count establishments missing each key field
+    const [noDesc, noAddress, noPhone, noPhotos, noGoogleId, noRating] = await Promise.all([
+      supabase.from('establishments').select('*', { count: 'exact', head: true })
+        .eq('status', 'ACTIVE').or('description.is.null,description.eq.'),
+      supabase.from('establishments').select('*', { count: 'exact', head: true })
+        .eq('status', 'ACTIVE').or('address.is.null,address.eq.'),
+      supabase.from('establishments').select('*', { count: 'exact', head: true })
+        .eq('status', 'ACTIVE').or('phone.is.null,phone.eq.'),
+      supabase.from('establishments').select('*', { count: 'exact', head: true })
+        .eq('status', 'ACTIVE').or('photo_refs.is.null,photo_refs.eq.{}'),
+      supabase.from('establishments').select('*', { count: 'exact', head: true })
+        .eq('status', 'ACTIVE').is('google_place_id', null),
+      supabase.from('establishments').select('*', { count: 'exact', head: true })
+        .eq('status', 'ACTIVE').or('rating.is.null,rating.eq.0'),
+    ]);
+
+    const gaps = {
+      noDescription: noDesc.count || 0,
+      noAddress: noAddress.count || 0,
+      noPhone: noPhone.count || 0,
+      noPhotos: noPhotos.count || 0,
+      noGooglePlaceId: noGoogleId.count || 0,
+      noRating: noRating.count || 0,
+    };
+
+    // Calculate completeness score (weighted)
+    const photoScore = total > 0 ? ((total - gaps.noPhotos) / total) * 100 : 0;
+    const addressScore = total > 0 ? ((total - gaps.noAddress) / total) * 100 : 0;
+    const descScore = total > 0 ? ((total - gaps.noDescription) / total) * 100 : 0;
+    const avgScore = (photoScore + addressScore + descScore) / 3;
+
+    const issues: string[] = [];
+    if (gaps.noPhotos > 10) issues.push(`${gaps.noPhotos} missing photos`);
+    if (gaps.noAddress > 20) issues.push(`${gaps.noAddress} missing address`);
+    if (gaps.noDescription > total * 0.3) issues.push(`${gaps.noDescription} missing description`);
+    if (gaps.noPhone > total * 0.5) issues.push(`${gaps.noPhone} missing phone`);
+
+    let status: CheckStatus = 'healthy';
+    if (avgScore < 80) status = 'warning';
+    if (avgScore < 60 || gaps.noPhotos > 30) status = 'critical';
+
+    return {
+      name: 'Establishment Quality',
+      status,
+      message: issues.length > 0
+        ? `Quality score ${avgScore.toFixed(0)}% — ${issues.join('; ')}`
+        : `Quality score ${avgScore.toFixed(0)}% — ${total} establishments with good data coverage`,
+      details: { total, gaps, scores: { photo: photoScore.toFixed(1), address: addressScore.toFixed(1), description: descScore.toFixed(1), average: avgScore.toFixed(1) } },
+    };
+  } catch (err) {
+    return { name: 'Establishment Quality', status: 'warning', message: `Check failed: ${String(err)}` };
+  }
+}
+
+/** Smoke-test the business claim/signup funnel — verify key endpoints respond */
+async function checkBusinessClaimFlow(): Promise<CheckResult> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+  const issues: string[] = [];
+
+  try {
+    // 1. Check /for-business page loads
+    const forBizRes = await fetch(`${baseUrl}/for-business`, {
+      method: 'HEAD',
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!forBizRes.ok) issues.push(`/for-business returned ${forBizRes.status}`);
+
+    // 2. Check business search API responds (empty query should return empty, not error)
+    const searchRes = await fetch(`${baseUrl}/api/business/search?q=test`, {
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!searchRes.ok) {
+      issues.push(`business search API returned ${searchRes.status}`);
+    }
+
+    // 3. Check business submit GET (returns cities + categories for form)
+    const submitGetRes = await fetch(`${baseUrl}/api/business/submit`, {
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!submitGetRes.ok) {
+      issues.push(`business submit API returned ${submitGetRes.status}`);
+    } else {
+      const submitData = await submitGetRes.json();
+      if (!submitData.cities || submitData.cities.length === 0) {
+        issues.push('business submit API returned no cities');
+      }
+      if (!submitData.categories || submitData.categories.length === 0) {
+        issues.push('business submit API returned no categories');
+      }
+    }
+
+    // 4. Check claim POST rejects properly (missing fields = 400, not 500)
+    const claimRes = await fetch(`${baseUrl}/api/business/claim`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({}), // empty body should get 400 validation error
+      signal: AbortSignal.timeout(10000),
+    });
+    // We expect 400 (validation) or 401 (auth required) — anything else is broken
+    if (claimRes.status >= 500) {
+      issues.push(`business claim API returned ${claimRes.status} (server error on empty payload)`);
+    }
+
+    if (issues.length === 0) {
+      return {
+        name: 'Business Claim Flow',
+        status: 'healthy',
+        message: 'All business signup endpoints responding correctly',
+      };
+    }
+
+    return {
+      name: 'Business Claim Flow',
+      status: issues.some(i => i.includes('500')) ? 'critical' : 'warning',
+      message: issues.join('; '),
+      details: { issues },
+    };
+  } catch (err) {
+    return { name: 'Business Claim Flow', status: 'critical', message: `Flow check failed: ${String(err)}` };
+  }
+}
+
+/** Smoke-test the ambassador invite flow — verify invite validation works */
+async function checkAmbassadorFlow(): Promise<CheckResult> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+  const issues: string[] = [];
+
+  try {
+    // 1. Check /ambassadors page loads
+    const ambassadorRes = await fetch(`${baseUrl}/ambassadors`, {
+      method: 'HEAD',
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!ambassadorRes.ok) issues.push(`/ambassadors returned ${ambassadorRes.status}`);
+
+    // 2. Verify invite validation rejects invalid codes properly (400, not 500)
+    const verifyRes = await fetch(`${baseUrl}/api/ambassadors/verify-invite`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: 'INVALID-TEST-CODE' }),
+      signal: AbortSignal.timeout(10000),
+    });
+    // We expect 400 or 404 for invalid code — 500 means the endpoint is broken
+    if (verifyRes.status >= 500) {
+      issues.push(`invite verification API returned ${verifyRes.status} (server error)`);
+    } else {
+      const verifyData = await verifyRes.json();
+      // Should return { valid: false } or an error — not crash
+      if (verifyRes.ok && verifyData.valid === true) {
+        issues.push('invite verification accepted a fake code (security issue)');
+      }
+    }
+
+    // 3. Check we have at least one active invite in the system
+    const supabase = getSupabaseAdmin();
+    const { count: activeInvites } = await supabase
+      .from('ambassador_invites')
+      .select('*', { count: 'exact', head: true })
+      .or('expires_at.is.null,expires_at.gt.' + new Date().toISOString());
+
+    if ((activeInvites || 0) === 0) {
+      issues.push('no active ambassador invites exist');
+    }
+
+    if (issues.length === 0) {
+      return {
+        name: 'Ambassador Flow',
+        status: 'healthy',
+        message: `Ambassador invite flow operational — ${activeInvites} active invite(s)`,
+        details: { activeInvites },
+      };
+    }
+
+    return {
+      name: 'Ambassador Flow',
+      status: issues.some(i => i.includes('500') || i.includes('security')) ? 'critical' : 'warning',
+      message: issues.join('; '),
+      details: { issues, activeInvites },
+    };
+  } catch (err) {
+    return { name: 'Ambassador Flow', status: 'warning', message: `Flow check failed: ${String(err)}` };
+  }
+}
+
 // ——— Email Alert (uses shared email utility — no more inline Resend) ————————
 
 // Import the shared email function that handles Resend properly
@@ -645,6 +841,7 @@ export async function GET(request: NextRequest) {
     checkGooglePlacesAPI(),
     checkDatabase(),
     checkPhotoFreshness(),
+    checkEstablishmentQuality(),
     checkInstagramPosting(),
     checkYesterdayPosts(),
     checkCreativeQueueDepth(),
@@ -652,6 +849,8 @@ export async function GET(request: NextRequest) {
     checkSitePages(),
     checkPhotoProxy(),
     checkEmailService(),
+    checkBusinessClaimFlow(),
+    checkAmbassadorFlow(),
     checkAndCleanPastEvents(),
   ]);
 
