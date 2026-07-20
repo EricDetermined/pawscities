@@ -42,7 +42,7 @@ interface ReferredBusiness {
   created_at: string;
 }
 
-const CITIES = ['Geneva', 'Paris', 'London', 'Los Angeles', 'New York City', 'Barcelona', 'Sydney', 'Tokyo'];
+const CITIES = ['Atlanta', 'Barcelona', 'Geneva', 'London', 'Los Angeles', 'New York City', 'Paris', 'Sydney', 'Tokyo'];
 const TIERS = [
   { value: '', label: 'No preference' },
   { value: 'explorer', label: 'Explorer' },

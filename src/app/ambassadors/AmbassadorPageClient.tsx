@@ -5,8 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 const CITIES = [
-  'Geneva', 'Paris', 'London', 'Los Angeles', 'New York',
-  'Barcelona', 'Sydney', 'Tokyo',
+  'Atlanta', 'Barcelona', 'Geneva', 'London', 'Los Angeles',
+  'New York', 'Paris', 'Sydney', 'Tokyo',
 ];
 
 const TIERS = [

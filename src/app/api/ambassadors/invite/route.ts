@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate city if provided
-    const validCities = ['Geneva', 'Paris', 'London', 'Los Angeles', 'New York City', 'Barcelona', 'Sydney', 'Tokyo'];
+    const validCities = ['Atlanta', 'Barcelona', 'Geneva', 'London', 'Los Angeles', 'New York City', 'Paris', 'Sydney', 'Tokyo'];
     if (city && !validCities.includes(city)) {
       return NextResponse.json({ error: `Invalid city. Must be one of: ${validCities.join(', ')}` }, { status: 400 });
     }
