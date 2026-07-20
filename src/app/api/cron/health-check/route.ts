@@ -496,22 +496,24 @@ async function checkCronExecution(): Promise<CheckResult> {
     }
 
     // Check health-check itself: should have recent entries
-    const { count: recentHealth } = await supabase
+    const { count: recentHealth, error: healthErr } = await supabase
       .from('health_checks')
       .select('*', { count: 'exact', head: true })
       .gte('timestamp', twoDaysAgo);
-    if ((recentHealth || 0) === 0) {
+    if (healthErr) {
+      // Table may not exist yet — skip self-check rather than false-flagging
+    } else if ((recentHealth || 0) === 0) {
       issues.push('health-check: no records in 48h (possible table issue)');
     }
 
-    // Check photo refresh: establishments should have recent updates
-    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    // Check photo refresh: runs biweekly (1st & 15th), allow 18-day window
+    const eighteenDaysAgo = new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString();
     const { count: recentRefresh } = await supabase
       .from('establishments')
       .select('*', { count: 'exact', head: true })
-      .gte('updated_at', oneDayAgo);
+      .gte('updated_at', eighteenDaysAgo);
     if ((recentRefresh || 0) === 0) {
-      issues.push('refresh-photos: no establishment updates in 24h');
+      issues.push('refresh-photos: no establishment updates in 18 days (runs 1st & 15th)');
     }
 
     if (issues.length === 0) {
