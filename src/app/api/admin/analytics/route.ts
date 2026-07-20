@@ -369,7 +369,7 @@ export async function GET(request: NextRequest) {
 
 /** Safely execute a Supabase query, returning an empty array on any error. */
 async function safeQuery(
-  queryFn: () => Promise<{ data: any[] | null; error: any }>
+  queryFn: () => PromiseLike<{ data: any[] | null; error: any }>
 ): Promise<any[]> {
   try {
     const { data, error } = await queryFn();
