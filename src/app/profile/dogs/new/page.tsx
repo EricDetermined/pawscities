@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { PhotoUpload } from '@/components/ui/PhotoUpload';
 
 export default function NewDogPage() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function NewDogPage() {
     personality: '',
     isPublic: false,
   });
+  const [photos, setPhotos] = useState<string[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ export default function NewDogPage() {
           size: form.size,
           personality: form.personality.trim() || null,
           isPublic: form.isPublic,
+          photos: photos.length > 0 ? photos : undefined,
         }),
       });
       const data = await res.json();
@@ -58,6 +61,11 @@ export default function NewDogPage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
             <input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="What's your dog's name?" className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" required />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Photos</label>
+            <PhotoUpload onPhotosChange={setPhotos} existingPhotos={photos} maxPhotos={5} />
           </div>
 
           <div>

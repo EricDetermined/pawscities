@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
+import { PhotoUpload } from '@/components/ui/PhotoUpload';
 
 interface Dog {
   id: string;
@@ -15,6 +16,7 @@ interface Dog {
   created_at: string;
   is_public?: boolean;
   slug?: string | null;
+  photos?: string[] | null;
 }
 
 export default function DogDetailPage() {
@@ -29,6 +31,7 @@ export default function DogDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [form, setForm] = useState({ name: '', breed: '', birthDate: '', size: 'MEDIUM', personality: '', isPublic: false });
+  const [photos, setPhotos] = useState<string[]>([]);
 
   useEffect(() => {
     fetch('/api/dogs')
@@ -45,6 +48,7 @@ export default function DogDetailPage() {
             personality: found.personality || '',
             isPublic: found.is_public === true,
           });
+          setPhotos(found.photos || (found.photo ? [found.photo] : []));
         }
       })
       .catch(() => setError('Failed to load dog profile'))
@@ -67,6 +71,7 @@ export default function DogDetailPage() {
           size: form.size,
           personality: form.personality.trim() || null,
           isPublic: form.isPublic,
+          photos,
         }),
       });
       const data = await res.json();
@@ -105,6 +110,10 @@ export default function DogDetailPage() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
               <input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Photos</label>
+              <PhotoUpload onPhotosChange={setPhotos} existingPhotos={photos} maxPhotos={5} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Breed</label>

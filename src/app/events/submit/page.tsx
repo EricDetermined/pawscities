@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '@/components/auth/AuthProvider';
 
 const CITY_OPTIONS = [
+  { slug: 'atlanta', name: 'Atlanta' },
   { slug: 'geneva', name: 'Geneva' },
   { slug: 'paris', name: 'Paris' },
   { slug: 'london', name: 'London' },

@@ -46,8 +46,19 @@ export async function GET() {
     supabase.from('check_ins').select('id', { count: 'exact' }).eq('user_id', dbUser!.id),
   ]);
 
+  // users.home_city stores a city UUID; the profile UIs work with slugs.
+  let userOut = dbUser;
+  if (dbUser?.home_city) {
+    const { data: homeCityRow } = await supabaseAdmin
+      .from('cities')
+      .select('slug')
+      .eq('id', dbUser.home_city)
+      .maybeSingle();
+    userOut = { ...dbUser, home_city: homeCityRow?.slug || null };
+  }
+
   return NextResponse.json({
-    user: dbUser,
+    user: userOut,
     stats: {
       dogs: dogs.count || 0,
       reviews: reviews.count || 0,
@@ -68,12 +79,32 @@ export async function PUT(request: NextRequest) {
 
   const { name, language, homeCity } = await request.json();
 
+  // The UI sends a city slug, but users.home_city is a UUID FK to cities(id).
+  // Resolve slug -> id (also accept a raw UUID or null to clear).
+  let homeCityId: string | null | undefined = undefined;
+  if (homeCity !== undefined) {
+    if (!homeCity) {
+      homeCityId = null;
+    } else {
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(homeCity);
+      const { data: city } = await supabaseAdmin
+        .from('cities')
+        .select('id')
+        .eq(isUuid ? 'id' : 'slug', homeCity)
+        .maybeSingle();
+      if (!city) {
+        return NextResponse.json({ error: `Unknown city: ${homeCity}` }, { status: 400 });
+      }
+      homeCityId = city.id;
+    }
+  }
+
   const { data: updated, error } = await supabaseAdmin
     .from('users')
     .update({
       ...(name !== undefined && { name }),
       ...(language !== undefined && { language }),
-      ...(homeCity !== undefined && { home_city: homeCity }),
+      ...(homeCityId !== undefined && { home_city: homeCityId }),
     })
     .eq('supabase_id', user.id)
     .select()
@@ -83,5 +114,11 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ user: updated });
+  // Return home_city as a slug for UI consistency (see GET)
+  const userOut =
+    updated?.home_city && homeCity !== undefined
+      ? { ...updated, home_city: homeCity || null }
+      : updated;
+
+  return NextResponse.json({ user: userOut });
 }

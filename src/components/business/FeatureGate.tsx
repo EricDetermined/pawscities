@@ -20,7 +20,11 @@ export function FeatureGate({
   featureName,
   compact = false,
 }: FeatureGateProps) {
-  const hasAccess = currentTier === 'PREMIUM' || requiredTier === 'FREE';
+  // Tier casing differs across the stack (Stripe webhook writes 'premium',
+  // some UIs use 'PREMIUM') — compare case-insensitively.
+  const hasAccess =
+    String(currentTier).toUpperCase() === 'PREMIUM' ||
+    String(requiredTier).toUpperCase() === 'FREE';
 
   if (hasAccess) {
     return <>{children}</>;
@@ -74,5 +78,5 @@ export function FeatureGate({
 }
 
 export function hasFeatureAccess(currentTier: string): boolean {
-  return currentTier === 'PREMIUM';
+  return String(currentTier).toUpperCase() === 'PREMIUM';
 }

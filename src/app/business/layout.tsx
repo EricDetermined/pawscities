@@ -28,6 +28,11 @@ const navItems = [
     icon: '⭐',
   },
   {
+    title: 'Events',
+    href: '/business/events',
+    icon: '📅',
+  },
+  {
     title: 'Analytics',
     href: '/business/analytics',
     icon: '📈',

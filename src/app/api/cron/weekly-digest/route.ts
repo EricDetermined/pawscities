@@ -23,6 +23,7 @@ function getResend(): Resend | null {
 const CITY_NAMES: Record<string, string> = {
   paris: 'Paris', geneva: 'Geneva', london: 'London', barcelona: 'Barcelona',
   losangeles: 'Los Angeles', newyork: 'New York City', sydney: 'Sydney', tokyo: 'Tokyo',
+  atlanta: 'Atlanta',
 };
 
 // ─── Email Template ────────────────────────────────────────────────────────────
