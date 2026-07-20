@@ -351,7 +351,7 @@ function renderCtaSlide(
             Follow @thepawcities
           </div>
           <div style={{ display: 'flex', color: '#6b7280', fontSize: '22px' }}>
-            Dog-friendly events in 8 cities worldwide
+            Dog-friendly events in 9 cities worldwide
           </div>
         </div>
 

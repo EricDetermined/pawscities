@@ -386,7 +386,7 @@ export default function AmbassadorPageClient() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Global Network</h3>
               <p className="text-gray-600 leading-relaxed">
-                Join ambassadors across 8 cities worldwide. Network, collaborate, and shape the future of Paw Cities alongside the founding team.
+                Join ambassadors across 9 cities worldwide. Network, collaborate, and shape the future of Paw Cities alongside the founding team.
               </p>
             </div>
           </div>

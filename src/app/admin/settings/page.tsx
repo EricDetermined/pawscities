@@ -41,7 +41,7 @@ export default function SettingsPage() {
               <p className="font-medium text-gray-900">Launch Cities</p>
               <p className="text-sm text-gray-500">Number of active cities</p>
             </div>
-            <p className="text-gray-700">8 cities</p>
+            <p className="text-gray-700">9 cities</p>
           </div>
         </div>
       </div>

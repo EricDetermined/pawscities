@@ -287,7 +287,7 @@ ${eventListText}
 
 ${sponsorHandles.length > 0 ? `📣 Shoutout to ${sponsorHandles.join(' ')} for making these happen!\n\n` : ''}🔗 Full details, venues & links → pawcities.com/${canonicalSlug}/events
 
-Follow @thepawcities for dog-friendly events in 8 cities worldwide 🌎
+Follow @thepawcities for dog-friendly events in 9 cities worldwide 🌎
 
 #PawCities #DogsOfInstagram #DogFriendly #DogEvents #${cityName.replace(/\s/g, '')}Dogs #DogFriendly${cityName.replace(/\s/g, '')}`;
 

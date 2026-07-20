@@ -694,7 +694,7 @@ function detectCityFromHashtag(hashtag: string): string | null {
 /**
  * Daily Event Discovery Cron
  *
- * Scans ALL 8 cities every day using rotating hashtag subsets.
+ * Scans ALL 9 cities every day using rotating hashtag subsets.
  * Each run picks 1 global + 1 city-specific hashtag per city = ~9 hashtag lookups.
  * This ensures every city gets fresh discovery daily while staying within
  * Instagram Graph API rate limits (30 unique hashtags per 7-day window).

@@ -1,7 +1,7 @@
 /**
  * Social media content bank and auto-selection logic for PawCities
  *
- * Contains 39 researched facts across 8 cities, with caption generation
+ * Contains 39 researched facts across 9 cities, with caption generation
  * and smart scheduling (round-robin cities, no duplicates).
  */
 
@@ -333,7 +333,7 @@ export function generateCaption(fact: ContentFact): string {
     '',
     `Explore dog-friendly ${city.name} at pawcities.com/${city.slug} \u{1F517}`,
     '',
-    `Follow @thepawcities for daily dog-friendly tips across 8 cities \u{1F30D}`,
+    `Follow @thepawcities for daily dog-friendly tips across 9 cities \u{1F30D}`,
     '',
     cta,
     '',

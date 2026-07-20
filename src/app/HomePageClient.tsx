@@ -131,7 +131,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
           >
             List for free
           </Link>
-          <span className="text-white/70 hidden sm:inline">— reach dog owners in 8 cities worldwide</span>
+          <span className="text-white/70 hidden sm:inline">— reach dog owners in 9 cities worldwide</span>
         </div>
       </div>
 
@@ -351,7 +351,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
             variant="inline"
             source="homepage_top"
             heading="Never Miss a Dog-Friendly Event"
-            subtext="Weekly updates on the best events, new spots, and dog-owner tips across 8 cities worldwide. Join thousands of dog lovers."
+            subtext="Weekly updates on the best events, new spots, and dog-owner tips across 9 cities worldwide. Join thousands of dog lovers."
           />
         </div>
       </section>
@@ -498,7 +498,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
                 Help Us Expand!
               </h3>
               <p className="text-gray-600 text-sm">
-                We&apos;re in 8 cities and growing. Tell us which city you&apos;d love to see next.
+                We&apos;re in 9 cities and growing. Tell us which city you&apos;d love to see next.
               </p>
             </div>
             <Link
