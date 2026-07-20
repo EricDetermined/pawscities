@@ -48,6 +48,10 @@ An AI agent session (likely working on a Prisma migration or restructure) force-
 ### Root cause
 
 - **No branch protection rules** on either GitHub repo
+  - *(Fixed 2026-07-20: `protect-main` ruleset now Active on `pawscities` —
+    blocks force-pushes and deletion of `main`. If a legitimate history rewrite
+    is ever needed, the ruleset must be temporarily disabled in
+    Settings → Rules → Rulesets, with explicit user approval.)*
 - **No verification step** before force-push operations
 - **Agent didn't check commit count** — if it had compared local (1 commit) vs remote (487 commits), the mismatch would have been obvious
 - **The naming confusion** (pawcities vs pawscities) meant it wasn't immediately clear which repo was affected
