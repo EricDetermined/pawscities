@@ -76,6 +76,27 @@ export async function GET() {
       .eq('establishment_id', establishment.id)
       .eq('event_type', 'page_view');
 
+    // Real week-over-week trends (this 7 days vs previous 7 days)
+    const now = Date.now();
+    const weekAgo = new Date(now - 7 * 86400000).toISOString();
+    const twoWeeksAgo = new Date(now - 14 * 86400000).toISOString();
+    const trendPct = (curr: number, prev: number): number => {
+      if (prev === 0) return curr > 0 ? 100 : 0;
+      return Math.round(((curr - prev) / prev) * 100);
+    };
+
+    const [viewsThisWeek, viewsLastWeek, checkinsThisWeek, checkinsLastWeek] = await Promise.all([
+      supabase.from('analytics_events').select('id', { count: 'exact', head: true })
+        .eq('establishment_id', establishment.id).eq('event_type', 'page_view').gte('created_at', weekAgo),
+      supabase.from('analytics_events').select('id', { count: 'exact', head: true })
+        .eq('establishment_id', establishment.id).eq('event_type', 'page_view')
+        .gte('created_at', twoWeeksAgo).lt('created_at', weekAgo),
+      supabase.from('check_ins').select('id', { count: 'exact', head: true })
+        .eq('establishment_id', establishment.id).gte('created_at', weekAgo),
+      supabase.from('check_ins').select('id', { count: 'exact', head: true })
+        .eq('establishment_id', establishment.id).gte('created_at', twoWeeksAgo).lt('created_at', weekAgo),
+    ]);
+
     // Get subscription tier
     const { data: subscription } = await supabase
       .from('subscriptions')
@@ -109,6 +130,8 @@ export async function GET() {
         favorites: favoritesCount || 0,
         checkIns: checkInsCount || 0,
         views: viewsCount || 0,
+        viewsTrend: trendPct(viewsThisWeek.count || 0, viewsLastWeek.count || 0),
+        checkinsTrend: trendPct(checkinsThisWeek.count || 0, checkinsLastWeek.count || 0),
       },
       subscription: {
         tier,

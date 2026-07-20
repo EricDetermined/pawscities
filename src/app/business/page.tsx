@@ -58,9 +58,9 @@ export default function BusinessDashboard() {
             subscriptionTier: (data.subscription?.tier || 'FREE') as SubscriptionTier,
             stats: {
               views: data.analytics?.views || 0,
-              viewsTrend: 0,
+              viewsTrend: data.analytics?.viewsTrend || 0,
               checkins: data.analytics?.checkIns || 0,
-              checkinsTrend: 0,
+              checkinsTrend: data.analytics?.checkinsTrend || 0,
               reviews: data.analytics?.totalReviews || 0,
               avgRating: data.analytics?.avgRating || 0,
               favorites: data.analytics?.favorites || 0,

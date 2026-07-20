@@ -19,8 +19,12 @@ const CITY_SLUGS = [
 const STATIC_PAGES = [
   { path: '/', priority: '1.0', changefreq: 'daily' },
   { path: '/explore', priority: '0.9', changefreq: 'daily' },
+  { path: '/events', priority: '0.9', changefreq: 'daily' },
+  { path: '/dogs', priority: '0.8', changefreq: 'daily' },
   { path: '/for-business', priority: '0.7', changefreq: 'weekly' },
   { path: '/business/list', priority: '0.7', changefreq: 'weekly' },
+  { path: '/ambassadors', priority: '0.6', changefreq: 'weekly' },
+  { path: '/events/submit', priority: '0.5', changefreq: 'monthly' },
   { path: '/privacy', priority: '0.3', changefreq: 'monthly' },
   { path: '/terms', priority: '0.3', changefreq: 'monthly' },
 ];
@@ -94,6 +98,61 @@ export async function GET() {
   } catch (error) {
     // If database query fails, continue with static URLs only
     console.error('Sitemap: Failed to fetch establishments:', error);
+  }
+
+  // Community + events URLs (service role: public dogs are RLS-readable, but
+  // events need the broader read)
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (supabaseUrl && serviceKey) {
+      const admin = createClient(supabaseUrl, serviceKey);
+
+      // Public dog profiles
+      const { data: dogs } = await admin
+        .from('dog_profiles')
+        .select('slug, updated_at')
+        .eq('is_public', true)
+        .not('slug', 'is', null)
+        .limit(5000);
+      for (const dog of dogs || []) {
+        const lastmod = dog.updated_at
+          ? new Date(dog.updated_at).toISOString().split('T')[0]
+          : now;
+        xml += `  <url>
+    <loc>${BASE_URL}/dogs/${dog.slug}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+`;
+      }
+
+      // Upcoming approved events with an actionable contact
+      const { data: events } = await admin
+        .from('events')
+        .select('slug, updated_at')
+        .eq('status', 'APPROVED')
+        .or('external_url.not.is.null,source_handle.not.is.null,venue_name.not.is.null')
+        .gte('start_date', now)
+        .limit(2000);
+      for (const ev of events || []) {
+        const lastmod = ev.updated_at
+          ? new Date(ev.updated_at).toISOString().split('T')[0]
+          : now;
+        xml += `  <url>
+    <loc>${BASE_URL}/events/${ev.slug}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+`;
+      }
+    }
+  } catch (error) {
+    console.error('Sitemap: Failed to fetch community/event URLs:', error);
   }
 
   xml += `</urlset>`;

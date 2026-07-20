@@ -83,7 +83,7 @@ function buildDigestEmail(data: DigestData, unsubscribeToken: string): string {
     ${eventsHtml}
   </table>
   <table cellpadding="0" cellspacing="0" style="margin:16px 0;"><tr><td>
-    <a href="${appUrl}/${data.citySlug}#events" style="display:inline-block;padding:10px 24px;background-color:#ea580c;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;border-radius:8px;">See All Events</a>
+    <a href="${appUrl}/events?city=${data.citySlug}" style="display:inline-block;padding:10px 24px;background-color:#ea580c;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;border-radius:8px;">See All Events</a>
   </td></tr></table>
 </td></tr>
 
@@ -142,6 +142,44 @@ export async function GET(request: NextRequest) {
   }
 
   console.log('[WEEKLY DIGEST] Starting...');
+
+  // 0. Auto-enroll registered users who aren't subscribers yet.
+  //    Account holders are the most engaged cohort — they shouldn't miss the
+  //    digest just because they never found the newsletter box. Enrolling them
+  //    into `subscribers` gives them the standard unsubscribe machinery.
+  try {
+    const { data: allUsers } = await supabase
+      .from('users')
+      .select('email, home_city, is_suspended')
+      .eq('is_suspended', false);
+    const { data: existingSubs } = await supabase
+      .from('subscribers')
+      .select('email');
+    const existingEmails = new Set((existingSubs || []).map(s => s.email.toLowerCase()));
+    const { data: cityRows } = await supabase.from('cities').select('id, slug');
+    const citySlugById = new Map((cityRows || []).map(c => [c.id, c.slug]));
+
+    const toEnroll = (allUsers || [])
+      .filter(u => u.email && !existingEmails.has(u.email.toLowerCase()))
+      .map(u => ({
+        email: u.email.toLowerCase(),
+        city_slug: u.home_city ? citySlugById.get(u.home_city) || null : null,
+        source: 'account',
+        status: 'active',
+        confirmed_at: new Date().toISOString(),
+      }));
+
+    if (toEnroll.length > 0) {
+      const { error: enrollError } = await supabase.from('subscribers').insert(toEnroll);
+      if (enrollError) {
+        console.error('[WEEKLY DIGEST] Auto-enroll failed:', enrollError.message);
+      } else {
+        console.log(`[WEEKLY DIGEST] Auto-enrolled ${toEnroll.length} registered users`);
+      }
+    }
+  } catch (e) {
+    console.error('[WEEKLY DIGEST] Auto-enroll step failed:', e);
+  }
 
   // 1. Get all active subscribers
   const { data: subscribers, error: subError } = await supabase

@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
-import { sendClaimConfirmation, sendNewClaimAdminAlert } from '@/lib/email';
+import { sendClaimConfirmation, sendClaimApproved, sendNewClaimAdminAlert } from '@/lib/email';
 import { searchPlace, getPhotoUrl } from '@/lib/google-places';
 
 function getSupabaseAdmin() {
@@ -255,6 +255,11 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  // Domain-verified claims approve instantly — the strongest ownership signal
+  // we have, and manual review was the biggest drop-off in the business funnel.
+  // Weaker verification methods still go through admin review.
+  const autoApprove = effectiveVerificationMethod === 'domain_email_match';
+
   const { data: claim, error } = await supabaseAdmin
     .from('business_claims')
     .insert({
@@ -266,7 +271,11 @@ export async function POST(request: NextRequest) {
       contact_phone: contactPhone || null,
       verification_method: effectiveVerificationMethod,
       verification_notes: verificationDoc || null,
-      status: 'PENDING',
+      status: autoApprove ? 'APPROVED' : 'PENDING',
+      ...(autoApprove && {
+        review_notes: 'Auto-approved: contact email domain matches business website',
+        reviewed_at: new Date().toISOString(),
+      }),
       referred_by: referredBy || null,
     })
     .select()
@@ -276,9 +285,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // Send email notifications (non-blocking)
-  sendClaimConfirmation(contactEmail, businessName, claim.id).catch(() => {});
-  sendNewClaimAdminAlert(businessName, contactName, contactEmail, effectiveVerificationMethod).catch(() => {});
+  if (autoApprove) {
+    // Mirror the admin-approval side effects
+    const { error: estError } = await supabaseAdmin
+      .from('establishments')
+      .update({
+        is_verified: true,
+        status: 'ACTIVE',
+        claimed_by: dbUser.id,
+        claimed_at: new Date().toISOString(),
+      })
+      .eq('id', establishmentId);
+    if (estError) {
+      console.error('Auto-approve: establishment update failed:', estError.message);
+    }
+    sendClaimApproved(contactEmail, businessName).catch(() => {});
+    // Admins still get a heads-up, flagged as auto-approved
+    sendNewClaimAdminAlert(businessName, contactName, contactEmail, 'domain_email_match (AUTO-APPROVED)').catch(() => {});
+  } else {
+    sendClaimConfirmation(contactEmail, businessName, claim.id).catch(() => {});
+    sendNewClaimAdminAlert(businessName, contactName, contactEmail, effectiveVerificationMethod).catch(() => {});
+  }
 
-  return NextResponse.json({ claim }, { status: 201 });
+  return NextResponse.json({ claim, autoApproved: autoApprove }, { status: 201 });
 }

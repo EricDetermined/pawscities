@@ -10,6 +10,7 @@ import type { Establishment, CategorySlug, PawEvent } from '@/types';
 import { PremiumCard } from '@/components/ListingBadges';
 import ShareButtons from '@/components/ShareButtons';
 import NewsletterSignup from '@/components/NewsletterSignup';
+import { CityCommunityStrip } from '@/components/community/CityCommunityStrip';
 
 // Dynamic import for MapView to avoid SSR issues with Leaflet
 const MapView = dynamic(() => import('@/components/map/MapView').then(mod => ({ default: mod.MapView })), {
@@ -319,7 +320,7 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
                         {/* Share */}
                         <div className="pt-1" onClick={(e) => e.stopPropagation()}>
                           <ShareButtons
-                            url={`https://pawcities.com/${citySlug}#events`}
+                            url={`https://pawcities.com/events/${event.slug}`}
                             title={`${event.name} — Dog-Friendly Event in ${cityName}`}
                             description={event.venueName ? `${event.venueName} · ${formatDateRange(event)}` : formatDateRange(event)}
                             compact
@@ -740,6 +741,9 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
           <EventSidebar events={events} cityName={city.name} citySlug={city.slug} />
         </div>
       </div>
+
+      {/* Community strip: local dogs + recent activity */}
+      <CityCommunityStrip citySlug={city.slug} cityName={city.name} />
 
       {/* List Your Business CTA */}
       <section className="bg-gradient-to-r from-primary-500 to-primary-600 py-10">

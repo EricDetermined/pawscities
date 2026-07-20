@@ -13,6 +13,8 @@ interface Review {
   dog_names?: string;
   created_at: string;
   users?: { name?: string; avatar?: string };
+  response?: string | null;
+  response_at?: string | null;
 }
 
 interface EstablishmentInteractionsProps {
@@ -275,6 +277,15 @@ export default function EstablishmentInteractions({
                     )}
                     {review.content && (
                       <p className="text-gray-700 text-sm leading-relaxed">{review.content}</p>
+                    )}
+                    {review.response && (
+                      <div className="mt-3 ml-1 pl-3 border-l-2 border-orange-200 bg-orange-50/50 rounded-r-lg p-3">
+                        <p className="text-xs font-semibold text-orange-700 mb-1">
+                          Response from the business
+                          {review.response_at ? ` · ${formatDate(review.response_at)}` : ''}
+                        </p>
+                        <p className="text-sm text-gray-700 leading-relaxed">{review.response}</p>
+                      </div>
                     )}
                   </div>
                 </div>

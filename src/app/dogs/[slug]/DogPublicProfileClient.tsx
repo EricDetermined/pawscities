@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ConnectButtons } from '@/components/community/ConnectButtons';
+import ShareButtons from '@/components/ShareButtons';
 
 interface DogProfile {
   dog: {
@@ -197,6 +198,16 @@ export function DogPublicProfileClient({ slug }: { slug: string }) {
                   </p>
                 </div>
               )}
+
+              {/* Share — dog profiles are the most naturally viral object on the site */}
+              <div className="mt-6 pt-6 border-t border-gray-100">
+                <p className="text-sm font-medium text-gray-700 mb-2">Share {dog.name}&apos;s profile</p>
+                <ShareButtons
+                  url={`https://pawcities.com/dogs/${dog.slug}`}
+                  title={`Meet ${dog.name}${dog.breed ? ` the ${dog.breed}` : ''} on Paw Cities 🐾`}
+                  compact
+                />
+              </div>
 
               {/* Owner card */}
               <div className="mt-6 pt-6 border-t border-gray-100">

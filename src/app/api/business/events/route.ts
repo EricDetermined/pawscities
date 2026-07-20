@@ -102,19 +102,20 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Event date cannot be in the past' }, { status: 400 });
   }
 
-  const slug =
-    name
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .substring(0, 200) +
-    '-' +
-    startDate;
+  // Recurring: expand a weekly event into up to 12 occurrences
+  const repeatWeeks = Math.min(Math.max(parseInt(body.repeatWeeks || '1', 10) || 1, 1), 12);
+  const baseSlug = name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .substring(0, 200);
 
-  const { data: event, error } = await admin
-    .from('events')
-    .insert({
-      slug,
+  const occurrences = Array.from({ length: repeatWeeks }, (_, i) => {
+    const d = new Date(startDate + 'T00:00:00Z');
+    d.setUTCDate(d.getUTCDate() + i * 7);
+    const dateStr = d.toISOString().split('T')[0];
+    return {
+      slug: `${baseSlug}-${dateStr}`,
       city_id: establishment.city_id,
       name: String(name).substring(0, 500),
       description: description ? String(description).substring(0, 5000) : null,
@@ -122,26 +123,32 @@ export async function POST(request: NextRequest) {
       venue_address: establishment.address,
       establishment_id: establishment.id,
       external_url: externalUrl || null,
-      start_date: startDate,
+      start_date: dateStr,
       start_time: startTime || null,
       end_time: endTime || null,
-      tags: ['business'],
+      tags: repeatWeeks > 1 ? ['business', 'recurring'] : ['business'],
       status: 'PENDING',
       source: 'business',
       submitted_by: dbUser.id,
       submitter_name: dbUser.name || establishment.name,
       submitter_email: dbUser.email,
       is_free: isFree !== false,
-    })
-    .select('id, name, start_date, status')
-    .single();
+    };
+  });
+
+  const { data: events, error } = await admin
+    .from('events')
+    .insert(occurrences)
+    .select('id, name, start_date, status');
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json(
-    { event, message: `Event submitted for review — it will appear on the ${city?.name || ''} page once approved.` },
-    { status: 201 }
-  );
+  const message =
+    repeatWeeks > 1
+      ? `${repeatWeeks} weekly occurrences submitted for review — they'll appear on the ${city?.name || ''} page once approved.`
+      : `Event submitted for review — it will appear on the ${city?.name || ''} page once approved.`;
+
+  return NextResponse.json({ event: events?.[0], events, message }, { status: 201 });
 }

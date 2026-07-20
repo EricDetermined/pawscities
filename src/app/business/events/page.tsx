@@ -49,6 +49,7 @@ export default function BusinessEventsPage() {
     endTime: '',
     externalUrl: '',
     isFree: true,
+    repeatWeeks: 1,
   });
 
   const load = useCallback(async () => {
@@ -93,6 +94,7 @@ export default function BusinessEventsPage() {
           endTime: form.endTime || null,
           externalUrl: form.externalUrl.trim() || null,
           isFree: form.isFree,
+          repeatWeeks: form.repeatWeeks,
         }),
       });
       const data = await res.json();
@@ -102,7 +104,7 @@ export default function BusinessEventsPage() {
       }
       setSuccess(data.message || 'Event submitted for review!');
       setShowForm(false);
-      setForm({ name: '', description: '', startDate: '', startTime: '', endTime: '', externalUrl: '', isFree: true });
+      setForm({ name: '', description: '', startDate: '', startTime: '', endTime: '', externalUrl: '', isFree: true, repeatWeeks: 1 });
       load();
     } catch {
       setFormError('Something went wrong. Please try again.');
@@ -231,15 +233,30 @@ export default function BusinessEventsPage() {
                 className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
               />
             </div>
-            <label className="flex items-center gap-2 text-sm text-gray-700">
-              <input
-                type="checkbox"
-                checked={form.isFree}
-                onChange={e => setForm(f => ({ ...f, isFree: e.target.checked }))}
-                className="w-4 h-4 text-orange-500 rounded focus:ring-orange-500"
-              />
-              Free to attend
-            </label>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+              <label className="flex items-center gap-2 text-sm text-gray-700">
+                <input
+                  type="checkbox"
+                  checked={form.isFree}
+                  onChange={e => setForm(f => ({ ...f, isFree: e.target.checked }))}
+                  className="w-4 h-4 text-orange-500 rounded focus:ring-orange-500"
+                />
+                Free to attend
+              </label>
+              <label className="flex items-center gap-2 text-sm text-gray-700">
+                Repeats weekly for
+                <select
+                  value={form.repeatWeeks}
+                  onChange={e => setForm(f => ({ ...f, repeatWeeks: parseInt(e.target.value, 10) }))}
+                  className="px-2 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                >
+                  <option value={1}>just this once</option>
+                  {[2, 3, 4, 6, 8, 12].map(n => (
+                    <option key={n} value={n}>{n} weeks</option>
+                  ))}
+                </select>
+              </label>
+            </div>
             <div className="pt-2">
               <button
                 type="submit"
