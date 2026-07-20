@@ -40,10 +40,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
 
-  const { name, breed, birthDate, size, personality, photo } = await request.json();
+  const { name, breed, birthDate, size, personality, photo, photos, isPublic, bio } =
+    await request.json();
   if (!name) {
     return NextResponse.json({ error: 'Dog name is required' }, { status: 400 });
   }
+  const photoList: string[] | null =
+    Array.isArray(photos) && photos.length > 0 ? photos : photo ? [photo] : null;
 
   let { data: dbUser } = await supabase
     .from('users')
@@ -68,6 +71,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to resolve user' }, { status: 500 });
   }
 
+  // URL-safe slug: name + short random suffix
+  const slug =
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+      .slice(0, 60) +
+    '-' +
+    Math.random().toString(36).slice(2, 8);
+
   const { data: dog, error } = await supabase
     .from('dog_profiles')
     .insert({
@@ -77,7 +90,11 @@ export async function POST(request: NextRequest) {
       birth_date: birthDate || null,
       size: size || 'MEDIUM',
       personality: personality || null,
-      photo: photo || null,
+      photo: photoList ? photoList[0] : null,
+      photos: photoList,
+      is_public: isPublic === true,
+      bio: bio || null,
+      slug,
     })
     .select()
     .single();
@@ -97,7 +114,8 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
 
-  const { id, name, breed, birthDate, size, personality, photo } = await request.json();
+  const { id, name, breed, birthDate, size, personality, photo, photos, isPublic, bio } =
+    await request.json();
   if (!id) {
     return NextResponse.json({ error: 'Dog profile ID is required' }, { status: 400 });
   }
@@ -133,6 +151,12 @@ export async function PUT(request: NextRequest) {
       ...(size !== undefined && { size }),
       ...(personality !== undefined && { personality }),
       ...(photo !== undefined && { photo }),
+      ...(Array.isArray(photos) && {
+        photos: photos.length > 0 ? photos : null,
+        photo: photos.length > 0 ? photos[0] : null,
+      }),
+      ...(isPublic !== undefined && { is_public: isPublic === true }),
+      ...(bio !== undefined && { bio }),
     })
     .eq('id', id)
     .select()

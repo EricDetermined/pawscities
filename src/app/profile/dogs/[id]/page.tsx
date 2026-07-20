@@ -13,6 +13,8 @@ interface Dog {
   personality: string | null;
   photo: string | null;
   created_at: string;
+  is_public?: boolean;
+  slug?: string | null;
 }
 
 export default function DogDetailPage() {
@@ -26,7 +28,7 @@ export default function DogDetailPage() {
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: '', breed: '', birthDate: '', size: 'MEDIUM', personality: '' });
+  const [form, setForm] = useState({ name: '', breed: '', birthDate: '', size: 'MEDIUM', personality: '', isPublic: false });
 
   useEffect(() => {
     fetch('/api/dogs')
@@ -41,6 +43,7 @@ export default function DogDetailPage() {
             birthDate: found.birth_date || '',
             size: found.size || 'MEDIUM',
             personality: found.personality || '',
+            isPublic: found.is_public === true,
           });
         }
       })
@@ -63,6 +66,7 @@ export default function DogDetailPage() {
           birthDate: form.birthDate || null,
           size: form.size,
           personality: form.personality.trim() || null,
+          isPublic: form.isPublic,
         }),
       });
       const data = await res.json();
@@ -125,6 +129,20 @@ export default function DogDetailPage() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Personality</label>
               <textarea value={form.personality} onChange={e => setForm(f => ({ ...f, personality: e.target.value }))} rows={3} className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none resize-none" />
             </div>
+            <label className="flex items-start gap-3 p-4 bg-orange-50 border border-orange-100 rounded-lg cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.isPublic}
+                onChange={e => setForm(f => ({ ...f, isPublic: e.target.checked }))}
+                className="mt-0.5 w-4 h-4 text-orange-500 rounded focus:ring-orange-500"
+              />
+              <span>
+                <span className="block text-sm font-medium text-gray-900">Show on Paw Cities community 🐾</span>
+                <span className="block text-xs text-gray-500 mt-0.5">
+                  {dog.name || 'Your dog'} appears in the public directory so other owners in your city can find and follow you. Your email is never shown.
+                </span>
+              </span>
+            </label>
             <div className="flex gap-2">
               <button onClick={handleSave} disabled={saving} className="px-5 py-2 bg-orange-500 text-white text-sm font-medium rounded-lg hover:bg-orange-600 disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
               <button onClick={() => setEditing(false)} className="px-5 py-2 border border-gray-300 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50">Cancel</button>
@@ -141,7 +159,17 @@ export default function DogDetailPage() {
               <div className="flex flex-wrap gap-2 mt-3">
                 {age && <span className="text-xs bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full">{age}</span>}
                 <span className="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full">{dog.size}</span>
+                {dog.is_public ? (
+                  <span className="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">Public 🐾</span>
+                ) : (
+                  <span className="text-xs bg-gray-100 text-gray-500 px-2.5 py-1 rounded-full">Private</span>
+                )}
               </div>
+              {dog.is_public && dog.slug && (
+                <Link href={`/dogs/${dog.slug}`} className="inline-block mt-2 text-xs text-orange-600 hover:underline">
+                  View public profile →
+                </Link>
+              )}
               {dog.personality && <p className="text-sm text-gray-500 mt-3">{dog.personality}</p>}
               <button onClick={() => setEditing(true)} className="mt-4 px-4 py-1.5 text-sm font-medium text-orange-600 border border-orange-300 rounded-lg hover:bg-orange-50">Edit</button>
             </div>

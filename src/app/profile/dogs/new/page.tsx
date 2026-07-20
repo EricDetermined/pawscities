@@ -14,6 +14,7 @@ export default function NewDogPage() {
     birthDate: '',
     size: 'MEDIUM',
     personality: '',
+    isPublic: false,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,6 +32,7 @@ export default function NewDogPage() {
           birthDate: form.birthDate || null,
           size: form.size,
           personality: form.personality.trim() || null,
+          isPublic: form.isPublic,
         }),
       });
       const data = await res.json();
@@ -83,6 +85,21 @@ export default function NewDogPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Personality</label>
             <textarea value={form.personality} onChange={e => setForm(f => ({ ...f, personality: e.target.value }))} rows={3} placeholder="Tell us about your dog's personality... Friendly? Playful? Shy with strangers?" className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none resize-none" />
           </div>
+
+          <label className="flex items-start gap-3 p-4 bg-orange-50 border border-orange-100 rounded-lg cursor-pointer">
+            <input
+              type="checkbox"
+              checked={form.isPublic}
+              onChange={e => setForm(f => ({ ...f, isPublic: e.target.checked }))}
+              className="mt-0.5 w-4 h-4 text-orange-500 rounded focus:ring-orange-500"
+            />
+            <span>
+              <span className="block text-sm font-medium text-gray-900">Show on Paw Cities community 🐾</span>
+              <span className="block text-xs text-gray-500 mt-0.5">
+                Your dog appears in the public directory so other owners in your city can find and follow you. Your email is never shown. You can change this anytime.
+              </span>
+            </span>
+          </label>
 
           <div className="flex gap-3 pt-2">
             <button type="submit" disabled={saving} className="px-6 py-2.5 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 disabled:opacity-50 transition-colors">

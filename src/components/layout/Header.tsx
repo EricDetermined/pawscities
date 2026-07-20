@@ -8,6 +8,7 @@ import { UserMenu } from '@/components/auth/UserMenu';
 
 const navigation = [
   { name: 'Explore', href: '/#cities-section' },
+  { name: 'Community', href: '/dogs' },
   { name: 'Events', href: '/events/submit' },
   { name: 'For Business', href: '/for-business' },
 ]

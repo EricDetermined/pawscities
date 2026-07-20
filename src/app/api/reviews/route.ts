@@ -138,13 +138,16 @@ export async function POST(request: NextRequest) {
       .eq('id', establishmentId);
   }
 
-  // Create activity
-  await supabaseAdmin.from('activities').insert({
+  // Create activity (schema columns: type / review_id / establishment_id)
+  const { error: activityError } = await supabaseAdmin.from('activities').insert({
     user_id: dbUser.id,
-    activity_type: 'REVIEW_POSTED',
-    entity_id: review.id,
-    entity_type: 'review',
+    type: 'review',
+    review_id: review.id,
+    establishment_id: establishmentId,
   });
+  if (activityError) {
+    console.error('Failed to record review activity:', activityError.message);
+  }
 
   return NextResponse.json({ review }, { status: 201 });
 }

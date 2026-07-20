@@ -104,13 +104,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // Create activity
-  await supabaseAdmin.from('activities').insert({
+  // Create activity (schema columns: type / check_in_id / establishment_id)
+  const { error: activityError } = await supabaseAdmin.from('activities').insert({
     user_id: dbUser.id,
-    activity_type: 'CHECKIN',
-    entity_id: checkIn.id,
-    entity_type: 'check_in',
+    type: 'check_in',
+    check_in_id: checkIn.id,
+    establishment_id: establishmentId,
   });
+  if (activityError) {
+    console.error('Failed to record check-in activity:', activityError.message);
+  }
 
   return NextResponse.json({ checkIn }, { status: 201 });
 }
