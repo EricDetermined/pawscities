@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid tier' }, { status: 400 });
     }
 
-    const validCities = ['Geneva', 'Paris', 'London', 'Los Angeles', 'New York City', 'Barcelona', 'Sydney', 'Tokyo'];
+    const validCities = ['Atlanta', 'Barcelona', 'Geneva', 'London', 'Los Angeles', 'New York City', 'Paris', 'Sydney', 'Tokyo'];
     if (city && !validCities.includes(city)) {
       return NextResponse.json({ error: `Invalid city` }, { status: 400 });
     }
