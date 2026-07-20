@@ -331,7 +331,7 @@ export default function AmbassadorPageClient() {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
             <div>
-              <p className="text-2xl md:text-3xl font-bold">8</p>
+              <p className="text-2xl md:text-3xl font-bold">9</p>
               <p className="text-sm text-gray-400">Cities Worldwide</p>
             </div>
             <div>

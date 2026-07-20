@@ -142,3 +142,61 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
   }
 }
+
+// PATCH /api/admin/ambassadors — Resend invite email for an existing invite code
+export async function PATCH(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { code } = body;
+
+    if (!code) {
+      return NextResponse.json({ error: 'Invite code is required' }, { status: 400 });
+    }
+
+    const supabase = getSupabaseAdmin();
+
+    // Look up the existing invite
+    const { data: invite, error } = await supabase
+      .from('ambassador_invites')
+      .select('*')
+      .eq('code', code)
+      .single();
+
+    if (error || !invite) {
+      return NextResponse.json({ error: 'Invite not found' }, { status: 404 });
+    }
+
+    if (!invite.recipient_email) {
+      return NextResponse.json({ error: 'No recipient email on this invite' }, { status: 400 });
+    }
+
+    // Send the email
+    const emailResult = await sendAmbassadorInvite(
+      invite.recipient_email,
+      invite.recipient_name || '',
+      invite.code,
+      invite.city || undefined,
+      invite.tier || undefined,
+    );
+
+    if (!emailResult.success) {
+      console.error('[ADMIN AMBASSADOR] Resend invite email failed:', emailResult.error);
+      return NextResponse.json({ error: 'Failed to send email', details: emailResult.error }, { status: 500 });
+    }
+
+    return NextResponse.json({
+      success: true,
+      emailSent: true,
+      invite: {
+        code: invite.code,
+        recipientName: invite.recipient_name,
+        recipientEmail: invite.recipient_email,
+        city: invite.city,
+        tier: invite.tier,
+      },
+    });
+  } catch (err) {
+    console.error('[ADMIN AMBASSADOR] Resend error:', err);
+    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
+  }
+}
