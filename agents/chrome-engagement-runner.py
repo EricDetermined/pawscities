@@ -34,7 +34,7 @@ Notes:
 import json
 import sys
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 # ─── Paths ──────────────────────────────────────────────────────────────────
@@ -101,9 +101,35 @@ CITY_SLUGS = [
 ]
 
 
+MAX_PENDING_AGE_DAYS = 7  # target posts older than this are stale — commenting looks late/bot-like
+
+def load_influencer_targets():
+    """Curated influencer handles (data/influencer-targets.json): {handle: {city, tier, notes}}.
+    These accounts get selection priority — they drive outsized follower growth."""
+    path = DATA_DIR / "influencer-targets.json"
+    if path.exists():
+        try:
+            with open(path) as f:
+                return {k.lower().lstrip("@"): v for k, v in json.load(f).items()}
+        except Exception:
+            return {}
+    return {}
+
+
 def get_postable_comments():
-    """Get comments ready to be posted (pending or dry_run status)."""
+    """Get comments ready to be posted (pending or dry_run status).
+    Auto-expires items older than MAX_PENDING_AGE_DAYS so we never comment on stale posts."""
     queue = load_queue()
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=MAX_PENDING_AGE_DAYS)).isoformat()
+    expired = 0
+    for item in queue["items"]:
+        if item["status"] in ("pending", "dry_run", "generated") and (item.get("created_at") or "") < cutoff:
+            item["status"] = "expired"
+            item["error"] = f"auto-expired: queued more than {MAX_PENDING_AGE_DAYS} days"
+            expired += 1
+    if expired:
+        save_queue(queue)
+        print(f"   (auto-expired {expired} stale queued comments)", file=sys.stderr)
     return [item for item in queue["items"] if item["status"] in ("pending", "dry_run", "generated")]
 
 
@@ -154,8 +180,11 @@ def select_balanced_batch(postable, limit):
         else:
             no_city.append(item)
 
+    influencers = load_influencer_targets()
     for city in by_city:
         by_city[city].sort(key=lambda x: (
+            # Priority 0: curated influencer targets always float to the top
+            1 if (x.get("target_username") or "").lower().lstrip("@") in influencers else 0,
             # Primary: higher likes = more visibility
             x.get("post_likes", 0),
             # Secondary: AI-generated comments are more relevant
