@@ -80,7 +80,7 @@ export async function PATCH(
     // Get the event first
     const { data: event, error: eventError } = await supabase
       .from('events')
-      .select('id, status, name, submitter_email, submitter_name')
+      .select('id, status, name, submitter_email, submitter_name, city_id, venue_name')
       .eq('id', eventId)
       .single();
 
@@ -92,6 +92,38 @@ export async function PATCH(
     }
 
     switch (action) {
+      case 'approve_series': {
+        // Approve this event AND every pending occurrence of the same recurring
+        // series (same name + venue + city) — one click instead of twelve.
+        if (event.status !== 'PENDING') {
+          return NextResponse.json(
+            { error: 'Only pending events can be approved' },
+            { status: 400 }
+          );
+        }
+        const { data: seriesRows, error: seriesError } = await supabase
+          .from('events')
+          .update({
+            status: 'APPROVED',
+            reviewed_by: authResult.dbUser?.id || null,
+            reviewed_at: new Date().toISOString(),
+            review_notes: reviewNotes || 'Approved as recurring series',
+          })
+          .eq('name', event.name)
+          .eq('city_id', event.city_id)
+          .eq('status', 'PENDING')
+          .filter('venue_name', event.venue_name ? 'eq' : 'is', event.venue_name)
+          .select('id, start_date');
+        if (seriesError) {
+          return NextResponse.json({ error: seriesError.message }, { status: 500 });
+        }
+        return NextResponse.json({
+          success: true,
+          approved: (seriesRows || []).length,
+          dates: (seriesRows || []).map(r => r.start_date).sort(),
+        });
+      }
+
       case 'approve': {
         if (event.status !== 'PENDING') {
           return NextResponse.json(

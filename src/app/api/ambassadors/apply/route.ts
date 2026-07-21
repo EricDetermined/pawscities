@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { sendAmbassadorApplicationReceived, sendAmbassadorApplicationAdminAlert } from '@/lib/email';
 
 export const dynamic = 'force-dynamic';
 
@@ -159,6 +160,12 @@ export async function POST(request: NextRequest) {
       .from('ambassador_invites')
       .update({ times_used: invite.times_used + 1 })
       .eq('id', invite.id);
+
+    // Confirmation + admin alert (fire-and-forget) — applications were silent on both sides
+    sendAmbassadorApplicationReceived(email, String(fullName).split(' ')[0], city)
+      .catch(err => console.error('[AMBASSADOR] Confirmation email failed:', err));
+    sendAmbassadorApplicationAdminAlert(fullName, email, city, availability)
+      .catch(err => console.error('[AMBASSADOR] Admin alert failed:', err));
 
     return NextResponse.json({
       success: true,

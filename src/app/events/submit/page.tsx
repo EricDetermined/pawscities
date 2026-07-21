@@ -32,6 +32,7 @@ export default function SubmitEventPage() {
     citySlug: '',
     imageUrl: '',
     isFree: false,
+    tags: [] as string[],
     submitterName: '',
     submitterEmail: '',
   });
@@ -96,6 +97,7 @@ export default function SubmitEventPage() {
           citySlug: '',
           imageUrl: '',
           isFree: false,
+          tags: [],
         }));
       } else {
         setResult({
@@ -241,6 +243,33 @@ export default function SubmitEventPage() {
                 />
                 <span className="text-sm text-gray-700">This is a free event</span>
               </label>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Event type <span className="text-gray-400 font-normal">(pick any that fit — helps people find it)</span>
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {['social', 'adoption', 'market', 'festival', 'sports', 'training', 'yappy-hour'].map(tag => (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={() =>
+                        setForm(f => ({
+                          ...f,
+                          tags: f.tags.includes(tag) ? f.tags.filter(t => t !== tag) : [...f.tags, tag],
+                        }))
+                      }
+                      className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                        form.tags.includes(tag)
+                          ? 'bg-orange-500 text-white'
+                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      }`}
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 

@@ -33,6 +33,7 @@ interface DigestData {
   citySlug: string;
   events: { name: string; date: string; venue: string | null; isFree: boolean }[];
   newEstablishments: { name: string; category: string }[];
+  newDogs: { name: string; breed: string | null; slug: string | null }[];
   tip: { headline: string; body: string; city: string } | null;
 }
 
@@ -53,6 +54,17 @@ function buildDigestEmail(data: DigestData, unsubscribeToken: string): string {
         <tr><td style="padding:8px 16px;border-bottom:1px solid #f0f0f0;">
           <strong>${e.name}</strong> <span style="color:#9ca3af;font-size:12px;">(${e.category})</span>
         </td></tr>`).join('')
+    : '';
+
+  // Community: new public dogs in this city — the follow loop starts here
+  const dogsHtml = data.newDogs.length > 0
+    ? `<tr><td style="padding:20px 32px 0;">
+        <h2 style="margin:0 0 4px;font-size:16px;color:#1a1a1a;">&#128054; New pups in ${data.cityName}</h2>
+        <p style="margin:0 0 10px;font-size:13px;color:#6b7280;">Say hi — their check-ins show up in your feed when you follow them.</p>
+        ${data.newDogs.slice(0, 4).map(d => `
+          <a href="${appUrl}/dogs/${d.slug || ''}" style="display:inline-block;margin:0 8px 8px 0;padding:6px 12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:16px;font-size:13px;color:#c2410c;text-decoration:none;">${d.name}${d.breed ? ` · ${d.breed}` : ''}</a>`).join('')}
+        <p style="margin:6px 0 0;"><a href="${appUrl}/dogs?city=${data.citySlug}" style="font-size:13px;color:#ea580c;">Meet all the ${data.cityName} dogs &rarr;</a></p>
+       </td></tr>`
     : '';
 
   const tipHtml = data.tip
@@ -95,6 +107,8 @@ ${data.newEstablishments.length > 0 ? `
     ${spotsHtml}
   </table>
 </td></tr>` : ''}
+
+${dogsHtml}
 
 <!-- Tip of the Week -->
 <tr><td style="padding:16px 32px;">
@@ -253,6 +267,31 @@ export async function GET(request: NextRequest) {
   let sent = 0;
   let failed = 0;
 
+  // Community: recent public dogs per city (last 14 days) for the follow loop
+  const dogsByCity: Record<string, { name: string; breed: string | null; slug: string | null }[]> = {};
+  try {
+    const twoWeeksAgoIso = new Date(Date.now() - 14 * 86400000).toISOString();
+    const [{ data: recentDogs }, { data: cityRows2 }] = await Promise.all([
+      supabase
+        .from('dog_profiles')
+        .select('name, breed, slug, created_at, users!inner(home_city)')
+        .eq('is_public', true)
+        .gte('created_at', twoWeeksAgoIso)
+        .order('created_at', { ascending: false })
+        .limit(100),
+      supabase.from('cities').select('id, slug'),
+    ]);
+    const slugById = new Map((cityRows2 || []).map(c => [c.id, c.slug]));
+    for (const d of recentDogs || []) {
+      const cs = slugById.get((d as any).users?.home_city);
+      if (!cs) continue;
+      if (!dogsByCity[cs]) dogsByCity[cs] = [];
+      dogsByCity[cs].push({ name: (d as any).name, breed: (d as any).breed, slug: (d as any).slug });
+    }
+  } catch (e) {
+    console.error('[WEEKLY DIGEST] Dogs section failed (non-blocking):', e);
+  }
+
   // Batch by city for efficiency
   const allCitySlugs = [...new Set(subscribers.map(s => s.city_slug || 'losangeles'))];
 
@@ -265,6 +304,7 @@ export async function GET(request: NextRequest) {
       citySlug,
       events: eventsByCity[citySlug] || [],
       newEstablishments: spotsByCity[citySlug] || [],
+      newDogs: dogsByCity[citySlug] || [],
       // Simple tip: rotate through cities based on week number
       tip: {
         headline: `Dog-Friendly Tip #${weekNum % 100 + 1}`,

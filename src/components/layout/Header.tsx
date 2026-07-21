@@ -69,7 +69,10 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-100 bg-white">
           <nav className="px-4 py-3 space-y-1">
-            {navigation.map((item) => (
+            {[...navigation,
+              { name: 'Your Feed', href: '/feed' },
+              { name: 'My Dogs', href: '/profile/dogs' },
+            ].map((item) => (
               <Link
                 key={item.name}
                 href={item.href}

@@ -34,7 +34,7 @@ export default function SettingsPage() {
       const res = await fetch('/api/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ language: form.language, homeCity: form.homeCity || null }),
+        body: JSON.stringify({ language: form.language }),
       });
       if (!res.ok) { setError('Failed to save'); return; }
       setSuccess('Settings saved!');
@@ -61,10 +61,9 @@ export default function SettingsPage() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Home City</label>
-          <select value={form.homeCity} onChange={e => setForm(f => ({ ...f, homeCity: e.target.value }))} className="w-full max-w-xs px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none">
-            <option value="">Select a city</option>
-            {cities.map(city => <option key={city.slug} value={city.slug}>{city.name}, {city.country}</option>)}
-          </select>
+          <p className="text-sm text-gray-500">
+            Your home city is managed on your <a href="/profile" className="text-orange-600 hover:underline">profile</a> — it decides which community directory and feed you appear in.
+          </p>
         </div>
         <button onClick={handleSave} disabled={saving} className="px-5 py-2.5 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 disabled:opacity-50 transition-colors">
           {saving ? 'Saving...' : 'Save Settings'}

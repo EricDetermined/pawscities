@@ -319,14 +319,14 @@ def detect_place_type(caption, hashtags):
 
 
 def detect_city(caption, hashtags, location):
-    """Try to detect which city the post is about."""
-    text = ((caption or "") + " " + " ".join(hashtags or []) + " " + (location or "")).lower()
-    # NOTE: signals must be specific enough not to false-match everyday words in
-    # other languages. Bare tokens like "la " (French/Spanish article) or "uk "
-    # match constantly and are banned — use "los angeles", "losangeles", "#la",
-    # "dtla", etc. instead. Ambiguity is resolved by requiring a UNIQUE match:
-    # if the text matches more than one city, we return None rather than guess
-    # (guessing is exactly how a French Paris post got labelled "Los Angeles").
+    """Try to detect which city the post is about.
+
+    Location-field-first (2026-07-21): the post's tagged location is the most
+    reliable signal we have. If a location IS tagged and it matches one of our
+    cities uniquely, use it. If a location is tagged and matches NONE of our
+    cities (e.g. "Crikvenica, Croatia", "Holkham Beach, Norfolk"), return None
+    — the post is off-market and caption keywords must not override that.
+    Only when no location is tagged do we fall back to caption + hashtags."""
     city_signals = {
         "los-angeles": ["los angeles", "losangeles", "socal", "hollywood",
                          "santa monica", "venice beach", "dtla", "silver lake",
@@ -341,10 +341,24 @@ def detect_city(caption, hashtags, location):
         "geneva": ["geneva", "genève", "geneve", "suisse", "swiss", "switzerland",
                    "zürich", "zurich"],
         "sydney": ["sydney", "bondi", "manly", "australia", "nsw"],
+        "atlanta": ["atlanta", "beltline", "buckhead", "midtown atl", "#atl ",
+                    "atldogs", "georgia", "piedmont park", "fetch park"],
     }
-    matched = [slug for slug, signals in city_signals.items()
-               if any(s in text for s in signals)]
-    return matched[0] if len(matched) == 1 else None
+
+    def unique_match(text):
+        matched = [slug for slug, signals in city_signals.items()
+                   if any(s in text for s in signals)]
+        return matched[0] if len(matched) == 1 else None
+
+    loc = (location or "").strip().lower()
+    if loc:
+        loc_match = unique_match(loc)
+        # Tagged location wins — and a tagged location OUTSIDE our markets
+        # disqualifies the post entirely (no caption-keyword override).
+        return loc_match
+
+    text = ((caption or "") + " " + " ".join(hashtags or [])).lower()
+    return unique_match(text)
 
 
 # ─── Content Safety Screening ────────────────────────────────────────────────

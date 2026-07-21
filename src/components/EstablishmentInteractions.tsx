@@ -51,8 +51,14 @@ export default function EstablishmentInteractions({
       const res = await fetch(`/api/reviews?establishmentId=${establishmentId}&limit=10`);
       const data = await res.json();
       if (res.ok) {
-        setReviews(data.reviews || []);
-        setReviewCount(data.pagination?.total || data.reviews?.length || 0);
+        // Business responses live in review_responses; normalize onto the review
+        const normalized = (data.reviews || []).map((r: any) => ({
+          ...r,
+          response: r.response || r.review_responses?.[0]?.response || null,
+          response_at: r.response_at || r.review_responses?.[0]?.responded_at || null,
+        }));
+        setReviews(normalized);
+        setReviewCount(data.pagination?.total || normalized.length || 0);
       }
     } catch {
       // Keep showing whatever we have

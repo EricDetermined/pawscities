@@ -308,6 +308,16 @@ export default function AdminEventsPage() {
                               >
                                 Approve
                               </button>
+                              {(event.tags || []).includes('recurring') && (
+                                <button
+                                  onClick={() => handleAction(event.id, 'approve_series')}
+                                  disabled={actionLoading === event.id}
+                                  className="px-3 py-1.5 bg-emerald-50 border border-emerald-300 text-emerald-700 rounded-lg text-sm font-medium hover:bg-emerald-100 disabled:opacity-50 transition-colors"
+                                  title="Approve every pending occurrence of this recurring event"
+                                >
+                                  Approve series
+                                </button>
+                              )}
                               <button
                                 onClick={() => {
                                   const notes = prompt('Rejection reason (optional):');

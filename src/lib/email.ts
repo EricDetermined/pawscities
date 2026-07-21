@@ -960,3 +960,51 @@ ${ctaButton('Accept or Decline', `${appUrl}/feed`)}
 `);
   return sendEmail(toEmail, `${requesterName} wants to join packs with you 🐕`, html);
 }
+
+/** Notifies a reviewer that the business responded — closes the review loop and drives a return visit. */
+export async function sendReviewResponseEmail(
+  toEmail: string,
+  reviewerName: string,
+  businessName: string,
+  establishmentUrl: string
+): Promise<EmailResult> {
+  const html = baseTemplate('The business replied to your review 💬', `
+<p>Hi ${reviewerName || 'there'},</p>
+<p><strong>${businessName}</strong> just responded to the review you left on Paw Cities.</p>
+${ctaButton('Read their response', establishmentUrl)}
+<p style="font-size:13px;color:#9ca3af;">You're receiving this because you reviewed ${businessName} on Paw Cities.</p>
+`);
+  return sendEmail(toEmail, `${businessName} responded to your review 💬`, html);
+}
+
+/** Confirms receipt of an ambassador application. */
+export async function sendAmbassadorApplicationReceived(
+  toEmail: string,
+  firstName: string,
+  city: string
+): Promise<EmailResult> {
+  const html = baseTemplate('Application received! 🌟', `
+<p>Hi ${firstName},</p>
+<p>Thanks for applying to be a Paw Cities Ambassador for <strong>${city}</strong>! We review every application personally and you'll hear back within <strong>5 business days</strong>.</p>
+<p>In the meantime, the best head start: create your free account, add your dog to the ${city} community, and explore what's already mapped in your city.</p>
+${ctaButton('Explore Paw Cities', getAppUrl())}
+`);
+  return sendEmail(toEmail, `Your Paw Cities Ambassador application for ${city} 🌟`, html);
+}
+
+/** Alerts admins to a new ambassador application. */
+export async function sendAmbassadorApplicationAdminAlert(
+  fullName: string,
+  email: string,
+  city: string,
+  availability: string
+): Promise<EmailResult> {
+  const admins = getAdminEmails();
+  if (admins.length === 0) return { success: false, error: 'No admin emails configured' };
+  const html = baseTemplate('New ambassador application 🌟', `
+<p><strong>${fullName}</strong> (${email}) applied to be an ambassador for <strong>${city}</strong>.</p>
+<p>Tier requested: ${availability}</p>
+${ctaButton('Review in Admin Dashboard', `${getAppUrl()}/admin/ambassadors`)}
+`);
+  return sendEmail(admins, `Ambassador application: ${fullName} — ${city}`, html);
+}

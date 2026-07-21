@@ -1,6 +1,7 @@
 import { requireBusinessOrAdmin } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
+import { sendReviewResponseEmail } from '@/lib/email';
 
 export async function GET() {
   const { error, supabase, dbUser } = await requireBusinessOrAdmin();
@@ -107,7 +108,7 @@ export async function POST(request: NextRequest) {
     // Verify the review belongs to this establishment
     const { data: review, error: reviewError } = await supabase
       .from('reviews')
-      .select('id')
+      .select('id, user_id, users:user_id(name, email), establishments:establishment_id(name, slug, cities(slug))')
       .eq('id', reviewId)
       .eq('establishment_id', claim.establishment_id)
       .single();
@@ -155,6 +156,20 @@ export async function POST(request: NextRequest) {
       }
       result = created;
     }
+
+    // Notify the reviewer their review got a response (fire-and-forget) —
+    // closes the loop that makes business responses actually get read.
+    try {
+      const r = review as any;
+      const reviewerEmail = r.users?.email;
+      const est = r.establishments;
+      if (reviewerEmail && est && !existing) {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+        const url = est.cities?.slug ? `${baseUrl}/${est.cities.slug}/${est.slug}` : baseUrl;
+        sendReviewResponseEmail(reviewerEmail, r.users?.name || '', est.name, url)
+          .catch(err => console.error('[REVIEWS] Response notification failed:', err));
+      }
+    } catch { /* non-blocking */ }
 
     return NextResponse.json({ response: result });
   } catch (error) {
