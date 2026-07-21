@@ -97,7 +97,7 @@ def load_config():
 
 CITY_SLUGS = [
     "london", "new-york-city", "los-angeles", "paris",
-    "tokyo", "barcelona", "geneva", "sydney",
+    "tokyo", "barcelona", "geneva", "sydney", "atlanta",
 ]
 
 
