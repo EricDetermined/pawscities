@@ -8,6 +8,8 @@ interface Claim {
   status: string;
   created_at: string;
   establishment_id: string;
+  verification_method?: string | null;
+  review_notes?: string | null;
   user_id: string;
   business_name: string;
   contact_name: string;
@@ -203,6 +205,14 @@ function ClaimRow({ claim }: { claim: Claim }) {
             >
               {claim.status}
             </span>
+            {claim.verification_method === 'domain_email_match' && (
+              <span
+                className="px-2 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200"
+                title={claim.review_notes || 'Contact email domain matches the business website'}
+              >
+                ✓ domain-verified{(claim.review_notes || '').startsWith('Auto-approved') ? ' · auto' : ''}
+              </span>
+            )}
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600">
             <div>

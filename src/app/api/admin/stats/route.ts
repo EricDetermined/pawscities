@@ -47,6 +47,7 @@ export async function GET(request: NextRequest) {
       pendingPhotos,
       // Validation queue
       pendingValidation,
+      pendingAmbassadors,
     ] = await Promise.all([
       // Core stats
       safe(supabase.from('cities').select('*', { count: 'exact', head: true }), 'cities'),
@@ -117,6 +118,7 @@ export async function GET(request: NextRequest) {
 
       // Validation queue count
       safe(supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('status', 'PENDING'), 'pendingValidation'),
+      safe(supabase.from('ambassador_applications').select('*', { count: 'exact', head: true }).eq('status', 'pending'), 'pendingAmbassadors'),
     ]);
 
     // Compute content remaining
@@ -137,6 +139,7 @@ export async function GET(request: NextRequest) {
         premiumListings: premium.count || 0,
         pendingPhotos: pendingPhotos.count || 0,
         pendingValidation: pendingValidation.count || 0,
+        pendingAmbassadors: pendingAmbassadors.count || 0,
       },
       events: {
         pending: pendingEvents.count || 0,

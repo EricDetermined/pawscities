@@ -15,6 +15,7 @@ interface DashboardData {
     premiumListings: number;
     pendingPhotos: number;
     pendingValidation: number;
+    pendingAmbassadors: number;
   };
   events: { pending: number; upcoming: number; total: number };
   subscribers: { total: number; newThisWeek: number };
@@ -248,6 +249,7 @@ export default function AdminDashboard() {
     { count: data.stats.pendingClaims, label: 'business claims', color: 'amber', href: '/admin/claims' },
     { count: data.stats.pendingPhotos, label: 'photos to moderate', color: 'green', href: '/admin/photos' },
     { count: data.stats.pendingValidation, label: 'places to validate', color: 'cyan', href: '/admin/validation' },
+    { count: data.stats.pendingAmbassadors || 0, label: 'ambassador applications', color: 'orange', href: '/admin/ambassadors' },
   ].filter(item => item.count > 0);
 
   const totalAttention = attentionItems.reduce((sum, item) => sum + item.count, 0);
@@ -814,6 +816,7 @@ function ActionBadge({ count, label, color, href }: {
     green: 'bg-green-50 text-green-700 border-green-200',
     purple: 'bg-purple-50 text-purple-700 border-purple-200',
     cyan: 'bg-cyan-50 text-cyan-700 border-cyan-200',
+    orange: 'bg-orange-50 text-orange-700 border-orange-200',
   };
   return (
     <a href={href} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-sm font-medium transition-colors hover:opacity-80 ${colors[color] || colors.blue}`}>

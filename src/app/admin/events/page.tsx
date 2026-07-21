@@ -22,6 +22,11 @@ interface EventRow {
   external_url: string | null;
   created_at: string;
   cities: { slug: string; name: string } | null;
+  description?: string | null;
+  venue_address?: string | null;
+  start_time?: string | null;
+  end_time?: string | null;
+  image_url?: string | null;
 }
 
 interface EventsResponse {
@@ -42,6 +47,58 @@ export default function AdminEventsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [editing, setEditing] = useState<EventRow | null>(null);
+  const [editForm, setEditForm] = useState<Record<string, string>>({});
+  const [editSaving, setEditSaving] = useState(false);
+
+  const openEdit = (event: EventRow) => {
+    setEditing(event);
+    setEditForm({
+      name: event.name || '',
+      description: event.description || '',
+      venueName: event.venue_name || '',
+      venueAddress: event.venue_address || '',
+      externalUrl: event.external_url || '',
+      startDate: event.start_date || '',
+      startTime: (event.start_time || '').slice(0, 5),
+      endTime: (event.end_time || '').slice(0, 5),
+      tags: (event.tags || []).join(', '),
+    });
+  };
+
+  const saveEdit = async () => {
+    if (!editing) return;
+    setEditSaving(true);
+    try {
+      const response = await fetch(`/api/admin/events/${editing.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'edit',
+          name: editForm.name,
+          description: editForm.description || null,
+          venueName: editForm.venueName || null,
+          venueAddress: editForm.venueAddress || null,
+          externalUrl: editForm.externalUrl || null,
+          startDate: editForm.startDate,
+          startTime: editForm.startTime || null,
+          endTime: editForm.endTime || null,
+          tags: editForm.tags.split(',').map(t => t.trim()).filter(Boolean),
+        }),
+      });
+      if (!response.ok) {
+        const d = await response.json();
+        alert(d.error || 'Save failed');
+      } else {
+        setEditing(null);
+        await fetchEvents();
+      }
+    } catch {
+      alert('Save failed');
+    } finally {
+      setEditSaving(false);
+    }
+  };
 
   const fetchEvents = async (p?: number) => {
     try {
@@ -352,6 +409,23 @@ export default function AdminEventsPage() {
                               </button>
                             </>
                           )}
+                          <button
+                            onClick={() => openEdit(event)}
+                            disabled={actionLoading === event.id}
+                            className="px-3 py-1.5 bg-white border border-blue-300 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 disabled:opacity-50 transition-colors"
+                          >
+                            Edit
+                          </button>
+                          {event.status === 'APPROVED' && (
+                            <a
+                              href={`/events/${event.slug}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-3 py-1.5 bg-white border border-gray-200 text-gray-500 rounded-lg text-sm text-center hover:bg-gray-50 transition-colors"
+                            >
+                              View live
+                            </a>
+                          )}
                           {event.external_url && (
                             <a
                               href={event.external_url}
@@ -422,6 +496,67 @@ export default function AdminEventsPage() {
             </div>
           )}
         </>
+      )}
+
+      {/* Edit modal — full view/edit without leaving the queue */}
+      {editing && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setEditing(null)} />
+          <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
+            <div className="flex items-start justify-between mb-4">
+              <h3 className="text-lg font-bold text-gray-900">Edit event</h3>
+              <button onClick={() => setEditing(null)} className="text-gray-400 hover:text-gray-600">✕</button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input value={editForm.name} onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea value={editForm.description} onChange={e => setEditForm(f => ({ ...f, description: e.target.value }))} rows={4} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Venue</label>
+                  <input value={editForm.venueName} onChange={e => setEditForm(f => ({ ...f, venueName: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                  <input value={editForm.venueAddress} onChange={e => setEditForm(f => ({ ...f, venueAddress: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                  <input type="date" value={editForm.startDate} onChange={e => setEditForm(f => ({ ...f, startDate: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Start</label>
+                  <input type="time" value={editForm.startTime} onChange={e => setEditForm(f => ({ ...f, startTime: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">End</label>
+                  <input type="time" value={editForm.endTime} onChange={e => setEditForm(f => ({ ...f, endTime: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Event link</label>
+                <input value={editForm.externalUrl} onChange={e => setEditForm(f => ({ ...f, externalUrl: e.target.value }))} placeholder="https://..." className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Tags <span className="text-gray-400 font-normal">(comma-separated)</span></label>
+                <input value={editForm.tags} onChange={e => setEditForm(f => ({ ...f, tags: e.target.value }))} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+              </div>
+              <div className="flex gap-3 pt-2">
+                <button onClick={() => setEditing(null)} className="flex-1 py-2.5 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Cancel</button>
+                <button onClick={saveEdit} disabled={editSaving || !editForm.name || !editForm.startDate} className="flex-1 py-2.5 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600 disabled:opacity-50">
+                  {editSaving ? 'Saving...' : 'Save changes'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

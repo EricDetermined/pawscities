@@ -38,6 +38,7 @@ const navSections: NavSection[] = [
       { title: 'Social Media', href: '/admin/social', icon: '\u{1F4F1}' },
       { title: 'Subscribers', href: '/admin/subscribers', icon: '\u{1F4E7}' },
       { title: 'Ambassadors', href: '/admin/ambassadors', icon: '\u{1F43E}' },
+      { title: 'Community', href: '/admin/community', icon: '\u{1F415}' },
     ],
   },
   {
