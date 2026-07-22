@@ -101,7 +101,8 @@ def load_influencers():
 
 def sweep():
     """Expire stale pending items and quarantine blocklisted targets."""
-    cutoff = (datetime.now(timezone.utc) - timedelta(days=MAX_PENDING_AGE_DAYS)).isoformat()
+    # 'Z' suffix, not '+00:00' — a literal '+' in a query string decodes to a space
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=MAX_PENDING_AGE_DAYS)).strftime("%Y-%m-%dT%H:%M:%SZ")
     expired = _call(
         "PATCH",
         f"/engagement_queue?status=eq.pending&created_at=lt.{cutoff}",
