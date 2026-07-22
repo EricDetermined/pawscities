@@ -1,0 +1,27 @@
+{
+  "thatdoodsquad": {
+    "city": "atlanta",
+    "tier": "priority",
+    "notes": "~112K followers, monthly ATL meetups \u2014 co-promo candidate per Atlanta launch plan"
+  },
+  "citydogatlanta": {
+    "city": "atlanta",
+    "tier": "priority",
+    "notes": "Local dog media + events calendar \u2014 natural events partner"
+  },
+  "pawfriendlyaus": {
+    "city": "sydney",
+    "tier": "priority",
+    "notes": "Verified AU dog-friendly directory; posts Sydney venues \u2014 engaged 2026-07-21"
+  },
+  "benjisguidetonyc": {
+    "city": "new-york-city",
+    "tier": "standard",
+    "notes": "NYC dog guide account \u2014 event attender (Bark in the Park)"
+  },
+  "nycdogadventures": {
+    "city": "new-york-city",
+    "tier": "standard",
+    "notes": "NYC adventure account seen engaging dog-event posts"
+  }
+}

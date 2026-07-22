@@ -116,6 +116,20 @@ def load_influencer_targets():
     return {}
 
 
+def load_blocklist():
+    """Accounts we must never comment on (data/engagement-blocklist.json).
+    Keys are lowercase handles without @; values carry reason/added metadata."""
+    path = DATA_DIR / "engagement-blocklist.json"
+    if path.exists():
+        try:
+            with open(path) as f:
+                data = json.load(f)
+            return {k.lower().lstrip("@") for k in data if not k.startswith("_")}
+        except Exception:
+            return set()
+    return set()
+
+
 def get_postable_comments():
     """Get comments ready to be posted (pending or dry_run status).
     Auto-expires items older than MAX_PENDING_AGE_DAYS so we never comment on stale posts."""
@@ -127,9 +141,20 @@ def get_postable_comments():
             item["status"] = "expired"
             item["error"] = f"auto-expired: queued more than {MAX_PENDING_AGE_DAYS} days"
             expired += 1
-    if expired:
+    blocklist = load_blocklist()
+    blocked = 0
+    for item in queue["items"]:
+        if item["status"] in ("pending", "dry_run", "generated") and \
+           (item.get("target_username") or "").lower().lstrip("@") in blocklist:
+            item["status"] = "blocked_account"
+            item["error"] = "account on engagement-blocklist.json"
+            blocked += 1
+    if expired or blocked:
         save_queue(queue)
-        print(f"   (auto-expired {expired} stale queued comments)", file=sys.stderr)
+        if expired:
+            print(f"   (auto-expired {expired} stale queued comments)", file=sys.stderr)
+        if blocked:
+            print(f"   (removed {blocked} comments targeting blocklisted accounts)", file=sys.stderr)
     return [item for item in queue["items"] if item["status"] in ("pending", "dry_run", "generated")]
 
 

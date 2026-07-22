@@ -5,8 +5,8 @@
     "monthly_target_usd": 39,
     "cost_per_ig_result": 0.0023,
     "cost_per_ig_run_base": 0.02,
-    "estimated_weekly_cost_usd": 3.50,
-    "estimated_monthly_cost_usd": 14.00,
+    "estimated_weekly_cost_usd": 3.5,
+    "estimated_monthly_cost_usd": 14.0,
     "notes": "Leaves ~$25/month for handle monitoring (Task #18)"
   },
   "schedule": "daily",
@@ -153,6 +153,38 @@
       "event_sources": {
         "instagram_hashtags": true,
         "notes": "World Dog Show (major global event), Swiss Kennel Club events. Trilingual: French/German/English all needed. Smaller event scene than other pilot cities."
+      }
+    },
+    "atlanta": {
+      "enabled": true,
+      "hashtags": [
+        "atlantadogevents",
+        "dogfriendlyatlanta",
+        "atldogs",
+        "atlantadogs",
+        "fetchpark",
+        "barkinthepark",
+        "beltlinedogs",
+        "yappyhouratlanta"
+      ],
+      "event_sources": {
+        "instagram_hashtags": true,
+        "notes": "Fetch Park events, BeltLine dog meetups, Braves Bark in the Park, Sip & Drool festivals, Piedmont Park dog community."
+      }
+    },
+    "sydney": {
+      "enabled": true,
+      "hashtags": [
+        "sydneydogevents",
+        "dogfriendlysydney",
+        "dogsofsydney",
+        "dogeventsydney",
+        "sydneydogs",
+        "dogloversfestival"
+      ],
+      "event_sources": {
+        "instagram_hashtags": true,
+        "notes": "Dog Lovers Festival, council off-leash events, dog beach meetups, makers markets with dog days."
       }
     }
   }

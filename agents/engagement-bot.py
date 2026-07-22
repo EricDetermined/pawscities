@@ -76,6 +76,21 @@ HISTORY_FILE = ENGAGEMENT_DIR / "comment-history.json"
 POSTS_FILE = ENGAGEMENT_DIR / "discovered-posts.json"
 SESSION_FILE = Path(os.environ.get("IG_SESSION_PATH", str(ENGAGEMENT_DIR / "ig-session.json")))
 CONFIG_FILE = DATA_DIR / "engagement-config.json"
+BLOCKLIST_FILE = DATA_DIR / "engagement-blocklist.json"
+
+
+def load_account_blocklist():
+    """Accounts we must never target (lowercase handles, no @)."""
+    if BLOCKLIST_FILE.exists():
+        try:
+            with open(BLOCKLIST_FILE) as f:
+                return {k.lower().lstrip("@") for k in json.load(f) if not k.startswith("_")}
+        except Exception:
+            return set()
+    return set()
+
+
+ACCOUNT_BLOCKLIST = load_account_blocklist()
 
 # Ensure dirs exist
 ENGAGEMENT_DIR.mkdir(parents=True, exist_ok=True)
@@ -1028,6 +1043,11 @@ def discover_posts(target_city=None):
         if config["discovery"]["skip_private_accounts"] and post.get("isPrivate"):
             continue
 
+        # Skip blocklisted accounts (confirmed off-market targets)
+        if (post.get("ownerUsername") or "").lower() in ACCOUNT_BLOCKLIST:
+            print(f"    🚫 SKIPPED @{post.get('ownerUsername')}: on engagement blocklist")
+            continue
+
         # ── Content safety screening ──
         caption_text = (post.get("caption") or "")[:500]
         owner = post.get("ownerUsername", "")
@@ -1133,6 +1153,7 @@ def discover_following():
         all_usernames.append(acc["username"])
 
     # Prioritize: city-tagged accounts first, then others
+    all_usernames = [u for u in all_usernames if u.lower() not in ACCOUNT_BLOCKLIST]
     priority_list = [u for u in all_usernames if u in priority_usernames]
     other_list = [u for u in all_usernames if u not in priority_usernames]
 
@@ -1304,6 +1325,93 @@ def discover_following():
     return output
 
 
+# ─── Supabase Cloud Queue Sink ───────────────────────────────────────────────
+# When SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY are set (e.g. in GitHub Actions),
+# generated comments are ALSO upserted into the engagement_queue table so
+# posting sessions can pull them from the cloud without this machine.
+
+def _supabase_env():
+    url = (os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL") or "").rstrip("/")
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+    return (url, key) if url and key else (None, None)
+
+
+def _supabase_call(method, path, payload=None, prefer=None):
+    url, key = _supabase_env()
+    if not url:
+        return None
+    req = urllib.request.Request(
+        f"{url}/rest/v1{path}",
+        data=json.dumps(payload).encode() if payload is not None else None,
+        method=method,
+        headers={
+            "apikey": key,
+            "Authorization": f"Bearer {key}",
+            "Content-Type": "application/json",
+            **({"Prefer": prefer} if prefer else {}),
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            body = resp.read().decode()
+            return json.loads(body) if body else []
+    except urllib.error.HTTPError as e:
+        print(f"  ⚠️ Supabase {method} {path} failed: {e.code} {e.read().decode()[:200]}")
+        return None
+    except Exception as e:
+        print(f"  ⚠️ Supabase {method} {path} failed: {e}")
+        return None
+
+
+def fetch_supabase_post_ids():
+    """All post_ids ever queued in the cloud — used for dedupe on ephemeral runners."""
+    url, _ = _supabase_env()
+    if not url:
+        return set()
+    ids, offset = set(), 0
+    while True:
+        rows = _supabase_call("GET", f"/engagement_queue?select=post_id&limit=1000&offset={offset}")
+        if not rows:
+            break
+        ids.update(r["post_id"] for r in rows)
+        if len(rows) < 1000:
+            break
+        offset += 1000
+    return ids
+
+
+def sync_queue_to_supabase(items):
+    """Upsert queue items into engagement_queue; duplicates (same post_id) are ignored."""
+    url, _ = _supabase_env()
+    if not url or not items:
+        return 0
+    sent = 0
+    for i in range(0, len(items), 200):
+        chunk = [{
+            "id": it["id"],
+            "post_id": it["post_id"],
+            "post_shortcode": it.get("post_shortcode", ""),
+            "post_url": it.get("post_url", ""),
+            "target_username": it.get("target_username", ""),
+            "post_likes": it.get("post_likes", 0) or 0,
+            "city": it.get("city"),
+            "comment_text": it["comment_text"],
+            "comment_category": it.get("comment_category"),
+            "comment_language": it.get("comment_language"),
+            "comment_hash": it.get("comment_hash"),
+            "status": it.get("status", "pending"),
+            "created_at": it.get("created_at"),
+            "source": "cloud-discovery",
+        } for it in items[i:i + 200]]
+        result = _supabase_call(
+            "POST", "/engagement_queue?on_conflict=post_id",
+            payload=chunk, prefer="resolution=ignore-duplicates,return=minimal",
+        )
+        if result is not None:
+            sent += len(chunk)
+    return sent
+
+
 # ─── Queue Management ────────────────────────────────────────────────────────
 
 def load_queue():
@@ -1352,6 +1460,10 @@ def generate_queue():
 
     # Track what we've already queued or commented on
     existing_post_ids = {item["post_id"] for item in queue["items"]}
+    cloud_post_ids = fetch_supabase_post_ids()
+    if cloud_post_ids:
+        print(f"  ☁️ Cloud queue dedupe: {len(cloud_post_ids)} post_ids already queued")
+        existing_post_ids |= cloud_post_ids
     commented_post_ids = {h["post_id"] for h in history}
 
     # Also track recent comment hashes to avoid repetitive phrasing
@@ -1408,6 +1520,13 @@ def generate_queue():
         new_count += 1
 
     save_queue(queue)
+
+    # Mirror pending items to the cloud queue (no-op unless Supabase env is set)
+    pending_items_for_sync = [i for i in queue["items"] if i["status"] == "pending"]
+    synced = sync_queue_to_supabase(pending_items_for_sync)
+    if synced:
+        print(f"  ☁️ Synced {synced} pending comments to Supabase engagement_queue")
+
     pending = sum(1 for item in queue["items"] if item["status"] == "pending")
     print(f"\n🐕 Generated {new_count} new comments")
     if blocked_count > 0:
