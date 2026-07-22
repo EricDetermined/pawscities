@@ -1,0 +1,47 @@
+# Laptop-off Instagram engagement discovery.
+# Runs daily in GitHub Actions: scrapes city-targeted posts via Apify,
+# screens + generates comments (OpenAI), and syncs pending comments to the
+# Supabase engagement_queue table. Posting stays manual (laptop-on, via
+# Claude driving Chrome) - this workflow never posts anything to Instagram.
+#
+# Required repo secrets (Settings -> Secrets and variables -> Actions):
+#   APIFY_TOKEN                  Apify API token
+#   OPENAI_API_KEY               OpenAI key for screening + comment generation
+#   SUPABASE_URL                 https://tnqctocershbclhbjnwg.supabase.co
+#   SUPABASE_SERVICE_ROLE_KEY    Supabase service-role key
+
+name: Engagement Discovery
+
+on:
+  schedule:
+    - cron: '0 12 * * *'   # daily 12:00 UTC = 5am PT / 8am ET
+  workflow_dispatch: {}
+
+concurrency:
+  group: engagement-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Discover city-targeted posts (Apify)
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python agents/engagement-bot.py discover
+
+      - name: Generate comments and sync to Supabase queue
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python agents/engagement-bot.py generate
