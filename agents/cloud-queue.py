@@ -150,6 +150,16 @@ def cmd_next(limit):
     # One comment per account per day
     pending = [p for p in pending if (p.get("target_username") or "").lower() not in posted_today_accounts]
 
+    # Account-recency dedupe: skip accounts engaged in the last 3 days
+    # (full history incl. the legacy Mac queue is backfilled into this table)
+    recent_cutoff = (datetime.now(timezone.utc) - timedelta(days=3)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    recent_rows = _call("GET", f"/engagement_queue?select=target_username&status=eq.posted&posted_at=gte.{recent_cutoff}&limit=1000") or []
+    recent_accounts = {(r.get("target_username") or "").lower() for r in recent_rows}
+    before = len(pending)
+    pending = [p for p in pending if (p.get("target_username") or "").lower() not in recent_accounts]
+    if before != len(pending):
+        print(f"   (skipped {before - len(pending)} items targeting accounts engaged in last 3 days)", file=__import__("sys").stderr)
+
     # City balance: fewest-posted-today cities first; influencer targets first within city
     city_counts = {}
     for r in posted:

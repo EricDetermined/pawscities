@@ -1,15 +1,59 @@
 {
   "_comment": "Accounts the engagement pipeline must never target. Confirmed off-market during vetted runs. Add lowercase handles without @.",
-  "bumer.shop7": {"reason": "German dog-harness shop, no city tie; surfaced 9x on 2026-07-22 mislabeled geneva", "added": "2026-07-22"},
-  "moko8692": {"reason": "Shih Tzu account in Sanda City, Japan; mislabeled new-york-city", "added": "2026-07-22"},
-  "rivathelittlechihuahua": {"reason": "Italy travel chihuahua (Riva del Garda); mislabeled los-angeles", "added": "2026-07-22"},
-  "rotolandoperilmondo": {"reason": "Italian van-life travel dog account; mislabeled los-angeles", "added": "2026-07-22"},
-  "bababeach_alassio": {"reason": "Beach club in Alassio, Italy; mislabeled barcelona", "added": "2026-07-22"},
-  "kyotodogcafe": {"reason": "Kyoto dog cafe; mislabeled new-york-city", "added": "2026-07-22"},
-  "houseofwoofstore": {"reason": "Victoria, Australia pet store; not in markets", "added": "2026-07-22"},
-  "melvillecastlehotel_": {"reason": "Hotel near Edinburgh, Scotland; mislabeled tokyo", "added": "2026-07-22"},
-  "stregistoronto": {"reason": "Toronto hotel; mislabeled barcelona", "added": "2026-07-22"},
-  "hundeschulegooddog": {"reason": "Dog school in Ellighausen, Thurgau CH; no geneva tie", "added": "2026-07-22"},
-  "amecanine": {"reason": "French dog trainer, no verifiable paris tie", "added": "2026-07-22"},
-  "sagarikabagga": {"reason": "New Jersey lifestyle account; mislabeled barcelona; comments limited", "added": "2026-07-22"}
+  "bumer.shop7": {
+    "reason": "German dog-harness shop, no city tie; surfaced 9x on 2026-07-22 mislabeled geneva",
+    "added": "2026-07-22"
+  },
+  "moko8692": {
+    "reason": "Shih Tzu account in Sanda City, Japan; mislabeled new-york-city",
+    "added": "2026-07-22"
+  },
+  "rivathelittlechihuahua": {
+    "reason": "Italy travel chihuahua (Riva del Garda); mislabeled los-angeles",
+    "added": "2026-07-22"
+  },
+  "rotolandoperilmondo": {
+    "reason": "Italian van-life travel dog account; mislabeled los-angeles",
+    "added": "2026-07-22"
+  },
+  "bababeach_alassio": {
+    "reason": "Beach club in Alassio, Italy; mislabeled barcelona",
+    "added": "2026-07-22"
+  },
+  "kyotodogcafe": {
+    "reason": "Kyoto dog cafe; mislabeled new-york-city",
+    "added": "2026-07-22"
+  },
+  "houseofwoofstore": {
+    "reason": "Victoria, Australia pet store; not in markets",
+    "added": "2026-07-22"
+  },
+  "melvillecastlehotel_": {
+    "reason": "Hotel near Edinburgh, Scotland; mislabeled tokyo",
+    "added": "2026-07-22"
+  },
+  "stregistoronto": {
+    "reason": "Toronto hotel; mislabeled barcelona",
+    "added": "2026-07-22"
+  },
+  "hundeschulegooddog": {
+    "reason": "Dog school in Ellighausen, Thurgau CH; no geneva tie",
+    "added": "2026-07-22"
+  },
+  "amecanine": {
+    "reason": "French dog trainer, no verifiable paris tie",
+    "added": "2026-07-22"
+  },
+  "sagarikabagga": {
+    "reason": "New Jersey lifestyle account; mislabeled barcelona; comments limited",
+    "added": "2026-07-22"
+  },
+  "montys_dog_beach": {
+    "reason": "Dog beach bar in Crikvenica, Croatia - the original off-target case (Eric flagged 2026-07-22); resurfaced mislabeled new-york-city",
+    "added": "2026-07-23"
+  },
+  "charleston_the_chewookie": {
+    "reason": "Ventura CA based (outside LA metro); surfaced 3x mislabeled los-angeles",
+    "added": "2026-07-23"
+  }
 }
