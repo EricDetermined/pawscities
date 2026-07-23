@@ -85,6 +85,33 @@ export default function AmbassadorsAdminPage() {
 
   // Expanded application
   const [expandedApp, setExpandedApp] = useState<string | null>(null);
+  const [reviewing, setReviewing] = useState<string | null>(null);
+
+  const reviewApplication = async (id: string, action: 'approve' | 'reject') => {
+    if (action === 'reject' && !window.confirm('Reject this application?')) return;
+    setReviewing(id);
+    try {
+      const res = await fetch('/api/admin/ambassadors/applications', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, action }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed');
+      setApplications(prev => prev.map(a =>
+        a.id === id ? { ...a, status: data.status } : a
+      ));
+      if (action === 'approve') {
+        alert(data.emailSent
+          ? 'Approved! A welcome email with their dashboard link was sent.'
+          : 'Approved! (Welcome email could not be sent — let them know manually.)');
+      }
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Something went wrong');
+    } finally {
+      setReviewing(null);
+    }
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -580,6 +607,27 @@ export default function AmbassadorsAdminPage() {
                       <p className="text-xs font-medium text-gray-500 uppercase mb-1">How They Explore Their City</p>
                       <p className="text-sm text-gray-700 bg-white p-3 rounded-lg border">{app.how_explore}</p>
                     </div>
+                    {app.status === 'pending' && (
+                      <div className="flex items-center gap-3 pt-2 border-t">
+                        <button
+                          onClick={() => reviewApplication(app.id, 'approve')}
+                          disabled={reviewing === app.id}
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:opacity-50"
+                        >
+                          {reviewing === app.id ? 'Working…' : '✓ Approve ambassador'}
+                        </button>
+                        <button
+                          onClick={() => reviewApplication(app.id, 'reject')}
+                          disabled={reviewing === app.id}
+                          className="px-4 py-2 bg-white border border-red-200 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors disabled:opacity-50"
+                        >
+                          Reject
+                        </button>
+                        <p className="text-xs text-gray-400">
+                          Approval activates their dashboard + referral credit and emails them their welcome kit.
+                        </p>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

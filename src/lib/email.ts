@@ -1008,3 +1008,21 @@ ${ctaButton('Review in Admin Dashboard', `${getAppUrl()}/admin/ambassadors`)}
 `);
   return sendEmail(admins, `Ambassador application: ${fullName} — ${city}`, html);
 }
+
+/** Congratulates an approved ambassador and points them at their dashboard. */
+export async function sendAmbassadorApproved(
+  toEmail: string,
+  firstName: string,
+  city: string,
+  referralCode: string
+): Promise<EmailResult> {
+  const html = baseTemplate(`Welcome aboard, ${firstName}! 🐾`, `
+<p>Hi ${firstName},</p>
+<p>Great news — you're officially a <strong>Paw Cities Ambassador for ${city}</strong>! 🎉</p>
+<p>Your personal referral code is <strong>${referralCode}</strong>. Add <code>?ref=${referralCode}</code> to any pawcities.com link you share and every signup, subscriber, and business claim gets credited to you.</p>
+<p>Your dashboard shows your live impact — members joined, subscribers, and businesses you've brought in:</p>
+${ctaButton('Open your Ambassador Dashboard', `${getAppUrl()}/ambassadors/dashboard`)}
+<p>First mission, if you choose to accept it: add your own pup to the ${city} dog directory and invite your first friend. Welcome to the pack!</p>
+`);
+  return sendEmail(toEmail, `You're a Paw Cities Ambassador for ${city}! 🎉`, html);
+}
