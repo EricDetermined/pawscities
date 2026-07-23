@@ -55,5 +55,9 @@
   "charleston_the_chewookie": {
     "reason": "Ventura CA based (outside LA metro); surfaced 3x mislabeled los-angeles",
     "added": "2026-07-23"
+  },
+  "89cafe.0221": {
+    "reason": "Dog cafe in Obihiro, Hokkaido Japan; repeatedly mislabeled geneva",
+    "added": "2026-07-23"
   }
 }
