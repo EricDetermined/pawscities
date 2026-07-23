@@ -139,7 +139,9 @@ async function checkDatabase(): Promise<CheckResult> {
   }
 }
 
-/** Check photo freshness — how many establishments have stale or missing photos */
+/** Check photo coverage — establishments missing images entirely.
+ *  (2026-07-23: staleness/"last refreshed" tracking removed — the priority
+ *  is that every active listing has at least one photo, not photo age.) */
 async function checkPhotoFreshness(): Promise<CheckResult> {
   try {
     const supabase = getSupabaseAdmin();
@@ -151,49 +153,28 @@ async function checkPhotoFreshness(): Promise<CheckResult> {
       .eq('status', 'ACTIVE')
       .or('photo_refs.is.null,photo_refs.eq.{}');
 
-    // Count establishments not refreshed in the last 10 days
-    const tenDaysAgo = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString();
-    const { count: stalePhotos } = await supabase
-      .from('establishments')
-      .select('*', { count: 'exact', head: true })
-      .eq('status', 'ACTIVE')
-      .not('google_place_id', 'is', null)
-      .lt('updated_at', tenDaysAgo);
-
     const { count: totalActive } = await supabase
       .from('establishments')
       .select('*', { count: 'exact', head: true })
       .eq('status', 'ACTIVE');
 
     const noPhotoCount = noPhotos || 0;
-    const staleCount = stalePhotos || 0;
     const total = totalActive || 0;
 
     let status: CheckStatus = 'healthy';
-    const issues: string[] = [];
-
-    if (noPhotoCount > 5) {
-      status = 'warning';
-      issues.push(`${noPhotoCount} establishments have no photos`);
-    }
+    if (noPhotoCount > 0) status = 'warning';
     if (noPhotoCount > 20) status = 'critical';
 
-    if (staleCount > 50) {
-      status = status === 'critical' ? 'critical' : 'warning';
-      issues.push(`${staleCount} establishments not refreshed in 10+ days`);
-    }
-    if (staleCount > 150) status = 'critical';
-
     return {
-      name: 'Photo Freshness',
+      name: 'Photo Coverage',
       status,
-      message: issues.length > 0
-        ? issues.join('; ')
-        : `All photos fresh — ${total} establishments with active photos`,
-      details: { total, noPhotos: noPhotoCount, stalePhotos: staleCount },
+      message: noPhotoCount > 0
+        ? `${noPhotoCount} of ${total} active establishments have no photos — prioritize filling these`
+        : `Full coverage — all ${total} active establishments have photos`,
+      details: { total, noPhotos: noPhotoCount },
     };
   } catch (err) {
-    return { name: 'Photo Freshness', status: 'critical', message: `Check failed: ${String(err)}` };
+    return { name: 'Photo Coverage', status: 'critical', message: `Check failed: ${String(err)}` };
   }
 }
 

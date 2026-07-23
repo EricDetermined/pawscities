@@ -82,23 +82,21 @@ export async function GET(request: NextRequest) {
       healthChecks.push({ name: 'Database', status: 'critical', message: 'Connection failed' });
     }
 
-    // Photo freshness
+    // Photo coverage (missing images first — staleness tracking removed 2026-07-23)
     try {
-      const tenDaysAgo = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString();
-      const { count: stalePhotos } = await supabase
+      const { count: noPhotos } = await supabase
         .from('establishments')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'ACTIVE')
-        .not('google_place_id', 'is', null)
-        .lt('updated_at', tenDaysAgo);
-      const stale = stalePhotos || 0;
+        .or('photo_refs.is.null,photo_refs.eq.{}');
+      const missing = noPhotos || 0;
       healthChecks.push({
-        name: 'Photo Freshness',
-        status: stale > 50 ? 'critical' : stale > 20 ? 'warning' : 'healthy',
-        message: stale > 0 ? `${stale} establishments stale (10+ days)` : 'All photos fresh',
+        name: 'Photo Coverage',
+        status: missing > 20 ? 'critical' : missing > 0 ? 'warning' : 'healthy',
+        message: missing > 0 ? `${missing} establishments have no photos` : 'All active establishments have photos',
       });
     } catch {
-      healthChecks.push({ name: 'Photo Freshness', status: 'warning', message: 'Check failed' });
+      healthChecks.push({ name: 'Photo Coverage', status: 'warning', message: 'Check failed' });
     }
 
     // Email service

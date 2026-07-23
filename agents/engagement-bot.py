@@ -333,6 +333,125 @@ def detect_place_type(caption, hashtags):
     return "spot"
 
 
+CITY_SIGNALS = {
+    "los-angeles": ["los angeles", "losangeles", "socal", "hollywood",
+                    "santa monica", "venice beach", "dtla", "silver lake",
+                    "echo park", "#la ", "#ladogs", "dogsofla",
+                    "orange county", "newport beach", "long beach", "pasadena"],
+    "new-york-city": ["new york", "newyork", "nyc", "brooklyn", "manhattan",
+                      "queens", "the bronx"],
+    "london": ["london", "brixton", "shoreditch", "camden",
+               "hampstead", "marylebone", "notting hill", "twickenham",
+               "richmond upon thames"],
+    "barcelona": ["barcelona", "bcn", "cataluña", "catalunya", "catalonia"],
+    "paris": ["paris", "parisien", "parisienne", "montmartre", "marais",
+              "île saint-louis", "ile saint-louis"],
+    "tokyo": ["tokyo", "東京", "渋谷", "新宿", "代々木", "お台場", "東京犬"],
+    # 2026-07-23: tightened — "swiss"/"switzerland"/"zurich" pulled in
+    # German-speaking accounts with no Geneva tie (bumer.shop7 etc.)
+    "geneva": ["geneva", "genève", "geneve", "genf", "lac léman", "lake geneva",
+               "carouge", "eaux-vives"],
+    "sydney": ["sydney", "bondi", "manly", "pyrmont", "surry hills",
+               "#dogfriendlysydney"],
+    "atlanta": ["atlanta", "beltline", "buckhead", "midtown atl", "#atl ",
+                "atldogs", "piedmont park", "fetch park", "old fourth ward"],
+}
+
+# Compact per-city tokens that count as evidence when found in the ACCOUNT
+# HANDLE itself (e.g. benjisguideto*nyc*, citydog*atlanta*, woolstore1888*sydney*)
+CITY_HANDLE_TOKENS = {
+    "los-angeles": ["losangeles", "ladog", "dogsofla", "socal", "hollywood",
+                    "weho", "dtla"],
+    "new-york-city": ["nyc", "newyork", "brooklyn", "manhattan"],
+    "london": ["london"],
+    "barcelona": ["barcelona", "bcn"],
+    "paris": ["paris"],
+    "tokyo": ["tokyo"],
+    "geneva": ["geneva", "geneve", "genf"],
+    "sydney": ["sydney", "bondi", "aussie", "aus"],
+    "atlanta": ["atlanta", "atldog", "atlpup"],
+}
+
+_NORMALIZED_CITY = {"los_angeles": "los-angeles", "new_york": "new-york-city"}
+
+
+def load_curated_city_map():
+    """handle(lower) -> city-slug (or "*" when list membership is city-agnostic).
+    Sources: influencer-targets.json, target-handles.json,
+    instagram-following.json (city_breakdown + full accounts list)."""
+    curated = {}
+    try:
+        for handle, meta in json.load(open(DATA_DIR / "influencer-targets.json")).items():
+            city = (meta or {}).get("city") if isinstance(meta, dict) else None
+            curated[handle.lower().lstrip("@")] = city or "*"
+    except Exception:
+        pass
+    try:
+        for handle, tag in json.load(open(DATA_DIR / "target-handles.json")).items():
+            city = str(tag).split(":")[-1] if ":" in str(tag) else "*"
+            curated[handle.lower().lstrip("@")] = _NORMALIZED_CITY.get(city, city)
+    except Exception:
+        pass
+    try:
+        following = json.load(open(DATA_DIR / "instagram-following.json"))
+        for city, users in (following.get("city_breakdown") or {}).items():
+            slug = _NORMALIZED_CITY.get(city, city.replace("_", "-"))
+            for u in users:
+                curated[u.lower().lstrip("@")] = slug
+        for acc in following.get("accounts") or []:
+            curated.setdefault((acc.get("username") or "").lower(), "*")
+    except Exception:
+        pass
+    curated.pop("", None)
+    return curated
+
+
+_CURATED_CITY_MAP = None
+
+
+def city_evidence(post):
+    """Hard evidence that a post is tied to its assigned city, or None.
+
+    Counts as evidence (2026-07-23, per Eric: only verifiably city-tied targets):
+      1. tagged location matching the city's signals
+      2. a city signal appearing in the hashtags
+      3. the account handle containing a city token
+      4. the account being on a curated city list (influencers, venue targets,
+         our vetted following list)
+    Caption-only keyword matches do NOT count — that is how off-market posts
+    (Croatia beach, Italian travel dogs) used to slip through.
+    """
+    global _CURATED_CITY_MAP
+    city = post.get("city")
+    if not city:
+        return None
+    signals = CITY_SIGNALS.get(city, [])
+
+    loc = (post.get("locationName") or "").strip().lower()
+    if loc and any(sig in loc for sig in signals):
+        return f"location:{(post.get('locationName') or '').strip()}"
+
+    tags = " ".join(post.get("hashtags") or []).lower()
+    if tags:
+        for sig in signals:
+            compact = sig.replace(" ", "").replace("#", "").strip()
+            if len(compact) >= 3 and compact in tags:
+                return f"hashtag:{compact}"
+
+    handle = (post.get("ownerUsername") or "").lower()
+    for token in CITY_HANDLE_TOKENS.get(city, []):
+        if token in handle:
+            return f"handle:{token}"
+
+    if _CURATED_CITY_MAP is None:
+        _CURATED_CITY_MAP = load_curated_city_map()
+    curated_city = _CURATED_CITY_MAP.get(handle)
+    if curated_city in ("*", city):
+        return f"curated:{curated_city}"
+
+    return None
+
+
 def detect_city(caption, hashtags, location):
     """Try to detect which city the post is about.
 
@@ -342,23 +461,7 @@ def detect_city(caption, hashtags, location):
     cities (e.g. "Crikvenica, Croatia", "Holkham Beach, Norfolk"), return None
     — the post is off-market and caption keywords must not override that.
     Only when no location is tagged do we fall back to caption + hashtags."""
-    city_signals = {
-        "los-angeles": ["los angeles", "losangeles", "socal", "hollywood",
-                         "santa monica", "venice beach", "dtla", "silver lake",
-                         "echo park", "#la ", "#ladogs", "dogsofla"],
-        "new-york-city": ["new york", "newyork", "nyc", "brooklyn", "manhattan",
-                          "queens", "the bronx"],
-        "london": ["london", "england", "brixton", "shoreditch", "camden",
-                   "hampstead", "marylebone", "notting hill"],
-        "barcelona": ["barcelona", "bcn", "cataluña", "catalunya", "catalonia"],
-        "paris": ["paris", "parisien", "parisienne", "montmartre", "marais"],
-        "tokyo": ["tokyo", "東京", "渋谷", "新宿", "代々木", "お台場"],
-        "geneva": ["geneva", "genève", "geneve", "suisse", "swiss", "switzerland",
-                   "zürich", "zurich"],
-        "sydney": ["sydney", "bondi", "manly", "australia", "nsw"],
-        "atlanta": ["atlanta", "beltline", "buckhead", "midtown atl", "#atl ",
-                    "atldogs", "georgia", "piedmont park", "fetch park"],
-    }
+    city_signals = CITY_SIGNALS
 
     def unique_match(text):
         matched = [slug for slug, signals in city_signals.items()
@@ -1399,6 +1502,7 @@ def sync_queue_to_supabase(items):
             "comment_category": it.get("comment_category"),
             "comment_language": it.get("comment_language"),
             "comment_hash": it.get("comment_hash"),
+            "city_evidence": it.get("city_evidence"),
             "status": it.get("status", "pending"),
             "created_at": it.get("created_at"),
             "source": "cloud-discovery",
@@ -1471,9 +1575,17 @@ def generate_queue():
 
     new_count = 0
     blocked_count = 0
+    evidence_skipped = 0
     for post in posts:
         post_id = post["id"]
         if post_id in existing_post_ids or post_id in commented_post_ids:
+            continue
+
+        # ── Evidence gate: only verifiably city-tied targets get comments ──
+        evidence = city_evidence(post)
+        if not evidence:
+            print(f"  🎯 SKIPPED @{post.get('ownerUsername')}: no hard {post.get('city')} evidence")
+            evidence_skipped += 1
             continue
 
         # ── Final safety gate: re-screen before generating comment ──
@@ -1508,6 +1620,7 @@ def generate_queue():
             "comment_category": comment_data["category"],
             "comment_language": comment_data["language"],
             "comment_hash": comment_data["hash"],
+            "city_evidence": evidence,
             "status": "pending",
             "created_at": datetime.now(timezone.utc).isoformat(),
             "posted_at": None,
@@ -1531,6 +1644,8 @@ def generate_queue():
     print(f"\n🐕 Generated {new_count} new comments")
     if blocked_count > 0:
         print(f"   🛡️ Safety blocked: {blocked_count} posts (grief/sensitive content)")
+    if evidence_skipped > 0:
+        print(f"   🎯 Evidence gate skipped: {evidence_skipped} posts with no verifiable city tie")
     print(f"   Queue: {pending} pending | {queue['stats']['posted']} posted | {queue['stats']['failed']} failed\n")
 
     # Preview first 5

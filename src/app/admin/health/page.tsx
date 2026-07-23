@@ -47,7 +47,7 @@ const serviceIcons: Record<string, string> = {
   'Instagram Token': '📸',
   'Google Places API': '🗺️',
   'Database': '🗄️',
-  'Photo Freshness': '🖼️',
+  'Photo Coverage': '🖼️',
   'Instagram Posting': '📱',
   'Site Pages': '🌐',
   'Photo Proxy': '🔗',
