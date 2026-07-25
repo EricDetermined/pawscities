@@ -16,7 +16,7 @@ function getSupabaseAdmin() {
   );
 }
 
-export const maxDuration = 300; // Increased to 5 min for Google Events + Vision scanning
+export const maxDuration = 300; // 5 min for 4 channels: Meta IG + Google Events + Curated + Apify IG
 
 // ─── City-specific hashtags (expanded for deeper discovery) ─────────────────
 // Each city has 8-12 hashtags covering: events, venues, community handles, local dog culture
@@ -297,6 +297,42 @@ const GOOGLE_EVENT_QUERIES: Record<string, {
 
 // Apify Google Events Scraper returns varied field names depending on version
 // We accept all known variations and normalize them
+// johnvc actor returns events nested in a wrapper with search_metadata
+interface JohnvcGoogleEvent {
+  title?: string;
+  date?: {
+    start_date?: string;
+    when?: string;
+    description?: string;
+    venue?: Record<string, unknown>;
+  };
+  address?: string[];
+  link?: string;
+  event_location_map?: { link?: string; image?: string };
+  description?: string;
+  ticket_info?: Array<{ source?: string; link?: string; link_type?: string }>;
+  venue?: {
+    name?: string;
+    rating?: number;
+    reviews?: number;
+    link?: string;
+  };
+  image?: string;
+  thumbnail?: string;
+  [key: string]: unknown;
+}
+
+interface JohnvcResponse {
+  search_parameters?: Record<string, unknown>;
+  search_metadata?: {
+    total_results?: number;
+    events_count?: number;
+  };
+  events?: JohnvcGoogleEvent[];
+  [key: string]: unknown;
+}
+
+// Legacy interface kept for type compatibility
 interface ApifyGoogleEvent {
   // Title fields
   title?: string;
@@ -365,18 +401,17 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
   console.log(`[GOOGLE-EVENTS] Searching "${query}" for ${citySlug}`);
 
   try {
-    const apifyUrl = `https://api.apify.com/v2/acts/codingfrontend~google-events-scraper/run-sync-get-dataset-items?token=${APIFY_TOKEN}`;
+    // Using johnvc actor (actively maintained, 46 users, 100% success rate)
+    // Old codingfrontend actor broke ~July 3 when Google changed their CSS class names
+    const apifyUrl = `https://api.apify.com/v2/acts/johnvc~google-events-api---access-google-events-data/run-sync-get-dataset-items?token=${APIFY_TOKEN}`;
     const res = await fetch(apifyUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query,
-        location: cityConfig.location,
-        gl: cityConfig.gl,
-        hl: cityConfig.hl,
-        maxItems: 20,
+        q: `${query} ${cityConfig.location}`,
+        max_pages: 2,
       }),
-      signal: AbortSignal.timeout(60000), // 60s timeout for Apify sync run
+      signal: AbortSignal.timeout(90000), // 90s timeout for Apify sync run
     });
 
     if (!res.ok) {
@@ -384,8 +419,18 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
       return [];
     }
 
-    const events = (await res.json()) as ApifyGoogleEvent[];
-    console.log(`[GOOGLE-EVENTS] Got ${events.length} results for ${citySlug}`);
+    // johnvc actor returns an array of page result objects, each containing an events array
+    const rawResults = (await res.json()) as JohnvcResponse[];
+
+    // Flatten all events from all pages
+    const events: JohnvcGoogleEvent[] = [];
+    for (const page of rawResults) {
+      if (page.events && Array.isArray(page.events)) {
+        events.push(...page.events);
+      }
+    }
+
+    console.log(`[GOOGLE-EVENTS] Got ${events.length} results for ${citySlug} (${rawResults.length} pages)`);
 
     // Log first result's keys so we can see the actual shape
     if (events.length > 0) {
@@ -395,25 +440,20 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
     }
 
     for (const event of events) {
-      // Normalize field names — Apify scrapers use varied schemas
-      const eventTitle = event.title || event.name || '';
+      // johnvc actor uses consistent field names
+      const eventTitle = event.title || '';
       if (!eventTitle) continue;
 
-      // Normalize date — can be string, object, or in 'when' field
+      // Date from the nested date object
       let eventDate: string | null = null;
-      if (typeof event.date === 'string') {
-        eventDate = event.date;
-      } else if (typeof event.date === 'object' && event.date) {
+      if (typeof event.date === 'object' && event.date) {
         eventDate = event.date.start_date || event.date.when || null;
       }
-      if (!eventDate && event.when) {
-        eventDate = String(event.when);
-      }
 
-      // Normalize other fields
-      const eventDescription = event.description || event.snippet || '';
-      const eventVenue = event.venue || (typeof event.location === 'string' ? event.location : null) || null;
-      const eventLink = event.link || event.url || event.event_location_map?.link || null;
+      // Description, venue, link, address
+      const eventDescription = event.description || '';
+      const eventVenue = event.venue?.name || null;
+      const eventLink = event.link || event.ticket_info?.[0]?.link || event.event_location_map?.link || null;
 
       // Filter: must be dog-related (strict word-boundary matching to avoid false positives)
       const titleLower = eventTitle.toLowerCase();
@@ -464,12 +504,17 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
         }
       }
 
+      // johnvc returns address as string array, normalize to string
+      const eventAddress = Array.isArray(event.address)
+        ? event.address.join(', ')
+        : (typeof event.address === 'string' ? event.address : null);
+
       results.push({
         name: eventTitle,
         date: eventDate,
         description: eventDescription.substring(0, 500) || null,
         venue: eventVenue,
-        address: event.address || null,
+        address: eventAddress,
         url: eventLink,
         imageUrl: event.image || event.thumbnail || null,
         city: citySlug,
@@ -726,13 +771,15 @@ export async function GET(request: NextRequest) {
   const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
 
   // ─── Build today's hashtag set ─────────────────────────────────────────────
-  // Strategy: 1 rotating global hashtag + 1 rotating city-specific per city
-  // = ~9 hashtag API calls per run (well within rate limits)
-  // Over 2 weeks, every single hashtag in every city gets scanned
+  // Strategy: 2 rotating global hashtags + 2 rotating city-specific per city
+  // = ~20 hashtag API calls per run (well within 30/7-day rate limit)
+  // Over 1 week, every hashtag in every city gets scanned at least once
 
-  const globalHashtag = GLOBAL_EVENT_HASHTAGS[dayOfYear % GLOBAL_EVENT_HASHTAGS.length];
+  const globalIdx1 = dayOfYear % GLOBAL_EVENT_HASHTAGS.length;
+  const globalIdx2 = (dayOfYear + 5) % GLOBAL_EVENT_HASHTAGS.length;
   const selectedHashtags: Array<{ hashtag: string; city: string | null }> = [
-    { hashtag: globalHashtag, city: null },
+    { hashtag: GLOBAL_EVENT_HASHTAGS[globalIdx1], city: null },
+    ...(globalIdx1 !== globalIdx2 ? [{ hashtag: GLOBAL_EVENT_HASHTAGS[globalIdx2], city: null }] : []),
   ];
 
   for (const [cityKey, cityData] of Object.entries(CITY_HASHTAGS)) {
@@ -741,13 +788,21 @@ export async function GET(request: NextRequest) {
       hashtag: cityData.hashtags[idx],
       city: cityKey,
     });
-    // On weekends (extra capacity), add a second hashtag per city
+    // Always add a second hashtag per city (not just weekends)
+    const idx2 = (dayOfYear + 7) % cityData.hashtags.length;
+    if (idx2 !== idx) {
+      selectedHashtags.push({
+        hashtag: cityData.hashtags[idx2],
+        city: cityKey,
+      });
+    }
+    // On weekends, add a third hashtag for extra coverage
     const dayOfWeek = new Date().getDay();
     if (dayOfWeek === 0 || dayOfWeek === 6) {
-      const idx2 = (dayOfYear + 7) % cityData.hashtags.length;
-      if (idx2 !== idx) {
+      const idx3 = (dayOfYear + 3) % cityData.hashtags.length;
+      if (idx3 !== idx && idx3 !== idx2) {
         selectedHashtags.push({
-          hashtag: cityData.hashtags[idx2],
+          hashtag: cityData.hashtags[idx3],
           city: cityKey,
         });
       }
@@ -771,8 +826,8 @@ export async function GET(request: NextRequest) {
     source?: string;
   }> = [];
 
-  // Vision scan budget — limit per run to control OpenAI costs
-  const VISION_SCAN_BUDGET = 5;
+  // Vision scan budget — increased from 5 to 15 to catch more event posters
+  const VISION_SCAN_BUDGET = 15;
   let visionScansUsed = 0;
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -815,7 +870,7 @@ export async function GET(request: NextRequest) {
       // Step 3: Classify each post
       for (const post of mediaData.data as MediaItem[]) {
         let score = classifyEventRelevance(post.caption || '', post.like_count || 0);
-        if (score < 35) continue; // Raised threshold — quality over quantity
+        if (score < 25) continue; // Lowered from 35 — let Vision scan more borderline posts
 
         const usernameMatch = post.permalink?.match(/instagram\.com\/([^\/]+)\//);
         const username = usernameMatch?.[1] || 'unknown';
@@ -837,7 +892,7 @@ export async function GET(request: NextRequest) {
           visionConfigured &&
           post.media_type === 'IMAGE' &&
           post.media_url &&
-          score >= 30 &&
+          score >= 20 &&
           visionScansUsed < VISION_SCAN_BUDGET
         ) {
           console.log(`[VISION] Scanning poster for ${post.permalink} (score: ${score})`);
@@ -915,11 +970,9 @@ export async function GET(request: NextRequest) {
   if (apifyConfigured) {
     console.log('[GOOGLE-EVENTS] Starting Google Events discovery via Apify...');
 
-    // Rotate cities: scan 4 cities per run (all 8 over 2 days)
+    // Scan ALL cities every run — johnvc actor is fast enough
     const allCities = Object.keys(GOOGLE_EVENT_QUERIES);
-    const citiesPerRun = 4;
-    const startIdx = (dayOfYear % 2) * citiesPerRun;
-    const todaysCities = allCities.slice(startIdx, startIdx + citiesPerRun);
+    const todaysCities = allCities;
 
     console.log(`[GOOGLE-EVENTS] Today's cities: ${todaysCities.join(', ')}`);
 
@@ -1025,9 +1078,136 @@ export async function GET(request: NextRequest) {
     console.log('[CURATED-SCRAPER] OpenAI key not configured, skipping curated sources');
   }
 
-  // Sort by score descending, take top 50 (increased for 3 channels)
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CHANNEL 4: Apify Instagram Hashtag Scraper
+  // Uses Apify's official Instagram scraper (apify/instagram-hashtag-scraper)
+  // to get broader Instagram coverage beyond the Meta Graph API's limitations.
+  // Scans 2-3 dog event hashtags per run, feeding results through the same
+  // scoring + Vision pipeline.
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  let apifyIgEventsFound = 0;
+  const apifyIgCityCounts: Record<string, number> = {};
+
+  if (apifyConfigured) {
+    console.log('[APIFY-INSTAGRAM] Starting Apify Instagram hashtag discovery...');
+
+    // Rotate through event-focused hashtags — these are high-yield for events
+    const apifyIgHashtags = [
+      'dogfriendlyevent', 'dogevent', 'dogfestival', 'pupupevent',
+      'barkinthpark', 'dogadoptionevent', 'yappyhour', 'dogbrunch',
+      'dogfriendlyfestival', 'petfriendlyevent', 'dogshow', 'dogwalk',
+      'dogmeetup', 'dogfriendlybrunch', 'dogdayevent',
+    ];
+
+    // Scan 3 hashtags per run, rotating daily
+    const apifyHashtagsPerRun = 3;
+    const apifyStartIdx = dayOfYear % Math.ceil(apifyIgHashtags.length / apifyHashtagsPerRun) * apifyHashtagsPerRun;
+    const todaysApifyHashtags = apifyIgHashtags.slice(apifyStartIdx, apifyStartIdx + apifyHashtagsPerRun);
+
+    for (const hashtag of todaysApifyHashtags) {
+      try {
+        console.log(`[APIFY-INSTAGRAM] Scanning #${hashtag}...`);
+        const apifyUrl = `https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/run-sync-get-dataset-items?token=${getApifyToken()}`;
+        const res = await fetch(apifyUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            hashtags: [hashtag],
+            resultsLimit: 30,
+            resultsType: 'posts',
+          }),
+          signal: AbortSignal.timeout(90000),
+        });
+
+        if (!res.ok) {
+          console.error(`[APIFY-INSTAGRAM] Apify returned ${res.status} for #${hashtag}`);
+          continue;
+        }
+
+        const posts = await res.json() as Array<{
+          caption?: string;
+          url?: string;
+          ownerUsername?: string;
+          likesCount?: number;
+          commentsCount?: number;
+          type?: string;
+          displayUrl?: string;
+          timestamp?: string;
+          [key: string]: unknown;
+        }>;
+
+        console.log(`[APIFY-INSTAGRAM] Got ${posts.length} posts for #${hashtag}`);
+
+        let foundCount = 0;
+        for (const post of posts) {
+          const caption = post.caption || '';
+          let score = classifyEventRelevance(caption, post.likesCount || 0);
+          if (score < 25) continue;
+
+          const username = post.ownerUsername || 'unknown';
+          let city = detectCity(caption) || null;
+          const mentionedHandles = extractMentionedHandles(caption);
+          const isBusiness = isBusinessPost(caption, username);
+
+          // Vision scan for high-scoring image posts
+          if (
+            visionConfigured &&
+            post.displayUrl &&
+            score >= 20 &&
+            visionScansUsed < VISION_SCAN_BUDGET
+          ) {
+            const visionResult = await scanPosterWithVision(post.displayUrl);
+            visionScansUsed++;
+
+            if (visionResult?.isEventPoster) {
+              console.log(`[APIFY-INSTAGRAM][VISION] Found poster: "${visionResult.eventName}" via #${hashtag}`);
+              score = Math.min(score + 25, 100);
+
+              // Detect city from vision-extracted venue/address
+              if (visionResult.address || visionResult.venue) {
+                const visionCity = detectCity(`${visionResult.venue || ''} ${visionResult.address || ''}`);
+                if (visionCity) city = visionCity;
+              }
+            }
+          }
+
+          if (!city) continue; // Skip posts we can't associate with a city
+
+          discoveredEvents.push({
+            caption: caption.substring(0, 800),
+            permalink: post.url || `https://instagram.com/${username}`,
+            username,
+            city,
+            score,
+            likes: post.likesCount || 0,
+            hashtag,
+            mentionedHandles,
+            isBusiness,
+            visionEnriched: false,
+            source: 'apify_instagram',
+          });
+          foundCount++;
+          apifyIgEventsFound++;
+          apifyIgCityCounts[city] = (apifyIgCityCounts[city] || 0) + 1;
+        }
+
+        console.log(`[APIFY-INSTAGRAM] #${hashtag}: ${foundCount} candidates`);
+      } catch (err) {
+        console.error(`[APIFY-INSTAGRAM] Error scanning #${hashtag}:`, err);
+      }
+
+      await new Promise(r => setTimeout(r, 1000));
+    }
+
+    console.log(`[APIFY-INSTAGRAM] Found ${apifyIgEventsFound} events total`);
+  } else {
+    console.log('[APIFY-INSTAGRAM] APIFY_TOKEN not configured, skipping');
+  }
+
+  // Sort by score descending, take top 75 (increased for 4 channels)
   discoveredEvents.sort((a, b) => b.score - a.score);
-  const topEvents = discoveredEvents.slice(0, 50);
+  const topEvents = discoveredEvents.slice(0, 75);
 
   // ── Helper: normalize title for fuzzy dedup ────────────────────────────
   function normalizeTitle(text: string): string {
@@ -1188,10 +1368,11 @@ export async function GET(request: NextRequest) {
   const googleCount = topEvents.filter(e => e.source === 'google_events').length;
   const curatedCount = topEvents.filter(e => e.source === 'curated_scrape').length;
   const instagramCount = topEvents.filter(e => !e.source || e.source === 'instagram').length;
+  const apifyIgCount = topEvents.filter(e => e.source === 'apify_instagram').length;
 
   const summary = [
-    `Scanned ${selectedHashtags.length} hashtags + ${apifyConfigured ? Object.keys(googleCityCounts).length : 0} Google cities + ${curatedSourcesScraped.length} curated sources`,
-    `Found ${discoveredEvents.length} candidates (IG: ${instagramCount}, Google: ${googleCount}, Curated: ${curatedCount})`,
+    `Scanned ${selectedHashtags.length} Meta IG hashtags + ${apifyConfigured ? Object.keys(googleCityCounts).length : 0} Google cities + ${curatedSourcesScraped.length} curated sources + ${apifyIgEventsFound} Apify IG`,
+    `Found ${discoveredEvents.length} candidates (MetaIG: ${instagramCount}, ApifyIG: ${apifyIgCount}, Google: ${googleCount}, Curated: ${curatedCount})`,
     `Inserted ${inserted} new items (${businessesFound} business, ${visionEnrichedCount} poster-scanned, ${curatedEventsFound} curated)`,
     skippedDupes > 0 ? `Skipped ${skippedDupes} duplicates` : '',
     visionScansUsed > 0 ? `Vision: ${visionScansUsed}/${VISION_SCAN_BUDGET}` : '',
@@ -1228,6 +1409,11 @@ export async function GET(request: NextRequest) {
         eventsFound: curatedEventsFound,
         directInserts: curatedDirectInserts.slice(0, 10),
       },
+      apifyInstagram: {
+        configured: apifyConfigured,
+        eventsFound: apifyIgEventsFound,
+        cityCounts: apifyIgCityCounts,
+      },
     },
     citiesScanned: Object.keys(CITY_HASHTAGS),
     totalCandidates: discoveredEvents.length,
@@ -1235,7 +1421,7 @@ export async function GET(request: NextRequest) {
     skippedDupes,
     insertErrors: insertErrors.length > 0 ? insertErrors.slice(0, 10) : undefined,
     businessesFound,
-    cityCounts: { ...cityCounts, ...googleCityCounts, ...curatedCityCounts },
+    cityCounts: { ...cityCounts, ...googleCityCounts, ...curatedCityCounts, ...apifyIgCityCounts },
     topEvents: topEvents.slice(0, 10).map(e => ({
       permalink: e.permalink,
       username: e.username,
