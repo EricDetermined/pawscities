@@ -246,6 +246,65 @@ export const CONTENT_BANK: ContentFact[] = [
   { city: 'tokyo', type: 'guide', headline: 'Odaiba: A Full Dog Day by the Bay', body: 'Odaiba\'s waterfront promenades, seaside park lawns, and pet-welcoming outdoor malls make it Tokyo\'s easiest all-day dog outing — with Rainbow Bridge views for the photos.', icon: '🌉🐾' },
   { city: 'tokyo', type: 'fun', headline: 'Japan\'s Native Dogs Are National Monuments', body: 'Japan\'s six native breeds — including the Shiba Inu and Akita — are officially designated natural monuments, protected as living cultural treasures. The Shiba smirk is government-certified.', icon: '🇯🇵🐕' },
   { city: 'tokyo', type: 'did-you-know', headline: 'Japan Has More Pets Than Children', body: 'Registered cats and dogs in Japan outnumber children under 15 — a statistic that explains Tokyo\'s pet strollers, dog cafés, and department-store pet floors.', icon: '👶🐕' },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // WAVE 3 — 36 new facts (4 per city) added July 2026
+  // Focus: summer tips, hidden gems, safety, local culture
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // ATLANTA — Wave 3
+  { city: 'atlanta', type: 'tip', headline: 'Beat the Georgia Heat: Early Morning Dog Walks', body: 'Atlanta summers hit 95°F+ regularly. Walk your dog before 8 AM or after 7 PM — and always test pavement with your palm. If it\'s too hot for your hand, it\'s too hot for paws.', icon: '☀️🐾' },
+  { city: 'atlanta', type: 'guide', headline: 'Chattahoochee River: Atlanta\'s Dog Swimming Spot', body: 'The Chattahoochee River National Recreation Area offers multiple dog-friendly access points where your pup can wade and swim. Paces Mill and East Palisades are local favorites with shallow entry.', icon: '🏊🐕' },
+  { city: 'atlanta', type: 'fun', headline: 'Atlanta\'s Dog Population Has Doubled Since 2010', body: 'Metro Atlanta\'s pet dog population has roughly doubled in 15 years, driven by the city\'s booming population and dog-friendly culture. More dogs than ever are hitting the BeltLine.', icon: '📈🐕' },
+  { city: 'atlanta', type: 'spotlight', headline: 'Fetch Park: Atlanta\'s Off-Leash Beer Garden', body: 'Fetch Park in Buckhead combines a full-size dog park with a craft beer and cocktail bar. Dogs play while you sip — and there\'s even a dog wash station for the muddy ones.', icon: '🍺🐾', placeName: 'Fetch Park Atlanta' },
+
+  // LOS ANGELES — Wave 3
+  { city: 'losangeles', type: 'tip', headline: 'Rattlesnake Safety: Essential for LA Dog Hikers', body: 'LA trails see rattlesnakes spring through fall. Keep dogs on-leash, stick to cleared paths, and consider rattlesnake aversion training — several LA trainers offer it seasonally.', icon: '🐍🐕' },
+  { city: 'losangeles', type: 'guide', headline: 'Runyon Canyon: LA\'s Most Famous Dog Hike', body: 'Runyon Canyon\'s off-leash areas make it the go-to dog hike in LA. Go early to beat crowds and heat. The Fuller Avenue entrance is easier; the Vista Street side has better city views.', icon: '🥾🐾' },
+  { city: 'losangeles', type: 'fun', headline: 'The World\'s Ugliest Dog Contest Is a California Tradition', body: 'Held annually in Petaluma, this beloved contest celebrates imperfect beauty. Past winners include a Chinese Crested named Sam and a Chihuahua-Chinese Crested mix. California loves all dogs.', icon: '🏆🐕' },
+  { city: 'losangeles', type: 'did-you-know', headline: 'LA Has Over 70 Dog Parks', body: 'Greater Los Angeles has more than 70 dedicated dog parks — from the beachside Rosie\'s Dog Beach in Long Beach to the hilltop Silver Lake Dog Park. More than any other US metro area.', icon: '🌴🐾' },
+
+  // NEW YORK — Wave 3
+  { city: 'nyc', type: 'tip', headline: 'NYC Off-Leash Hours: Know the Rules', body: 'Most NYC parks allow off-leash dogs from 6-9 AM and 9 PM-1 AM. The rules are strict and enforced — a $200 fine for violations. Always check park-specific signs; some have different hours.', icon: '⏰🐕' },
+  { city: 'nyc', type: 'guide', headline: 'Prospect Park: Brooklyn\'s Dog Paradise', body: 'Prospect Park\'s Long Meadow becomes an off-leash wonderland during early morning hours. The Nethermead is also popular. Pro tip: the dog beach at the lake is unofficial but beloved.', icon: '🌳🐾' },
+  { city: 'nyc', type: 'fun', headline: 'NYC Subway Technically Bans Dogs — Unless They Fit in a Bag', body: 'MTA rules say dogs must be in a container. New Yorkers responded by putting huskies in IKEA bags, Great Danes in duffel bags, and pit bulls in backpacks. The creativity is unmatched.', icon: '🚇🐕' },
+  { city: 'nyc', type: 'did-you-know', headline: 'NYC Dog Walkers Need a License', body: 'Commercial dog walkers in NYC must carry a license and insurance. The city caps them at a certain number of dogs per walker. It\'s one of the most regulated dog-walking markets in the world.', icon: '📋🐾' },
+
+  // LONDON — Wave 3
+  { city: 'london', type: 'tip', headline: 'Dog-Friendly Pubs: London\'s Secret Weapon', body: 'London has more dog-friendly pubs than any other European city. Most welcome dogs in the bar area (not the kitchen/restaurant). Always check — a quick "do you allow dogs?" saves awkwardness.', icon: '🍺🐕' },
+  { city: 'london', type: 'guide', headline: 'Hampstead Heath: London\'s Wildest Dog Walk', body: 'Hampstead Heath\'s 790 acres feel like countryside in the city. The Parliament Hill fields are popular for off-leash play, and the swimming ponds have dedicated dog-friendly sections.', icon: '🌿🐾' },
+  { city: 'london', type: 'fun', headline: 'The UK Has a National Dog Survey Every Year', body: 'The PDSA\'s annual PAW Report surveys thousands of UK dog owners on health, behavior, and welfare. The Labrador Retriever has been Britain\'s most popular breed for over 30 years running.', icon: '📊🐕' },
+  { city: 'london', type: 'did-you-know', headline: 'London Black Cabs Must Accept Assistance Dogs', body: 'It\'s illegal for a London taxi driver to refuse an assistance dog. For pet dogs, it\'s driver\'s discretion — but many cabbies are happy to let well-behaved pups ride along.', icon: '🚕🐾' },
+
+  // PARIS — Wave 3
+  { city: 'paris', type: 'tip', headline: 'Parisian Dog Etiquette: Always Ask First', body: 'In Paris, always ask "je peux le caresser?" before petting someone\'s dog. The French take dog manners seriously — and most Parisian dogs are impeccably trained café companions.', icon: '🇫🇷🐕' },
+  { city: 'paris', type: 'guide', headline: 'Canal Saint-Martin: A Calm Walk with Your Chien', body: 'The Canal Saint-Martin\'s tree-lined banks offer a peaceful, flat walk perfect for dogs. Several cafés along the canal welcome dogs on their terraces. Best on weekday mornings.', icon: '🚶🐾' },
+  { city: 'paris', type: 'fun', headline: 'France Has a Dog DNA Database', body: 'France\'s I-CAD system tracks every registered dog via microchip — over 10 million in the database. Microchipping is mandatory for all dogs, and the registry helps reunite thousands of lost pets yearly.', icon: '🧬🐕' },
+  { city: 'paris', type: 'did-you-know', headline: 'Parisian Dogs Outnumber Children in Some Arrondissements', body: 'In several central Paris neighborhoods, registered dogs outnumber children under 10. The 7th and 16th arrondissements are especially dog-dense — you\'ll notice on any café terrace.', icon: '🐩🏙️' },
+
+  // BARCELONA — Wave 3
+  { city: 'barcelona', type: 'tip', headline: 'Dog Beaches in Barcelona: Know the Schedule', body: 'Barcelona\'s designated dog beaches (like Llevant) are typically open October through March. In summer, dogs are banned from most beaches. Check the Ajuntament website for current rules.', icon: '🏖️🐕' },
+  { city: 'barcelona', type: 'guide', headline: 'Park Güell Surroundings: Dog-Friendly Gaudí Views', body: 'While Park Güell\'s monumental zone bans dogs, the surrounding free park areas are dog-friendly with stunning views. Walk the perimeter paths for Gaudí mosaics visible from outside.', icon: '🎨🐾' },
+  { city: 'barcelona', type: 'fun', headline: 'Spain Created Europe\'s First Animal Welfare Law', body: 'Spain\'s 2023 animal welfare law made it one of the strictest in Europe — dogs can\'t be left alone more than 24 hours, and abandonment is now a criminal offense, not just a fine.', icon: '⚖️🐕' },
+  { city: 'barcelona', type: 'did-you-know', headline: 'Barcelona Has Over 30 Dedicated Dog Parks', body: 'Barcelona\'s "àrees d\'esbarjo per a gossos" — dedicated fenced dog areas — number over 30 across the city. The Ciutadella Park area and Montjuïc have some of the biggest.', icon: '🐾🏙️' },
+
+  // TOKYO — Wave 3
+  { city: 'tokyo', type: 'tip', headline: 'Summer in Tokyo: Watch for Heat Stroke in Dogs', body: 'Tokyo\'s humid summers (35°C+ with 80% humidity) are dangerous for dogs. Walk only early morning or late evening, bring water, and look for signs like heavy panting or stumbling.', icon: '🌡️🐕' },
+  { city: 'tokyo', type: 'guide', headline: 'Yoyogi Park: Tokyo\'s Biggest Dog Hangout', body: 'Yoyogi Park\'s spacious lawns attract Tokyo\'s dog community every weekend. While officially leash-required, the atmosphere is social and welcoming. Nearby Harajuku has pet supply shops too.', icon: '🌸🐾' },
+  { city: 'tokyo', type: 'fun', headline: 'Dog Strollers Are Completely Normal in Tokyo', body: 'In Tokyo, pushing your dog in a stroller is standard, not quirky. Department stores sell high-end pet strollers, and many shops require dogs to ride in them — it\'s functional, not fashionable.', icon: '👶🐕' },
+  { city: 'tokyo', type: 'did-you-know', headline: 'Tokyo Has Dog-Friendly Department Stores', body: 'Several Tokyo department stores have entire pet floors with grooming salons, boutiques, and even dog-friendly restaurants. Mitsukoshi and Isetan are known for their pet sections.', icon: '🏬🐾' },
+
+  // SYDNEY — Wave 3
+  { city: 'sydney', type: 'tip', headline: 'Tick Season in Sydney: Prevention Is Everything', body: 'Paralysis ticks are a serious threat to dogs in Sydney, especially along the Northern Beaches. Keep tick prevention up to date year-round and do daily tick checks after bush walks.', icon: '🩺🐕' },
+  { city: 'sydney', type: 'guide', headline: 'Centennial Park: Sydney\'s Grand Dog Walk', body: 'Centennial Park\'s 189 hectares include designated off-leash areas and gorgeous tree-lined avenues. The Lachlan Swamp boardwalk is scenic, and the café near the ponds is dog-friendly.', icon: '🌳🐾' },
+  { city: 'sydney', type: 'fun', headline: 'Australia Invented the Dog-Friendly Pub Garden', body: 'The Australian tradition of dogs in pub beer gardens predates any formal "dog-friendly" movement. It\'s embedded in the culture — many pubs keep water bowls out permanently.', icon: '🍻🐕' },
+  { city: 'sydney', type: 'did-you-know', headline: 'Sydney\'s Ferries Allow Dogs', body: 'Sydney\'s ferries welcome leashed dogs on the outdoor decks. The Manly Ferry ride offers spectacular harbour views — and your dog gets to experience the sea breeze and seagulls.', icon: '⛴️🐾' },
+
+  // GENEVA — Wave 3
+  { city: 'geneva', type: 'tip', headline: 'Swiss Dog Tax: A Unique Requirement', body: 'Dog owners in Geneva pay an annual dog tax (taxe sur les chiens). The amount varies by municipality but averages around CHF 100-150. Registration and microchipping are also mandatory.', icon: '💰🐕' },
+  { city: 'geneva', type: 'guide', headline: 'Lac Léman Lakeside Walks: Geneva\'s Best for Dogs', body: 'The lakeside promenades from Jardin Anglais to Parc La Grange offer a flat, scenic 3km walk perfect for dogs. In summer, dogs can swim at designated lake access points along the way.', icon: '🏔️🐾' },
+  { city: 'geneva', type: 'fun', headline: 'The Swiss Take Dog Training Courses Seriously', body: 'Several Swiss cantons require new dog owners to complete a theoretical course before getting a dog and practical training classes after. Geneva takes responsible dog ownership to another level.', icon: '📚🐕' },
+  { city: 'geneva', type: 'did-you-know', headline: 'Geneva\'s Jet d\'Eau Was Originally a Safety Valve', body: 'The 140m Jet d\'Eau — Geneva\'s iconic fountain and backdrop for lakeside dog walks — started as an overflow valve for a hydraulic plant. It accidentally became the city\'s most recognized landmark.', icon: '⛲🐾' },
 ];
 
 /**
