@@ -176,6 +176,13 @@ export const CURATED_SOURCES: Record<string, CuratedSource[]> = {
   ],
   sydney: [
     {
+      url: 'https://www.eventbrite.com.au/d/australia--sydney/dog-events/',
+      name: 'Eventbrite Sydney Dogs',
+      language: 'en',
+      linkPattern: '/e/',
+      maxEvents: 8,
+    },
+    {
       url: 'https://www.australiandoglover.com/p/2026-dog-events-australia-calendar.html',
       name: 'Australian Dog Lover',
       language: 'en',
@@ -195,6 +202,30 @@ export const CURATED_SOURCES: Record<string, CuratedSource[]> = {
       language: 'en',
       linkPattern: 'petcarecommunity\\.com\\.au/pet-events/[\\w-]+',
       maxEvents: 8,
+    },
+  ],
+  atlanta: [
+    {
+      url: 'https://www.eventbrite.com/d/ga--atlanta/dog-events/',
+      name: 'Eventbrite Atlanta Dogs',
+      language: 'en',
+      linkPattern: '/e/',
+      maxEvents: 8,
+    },
+    {
+      url: 'https://www.bringfido.com/event/city/atlanta_ga_us/',
+      name: 'BringFido Atlanta',
+      language: 'en',
+      linkPattern: '/event/\\d+',
+      maxEvents: 8,
+      isAggregator: true,
+    },
+    {
+      url: 'https://discoveratlanta.com/events/pets/',
+      name: 'Discover Atlanta Pets',
+      language: 'en',
+      linkPattern: 'discoveratlanta\\.com/event/[\\w-]+',
+      maxEvents: 6,
     },
   ],
   geneva: [
@@ -387,6 +418,22 @@ Respond with ONLY the JSON object, no markdown.`;
 
     if (!parsed.name) return null;
 
+    // ── HARD date gate: never trust is_upcoming alone ──────────────────────
+    // Verify the extracted date is actually today-or-future. A "Blossoms and
+    // Bonds Event" dated 2024 once slipped past the AI's is_upcoming flag.
+    if (parsed.date) {
+      const dateStr = String(parsed.date);
+      const hasYear = /\b(19|20)\d{2}\b/.test(dateStr);
+      const d = new Date(dateStr);
+      if (!isNaN(d.getTime())) {
+        const startOfToday = new Date(); startOfToday.setHours(0, 0, 0, 0);
+        if (hasYear && d.getTime() < startOfToday.getTime()) {
+          console.log(`[CURATED-SCRAPER] HARD REJECT past-dated event: "${parsed.name}" (${dateStr})`);
+          return null;
+        }
+      }
+    }
+
     // For aggregator sources, we MUST have an original URL — never link to competitors
     let finalUrl = pageUrl;
     if (isAggregator) {
@@ -532,8 +579,20 @@ export function getTodaysSources(): Array<{ citySlug: string; source: CuratedSou
 
   for (const [citySlug, sources] of Object.entries(CURATED_SOURCES)) {
     if (sources.length === 0) continue;
-    const sourceIndex = dayOfYear % sources.length;
-    result.push({ citySlug, source: sources[sourceIndex] });
+
+    // ALWAYS include the city's Eventbrite source (highest event yield, fresh
+    // dates) — summer weekends fill up fast and we cannot miss them.
+    const eventbrite = sources.find(s => /eventbrite/i.test(s.url));
+    if (eventbrite) {
+      result.push({ citySlug, source: eventbrite });
+    }
+
+    // Plus one rotating non-Eventbrite source per city per day
+    const others = sources.filter(s => s !== eventbrite);
+    if (others.length > 0) {
+      const sourceIndex = dayOfYear % others.length;
+      result.push({ citySlug, source: others[sourceIndex] });
+    }
   }
 
   return result;

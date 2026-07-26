@@ -194,6 +194,42 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // ── Step 3: NEVER-ZERO-POSTS fallback ─────────────────────────────────
+    // If nothing is scheduled for today, PULL FORWARD the next future-scheduled
+    // approved creative rather than going silent. A quiet feed loses followers;
+    // posting a creative a few days early costs nothing.
+    // (Only for the first post of a slot — later posts can end quietly.)
+    if ((!approvedCreatives || approvedCreatives.length === 0) && postNum === 0) {
+      const { data: futureCreatives } = await supabase
+        .from('creative_queue')
+        .select('*')
+        .eq('status', 'approved')
+        .gt('scheduled_for', today)
+        .order('scheduled_for', { ascending: true })
+        .limit(5);
+
+      if (futureCreatives && futureCreatives.length > 0) {
+        // For event creatives, only pull forward if the event is still ahead
+        const usable = [];
+        for (const c of futureCreatives) {
+          if (c.content_type === 'event' && c.event_id) {
+            const { data: ev } = await supabase
+              .from('events').select('start_date').eq('id', c.event_id).single();
+            if (ev?.start_date && ev.start_date < today) continue;
+          }
+          usable.push(c);
+        }
+        if (usable.length > 0) {
+          console.log(`[SOCIAL-POST] ⚠️ EMPTY QUEUE FALLBACK: pulling forward "${usable[0].headline}" (was scheduled ${usable[0].scheduled_for})`);
+          await supabase.from('creative_queue')
+            .update({ scheduled_for: today })
+            .eq('id', usable[0].id);
+          usable[0].scheduled_for = today;
+          approvedCreatives = usable;
+        }
+      }
+    }
+
     if (!approvedCreatives || approvedCreatives.length === 0) {
       console.log(`[SOCIAL-POST] Slot=${slot} [${postNum + 1}/${maxPosts}]: No more approved creatives`);
       break; // No more candidates — exit loop

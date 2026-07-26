@@ -115,18 +115,30 @@ function parseEventFromText(rawText: string, subject: string | null): {
   if (addrMatch) venueAddress = addrMatch[1].trim();
 
   // ─── Date ──────────────────────────────────────────────────────────────
+  // Smart parsing: date strings WITHOUT a year (e.g. "Aug 12") must resolve
+  // to the NEXT upcoming occurrence — JS Date() defaults them to 2001, which
+  // previously corrupted or wrongly rejected valid events.
+  const parseDateSmart = (dStr: string): string | null => {
+    const s = dStr.trim();
+    const isoMatch = s.match(/(\d{4}-\d{2}-\d{2})/);
+    if (isoMatch) return isoMatch[1];
+    const hasExplicitYear = /\b(19|20)\d{2}\b/.test(s);
+    const parsed = new Date(s);
+    if (isNaN(parsed.getTime())) return null;
+    if (hasExplicitYear) return parsed.toISOString().split('T')[0];
+    // No year — assume next upcoming occurrence
+    const now = new Date();
+    const candidate = new Date(Date.UTC(now.getFullYear(), parsed.getMonth(), parsed.getDate()));
+    if (candidate.getTime() < now.getTime() - 24 * 60 * 60 * 1000) {
+      candidate.setUTCFullYear(now.getFullYear() + 1);
+    }
+    return candidate.toISOString().split('T')[0];
+  };
+
   let date: string | null = null;
   const dateLineMatch = rawText.match(/^Date:\s*(.+)$/m);
   if (dateLineMatch) {
-    const dStr = dateLineMatch[1].trim();
-    // Try ISO format first
-    const isoMatch = dStr.match(/(\d{4}-\d{2}-\d{2})/);
-    if (isoMatch) {
-      date = isoMatch[1];
-    } else {
-      const parsed = new Date(dStr);
-      if (!isNaN(parsed.getTime())) date = parsed.toISOString().split('T')[0];
-    }
+    date = parseDateSmart(dateLineMatch[1]);
   }
   if (!date) {
     const datePatterns = [
@@ -137,8 +149,7 @@ function parseEventFromText(rawText: string, subject: string | null): {
     for (const pat of datePatterns) {
       const match = combined.match(pat);
       if (match) {
-        const parsed = new Date(match[1]);
-        if (!isNaN(parsed.getTime())) date = parsed.toISOString().split('T')[0];
+        date = parseDateSmart(match[1]);
         break;
       }
     }
@@ -510,10 +521,11 @@ async function handleProcessIngest(request: NextRequest) {
           continue;
         }
 
-        // Reject events with dates in the past (more than 7 days ago)
+        // STRICT: reject any event whose date is before today. A dog owner
+        // can't attend a past event — there is zero value in posting one.
         const eventDateObj = new Date(eventDate);
-        const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-        if (eventDateObj < sevenDaysAgo) {
+        const startOfToday = new Date(); startOfToday.setUTCHours(0, 0, 0, 0);
+        if (eventDateObj < startOfToday) {
           console.log(`[PROCESS-INGEST] Skipping past event "${eventName}" (${eventDate})`);
           await supabase
             .from('ingest_queue')
@@ -616,6 +628,45 @@ async function handleProcessIngest(request: NextRequest) {
         results.created++;
         const handleInfo = mentionedHandles.length > 0 ? ` [handles: @${mentionedHandles.slice(0, 3).join(', @')}]` : '';
         console.log(`[PROCESS-INGEST] Created event "${eventName}" (${newEvent.id}) — quality: ${qualityScore}/100, city: ${detectedCity}${handleInfo}`);
+
+        // ── URGENT FAST-TRACK ────────────────────────────────────────────
+        // Events happening within 7 days can't wait for the daily review
+        // cycle (discovered Fri for a Sat event = missed if it sits in
+        // PENDING). These already passed every gate: future date, real
+        // link/handle, city match, quality score. Auto-approve + generate
+        // the creative NOW so it posts in today's cron slots.
+        const daysUntilEvent = Math.ceil(
+          (new Date(finalDate + 'T00:00:00Z').getTime() - Date.now()) / (24 * 60 * 60 * 1000)
+        );
+        if (daysUntilEvent >= 0 && daysUntilEvent <= 7) {
+          try {
+            await supabase
+              .from('events')
+              .update({ status: 'APPROVED' })
+              .eq('id', newEvent.id);
+
+            const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+              || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://pawcities.com');
+            const creativeRes = await fetch(`${baseUrl}/api/admin/creatives`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'generate_event', eventId: newEvent.id }),
+              signal: AbortSignal.timeout(60000),
+            });
+            const creativeData = await creativeRes.json().catch(() => ({}));
+            // Auto-approve the creative too so today's posting cron can use it
+            if (creativeData.success) {
+              await supabase
+                .from('creative_queue')
+                .update({ status: 'approved' })
+                .eq('event_id', newEvent.id)
+                .eq('status', 'pending_review');
+            }
+            console.log(`[PROCESS-INGEST] ⚡ FAST-TRACKED urgent event "${eventName}" (${daysUntilEvent}d out) — approved + creative ${creativeData.success ? 'generated & approved' : 'generation failed'}`);
+          } catch (ftErr) {
+            console.error(`[PROCESS-INGEST] Fast-track error for "${eventName}":`, ftErr);
+          }
+        }
       } catch (itemError) {
         results.errors.push(`${item.id}: ${String(itemError)}`);
       }

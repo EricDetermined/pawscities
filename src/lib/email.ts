@@ -477,6 +477,13 @@ export interface MarketingDigestData {
     pendingReview: number;
     discoveryNeedsReview?: number;
   };
+  // URGENT: pending events happening within 7 days — review TODAY or they're lost
+  urgentEvents?: {
+    name: string;
+    city: string;
+    startDate: string;
+    daysUntil: number;
+  }[];
   // Creative queue health (unified pipeline)
   creativeQueue?: {
     remaining: number;
@@ -651,7 +658,22 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
     : '';
 
   // ─── Assemble the full email ──────────────────────
+  const urgentEventsHtml = (data.urgentEvents && data.urgentEvents.length > 0)
+    ? `
+    <tr><td style="padding:16px 0 0;">
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#fef2f2;border:2px solid #ef4444;border-radius:8px;">
+        <tr><td style="padding:14px 16px;">
+          <div style="font-size:16px;font-weight:700;color:#b91c1c;">⏰ URGENT — ${data.urgentEvents.length} event${data.urgentEvents.length > 1 ? 's' : ''} happening within 7 days need review TODAY</div>
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:8px;font-size:13px;color:#7f1d1d;">
+            ${data.urgentEvents.map(e => `<tr><td style="padding:3px 0;"><strong>${e.name}</strong> — ${e.city} · ${e.startDate} (${e.daysUntil === 0 ? 'TODAY' : e.daysUntil === 1 ? 'tomorrow' : `in ${e.daysUntil} days`})</td></tr>`).join('')}
+          </table>
+          <div style="margin-top:10px;"><a href="https://pawcities.com/admin/events" style="background:#ef4444;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;">Review Now →</a></div>
+        </td></tr>
+      </table>
+    </td></tr>` : '';
+
   const html = baseTemplate(`🐾 Daily Marketing Digest — ${today}`, `
+    ${urgentEventsHtml}
     ${healthBanner}
     ${healthDetailsHtml}
     ${failedPostsHtml}

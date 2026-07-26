@@ -508,9 +508,16 @@ export async function POST(request: NextRequest) {
       format: visualStyle,
       status: 'pending_review',
       scheduled_for: (() => {
+        // Post 5 days before the event, but NEVER in the past — an event
+        // happening this weekend must post TODAY, not sit waiting.
+        // (The old "event - 3 days" logic left the queue empty for days when
+        // all approved events were far out, causing the July 24 posting gap.)
+        const today = new Date(); today.setUTCHours(0, 0, 0, 0);
         const eventDate = new Date(event.start_date + 'T00:00:00Z');
-        eventDate.setUTCDate(eventDate.getUTCDate() - 3);
-        return eventDate.toISOString().split('T')[0];
+        const idealPost = new Date(eventDate);
+        idealPost.setUTCDate(idealPost.getUTCDate() - 5);
+        const scheduled = idealPost < today ? today : idealPost;
+        return scheduled.toISOString().split('T')[0];
       })(),
       generation_model: useMascot ? 'gpt-image-1' : 'contextual-photo',
     });

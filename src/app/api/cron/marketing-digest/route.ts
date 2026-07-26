@@ -419,6 +419,29 @@ export async function GET(request: NextRequest) {
       };
     }
 
+    // ── URGENT events: PENDING events starting within 7 days ─────────────
+    // These are useless if they aren't reviewed before their date passes.
+    const todayStr = new Date().toISOString().split('T')[0];
+    const sevenDaysOut = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    const { data: urgentPending } = await supabase
+      .from('events')
+      .select('name, start_date, cities(slug)')
+      .eq('status', 'PENDING')
+      .gte('start_date', todayStr)
+      .lte('start_date', sevenDaysOut)
+      .order('start_date', { ascending: true })
+      .limit(10);
+
+    const urgentEvents = (urgentPending || []).map((e: { name: string; start_date: string; cities: { slug: string } | { slug: string }[] | null }) => {
+      const cityObj = Array.isArray(e.cities) ? e.cities[0] : e.cities;
+      return {
+        name: e.name,
+        city: cityObj?.slug || '?',
+        startDate: e.start_date,
+        daysUntil: Math.max(0, Math.ceil((new Date(e.start_date + 'T00:00:00Z').getTime() - Date.now()) / (24 * 60 * 60 * 1000))),
+      };
+    });
+
     // ═══════════════════════════════════════════════════════════════
     // 8. ASSEMBLE AND SEND THE DIGEST
     // ═══════════════════════════════════════════════════════════════
@@ -479,6 +502,7 @@ export async function GET(request: NextRequest) {
         totalUniqueCommenters,
       },
       events: eventsData,
+      urgentEvents: urgentEvents.length > 0 ? urgentEvents : undefined,
       creativeQueue: {
         remaining: creativesRemaining,
         needsReview: needsReviewCount || 0,

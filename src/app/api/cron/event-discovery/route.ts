@@ -492,16 +492,17 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
       // Skip if only weak match with low score
       if (!strongMatch && googleScore < 40) continue;
 
-      // ── Pre-filter: reject obviously past events before they hit the ingest queue ──
-      // Google Events often returns results from 2023-2025; catch them early
+      // ── Pre-filter: reject past events before they hit the ingest queue ──
+      // Uses smart year resolution: "Aug 12" (no year) resolves to the next
+      // upcoming Aug 12, never JS's default 2001. Explicit past years rejected.
+      if (isPastEventDate(eventDate)) {
+        console.log(`[GOOGLE-EVENTS] Skipping past event (${eventDate}): "${eventTitle}"`);
+        continue;
+      }
+      // Normalize the date to ISO so downstream parsing can't misresolve the year
       if (eventDate) {
-        const pastYearPattern = /\b(2019|2020|2021|2022|2023|2024|2025)\b/;
-        const currentYear = new Date().getFullYear();
-        const pastMatch = eventDate.match(pastYearPattern);
-        if (pastMatch && parseInt(pastMatch[1]) < currentYear) {
-          console.log(`[GOOGLE-EVENTS] Skipping past event (${pastMatch[1]}): "${eventTitle}"`);
-          continue;
-        }
+        const resolved = resolveEventDate(eventDate);
+        if (resolved) eventDate = resolved.toISOString().split('T')[0];
       }
 
       // johnvc returns address as string array, normalize to string
@@ -692,6 +693,55 @@ function isBusinessPost(caption: string, username: string): boolean {
   return bizSignals.length >= 2 || (bizSignals.length >= 1 && isBizUsername);
 }
 
+// ─── Geo disambiguation ─────────────────────────────────────────────────────
+// Reject posts whose location keywords collide with our cities but are elsewhere
+// (e.g. "London, Ontario" is NOT London UK; "Paris, Texas" is NOT Paris FR).
+const CITY_GEO_CONFLICTS: Record<string, string[]> = {
+  london: ['ontario', 'ldnont', 'canada', 'wortley', 'london ohio', 'london kentucky', '#ldnontario'],
+  paris: ['paris texas', 'paris tx', 'paris tennessee', 'paris ontario', 'paris kentucky'],
+  sydney: ['nova scotia', 'sydney ns', 'cape breton'],
+  barcelona: ['barcelona venezuela'],
+  geneva: ['geneva ny', 'geneva illinois', 'geneva ohio', 'lake geneva wi', 'lake geneva wisconsin'],
+  newyork: [],
+  losangeles: [],
+  tokyo: [],
+  atlanta: ['atlanta texas', 'atlanta illinois'],
+};
+
+function hasGeoConflict(city: string, caption: string): boolean {
+  const lower = (caption || '').toLowerCase();
+  const conflicts = CITY_GEO_CONFLICTS[city] || [];
+  return conflicts.some(kw => lower.includes(kw));
+}
+
+// ─── Smart date resolution ──────────────────────────────────────────────────
+// Parse a date string; if it has no explicit year (e.g. "Aug 12"), resolve to
+// the NEXT upcoming occurrence instead of JS default year 2001.
+function resolveEventDate(dateStr: string | null | undefined): Date | null {
+  if (!dateStr) return null;
+  const s = String(dateStr).trim();
+  const hasExplicitYear = /\b(19|20)\d{2}\b/.test(s);
+  const parsed = new Date(s);
+  if (isNaN(parsed.getTime())) return null;
+  if (hasExplicitYear) return parsed;
+  // No year given — JS may have defaulted to 2001 or current year
+  const now = new Date();
+  const candidate = new Date(now.getFullYear(), parsed.getMonth(), parsed.getDate());
+  // If that date already passed more than 7 days ago, assume next year
+  if (candidate.getTime() < now.getTime() - 7 * 24 * 60 * 60 * 1000) {
+    candidate.setFullYear(now.getFullYear() + 1);
+  }
+  return candidate;
+}
+
+/** True if the event date is clearly in the past (rejects), false if future or unknown */
+function isPastEventDate(dateStr: string | null | undefined): boolean {
+  const resolved = resolveEventDate(dateStr);
+  if (!resolved) return false; // unknown date — let process-ingest handle it
+  const startOfToday = new Date(); startOfToday.setHours(0, 0, 0, 0);
+  return resolved.getTime() < startOfToday.getTime();
+}
+
 function detectCity(caption: string): string | null {
   const lower = (caption || '').toLowerCase();
   const cityMap: Record<string, string[]> = {
@@ -711,7 +761,14 @@ function detectCity(caption: string): string | null {
   };
 
   for (const [city, keywords] of Object.entries(cityMap)) {
-    if (keywords.some(kw => lower.includes(kw))) return city;
+    if (keywords.some(kw => lower.includes(kw))) {
+      // Geo disambiguation: "London, Ontario" must NOT match London UK, etc.
+      if (hasGeoConflict(city, caption)) {
+        console.log(`[GEO-FILTER] Rejected ${city} match — conflicting location keywords in caption`);
+        return null;
+      }
+      return city;
+    }
   }
   return null;
 }
@@ -869,14 +926,24 @@ export async function GET(request: NextRequest) {
 
       // Step 3: Classify each post
       for (const post of mediaData.data as MediaItem[]) {
+        // ── Freshness gate: skip posts older than 21 days ──
+        // Old posts describe past events; they poison the queue.
+        if (post.timestamp) {
+          const postAge = Date.now() - new Date(post.timestamp).getTime();
+          if (postAge > 21 * 24 * 60 * 60 * 1000) continue;
+        }
+
         let score = classifyEventRelevance(post.caption || '', post.like_count || 0);
-        if (score < 25) continue; // Lowered from 35 — let Vision scan more borderline posts
+        if (score < 35) continue; // Quality threshold — volume comes from more channels, not lower quality
 
         const usernameMatch = post.permalink?.match(/instagram\.com\/([^\/]+)\//);
         const username = usernameMatch?.[1] || 'unknown';
 
         // Detect city from caption first, then fall back to hashtag hint
         let city = detectCity(post.caption || '') || hintCity || detectCityFromHashtag(hashtag);
+
+        // Geo disambiguation applies to hint-derived cities too
+        if (city && hasGeoConflict(city, post.caption || '')) continue;
 
         // Extract business/sponsor handles from the caption
         const mentionedHandles = extractMentionedHandles(post.caption || '');
@@ -1108,6 +1175,9 @@ export async function GET(request: NextRequest) {
     for (const hashtag of todaysApifyHashtags) {
       try {
         console.log(`[APIFY-INSTAGRAM] Scanning #${hashtag}...`);
+        // CRITICAL: onlyPostsNewerThan prevents years-old "top posts" (a 2017
+        // event once slipped through without this) — only fetch recent posts.
+        const newerThan = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
         const apifyUrl = `https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/run-sync-get-dataset-items?token=${getApifyToken()}`;
         const res = await fetch(apifyUrl, {
           method: 'POST',
@@ -1116,6 +1186,7 @@ export async function GET(request: NextRequest) {
             hashtags: [hashtag],
             resultsLimit: 30,
             resultsType: 'posts',
+            onlyPostsNewerThan: newerThan,
           }),
           signal: AbortSignal.timeout(90000),
         });
@@ -1142,8 +1213,22 @@ export async function GET(request: NextRequest) {
         let foundCount = 0;
         for (const post of posts) {
           const caption = post.caption || '';
+
+          // ── Belt-and-braces freshness check: reject posts older than 21 days ──
+          // (onlyPostsNewerThan should handle this, but never trust a single gate)
+          if (post.timestamp) {
+            const postAge = Date.now() - new Date(String(post.timestamp)).getTime();
+            if (postAge > 21 * 24 * 60 * 60 * 1000) {
+              console.log(`[APIFY-INSTAGRAM] Skipping stale post from ${String(post.timestamp).substring(0, 10)}`);
+              continue;
+            }
+          } else {
+            // No timestamp at all — cannot verify freshness, skip
+            continue;
+          }
+
           let score = classifyEventRelevance(caption, post.likesCount || 0);
-          if (score < 25) continue;
+          if (score < 35) continue; // Same quality bar as Meta IG channel
 
           const username = post.ownerUsername || 'unknown';
           let city = detectCity(caption) || null;
