@@ -79,32 +79,33 @@
       "dogfriendlybarcelona",
       "perrosdebarcelona",
       "perrobarcelona",
-      "dogfriendlyspain",
       "dogbarcelona",
-      "mascotabarcelona"
+      "gossosbarcelona",
+      "dogsofbarcelona"
     ],
     "paris": [
       "chienparis",
-      "chienstagram",
       "parischien",
       "dogfriendlyparis",
-      "chienfriendly",
-      "chiendeparis"
+      "chiendeparis",
+      "dogsofparis",
+      "parisdog"
     ],
     "tokyo": [
-      "\u72ac\u30b9\u30bf\u30b0\u30e9\u30e0",
-      "\u72ac\u306e\u3044\u308b\u66ae\u3089\u3057",
-      "\u30c9\u30c3\u30b0\u30ab\u30d5\u30a7",
-      "\u72ac\u3068\u304a\u51fa\u304b\u3051",
-      "\u30c9\u30c3\u30b0\u30d5\u30ec\u30f3\u30c9\u30ea\u30fc",
-      "\u6771\u4eac\u72ac"
+      "東京犬",
+      "dogsoftokyo",
+      "tokyodog",
+      "東京ドッグカフェ",
+      "ドッグカフェ東京",
+      "犬とお出かけ東京"
     ],
     "geneva": [
-      "dogfriendlyswiss",
-      "swissdogs",
-      "chienssuisses",
       "dogfriendlygeneva",
-      "hundeschweiz"
+      "genevadogs",
+      "dogsofgeneva",
+      "chiengeneve",
+      "chienssuisses",
+      "genevedog"
     ],
     "sydney": [
       "dogsofsydney",
@@ -113,6 +114,14 @@
       "dogfriendlyaustralia",
       "dogsofaustralia",
       "dogbeachsydney"
+    ],
+    "atlanta": [
+      "dogsofatlanta",
+      "atlantadogs",
+      "dogfriendlyatlanta",
+      "atldogs",
+      "atlantadogmoms",
+      "beltlinedogs"
     ]
   },
   "cities": {
@@ -137,7 +146,7 @@
       "tz": "Europe/Paris"
     },
     "tokyo": {
-      "name": "\u6771\u4eac (Tokyo)",
+      "name": "東京 (Tokyo)",
       "tz": "Asia/Tokyo"
     },
     "geneva": {
@@ -147,6 +156,10 @@
     "sydney": {
       "name": "Sydney",
       "tz": "Australia/Sydney"
+    },
+    "atlanta": {
+      "name": "Atlanta",
+      "tz": "America/New_York"
     }
   }
 }
