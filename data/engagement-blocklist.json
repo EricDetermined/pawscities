@@ -61,7 +61,7 @@
     "added": "2026-07-23"
   },
   "bringfido": {
-    "reason": "COMPETITOR \u2014 direct competitor aggregator; never engage or drive audience to them",
+    "reason": "COMPETITOR — direct competitor aggregator; never engage or drive audience to them",
     "added": "2026-07-27"
   },
   "margaritavillehotelkansascity": {
@@ -71,5 +71,33 @@
   "thewildpheasant_hotelandspa": {
     "reason": "Wales UK spa; mislabeled tokyo (2026-07-26)",
     "added": "2026-07-27"
+  },
+  "cobys.dog.cafe": {
+    "reason": "Seattle WA dog cafe; mislabeled sydney (2026-07-28)",
+    "added": "2026-07-28"
+  },
+  "lgadventures_1": {
+    "reason": "Cornwall UK beach content (Mexico Towans, Hayle); mislabeled los-angeles",
+    "added": "2026-07-28"
+  },
+  "wanderfullivingfl": {
+    "reason": "Florida travel agent account (Clearwater Beach); mislabeled los-angeles; not a dog account",
+    "added": "2026-07-28"
+  },
+  "k9waggle": {
+    "reason": "Perth WA dog business (#inglewoodperth); mislabeled sydney",
+    "added": "2026-07-28"
+  },
+  "coastalpawssandiego": {
+    "reason": "San Diego dog daycare; mislabeled los-angeles",
+    "added": "2026-07-28"
+  },
+  "briannathechii": {
+    "reason": "Spanish-language chihuahua account, Galicia Spain content; mislabeled los-angeles",
+    "added": "2026-07-28"
+  },
+  "erinkingphotographer": {
+    "reason": "Melbourne pet photographer; mislabeled sydney",
+    "added": "2026-07-28"
   }
 }
