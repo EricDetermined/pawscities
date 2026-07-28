@@ -638,7 +638,24 @@ async function handleProcessIngest(request: NextRequest) {
         const daysUntilEvent = Math.ceil(
           (new Date(finalDate + 'T00:00:00Z').getTime() - Date.now()) / (24 * 60 * 60 * 1000)
         );
-        if (daysUntilEvent >= 0 && daysUntilEvent <= 7) {
+
+        // Fast-track requires an EVENT-SPECIFIC link (not a bare homepage) —
+        // posting an event whose link doesn't show that event gives users
+        // nothing. Homepage-grade links stay PENDING for manual enrichment.
+        const isEventSpecificLink = (() => {
+          const urlToCheck = (externalUrl || item.url || '').trim();
+          if (!urlToCheck) return false;
+          try {
+            const u = new URL(urlToCheck);
+            const segments = u.pathname.replace(/\/+$/, '').split('/').filter(Boolean);
+            if (segments.length === 0) return false;
+            if (/\/(e|events?|event|tickets?|whats-on|whatson)\//i.test(u.pathname + '/')) return true;
+            if (/\d{4,}/.test(u.pathname)) return true;
+            return segments.length >= 2;
+          } catch { return false; }
+        })();
+
+        if (daysUntilEvent >= 0 && daysUntilEvent <= 7 && isEventSpecificLink) {
           try {
             await supabase
               .from('events')

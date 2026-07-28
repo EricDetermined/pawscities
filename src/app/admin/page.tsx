@@ -399,10 +399,27 @@ export default function AdminDashboard() {
                 </div>
               ) : (
                 data.pendingEventsData.map(event => {
+                  // ── Link quality: does the URL point at THIS event, or just a homepage? ──
+                  // Approving an event whose link is a bare homepage gives users no value.
+                  const linkQuality = (() => {
+                    if (!event.external_url) return 'missing';
+                    try {
+                      const u = new URL(event.external_url);
+                      const path = u.pathname.replace(/\/+$/, '');
+                      const segments = path.split('/').filter(Boolean);
+                      if (segments.length === 0) return 'homepage';
+                      // Strong event-page signals: /e/ (Eventbrite), /event(s)/, /tickets/, numeric IDs, long slugs
+                      if (/\/(e|events?|event|tickets?|whats-on|whatson)\//i.test(u.pathname + '/')) return 'event';
+                      if (/\d{4,}/.test(path)) return 'event';
+                      if (segments.length >= 2 || (segments[0] && segments[0].length > 15)) return 'deep';
+                      return 'shallow';
+                    } catch { return 'missing'; }
+                  })();
                   const missingFields: string[] = [];
                   if (!event.source_handle) missingFields.push('handle');
                   if (!event.external_url) missingFields.push('url');
                   if (!event.venue_name) missingFields.push('venue');
+                  if (linkQuality === 'homepage' || linkQuality === 'shallow') missingFields.push('event-specific link');
                   const isReady = missingFields.length === 0;
                   return (
                     <div key={event.id} className="p-4 flex items-start gap-4 hover:bg-gray-50 transition-colors">
@@ -411,9 +428,14 @@ export default function AdminDashboard() {
                         <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-gray-500">
                           <span>{(event.cities as { name: string })?.name}</span>
                           <span>·</span>
-                          <span>{new Date(event.start_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                          <span>{new Date(event.start_date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
+                          {event.start_time && <><span>·</span><span>{String(event.start_time).slice(0, 5)}</span></>}
                           {event.venue_name && <><span>·</span><span>{event.venue_name}</span></>}
+                          {event.is_free && <span className="text-green-600 font-medium">Free</span>}
                         </div>
+                        {event.description && (
+                          <p className="text-xs text-gray-500 mt-1.5 line-clamp-2">{event.description}</p>
+                        )}
                         <div className="flex flex-wrap items-center gap-2 mt-1.5">
                           {event.source_handle ? (
                             <a href={`https://instagram.com/${event.source_handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer"
@@ -422,12 +444,21 @@ export default function AdminDashboard() {
                             <span className="text-xs bg-red-50 text-red-500 px-1.5 py-0.5 rounded">no handle</span>
                           )}
                           {event.external_url ? (
-                            <a href={event.external_url} target="_blank" rel="noopener noreferrer"
-                               className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded hover:bg-blue-100 truncate max-w-[180px]">
-                              {(() => { try { return new URL(event.external_url).hostname.replace('www.', ''); } catch { return 'link'; } })()} ↗
+                            <a href={event.external_url} target="_blank" rel="noopener noreferrer" title={event.external_url}
+                               className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded hover:bg-blue-100 truncate max-w-[280px]">
+                              {(() => { try { const u = new URL(event.external_url); return u.hostname.replace('www.', '') + (u.pathname !== '/' ? u.pathname : ''); } catch { return 'link'; } })()} ↗
                             </a>
                           ) : (
                             <span className="text-xs bg-red-50 text-red-500 px-1.5 py-0.5 rounded">no url</span>
+                          )}
+                          {linkQuality === 'event' && (
+                            <span className="text-xs bg-green-50 text-green-700 px-1.5 py-0.5 rounded font-medium">✓ event page</span>
+                          )}
+                          {linkQuality === 'deep' && (
+                            <span className="text-xs bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded">deep link — verify</span>
+                          )}
+                          {(linkQuality === 'homepage' || linkQuality === 'shallow') && (
+                            <span className="text-xs bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded font-medium">⚠ homepage only — users won&apos;t find this event</span>
                           )}
                         </div>
                       </div>
@@ -436,9 +467,9 @@ export default function AdminDashboard() {
                           onClick={() => handleEventAction(event.id, 'approve')}
                           disabled={actioningId === event.id}
                           title={!isReady ? `Warning — missing: ${missingFields.join(', ')}` : 'Approve event'}
-                          className="px-3 py-1.5 text-white text-xs font-medium rounded-lg disabled:opacity-50 transition-colors bg-green-600 hover:bg-green-700"
+                          className={`px-3 py-1.5 text-white text-xs font-medium rounded-lg disabled:opacity-50 transition-colors ${isReady ? 'bg-green-600 hover:bg-green-700' : 'bg-amber-500 hover:bg-amber-600'}`}
                         >
-                          {actioningId === event.id ? '...' : 'Approve'}
+                          {actioningId === event.id ? '...' : isReady ? 'Approve' : 'Approve ⚠'}
                         </button>
                         <button
                           onClick={() => handleEventAction(event.id, 'reject')}
