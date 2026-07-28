@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { enrichEventWithAI } from '@/lib/dalle';
 
-export const maxDuration = 120;
+export const maxDuration = 300; // allow Instagram post fetch + vision for email-submitted links
 
 /**
  * POST /api/cron/process-ingest
@@ -223,6 +223,113 @@ function slugify(text: string, date: string | null): string {
   return date ? `${base}-${date}-${suffix}` : `${base}-${suffix}`;
 }
 
+// ─── Instagram post fetch (for email-submitted bare links) ─────────────────
+// When someone forwards just an Instagram URL to ingest@pawcities, the item has
+// no caption. We must fetch the post so AI extraction has real content to read.
+interface FetchedIgPost {
+  caption: string;
+  ownerUsername: string | null;
+  locationName: string | null;
+  displayUrl: string | null;
+  timestamp: string | null;
+}
+
+async function fetchInstagramPost(shortcode: string): Promise<FetchedIgPost | null> {
+  const APIFY_TOKEN = process.env.APIFY_TOKEN;
+  if (!APIFY_TOKEN) {
+    console.warn('[PROCESS-INGEST] APIFY_TOKEN not set — cannot fetch Instagram post');
+    return null;
+  }
+  const postUrl = `https://www.instagram.com/p/${shortcode}/`;
+  try {
+    const res = await fetch(
+      `https://api.apify.com/v2/acts/apify~instagram-scraper/run-sync-get-dataset-items?token=${APIFY_TOKEN}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          directUrls: [postUrl],
+          resultsType: 'posts',
+          resultsLimit: 1,
+          addParentData: false,
+        }),
+        signal: AbortSignal.timeout(120000),
+      }
+    );
+    if (!res.ok) {
+      console.error(`[PROCESS-INGEST] Apify post fetch returned ${res.status}`);
+      return null;
+    }
+    const items = await res.json();
+    const post = Array.isArray(items) ? items[0] : null;
+    if (!post) return null;
+    return {
+      caption: post.caption || '',
+      ownerUsername: post.ownerUsername || null,
+      locationName: post.locationName || null,
+      displayUrl: post.displayUrl || null,
+      timestamp: post.timestamp || null,
+    };
+  } catch (err) {
+    console.error('[PROCESS-INGEST] Instagram post fetch failed:', err);
+    return null;
+  }
+}
+
+// Vision scan of the post image — reads event posters/flyers when the caption
+// alone doesn't carry the details (mirrors event-discovery's poster scanner).
+async function scanPostImageForEvent(imageUrl: string): Promise<string | null> {
+  const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+  if (!OPENAI_API_KEY || !imageUrl) return null;
+  try {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content:
+              'You read event posters/flyers. If the image is an event poster, reply with a short plain-text summary of every detail visible: event name, date, time, venue, address, organizer, price, ticket info. If it is not an event poster, reply exactly: NOT_A_POSTER',
+          },
+          {
+            role: 'user',
+            content: [
+              { type: 'image_url', image_url: { url: imageUrl, detail: 'low' } },
+              { type: 'text', text: 'Extract all event details visible in this image.' },
+            ],
+          },
+        ],
+        max_tokens: 250,
+        temperature: 0,
+      }),
+      signal: AbortSignal.timeout(20000),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const content: string | undefined = data.choices?.[0]?.message?.content;
+    if (!content || content.includes('NOT_A_POSTER')) return null;
+    return content.trim();
+  } catch {
+    return null;
+  }
+}
+
+// True when raw_text is essentially just links/signature with no real caption
+function lacksCaptionContent(rawText: string): boolean {
+  const stripped = (rawText || '')
+    .replace(/https?:\/\/\S+/g, '')
+    .replace(/---\s*URLs found in email\s*---[\s\S]*$/i, '')
+    .replace(/\*?Eric Silverstein\*?[\s\S]*$/i, '') // strip email signature block
+    .replace(/[\s\r\n*]+/g, ' ')
+    .trim();
+  return stripped.length < 80;
+}
+
 // Shared handler for both GET (Vercel cron) and POST (manual/inline triggers)
 async function handleProcessIngest(request: NextRequest) {
   // Auth check
@@ -301,14 +408,56 @@ async function handleProcessIngest(request: NextRequest) {
           continue;
         }
 
+        // ─── STEP 0.5: Fetch Instagram post content for bare-link submissions ──
+        // Email-forwarded Instagram links arrive with no caption. Fetch the post
+        // (caption + image + location + owner) so extraction has real content —
+        // this is the whole point of the ingest@pawcities flow.
+        let effectiveRawText = item.raw_text || '';
+        let effectiveUsername = isUsefulHandle(item.instagram_username) ? item.instagram_username : null;
+        if (
+          item.platform === 'instagram' &&
+          item.instagram_shortcode &&
+          lacksCaptionContent(effectiveRawText)
+        ) {
+          console.log(`[PROCESS-INGEST] Bare Instagram link — fetching post ${item.instagram_shortcode}`);
+          const igPost = await fetchInstagramPost(item.instagram_shortcode);
+          if (igPost && (igPost.caption || igPost.displayUrl)) {
+            const parts: string[] = [];
+            if (igPost.caption) parts.push(igPost.caption);
+            if (igPost.locationName) parts.push(`Location: ${igPost.locationName}`);
+            if (igPost.ownerUsername) parts.push(`Posted by: @${igPost.ownerUsername}`);
+
+            // If the caption alone is thin or dateless, read the post image too
+            const captionLooksThin = (igPost.caption || '').length < 120 || !/\d/.test(igPost.caption || '');
+            if (captionLooksThin && igPost.displayUrl) {
+              const posterDetails = await scanPostImageForEvent(igPost.displayUrl);
+              if (posterDetails) parts.push(`Poster details (from image): ${posterDetails}`);
+            }
+
+            effectiveRawText = parts.join('\n\n');
+            effectiveUsername = igPost.ownerUsername || effectiveUsername;
+
+            // Persist fetched content so the admin card shows the real post, not a bare URL
+            await supabase
+              .from('ingest_queue')
+              .update({
+                raw_text: effectiveRawText,
+                instagram_username: igPost.ownerUsername || item.instagram_username,
+              })
+              .eq('id', item.id);
+          } else {
+            console.warn(`[PROCESS-INGEST] Could not fetch Instagram post ${item.instagram_shortcode} — falling back to raw text`);
+          }
+        }
+
         // ─── STEP 1: Try AI enrichment first (quality gate) ──────────────
         // Uses GPT-4o-mini to extract structured data, detect language,
         // identify businesses/sponsors, and score completeness.
         // Falls back to regex-based parsing if AI is unavailable or fails.
 
         const aiEnriched = await enrichEventWithAI(
-          item.raw_text || '',
-          item.instagram_username || 'unknown',
+          effectiveRawText,
+          effectiveUsername || 'unknown',
           item.city || null,
           item.url || null,
         );
@@ -367,7 +516,7 @@ async function handleProcessIngest(request: NextRequest) {
         } else {
           // AI unavailable or failed — fall back to regex parsing
           console.log(`[PROCESS-INGEST] AI enrichment unavailable, using regex parser for ${item.id}`);
-          const parsed = parseEventFromText(item.raw_text || '', item.subject);
+          const parsed = parseEventFromText(effectiveRawText, item.subject);
           eventName = parsed.name;
           eventDescription = parsed.description;
           venueName = parsed.venueName;
@@ -546,7 +695,7 @@ async function handleProcessIngest(request: NextRequest) {
         // end, so auto-reject it here (never enters the events table / posting queue).
         const resolvedHandle = isUsefulHandle(sourceHandle)
           ? sourceHandle
-          : (isUsefulHandle(item.instagram_username) ? item.instagram_username : null);
+          : effectiveUsername;
         const hasHandle = !!resolvedHandle || (mentionedHandles && mentionedHandles.length > 0);
         const candidateUrl = (externalUrl || item.url || '').trim();
         // A synthesized Google-search fallback isn't a real details page.
@@ -595,7 +744,7 @@ async function handleProcessIngest(request: NextRequest) {
             source: item.submitted_by === 'cron:event-discovery' ? 'discovery_agent' : 'admin',
             submitter_email: item.submitted_by,
             source_post_url: item.url,
-            source_handle: isUsefulHandle(sourceHandle) ? sourceHandle : (isUsefulHandle(item.instagram_username) ? item.instagram_username : null),
+            source_handle: isUsefulHandle(sourceHandle) ? sourceHandle : effectiveUsername,
             mentioned_handles: mentionedHandles.length > 0 ? mentionedHandles : null,
           })
           .select('id')
