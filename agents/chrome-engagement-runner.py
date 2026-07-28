@@ -35,6 +35,27 @@ import json
 import sys
 import os
 from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
+
+# The daily 25-comment cap runs on Eric's LOCAL day (Pacific), not UTC.
+# Posting at 9:45 PM PT must not consume the next day's cap just because
+# it's past midnight UTC.
+LOCAL_TZ = ZoneInfo("America/Los_Angeles")
+
+
+def _local_date_of(iso_str):
+    """Convert a stored UTC ISO timestamp to its local (Pacific) date string."""
+    try:
+        dt = datetime.fromisoformat((iso_str or "").replace("Z", "+00:00"))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(LOCAL_TZ).date().isoformat()
+    except (ValueError, AttributeError):
+        return ""
+
+
+def _today_local():
+    return datetime.now(LOCAL_TZ).date().isoformat()
 from pathlib import Path
 
 # ─── Paths ──────────────────────────────────────────────────────────────────
@@ -161,19 +182,19 @@ def get_postable_comments():
 def get_today_posted_count():
     """Count how many comments were posted today."""
     queue = load_queue()
-    today = datetime.now(timezone.utc).date().isoformat()
+    today = _today_local()
     return sum(1 for i in queue["items"]
                if i["status"] == "posted"
-               and (i.get("posted_at") or "").startswith(today))
+               and _local_date_of(i.get("posted_at")) == today)
 
 
 def get_today_posted_by_city():
     """Count how many comments were posted today per city."""
     queue = load_queue()
-    today = datetime.now(timezone.utc).date().isoformat()
+    today = _today_local()
     by_city = {}
     for i in queue["items"]:
-        if i["status"] == "posted" and (i.get("posted_at") or "").startswith(today):
+        if i["status"] == "posted" and _local_date_of(i.get("posted_at")) == today:
             c = i.get("city") or "unknown"
             by_city[c] = by_city.get(c, 0) + 1
     return by_city
@@ -454,7 +475,7 @@ def cmd_daily_report():
     today = datetime.now(timezone.utc).date().isoformat()
     chrome_today = sum(1 for i in queue["items"]
                        if i.get("posted_via") in ("chrome_mcp", "chrome_mcp_scheduled")
-                       and (i.get("posted_at") or "").startswith(today))
+                       and _local_date_of(i.get("posted_at")) == today)
 
     # City health: which cities have inventory?
     pending_by_city = {}
