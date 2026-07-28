@@ -59,5 +59,17 @@
   "89cafe.0221": {
     "reason": "Dog cafe in Obihiro, Hokkaido Japan; repeatedly mislabeled geneva",
     "added": "2026-07-23"
+  },
+  "bringfido": {
+    "reason": "COMPETITOR \u2014 direct competitor aggregator; never engage or drive audience to them",
+    "added": "2026-07-27"
+  },
+  "margaritavillehotelkansascity": {
+    "reason": "Kansas City hotel; mislabeled tokyo (2026-07-26)",
+    "added": "2026-07-27"
+  },
+  "thewildpheasant_hotelandspa": {
+    "reason": "Wales UK spa; mislabeled tokyo (2026-07-26)",
+    "added": "2026-07-27"
   }
 }
