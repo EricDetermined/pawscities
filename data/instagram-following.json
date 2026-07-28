@@ -1,7 +1,7 @@
 {
   "account": "@thepawcities",
   "extracted_date": "2026-05-03",
-  "total_following": 360,
+  "total_following": 371,
   "verified_count": 63,
   "all_public": true,
   "accounts": [
@@ -1804,6 +1804,61 @@
       "username": "mascoting.es",
       "verified": false,
       "category": "event-organizer:barcelona"
+    },
+    {
+      "username": "doggywash.ch",
+      "verified": false,
+      "category": "venue-geneva"
+    },
+    {
+      "username": "spa.geneve",
+      "verified": false,
+      "category": "venue-geneva"
+    },
+    {
+      "username": "happydogsgeneve",
+      "verified": false,
+      "category": "venue-geneva"
+    },
+    {
+      "username": "genevechiens",
+      "verified": false,
+      "category": "venue-geneva"
+    },
+    {
+      "username": "dogsmompaseoperrosbcn",
+      "verified": false,
+      "category": "venue-barcelona"
+    },
+    {
+      "username": "proanimalsbcn",
+      "verified": false,
+      "category": "venue-barcelona"
+    },
+    {
+      "username": "mydogbcn",
+      "verified": false,
+      "category": "venue-barcelona"
+    },
+    {
+      "username": "barkcelonastore",
+      "verified": false,
+      "category": "venue-barcelona"
+    },
+    {
+      "username": "dogcampbcn",
+      "verified": false,
+      "category": "venue-barcelona"
+    },
+    {
+      "username": "dogwelfare",
+      "verified": false,
+      "category": "venue-barcelona"
+    },
+    {
+      "username": "dogcarebarcelona",
+      "verified": false,
+      "category": "venue-barcelona"
     }
   ],
   "city_breakdown": {
@@ -1831,7 +1886,11 @@
       "swiss_doglife",
       "dogsingeneva",
       "wanderlust_swissdogs",
-      "exploregenevaoutdoors"
+      "exploregenevaoutdoors",
+      "doggywash.ch",
+      "spa.geneve",
+      "happydogsgeneve",
+      "genevechiens"
     ],
     "london": [
       "london.doggies",
@@ -1879,7 +1938,14 @@
       "lagalgarosa",
       "gosandfamily",
       "barcelonadogs",
-      "rucan_dogs"
+      "rucan_dogs",
+      "dogsmompaseoperrosbcn",
+      "proanimalsbcn",
+      "mydogbcn",
+      "barkcelonastore",
+      "dogcampbcn",
+      "dogwelfare",
+      "dogcarebarcelona"
     ],
     "tokyo": [
       "dogcafe_tokyo",
