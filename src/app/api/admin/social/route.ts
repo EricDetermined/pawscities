@@ -353,14 +353,22 @@ export async function GET(request: NextRequest) {
 
   /* --- Pending Events: events awaiting approval --- */
   if (type === 'pending-events') {
-    const { data: pendingEvents } = await db
-      .from('events')
-      .select('*, cities!inner(name, slug)')
-      .eq('status', 'PENDING')
-      .order('created_at', { ascending: false })
-      .limit(50);
+    const today = new Date().toISOString().split('T')[0];
+    const [{ data: pendingEvents }, { count: approvedUpcoming }] = await Promise.all([
+      db
+        .from('events')
+        .select('*, cities!inner(name, slug)')
+        .eq('status', 'PENDING')
+        .order('created_at', { ascending: false })
+        .limit(50),
+      db
+        .from('events')
+        .select('id', { count: 'exact', head: true })
+        .eq('status', 'APPROVED')
+        .gte('start_date', today),
+    ]);
 
-    return NextResponse.json({ events: pendingEvents || [] });
+    return NextResponse.json({ events: pendingEvents || [], approvedUpcoming: approvedUpcoming || 0 });
   }
 
   /* --- Action tracking: load completed actions --- */

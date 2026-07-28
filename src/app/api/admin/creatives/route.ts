@@ -111,6 +111,7 @@ export async function GET(request: NextRequest) {
 
   const { searchParams } = new URL(request.url);
   const status = searchParams.get('status'); // pending_review, approved, posted, etc.
+  const view = searchParams.get('view'); // 'upcoming' = calendar view (future queue + recent posts)
   const limit = parseInt(searchParams.get('limit') || '20');
 
   let query = supabase
@@ -122,6 +123,14 @@ export async function GET(request: NextRequest) {
 
   if (status) {
     query = query.eq('status', status);
+  } else if (view === 'upcoming') {
+    // Calendar view: everything still in flight (pending review / approved),
+    // plus recently posted items for context. Without this, a small `limit`
+    // returns only the OLDEST posted rows and the pipeline looks empty.
+    const recentCutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    query = query.or(
+      `status.in.(pending_review,approved,generating),and(status.eq.posted,scheduled_for.gte.${recentCutoff})`
+    );
   }
 
   const { data, error } = await query;

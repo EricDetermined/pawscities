@@ -167,6 +167,8 @@ function SocialCommandCenter() {
   const [posts, setPosts] = useState<PostItem[]>([]);
   const [perfStats, setPerfStats] = useState<PerformanceStats | null>(null);
   const [calendarItems, setCalendarItems] = useState<CalendarItem[]>([]);
+  const [creativeCounts, setCreativeCounts] = useState<Record<string, number>>({});
+  const [approvedUpcomingEvents, setApprovedUpcomingEvents] = useState(0);
   const [discoveryItems, setDiscoveryItems] = useState<DiscoveryItem[]>([]);
   const [discoverySummary, setDiscoverySummary] = useState<{ total: number; bySource: Record<string, number>; byCity: Record<string, number> } | null>(null);
   const [pendingEvents, setPendingEventsData] = useState<PendingEvent[]>([]);
@@ -202,7 +204,7 @@ function SocialCommandCenter() {
         authFetch('/api/admin/social?type=comments'),
         authFetch('/api/admin/social?type=performance'),
         authFetch('/api/admin/social?type=actions'),
-        authFetch('/api/admin/creatives?limit=30'),
+        authFetch('/api/admin/creatives?view=upcoming&limit=60'),
         authFetch('/api/admin/social?type=discovery'),
         authFetch('/api/admin/social?type=pending-events'),
       ]);
@@ -214,9 +216,11 @@ function SocialCommandCenter() {
       setPerfStats(perfRes.stats || null);
       setActions(actRes.actions || []);
       setCalendarItems(calRes.items || []);
+      setCreativeCounts(calRes.counts || {});
       setDiscoveryItems(discRes.items || []);
       setDiscoverySummary(discRes.summary || null);
       setPendingEventsData(pendRes.events || []);
+      setApprovedUpcomingEvents(pendRes.approvedUpcoming || 0);
     } catch (err) {
       if (err instanceof Error && err.message === 'AUTH_REDIRECT') return;
       console.error('Failed to fetch social data:', err);
@@ -439,7 +443,7 @@ function SocialCommandCenter() {
           <h1 className="text-2xl font-bold text-gray-900">Social Command Center</h1>
           <p className="text-sm text-gray-500 mt-1">
             {pendingEvents.length > 0 && <><span className="text-orange-600 font-medium">{pendingEvents.length} events to review</span> &middot; </>}
-            {calendarUpcoming.length} posts scheduled &middot; {discoveryItems.length} discovered (7d) &middot; {unrepliedComments.length} unreplied
+            {(creativeCounts.approved || 0)} posts scheduled &middot; {discoveryItems.length} discovered (7d) &middot; {unrepliedComments.length} unreplied
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -474,6 +478,42 @@ function SocialCommandCenter() {
       {/* ═══════ PIPELINE TAB ═══════ */}
       {activeTab === 'pipeline' && (
         <div className="space-y-6">
+          {/* ── Needs Your Attention ── */}
+          {(() => {
+            const needsReviewDiscoveries = discoveryItems.filter(d => d.status === 'needs_review' || d.status === 'pending').length;
+            const actions: { label: string; count: number; onClick?: () => void; href?: string }[] = [
+              ...(pendingEvents.length > 0 ? [{ label: 'events awaiting approval', count: pendingEvents.length }] : []),
+              ...(needsReviewDiscoveries > 0 ? [{ label: 'discoveries to review (create event or dismiss)', count: needsReviewDiscoveries }] : []),
+              ...((creativeCounts.pending_review || 0) > 0 ? [{ label: 'creatives awaiting review', count: creativeCounts.pending_review }] : []),
+              ...(unrepliedComments.length > 0 ? [{ label: 'comments awaiting reply', count: unrepliedComments.length }] : []),
+            ];
+            return actions.length > 0 ? (
+              <div className="bg-orange-50 rounded-xl border border-orange-200 p-5">
+                <h3 className="text-sm font-semibold text-orange-800 mb-3 flex items-center gap-2">
+                  <span>👋</span> Needs your attention
+                </h3>
+                <ul className="space-y-1.5">
+                  {actions.map(a => (
+                    <li key={a.label} className="text-sm text-orange-900 flex items-center gap-2">
+                      <span className="inline-flex items-center justify-center min-w-[24px] h-6 px-1.5 rounded-full bg-orange-200 text-orange-800 text-xs font-bold">{a.count}</span>
+                      {a.label}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-orange-700/70 mt-3">Everything else runs automatically — approved creatives post daily, urgent events fast-track on their own.</p>
+              </div>
+            ) : (
+              <div className="bg-green-50 rounded-xl border border-green-200 p-5">
+                <h3 className="text-sm font-semibold text-green-800 flex items-center gap-2">
+                  <span>✅</span> Nothing needs your review right now
+                </h3>
+                <p className="text-xs text-green-700/80 mt-1.5">
+                  {creativeCounts.approved || 0} posts are approved and scheduled, {approvedUpcomingEvents} upcoming events are live. The pipeline is running on its own.
+                </p>
+              </div>
+            );
+          })()}
+
           {/* ── Pipeline Flow Visualization ── */}
           <div className="bg-white rounded-xl border border-gray-200 p-5">
             <h3 className="text-sm font-semibold text-gray-700 mb-4">Pipeline Flow</h3>
@@ -481,10 +521,10 @@ function SocialCommandCenter() {
               {[
                 { label: 'Discovered', count: discoverySummary?.total || 0, color: 'bg-indigo-100 text-indigo-700 border-indigo-200', sub: '7 days' },
                 { label: 'Pending Review', count: pendingEvents.length, color: pendingEvents.length > 0 ? 'bg-orange-100 text-orange-700 border-orange-300 ring-2 ring-orange-200' : 'bg-orange-50 text-orange-600 border-orange-200', sub: 'events' },
-                { label: 'Approved Events', count: calendarItems.filter(c => c.status === 'approved' && c.format === 'event').length, color: 'bg-green-100 text-green-700 border-green-200', sub: 'in queue' },
-                { label: 'Creative Review', count: calendarItems.filter(c => c.status === 'pending_review').length, color: 'bg-purple-100 text-purple-700 border-purple-200', sub: 'creatives' },
-                { label: 'Ready to Post', count: calendarItems.filter(c => c.status === 'approved').length, color: 'bg-emerald-100 text-emerald-700 border-emerald-200', sub: 'creatives' },
-                { label: 'Posted', count: calendarItems.filter(c => c.status === 'posted').length, color: 'bg-blue-100 text-blue-700 border-blue-200', sub: 'all time' },
+                { label: 'Approved Events', count: approvedUpcomingEvents, color: 'bg-green-100 text-green-700 border-green-200', sub: 'upcoming' },
+                { label: 'Creative Review', count: creativeCounts.pending_review || 0, color: (creativeCounts.pending_review || 0) > 0 ? 'bg-purple-100 text-purple-700 border-purple-300 ring-2 ring-purple-200' : 'bg-purple-100 text-purple-700 border-purple-200', sub: 'creatives' },
+                { label: 'Ready to Post', count: creativeCounts.approved || 0, color: 'bg-emerald-100 text-emerald-700 border-emerald-200', sub: 'scheduled' },
+                { label: 'Posted', count: creativeCounts.posted || 0, color: 'bg-blue-100 text-blue-700 border-blue-200', sub: 'all time' },
               ].map((step, i) => (
                 <div key={step.label} className="flex items-center gap-2">
                   {i > 0 && <span className="text-gray-300 text-lg">→</span>}
