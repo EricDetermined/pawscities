@@ -1066,14 +1066,23 @@ def discover_posts(target_city=None):
         city_name = config["cities"][city_slug]["name"]
         all_tags = list(set(global_tags + city_tags))
 
-        # Sample a subset to control cost — 8 tags per city per run
-        sampled_tags = random.sample(all_tags, min(8, len(all_tags)))
+        # Sample a subset to control cost — 4 tags per city per run
+        # (was 8; at pay-per-result pricing this halves spend with minimal
+        # quality loss since tags rotate randomly across days)
+        sampled_tags = random.sample(all_tags, min(4, len(all_tags)))
 
-        print(f"  📍 {city_name}: scraping {len(sampled_tags)} hashtags × {results_per} results...")
+        # CRITICAL: only fetch RECENT posts. Without this the scraper returns
+        # "top posts" which can be months or years old — commenting on stale
+        # posts looks like bot behavior and wastes the daily cap. Also cuts
+        # cost: fewer matching results = lower pay-per-result charge.
+        newer_than = (datetime.now(timezone.utc) - timedelta(days=7)).strftime("%Y-%m-%d")
+
+        print(f"  📍 {city_name}: scraping {len(sampled_tags)} hashtags × {results_per} results (posts newer than {newer_than})...")
 
         result = apify_request("POST", "/acts/apify~instagram-hashtag-scraper/runs", {
             "hashtags": sampled_tags,
             "resultsLimit": results_per,
+            "onlyPostsNewerThan": newer_than,
         })
 
         if result and result.get("data", {}).get("id"):
