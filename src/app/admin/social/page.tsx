@@ -481,11 +481,13 @@ function SocialCommandCenter() {
           {/* ── Needs Your Attention ── */}
           {(() => {
             const needsReviewDiscoveries = discoveryItems.filter(d => d.status === 'needs_review' || d.status === 'pending').length;
+            const scrollToDiscoveries = () => document.getElementById('recent-discoveries')?.scrollIntoView({ behavior: 'smooth' });
+            const scrollToPendingEvents = () => document.getElementById('pending-events-section')?.scrollIntoView({ behavior: 'smooth' });
             const actions: { label: string; count: number; onClick?: () => void; href?: string }[] = [
-              ...(pendingEvents.length > 0 ? [{ label: 'events awaiting approval', count: pendingEvents.length }] : []),
-              ...(needsReviewDiscoveries > 0 ? [{ label: 'discoveries to review (create event or dismiss)', count: needsReviewDiscoveries }] : []),
-              ...((creativeCounts.pending_review || 0) > 0 ? [{ label: 'creatives awaiting review', count: creativeCounts.pending_review }] : []),
-              ...(unrepliedComments.length > 0 ? [{ label: 'comments awaiting reply', count: unrepliedComments.length }] : []),
+              ...(pendingEvents.length > 0 ? [{ label: 'events awaiting approval', count: pendingEvents.length, onClick: scrollToPendingEvents }] : []),
+              ...(needsReviewDiscoveries > 0 ? [{ label: 'discoveries to review (create event or dismiss)', count: needsReviewDiscoveries, onClick: scrollToDiscoveries }] : []),
+              ...((creativeCounts.pending_review || 0) > 0 ? [{ label: 'creatives awaiting review', count: creativeCounts.pending_review, href: '/admin/creatives' }] : []),
+              ...(unrepliedComments.length > 0 ? [{ label: 'comments awaiting reply', count: unrepliedComments.length, onClick: () => setActiveTab('comments') }] : []),
             ];
             return actions.length > 0 ? (
               <div className="bg-orange-50 rounded-xl border border-orange-200 p-5">
@@ -494,9 +496,18 @@ function SocialCommandCenter() {
                 </h3>
                 <ul className="space-y-1.5">
                   {actions.map(a => (
-                    <li key={a.label} className="text-sm text-orange-900 flex items-center gap-2">
-                      <span className="inline-flex items-center justify-center min-w-[24px] h-6 px-1.5 rounded-full bg-orange-200 text-orange-800 text-xs font-bold">{a.count}</span>
-                      {a.label}
+                    <li key={a.label}>
+                      {a.href ? (
+                        <a href={a.href} className="text-sm text-orange-900 flex items-center gap-2 hover:underline cursor-pointer">
+                          <span className="inline-flex items-center justify-center min-w-[24px] h-6 px-1.5 rounded-full bg-orange-200 text-orange-800 text-xs font-bold">{a.count}</span>
+                          {a.label} <span className="text-orange-400">&rarr;</span>
+                        </a>
+                      ) : (
+                        <button onClick={a.onClick} className="text-sm text-orange-900 flex items-center gap-2 hover:underline cursor-pointer text-left">
+                          <span className="inline-flex items-center justify-center min-w-[24px] h-6 px-1.5 rounded-full bg-orange-200 text-orange-800 text-xs font-bold">{a.count}</span>
+                          {a.label} <span className="text-orange-400">&rarr;</span>
+                        </button>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -539,7 +550,7 @@ function SocialCommandCenter() {
           </div>
 
           {/* ── Discovery Summary ── */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div id="recent-discoveries" className="bg-white rounded-xl border border-gray-200 p-5">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                 <span>🔍</span> Recent Discoveries
@@ -743,7 +754,7 @@ function SocialCommandCenter() {
           </div>
 
           {/* ── Pending Event Approval ── */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
+          <div id="pending-events-section" className="bg-white rounded-xl border border-gray-200 p-5">
             <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
               <span>⏳</span> Events Awaiting Approval
               {pendingEvents.length > 0 && (

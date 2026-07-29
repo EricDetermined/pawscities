@@ -344,10 +344,13 @@ async function handleProcessIngest(request: NextRequest) {
 
   try {
     // Fetch pending event-classified ingest items (both 'event' and 'business_event')
+    // Include items with classification event/business_event OR unclassified
+    // items whose content_type marks them as events (engagement-session inserts
+    // previously stalled forever because classification was never set).
     const { data: pendingItems, error: fetchError } = await supabase
       .from('ingest_queue')
       .select('*')
-      .in('classification', ['event', 'business_event'])
+      .or('classification.in.(event,business_event),and(classification.is.null,content_type.eq.event)')
       .eq('status', 'pending')
       .order('created_at', { ascending: true })
       .limit(20);
