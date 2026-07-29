@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "daily_cap": 25,
+  "daily_cap": 30,
   "ramp_schedule": {
     "week_1": 8,
     "week_2": 12,

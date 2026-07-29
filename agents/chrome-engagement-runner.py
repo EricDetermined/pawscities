@@ -295,7 +295,7 @@ def select_balanced_batch(postable, limit):
 def cmd_preview():
     """Show what would be posted next, using city-balanced selection."""
     config = load_config()
-    daily_cap = config.get("daily_cap", 25)
+    daily_cap = config.get("daily_cap", 30)
     today_posted = get_today_posted_count()
     remaining = max(0, daily_cap - today_posted)
     postable = get_postable_comments()
@@ -333,7 +333,7 @@ def cmd_preview():
 def cmd_next(limit=1):
     """Output the next comment(s) to post as JSON, city-balanced and engagement-ranked."""
     config = load_config()
-    daily_cap = config.get("daily_cap", 25)
+    daily_cap = config.get("daily_cap", 30)
     today_posted = get_today_posted_count()
     remaining = max(0, daily_cap - today_posted)
 
@@ -439,7 +439,7 @@ def cmd_stats():
     """Show engagement stats."""
     queue = load_queue()
     config = load_config()
-    daily_cap = config.get("daily_cap", 15)
+    daily_cap = config.get("daily_cap", 30)
     today_posted = get_today_posted_count()
 
     statuses = {}
@@ -467,7 +467,7 @@ def cmd_daily_report():
     """Generate a daily report for the scheduled task."""
     queue = load_queue()
     config = load_config()
-    daily_cap = config.get("daily_cap", 25)
+    daily_cap = config.get("daily_cap", 30)
     today_posted = get_today_posted_count()
     postable = get_postable_comments()
 
