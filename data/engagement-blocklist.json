@@ -99,5 +99,17 @@
   "erinkingphotographer": {
     "reason": "Melbourne pet photographer; mislabeled sydney",
     "added": "2026-07-28"
+  },
+  "cafetonton": {
+    "reason": "Dog cafe in Hiratsuka/Shonan Japan; surfaced mislabeled as sydney AND new-york-city",
+    "added": "2026-07-29"
+  },
+  "theporcupinemountains": {
+    "reason": "Upper Michigan trails account; mislabeled los-angeles",
+    "added": "2026-07-29"
+  },
+  "mmpp1205": {
+    "reason": "Japanese dog cafe review account (Kamakura etc.); mislabeled sydney",
+    "added": "2026-07-29"
   }
 }
