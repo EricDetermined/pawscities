@@ -176,7 +176,27 @@ def get_postable_comments():
             print(f"   (auto-expired {expired} stale queued comments)", file=sys.stderr)
         if blocked:
             print(f"   (removed {blocked} comments targeting blocklisted accounts)", file=sys.stderr)
-    return [item for item in queue["items"] if item["status"] in ("pending", "dry_run", "generated")]
+    # ── Account cooldown: never serve a target we engaged in the last 48h ──
+    # (rule: no same-day or yesterday repeats; the 1pm 2026-07-30 scheduled run
+    # re-engaged two accounts from the previous morning because this was only
+    # enforced in prompts, not code)
+    cooldown_cutoff = datetime.now(timezone.utc) - timedelta(hours=48)
+    recently_engaged = set()
+    for item in queue["items"]:
+        if item.get("status") == "posted" and item.get("posted_at"):
+            try:
+                dt = datetime.fromisoformat(item["posted_at"].replace("Z", "+00:00"))
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=timezone.utc)
+                if dt >= cooldown_cutoff:
+                    recently_engaged.add((item.get("target_username") or "").lower().lstrip("@"))
+            except (ValueError, AttributeError):
+                pass
+    return [
+        item for item in queue["items"]
+        if item["status"] in ("pending", "dry_run", "generated")
+        and (item.get("target_username") or "").lower().lstrip("@") not in recently_engaged
+    ]
 
 
 def get_today_posted_count():
