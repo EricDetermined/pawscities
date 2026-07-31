@@ -111,5 +111,17 @@
   "mmpp1205": {
     "reason": "Japanese dog cafe review account (Kamakura etc.); mislabeled sydney",
     "added": "2026-07-29"
+  },
+  "bleuthelaussie": {
+    "reason": "California Australian Shepherd account; mislabeled sydney (breed-name trap)",
+    "added": "2026-07-30"
+  },
+  "mon_chien_adorable_2025": {
+    "reason": "Affiliate spam account pushing Amazon supplement links; fake Paris community content",
+    "added": "2026-07-31"
+  },
+  "mi_adorable_perro": {
+    "reason": "GastroBalance affiliate spam network (Spanish arm); fake Barcelona community content",
+    "added": "2026-07-31"
   }
 }

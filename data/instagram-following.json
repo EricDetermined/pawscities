@@ -1859,6 +1859,11 @@
       "username": "dogcarebarcelona",
       "verified": false,
       "category": "venue-barcelona"
+    },
+    {
+      "username": "clyde_loves_lola",
+      "verified": true,
+      "category": "community-atlanta"
     }
   ],
   "city_breakdown": {
@@ -1964,6 +1969,9 @@
       "shibuyadogstory",
       "marutaro",
       "dogood_yoyogipark"
+    ],
+    "atlanta": [
+      "clyde_loves_lola"
     ]
   }
 }
