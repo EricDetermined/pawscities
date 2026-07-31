@@ -193,6 +193,68 @@ def load_config():
 
 # ─── Comment Templates ───────────────────────────────────────────────────────
 
+
+# ─── Target-type classification (2026-07-31, per Eric) ──────────────────────
+# Event and business posts are the highest-ROI targets: the accounts behind
+# them follow back and register as businesses. Community pet accounts are
+# filler. Classify every target so batch selection can prioritize.
+
+EVENT_SIGNALS = [
+    "grand opening", "join us", "save the date", "rsvp", "tickets", "pop-up",
+    "popup", "festival", "market", "meetup", "meet up", "yappy hour",
+    "adoption event", "fundraiser", "this weekend", "this saturday",
+    "this sunday", "this friday", "event", "workshop", "photoshoot",
+    "quedada", "\u00e9v\u00e9nement", "evento", "\u30a4\u30d9\u30f3\u30c8",
+]
+
+BUSINESS_SIGNALS = [
+    "cafe", "caf\u00e9", "hotel", "grooming", "groomer", "daycare", "day care",
+    "boarding", "kennel", "store", "shop", "bakery", "barkery", "rescue",
+    "shelter", "protectora", "vet", "clinic", "walker", "walking", "training",
+    "trainer", "brewery", "taproom", "bar", "boutique", "salon", "supply",
+    "supplies", "photography", "photographer", "sitter", "sitting", "spa",
+    "residencia", "toilettage", "peluqueria", "guarderia", "pension",
+]
+
+
+def classify_target_type(post):
+    """event > business > community. Event/business accounts can follow back
+    and register on Paw Cities; community accounts are engagement filler."""
+    caption = (post.get("caption") or "").lower()
+    handle = (post.get("ownerUsername") or "").lower()
+    import re as _re
+    # Date-looking strings strongly suggest an event post
+    has_date = bool(_re.search(
+        r"\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+\d{1,2}\b"
+        r"|\b\d{1,2}\s*[-/]\s*\d{1,2}\b\s*(am|pm)?", caption))
+    if any(k in caption for k in EVENT_SIGNALS) and (has_date or "opening" in caption or "event" in caption):
+        return "event"
+    if any(k in caption for k in EVENT_SIGNALS[:12]):
+        return "event"
+    if any(k in handle for k in BUSINESS_SIGNALS) or any(k in caption[:200] for k in BUSINESS_SIGNALS):
+        # curated venue/business lists count too
+        return "business"
+    curated = load_curated_city_map() if "_CURATED_CITY_MAP" in globals() else {}
+    if handle in (curated or {}):
+        return "business"
+    return "community"
+
+
+COMMENT_TEMPLATES_EVENT = [
+    "This sounds like such a great event for local dog parents \u2014 hope it's a huge success!",
+    "What a fantastic event idea \u2014 the local dog community is lucky to have this",
+    "Love seeing dog-friendly events like this \u2014 exactly what more cities need",
+    "This looks like a brilliant day out for pups and their people \u2014 have an amazing one!",
+]
+
+COMMENT_TEMPLATES_BUSINESS = [
+    "Businesses like yours make the city so much better for dog parents \u2014 love what you do",
+    "This is exactly the kind of dog-friendly spot every neighborhood needs",
+    "The care you put into this really shows \u2014 local dog parents are lucky to have you",
+    "Love supporting places that welcome dogs properly \u2014 keep up the great work",
+]
+
+
 COMMENT_TEMPLATES = {
     "appreciation": [
         "Love this! {city_ref}is such a great spot for dogs",
@@ -1626,6 +1688,7 @@ def generate_queue():
 
         queue_item = {
             "id": f"cmt-{int(time.time()*1000)}-{random.randint(100,999)}",
+            "target_type": classify_target_type(post),
             "post_id": post_id,
             "post_shortcode": post.get("shortcode", ""),
             "post_url": post.get("url", ""),

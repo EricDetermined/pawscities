@@ -248,12 +248,17 @@ def select_balanced_batch(postable, limit):
 
     influencers = load_influencer_targets()
     for city in by_city:
+        _type_tier = {"event": 2, "business": 1, "community": 0}
         by_city[city].sort(key=lambda x: (
             # Priority 0: curated influencer targets always float to the top
             1 if (x.get("target_username") or "").lower().lstrip("@") in influencers else 0,
-            # Primary: higher likes = more visibility
+            # Priority 1 (2026-07-31, per Eric): event and business posts first —
+            # these accounts follow back and register as businesses; community
+            # pet accounts are filler
+            _type_tier.get(x.get("target_type"), 0),
+            # Then: higher likes = more visibility
             x.get("post_likes", 0),
-            # Secondary: AI-generated comments are more relevant
+            # Finally: AI-generated comments are more relevant
             1 if x.get("comment_category") == "ai_generated" else 0,
         ), reverse=True)
 
