@@ -330,6 +330,28 @@ export function pickContextualDogPhotoWithId(
     isRecent: recentIds.has(photo.id),
   }));
 
+  // ── BREED OVERRIDE ────────────────────────────────────────────────────
+  // A breed-specific event (Corgi Fest, Frenchie Meetup…) must show that
+  // breed. Recency exclusion previously outranked breed match, so a corgi
+  // event could get a non-corgi photo if all corgi shots were recently
+  // used. Showing the wrong dog is worse than repeating a photo — restrict
+  // to breed matches whenever any exist, preferring non-recent among them.
+  if (detectedBreeds.length > 0) {
+    const breedMatches = scored.filter(s => detectedBreeds.includes(s.photo.breed));
+    if (breedMatches.length > 0) {
+      const nonRecent = breedMatches.filter(s => !s.isRecent);
+      const pool = nonRecent.length > 0 ? nonRecent : breedMatches;
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      const dims = format === 'square'
+        ? 'w=640&h=640&fit=crop&crop=faces&q=75'
+        : 'w=1080&h=600&fit=crop&crop=faces&q=75';
+      return {
+        url: `${BASE}/${pick.photo.id}?${dims}`,
+        photoId: pick.photo.id,
+      };
+    }
+  }
+
   // Sort by: not-recent first, then score descending
   scored.sort((a, b) => {
     // Penalize recently used photos (push them to the end)
