@@ -319,6 +319,20 @@ async function scanPostImageForEvent(imageUrl: string): Promise<string | null> {
   }
 }
 
+// True when the text contains anything that plausibly looks like an event date.
+// Email clients truncate forwarded captions ("…Pismo Beach Pier..." with the
+// date cut off) — if no date-ish token survives, we must fetch the full post.
+function containsPlausibleDate(text: string): boolean {
+  const t = (text || '').toLowerCase();
+  return (
+    /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*\d{1,2}/i.test(t) ||
+    /\d{1,2}\s*(?:of\s+)?(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|janv|févr|avril|juin|juil|août|sept|octobre|nov|déc|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i.test(t) ||
+    /\d{1,2}[\/\-.]\d{1,2}([\/\-.]\d{2,4})?\b/.test(t) ||
+    /\d{1,2}月\s*\d{1,2}日/.test(t) ||
+    /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b.*\d/i.test(t)
+  );
+}
+
 // True when raw_text is essentially just links/signature with no real caption
 function lacksCaptionContent(rawText: string): boolean {
   const stripped = (rawText || '')
@@ -420,9 +434,9 @@ async function handleProcessIngest(request: NextRequest) {
         if (
           item.platform === 'instagram' &&
           item.instagram_shortcode &&
-          lacksCaptionContent(effectiveRawText)
+          (lacksCaptionContent(effectiveRawText) || !containsPlausibleDate(effectiveRawText))
         ) {
-          console.log(`[PROCESS-INGEST] Bare Instagram link — fetching post ${item.instagram_shortcode}`);
+          console.log(`[PROCESS-INGEST] Bare or dateless Instagram link — fetching post ${item.instagram_shortcode}`);
           const igPost = await fetchInstagramPost(item.instagram_shortcode);
           if (igPost && (igPost.caption || igPost.displayUrl)) {
             const parts: string[] = [];
@@ -431,7 +445,8 @@ async function handleProcessIngest(request: NextRequest) {
             if (igPost.ownerUsername) parts.push(`Posted by: @${igPost.ownerUsername}`);
 
             // If the caption alone is thin or dateless, read the post image too
-            const captionLooksThin = (igPost.caption || '').length < 120 || !/\d/.test(igPost.caption || '');
+            const captionLooksThin =
+              (igPost.caption || '').length < 120 || !containsPlausibleDate(igPost.caption || '');
             if (captionLooksThin && igPost.displayUrl) {
               const posterDetails = await scanPostImageForEvent(igPost.displayUrl);
               if (posterDetails) parts.push(`Poster details (from image): ${posterDetails}`);

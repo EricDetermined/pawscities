@@ -459,26 +459,40 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to save' }, { status: 500 });
     }
 
-    // If there were multiple URLs, insert additional items for each
+    // If there were multiple MEANINGFUL URLs, insert additional items.
+    // Only distinct Instagram post/reel links count — email signatures are full
+    // of profile/social/blog links (twitter, facebook, scoop.it, etc.) that
+    // previously exploded into junk queue items nothing ever processed.
     if (urls.length > 1) {
-      const additionalItems = urls.slice(1).map(u => {
-        const ig = parseInstagramUrl(u);
-        return {
+      const primaryShortcode = igData?.shortcode || null;
+      const seenShortcodes = new Set<string>(primaryShortcode ? [primaryShortcode] : []);
+      const additionalItems = urls
+        .slice(1)
+        .map(u => ({ u, ig: parseInstagramUrl(u) }))
+        .filter(({ ig }) => {
+          // Keep only IG posts/reels with a shortcode we haven't seen yet
+          if (!ig?.shortcode || ig.contentType === 'profile') return false;
+          if (seenShortcodes.has(ig.shortcode)) return false;
+          seenShortcodes.add(ig.shortcode);
+          return true;
+        })
+        .map(({ u, ig }) => ({
           source: 'email' as const,
           submitted_by: senderEmail,
           url: u,
           raw_text: null,
           subject: `Additional URL from: ${subject}`.substring(0, 500),
-          platform: u.includes('instagram.com') ? 'instagram' : 'website',
-          content_type: ig?.contentType || null,
-          instagram_shortcode: ig?.shortcode || null,
-          instagram_username: ig?.username || null,
-          classification: ig?.contentType === 'profile' ? 'influencer' : 'engagement',
+          platform: 'instagram',
+          content_type: ig!.contentType || null,
+          instagram_shortcode: ig!.shortcode,
+          instagram_username: ig!.username || null,
+          // Classify as event so process-ingest picks it up (it will fetch the
+          // post and auto-reject if it turns out not to be one).
+          classification: 'event',
           city,
           priority: 'normal' as const,
           status: 'pending' as const,
-        };
-      });
+        }));
 
       if (additionalItems.length > 0) {
         await supabase.from('ingest_queue').insert(additionalItems);
