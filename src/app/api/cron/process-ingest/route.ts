@@ -690,8 +690,22 @@ async function handleProcessIngest(request: NextRequest) {
 
         // STRICT: reject any event whose date is before today. A dog owner
         // can't attend a past event — there is zero value in posting one.
-        const eventDateObj = new Date(eventDate);
+        let eventDateObj = new Date(eventDate);
         const startOfToday = new Date(); startOfToday.setUTCHours(0, 0, 0, 0);
+
+        // Year-inference correction: social captions usually omit the year
+        // ("Saturday, September 12") and AI extraction sometimes guesses a
+        // past year. If the content contains no explicit year, assume the
+        // next future occurrence instead of rejecting.
+        if (eventDateObj < startOfToday && !/\b20\d{2}\b/.test(effectiveRawText || '')) {
+          const rolled = new Date(eventDateObj);
+          rolled.setUTCFullYear(startOfToday.getUTCFullYear());
+          if (rolled < startOfToday) rolled.setUTCFullYear(startOfToday.getUTCFullYear() + 1);
+          eventDateObj = rolled;
+          finalDate = rolled.toISOString().split('T')[0];
+          console.log(`[PROCESS-INGEST] No explicit year in content — rolled "${eventName}" forward to ${finalDate}`);
+        }
+
         if (eventDateObj < startOfToday) {
           console.log(`[PROCESS-INGEST] Skipping past event "${eventName}" (${eventDate})`);
           await supabase
