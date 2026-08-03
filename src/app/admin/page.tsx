@@ -44,6 +44,7 @@ interface DashboardData {
   };
   pendingEventsData: {
     id: string; name: string; start_date: string; end_date: string | null;
+    start_time?: string | null; is_free?: boolean | null; description?: string | null;
     venue_name: string | null; source: string; source_handle: string | null;
     external_url: string | null; discovery_score: number | null;
     created_at: string; cities: { name: string; slug: string };
