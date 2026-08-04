@@ -186,5 +186,156 @@
   "dogcampbcn": "venue:barcelona",
   "dogwelfare": "venue:barcelona",
   "dogcarebarcelona": "venue:barcelona",
-  "clyde_loves_lola": "venue:atlanta"
+  "clyde_loves_lola": "venue:atlanta",
+  "the_caninecreamery": "venue:atlanta",
+  "club_diogi": {
+    "city": "atlanta",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "atlpetstop": {
+    "city": "atlanta",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "fidofidoatl": {
+    "city": "atlanta",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "happyheartspetcareatl": {
+    "city": "atlanta",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "canpenedes": {
+    "city": "barcelona",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "perrosalagua": {
+    "city": "barcelona",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "gosbi_official": {
+    "city": "barcelona",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "altudog": {
+    "city": "barcelona",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "rucan_dogs": {
+    "city": "barcelona",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "rutcasanellasphotographer": {
+    "city": "barcelona",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "dog_tales_club": {
+    "city": "london",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "delihouseuk": {
+    "city": "london",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "dogsonlysocialclub": {
+    "city": "los-angeles",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "4pawsn1tail": {
+    "city": "los-angeles",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "vaccinevets": {
+    "city": "los-angeles",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "chateaulewoof": {
+    "city": "new-york-city",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "mymochi.handmadepetsnack": {
+    "city": "new-york-city",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "pupstudio.grooming": {
+    "city": "new-york-city",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "streetpawsfestivalofficial": {
+    "city": "sydney",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "kipalexandria.nsw": {
+    "city": "sydney",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "elizabeth_bay_cafe": {
+    "city": "sydney",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "theerkohotel": {
+    "city": "sydney",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "dogge_official": {
+    "city": "sydney",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "walknroll.syd": {
+    "city": "sydney",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "brewdogsoutheveleigh": {
+    "city": "sydney",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "publichousepetersham": {
+    "city": "sydney",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "pupsinpubsaus": {
+    "city": "sydney",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "pupdates.au": {
+    "city": "sydney",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "wantime_media": {
+    "city": "tokyo",
+    "type": "business",
+    "source": "engagement-vetted"
+  },
+  "wa_marutto": {
+    "city": "tokyo",
+    "type": "business",
+    "source": "engagement-vetted"
+  }
 }
