@@ -43,7 +43,7 @@
     },
     {
       "path": "/api/cron/event-discovery",
-      "schedule": "0 8 * * *"
+      "schedule": "0 8 * * 1,4"
     },
     {
       "path": "/api/cron/marketing-digest",
