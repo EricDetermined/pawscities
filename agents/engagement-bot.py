@@ -1200,7 +1200,7 @@ def discover_posts(target_city=None):
 
     # Load history to avoid re-commenting
     history = load_history()
-    commented_post_ids = {h["post_id"] for h in history}
+    commented_post_ids = {h.get("post_id") for h in history if h.get("post_id")}
 
     for post in all_posts:
         post_id = post.get("id", "")
@@ -1411,7 +1411,7 @@ def discover_following():
     cutoff = datetime.now(timezone.utc) - timedelta(days=max_age)
 
     history = load_history()
-    commented_post_ids = {h["post_id"] for h in history}
+    commented_post_ids = {h.get("post_id") for h in history if h.get("post_id")}
 
     filtered = []
     seen_ids = set()
@@ -1641,12 +1641,12 @@ def generate_queue():
     history = load_history()
 
     # Track what we've already queued or commented on
-    existing_post_ids = {item["post_id"] for item in queue["items"]}
+    existing_post_ids = {item.get("post_id") for item in queue["items"] if item.get("post_id")}
     cloud_post_ids = fetch_supabase_post_ids()
     if cloud_post_ids:
         print(f"  ☁️ Cloud queue dedupe: {len(cloud_post_ids)} post_ids already queued")
         existing_post_ids |= cloud_post_ids
-    commented_post_ids = {h["post_id"] for h in history}
+    commented_post_ids = {h.get("post_id") for h in history if h.get("post_id")}
 
     # Also track recent comment hashes to avoid repetitive phrasing
     recent_hashes = {item.get("comment_hash") for item in queue["items"][-100:]}
