@@ -337,5 +337,48 @@
     "city": "tokyo",
     "type": "business",
     "source": "engagement-vetted"
+  },
+  "balgowlahvillage": "venue:sydney",
+  "sandy.springs.farmers.market": "venue:atlanta",
+  "pupu_maruco": "venue:tokyo",
+  "tails_salon_shibuya": "venue:tokyo",
+  "woofandwildsydney": "venue:sydney",
+  "woofandwildtraining": "venue:sydney",
+  "mablehouse_artscentre": "venue:atlanta",
+  "carlacavanillas_groomer": "venue:barcelona",
+  "pupsy.team": "community:sydney",
+  "fur_everpawsome": "community:sydney",
+  "leichhardtbowlo": "venue:sydney",
+  "bankhotel": "venue:sydney",
+  "hairytalesau": "business:sydney",
+  "barkmondseysquare": "event:london",
+  "arznerbar": "venue:london",
+  "wehoweens": "community:los-angeles",
+  "doglifemagazine_": "media:barcelona",
+  "elfotografodeperros": "business:barcelona",
+  "redsbeergarden": {
+    "city": "atlanta",
+    "type": "business",
+    "source": "event-sponsor-venue"
+  },
+  "thedraftydane": {
+    "city": "atlanta",
+    "type": "business",
+    "source": "event-sponsor-venue"
+  },
+  "bennyboybrewing": {
+    "city": "los-angeles",
+    "type": "business",
+    "source": "event-sponsor-venue"
+  },
+  "lappeitup": {
+    "city": "los-angeles",
+    "type": "business",
+    "source": "event-sponsor-venue"
+  },
+  "cpfnyc": {
+    "city": "new-york-city",
+    "type": "business",
+    "source": "event-sponsor-venue"
   }
 }
