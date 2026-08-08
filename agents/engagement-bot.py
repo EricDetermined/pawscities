@@ -1660,11 +1660,14 @@ def generate_queue():
             continue
 
         # ── Evidence gate: only verifiably city-tied targets get comments ──
-        evidence = city_evidence(post)
-        if not evidence:
-            print(f"  🎯 SKIPPED @{post.get('ownerUsername')}: no hard {post.get('city')} evidence")
-            evidence_skipped += 1
-            continue
+        # browser_verified posts bypass the gate: a human/agent looked at the
+        # actual post in Chrome and confirmed city + content before queueing.
+        if not post.get("browser_verified"):
+            evidence = city_evidence(post)
+            if not evidence:
+                print(f"  🎯 SKIPPED @{post.get('ownerUsername')}: no hard {post.get('city')} evidence")
+                evidence_skipped += 1
+                continue
 
         # ── Final safety gate: re-screen before generating comment ──
         # This catches posts that may have been added to discovered-posts.json
