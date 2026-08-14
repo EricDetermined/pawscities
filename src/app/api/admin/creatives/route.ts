@@ -372,6 +372,24 @@ export async function POST(request: NextRequest) {
       }, { status: 409 });
     }
 
+    // ── DETAIL GATE (2026-08-14, per Eric) ──────────────────────────────
+    // A caption without a venue is a post with no details — worse than no
+    // post. If the event lacks venue_name, refuse to generate and flag the
+    // event needs_details so it surfaces on the admin attention card
+    // instead of silently becoming a fluff creative. (Incident: LA "Pet
+    // Adoption Event" creative approved with no venue/time; source turned
+    // out to be Grand Strand Nissan, Myrtle Beach SC.)
+    if (!event.venue_name || String(event.venue_name).trim().length < 3) {
+      await supabase
+        .from('events')
+        .update({ enrichment_status: 'needs_details' })
+        .eq('id', eventId);
+      return NextResponse.json({
+        success: false,
+        error: 'Event has no venue — creative blocked. Add venue/time details (event flagged needs_details), then generate.',
+      }, { status: 422 });
+    }
+
     const cityName = event.cities?.name || 'City';
     const citySlug = event.cities?.slug || 'losangeles';
     const metaKey = Object.keys(CITY_META).find(k => CITY_META[k].slug === citySlug) || citySlug;
