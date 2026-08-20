@@ -9,8 +9,38 @@ import {
   pickNextContent,
 } from '@/lib/social-content';
 import { generateAndUploadMascotImage, generateCharacterCaption } from '@/lib/dalle';
-import { getVisualStyle, shouldUseMascot, shouldUseTextCard, getCaptionStyle, type VisualStyle } from '@/lib/visual-strategy';
+import { getVisualStyle, getCaptionStyle, type VisualStyle } from '@/lib/visual-strategy';
 import { detectBreeds } from '@/lib/dog-photos';
+
+// ─── Card copy + base URL helpers ─────────────────────────────────────────────
+
+/**
+ * Trim body copy to fit the card without slicing mid-word.
+ * A blunt .slice(120) produced cards reading "...after every dry-brush h".
+ */
+function truncateAtWord(text: string, max = 120): string {
+  const clean = (text || '').trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.\s]+$/, '')}…`;
+}
+
+/**
+ * Single source of truth for the self-referencing base URL.
+ *
+ * This file previously read NEXT_PUBLIC_SITE_URL in the text-card path and
+ * NEXT_PUBLIC_BASE_URL in the photo path. Neither is set in .env.local, so the
+ * two paths silently resolved differently. Both now go through here.
+ */
+function getCreativeBaseUrl(): string {
+  return (
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
+    'https://pawcities.com'
+  );
+}
 
 // ─── Supabase Admin ────────────────────────────────────────────────────────────
 
@@ -219,10 +249,18 @@ export async function POST(request: NextRequest) {
 
       // ── Visual Style Routing ──────────────────────────────────────────
       // Route content to the right visual approach based on type
-      const visualStyle: VisualStyle = getVisualStyle(fact.type);
+      // 'photo' needs a placeName to look up via Google Places — pass that
+      // through so a placeless fact never gets routed to the photo path.
+      // Not const: if image generation falls back to a text card we relabel the
+      // format to match, so `format` never claims to be something it isn't.
+      let visualStyle: VisualStyle = getVisualStyle(fact.type, false, {
+        hasPlaceName: Boolean(fact.placeName),
+      });
 
       // Narrator assignment: only needed for mascot style
-      const narrator = shouldUseMascot(fact.type) ? assignNarrator(fact.type) : 'buster';
+      // Use the style we already resolved rather than calling shouldUseMascot(),
+      // which re-rolls the 25% alternate dice and can disagree with visualStyle.
+      const narrator = visualStyle === 'mascot' ? assignNarrator(fact.type) : 'buster';
 
       // Determine scheduled date (today + i days)
       const schedDate = new Date();
@@ -256,6 +294,63 @@ export async function POST(request: NextRequest) {
       let imagePrompt: string | null = null;
       let photoId: string | null = null;
 
+      // Branded text card via the OG endpoint. Used both as the primary path
+      // for text_card style and as the fallback whenever another style fails to
+      // produce an image — a queued creative should never reach review with a
+      // null image_url, because a reviewer can't judge what they can't see.
+      const generateTextCard = async (): Promise<string | null> => {
+        const baseUrl = getCreativeBaseUrl();
+        try {
+          const ogParams = new URLSearchParams({
+            headline: fact.headline,
+            body: truncateAtWord(fact.body || '', 120),
+            city: cityName,
+            citySlug,
+            type: fact.type,
+          });
+          if (usedPhotoIds.length > 0) ogParams.set('recent', usedPhotoIds.join(','));
+          const ogUrl = `${baseUrl}/api/social/text-card-creative?${ogParams}`;
+
+          // The text-card endpoint fails intermittently (~1 in 6 observed on
+          // 2026-08-19 — it 500s regardless of city or headline, so it's the
+          // upstream photo fetch, not the input). Retry with backoff rather
+          // than dropping the creative into review with no image.
+          let ogRes: Response | null = null;
+          for (let attempt = 1; attempt <= 3; attempt++) {
+            ogRes = await fetch(ogUrl, { signal: AbortSignal.timeout(20000) });
+            if (ogRes.ok) break;
+            console.error(
+              `[CREATIVE] Text card attempt ${attempt}/3 returned ${ogRes.status} for "${fact.headline}"`,
+            );
+            if (attempt < 3) await new Promise((r) => setTimeout(r, 1500 * attempt));
+          }
+          if (!ogRes || !ogRes.ok) {
+            console.error(`[CREATIVE] Text card gave up after 3 attempts for "${fact.headline}"`);
+            return null;
+          }
+          const headerPhotoId = ogRes.headers.get('x-photo-id');
+          if (headerPhotoId) {
+            photoId = headerPhotoId;
+            usedPhotoIds.push(headerPhotoId);
+          }
+          const imgBuffer = Buffer.from(await ogRes.arrayBuffer());
+          const safeName = fact.headline.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 50);
+          const storagePath = `text-card-creatives/${citySlug}-${safeName}-${Date.now()}.png`;
+          const { error: uploadError } = await supabase.storage
+            .from('photos')
+            .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+          if (uploadError) {
+            console.error(`[CREATIVE] Text card upload failed for "${fact.headline}":`, uploadError.message);
+            return null;
+          }
+          const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+          return urlData?.publicUrl || null;
+        } catch (err) {
+          console.error(`[CREATIVE] Text card generation failed for "${fact.headline}":`, err);
+          return null;
+        }
+      };
+
       if (visualStyle === 'mascot' && hasOpenAI) {
         // DALL-E mascot illustration — only for did-you-know and fun types
         imagePrompt = buildImagePrompt(fact, narrator);
@@ -265,52 +360,30 @@ export async function POST(request: NextRequest) {
           imageUrl = dalleResult.publicUrl;
         }
       } else if (visualStyle === 'text_card') {
-        // ── Text card: branded dog photo + text overlay via OG endpoint ────
-        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
-          || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
-        try {
-          const ogParams = new URLSearchParams({
-            headline: fact.headline,
-            body: (fact.body || '').slice(0, 120),
-            city: cityName,
-            citySlug,
-            type: fact.type,
-          });
-          if (usedPhotoIds.length > 0) ogParams.set('recent', usedPhotoIds.join(','));
-          const ogUrl = `${baseUrl}/api/social/text-card-creative?${ogParams}`;
-          const ogRes = await fetch(ogUrl, { signal: AbortSignal.timeout(20000) });
-          if (ogRes.ok) {
-            photoId = ogRes.headers.get('x-photo-id');
-            if (photoId) usedPhotoIds.push(photoId);
-            const imgBuffer = Buffer.from(await ogRes.arrayBuffer());
-            const safeName = fact.headline.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 50);
-            const storagePath = `text-card-creatives/${citySlug}-${safeName}-${Date.now()}.png`;
-            const { error: uploadError } = await supabase.storage
-              .from('photos')
-              .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
-            if (!uploadError) {
-              const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
-              imageUrl = urlData?.publicUrl || null;
-            }
-          }
-        } catch (err) {
-          console.log(`[CREATIVE] Text card generation failed for "${fact.headline}":`, err);
-        }
+        imageUrl = await generateTextCard();
       } else if (visualStyle === 'photo' && fact.placeName) {
         // ── Spotlight photo: real business photo via Google Places ─────────
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+        const baseUrl = getCreativeBaseUrl();
         try {
           const { searchPlace } = await import('@/lib/google-places');
           const result = await searchPlace(fact.placeName);
           if (result?.photos?.[0]?.name) {
             imageUrl = `${baseUrl}/api/places/photo?name=${encodeURIComponent(result.photos[0].name)}&maxWidth=1080`;
+          } else {
+            console.error(`[CREATIVE] No Places photo for "${fact.placeName}" — falling back to text card`);
           }
-        } catch {
-          console.log(`[CREATIVE] Could not fetch photo for "${fact.placeName}", will use text card fallback`);
+        } catch (err) {
+          console.error(`[CREATIVE] Places lookup failed for "${fact.placeName}":`, err);
         }
       }
-      // mascot fallback (no OpenAI key) or photo fallback (no place): null imageUrl is OK,
-      // the social-post cron will generate via OG endpoint at post time
+
+      // Last resort: any style that produced nothing falls back to a text card
+      // so the reviewer always has something to look at.
+      if (!imageUrl) {
+        console.error(`[CREATIVE] "${fact.headline}" (${visualStyle}) produced no image — using text card fallback`);
+        imageUrl = await generateTextCard();
+        if (imageUrl) visualStyle = 'text_card';
+      }
 
       const { error: insertError } = await supabase.from('creative_queue').insert({
         content_type: 'content_bank',

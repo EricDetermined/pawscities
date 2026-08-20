@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getServiceClient } from '@/lib/community';
 import ShareButtons from '@/components/ShareButtons';
+import NewsletterSignup from '@/components/NewsletterSignup';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,22 +27,68 @@ interface EventDetail {
   is_free: boolean;
   tags: string[] | null;
   status: string;
+  city_id: string;
   cities: { slug: string; name: string } | null;
 }
 
+const EVENT_FIELDS =
+  'id, slug, name, description, venue_name, venue_address, external_url, source_handle, source_post_url, start_date, end_date, start_time, end_time, image_url, is_free, tags, status, city_id, cities!inner(slug, name)';
+
+/**
+ * Fetch an event regardless of status.
+ *
+ * Previously this filtered to APPROVED/PENDING, so CANCELLED events 404'd. That
+ * was actively harmful: as of 2026-08-20, 149 of 327 events are CANCELLED, and
+ * GA4 showed three of the top-four organic search landing pages were exactly
+ * these 404s — ~47 sessions/month landing on a dead end and bouncing in 4-8s,
+ * against 31-45s on city pages.
+ *
+ * A 404 throws away the ranking and the visitor. We now render the page with an
+ * honest "this event has ended/was cancelled" state plus live alternatives, and
+ * mark it noindex once stale (see generateMetadata) so Google stops ranking it
+ * while existing visitors still land somewhere useful.
+ */
 async function getEvent(slug: string): Promise<EventDetail | null> {
   const admin = getServiceClient();
   const { data } = await admin
     .from('events')
-    .select(
-      'id, slug, name, description, venue_name, venue_address, external_url, source_handle, source_post_url, start_date, end_date, start_time, end_time, image_url, is_free, tags, status, cities!inner(slug, name)'
-    )
+    .select(EVENT_FIELDS)
     .eq('slug', slug)
-    .in('status', ['APPROVED', 'PENDING'])
     .order('created_at', { ascending: false })
     .limit(1)
     .maybeSingle();
   return (data as unknown as EventDetail) || null;
+}
+
+/** Live, upcoming events in the same city — the onward journey for a dead page. */
+async function getAlternatives(cityId: string, excludeSlug: string) {
+  const admin = getServiceClient();
+  const today = new Date().toISOString().split('T')[0];
+  const { data } = await admin
+    .from('events')
+    .select('slug, name, start_date, venue_name, is_free')
+    .eq('city_id', cityId)
+    .eq('status', 'APPROVED')
+    .gte('start_date', today)
+    .neq('slug', excludeSlug)
+    .order('start_date', { ascending: true })
+    .limit(4);
+  return data || [];
+}
+
+/** Is this page dead — cancelled, rejected, or in the past? */
+function eventState(event: EventDetail): 'live' | 'cancelled' | 'past' {
+  const today = new Date().toISOString().split('T')[0];
+  if (event.status === 'CANCELLED' || event.status === 'REJECTED') return 'cancelled';
+  const end = event.end_date || event.start_date;
+  if (end < today) return 'past';
+  return 'live';
+}
+
+/** Days since the event ended — drives the noindex decision. */
+function daysSinceEnded(event: EventDetail): number {
+  const end = new Date((event.end_date || event.start_date) + 'T00:00:00').getTime();
+  return Math.floor((Date.now() - end) / 86400000);
 }
 
 export async function generateMetadata({
@@ -52,13 +99,25 @@ export async function generateMetadata({
   const event = await getEvent(params.slug);
   if (!event) return { title: 'Event | Paw Cities' };
   const cityName = event.cities?.name || '';
-  const title = `${event.name} — ${cityName} | Paw Cities`;
+  const state = eventState(event);
+  const stale = state !== 'live' && daysSinceEnded(event) > 30;
+
+  const prefix = state === 'cancelled' ? 'Cancelled: ' : state === 'past' ? 'Past event: ' : '';
+  const title = `${prefix}${event.name} — ${cityName} | Paw Cities`;
   const description =
-    event.description?.slice(0, 155) ||
-    `Dog-friendly event in ${cityName}${event.venue_name ? ` at ${event.venue_name}` : ''} on ${event.start_date}.`;
+    state !== 'live'
+      ? `This event is no longer running. See what else is on for dogs in ${cityName}.`
+      : event.description?.slice(0, 155) ||
+        `Dog-friendly event in ${cityName}${event.venue_name ? ` at ${event.venue_name}` : ''} on ${event.start_date}.`;
+
   return {
     title,
     description,
+    // Keep live and recently-ended events indexed — people still search for them
+    // and the page now offers a real onward journey. Drop the long tail of dead
+    // events out of the index rather than letting Google rank 404-equivalents.
+    ...(stale && { robots: { index: false, follow: true } }),
+    alternates: { canonical: `${BASE_URL}/events/${event.slug}` },
     openGraph: {
       title,
       description,
@@ -95,6 +154,10 @@ export default async function EventDetailPage({
   const event = await getEvent(params.slug);
   if (!event) notFound();
 
+  const state = eventState(event);
+  const alternatives =
+    state === 'live' ? [] : await getAlternatives(event.city_id, event.slug);
+
   const city = event.cities;
   const handle = event.source_handle
     ? event.source_handle.startsWith('@')
@@ -119,7 +182,10 @@ export default async function EventDetailPage({
     ...(event.description && { description: event.description }),
     ...(event.image_url && { image: [event.image_url] }),
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    eventStatus: 'https://schema.org/EventScheduled',
+    eventStatus:
+      state === 'cancelled'
+        ? 'https://schema.org/EventCancelled'
+        : 'https://schema.org/EventScheduled',
     location: {
       '@type': 'Place',
       name: event.venue_name || city?.name || 'TBA',
@@ -147,6 +213,74 @@ export default async function EventDetailPage({
         >
           ← {city ? `${city.name} events` : 'All events'}
         </Link>
+
+        {/*
+          Dead-event banner. This page used to 404 for cancelled events, which
+          sent the site's largest traffic channel into a wall — three of the top
+          four organic landing pages were 404s bouncing in 4-8s. Now the visitor
+          is told the truth immediately and routed to the city page, which holds
+          attention for 31-45s.
+        */}
+        {state !== 'live' && (
+          <div className="mt-4 rounded-2xl border border-amber-300 bg-amber-50 p-5">
+            <p className="font-semibold text-amber-900">
+              {state === 'cancelled'
+                ? 'This event was cancelled'
+                : 'This event has already taken place'}
+            </p>
+            <p className="mt-1 text-sm text-amber-800">
+              {city
+                ? `It's no longer running, but there's plenty else on for dogs in ${city.name}.`
+                : "It's no longer running, but there's plenty else on for dogs."}
+            </p>
+            {city && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                <Link
+                  href={`/${city.slug}`}
+                  className="inline-flex items-center rounded-lg bg-orange-600 px-4 py-2 text-sm font-medium text-white hover:bg-orange-700 transition-colors"
+                >
+                  Dog-friendly {city.name} →
+                </Link>
+                <Link
+                  href={`/events?city=${city.slug}`}
+                  className="inline-flex items-center rounded-lg border border-amber-400 bg-white px-4 py-2 text-sm font-medium text-amber-900 hover:bg-amber-100 transition-colors"
+                >
+                  All {city.name} events
+                </Link>
+              </div>
+            )}
+
+            {alternatives.length > 0 && (
+              <div className="mt-5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-amber-900">
+                  Coming up instead
+                </p>
+                <ul className="mt-2 space-y-2">
+                  {alternatives.map((alt) => (
+                    <li key={alt.slug}>
+                      <Link
+                        href={`/events/${alt.slug}`}
+                        className="group flex items-baseline justify-between gap-3 rounded-lg bg-white px-3 py-2 hover:bg-amber-100 transition-colors"
+                      >
+                        <span className="text-sm font-medium text-gray-900 group-hover:text-orange-700">
+                          {alt.name}
+                          {alt.is_free && (
+                            <span className="ml-2 rounded bg-green-100 px-1.5 py-0.5 text-[11px] font-semibold text-green-800">
+                              FREE
+                            </span>
+                          )}
+                        </span>
+                        <span className="shrink-0 text-xs text-gray-500">
+                          {formatLongDate(alt.start_date)}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="mt-4 bg-white rounded-2xl border border-gray-200 overflow-hidden">
           {event.image_url && (
@@ -265,6 +399,30 @@ export default async function EventDetailPage({
               />
             </div>
           </div>
+        </div>
+
+        {/*
+          Email capture. Event pages are the site's biggest organic search entry
+          point (62% of traffic is search; event pages dominate landing pages) and
+          until now asked visitors for nothing — 823 content pages had produced 2
+          organic signups. City is pre-filled from the event so the ask is specific.
+        */}
+        <div className="mt-8">
+          <NewsletterSignup
+            citySlug={city?.slug}
+            source={`event_page:${event.slug}`}
+            variant="banner"
+            heading={
+              city
+                ? `Dog-friendly ${city.name} events, in your inbox`
+                : 'Dog-friendly events, in your inbox'
+            }
+            subtext={
+              city
+                ? `We'll email you what's on for dogs in ${city.name}. No spam, unsubscribe anytime.`
+                : "We'll email you what's on for dogs in your city."
+            }
+          />
         </div>
 
         <p className="text-center mt-6 text-sm text-gray-400">

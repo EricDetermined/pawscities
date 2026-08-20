@@ -18,7 +18,7 @@ Usage:
     python3 agents/chrome-engagement-runner.py preview     # Show what would be posted
     python3 agents/chrome-engagement-runner.py next        # Get next comment to post
     python3 agents/chrome-engagement-runner.py next 10     # Get next 10 comments
-    python3 agents/chrome-engagement-runner.py mark-posted <comment-id>  # Mark as posted
+    python3 agents/chrome-engagement-runner.py mark-posted <comment-id> [comment_pk] [media_pk]
     python3 agents/chrome-engagement-runner.py mark-failed <comment-id> <error>  # Mark as failed
     python3 agents/chrome-engagement-runner.py stats       # Show queue stats
     python3 agents/chrome-engagement-runner.py daily-report # Summary for scheduled task
@@ -401,8 +401,16 @@ def cmd_next(limit=1):
     print(json.dumps(output, indent=2))
 
 
-def cmd_mark_posted(comment_id):
-    """Mark a comment as successfully posted via Chrome MCP."""
+def cmd_mark_posted(comment_id, comment_pk="", media_pk=""):
+    """
+    Mark a comment as successfully posted via Chrome MCP.
+
+    comment_pk / media_pk are optional but strongly preferred: writing them as ""
+    is what blinded reply monitoring in July 2026 (engagement-bot's monitor-replies
+    only checks comments that carry a pk, so 285 August comments were invisible).
+    growth-tracker.py can now recover replies without a pk, but capturing it here
+    is cheaper than looking it up later.
+    """
     queue = load_queue()
     history = load_history()
 
@@ -424,8 +432,8 @@ def cmd_mark_posted(comment_id):
                 "city": item.get("city"),
                 "posted_at": item["posted_at"],
                 "posted_via": "chrome_mcp",
-                "comment_pk": "",
-                "media_pk": "",
+                "comment_pk": comment_pk,
+                "media_pk": media_pk,
                 "reply_checked_at": None,
                 "replies": [],
             })
@@ -512,7 +520,7 @@ def cmd_daily_report():
     low_cities = [c for c in CITY_SLUGS if 0 < pending_by_city.get(c, 0) <= 5]
 
     # Engagement quality: what's the median post_likes in queue?
-    likes = sorted(i.get("post_likes", 0) for i in postable)
+    likes = sorted((i.get("post_likes") or 0) for i in postable)
     median_likes = likes[len(likes)//2] if likes else 0
     high_value = sum(1 for l in likes if l >= 50)
 
@@ -557,9 +565,13 @@ if __name__ == "__main__":
         cmd_next(limit)
     elif command == "mark-posted":
         if len(sys.argv) < 3:
-            print("Usage: mark-posted <comment-id>")
+            print("Usage: mark-posted <comment-id> [comment_pk] [media_pk]")
             sys.exit(1)
-        cmd_mark_posted(sys.argv[2])
+        cmd_mark_posted(
+            sys.argv[2],
+            sys.argv[3] if len(sys.argv) > 3 else "",
+            sys.argv[4] if len(sys.argv) > 4 else "",
+        )
     elif command == "mark-failed":
         if len(sys.argv) < 3:
             print("Usage: mark-failed <comment-id> [error-message]")

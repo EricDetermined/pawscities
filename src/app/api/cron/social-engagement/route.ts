@@ -226,36 +226,60 @@ export async function GET(request: NextRequest) {
     }
 
     const posts = mediaData.data || [];
+    // Tracked across the whole run so we log the permission failure once, not 25x,
+    // and so the response can report insight availability honestly.
+    let insightsUnavailable = false;
+    let insightsAvailable = false;
+    let insightsErrorLogged = false;
     const insights: { postId: string; likes: number; comments: number; permalink: string; timestamp: string; caption: string }[] = [];
 
     // ─── 2. Process each post: metrics + comments ───────────────────
     for (const post of posts) {
       // Get detailed insights
-      let reach = 0;
-      let impressions = 0;
-      let saved = 0;
+      let reach: number | null = null;
+      let saved: number | null = null;
 
+      // NOTE (2026-08-19): this call has been failing since launch with
+      //   (#10) Application does not have permission for this action
+      // because the Meta app lacks `instagram_manage_insights`. The previous
+      // version swallowed that in a bare catch and wrote reach = 0, so four
+      // months of auth failures were indistinguishable from genuine zeros.
+      // Never silently zero a metric — record that it is unavailable instead.
       try {
         const insightResponse = await fetch(
-          `https://graph.facebook.com/${META_API_VERSION}/${post.id}/insights?metric=reach,impressions,saved&access_token=${META_PAGE_ACCESS_TOKEN}`
+          `https://graph.facebook.com/${META_API_VERSION}/${post.id}/insights?metric=reach,saved&access_token=${META_PAGE_ACCESS_TOKEN}`
         );
         const insightData = await insightResponse.json();
 
-        if (insightData.data) {
+        if (insightData.error) {
+          insightsUnavailable = true;
+          if (!insightsErrorLogged) {
+            console.error(
+              `[SOCIAL-ENGAGEMENT] Insights unavailable (${insightData.error.code}): ` +
+              `${insightData.error.message}. reach/saved will be recorded as null, not 0. ` +
+              `Fix: add instagram_manage_insights to the Meta app and complete App Review.`
+            );
+            insightsErrorLogged = true;
+          }
+        } else if (insightData.data) {
+          insightsAvailable = true;
           for (const metric of insightData.data) {
-            if (metric.name === 'reach') reach = metric.values?.[0]?.value || 0;
-            if (metric.name === 'impressions') impressions = metric.values?.[0]?.value || 0;
-            if (metric.name === 'saved') saved = metric.values?.[0]?.value || 0;
+            if (metric.name === 'reach') reach = metric.values?.[0]?.value ?? 0;
+            if (metric.name === 'saved') saved = metric.values?.[0]?.value ?? 0;
           }
         }
-      } catch {
-        // Insights not available for all posts
+      } catch (err) {
+        insightsUnavailable = true;
+        if (!insightsErrorLogged) {
+          console.error('[SOCIAL-ENGAGEMENT] Insights request threw:', err);
+          insightsErrorLogged = true;
+        }
       }
 
       const engagementScore = (post.like_count || 0) * 1
         + (post.comments_count || 0) * 3
-        + saved * 5
-        + (reach > 0 ? ((post.like_count + post.comments_count) / reach) * 100 : 0);
+        + (saved ?? 0) * 5
+        + (reach && reach > 0 ? ((post.like_count + post.comments_count) / reach) * 100 : 0);
 
       insights.push({
         postId: post.id,
@@ -280,7 +304,7 @@ export async function GET(request: NextRequest) {
             likes: post.like_count || 0,
             comments_count: post.comments_count || 0,
             reach,
-            impressions,
+            impressions: null, // deprecated by Meta for media; kept nullable for schema compat
             saves: saved,
             engagement_score: Math.round(engagementScore * 10) / 10,
             insights_updated_at: new Date().toISOString(),
@@ -467,9 +491,22 @@ export async function GET(request: NextRequest) {
 
     console.log(`[ENGAGEMENT] Complete: ${newCommentsFound} new comments, ${autoRepliesSent} auto-replies, ${questionsFound} questions flagged, ${vips.length} VIPs`);
 
+    if (insightsUnavailable && !insightsAvailable) {
+      console.error(
+        '[SOCIAL-ENGAGEMENT] reach/saves were NOT collected this run — stored as null. ' +
+        'This has been the case since launch; see growth plan item 1.2.'
+      );
+    }
+
     return NextResponse.json({
       success: true,
       ...summary,
+      // Explicit so a caller can never mistake "not permitted" for "measured zero".
+      insights_available: insightsAvailable,
+      insights_blocked: insightsUnavailable && !insightsAvailable,
+      insights_hint: insightsUnavailable && !insightsAvailable
+        ? 'Meta app is missing instagram_manage_insights — reach/saves unavailable'
+        : undefined,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

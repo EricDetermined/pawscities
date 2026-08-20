@@ -80,3 +80,22 @@ data/influencer-tracker.json
 
 # Temporary scripts (one-off generators)
 generate-mascots.js
+
+# ─── Added 2026-08-20 ─────────────────────────────────────────────────────────
+# One-off Supabase insert/query scripts generated during nightly sessions.
+# They embed live data and are throwaway — regenerate rather than commit.
+ins-*.mjs
+insert-*-tmp.mjs
+*-tmp.mjs
+*-tmp.ts
+
+# Session scratch + logs
+.tmp/
+.discover-run.log
+data/*.log
+ingest24.json
+
+# Ambassador collateral (binary, belongs in Drive not git)
+Badge-*.png
+QR-*.png
+Zoe-Ambassador-Kit/

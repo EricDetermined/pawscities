@@ -31,21 +31,42 @@ const STYLE_MAP: Record<ContentType, { primary: VisualStyle; alternates: VisualS
  * Get the visual style for a content type.
  * Uses primary style ~75% of the time, alternates ~25% for grid variety.
  * Pass forceDefault=true to always get the primary (for backward compat).
+ *
+ * `opts.hasPlaceName` — the 'photo' style sources a real photograph via Google
+ * Places, which requires the fact to carry a placeName. Only `spotlight` facts
+ * do. Without this guard a tip/guide/fun fact can randomly land on 'photo',
+ * find no place to look up, and be queued with a null image_url — which is what
+ * put seven imageless creatives into the review queue on 2026-08-17.
+ * When no placeName is available, 'photo' is filtered out of the alternates.
  */
-export function getVisualStyle(contentType: string, forceDefault = false): VisualStyle {
+export function getVisualStyle(
+  contentType: string,
+  forceDefault = false,
+  opts: { hasPlaceName?: boolean } = {},
+): VisualStyle {
   const mapping = STYLE_MAP[contentType as ContentType];
   if (!mapping) return 'mascot';
 
-  if (forceDefault || mapping.alternates.length === 0) {
-    return mapping.primary;
+  // 'photo' is only viable when we have a place to look up.
+  const alternates = opts.hasPlaceName
+    ? mapping.alternates
+    : mapping.alternates.filter((s) => s !== 'photo');
+
+  // Primary can also be 'photo' (spotlight/event) — fall back to a card if
+  // there is nothing to photograph.
+  const primary =
+    mapping.primary === 'photo' && !opts.hasPlaceName ? 'text_card' : mapping.primary;
+
+  if (forceDefault || alternates.length === 0) {
+    return primary;
   }
 
   // ~25% chance of alternate style for visual variety
   if (Math.random() < 0.25) {
-    return mapping.alternates[Math.floor(Math.random() * mapping.alternates.length)];
+    return alternates[Math.floor(Math.random() * alternates.length)];
   }
 
-  return mapping.primary;
+  return primary;
 }
 
 /**

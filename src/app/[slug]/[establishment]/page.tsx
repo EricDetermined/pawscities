@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import NewsletterSignup from '@/components/NewsletterSignup';
 import { getCityConfig, CATEGORIES } from '@/lib/cities-config';
 import { getEstablishment, getCityEstablishments } from '@/lib/data';
 import { createClient } from '@supabase/supabase-js';
@@ -542,6 +543,22 @@ export default async function EstablishmentPage({ params }: Props) {
             </div>
           </section>
         )}
+      </div>
+
+      {/*
+        Email capture. Establishment pages hold attention far better than event
+        pages (/paris/galeries-lafayette runs 31s vs 4-8s on events) but asked
+        visitors for nothing — 823 content pages had produced 2 organic signups.
+        City is pre-filled so the ask is concrete.
+      */}
+      <div className="container mx-auto px-4 pb-10">
+        <NewsletterSignup
+          citySlug={city.slug}
+          source={`establishment:${params.establishment}`}
+          variant="banner"
+          heading={`More dog-friendly ${city.name}, in your inbox`}
+          subtext={`New spots and events for dogs in ${city.name}. No spam, unsubscribe anytime.`}
+        />
       </div>
 
       {/* Footer */}

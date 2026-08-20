@@ -27,6 +27,26 @@ function getSupabaseAdmin() {
   );
 }
 
+/**
+ * Region markers that contradict a resolved city.
+ *
+ * Added 2026-08-20 after a geo audit found Melbourne, Adelaide and Brisbane
+ * events published on the Sydney city page. Matching any of these against the
+ * event name/venue/address sends the item to needs_review instead of publishing
+ * it under the wrong city.
+ */
+const REGION_CONFLICTS: Record<string, RegExp[]> = {
+  sydney: [/\bQLD\b|queensland|brisbane/i, /\bVIC\b|melbourne/i, /\bWA\b|perth/i, /\bSA\b|adelaide/i, /\bTAS\b|hobart/i, /\bACT\b|canberra/i],
+  london: [/\b(manchester|liverpool|leeds|bristol|birmingham|glasgow|edinburgh|cardiff|brighton)\b/i],
+  losangeles: [/\b(san diego|san francisco|sacramento|fresno|las vegas|phoenix)\b/i],
+  newyork: [/\b(boston|philadelphia|chicago)\b/i],
+  paris: [/\b(lyon|marseille|bordeaux|toulouse|lille)\b/i],
+  barcelona: [/\b(madrid|valencia|sevilla|seville|bilbao|torredembarra|tarragona)\b/i],
+  tokyo: [/\b(osaka|kyoto|nagoya|fukuoka|sapporo|yokohama)\b/i],
+  geneva: [/\b(zurich|z\u00fcrich|bern|basel|lausanne|lugano)\b/i],
+  atlanta: [/\b(nashville|charlotte|savannah)\b/i],
+};
+
 // City slug → city_id mapping (loaded dynamically)
 async function getCityMap(supabase: ReturnType<typeof getSupabaseAdmin>) {
   const { data } = await supabase.from('cities').select('id, slug, name');
@@ -574,11 +594,40 @@ async function handleProcessIngest(request: NextRequest) {
           ? (cityAliases[detectedCity] || detectedCity)
           : null;
 
+        // Resolve the city, or send it for review — never guess.
+        //
+        // This previously fell back to Los Angeles whenever the city could not
+        // be resolved, silently. LA carries 89 events, more than any other city,
+        // and an unknown share of those are simply unresolved items that landed
+        // here by default. A wrong city is worse than a queued one: it corrupts
+        // the city pages, the events feed, and the engagement targeting that
+        // reads from them.
         let cityId: string | null = null;
         if (resolvedCity && cityMap[resolvedCity]) {
           cityId = cityMap[resolvedCity].id;
-        } else {
-          cityId = cityMap['losangeles']?.id || null;
+        }
+
+        // Region sanity check: if the venue address names a region that clearly
+        // isn't the resolved city, don't publish it. Four Australian shows
+        // (Melbourne, Adelaide, Brisbane) were filed under Sydney this way —
+        // up to 1,400km from the city whose page they appeared on.
+        if (cityId && resolvedCity) {
+          const haystack = `${eventName || ''} ${venueName || ''} ${venueAddress || ''}`;
+          const conflict = REGION_CONFLICTS[resolvedCity]?.find((re) => re.test(haystack));
+          if (conflict) {
+            await supabase
+              .from('ingest_queue')
+              .update({
+                status: 'needs_review',
+                error_message:
+                  `Geo conflict: resolved as "${resolvedCity}" but the venue address ` +
+                  `names another region. Confirm the city before publishing.`,
+                processed_at: new Date().toISOString(),
+              })
+              .eq('id', item.id);
+            results.errors.push(`${item.id}: geo conflict with ${resolvedCity}`);
+            continue;
+          }
         }
 
         if (!cityId) {

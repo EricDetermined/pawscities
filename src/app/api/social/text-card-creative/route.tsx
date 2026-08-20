@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
-import { pickContextualDogPhotoWithId, photoUrlFromId } from '@/lib/dog-photos';
+import { photoUrlFromId } from '@/lib/dog-photos';
+import { curatePhoto } from '@/lib/photo-curator';
 
 const BRAND_ORANGE = '#f97316';
 const BRAND_DARK = '#1a1a2e';
@@ -50,11 +51,15 @@ export async function GET(request: NextRequest) {
   const accent = CITY_ACCENTS[citySlug] || BRAND_ORANGE;
   let dogPhoto: string;
   let chosenPhotoId: string;
+  let photoSource = 'forced';
   if (forcedPhoto) {
     chosenPhotoId = forcedPhoto;
     dogPhoto = photoUrlFromId(forcedPhoto, 'wide');
   } else {
-    const picked = pickContextualDogPhotoWithId({
+    // AI photo editor picks from the tagged library; falls back to the
+    // deterministic scorer on any failure or timeout. `curatePhoto` never
+    // throws, so card rendering is not gated on the model being available.
+    const picked = await curatePhoto({
       text: headline,
       citySlug,
       description: body || undefined,
@@ -62,11 +67,22 @@ export async function GET(request: NextRequest) {
     }, 'wide');
     dogPhoto = picked.url;
     chosenPhotoId = picked.photoId;
+    photoSource = picked.source;
+    if (picked.reason) {
+      console.log(`[TEXT-CARD] photo ${picked.photoId} via ${picked.source}: ${picked.reason}`);
+    }
   }
 
-  // Truncate text for readability
-  const displayHeadline = headline.length > 55 ? headline.slice(0, 52) + '...' : headline;
-  const displayBody = body.length > 120 ? body.slice(0, 117) + '...' : body;
+  // Truncate for readability — on a word boundary, so cards don't end mid-word
+  // ("...after every dry-brus...").
+  const trimAtWord = (text: string, max: number) => {
+    if (text.length <= max) return text;
+    const cut = text.slice(0, max);
+    const lastSpace = cut.lastIndexOf(' ');
+    return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.\s]+$/, '')}…`;
+  };
+  const displayHeadline = trimAtWord(headline, 55);
+  const displayBody = trimAtWord(body, 120);
   const headlineFontSize = displayHeadline.length > 40 ? '44px' : displayHeadline.length > 30 ? '50px' : '56px';
 
   // Type label
@@ -277,7 +293,7 @@ export async function GET(request: NextRequest) {
     {
       width: 1080,
       height: 1080,
-      headers: { 'X-Photo-Id': chosenPhotoId },
+      headers: { 'X-Photo-Id': chosenPhotoId, 'X-Photo-Source': photoSource },
     }
   );
 }

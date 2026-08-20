@@ -12,7 +12,7 @@
  */
 
 // Read at request time, not build time
-function getMetaApiVersion() { return process.env.META_API_VERSION || 'v25.0'; }
+export function getMetaApiVersion() { return process.env.META_API_VERSION || 'v25.0'; }
 function getBaseUrl() { return `https://graph.facebook.com/${getMetaApiVersion()}`; }
 
 interface MediaContainerResponse {

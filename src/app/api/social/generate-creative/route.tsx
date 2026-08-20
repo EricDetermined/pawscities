@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { CONTENT_BANK, CITY_META } from '@/lib/social-content';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { curatePhoto } from '@/lib/photo-curator';
 
 function getSupabaseAdmin() {
   return createClient(
@@ -19,7 +20,15 @@ const BRAND = {
   white: '#ffffff',
 };
 
-// City background images (Unsplash, high quality, free to use)
+/**
+ * Static city skylines — now only a last-resort fallback.
+ *
+ * Two problems with using these as the primary source: they are the same image
+ * for every post about a city regardless of subject, and `atlanta` was never
+ * added, so every Atlanta fact silently rendered on a PARIS skyline. Imagery
+ * now comes from the curated dog library via `curatePhoto`, which is both
+ * content-aware and city-aware; this map only survives as a safety net.
+ */
 const CITY_BACKGROUNDS: Record<string, string> = {
   paris: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1080&h=1080&fit=crop',
   geneva: 'https://images.unsplash.com/photo-1752405165625-15bc2e842f05?w=1080&h=1080&fit=crop',
@@ -48,7 +57,28 @@ export async function GET(request: NextRequest) {
   }
 
   const cityMeta = CITY_META[fact.city];
-  const bgImage = CITY_BACKGROUNDS[fact.city] || CITY_BACKGROUNDS.paris;
+
+  // Content-aware imagery, same curator the text-card and event paths use, so
+  // this legacy fallback can no longer emit an off-topic or wrong-city image.
+  let bgImage: string;
+  let chosenPhotoId = '';
+  let photoSource = 'scorer';
+  try {
+    const picked = await curatePhoto({
+      text: fact.headline,
+      citySlug: cityMeta?.slug || fact.city,
+      description: fact.body || undefined,
+    }, 'square');
+    bgImage = picked.url;
+    chosenPhotoId = picked.photoId;
+    photoSource = picked.source;
+    if (picked.reason) {
+      console.log(`[GENERATE-CREATIVE] photo ${picked.photoId} via ${picked.source}: ${picked.reason}`);
+    }
+  } catch (err) {
+    console.error('[GENERATE-CREATIVE] photo curation failed, using city skyline:', err);
+    bgImage = CITY_BACKGROUNDS[fact.city] || CITY_BACKGROUNDS.paris;
+  }
 
   // Generate the branded creative as a 1080x1080 Instagram image
   const imageResponse = new ImageResponse(
@@ -216,8 +246,11 @@ export async function GET(request: NextRequest) {
     }
   );
 
-  // If preview mode, just return the image
+  // If preview mode, just return the image. Expose which photo was chosen and
+  // how, so callers (and the social-post cron) can record it like the other paths.
   if (preview) {
+    if (chosenPhotoId) imageResponse.headers.set('X-Photo-Id', chosenPhotoId);
+    imageResponse.headers.set('X-Photo-Source', photoSource);
     return imageResponse;
   }
 

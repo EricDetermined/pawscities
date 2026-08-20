@@ -329,6 +329,12 @@ COMMENT_TEMPLATES = {
         "¡Qué alegría ver lugares donde los perros son bienvenidos!",
         "Tu perro tiene cara de felicidad total. ¡Precioso!",
     ],
+    # Expanded 2026-08-20. Tokyo had a 0% reply rate across 20 checked comments —
+    # the worst of any city — while Barcelona ran at 42.9%. The cause was volume
+    # over a tiny template set: 4 lines covered ~62 of 229 Tokyo comments, one of
+    # them used 22 times verbatim. These are more varied and lean on specifics
+    # (coat, season, walk, cafe) rather than generic praise, which is what the
+    # higher-performing cities' comments do.
     "japanese": [
         "最高ですね！ワンちゃんもとっても楽しそう",
         "素敵な場所！{city_name}はワンコに優しい街ですね",
@@ -338,6 +344,22 @@ COMMENT_TEMPLATES = {
         "こんな素敵な場所があるんですね。愛犬と行ってみたい",
         "犬と一緒に楽しめる場所、本当にありがたいですよね",
         "幸せそうなワンちゃんの写真、癒されます",
+        "毛並みがつやつやですね！お手入れ上手さんだ",
+        "この後ろ姿がたまらないです。散歩日和ですね",
+        "お散歩コース、気持ちよさそうです",
+        "ワンちゃん、カメラ目線が完璧すぎます",
+        "一緒にお出かけできるお店が増えると嬉しいですよね",
+        "テラス席でワンちゃんとゆっくりできるの、最高です",
+        "この笑顔を見るとこちらまで元気になります",
+        "季節の変わり目、お散歩がいちばん楽しい時期ですね",
+        "こんなに楽しそうだと連れて行った甲斐がありますね",
+        "足元までしっかりケアされていて素敵です",
+        "ワンちゃん連れで行ける場所、もっと広まってほしいです",
+        "写真の切り取り方がすごく good です。愛情が伝わります",
+        "並んで歩く姿がかわいすぎます",
+        "こういう何気ない一枚がいちばん好きです",
+        "落ち着いた表情、信頼関係が伝わってきます",
+        "お出かけ先での一枚、宝物になりますね",
     ],
     "german": [
         "Wunderschön! Euer Hund sieht so glücklich aus",
@@ -1048,6 +1070,34 @@ def generate_comment(post, config):
 
     if not area:
         area = city_name or "the neighborhood"
+
+    # Language/city consistency guard.
+    #
+    # `language` is detected from the POST's caption; `city_name` comes from the
+    # target's assigned city. When those disagree, interpolating city_name
+    # produces nonsense addressed to the wrong market. A 2026-08-20 audit found
+    # 43 Japanese-language comments sent to Barcelona/NYC-assigned targets,
+    # including "素敵な場所！Barcelonaはワンコに優しい街ですね" ("what a lovely
+    # spot, Barcelona is such a dog-friendly city") sent to a Japanese cafe.
+    #
+    # A Japanese caption effectively pins the market to Tokyo. Rather than assert
+    # a city we now doubt, drop the city reference entirely — the templates all
+    # read fine without it.
+    LANGUAGE_MARKETS = {
+        "japanese": {"tokyo"},
+        "french": {"paris", "geneva"},
+        "spanish": {"barcelona"},
+        "german": {"geneva"},
+    }
+    expected = LANGUAGE_MARKETS.get(language)
+    assigned = (city_slug or "").lower()
+    if expected and assigned and assigned not in expected:
+        print(
+            f"  ⚠️  language/city mismatch: {language} caption but city='{assigned}' "
+            f"— dropping city reference (target may be misfiled)"
+        )
+        city_name = ""
+        area = "this area"
 
     comment = template.format(
         city_ref=city_ref,

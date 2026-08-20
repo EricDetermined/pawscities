@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest, NextResponse } from 'next/server';
-import { pickContextualDogPhotoWithId, photoUrlFromId } from '@/lib/dog-photos';
+import { photoUrlFromId } from '@/lib/dog-photos';
+import { curatePhoto } from '@/lib/photo-curator';
 
 const BRAND_ORANGE = '#f97316';
 
@@ -46,11 +47,15 @@ export async function GET(request: NextRequest) {
 
   let bgImage: string;
   let chosenPhotoId: string;
+  let photoSource = 'forced';
   if (forcedPhoto) {
     chosenPhotoId = forcedPhoto;
     bgImage = photoUrlFromId(forcedPhoto, 'square');
   } else {
-    const picked = pickContextualDogPhotoWithId({
+    // Same AI photo editor the text cards use, so a breed-specific event gets
+    // the right dog. Falls back to the deterministic scorer on any failure —
+    // event creative generation is never gated on the model being available.
+    const picked = await curatePhoto({
       text: name,
       citySlug,
       description: desc || undefined,
@@ -60,6 +65,10 @@ export async function GET(request: NextRequest) {
     }, 'square');
     bgImage = picked.url;
     chosenPhotoId = picked.photoId;
+    photoSource = picked.source;
+    if (picked.reason) {
+      console.log(`[EVENT-CARD] photo ${picked.photoId} via ${picked.source}: ${picked.reason}`);
+    }
   }
   const tagList = tags ? tags.split(',').slice(0, 4) : [];
 
@@ -266,7 +275,7 @@ export async function GET(request: NextRequest) {
     {
       width: 1080,
       height: 1080,
-      headers: { 'X-Photo-Id': chosenPhotoId },
+      headers: { 'X-Photo-Id': chosenPhotoId, 'X-Photo-Source': photoSource },
     }
   );
 
