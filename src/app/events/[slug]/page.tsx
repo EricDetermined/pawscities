@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getServiceClient } from '@/lib/community';
 import ShareButtons from '@/components/ShareButtons';
 import NewsletterSignup from '@/components/NewsletterSignup';
+import OutboundLink from '@/components/OutboundLink';
 
 export const dynamic = 'force-dynamic';
 
@@ -342,16 +343,19 @@ export default async function EventDetailPage({
                     {event.venue_address ? (
                       <>
                         {' — '}
-                        <a
+                        <OutboundLink
                           href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                             `${event.venue_name} ${event.venue_address}`
                           )}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          eventSlug={event.slug}
+                          eventId={event.id}
+                          citySlug={city?.slug}
+                          linkType="maps"
+                          eventState={state}
                           className="text-orange-600 hover:underline"
                         >
                           {event.venue_address}
-                        </a>
+                        </OutboundLink>
                       </>
                     ) : city ? (
                       `, ${city.name}`
@@ -377,25 +381,38 @@ export default async function EventDetailPage({
 
             {/* Actionable contact — the reason this event board is trustworthy */}
             <div className="mt-8 flex flex-wrap gap-3">
+              {/*
+                These are the conversion. Paw Cities is a directory: the page
+                highlights the event, then the visitor leaves for the organiser.
+                That departure is the success signal, and it was unmeasured
+                until now — a visitor who found exactly what they wanted looked
+                identical to one who bounced.
+              */}
               {event.external_url && (
-                <a
+                <OutboundLink
                   href={event.external_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  eventSlug={event.slug}
+                  eventId={event.id}
+                  citySlug={city?.slug}
+                  linkType="tickets"
+                  eventState={state}
                   className="px-6 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors"
                 >
                   Event details & tickets ↗
-                </a>
+                </OutboundLink>
               )}
               {instagramUrl && (
-                <a
+                <OutboundLink
                   href={instagramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  eventSlug={event.slug}
+                  eventId={event.id}
+                  citySlug={city?.slug}
+                  linkType="instagram"
+                  eventState={state}
                   className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:border-orange-400 hover:text-orange-600 transition-colors"
                 >
                   {handle || 'Instagram'} on Instagram ↗
-                </a>
+                </OutboundLink>
               )}
             </div>
 
