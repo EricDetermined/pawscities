@@ -158,7 +158,17 @@ def cmd_next(limit):
         return
     expired, blocked = sweep()
 
-    pending = _call("GET", "/engagement_queue?select=*&status=eq.pending&order=created_at.desc&limit=500") or []
+    # source=eq.cloud-discovery is a STRUCTURAL guard, not a nicety.
+    # The local browser queue's pending rows are now mirrored to Supabase so the
+    # nightly brief can run without the laptop. Those rows are about to be
+    # posted by the local runner — serving them here would double-comment on
+    # the same post, which is the spam signature Instagram penalises.
+    #
+    # _locally_handled_shortcodes() below already guards this, but only when
+    # comment-queue.json is readable. This filter holds even when it isn't.
+    pending = _call("GET", "/engagement_queue?select=*&status=eq.pending"
+                           "&source=eq.cloud-discovery"
+                           "&order=created_at.desc&limit=500") or []
 
     # Never serve a post the local browser queue has already handled — see
     # _locally_handled_shortcodes(). Without this the two queues drift and we

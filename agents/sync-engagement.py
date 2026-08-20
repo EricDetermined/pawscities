@@ -38,11 +38,20 @@ ROOT = Path(__file__).resolve().parent.parent
 ENG = ROOT / "data" / "engagement"
 BATCH = 500
 
-# Statuses worth mirroring. 'pending' is deliberately excluded: it is local
-# working state that changes minute to minute, and copying it up would recreate
-# the phantom-pending drift that DUAL-SYSTEM-FINDING documented.
+# Statuses mirrored to Supabase.
+#
+# 'pending' was originally excluded because DUAL-SYSTEM-FINDING documented 415
+# phantom pending rows the cloud workflow generated and nobody posted. That
+# risk was real but it was about the CLOUD system inventing work; the local
+# queue's pending rows are the actual work about to happen, and the nightly
+# brief cannot answer "is there anything to post tomorrow" without them.
+#
+# They are safe to mirror only because cloud-queue.py's cmd_next now filters
+# on source=cloud-discovery, so it structurally cannot serve a browser-local
+# row back out and cause a double-comment. If that filter is ever removed,
+# remove 'pending' here too.
 SYNC_STATUSES = {"posted", "failed", "expired", "blocked_safety",
-                 "blocked_account", "skipped_vetting"}
+                 "blocked_account", "skipped_vetting", "pending"}
 
 # Columns that exist on engagement_queue. Anything else in the local record is
 # local-only bookkeeping (e.g. posted_via) and must not be sent — PostgREST

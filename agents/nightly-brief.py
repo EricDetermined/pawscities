@@ -244,9 +244,27 @@ def reach():
 def engagement_by_city():
     """
     Reply rate per city — the sharpest targeting signal available.
-    Barcelona ran 42.9% while Tokyo ran 0%; rotation-based targeting cannot see
-    that difference, so it kept spending equally on both.
+    Barcelona runs 42.9% while Tokyo runs 0%; rotation-based targeting cannot
+    see that difference, so it kept spending equally on both.
+
+    Reads the engagement_reply_rates VIEW, which filters on
+    reply_checker='browser_v2'. That filter is not optional: ~375 rows carry a
+    reply_count of 0 that is a false negative from detection that keyed on
+    comment_pk, which browser-posted comments never had. Aggregating the raw
+    table would collapse a real 23.5% toward 0% — the original bug.
+
+    Falls back to the local file so the brief still works on a laptop with no
+    network, but the cloud path is what lets this run at 6am unattended.
     """
+    rows = sb("engagement_reply_rates?select=*")
+    if rows:
+        out = [{"city": canon_city(r["city"]), "checked": r["checked"],
+                "replied": r["replied"],
+                "reply_rate_pct": float(r["reply_rate_pct"] or 0)}
+               for r in rows if r.get("city")]
+        out.sort(key=lambda r: -r["reply_rate_pct"])
+        return out
+
     tracker = local("reply-tracker.json", {"comments": []})
     v2 = [c for c in tracker.get("comments", []) if c.get("checker") == "browser_v2"]
     checked, replied = Counter(), Counter()
@@ -273,10 +291,22 @@ def engagement_by_city():
 
 
 def queue_health():
-    """Is there anything to post tomorrow, and is it spread across cities?"""
-    q = local("comment-queue.json", {"items": []})
-    pending = [i for i in q.get("items", []) if i.get("status") == "pending"]
-    by_city = Counter(canon_city(i.get("city")) for i in pending)
+    """
+    Is there anything to post tomorrow, and is it spread across cities?
+
+    Counts only source='browser-local' pending rows. The cloud-discovery rows
+    are a separate, currently-dormant queue (its workflow was retired
+    2026-08-20); counting both would overstate tomorrow's real capacity.
+    """
+    rows = sb("engagement_queue?select=city,source&status=eq.pending"
+              "&source=eq.browser-local")
+    if rows:
+        pending = rows
+        by_city = Counter(canon_city(i.get("city")) for i in pending)
+    else:
+        q = local("comment-queue.json", {"items": []})
+        pending = [i for i in q.get("items", []) if i.get("status") == "pending"]
+        by_city = Counter(canon_city(i.get("city")) for i in pending)
     creatives = sb("creative_queue?select=status&status=eq.approved")
     upcoming = sb("events?select=id&status=eq.APPROVED&start_date=gte."
                   + datetime.now(timezone.utc).date().isoformat())
@@ -290,13 +320,37 @@ def queue_health():
 
 
 def warm_leads():
-    """Accounts that replied to us and still don't follow — the warmest targets."""
+    """
+    Accounts that replied to us and still don't follow — the warmest targets
+    we have, and cheaper to convert than cold discovery.
+
+    Derived from engagement_queue (replied=true, followed_back not true)
+    rather than a dated warm-leads-*.json snapshot, so it stays current
+    instead of going stale the day after it was generated.
+    """
+    rows = sb("engagement_queue?select=target_username,replied,followed_back,city"
+              "&replied=is.true&order=posted_at.desc")
+    if rows:
+        seen, remaining = set(), []
+        for r in rows:
+            u = r.get("target_username")
+            if not u or u in seen or r.get("followed_back"):
+                continue
+            seen.add(u)
+            remaining.append({"username": u, "replies": 1,
+                              "city": canon_city(r.get("city"))})
+        return _shape_leads(remaining, "engagement_queue (live)")
+
     import glob
     files = sorted(glob.glob(str(ENG / "warm-leads-*.json")))
     if not files:
-        return {"available": 0}
+        return {"available": 0, "business_looking": 0}
     d = json.loads(Path(files[-1]).read_text())
     remaining = [l for l in d.get("leads", []) if not l.get("followed")]
+    return _shape_leads(remaining, Path(files[-1]).name)
+
+
+def _shape_leads(remaining, source):
     biz = [l for l in remaining if any(
         w in l["username"] for w in
         ("pet", "dog", "vet", "groom", "bar", "pub", "store", "shop", "brew",
@@ -304,9 +358,11 @@ def warm_leads():
     return {
         "available": len(remaining),
         "business_looking": len(biz),
-        "top": [l["username"] for l in sorted(
-            remaining, key=lambda x: -x.get("replies", 0))[:8]],
-        "source": Path(files[-1]).name,
+        # Businesses first: they are the accounts worth following, per the
+        # goal of building followers tied to businesses and established owners.
+        "top": [l["username"] for l in
+                biz + [l for l in remaining if l not in biz]][:8],
+        "source": source,
     }
 
 
