@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { getActiveCities } from '@/lib/cities-config';
+import { trackSignup } from '@/lib/analytics';
 
 interface NewsletterSignupProps {
   /** Pre-select a city (e.g., on city pages) */
@@ -50,6 +51,18 @@ export default function NewsletterSignup({
       setStatus('success');
       setMessage(data.alreadySubscribed ? 'You\'re already on the list!' : 'You\'re in! Check your inbox soon.');
       setEmail('');
+
+      // Fired only after the API confirms success, so the metric counts real
+      // subscribers rather than submit attempts. A repeat signup is routed to
+      // a separate event — see trackSignup — so it cannot inflate the
+      // conversion number. `source` and `citySlug` are already threaded
+      // through this component for attribution, which lets GA4 answer which
+      // placement and which city actually earn signups.
+      trackSignup({
+        alreadySubscribed: Boolean(data.alreadySubscribed),
+        source,
+        citySlug,
+      });
     } catch {
       setStatus('error');
       setMessage('Network error. Please try again.');
