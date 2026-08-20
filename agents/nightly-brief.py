@@ -31,9 +31,13 @@ DATA IT JOINS
             follower-snapshots.json
             warm-leads-*.json     accounts that replied but don't follow
 
-Usage:  python3 agents/nightly-brief.py [--json]
+Usage:
+    python3 agents/nightly-brief.py            # print to terminal
+    python3 agents/nightly-brief.py --json     # machine-readable
+    python3 agents/nightly-brief.py --email    # send via Resend
 """
 
+import io
 import json
 import os
 import sys
@@ -187,6 +191,31 @@ def parse_dt(v):
 
 
 # ─── sections ─────────────────────────────────────────────────────────────────
+
+def data_freshness():
+    """
+    How current is the engagement data the brief is reasoning from?
+
+    The brief now reads Supabase and runs unattended, but sync-engagement.py
+    still has to run ON THE LAPTOP — it reads comment-queue.json, which only
+    exists there. So if the laptop stays shut for days, this keeps producing a
+    confident-looking brief from stale numbers.
+    
+    A brief that silently reports week-old queue depth as "tomorrow's queue" is
+    the same class of failure as the reply rate that read 0% for months. Say so
+    instead.
+    """
+    rows = sb("engagement_queue?select=posted_at&posted_at=not.is.null"
+              "&order=posted_at.desc&limit=1")
+    if not rows:
+        return {"days": None}
+    last = parse_dt(rows[0]["posted_at"])
+    if not last:
+        return {"days": None}
+    days = (datetime.now(timezone.utc) - last).days
+    return {"days": days, "last_activity": rows[0]["posted_at"][:10],
+            "stale": days >= 2}
+
 
 def audience():
     """Follower trend. The only number that says whether growth is happening."""
@@ -508,6 +537,95 @@ def recommendations(city_rows, q, leads, aud, out=None, covered=()):
     return recs
 
 
+# ─── email ────────────────────────────────────────────────────────────────────
+
+def _html(aud, rch, city_rows, q, leads, out, fun, xsig, recs):
+    """
+    Minimal HTML. Deliberately plain: this is read on a phone at 6am, so it
+    leads with the decisions and keeps the supporting numbers beneath them.
+    """
+    def esc(t):
+        return (str(t).replace("&", "&amp;").replace("<", "&lt;")
+                .replace(">", "&gt;"))
+
+    rows = "".join(
+        f'<tr><td style="padding:4px 10px 4px 0">{esc(r["city"])}</td>'
+        f'<td style="padding:4px 10px;text-align:right;'
+        f'{"font-weight:600" if r["reply_rate_pct"] >= 25 else ""}">'
+        f'{r["reply_rate_pct"]}%</td>'
+        f'<td style="padding:4px 0;color:#666">{r["replied"]}/{r["checked"]}</td></tr>'
+        for r in city_rows)
+
+    sig = "".join(f'<li style="margin-bottom:8px">{esc(x)}</li>' for x in xsig)
+    pri = "".join(f'<li style="margin-bottom:6px">{esc(x)}</li>' for x in recs)
+
+    followers = "n/a" if aud.get("error") else aud.get("followers")
+    d1 = aud.get("delta_1d")
+    delta = f' ({d1:+d} today)' if isinstance(d1, int) else ""
+
+    reach_line = ("reach not yet measured" if rch.get("error") else
+                  f'avg reach {rch["avg_reach"]} over {rch["posts_measured"]} posts'
+                  + (" — thin sample, treat as directional"
+                     if rch.get("thin_sample") else ""))
+
+    return f"""<div style="font-family:-apple-system,Segoe UI,sans-serif;max-width:640px;color:#111">
+<h2 style="margin:0 0 4px">Paw Cities — Nightly Brief</h2>
+<p style="margin:0 0 18px;color:#666;font-size:13px">{datetime.now().strftime('%A %d %B %Y')}</p>
+
+{'<h3 style="margin:18px 0 6px">Do this first</h3><ul style="padding-left:18px;margin:0">' + sig + '</ul>' if sig else ''}
+
+<h3 style="margin:20px 0 6px">Priorities</h3>
+<ol style="padding-left:18px;margin:0">{pri}</ol>
+
+<h3 style="margin:20px 0 6px">Reply rate by city</h3>
+<table style="border-collapse:collapse;font-size:14px">{rows}</table>
+
+<h3 style="margin:20px 0 6px">Where things stand</h3>
+<ul style="padding-left:18px;margin:0;font-size:14px">
+<li>followers {followers}{delta}</li>
+<li>{reach_line}</li>
+<li>{q['comments_pending']} comments queued across {q['cities_covered']}/9 cities</li>
+<li>{leads.get('available', 0)} warm leads ({leads.get('business_looking', 0)} businesses)</li>
+<li>{out['local_opportunities']} city-tagged hashtag opportunities open</li>
+<li>subscribers {fun['subscribers_total']} (+{fun['subscribers_last_7d']} this week)</li>
+</ul>
+
+<p style="margin-top:24px;color:#888;font-size:12px">
+Read-only: this brief never posts, follows or queues anything.</p>
+</div>"""
+
+
+def send_email(subject, html, text):
+    """
+    Send via Resend's HTTP API directly rather than through the Next.js app.
+    One implementation of the brief, no parallel TypeScript port to drift.
+    """
+    key = os.environ.get("RESEND_API_KEY")
+    to = [e.strip() for e in (os.environ.get("ADMIN_EMAILS") or "").split(",")
+          if e.strip()]
+    sender = os.environ.get("EMAIL_FROM", "Paw Cities <noreply@pawcities.com>")
+    if not key:
+        print("RESEND_API_KEY not set — cannot email.", file=sys.stderr)
+        return 1
+    if not to:
+        print("ADMIN_EMAILS not set — nobody to send to.", file=sys.stderr)
+        return 1
+    body = json.dumps({"from": sender, "to": to, "subject": subject,
+                       "html": html, "text": text}).encode()
+    req = urllib.request.Request(
+        "https://api.resend.com/emails", data=body,
+        headers={"Authorization": f"Bearer {key}",
+                 "Content-Type": "application/json"}, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            print(f"emailed {', '.join(to)} — {json.loads(r.read().decode()).get('id','sent')}")
+        return 0
+    except Exception as e:  # noqa: BLE001
+        detail = e.read().decode()[:200] if hasattr(e, "read") else str(e)[:200]
+        print(f"email failed: {detail}", file=sys.stderr)
+        return 1
+
+
 # ─── render ───────────────────────────────────────────────────────────────────
 
 def main():
@@ -515,7 +633,13 @@ def main():
     aud, rch = audience(), reach()
     city_rows, q = engagement_by_city(), queue_health()
     leads, out, fun = warm_leads(), outreach(), funnel()
+    fresh = data_freshness()
     xsig = cross_signals(city_rows, q, out)
+    if fresh.get("stale"):
+        xsig.insert(0, (
+            f"DATA IS {fresh['days']} DAYS OLD — last comment activity "
+            f"{fresh['last_activity']}. sync-engagement.py runs on the laptop; "
+            f"if it has not run, the queue and reply numbers below are stale."))
     covered = {c for c in CITIES if any(c.upper() in sg for sg in xsig)}
     recs = recommendations(city_rows, q, leads, aud, out, covered)
 
@@ -525,9 +649,16 @@ def main():
             "audience": aud, "reach": rch, "engagement_by_city": city_rows,
             "queue": q, "warm_leads": leads, "outreach": out, "funnel": fun,
             "cross_signals": xsig, "recommendations": recs,
+            "freshness": fresh,
             "errors": SB_ERRORS + LOCAL_ERRORS,
         }, indent=1))
         return 1 if (SB_ERRORS or LOCAL_ERRORS) else 0
+
+    email_mode = "--email" in sys.argv
+    buf = io.StringIO()
+    _out = sys.stdout
+    if email_mode:
+        sys.stdout = buf  # capture the same report the terminal would show
 
     W = 66
     print("\n" + "=" * W)
@@ -609,6 +740,22 @@ def main():
     for i, r in enumerate(recs, 1):
         print(f"  {i}. {r}")
     print("\n" + "=" * W + "\n")
+
+    if email_mode:
+        sys.stdout = _out
+        text = buf.getvalue()
+        # Lead the subject with the single most actionable finding, so the
+        # inbox preview is useful without opening anything.
+        headline = (xsig[0].split(":")[0].title() if xsig
+                    else (recs[0][:48] if recs else "no action needed"))
+        subject = f"Paw Cities brief — {headline}"
+        rc = send_email(subject,
+                        _html(aud, rch, city_rows, q, leads, out, fun, xsig, recs),
+                        text)
+        print(text)
+        if rc:
+            return rc
+
     # Non-zero exit so a scheduled run that silently lost a data source is
     # visible to whatever is watching, instead of looking like a healthy report.
     return 1 if (SB_ERRORS or LOCAL_ERRORS) else 0

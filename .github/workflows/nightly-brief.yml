@@ -1,0 +1,81 @@
+# Daily growth brief, emailed at 6am Pacific.
+#
+# WHAT IT DOES
+# Runs agents/nightly-brief.py, which reads Supabase and emails a decision
+# summary: which cities to engage weighted by reply rate, which accounts to
+# follow, what is running dry, and what to stop. It is READ-ONLY — it never
+# posts a comment, follows an account, or queues anything.
+#
+# WHY GITHUB ACTIONS AND NOT A VERCEL CRON
+# Vercel crons hit HTTP endpoints and the brief is Python. Porting it to a
+# TypeScript route would mean two implementations of the same logic drifting
+# apart, which is the exact failure mode that left two engagement systems
+# unreconciled for a month. One implementation, scheduled where Python runs.
+#
+# SCHEDULE
+# 13:00 UTC = 6am Pacific Daylight Time. GitHub cron is always UTC and does not
+# follow daylight saving, so this becomes 5am Pacific when PST resumes in
+# November. Adjust to '0 14 * * *' then if the hour matters.
+#
+# REQUIRED REPO SECRETS  (Settings -> Secrets and variables -> Actions)
+#   SUPABASE_URL                 https://tnqctocershbclhbjnwg.supabase.co
+#   SUPABASE_SERVICE_ROLE_KEY    Supabase service-role key
+#   RESEND_API_KEY               Resend key (same one Vercel uses)
+#   ADMIN_EMAILS                 comma-separated recipients
+#
+# The first two already exist for the retired engagement-discovery workflow.
+# The last two live only in Vercel today and must be added here.
+#
+# A NOTE ON STALENESS
+# This runs in the cloud, but agents/sync-engagement.py still runs on the
+# laptop because it reads comment-queue.json. If the laptop stays shut, the
+# queue and reply figures stop advancing — the brief detects this itself and
+# leads with a "DATA IS N DAYS OLD" warning rather than reporting stale numbers
+# as current.
+
+name: Nightly Brief
+
+on:
+  schedule:
+    - cron: '0 13 * * *'   # 13:00 UTC = 6am PDT / 5am PST
+  workflow_dispatch: {}    # run by hand any time
+
+concurrency:
+  group: nightly-brief
+  cancel-in-progress: false
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # No pip install step: the brief uses only the standard library, so there
+      # is no dependency that can break this at 6am.
+      - name: Send the brief
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ADMIN_EMAILS: ${{ secrets.ADMIN_EMAILS }}
+        run: python agents/nightly-brief.py --email
+
+      # Also attach the brief to the run, so there is a readable record even if
+      # the email bounces or a secret expires.
+      - name: Attach to run summary
+        if: always()
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          {
+            echo '## Paw Cities — Nightly Brief'
+            echo '```'
+            python agents/nightly-brief.py || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
