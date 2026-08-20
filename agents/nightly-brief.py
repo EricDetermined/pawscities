@@ -614,15 +614,31 @@ def send_email(subject, html, text):
                        "html": html, "text": text}).encode()
     req = urllib.request.Request(
         "https://api.resend.com/emails", data=body,
-        headers={"Authorization": f"Bearer {key}",
-                 "Content-Type": "application/json"}, method="POST")
+        headers={
+            "Authorization": f"Bearer {key}",
+            "Content-Type": "application/json",
+            # An explicit User-Agent is REQUIRED, not cosmetic. urllib defaults
+            # to "Python-urllib/3.x", which Cloudflare in front of the Resend
+            # API rejects outright — the first scheduled run came back with
+            # "error code: 1010" (Cloudflare's banned-signature page), not a
+            # Resend error at all. Works from a laptop, fails from CI.
+            "User-Agent": "pawcities-nightly-brief/1.0 (+https://pawcities.com)",
+            "Accept": "application/json",
+        }, method="POST")
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
-            print(f"emailed {', '.join(to)} — {json.loads(r.read().decode()).get('id','sent')}")
+            print(f"emailed {', '.join(to)} — "
+                  f"{json.loads(r.read().decode()).get('id', 'sent')}")
         return 0
+    except urllib.error.HTTPError as e:
+        # Report the STATUS as well as the body. The body alone said only
+        # "error code: 1010", which reads like an application error and sent me
+        # looking at Resend rather than at the edge in front of it.
+        detail = e.read().decode()[:300]
+        print(f"email failed: HTTP {e.code} {e.reason} — {detail}", file=sys.stderr)
+        return 1
     except Exception as e:  # noqa: BLE001
-        detail = e.read().decode()[:200] if hasattr(e, "read") else str(e)[:200]
-        print(f"email failed: {detail}", file=sys.stderr)
+        print(f"email failed: {type(e).__name__} {str(e)[:200]}", file=sys.stderr)
         return 1
 
 
