@@ -357,6 +357,30 @@ def warm_leads():
     rather than a dated warm-leads-*.json snapshot, so it stays current
     instead of going stale the day after it was generated.
     """
+    # Prefer the warm_leads VIEW, which excludes accounts we already follow.
+    # The old query could not do this: it keyed off followed_back, which records
+    # whether THEY follow US — a different fact. That conflation put accounts we
+    # already follow (barkcelonastore, atlpetstop, dogsonlysocialclub,
+    # barkmondseysquare, vaccinevets) on the list as fresh targets.
+    view = sb("warm_leads?select=target_username,city,they_follow_us")
+    follows = sb("instagram_following?select=username")
+    snap = sb("account_snapshots?select=follows_count&order=captured_on.desc&limit=1")
+    actually_follow = (snap[0].get("follows_count") if snap else None)
+    coverage = (len(follows) / actually_follow) if (actually_follow and follows) else 0
+
+    if view:
+        out = _shape_leads(
+            [{"username": r["target_username"], "replies": 1,
+              "city": canon_city(r.get("city"))} for r in view],
+            "warm_leads view")
+        out["follow_capture"] = f"{len(follows)}/{actually_follow or '?'}"
+        # A partial following list means this list still contains accounts we
+        # already follow. Say so rather than presenting a number that looks
+        # authoritative — an inflated work list is how the last pass wasted
+        # effort on five accounts we were already following.
+        out["incomplete"] = coverage < 0.9
+        return out
+
     rows = sb("engagement_queue?select=target_username,replied,followed_back,city"
               "&replied=is.true&order=posted_at.desc")
     if rows:
@@ -722,6 +746,10 @@ def main():
     print("\nWARM LEADS")
     print(f"  {leads.get('available', 0)} replied but don't follow "
           f"({leads.get('business_looking', 0)} businesses)")
+    if leads.get("incomplete"):
+        print(f"  ⚠️  follow-list capture is only {leads.get('follow_capture')} — "
+              f"this count still includes accounts we already follow. "
+              f"Run agents/capture-following.py before working it.")
     if leads.get("top"):
         print(f"  next: {', '.join(leads['top'][:6])}")
 
