@@ -132,9 +132,21 @@ export async function GET(request: NextRequest) {
 
         const hashtagId = hashtagSearchData.data[0].id;
 
-        // Get top media for this hashtag
+        // Get top media for this hashtag.
+        //
+        // The `limit` is load-bearing. Without it Meta rejects the request with
+        // "Please reduce the amount of data you're asking for" (error code 1)
+        // on every hashtag — so this cron was reporting hashtagsScanned: 0
+        // while still returning success: true. Verified in production
+        // 2026-08-20: all 4 hashtags failing, and it had been doing so
+        // unnoticed since the default page size grew too large to serve.
+        //
+        // Tested 2026-08-20: this exact field set succeeds at limit 5, 10 and
+        // 15, and fails with no limit. The fields are unchanged — media_type
+        // and timestamp are both consumed downstream (post.media_type,
+        // post.timestamp), so they must stay.
         const mediaRes = await fetch(
-          `https://graph.facebook.com/${META_API_VERSION}/${hashtagId}/top_media?user_id=${INSTAGRAM_ACCOUNT_ID}&fields=id,caption,media_type,permalink,timestamp,like_count,comments_count&access_token=${META_PAGE_ACCESS_TOKEN}`
+          `https://graph.facebook.com/${META_API_VERSION}/${hashtagId}/top_media?user_id=${INSTAGRAM_ACCOUNT_ID}&fields=id,caption,media_type,permalink,timestamp,like_count,comments_count&limit=15&access_token=${META_PAGE_ACCESS_TOKEN}`
         );
         const mediaData = await mediaRes.json();
 
@@ -300,6 +312,7 @@ export async function GET(request: NextRequest) {
 
     const summary = {
       hashtagsScanned,
+      degraded: hashtagsScanned === 0 && hashtagErrors.length > 0,
       hashtagErrors: hashtagErrors.length,
       watchlistAccountsChecked: watchlistChecked,
       watchlistErrors: watchlistErrors.length,
@@ -307,6 +320,18 @@ export async function GET(request: NextRequest) {
       totalPendingOpportunities: pendingCount || 0,
       timestamp: new Date().toISOString(),
     };
+
+    // Scanning nothing is a failure, not a success. This cron returned
+    // success: true with hashtagsScanned: 0 for an unknown number of days
+    // because every hashtag call errored and nothing surfaced it. Say so
+    // loudly, and report degraded in the payload so health-check can see it.
+    const scannedNothing = hashtagsScanned === 0 && hashtagErrors.length > 0;
+    if (scannedNothing) {
+      console.error(
+        `[OUTREACH] DEGRADED — 0 hashtags scanned, ${hashtagErrors.length} errored. ` +
+        `First error: ${hashtagErrors[0]}`
+      );
+    }
 
     console.log('[OUTREACH] Scan complete:', JSON.stringify(summary));
 

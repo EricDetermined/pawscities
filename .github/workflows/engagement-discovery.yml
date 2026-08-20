@@ -13,8 +13,25 @@
 name: Engagement Discovery
 
 on:
-  schedule:
-    - cron: '0 12 * * *'   # daily 12:00 UTC = 5am PT / 8am ET
+  # DISABLED 2026-08-20 — manual trigger only.
+  #
+  # This ran daily for 31 runs and its output was never used. Posting happens
+  # entirely through the local browser queue (comment-queue.json +
+  # chrome-engagement-runner.py); this workflow writes to Supabase
+  # engagement_queue, which nothing posts from. The result was 415 orphaned
+  # pending rows, of which 131 were for posts we had ALREADY commented on —
+  # a duplicate-comment hazard if anyone ran `cloud-queue.py next`.
+  #
+  # It also spent Apify + OpenAI credits on every run to produce those unused
+  # comments. See DUAL-SYSTEM-FINDING-2026-08-20.md.
+  #
+  # workflow_dispatch is kept so it can still be run by hand if browser-based
+  # discovery is ever unavailable. Before re-enabling the schedule, confirm
+  # cloud-queue.py's dedup guard (_locally_handled_shortcodes) is still in place,
+  # otherwise the two queues will drift again.
+  #
+  #  schedule:
+  #    - cron: '0 12 * * *'   # daily 12:00 UTC = 5am PT / 8am ET
   workflow_dispatch: {}
 
 concurrency:
