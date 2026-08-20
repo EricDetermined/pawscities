@@ -66,6 +66,23 @@ CITY_HASHTAG_TOKENS = {
 }
 
 
+# Slug variants that accumulated across discovery paths. Without this the
+# brief splits one city's reply rate in two — "new-york 0.0% (0/7)" reads as a
+# dead market when those comments belong to new-york-city.
+CITY_ALIASES = {
+    "new_york": "new-york-city", "new-york": "new-york-city",
+    "newyork": "new-york-city", "nyc": "new-york-city",
+    "los_angeles": "los-angeles", "losangeles": "los-angeles", "la": "los-angeles",
+}
+
+
+def canon_city(city):
+    if not city:
+        return None
+    c = str(city).strip().lower()
+    return CITY_ALIASES.get(c, c)
+
+
 def hashtag_city(tag):
     """
     Return the city a hashtag belongs to, or None.
@@ -234,7 +251,7 @@ def engagement_by_city():
     v2 = [c for c in tracker.get("comments", []) if c.get("checker") == "browser_v2"]
     checked, replied = Counter(), Counter()
     for c in v2:
-        city = c.get("city")
+        city = canon_city(c.get("city"))
         if not city:
             continue
         checked[city] += 1
@@ -259,7 +276,7 @@ def queue_health():
     """Is there anything to post tomorrow, and is it spread across cities?"""
     q = local("comment-queue.json", {"items": []})
     pending = [i for i in q.get("items", []) if i.get("status") == "pending"]
-    by_city = Counter(i.get("city") for i in pending)
+    by_city = Counter(canon_city(i.get("city")) for i in pending)
     creatives = sb("creative_queue?select=status&status=eq.approved")
     upcoming = sb("events?select=id&status=eq.APPROVED&start_date=gte."
                   + datetime.now(timezone.utc).date().isoformat())

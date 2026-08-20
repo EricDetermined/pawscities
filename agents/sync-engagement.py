@@ -54,6 +54,31 @@ QUEUE_COLS = {"id", "post_id", "post_shortcode", "post_url", "target_username",
 REPLY_COLS = {"reply_count", "replied", "reply_checked_at", "reply_checker",
               "replies", "followed_back"}
 
+# City slug variants that accumulated across different discovery paths.
+# 44 rows in comment-queue.json and 16 in reply-tracker.json use these instead
+# of the canonical slug, which SPLITS a city's reply rate across two buckets —
+# the first sync reported "new-york 0.0% (0/6)" as if it were a separate,
+# failing market when those 6 comments belong to new-york-city's 39.
+# Normalising here rather than rewriting the local files, which stay the
+# source of truth for posting.
+CITY_ALIASES = {
+    "new_york": "new-york-city",
+    "new-york": "new-york-city",
+    "newyork": "new-york-city",
+    "nyc": "new-york-city",
+    "los_angeles": "los-angeles",
+    "losangeles": "los-angeles",
+    "la": "los-angeles",
+}
+
+
+def canon_city(city):
+    """Canonical city slug, or None. Never invents a city it hasn't seen."""
+    if not city:
+        return None
+    c = str(city).strip().lower()
+    return CITY_ALIASES.get(c, c)
+
 
 def env():
     for name in (".env.local", ".env.instagram"):
@@ -98,7 +123,7 @@ def fetch_all(url, key, path_base):
             return out
 
 
-def build_records(sb_shortcode_to_id):
+def build_records(sb_shortcode_to_id, sb_id_to_post_id=None):
     """
     Merge the local queue with reply outcomes into engagement_queue rows.
 
@@ -115,6 +140,14 @@ def build_records(sb_shortcode_to_id):
          (without this, 7 rows insert as duplicates of posts already recorded,
          which is the double-comment hazard from DUAL-SYSTEM-FINDING)
       3. otherwise keep the synthetic id
+
+    SEPARATELY, the table has TWO unique constraints — id (primary key) and
+    post_id — and an upsert can only resolve one of them. 24 local rows carry
+    an `id` that Supabase already holds against a DIFFERENT post_id, so an
+    upsert on post_id inserts a new row and then collides on the primary key.
+    Those ids are local labels (`cmt-<timestamp>-<rand>`); post_id/shortcode is
+    the real identity. So the id is deterministically re-keyed rather than
+    overwriting whatever Supabase currently has under it.
     """
     queue = json.loads((ENG / "comment-queue.json").read_text())["items"]
     tracker = json.loads((ENG / "reply-tracker.json").read_text())
@@ -126,6 +159,7 @@ def build_records(sb_shortcode_to_id):
     # followed_back is tracked separately, keyed by username.
     followed = set(tracker.get("followed_back") or [])
 
+    sb_id_to_post_id = sb_id_to_post_id or {}
     records, skipped, repaired = [], Counter(), Counter()
     for item in queue:
         if item.get("status") not in SYNC_STATUSES:
@@ -137,6 +171,11 @@ def build_records(sb_shortcode_to_id):
 
         rec = {k: v for k, v in item.items() if k in QUEUE_COLS}
         rec.setdefault("source", "browser-local")
+        if rec.get("city"):
+            before = rec["city"]
+            rec["city"] = canon_city(before)
+            if rec["city"] != before:
+                repaired["city slug normalised"] += 1
 
         sc = item.get("post_shortcode")
         if not str(rec["post_id"]).isdigit() and sc:
@@ -166,6 +205,7 @@ def build_records(sb_shortcode_to_id):
             rec["replied"] = bool(reply_list) if (reply_list or checker == "browser_v2") else None
         if item.get("target_username") in followed:
             rec["followed_back"] = True
+
         records.append(rec)
 
     # Two local rows can now normalise onto the same post_id (the same post
@@ -177,6 +217,32 @@ def build_records(sb_shortcode_to_id):
     if len(deduped) < len(records):
         skipped["duplicate post_id collapsed"] = len(records) - len(deduped)
     out = list(deduped.values())
+
+    # ── Primary-key uniqueness ────────────────────────────────────────────
+    # engagement_queue constrains BOTH id (primary key) and post_id, and an
+    # upsert can only resolve one. Two independent sources of id collision:
+    #
+    #   1. Supabase already holds this id against a DIFFERENT post_id (24 rows)
+    #   2. The local queue itself reuses one id across two different posts
+    #      (25 ids covering 50 rows — the local generator collided, but the
+    #      posts are genuinely distinct: different shortcodes, both posted)
+    #
+    # The first pass missed (2) because it compared only against a snapshot
+    # taken before the run, so a batch could collide with a row an earlier
+    # batch had just inserted.
+    #
+    # id is a local label; post_id/shortcode is the real identity. So re-key
+    # rather than dropping a real comment or overwriting an unrelated row.
+    # The suffix is derived from post_id, not a counter, so a re-run produces
+    # the same id and the sync stays idempotent.
+    seen_ids = set()
+    for r in sorted(out, key=lambda x: x.get("posted_at") or ""):
+        held = sb_id_to_post_id.get(r["id"])
+        collides_remote = held is not None and str(held) != str(r["post_id"])
+        if collides_remote or r["id"] in seen_ids:
+            r["id"] = f'{r["id"]}-{str(r["post_id"])[-6:]}'
+            repaired["id re-keyed (collision)"] += 1
+        seen_ids.add(r["id"])
 
     # PostgREST requires EVERY object in a bulk request to carry an identical
     # key set (PGRST102 "All object keys must match") — it builds one INSERT
@@ -194,10 +260,11 @@ def main():
     verify_only = "--verify" in sys.argv
     url, key = env()
 
-    existing = fetch_all(url, key, "engagement_queue?select=post_id,post_shortcode")
+    existing = fetch_all(url, key, "engagement_queue?select=id,post_id,post_shortcode")
     sb_map = {r["post_shortcode"]: r["post_id"] for r in existing
               if r.get("post_shortcode")}
-    records, skipped, repaired = build_records(sb_map)
+    sb_ids = {r["id"]: r["post_id"] for r in existing}
+    records, skipped, repaired = build_records(sb_map, sb_ids)
     have = {r["post_id"] for r in existing}
     new = [r for r in records if r["post_id"] not in have]
     upd = [r for r in records if r["post_id"] in have]
@@ -241,9 +308,20 @@ def main():
             sent += len(chunk)
             print(f"  synced {sent}/{len(records)}")
         except urllib.error.HTTPError as e:
+            detail = e.read().decode()[:400]
             print(f"\nFAILED at batch {i // BATCH + 1}: {e.code}")
-            print(e.read().decode()[:400])
-            print("Has migration 022_engagement_replies.sql been applied?")
+            print(detail)
+            # Report what the error actually means. The previous version blamed
+            # migration 022 for every failure, which sent me looking in the
+            # wrong place twice — once for a varchar overflow and once for a
+            # primary-key collision, neither of which was a missing migration.
+            if "PGRST204" in detail or "schema cache" in detail:
+                print("-> A column is missing. Apply supabase/migrations/022_engagement_replies.sql.")
+            elif "22001" in detail:
+                print("-> A value exceeds its column width. See 024_widen_post_shortcode.sql.")
+            elif "23505" in detail:
+                print("-> Unique/primary-key collision. engagement_queue constrains BOTH id "
+                      "and post_id; an upsert resolves only one.")
             return 1
 
     rates = req(url, key, "engagement_reply_rates?select=*")
