@@ -31,7 +31,7 @@ export async function generateMetadata({
           .maybeSingle();
         cityName = city?.name || '';
       }
-      const title = `${d.name}${d.breed ? ` the ${d.breed}` : ''}${cityName ? ` in ${cityName}` : ''} | Paw Cities`;
+      const title = `${d.name}${d.breed ? ` the ${d.breed}` : ''}${cityName ? ` in ${cityName}` : ''}`;
       const description =
         (d.bio || d.personality || '').slice(0, 155) ||
         `Meet ${d.name} on Paw Cities — the dog-friendly city community.`;

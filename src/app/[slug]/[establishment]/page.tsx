@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!city || !place) return {};
   const url = `${BASE_URL}/${city.slug}/${params.establishment}`;
   return {
-    title: `${place.name} - Dog-Friendly in ${city.name} | Paw Cities`,
+    title: `${place.name} - Dog-Friendly in ${city.name}`,
     description: place.description,
     alternates: { canonical: url },
     openGraph: {

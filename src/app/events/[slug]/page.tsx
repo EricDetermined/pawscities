@@ -97,13 +97,22 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const event = await getEvent(params.slug);
-  if (!event) return { title: 'Event | Paw Cities' };
+  if (!event) return { title: 'Event' };
   const cityName = event.cities?.name || '';
   const state = eventState(event);
   const stale = state !== 'live' && daysSinceEnded(event) > 30;
 
-  const prefix = state === 'cancelled' ? 'Cancelled: ' : state === 'past' ? 'Past event: ' : '';
-  const title = `${prefix}${event.name} — ${cityName} | Paw Cities`;
+  // Title leads with the event name, because that is what people actually type.
+  // Search Console (2026-08-20) shows every top query is an event-name search:
+  // "ekka dog show 2026" (924 impressions), "wuthering heights day sydney 2026"
+  // (251), "dogs day out st ives" (91). Burying the name behind a status prefix
+  // or trailing it with boilerplate costs us the match.
+  //
+  // Cancelled/past state moves to the END so the name still leads, but searchers
+  // see the status before clicking rather than bouncing off a dead page.
+  const suffix =
+    state === 'cancelled' ? ' (Cancelled)' : state === 'past' ? ' (Past event)' : '';
+  const title = `${event.name}${suffix} — ${cityName}`;
   const description =
     state !== 'live'
       ? `This event is no longer running. See what else is on for dogs in ${cityName}.`

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { AmbassadorDashboardClient } from './AmbassadorDashboardClient';
 
 export const metadata: Metadata = {
-  title: 'Ambassador Dashboard | Paw Cities',
+  title: 'Ambassador Dashboard',
   description: 'Your referral link and community impact.',
 };
 

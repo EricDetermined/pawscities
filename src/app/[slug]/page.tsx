@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   if (!city) return {};
   const url = `${BASE_URL}/${city.slug}`;
   return {
-    title: `Dog-Friendly Places in ${city.name} | Paw Cities`,
+    title: `Dog-Friendly Places in ${city.name}`,
     description: city.description,
     alternates: { canonical: url },
     openGraph: {

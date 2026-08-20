@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import ClaimPageClient from './ClaimPageClient';
 
 export const metadata = {
-  title: 'Claim Your Business | Paw Cities',
+  title: 'Claim Your Business',
   description: 'Claim and manage your dog-friendly business listing on Paw Cities.',
 };
 

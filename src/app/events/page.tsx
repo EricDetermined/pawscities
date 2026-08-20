@@ -5,7 +5,7 @@ import { getServiceClient } from '@/lib/community';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Dog-Friendly Events | Paw Cities',
+  title: 'Dog-Friendly Events',
   description:
     'Upcoming dog-friendly events across Paw Cities — yappy hours, adoption days, pup socials, and more. Every event has a link, contact, or venue you can act on.',
 };
