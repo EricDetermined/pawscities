@@ -127,6 +127,29 @@ def today_posted():
     return rows or []
 
 
+def _locally_handled_shortcodes():
+    """
+    Shortcodes already present in the local browser queue, in ANY status.
+
+    The cloud queue (Supabase) and the local queue (comment-queue.json) are two
+    independent systems: the GitHub Action fills Supabase daily, but posting runs
+    off the local queue. Nothing reconciled them, so on 2026-08-20 Supabase held
+    131 `pending` rows for posts already commented on locally — @club_diogi twice
+    among them. Serving those would post duplicate comments on the same post,
+    which is the exact pattern Instagram treats as spam.
+
+    Returning a batch is not worth that risk, so we exclude anything the local
+    queue has ever touched.
+    """
+    path = DATA_DIR / "engagement" / "comment-queue.json"
+    try:
+        with open(path) as f:
+            items = json.load(f).get("items", [])
+    except (FileNotFoundError, json.JSONDecodeError):
+        return set()
+    return {i.get("post_shortcode") for i in items if i.get("post_shortcode")}
+
+
 def cmd_next(limit):
     posted = today_posted()
     remaining = max(0, DAILY_CAP - len(posted))
@@ -136,6 +159,19 @@ def cmd_next(limit):
     expired, blocked = sweep()
 
     pending = _call("GET", "/engagement_queue?select=*&status=eq.pending&order=created_at.desc&limit=500") or []
+
+    # Never serve a post the local browser queue has already handled — see
+    # _locally_handled_shortcodes(). Without this the two queues drift and we
+    # double-comment on the same post.
+    handled = _locally_handled_shortcodes()
+    if handled:
+        before = len(pending)
+        pending = [p for p in pending if p.get("post_shortcode") not in handled]
+        skipped = before - len(pending)
+        if skipped:
+            print(f"  ⚠️  skipped {skipped} pending row(s) already handled by the local queue",
+                  file=sys.stderr)
+
     if not pending:
         print(json.dumps({"status": "queue_empty", "posted_today": len(posted)}))
         return
