@@ -612,6 +612,7 @@ export default function AdminDashboard() {
                                   className="w-full px-2 py-1.5 text-sm border rounded-lg focus:ring-1 focus:ring-green-400 focus:border-green-400"
                                 >
                                   <option value="">Select city</option>
+                                  <option value="atlanta">Atlanta</option>
                                   <option value="newyork">New York</option>
                                   <option value="london">London</option>
                                   <option value="paris">Paris</option>

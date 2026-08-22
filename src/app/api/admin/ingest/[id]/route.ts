@@ -159,12 +159,49 @@ export async function PATCH(
           })
           .eq('id', itemId);
 
+        // ── URGENT FAST-TRACK (manual path) ────────────────────────────
+        // Same rule as process-ingest: an event within 7 days can't wait
+        // for the daily review cycle. The admin just reviewed and approved
+        // the details by hand (venue/date are form-validated), so generate
+        // the creative NOW and auto-approve it — the next event posting
+        // slot (09:00/17:00 UTC) will publish it same-day.
+        let fastTracked = false;
+        const daysUntilEvent = Math.ceil(
+          (new Date(startDate + 'T00:00:00Z').getTime() - Date.now()) / (24 * 60 * 60 * 1000)
+        );
+        if (event?.id && daysUntilEvent >= 0 && daysUntilEvent <= 7) {
+          try {
+            const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+              || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://pawcities.com');
+            const creativeRes = await fetch(`${baseUrl}/api/admin/creatives`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'generate_event', eventId: event.id }),
+              signal: AbortSignal.timeout(60000),
+            });
+            const creativeData = await creativeRes.json().catch(() => ({}));
+            if (creativeData.success) {
+              await supabase
+                .from('creative_queue')
+                .update({ status: 'approved' })
+                .eq('event_id', event.id)
+                .eq('status', 'pending_review');
+              fastTracked = true;
+            }
+          } catch (ftErr) {
+            console.error(`[ADMIN-INGEST] Fast-track error for "${name}":`, ftErr);
+          }
+        }
+
         return NextResponse.json({
           success: true,
           id: itemId,
           status: 'processed',
           event: { id: event?.id, slug: event?.slug, name: event?.name },
-          message: `Event "${name}" created from ingest item`,
+          fastTracked,
+          message: fastTracked
+            ? `Event "${name}" created — happening in ${daysUntilEvent}d, creative generated & approved; posts in the next event slot (9am/5pm UTC)`
+            : `Event "${name}" created from ingest item`,
         });
       }
 
