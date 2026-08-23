@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { requireAdmin } from '@/lib/admin';
+import { runGa4Report } from '@/lib/ga4';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -403,6 +404,49 @@ export async function GET(request: NextRequest) {
           accountsWeFollow: followingR.count ?? null,
           outboundClicksTotal: clicksR.count ?? null,
         };
+      })(),
+      // ── GA4 (unlocked 2026-08-23: service account in app_config) ─────
+      // Website truth alongside social truth: where visitors come from and
+      // what converts. Null when unconfigured or on API error — the rest of
+      // the dashboard must never break because Google is down.
+      ga4: await (async () => {
+        try {
+          const [byChannel, daily, topPages] = await Promise.all([
+            runGa4Report({
+              metrics: ['activeUsers', 'sessions', 'screenPageViews'],
+              dimensions: ['sessionDefaultChannelGroup'],
+              startDate: '30daysAgo',
+            }),
+            runGa4Report({
+              metrics: ['activeUsers', 'sessions'],
+              dimensions: ['date'],
+              startDate: '30daysAgo',
+              limit: 31,
+            }),
+            runGa4Report({
+              metrics: ['screenPageViews', 'activeUsers'],
+              dimensions: ['pagePath'],
+              startDate: '30daysAgo',
+              limit: 10,
+            }),
+          ]);
+          if (!byChannel) return null; // not configured
+          return {
+            period: 'last 30 days',
+            byChannel: byChannel.map(r => ({
+              channel: r.dimensions[0], users: r.metrics[0], sessions: r.metrics[1], pageViews: r.metrics[2],
+            })),
+            daily: (daily ?? [])
+              .sort((a, b) => a.dimensions[0].localeCompare(b.dimensions[0]))
+              .map(r => ({ date: r.dimensions[0], users: r.metrics[0], sessions: r.metrics[1] })),
+            topPages: (topPages ?? [])
+              .sort((a, b) => b.metrics[0] - a.metrics[0])
+              .map(r => ({ path: r.dimensions[0], views: r.metrics[0], users: r.metrics[1] })),
+          };
+        } catch (e) {
+          console.error('[ANALYTICS] GA4 fetch failed (non-fatal):', e);
+          return { error: String(e).slice(0, 200) };
+        }
       })(),
       insights,
     });
