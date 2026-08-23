@@ -197,8 +197,13 @@ export async function GET(request: NextRequest) {
   const summary = `Photo refresh: ${updated} updated, ${skipped} unchanged, ${failed} failed out of ${establishments.length} (${needPhotosCount} needing photos, ${refreshCount} refresh)`;
   console.log(summary);
 
+  // HONESTY GUARD (2026-08-23): this cron reported success:true for weeks
+  // while EVERY row failed with a TypeError, which let photo refs age until
+  // Google invalidated them all. A run where failures dominate is a failure.
+  const mostlyFailed = establishments.length > 0 && failed > updated + skipped;
+
   return NextResponse.json({
-    success: true,
+    success: !mostlyFailed,
     message: summary,
     updated,
     skipped,
