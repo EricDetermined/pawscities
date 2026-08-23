@@ -337,13 +337,18 @@ async function checkPhotoProxy(): Promise<CheckResult> {
       };
     }
 
+    // CRITICAL, not warning (2026-08-23): a failing photo proxy means every
+    // establishment card site-wide falls back to the same default dog image —
+    // a visitor-facing disaster. Most likely cause: Google invalidated the
+    // stored photo resource names in bulk (they are NOT permanent). Recovery:
+    // /api/cron/refresh-photos?force=true&batch=50 repeatedly until all clear.
     return {
       name: 'Photo Proxy',
-      status: 'warning',
-      message: `Proxy returned ${res.status} for "${est.name}"`,
+      status: 'critical',
+      message: `Proxy returned ${res.status} for "${est.name}" — establishment images are DOWN site-wide. If Google says "photo resource invalid", stored photo names expired: run refresh-photos with force=true until recovered.`,
     };
   } catch (err) {
-    return { name: 'Photo Proxy', status: 'warning', message: `Proxy check failed: ${String(err)}` };
+    return { name: 'Photo Proxy', status: 'critical', message: `Proxy check failed: ${String(err)} — establishment images may be down site-wide` };
   }
 }
 

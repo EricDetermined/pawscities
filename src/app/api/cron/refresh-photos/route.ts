@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { searchPlace } from '@/lib/google-places';
+import { searchPlace, getPlaceById, nameMatchScore, isCrossScriptComparison, DEFAULT_MIN_NAME_SCORE } from '@/lib/google-places';
 import { verifyCronAuth } from '@/lib/cron-auth';
 
 function getSupabaseAdmin() {
@@ -23,9 +23,19 @@ export async function GET(request: NextRequest) {
 
   // Cost optimization: reduced batch size (was 60) and added 30-day freshness gate
   // to minimize Google Places Text Search API calls
-  const BATCH_SIZE = 15;
+  //
+  // EMERGENCY MODE (2026-08-23): ?force=true&batch=N ignores the freshness gate
+  // and raises the batch cap. Added after Google invalidated ALL stored photo
+  // resource names at once ("The photo resource in the request is invalid") —
+  // photo names are NOT permanent and can expire in bulk, so a full re-fetch
+  // must be possible on demand.
+  const { searchParams } = new URL(request.url);
+  const force = searchParams.get('force') === 'true';
+  const BATCH_SIZE = Math.min(Number(searchParams.get('batch')) || 15, 60);
   const FRESHNESS_DAYS = 30;
-  const freshnessDate = new Date(Date.now() - FRESHNESS_DAYS * 24 * 60 * 60 * 1000).toISOString();
+  const freshnessDate = force
+    ? new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // future date = no gate
+    : new Date(Date.now() - FRESHNESS_DAYS * 24 * 60 * 60 * 1000).toISOString();
 
   // PRIORITY 1: Establishments with no photos yet — these need initial enrichment
   const { data: needPhotos, error: needPhotosError } = await supabase
@@ -103,8 +113,23 @@ export async function GET(request: NextRequest) {
       }
 
       const cityName = cityMap[est.city_id] || '';
-      const searchQuery = `${est.name} ${est.address || ''} ${cityName}`;
-      const result = await searchPlace(searchQuery);
+
+      // Prefer a direct ID lookup when we already know the place — a fuzzy
+      // re-search can drift onto a different venue and overwrite good photos.
+      const result = est.google_place_id
+        ? await getPlaceById(est.google_place_id as string)
+        : await searchPlace(`${est.name} ${est.address || ''} ${cityName}`);
+
+      // Guard the search path: only trust a hit whose name matches the venue.
+      if (result && !est.google_place_id) {
+        const score = nameMatchScore(est.name as string, result.displayName?.text || '');
+        if (score < DEFAULT_MIN_NAME_SCORE && !isCrossScriptComparison(est.name as string, result.displayName?.text || '')) {
+          skipped++;
+          details.push({ name: est.name, status: 'name_mismatch_skip' });
+          await new Promise(resolve => setTimeout(resolve, 50));
+          continue;
+        }
+      }
 
       if (result && result.photos && result.photos.length > 0) {
         const newPhotoRefs = result.photos.slice(0, 5).map((p: { name: string }) => p.name);
