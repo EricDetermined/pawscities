@@ -25,8 +25,22 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const token = process.env.META_PAGE_ACCESS_TOKEN;
   const igId = process.env.INSTAGRAM_ACCOUNT_ID;
+
+  // Token: app_config first (rotated 2026-08-23 with instagram_manage_insights
+  // scope, stored at runtime via /api/admin/meta-token), env var as fallback.
+  const supabaseForConfig = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } },
+  );
+  let token = process.env.META_PAGE_ACCESS_TOKEN;
+  try {
+    const { data: cfg } = await supabaseForConfig
+      .from('app_config').select('value').eq('key', 'meta_page_token').single();
+    if (cfg?.value) token = cfg.value;
+  } catch { /* app_config may not exist yet — env fallback */ }
+
   if (!token || !igId) {
     return NextResponse.json(
       { error: 'META_PAGE_ACCESS_TOKEN or INSTAGRAM_ACCOUNT_ID not configured' },
@@ -78,8 +92,33 @@ export async function GET(request: NextRequest) {
     .order('captured_on', { ascending: false })
     .limit(1);
 
+  // Insights (unlocked 2026-08-23 via instagram_manage_insights re-auth).
+  // Failure here must never block the follower snapshot — log and move on.
+  let reachDay: number | null = null;
+  let profileViewsDay: number | null = null;
+  let accountsEngagedDay: number | null = null;
+  try {
+    const insUrl =
+      `https://graph.facebook.com/${v}/${igId}/insights` +
+      `?metric=reach,profile_views,accounts_engaged&period=day&metric_type=total_value&access_token=${token}`;
+    const ins = await fetch(insUrl, { signal: AbortSignal.timeout(20000) }).then(r => r.json());
+    if (ins.error) {
+      console.error('[ACCOUNT-SNAPSHOT] insights error (non-fatal):', JSON.stringify(ins.error));
+    } else {
+      for (const m of ins.data ?? []) {
+        const val = Number(m.total_value?.value);
+        if (!Number.isFinite(val)) continue;
+        if (m.name === 'reach') reachDay = val;
+        if (m.name === 'profile_views') profileViewsDay = val;
+        if (m.name === 'accounts_engaged') accountsEngagedDay = val;
+      }
+    }
+  } catch (e) {
+    console.error('[ACCOUNT-SNAPSHOT] insights fetch failed (non-fatal):', e);
+  }
+
   const p = prev?.[0];
-  const row = {
+  const row: Record<string, unknown> = {
     captured_on: today,
     platform: 'instagram',
     username: String(account.username ?? ''),
@@ -91,6 +130,11 @@ export async function GET(request: NextRequest) {
     media_delta: p && Number.isFinite(media) ? media - (p.media_count ?? 0) : null,
     source: 'graph_api',
   };
+  // Only include insight columns when we have values — keeps the upsert
+  // working even if migration 027 has not been applied yet.
+  if (reachDay !== null) row.reach_day = reachDay;
+  if (profileViewsDay !== null) row.profile_views_day = profileViewsDay;
+  if (accountsEngagedDay !== null) row.accounts_engaged_day = accountsEngagedDay;
 
   const { error } = await supabase
     .from('account_snapshots')
