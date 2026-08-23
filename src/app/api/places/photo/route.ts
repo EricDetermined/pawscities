@@ -25,7 +25,14 @@ export async function GET(request: NextRequest) {
     });
 
     if (!response.ok) {
-      return NextResponse.json({ error: 'Failed to fetch photo' }, { status: response.status });
+      // Surface Google's actual error (2026-08-23: all photos 400'd site-wide
+      // while searchText worked — opaque "Failed to fetch photo" hid the cause).
+      const googleError = await response.text().catch(() => '');
+      console.error(`[PHOTO-PROXY] Google ${response.status} for ${photoName.slice(0, 80)}: ${googleError.slice(0, 300)}`);
+      return NextResponse.json(
+        { error: 'Failed to fetch photo', google_status: response.status, google_error: googleError.slice(0, 500) },
+        { status: response.status }
+      );
     }
 
     const contentType = response.headers.get('content-type') || 'image/jpeg';
