@@ -111,6 +111,8 @@ interface RawPlace {
   photoRefs?: string[];
   googleMapsUrl?: string;
   openingHours?: string[];
+  /** Google match was rejected — import as PENDING_REVIEW, not ACTIVE. */
+  needsVerification?: boolean;
 }
 
 /**
@@ -206,7 +208,8 @@ export async function POST(request: NextRequest) {
         city_id: cityId,
         category_id: categoryId,
         description: place.description,
-        status: 'ACTIVE',
+        // Entries whose Google match was rejected stay hidden until confirmed
+        status: place.needsVerification ? 'PENDING_REVIEW' : 'ACTIVE',
         tier: 'free',
         is_verified: (place.confidence || 0) > 90,
         is_featured: false,

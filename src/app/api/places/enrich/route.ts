@@ -68,13 +68,17 @@ export async function GET(request: NextRequest) {
           place.name,
           cityConfig.cityName,
           place.category,
-          { lat: cityConfig.lat, lng: cityConfig.lng }
+          { lat: cityConfig.lat, lng: cityConfig.lng },
+          // Honour a curated ID so verified entries never re-run a fuzzy search
+          { googlePlaceId: typeof place.pinnedPlaceId === 'string' ? place.pinnedPlaceId : undefined }
         );
 
         if (enriched && enriched.matched) {
           enrichedPlaces.push({
             originalName: place.name,
             googleName: enriched.name,
+            nameScore: enriched.nameScore,
+            needsManualReview: enriched.needsManualReview,
             googlePlaceId: enriched.googlePlaceId,
             address: enriched.address,
             latitude: enriched.latitude,
@@ -88,6 +92,14 @@ export async function GET(request: NextRequest) {
             googleMapsUrl: enriched.googleMapsUrl,
             openingHours: enriched.openingHours,
             status: 'matched',
+          });
+        } else if (enriched) {
+          // A hit came back but the name did not match well enough to trust.
+          enrichedPlaces.push({
+            originalName: place.name,
+            status: 'name_mismatch',
+            nameScore: enriched.nameScore,
+            rejectedCandidate: enriched.rejectedCandidate,
           });
         } else {
           enrichedPlaces.push({
@@ -110,6 +122,8 @@ export async function GET(request: NextRequest) {
       offset,
       limit,
       enrichedCount: enrichedPlaces.filter(p => p.status === 'matched').length,
+      nameMismatchCount: enrichedPlaces.filter(p => p.status === 'name_mismatch').length,
+      needsReviewCount: enrichedPlaces.filter(p => p.needsManualReview).length,
       nextOffset: offset + limit < places.length ? offset + limit : null,
       places: enrichedPlaces,
     });
