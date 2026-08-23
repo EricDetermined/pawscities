@@ -357,6 +357,53 @@ export async function GET(request: NextRequest) {
         replyRate,
         opportunities: opportunityStats,
       },
+      // ── Growth & engagement-outreach measurement (2026-08-23) ────────
+      // Sources: account_snapshots (Meta Graph API, daily 23:00 UTC cron),
+      // engagement_queue (browser sessions, synced nightly from laptop),
+      // instagram_following (browser-captured), outbound_clicks (site).
+      // NOTE: reach/impressions need the instagram_manage_insights scope on
+      // the Meta token (currently absent); GA4 read-side needs a Data API
+      // service account. Both flagged in MEASUREMENT-RUNBOOK.md.
+      growth: await (async () => {
+        const [snapsR, engR, followingR, clicksR] = await Promise.all([
+          supabase.from('account_snapshots')
+            .select('captured_on, followers_count, follows_count, media_count')
+            .order('captured_on', { ascending: true }).limit(90),
+          supabase.from('engagement_queue')
+            .select('city, status, replied, followed_back, posted_at')
+            .eq('status', 'posted').gte('posted_at', thirtyDaysAgoISO).limit(2000),
+          supabase.from('instagram_following')
+            .select('username', { count: 'exact', head: true }),
+          supabase.from('outbound_clicks')
+            .select('id', { count: 'exact', head: true }),
+        ]);
+        const series = snapsR.data || [];
+        const latest = series[series.length - 1] || null;
+        const first = series[0] || null;
+        const rows = engR.data || [];
+        const byCity: Record<string, { comments: number; replies: number }> = {};
+        let replies = 0, followBacks = 0;
+        for (const r of rows) {
+          const c = (r.city as string) || 'unknown';
+          byCity[c] = byCity[c] || { comments: 0, replies: 0 };
+          byCity[c].comments++;
+          if (r.replied) { byCity[c].replies++; replies++; }
+          if (r.followed_back) followBacks++;
+        }
+        return {
+          followerSeries: series,
+          followersNow: latest?.followers_count ?? null,
+          followerChange: latest && first
+            ? (latest.followers_count ?? 0) - (first.followers_count ?? 0) : null,
+          commentsPosted30d: rows.length,
+          replies30d: replies,
+          replyRate30d: rows.length ? Math.round((replies / rows.length) * 100) : 0,
+          followBacks30d: followBacks,
+          engagementByCity: byCity,
+          accountsWeFollow: followingR.count ?? null,
+          outboundClicksTotal: clicksR.count ?? null,
+        };
+      })(),
       insights,
     });
   } catch (error: any) {

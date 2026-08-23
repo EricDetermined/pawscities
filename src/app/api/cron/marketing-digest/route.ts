@@ -541,6 +541,9 @@ export async function GET(request: NextRequest) {
       emailSkipped: skipEmail,
       emailDelivered: emailResult.success,
       emailError: emailResult.error || null,
+      // Exposed for the daily ops-validation dry-run (2026-08-23): the
+      // monitor's urgent-events check reads the API response, not the email.
+      urgentEvents,
     };
 
     console.log(`[MARKETING-DIGEST] ${JSON.stringify(summary)}`);
