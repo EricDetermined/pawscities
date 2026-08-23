@@ -188,7 +188,7 @@ export async function GET(request: NextRequest) {
     } catch (e) {
       console.error(`Error refreshing ${est.name}:`, e);
       failed++;
-      details.push({ name: est.name, status: 'error' });
+      details.push({ name: est.name, status: `error: ${String(e).slice(0, 160)}` });
     }
   }
 
