@@ -366,16 +366,25 @@ export async function GET(request: NextRequest) {
       // the Meta token (currently absent); GA4 read-side needs a Data API
       // service account. Both flagged in MEASUREMENT-RUNBOOK.md.
       growth: await (async () => {
+        // Service-role client: growth tables (account_snapshots,
+        // engagement_queue, instagram_following, outbound_clicks) are not
+        // readable by the session-scoped admin client under RLS.
+        const { createClient } = await import('@supabase/supabase-js');
+        const svc = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.SUPABASE_SERVICE_ROLE_KEY!,
+          { auth: { autoRefreshToken: false, persistSession: false } },
+        );
         const [snapsR, engR, followingR, clicksR] = await Promise.all([
-          supabase.from('account_snapshots')
+          svc.from('account_snapshots')
             .select('captured_on, followers_count, follows_count, media_count')
             .order('captured_on', { ascending: true }).limit(90),
-          supabase.from('engagement_queue')
+          svc.from('engagement_queue')
             .select('city, status, replied, followed_back, posted_at')
             .eq('status', 'posted').gte('posted_at', thirtyDaysAgoISO).limit(2000),
-          supabase.from('instagram_following')
+          svc.from('instagram_following')
             .select('username', { count: 'exact', head: true }),
-          supabase.from('outbound_clicks')
+          svc.from('outbound_clicks')
             .select('id', { count: 'exact', head: true }),
         ]);
         const series = snapsR.data || [];
