@@ -55,11 +55,33 @@ async function checkInstagramToken(): Promise<CheckResult> {
       };
     }
 
-    // Check data access expiry from env (set in .env.instagram comment)
+    // ── IG ACCOUNT LINK CHECK (added 2026-08-24) ─────────────────────
+    // On 2026-08-23 Instagram flagged @thepawcities ("confirm you're human")
+    // which silently SEVERED the Page↔IG link. Token checks kept passing while
+    // every post failed with opaque "unsupported post request" errors. The
+    // link itself is the canary: if instagram_business_account is empty, the
+    // IG account is unlinked — usually meaning suspended/flagged — and Eric
+    // must be alerted IMMEDIATELY, not via a warning.
+    try {
+      const linkRes = await fetch(
+        `https://graph.facebook.com/v25.0/${data.id}?fields=instagram_business_account&access_token=${token}`,
+        { signal: AbortSignal.timeout(10000) }
+      );
+      const linkData = await linkRes.json();
+      if (!linkData.instagram_business_account?.id) {
+        return {
+          name: 'Instagram Token',
+          status: 'critical',
+          message: 'IG ACCOUNT UNLINKED from the Facebook Page — @thepawcities is likely suspended or flagged for human verification. ALL posting/insights are down. Eric must check instagram.com/accounts/suspended and complete verification personally.',
+          details: { page_id: data.id, instagram_business_account: null },
+        };
+      }
+    } catch { /* link probe failure — fall through to token-healthy */ }
+
     return {
       name: 'Instagram Token',
       status: 'healthy',
-      message: `Token valid — connected to "${data.name}"`,
+      message: `Token valid — connected to "${data.name}" (IG link intact)`,
       details: { page_name: data.name, page_id: data.id },
     };
   } catch (err) {
