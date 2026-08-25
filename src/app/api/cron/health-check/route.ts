@@ -346,8 +346,13 @@ async function checkPhotoProxy(): Promise<CheckResult> {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
     const photoUrl = `${baseUrl}/api/places/photo?name=${encodeURIComponent(est.photo_refs[0])}&maxWidth=100`;
 
+    // redirect:'manual' (2026-08-25): the proxy now 302s to an Unsplash
+    // fallback on Google failure so visitors never see broken images. Following
+    // that redirect would return 200 and mask a dead ref — a 302 here IS a
+    // failure signal.
     const res = await fetch(photoUrl, {
       method: 'HEAD',
+      redirect: 'manual',
       signal: AbortSignal.timeout(15000),
     });
 

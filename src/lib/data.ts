@@ -230,17 +230,71 @@ function rawToEstablishment(raw: RawPlace, citySlug: string, cityConfig: CityCon
     updatedAt: new Date().toISOString(),
   };
 }
-const dataCache = new Map<string, Establishment[]>();
+// TTL cache (2026-08-25): the old forever-cache pinned stale photo refs for the
+// life of a serverless instance. 15 min keeps DB-refreshed refs flowing to pages.
+const DATA_CACHE_TTL_MS = 15 * 60 * 1000;
+const dataCache = new Map<string, { at: number; value: Establishment[] }>();
 const rawCache = new Map<string, RawPlace[]>();
 
+/**
+ * Overlay LIVE photo refs from the establishments table onto the static-JSON
+ * establishments.
+ *
+ * WHY (2026-08-25 BrewDog-page incident): every card surface — city pages,
+ * category pages, "More X in City" — rendered images from photoRefs frozen in
+ * research-output JSON at seed time. Google bulk-invalidates photo resource
+ * names, and the refresh-photos cron only updates the DATABASE, so cards kept
+ * serving dead refs (broken alt-text placeholders) even while the DB held
+ * fresh working ones. Only the detail hero read the DB. This overlay makes the
+ * DB the single source of truth for images everywhere it has a row.
+ */
+async function overlayDbPhotos(citySlug: string, establishments: Establishment[]): Promise<Establishment[]> {
+  try {
+    const supabaseAdmin = getSupabaseAdmin();
+    const { data: cityRecord } = await supabaseAdmin
+      .from('cities').select('id').eq('slug', citySlug).single();
+    if (!cityRecord?.id) return establishments;
+    const { data: rows } = await supabaseAdmin
+      .from('establishments')
+      .select('slug, photo_refs, primary_image')
+      .eq('city_id', cityRecord.id);
+    if (!rows || rows.length === 0) return establishments;
+    const bySlug = new Map(rows.map(r => [r.slug, r]));
+    return establishments.map(est => {
+      const db = bySlug.get(est.slug);
+      if (!db) return est;
+      if (db.photo_refs && Array.isArray(db.photo_refs) && db.photo_refs.length > 0) {
+        const fresh = db.photo_refs.map((ref: string) =>
+          ref.startsWith('places/')
+            ? `/api/places/photo?name=${encodeURIComponent(ref)}&maxWidth=800`
+            : ref,
+        );
+        // Keep the category Unsplash fallback last, same contract as before.
+        return { ...est, images: [...fresh, est.images[est.images.length - 1]] };
+      }
+      if (db.primary_image) {
+        return { ...est, images: [db.primary_image, est.images[est.images.length - 1]] };
+      }
+      // DB row exists but has no photos yet — drop dead static refs entirely
+      // and show the category fallback rather than a broken image.
+      return { ...est, images: [est.images[est.images.length - 1]] };
+    });
+  } catch (err) {
+    console.error('[DATA] overlayDbPhotos failed, using static refs:', err);
+    return establishments;
+  }
+}
+
 export async function getCityEstablishments(citySlug: string): Promise<Establishment[]> {
-  if (dataCache.has(citySlug)) return dataCache.get(citySlug)!;
+  const cached = dataCache.get(citySlug);
+  if (cached && Date.now() - cached.at < DATA_CACHE_TTL_MS) return cached.value;
   const cityConfig = CITIES[citySlug];
   if (!cityConfig) return [];
   const rawPlaces = await loadCityJson(citySlug);
   rawCache.set(citySlug, rawPlaces);
-  const establishments = rawPlaces.map((raw, index) => rawToEstablishment(raw, citySlug, cityConfig, index));
-  dataCache.set(citySlug, establishments);
+  let establishments = rawPlaces.map((raw, index) => rawToEstablishment(raw, citySlug, cityConfig, index));
+  establishments = await overlayDbPhotos(citySlug, establishments);
+  dataCache.set(citySlug, { at: Date.now(), value: establishments });
   return establishments;
 }
 

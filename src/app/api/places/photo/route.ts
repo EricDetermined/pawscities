@@ -29,9 +29,14 @@ export async function GET(request: NextRequest) {
       // while searchText worked — opaque "Failed to fetch photo" hid the cause).
       const googleError = await response.text().catch(() => '');
       console.error(`[PHOTO-PROXY] Google ${response.status} for ${photoName.slice(0, 80)}: ${googleError.slice(0, 300)}`);
-      return NextResponse.json(
-        { error: 'Failed to fetch photo', google_status: response.status, google_error: googleError.slice(0, 500) },
-        { status: response.status }
+      // Never let a visitor see a broken image (2026-08-25 BrewDog-page
+      // incident: dead refs rendered as alt-text placeholders on cards).
+      // Redirect to a warm dog-friendly fallback; short CDN cache so it
+      // self-corrects quickly once the ref is refreshed. Health check still
+      // sees real failures via its direct upstream probe + the log line above.
+      return NextResponse.redirect(
+        'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=600&fit=crop',
+        { status: 302, headers: { 'Cache-Control': 'public, max-age=300, s-maxage=300' } },
       );
     }
 
