@@ -31,21 +31,38 @@ export async function GET(request: NextRequest) {
   // must be possible on demand.
   const { searchParams } = new URL(request.url);
   const force = searchParams.get('force') === 'true';
+  // TARGETED MODE (2026-08-25): ?slug=X refreshes exactly one establishment and
+  // reports the candidate Google returned (name + id + score) even when the
+  // name-match gate rejects it — added because BrewDog Atlanta's re-match
+  // failed as an opaque 'name_mismatch_skip' with no way to see why.
+  const targetSlug = searchParams.get('slug');
   const BATCH_SIZE = Math.min(Number(searchParams.get('batch')) || 15, 60);
   const FRESHNESS_DAYS = 30;
   const freshnessDate = force
     ? new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // future date = no gate
     : new Date(Date.now() - FRESHNESS_DAYS * 24 * 60 * 60 * 1000).toISOString();
 
-  // PRIORITY 1: Establishments with no photos yet — these need initial enrichment
-  const { data: needPhotos, error: needPhotosError } = await supabase
-    .from('establishments')
-    .select('id, name, address, google_place_id, photo_refs, city_id, dog_features, listing_type')
-    .eq('status', 'ACTIVE')
-    .is('photo_refs', null)
-    .neq('listing_type', 'online')
-    .order('updated_at', { ascending: true })
-    .limit(BATCH_SIZE);
+  // PRIORITY 1: Establishments with no photos yet — these need initial
+  // enrichment. In targeted mode this is exactly the one requested slug.
+  const p1Query = targetSlug
+    ? supabase
+        .from('establishments')
+        .select('id, name, address, google_place_id, photo_refs, city_id, dog_features, listing_type')
+        .eq('slug', targetSlug)
+        .limit(1)
+    : supabase
+        .from('establishments')
+        .select('id, name, address, google_place_id, photo_refs, city_id, dog_features, listing_type')
+        .eq('status', 'ACTIVE')
+        .is('photo_refs', null)
+        .neq('listing_type', 'online')
+        .order('updated_at', { ascending: true })
+        .limit(BATCH_SIZE);
+  const { data: needPhotos, error: needPhotosError } = await p1Query;
+
+  if (targetSlug && (!needPhotos || needPhotos.length === 0)) {
+    return NextResponse.json({ error: `No establishment with slug ${targetSlug}` }, { status: 404 });
+  }
 
   if (needPhotosError) {
     console.error('Failed to fetch photo-less establishments:', needPhotosError);
@@ -54,16 +71,19 @@ export async function GET(request: NextRequest) {
 
   // PRIORITY 2: Fill remaining slots with stale establishments that already have photos
   // Only refresh establishments not checked in the last FRESHNESS_DAYS days
-  const remainingSlots = BATCH_SIZE - (needPhotos?.length || 0);
+  const remainingSlots = targetSlug ? 0 : BATCH_SIZE - (needPhotos?.length || 0);
   let refreshEstablishments: typeof needPhotos = [];
 
   if (remainingSlots > 0) {
+    // NOTE (2026-08-25): the old query also required google_place_id NOT NULL,
+    // which silently excluded rows that have photo_refs but no place id — those
+    // could never refresh and their refs would rot forever. The processing loop
+    // handles the no-id case via searchPlace + name-match gate, so include them.
     const { data: refreshData, error: refreshError } = await supabase
       .from('establishments')
       .select('id, name, address, google_place_id, photo_refs, city_id, dog_features, listing_type')
       .eq('status', 'ACTIVE')
       .not('photo_refs', 'is', null)
-      .not('google_place_id', 'is', null)
       .neq('listing_type', 'online')
       .lt('updated_at', freshnessDate)
       .order('updated_at', { ascending: true })
@@ -125,7 +145,12 @@ export async function GET(request: NextRequest) {
         const score = nameMatchScore(est.name as string, result.displayName?.text || '');
         if (score < DEFAULT_MIN_NAME_SCORE && !isCrossScriptComparison(est.name as string, result.displayName?.text || '')) {
           skipped++;
-          details.push({ name: est.name, status: 'name_mismatch_skip' });
+          // Show WHAT was rejected — an opaque skip made BrewDog Atlanta's
+          // failed re-match undiagnosable (2026-08-25).
+          details.push({
+            name: est.name,
+            status: `name_mismatch_skip (candidate: "${result.displayName?.text || '?'}" id=${result.id || '?'} score=${score.toFixed(2)})`,
+          });
           await new Promise(resolve => setTimeout(resolve, 50));
           continue;
         }
