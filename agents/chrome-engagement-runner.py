@@ -108,12 +108,26 @@ def save_history(history):
         json.dump(payload, f, indent=2)
 
 
+# RAMP MODE (account flagged 2026-08-23, restored 08-24): cap enforced in CODE,
+# not by sessions reading a task file — a session that forgets the ramp would
+# otherwise happily post the configured 35/day. Delete after 2026-09-07.
+RAMP_CAP_UNTIL = "2026-09-07"
+RAMP_CAP = 10
+
+
 def load_config():
     """Load engagement config."""
     if not CONFIG_FILE.exists():
-        return {"daily_cap": 15, "timing": {"batch_size": 5}}
-    with open(CONFIG_FILE) as f:
-        return json.load(f)
+        cfg = {"daily_cap": 15, "timing": {"batch_size": 5}}
+    else:
+        with open(CONFIG_FILE) as f:
+            cfg = json.load(f)
+    if datetime.now(timezone.utc).date().isoformat() <= RAMP_CAP_UNTIL:
+        configured = int(cfg.get("daily_cap", 15) or 15)
+        if configured > RAMP_CAP:
+            cfg["daily_cap"] = RAMP_CAP
+            cfg["_ramp_note"] = f"daily_cap {configured} -> {RAMP_CAP} (ramp until {RAMP_CAP_UNTIL})"
+    return cfg
 
 
 CITY_SLUGS = [
@@ -257,12 +271,12 @@ def select_balanced_batch(postable, limit):
             # pet accounts are filler
             _type_tier.get(x.get("target_type"), 0),
             # Then: higher likes = more visibility
-            x.get("post_likes", 0),
+            (x.get("post_likes") or 0),
             # Finally: AI-generated comments are more relevant
             1 if x.get("comment_category") == "ai_generated" else 0,
         ), reverse=True)
 
-    no_city.sort(key=lambda x: x.get("post_likes", 0), reverse=True)
+    no_city.sort(key=lambda x: (x.get("post_likes") or 0), reverse=True)
 
     # Check today's city distribution to compensate for imbalance
     today_by_city = get_today_posted_by_city()
@@ -306,7 +320,7 @@ def select_balanced_batch(postable, limit):
         if item["id"] not in selected_ids:
             all_remaining.append(item)
 
-    all_remaining.sort(key=lambda x: x.get("post_likes", 0), reverse=True)
+    all_remaining.sort(key=lambda x: (x.get("post_likes") or 0), reverse=True)
 
     for item in all_remaining:
         if len(selected) >= limit:
@@ -395,7 +409,7 @@ def cmd_next(limit=1):
             "target_username": item["target_username"],
             "city": item.get("city", "unknown"),
             "comment_text": item["comment_text"],
-            "post_likes": item.get("post_likes", 0),
+            "post_likes": (item.get("post_likes") or 0),
         } for item in batch]
     }
     print(json.dumps(output, indent=2))

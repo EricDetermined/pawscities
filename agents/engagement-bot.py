@@ -1748,7 +1748,7 @@ def generate_queue():
             "post_shortcode": post.get("shortcode", ""),
             "post_url": post.get("url", ""),
             "target_username": post.get("ownerUsername", ""),
-            "post_likes": post.get("likesCount", 0),
+            "post_likes": (post.get("likesCount") or 0),  # feed harvests can carry null likesCount
             "city": post.get("city"),
             "comment_text": comment_data["text"],
             "comment_category": comment_data["category"],
