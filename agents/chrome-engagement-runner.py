@@ -112,7 +112,7 @@ def save_history(history):
 # not by sessions reading a task file — a session that forgets the ramp would
 # otherwise happily post the configured 35/day. Delete after 2026-09-07.
 RAMP_CAP_UNTIL = "2026-09-07"
-RAMP_CAP = 10
+RAMP_CAP = 20  # weekend boost approved by Eric 2026-08-28
 
 
 def load_config():
