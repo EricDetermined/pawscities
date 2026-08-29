@@ -796,6 +796,40 @@ async function handleProcessIngest(request: NextRequest) {
           continue;
         }
 
+        // ─── Dedup Layer D: same venue + same date (2026-08-29) ───────────
+        // Name-only dedup missed the same event arriving under different
+        // captions — three copies of the London Schnauzer Social Aug 30 event
+        // ("Chelsea Is Going To The Schnauzers" / "The Ultimate Schnauzer
+        // Sunday" / "Schnauzer Day - Kenji's Birthday Bash") all published.
+        // One venue hosting on one date is one event.
+        if (venueName) {
+          const normVenue = venueName.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const { data: sameDay } = await supabase
+            .from('events')
+            .select('id, name, venue_name')
+            .eq('start_date', finalDate)
+            .neq('status', 'REJECTED')
+            .limit(100);
+          const venueDup = (sameDay ?? []).find(e => {
+            if (!e.venue_name) return false;
+            const v = (e.venue_name as string).toLowerCase().replace(/[^a-z0-9]/g, '');
+            return v.length >= 5 && normVenue.length >= 5 &&
+              (v === normVenue || v.includes(normVenue) || normVenue.includes(v));
+          });
+          if (venueDup) {
+            console.log(`[PROCESS-INGEST] Skipping "${eventName}" — same venue+date as existing "${venueDup.name}"`);
+            await supabase
+              .from('ingest_queue')
+              .update({
+                status: 'needs_review',
+                error_message: `Duplicate: same venue ("${venueName}") and date (${finalDate}) as existing event "${venueDup.name}"`,
+                processed_at: new Date().toISOString(),
+              })
+              .eq('id', item.id);
+            continue;
+          }
+        }
+
         const eventSlug = slugify(eventName, finalDate);
         const timezone = (detectedCity && cityTimezones[detectedCity]) || 'America/Los_Angeles';
 
