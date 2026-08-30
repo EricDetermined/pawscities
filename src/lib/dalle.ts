@@ -34,7 +34,10 @@ export async function generateMascotImage(
       prompt,
       n: 1,
       size: options?.size || '1024x1024',
-      quality: options?.quality || 'high',
+      // 'medium' (2026-08-29): 'high' cost ~$0.17-0.25/image and drove $5-10
+      // OpenAI charges per approval batch. At Instagram's 1080px feed size the
+      // difference is imperceptible; medium is ~1/3 the price.
+      quality: options?.quality || 'medium',
     });
 
     // gpt-image-1 returns base64 data
