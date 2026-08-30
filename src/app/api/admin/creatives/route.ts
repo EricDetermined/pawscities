@@ -351,13 +351,36 @@ export async function POST(request: NextRequest) {
         }
       };
 
+      let usedMascotLibrary = false;
       if (visualStyle === 'mascot' && hasOpenAI) {
-        // DALL-E mascot illustration — only for did-you-know and fun types
-        imagePrompt = buildImagePrompt(fact, narrator);
-        const storagePath = `mascot-creatives/${fact.city}-${narrator}-${factIndex}-${Date.now()}.png`;
-        const dalleResult = await generateAndUploadMascotImage(imagePrompt, storagePath);
-        if (dalleResult) {
-          imageUrl = dalleResult.publicUrl;
+        // Library first (2026-08-29): pre-generated Marley/Buster pool costs
+        // nothing per use. On-demand gpt-image-1 is only the fallback while
+        // the pool fills (or for combos with no coverage).
+        try {
+          const { getMascotLibraryImage } = await import('@/lib/mascot-library');
+          const { data: recent } = await supabase
+            .from('creative_queue')
+            .select('image_url')
+            .eq('city', fact.city)
+            .order('created_at', { ascending: false })
+            .limit(6);
+          const avoid = (recent ?? []).map(r => r.image_url).filter(Boolean) as string[];
+          const libUrl = await getMascotLibraryImage(supabase, narrator as 'buster' | 'marley' | 'both', fact.city, avoid);
+          if (libUrl) {
+            imageUrl = libUrl;
+            imagePrompt = 'mascot-library';
+            usedMascotLibrary = true;
+          }
+        } catch (err) {
+          console.error('[CREATIVE] mascot library lookup failed, falling back to generation:', err);
+        }
+        if (!imageUrl) {
+          imagePrompt = buildImagePrompt(fact, narrator);
+          const storagePath = `mascot-creatives/${fact.city}-${narrator}-${factIndex}-${Date.now()}.png`;
+          const dalleResult = await generateAndUploadMascotImage(imagePrompt, storagePath);
+          if (dalleResult) {
+            imageUrl = dalleResult.publicUrl;
+          }
         }
       } else if (visualStyle === 'text_card') {
         imageUrl = await generateTextCard();
@@ -398,7 +421,9 @@ export async function POST(request: NextRequest) {
         format: visualStyle,  // 'mascot', 'photo', or 'text_card'
         status: 'pending_review',
         scheduled_for: scheduledFor,
-        generation_model: visualStyle === 'mascot' && hasOpenAI ? 'gpt-image-1' : 'next-og',
+        generation_model: visualStyle === 'mascot' && hasOpenAI
+          ? (usedMascotLibrary ? 'mascot-library' : 'gpt-image-1')
+          : 'next-og',
       });
 
       if (!insertError) {
@@ -538,8 +563,30 @@ export async function POST(request: NextRequest) {
     let imagePrompt: string | null = null;
     let photoId: string | null = null;
 
+    let usedEventMascotLibrary = false;
     if (useMascot) {
-      // ── MASCOT illustration via DALL-E ──────────────────────────────────
+      // Library first (2026-08-29) — see src/lib/mascot-library.ts.
+      try {
+        const { getMascotLibraryImage } = await import('@/lib/mascot-library');
+        const { data: recent } = await supabase
+          .from('creative_queue')
+          .select('image_url')
+          .eq('city', metaKey)
+          .order('created_at', { ascending: false })
+          .limit(6);
+        const avoid = (recent ?? []).map(r => r.image_url).filter(Boolean) as string[];
+        const libUrl = await getMascotLibraryImage(supabase, narrator as 'buster' | 'marley', metaKey, avoid);
+        if (libUrl) {
+          imageUrl = libUrl;
+          imagePrompt = 'mascot-library';
+          usedEventMascotLibrary = true;
+        }
+      } catch (err) {
+        console.error('[CREATIVE] mascot library lookup failed, falling back to generation:', err);
+      }
+    }
+    if (useMascot && !usedEventMascotLibrary) {
+      // ── MASCOT illustration via DALL-E (fallback while library fills) ───
       // Build a prompt that includes breed-specific and city-specific elements
       const breedDesc = detectedBreeds.length > 0
         ? `surrounded by ${detectedBreeds[0]}s`
@@ -557,7 +604,7 @@ export async function POST(request: NextRequest) {
       if (dalleResult) {
         imageUrl = dalleResult.publicUrl;
       }
-    } else {
+    } else if (!useMascot) {
       // ── PHOTO creative via OG endpoint (with contextual dog selection) ──
       try {
         const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
@@ -619,7 +666,9 @@ export async function POST(request: NextRequest) {
         const scheduled = idealPost < today ? today : idealPost;
         return scheduled.toISOString().split('T')[0];
       })(),
-      generation_model: useMascot ? 'gpt-image-1' : 'contextual-photo',
+      generation_model: useMascot
+        ? (usedEventMascotLibrary ? 'mascot-library' : 'gpt-image-1')
+        : 'contextual-photo',
     });
 
     if (insertError) {
