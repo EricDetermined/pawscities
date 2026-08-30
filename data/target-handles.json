@@ -1,384 +1,1195 @@
 {
-  "parkgrounds": "venue:atlanta",
-  "chattahoocheerivernps": "venue:atlanta",
-  "sitmeanssitatlanta": "venue:atlanta",
-  "fsatlanta": "venue:atlanta",
-  "k9coachatlanta": "venue:atlanta",
-  "thegeorgianterracehotel": "venue:atlanta",
-  "highlandpetsupply": "venue:atlanta",
-  "cypressstreet": "venue:atlanta",
-  "bistroniko": "venue:atlanta",
-  "twourbanlicks": "venue:atlanta",
-  "foxbrosbarbq": "venue:atlanta",
-  "theporterbeerbar": "venue:atlanta",
-  "deadenddrinksatl": "venue:atlanta",
-  "thealbertatl": "venue:atlanta",
-  "leonsfullservice": "venue:atlanta",
-  "brickstorepub": "venue:atlanta",
-  "iberianpig": "venue:atlanta",
-  "cooksatl": "venue:atlanta",
-  "theoptimistatl": "venue:atlanta",
-  "littlebearatl": "venue:atlanta",
-  "victorysandwichbar": "venue:atlanta",
-  "barcelona_cat": "venue:barcelona",
-  "condesacoffee": "venue:atlanta",
-  "auroracoffee": "venue:atlanta",
-  "muchachoatl": "venue:atlanta",
-  "mondaynight": "venue:atlanta",
-  "newrealm_atl": "venue:atlanta",
-  "parktavern": "venue:atlanta",
-  "scofflawbeer": "venue:atlanta",
-  "orpheusbrewing": "venue:atlanta",
-  "pontoonbrewing": "venue:atlanta",
-  "brewdogatl": "venue:atlanta",
-  "beerwildheaven": "venue:atlanta",
-  "wreckingbarbrewpub": "venue:atlanta",
-  "eventidebrewing": "venue:atlanta",
-  "threetaverns": "venue:atlanta",
-  "roundtripbeer": "venue:atlanta",
-  "fetchparkbuckhead": "venue:atlanta",
-  "freedombarkwaydogpark": "venue:atlanta",
-  "brookhavendogpark_atlanta": "venue:atlanta",
-  "theroyalparks": "venue:london",
-  "cpcatl": "venue:atlanta",
-  "h4wpatl": "venue:atlanta",
-  "sweetwatercreekstatepark": "venue:atlanta",
-  "stonemountainpark": "venue:atlanta",
-  "thesylvanhotel": "venue:atlanta",
-  "shanehotelatlanta": "venue:atlanta",
-  "hyattcentricbuckheadatl": "venue:atlanta",
-  "hotelclermont": "venue:atlanta",
-  "watlmidtown": "venue:atlanta",
-  "indigoatlmt": "venue:atlanta",
-  "bhvatl": "venue:atlanta",
-  "centralbarkatlanta": "venue:atlanta",
-  "waggingtailsatlanta": "venue:atlanta",
-  "barkandboard": "venue:atlanta",
-  "piedmont_bark": "venue:atlanta",
-  "campbowwow": "venue:atlanta",
-  "parkpetsupply": "venue:atlanta",
-  "sassypaws_petboutique": "venue:atlanta",
-  "tajmahound": "venue:atlanta",
-  "thewholedogmarket": "venue:atlanta",
-  "hwfeed": "venue:atlanta",
-  "woofgangbakery": "venue:atlanta",
-  "thekrogdistrict": "venue:atlanta",
-  "medvet": "venue:atlanta",
-  "thevillagevetsinatlanta": "venue:atlanta",
-  "bluepearlsandyspringsga": "venue:atlanta",
-  "inmanpark_animalhospital": "venue:atlanta",
-  "atlanta_dog_trainer": "venue:atlanta",
-  "ladybirdatlanta": "venue:atlanta",
-  "atlantabeltline": "venue:atlanta",
-  "manuels_tavern": "venue:atlanta",
-  "taqueriadelsol": "venue:atlanta",
-  "argosyeav": "venue:atlanta",
-  "gioantico": "venue:atlanta",
-  "barcelonawinebar": "venue:atlanta",
-  "piedmontpark": "venue:atlanta",
-  "citydogmarket": "venue:atlanta",
-  "sweetwaterbrew": "venue:atlanta",
-  "chromeyellowtradingco": "venue:atlanta",
-  "grantpark.atlanta": "venue:atlanta",
-  "loewsatl": "venue:atlanta",
-  "thevortexatl": "venue:atlanta",
-  "fetchparkworks": "venue:atlanta",
-  "firemakerbeer": "venue:atlanta",
-  "drbombays": "venue:atlanta",
-  "boldmonkbrewing": "venue:atlanta",
-  "refugecoffeeco": "venue:atlanta",
-  "fetchpark": "venue:atlanta",
-  "wagalotatlanta": "venue:atlanta",
-  "secondselfbeer": "venue:atlanta",
-  "hodgepodgecoffee": "venue:atlanta",
-  "westsideparkatl": "venue:atlanta",
-  "poncecitymarket": "venue:atlanta",
-  "epicureanatlanta": "venue:atlanta",
-  "pikenurseries": "venue:atlanta",
-  "borisandhorton": "venue:newyork",
-  "shopridgehill": "event-organizer:newyork",
-  "shrinela": "event-organizer:losangeles",
-  "virginhotelsnyc": "event-organizer:newyork",
-  "thedogvine": "event-organizer:london",
-  "thevenicefest": "event-organizer:losangeles",
-  "dtsantamonica": "event-organizer:losangeles",
-  "castanea.cafe": "event-organizer:losangeles",
-  "museumofthedog": "event-organizer:newyork",
-  "entertainmentquarter": "event-organizer:sydney",
-  "catandmutton": "event-organizer:london",
-  "shopify": "event-organizer:london",
-  "dogtopia": "event-organizer:losangeles",
-  "kispace.hotelspa": "event-organizer:paris",
-  "bryantparknyc": "event-organizer:newyork",
-  "dirtydogwashes": "event-organizer:london",
-  "petmarketnyc": "event-organizer:newyork",
-  "cityofsydney": "event-organizer:sydney",
-  "monroviafest": "event-organizer:losangeles",
-  "unknown": "event-organizer:paris",
-  "stevieswhittier": "event-organizer:losangeles",
-  "london_dog_festival": "event-organizer:tokyo",
-  "animal_lighthouse": "event-organizer:newyork",
-  "oldpasadena": "event-organizer:losangeles",
-  "sydneyportugalclub": "event-organizer:sydney",
-  "cavsandcoffee": "event-organizer:losangeles",
-  "doghausdogs": "event-organizer:losangeles",
-  "pawradise.park": "event-organizer:losangeles",
-  "arthritisfoundation": "event-organizer:losangeles",
-  "humblegrape": "event-organizer:london",
-  "pupculturerescue": "event-organizer:losangeles",
-  "virtuevets": "event-organizer:london",
-  "domainedampierre": "event-organizer:paris",
-  "atlantahumane": "event-organizer:atlanta",
-  "wagsandwalks": "event-organizer:losangeles",
-  "cityofwinstonsalem": "event-organizer:losangeles",
-  "sipdrooldogfestival": "event-organizer:atlanta",
-  "reel": "event-organizer:losangeles",
-  "communityfarmersmarkets": "event-organizer:atlanta",
-  "sandboxvr": "event-organizer:atlanta",
-  "citedessciences": "event-organizer:paris",
-  "email": "event-organizer:newyork",
-  "pobleespanyol": "event-organizer:barcelona",
-  "fitdogclubs": "event-organizer:losangeles",
-  "lawlessbeer": "event-organizer:losangeles",
-  "espritdog": "event-organizer:paris",
-  "calstatela": "event-organizer:losangeles",
-  "lauriespiebar": "event-organizer:losangeles",
-  "smalldoorvet": "event-organizer:newyork",
-  "dogsnsw": "event-organizer:sydney",
-  "ivystationculvercity": "event-organizer:losangeles",
-  "sixpointatbfpl": "event-organizer:newyork",
-  "blackaborc": "event-organizer:sydney",
-  "philosophical_research_society": "event-organizer:losangeles",
-  "snell_sports": "event-organizer:geneva",
-  "jcfitco": "event-organizer:newyork",
-  "divercitytokyo_plaza.official": "event-organizer:tokyo",
-  "mustlovedogsandcomedy": "event-organizer:newyork",
-  "amsterdamalehousenyc": "event-organizer:newyork",
-  "thewalrusbarandhostel": "event-organizer:london",
-  "different.jewelry.barcelona": "event-organizer:barcelona",
-  "gunnersburyparkmuseum": "event-organizer:london",
-  "tokyo_dog_show_official": "event-organizer:tokyo",
-  "pupsandpizzas": "event-organizer:london",
-  "londondogphotographer": "event-organizer:london",
-  "thedogloversfestival": "event-organizer:sydney",
-  "c21espana": "event-organizer:barcelona",
-  "atreoimachi": "event-organizer:tokyo",
-  "orchardhotelchatswood": "event-organizer:sydney",
-  "helmsdesigndistrict": "event-organizer:losangeles",
-  "corgicafe_bcn": "event-organizer:barcelona",
-  "bondifestival": "event-organizer:sydney",
-  "koen_tptc_odaiba": "event-organizer:tokyo",
-  "vanderpumpdogs": "event-organizer:losangeles",
-  "allaboutdogsshow": "event-organizer:london",
-  "luckyandicy": "event-organizer:losangeles",
-  "huntingtondogbeach": "event-organizer:losangeles",
-  "fitpalslosangeles": "event-organizer:losangeles",
-  "theswisslanguageacademy": "event-organizer:geneva",
-  "mascoting.es": "event-organizer:barcelona",
-  "doggywash.ch": "venue:geneva",
-  "spa.geneve": "venue:geneva",
-  "happydogsgeneve": "venue:geneva",
-  "genevechiens": "venue:geneva",
-  "dogsmompaseoperrosbcn": "venue:barcelona",
-  "proanimalsbcn": "venue:barcelona",
-  "mydogbcn": "venue:barcelona",
-  "barkcelonastore": "venue:barcelona",
-  "dogcampbcn": "venue:barcelona",
-  "dogwelfare": "venue:barcelona",
-  "dogcarebarcelona": "venue:barcelona",
-  "clyde_loves_lola": "venue:atlanta",
-  "the_caninecreamery": "venue:atlanta",
-  "club_diogi": {
-    "city": "atlanta",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "atlpetstop": {
-    "city": "atlanta",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "fidofidoatl": {
-    "city": "atlanta",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "happyheartspetcareatl": {
-    "city": "atlanta",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "canpenedes": {
-    "city": "barcelona",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "perrosalagua": {
-    "city": "barcelona",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "gosbi_official": {
-    "city": "barcelona",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "altudog": {
-    "city": "barcelona",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "rucan_dogs": {
-    "city": "barcelona",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "rutcasanellasphotographer": {
-    "city": "barcelona",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "dog_tales_club": {
-    "city": "london",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "delihouseuk": {
-    "city": "london",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "dogsonlysocialclub": {
-    "city": "los-angeles",
-    "type": "business",
-    "source": "engagement-vetted"
+  "47bruckner": {
+    "city": "new-york",
+    "source": "feed-2026-08-22-barkfest-sponsor",
+    "type": "business"
   },
   "4pawsn1tail": {
     "city": "los-angeles",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "engagement-vetted",
+    "type": "business"
   },
-  "vaccinevets": {
+  "_itsapawty": {
     "city": "los-angeles",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
   },
+  "ahimsahouse": {
+    "city": "atlanta",
+    "source": "feed-discovery-20260821",
+    "type": "nonprofit"
+  },
+  "airpets": "business:london",
+  "allaboutdogsshow": "event-organizer:london",
+  "alldogsmatter": "event-sponsor-venue:london",
+  "altudog": {
+    "city": "barcelona",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "amicascience": {
+    "city": "los-angeles",
+    "source": "engagement_discovery_20260819_s3"
+  },
+  "amsterdamalehousenyc": "event-organizer:newyork",
+  "andrewraven_": "expert:london",
+  "angelcitymarketla": {
+    "city": "los-angeles",
+    "source": "feed-discovery-2026-08-21",
+    "type": "event"
+  },
+  "animal_lighthouse": "event-organizer:newyork",
+  "annawebbdogs": "expert:london",
+  "applawsanz": "event-sponsor-venue:sydney",
+  "applawstastetoppersanz": {
+    "city": "sydney",
+    "source": "feed-discovery-20260821",
+    "type": "sponsor"
+  },
+  "arcalab_": "event-sponsor-venue:sydney",
+  "argosyeav": "venue:atlanta",
+  "arthritisfoundation": "event-organizer:losangeles",
+  "arznerbar": "event-sponsor-venue:london",
+  "arznercinema": "event-sponsor-venue:london",
+  "atlanta_dog_trainer": "venue:atlanta",
+  "atlantabeltline": "venue:atlanta",
+  "atlantahumane": "event-organizer:atlanta",
+  "atlpetstop": "business:atlanta",
+  "atreoimachi": "event-organizer:tokyo",
+  "auroracoffee": "venue:atlanta",
+  "awlnsw_northernbeaches": "event-sponsor-venue:sydney",
+  "badassanimalrescue": {
+    "city": "new-york-city",
+    "source": "feed-discovery-2026-08-19",
+    "type": "event"
+  },
+  "balgowlahvillage": "venue:sydney",
+  "bankhotel": "event-sponsor-venue:sydney",
+  "barcelona_cat": "venue:barcelona",
+  "barcelonadogs": "event-sponsor-venue:barcelona",
+  "barcelonawinebar": "venue:atlanta",
+  "barclondon": {
+    "city": "london",
+    "note": "tagged on a verified city dog-event post; NOT yet followed by @thepawcities",
+    "source": "nightly-2026-08-21-deep-discovery",
+    "type": "event-sponsor-venue"
+  },
+  "barkandboard": "venue:atlanta",
+  "barkandbrewnyc": {
+    "city": "new-york",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "barkcelonastore": "venue:barcelona",
+  "barkmondseysquare": "event:london",
+  "beerwildheaven": "venue:atlanta",
+  "beesbarkbar": {
+    "city": "atlanta",
+    "source": "event-sponsor-venue",
+    "type": "business"
+  },
+  "benjisguidetonyc": {
+    "city": "new-york",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "bennyboybrewing": "event-sponsor-venue:los-angeles",
+  "bermondsstfest": {
+    "city": "london",
+    "source": "nightly-discovery-20260826",
+    "type": "event-sponsor-venue"
+  },
+  "bhvatl": "venue:atlanta",
+  "bigdogenergy_la": "event-sponsor-venue:los-angeles",
+  "bistroniko": "venue:atlanta",
+  "blackaborc": "event-organizer:sydney",
+  "bloomandbranchstudio": "business:atlanta",
+  "bluepearlsandyspringsga": "venue:atlanta",
+  "boldmonkbrewing": "venue:atlanta",
+  "bondifestival": "event-organizer:sydney",
+  "borisandhorton": "venue:newyork",
+  "brewdogatl": "venue:atlanta",
+  "brewdogsoutheveleigh": "event-sponsor-venue:sydney",
+  "brickstorepub": "venue:atlanta",
+  "brookhavendogpark_atlanta": "venue:atlanta",
+  "brooklyn_cresteds_": {
+    "city": "new-york",
+    "source": "nightly-discovery-20260826",
+    "type": "event-sponsor-venue"
+  },
+  "bryantparknyc": "event-organizer:newyork",
+  "bulles_dog_wash": {
+    "city": "paris",
+    "source": "engagement-2026-08-18-s1",
+    "type": "business"
+  },
+  "c21espana": "event-organizer:barcelona",
+  "calstatela": "event-organizer:losangeles",
+  "campbowwow": "venue:atlanta",
+  "canpenedes": {
+    "city": "barcelona",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "canyonviewranch": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260827",
+    "type": "event-sponsor-venue"
+  },
+  "cargosnackshack": {
+    "city": "los-angeles",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "carlacavanillas_groomer": "venue:barcelona",
+  "castanea.cafe": "event-organizer:losangeles",
+  "catandmutton": "event-organizer:london",
+  "cavsandcoffee": "event-organizer:losangeles",
+  "centralbarkatlanta": "venue:atlanta",
+  "centralparknyc": "event-sponsor-venue:new-york-city",
   "chateaulewoof": {
     "city": "new-york-city",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "engagement-vetted",
+    "type": "business"
   },
-  "mymochi.handmadepetsnack": {
+  "chattahoocheerivernps": "venue:atlanta",
+  "cherieinla": {
+    "city": "los-angeles",
+    "source": "engagement_discovery_20260819_s3"
+  },
+  "chilliinlondon": {
+    "city": "london",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "chromeyellowtradingco": "venue:atlanta",
+  "citedessciences": "event-organizer:paris",
+  "city_of_duarte": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260826",
+    "type": "event-sponsor-venue"
+  },
+  "citydogmarket": "venue:atlanta",
+  "cityofsydney": "event-organizer:sydney",
+  "cityofwinstonsalem": "event-organizer:losangeles",
+  "cliniqueveterinairedumarche": {
+    "city": "paris",
+    "note": "tagged on a verified city dog-event post; NOT yet followed by @thepawcities",
+    "source": "nightly-2026-08-21-deep-discovery",
+    "type": "event-sponsor-venue"
+  },
+  "club_diogi": {
+    "city": "atlanta",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "club_mascota_shop": {
+    "city": "los-angeles",
+    "source": "engagement_discovery_20260821_s2",
+    "type": "business"
+  },
+  "clyde_loves_lola": "venue:atlanta",
+  "coffeeandchill": {
+    "city": "los-angeles",
+    "source": "engagement_discovery_20260819_s3"
+  },
+  "communityfarmersmarkets": "event-organizer:atlanta",
+  "condesacoffee": "venue:atlanta",
+  "controlroomb": {
+    "city": "london",
+    "source": "feed-discovery-2026-08-19",
+    "type": "business"
+  },
+  "cooksatl": "venue:atlanta",
+  "corgicafe_bcn": "event-organizer:barcelona",
+  "corginationvacation": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "corgis_of_nyc": {
+    "city": "new-york",
+    "source": "nightly-discovery-20260826",
+    "type": "event-sponsor-venue"
+  },
+  "cpcatl": "venue:atlanta",
+  "cpfnyc": {
     "city": "new-york-city",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "event-sponsor-venue",
+    "type": "business"
   },
-  "pupstudio.grooming": {
-    "city": "new-york-city",
-    "type": "business",
-    "source": "engagement-vetted"
+  "creaturecomfortsbeer": "event-sponsor-venue:atlanta",
+  "creaturecomfortsvetclinic": {
+    "city": "london",
+    "source": "feed-discovery-2026-08-19",
+    "type": "business"
   },
-  "streetpawsfestivalofficial": {
+  "cypressstreet": "venue:atlanta",
+  "daisydogmeets": {
+    "city": "london",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "daisysdogslondon": {
+    "city": "london",
+    "note": "tagged on a verified city dog-event post; NOT yet followed by @thepawcities",
+    "source": "nightly-2026-08-21-deep-discovery",
+    "type": "event-sponsor-venue"
+  },
+  "deadenddrinksatl": "venue:atlanta",
+  "delihouseuk": {
+    "city": "london",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "denurbandogretreat": {
+    "city": "los-angeles",
+    "source": "feed-discovery-2026-08-19",
+    "type": "business"
+  },
+  "diegothepetphotographer": {
+    "city": "atlanta",
+    "source": "event-sponsor-venue",
+    "type": "business"
+  },
+  "different.jewelry.barcelona": "event-organizer:barcelona",
+  "dirtydogwashes": "event-organizer:london",
+  "disco_ufo_": {
+    "city": "atlanta",
+    "source": "feed-discovery-2026-08-21",
+    "type": "event"
+  },
+  "divercitytokyo_plaza.official": "event-organizer:tokyo",
+  "dog_tales_club": {
+    "city": "london",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "dogcampbcn": "venue:barcelona",
+  "dogge_official": {
     "city": "sydney",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "doghausdogs": "event-organizer:losangeles",
+  "doglifemagazine_": "media:barcelona",
+  "dogood_yoyogipark": "event-sponsor-venue:tokyo",
+  "dogppl": {
+    "city": "los-angeles",
+    "source": "engagement_discovery_20260819_s3"
+  },
+  "dogrocks.rock": "event-sponsor-venue:sydney",
+  "dogsalon_bungohills": {
+    "city": "tokyo",
+    "source": "engagement_discovery_20260819_s3"
+  },
+  "dogsmompaseoperrosbcn": "venue:barcelona",
+  "dogsnsw": "event-organizer:sydney",
+  "dogsofmh": {
+    "city": "new-york",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "dogsonlysocialclub": "event-sponsor-venue:los-angeles",
+  "dogswithoutborders": {
+    "city": "los-angeles",
+    "source": "engagement-2026-08-18-s1",
+    "type": "business"
+  },
+  "dogtopia": "event-organizer:losangeles",
+  "dogwelfare": "venue:barcelona",
+  "dogworldnewyork": {
+    "city": "new-york",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "domainedampierre": "event-organizer:paris",
+  "draftydane": {
+    "city": "atlanta",
+    "source": "nightly-sweep-2026-08-13 (collab partner on the_caninecreamery Grateful Dane night)",
+    "type": "event-sponsor-venue"
+  },
+  "drbombays": "venue:atlanta",
+  "drinklouielouie": {
+    "city": "atlanta",
+    "source": "feed-discovery-20260821",
+    "type": "sponsor"
+  },
+  "dtladogwalkingclub": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "dtsantamonica": "event-organizer:losangeles",
+  "earthwisepet_grantpark": {
+    "city": "atlanta",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "elfotografodeperros": "business:barcelona",
+  "elizabeth_bay_cafe": {
+    "city": "sydney",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "email": "event-organizer:newyork",
+  "empruntemontoutou": {
+    "city": "paris",
+    "source": "engagement_discovery_20260819_s3"
+  },
+  "entertainmentquarter": "event-organizer:sydney",
+  "epicureanatlanta": "venue:atlanta",
+  "espritdog": "event-organizer:paris",
+  "evasdogcamp": {
+    "city": "new-york-city",
+    "source": "feed-discovery-2026-08-19",
+    "type": "business"
+  },
+  "eventidebrewing": "venue:atlanta",
+  "everybodylovesrexy": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "festesanimals": {
+    "city": "barcelona",
+    "source": "nightly-discovery-20260823",
+    "type": "event-sponsor-venue"
+  },
+  "fetchpark": "venue:atlanta",
+  "fetchparkbuckhead": "venue:atlanta",
+  "fetchparkworks": "venue:atlanta",
+  "fidofidoatl": {
+    "city": "atlanta",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "firemakerbeer": "venue:atlanta",
+  "fitdogclubs": "event-organizer:losangeles",
+  "fitnflash": "event-sponsor-venue:sydney",
+  "fitpalslosangeles": "event-organizer:losangeles",
+  "fm_vallespir": {
+    "city": "barcelona",
+    "source": "nightly-discovery-20260823",
+    "type": "event-sponsor-venue"
+  },
+  "foresthillslivingmagazine": "media:newyork",
+  "forestparkbarkinglot": "event-organizer:newyork",
+  "fotografiatumascota": "business:barcelona",
+  "foxbrosbarbq": "venue:atlanta",
+  "freedombarkwaydogpark": "venue:atlanta",
+  "fripperssausages": "event-sponsor-venue:atlanta",
+  "fsatlanta": "venue:atlanta",
+  "funkyspaw": {
+    "city": "geneva",
+    "note": "Funky's Paw grooming salon, Route de Soral 115A, Bernex GE; partners with @spa.geneve on rescue-dog grooming. Not followed yet (ramp).",
+    "source": "evening-deep-discovery-2026-08-28",
+    "type": "event-sponsor-venue"
+  },
+  "fur_everpawsome": "community:sydney",
+  "furrificpetaccessories": "event-sponsor-venue:sydney",
+  "gab_grupo.ayuda.bodegueros": {
+    "city": "barcelona",
+    "source": "nightly-discovery-20260823",
+    "type": "event-sponsor-venue"
+  },
+  "gabrielapupovac": "event-sponsor-venue:sydney",
+  "genevechiens": "venue:geneva",
+  "gioantico": "venue:atlanta",
+  "goodcompanyshop.nyc": {
+    "city": "new-york",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "goodpeoplecoffeeco": {
+    "city": "los-angeles",
+    "source": "engagement-vetted-20260818-s3",
+    "type": "event-sponsor-venue"
+  },
+  "gosbi_official": {
+    "city": "barcelona",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "grantpark.atlanta": "venue:atlanta",
+  "gslrescue": "event-sponsor-venue:los-angeles",
+  "gunnersburyparkmuseum": "event-organizer:london",
+  "h4wpatl": "venue:atlanta",
+  "hairytalesau": "business:sydney",
+  "happydogsgeneve": "venue:geneva",
+  "happyheartspetcareatl": {
+    "city": "atlanta",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "heartofchelseavet": {
+    "city": "new-york-city",
+    "source": "feed-discovery-2026-08-19",
+    "type": "business"
+  },
+  "hellosunbean": {
+    "city": "new-york",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "helmsdesigndistrict": "event-organizer:losangeles",
+  "hideandseek.london": {
+    "city": "london",
+    "source": "feed_discovery_20260820_1pm",
+    "type": "event-sponsor-venue"
+  },
+  "highfalutinhags": "event-sponsor-venue:atlanta",
+  "highlandpetsupply": "venue:atlanta",
+  "hodgepodgecoffee": "venue:atlanta",
+  "hollywooddogobedienceclub": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "homelesspetsfoundation": {
+    "city": "atlanta",
+    "source": "nightly-discovery-20260826",
+    "type": "event-sponsor-venue"
+  },
+  "hookdonpets": "event-organizer:newyork",
+  "hotelclermont": "venue:atlanta",
+  "houndabouttown": {
+    "city": "new-york",
+    "source": "engagement-2026-08-18-s1",
+    "type": "business"
+  },
+  "humblegrape": "event-organizer:london",
+  "huntingtondogbeach": "event-organizer:losangeles",
+  "huxtherottie": "event-sponsor-venue:sydney",
+  "hwfeed": "venue:atlanta",
+  "hyattcentricbuckheadatl": "venue:atlanta",
+  "iberianpig": "venue:atlanta",
+  "iikomazesoba": {
+    "city": "sydney",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "indigoatlmt": "venue:atlanta",
+  "industrycity": {
+    "city": "new-york",
+    "source": "feed-discovery-20260823",
+    "type": "event-sponsor-venue"
+  },
+  "inmanpark_animalhospital": "venue:atlanta",
+  "ivystationculvercity": "event-organizer:losangeles",
+  "japandogwalker": {
+    "city": "tokyo",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "jcfitco": "event-organizer:newyork",
+  "jetsetpetsnyc": {
+    "city": "new-york",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "k9coachatlanta": "venue:atlanta",
+  "k9resorts_dumbo": {
+    "city": "new-york",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "keiko.oodle": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "kingkaithesamoyed": {
+    "city": "new-york-city",
+    "source": "feed-discovery-2026-08-19",
+    "type": "community"
   },
   "kipalexandria.nsw": {
     "city": "sydney",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "engagement-vetted",
+    "type": "business"
   },
-  "elizabeth_bay_cafe": {
+  "kirbydogtraining": "expert:london",
+  "kispace.hotelspa": "event-organizer:paris",
+  "knosepetinsurance": "event-sponsor-venue:sydney",
+  "koen_tptc_odaiba": "event-organizer:tokyo",
+  "la.yorkieclub": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "la_pawnaderia": {
+    "city": "los-angeles",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "ladybirdatlanta": "venue:atlanta",
+  "lakewoodfunfridays": {
+    "city": "los-angeles",
+    "source": "feed-discovery-2026-08-21",
+    "type": "event"
+  },
+  "lameutedotone": "community:paris",
+  "lappeitup": {
+    "city": "los-angeles",
+    "source": "event-sponsor-venue",
+    "type": "business"
+  },
+  "lauriespiebar": "event-organizer:losangeles",
+  "lawlessbeer": "event-organizer:losangeles",
+  "leboneappart": {
+    "city": "paris",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "leichhardtbowlo": "venue:sydney",
+  "leonsfullservice": "venue:atlanta",
+  "lickers_whines": "event-sponsor-venue:atlanta",
+  "lifewithkenjijoy": "event-sponsor-venue:london",
+  "lil.nikki.the.corgi": {
     "city": "sydney",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "lilyfieldsdistillingco": "venue:sydney",
+  "lisathepetvetsitter": "business:london",
+  "litpet_uk": {
+    "city": "london",
+    "note": "tagged on a verified city dog-event post; NOT yet followed by @thepawcities",
+    "source": "nightly-2026-08-21-deep-discovery",
+    "type": "event-sponsor-venue"
+  },
+  "littlebearatl": "venue:atlanta",
+  "littohowler": {
+    "city": "los-angeles",
+    "source": "engagement_discovery_20260819_s3"
+  },
+  "lizzielikemcguire": {
+    "city": "new-york",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "lmhtownhouse": "event-sponsor-venue:london",
+  "loewsatl": "venue:atlanta",
+  "logs_au": "event-sponsor-venue:sydney",
+  "lolaledoux_photographe": "event-sponsor-venue:paris",
+  "london_dog_festival": "event-organizer:tokyo",
+  "londondogphotographer": "event-organizer:london",
+  "londonschnauzersocial": "event-sponsor-venue:london",
+  "long_beach_pet_fair": {
+    "city": "los-angeles",
+    "source": "engagement-2026-08-18-s1",
+    "type": "business"
+  },
+  "losangeles.pups": {
+    "city": "los-angeles",
+    "source": "engagement_discovery_20260821_s2",
+    "type": "event-organizer"
+  },
+  "losangelesfunevents": {
+    "city": "los-angeles",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "love.my.human": "event-sponsor-venue:london",
+  "luckyandicy": "event-organizer:losangeles",
+  "lungesandlattesnyc": "Lunges & Lattes NYC - Pilates partner for Pilates & Paws in Central Park",
+  "mablehouse_artscentre": "venue:atlanta",
+  "maggiesrescue": {
+    "city": "sydney",
+    "source": "nightly-discovery-20260826",
+    "type": "event-sponsor-venue"
+  },
+  "majordogcompany": {
+    "city": "atlanta",
+    "source": "event-sponsor-venue",
+    "type": "business"
+  },
+  "manhattandogclub": {
+    "city": "new-york",
+    "source": "nightly-discovery-20260827",
+    "type": "event-sponsor-venue"
+  },
+  "manlydogs": "event-sponsor-venue:sydney",
+  "manuels_tavern": "venue:atlanta",
+  "marrickville_market": {
+    "city": "sydney",
+    "source": "feed-discovery-20260822-0900",
+    "type": "business"
+  },
+  "mascoting.es": "event-organizer:barcelona",
+  "mctulafamily": {
+    "city": "los-angeles",
+    "source": "engagement-vetted-20260818-s3",
+    "type": "event-sponsor-venue"
+  },
+  "medvet": "venue:atlanta",
+  "milosdogrunning": {
+    "city": "london",
+    "note": "tagged on a verified city dog-event post; NOT yet followed by @thepawcities",
+    "source": "nightly-2026-08-21-deep-discovery",
+    "type": "event-sponsor-venue"
+  },
+  "minniesmutts": "event-sponsor-venue:los-angeles",
+  "minuitexpressparis": {
+    "city": "paris",
+    "source": "admin-tab-2026-08-22",
+    "type": "venue"
+  },
+  "mizuandco_uk": {
+    "city": "london",
+    "source": "feed-discovery-2026-08-19",
+    "type": "business"
+  },
+  "mochitheboss": "event-sponsor-venue:sydney",
+  "moderndogemporium": "event-sponsor-venue:sydney",
+  "monceau.dog.club": {
+    "city": "paris",
+    "source": "engagement-2026-08-18-s1",
+    "type": "business"
+  },
+  "mondaynight": "venue:atlanta",
+  "monroviafest": "event-organizer:losangeles",
+  "motion.flix": {
+    "city": "los-angeles",
+    "source": "feed-discovery-20260822-0900",
+    "type": "business"
+  },
+  "mrsuzukispetcare": "event-sponsor-venue:los-angeles",
+  "muchachoatl": "venue:atlanta",
+  "museumofthedog": "event-organizer:newyork",
+  "mustlovedogsandcomedy": "event-organizer:newyork",
+  "my.kindredtails": "event-sponsor-venue:los-angeles",
+  "my_lilyorkiecrew": {
+    "city": "los-angeles",
+    "source": "feed-2026-08-22",
+    "type": "organizer"
+  },
+  "mydogbcn": "venue:barcelona",
+  "mymochi.handmadepetsnack": {
+    "city": "new-york-city",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "mypetbesties": "event-sponsor-venue:sydney",
+  "nami.coffee": {
+    "city": "paris",
+    "source": "admin-tab-2026-08-22",
+    "type": "business"
+  },
+  "neonbordercollie": {
+    "city": "barcelona",
+    "source": "feed-discovery-2026-08-19",
+    "type": "community"
+  },
+  "newrealm_atl": "venue:atlanta",
+  "northernbeachesdogs": "event-sponsor-venue:sydney",
+  "northside_emergency_vet": "event-sponsor-venue:sydney",
+  "nortonstitalianfesta": "event-sponsor-venue:sydney",
+  "nyc_forfree": {
+    "city": "new-york",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "nycdogadventures": "community:newyork",
+  "nycdogevents": "event-organizer:newyork",
+  "nycfamilyexplorer": {
+    "city": "new-york",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "nycfunevents": {
+    "city": "new-york",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "nycguardians": {
+    "city": "new-york",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "odewanbu": {
+    "city": "tokyo",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "oldpasadena": "event-organizer:losangeles",
+  "oldtownmonrovia": {
+    "city": "los-angeles",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "orchardhotelchatswood": "event-organizer:sydney",
+  "orpheusbrewing": "venue:atlanta",
+  "pandabashi_sky": {
+    "city": "tokyo",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "pansispawsdaycare": {
+    "city": "sydney",
+    "note": "Dog daycare; Dogge Cafe community day partner",
+    "source": "browser-discovery-2026-08-11",
+    "type": "event-sponsor-venue"
+  },
+  "parisbyaurelie": "community:paris",
+  "parkgrounds": "venue:atlanta",
+  "parkpetsupply": "venue:atlanta",
+  "parktavern": "venue:atlanta",
+  "partnershipsforparks": "community:new-york-city",
+  "pata.paw": {
+    "city": "geneva",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "paw.nexo": {
+    "city": "new-york",
+    "source": "feed-2026-08-22-barkfest-sponsor",
+    "type": "business"
+  },
+  "pawelier": {
+    "city": "new-york",
+    "source": "nightly-discovery-20260823",
+    "type": "event-sponsor-venue"
+  },
+  "pawelierclub": "Pawelier Club - NYC dog wellness event organiser (Pilates & Paws, Central Park)",
+  "pawpure.au": {
+    "city": "sydney",
+    "note": "Premium freeze-dried treat brand; Street Paws Festival Aug 15 sponsor with on-site tasting",
+    "source": "browser-discovery-2026-08-11",
+    "type": "event-sponsor-venue"
+  },
+  "pawradise.park": "event-organizer:losangeles",
+  "pawrawellness": {
+    "city": "london",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "pawsapaloozala": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "pawshpets.co": "event-sponsor-venue:sydney",
+  "pawsitivemgmt": {
+    "city": "los-angeles",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "pawsitivevibesla": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "pawtrait_pups": {
+    "city": "sydney",
+    "source": "engagement-2026-08-18-s1",
+    "type": "business"
+  },
+  "perrosalagua": {
+    "city": "barcelona",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "pet_impact": "event-sponsor-venue:london",
+  "petmarketnyc": "event-organizer:newyork",
+  "philosophical_research_society": "event-organizer:losangeles",
+  "piedmont_bark": "venue:atlanta",
+  "piedmontpark": "venue:atlanta",
+  "pikenurseries": "venue:atlanta",
+  "pilpoileduc": {
+    "city": "geneva",
+    "source": "nightly-discovery-20260823",
+    "type": "event-sponsor-venue"
+  },
+  "pobleespanyol": "event-organizer:barcelona",
+  "pomohaus": {
+    "city": "los-angeles",
+    "source": "engagement_discovery_20260819_s3"
+  },
+  "poncecitymarket": "venue:atlanta",
+  "pontoonbrewing": "venue:atlanta",
+  "poochi.thebrand": {
+    "city": "sydney",
+    "source": "engagement-2026-08-18-s1",
+    "type": "business"
+  },
+  "poodledoodsnyc": {
+    "city": "new-york-city",
+    "source": "nightly-discovery-2026-08-19",
+    "type": "event-sponsor-venue"
+  },
+  "popandbark": {
+    "city": "london",
+    "source": "feed-discovery-2026-08-19",
+    "type": "event"
+  },
+  "poundpaws": {
+    "city": "sydney",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "prettygoodboy.la": "event-sponsor-venue:los-angeles",
+  "prime100petfood": "event-sponsor-venue:sydney",
+  "proanimalsbcn": "venue:barcelona",
+  "publichousepetersham": "event-sponsor-venue:sydney",
+  "pupcrawl.co": "event-sponsor-venue:london",
+  "pupculturerescue": "event-organizer:losangeles",
+  "pupdates.au": {
+    "city": "sydney",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "puppa.paws": {
+    "city": "new-york",
+    "source": "feed-2026-08-22-barkfest-sponsor",
+    "type": "business"
+  },
+  "pupsandpizzas": "event-organizer:london",
+  "pupsinpubsaus": {
+    "city": "sydney",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "pupstudio.grooming": {
+    "city": "new-york-city",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "pupsy.team": "community:sydney",
+  "pupu_maruco": "venue:tokyo",
+  "pvopetcollective": "business:atlanta",
+  "rafarogerpoodles": {
+    "city": "london",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "redsbeergarden": {
+    "city": "atlanta",
+    "source": "event-sponsor-venue",
+    "type": "business"
+  },
+  "reel": "event-organizer:losangeles",
+  "refugecoffeeco": "venue:atlanta",
+  "retreatpetcare": {
+    "city": "geneva",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "roadogs": {
+    "city": "los-angeles",
+    "source": "engagement-vetted-20260818-s3",
+    "type": "rescue-partner"
+  },
+  "ronaldmcdonaldhouse_pasadena": {
+    "city": "los-angeles",
+    "source": "engagement-vetted",
+    "type": "community"
+  },
+  "rooftopcinemaclubuk": {
+    "city": "london",
+    "source": "feed-discovery-2026-08-19",
+    "type": "business"
+  },
+  "rosasatpark": {
+    "city": "new-york-city",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "roundtripbeer": "venue:atlanta",
+  "royallancasterlondon": {
+    "city": "london",
+    "source": "feed_discovery_20260820_1pm",
+    "type": "event-sponsor-venue"
+  },
+  "rucan_dogs": "business:barcelona",
+  "runforpawsla": {
+    "city": "los-angeles",
+    "source": "feed_discovery_20260820_1pm",
+    "type": "event-organizer"
+  },
+  "rutcasanellasphotographer": {
+    "city": "barcelona",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "sandboxvr": "event-organizer:atlanta",
+  "sandy.springs.farmers.market": "venue:atlanta",
+  "sassypaws_petboutique": "venue:atlanta",
+  "scbgarden": {
+    "city": "los-angeles",
+    "source": "feed-discovery-20260823",
+    "type": "event-sponsor-venue"
+  },
+  "scofflawbeer": "venue:atlanta",
+  "secondselfbeer": "venue:atlanta",
+  "shanehotelatlanta": "venue:atlanta",
+  "shilohs_animal_rescue": "event-sponsor-venue:los-angeles",
+  "shopify": "event-organizer:london",
+  "shopridgehill": "event-organizer:newyork",
+  "shrinela": "event-organizer:losangeles",
+  "sipdrooldogfestival": "event-organizer:atlanta",
+  "sippofesta": {
+    "city": "tokyo",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "sitmeanssitatlanta": "venue:atlanta",
+  "sixpointatbfpl": "event-organizer:newyork",
+  "slinky.the.label": "event-sponsor-venue:sydney",
+  "smalldoorvet": "event-organizer:newyork",
+  "smileydogau": "event-sponsor-venue:sydney",
+  "snell_sports": "event-organizer:geneva",
+  "socalcorgibeachday": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260822",
+    "type": "event-sponsor-venue"
+  },
+  "spa.geneve": "venue:geneva",
+  "springlandpets": {
+    "city": "los-angeles",
+    "source": "engagement_discovery_20260819_s3"
+  },
+  "stevieswhittier": "event-organizer:losangeles",
+  "stitchitupppp": {
+    "city": "los-angeles",
+    "source": "feed-discovery-2026-08-21",
+    "type": "business"
+  },
+  "stonemountainpark": "venue:atlanta",
+  "streetpawsfestivalofficial": {
+    "city": "sydney",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "sundaydogsocial": {
+    "city": "london",
+    "note": "tagged on a verified city dog-event post; NOT yet followed by @thepawcities",
+    "source": "nightly-2026-08-21-deep-discovery",
+    "type": "event-sponsor-venue"
+  },
+  "sweetwaterbrew": "venue:atlanta",
+  "sweetwatercreekstatepark": "venue:atlanta",
+  "sydneyportugalclub": "event-organizer:sydney",
+  "sydneytramwaymuseum": "venue:sydney",
+  "tails_salon_shibuya": "venue:tokyo",
+  "tails_shibuya": "event-sponsor-venue:tokyo",
+  "tajmahound": "venue:atlanta",
+  "takepawwell": {
+    "city": "london",
+    "note": "tagged on a verified city dog-event post; NOT yet followed by @thepawcities",
+    "source": "nightly-2026-08-21-deep-discovery",
+    "type": "event-sponsor-venue"
+  },
+  "taqueriadelsol": "venue:atlanta",
+  "the.style.den": {
+    "city": "los-angeles",
+    "source": "feed-2026-08-22-venue",
+    "type": "venue"
+  },
+  "the_caninecreamery": "venue:atlanta",
+  "the_devonshire_pub": {
+    "city": "london",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "the_dog_nutritionist": {
+    "city": "london",
+    "source": "nightly-discovery-20260823",
+    "type": "event-sponsor-venue"
+  },
+  "the_furheroes": {
+    "city": "new-york",
+    "source": "feed-2026-08-22-barkfest-sponsor",
+    "type": "business"
+  },
+  "thealbertatl": "venue:atlanta",
+  "theannandalehotel": {
+    "city": "sydney",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
+  },
+  "thebarksociety.paris": {
+    "city": "paris",
+    "source": "engagement-2026-08-18-s1",
+    "type": "business"
+  },
+  "thebulldogbutler": {
+    "city": "new-york",
+    "source": "feed-2026-08-22-barkfest-sponsor",
+    "type": "business"
+  },
+  "thedogbutleraus": {
+    "city": "sydney",
+    "note": "Sydney dog services; follows Street Paws + Pups in Pubs",
+    "source": "browser-discovery-2026-08-11",
+    "type": "business"
+  },
+  "thedogfoodtruckau": {
+    "city": "sydney",
+    "source": "feed-discovery-20260822-0900",
+    "type": "business"
+  },
+  "thedogloversfestival": "event-organizer:sydney",
+  "thedogvine": "event-organizer:london",
+  "thedraftydane": {
+    "city": "atlanta",
+    "source": "event-sponsor-venue",
+    "type": "business"
   },
   "theerkohotel": {
     "city": "sydney",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "engagement-vetted",
+    "type": "business"
   },
-  "dogge_official": {
+  "thefaradayepsom": "venue:london",
+  "thefurlove": {
+    "city": "paris",
+    "source": "engagement-2026-08-18-s1",
+    "type": "business"
+  },
+  "thegeorgianterracehotel": "venue:atlanta",
+  "thegoodpeoplebadhabits": {
+    "city": "los-angeles",
+    "source": "engagement-vetted-20260818-s3",
+    "type": "event-sponsor-venue"
+  },
+  "thegrounds": {
     "city": "sydney",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "feed-discovery-20260823",
+    "type": "event-sponsor-venue"
   },
+  "thejolenecoffee": "Jolene Coffee - NYC coffee sponsor for Pilates & Paws",
+  "thekrogdistrict": "venue:atlanta",
+  "thenextfunthing": {
+    "city": "los-angeles",
+    "source": "nightly-discovery-20260823",
+    "type": "event-sponsor-venue"
+  },
+  "theoptimistatl": "venue:atlanta",
+  "thepetspecialists": "event-sponsor-venue:sydney",
+  "theporterbeerbar": "venue:atlanta",
+  "theroyalparks": "venue:london",
+  "theswisslanguageacademy": "event-organizer:geneva",
+  "thesylvanhotel": "venue:atlanta",
+  "thetoxteth": {
+    "city": "sydney",
+    "source": "nightly-discovery-20260826",
+    "type": "event-sponsor-venue"
+  },
+  "thevenicefest": "event-organizer:losangeles",
+  "thevillagevetsinatlanta": "venue:atlanta",
+  "thevortexatl": "venue:atlanta",
+  "thewalrusbarandhostel": "event-organizer:london",
+  "thewholedogmarket": "venue:atlanta",
+  "theyoyogidogs": "event-sponsor-venue:tokyo",
+  "threetaverns": "venue:atlanta",
+  "toutous.neuilly": {
+    "city": "paris",
+    "source": "engagement-2026-08-18-s1",
+    "type": "business"
+  },
+  "toxtethhotel": "venue:sydney",
+  "tres_trufas": "business:barcelona",
+  "treylonsart": "event-sponsor-venue:los-angeles",
+  "twourbanlicks": "venue:atlanta",
+  "unknown": "event-organizer:paris",
+  "unnecessarynewyork": {
+    "city": "new-york",
+    "source": "nightly-deep-discovery-20260829",
+    "type": "event-sponsor-venue"
+  },
+  "uptown_festival": "event-sponsor-venue:london",
+  "vaccinevets": {
+    "city": "los-angeles",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "vanderpumpdogs": "event-organizer:losangeles",
+  "vanityfurclub": "event-sponsor-venue:los_angeles",
+  "vergbrooklyn": {
+    "city": "new-york-city",
+    "source": "feed-discovery-2026-08-19",
+    "type": "business"
+  },
+  "victorysandwichbar": "venue:atlanta",
+  "virginhotelsnyc": "event-organizer:newyork",
+  "virtuevets": "event-organizer:london",
+  "voilaconceptstore": {
+    "city": "paris",
+    "source": "nightly-discovery-2026-08-19",
+    "type": "event-sponsor-venue"
+  },
+  "vsos_vets": "event-sponsor-venue:sydney",
+  "wa_marutto": {
+    "city": "tokyo",
+    "source": "engagement-vetted",
+    "type": "business"
+  },
+  "wagalotatlanta": "venue:atlanta",
+  "waggingtailsatlanta": "venue:atlanta",
+  "wagsandwalks": "event-organizer:losangeles",
   "walknroll.syd": {
     "city": "sydney",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "engagement-vetted",
+    "type": "business"
   },
-  "brewdogsoutheveleigh": {
-    "city": "sydney",
-    "type": "business",
-    "source": "engagement-vetted"
+  "wander_woofs_": {
+    "city": "barcelona",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
   },
-  "publichousepetersham": {
-    "city": "sydney",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "pupsinpubsaus": {
-    "city": "sydney",
-    "type": "business",
-    "source": "engagement-vetted"
-  },
-  "pupdates.au": {
-    "city": "sydney",
-    "type": "business",
-    "source": "engagement-vetted"
+  "wanderlust_swissdogs": "event-sponsor-venue:geneva",
+  "wanfes.with": {
+    "city": "tokyo",
+    "source": "nightly-discovery-20260820",
+    "type": "event-sponsor-venue"
   },
   "wantime_media": {
     "city": "tokyo",
-    "type": "business",
-    "source": "engagement-vetted"
+    "source": "engagement-vetted",
+    "type": "business"
   },
-  "wa_marutto": {
-    "city": "tokyo",
-    "type": "business",
-    "source": "engagement-vetted"
+  "watlmidtown": "venue:atlanta",
+  "wehoweens": "community:los-angeles",
+  "welltayl": {
+    "city": "los-angeles",
+    "source": "engagement_discovery_20260819_s3"
   },
-  "balgowlahvillage": "venue:sydney",
-  "sandy.springs.farmers.market": "venue:atlanta",
-  "pupu_maruco": "venue:tokyo",
-  "tails_salon_shibuya": "venue:tokyo",
+  "westsideparkatl": "venue:atlanta",
+  "wetnosepawject": {
+    "city": "new-york",
+    "source": "feed-2026-08-22-barkfest-sponsor",
+    "type": "business"
+  },
+  "white_cockatoo_hotel": "venue:sydney",
+  "withinpets": {
+    "city": "london",
+    "source": "feed_discovery_20260820_1pm",
+    "type": "event-sponsor-venue"
+  },
   "woofandwildsydney": "venue:sydney",
   "woofandwildtraining": "venue:sydney",
-  "mablehouse_artscentre": "venue:atlanta",
-  "carlacavanillas_groomer": "venue:barcelona",
-  "pupsy.team": "community:sydney",
-  "fur_everpawsome": "community:sydney",
-  "leichhardtbowlo": "venue:sydney",
-  "bankhotel": "venue:sydney",
-  "hairytalesau": "business:sydney",
-  "barkmondseysquare": "event:london",
-  "arznerbar": "venue:london",
-  "wehoweens": "community:los-angeles",
-  "doglifemagazine_": "media:barcelona",
-  "elfotografodeperros": "business:barcelona",
-  "redsbeergarden": {
-    "city": "atlanta",
-    "type": "business",
-    "source": "event-sponsor-venue"
-  },
-  "thedraftydane": {
-    "city": "atlanta",
-    "type": "business",
-    "source": "event-sponsor-venue"
-  },
-  "bennyboybrewing": {
-    "city": "los-angeles",
-    "type": "business",
-    "source": "event-sponsor-venue"
-  },
-  "lappeitup": {
-    "city": "los-angeles",
-    "type": "business",
-    "source": "event-sponsor-venue"
-  },
-  "cpfnyc": {
+  "woofbowl": "event-sponsor-venue:newyork",
+  "woofgangbakery": "venue:atlanta",
+  "woofgangsmyrna": "event-sponsor-venue:atlanta",
+  "woofgangweho": "event-sponsor-venue:los_angeles",
+  "wooftopwednesdays": {
     "city": "new-york-city",
-    "type": "business",
-    "source": "event-sponsor-venue"
+    "source": "nightly-discovery-2026-08-19",
+    "type": "event-sponsor-venue"
+  },
+  "wreckingbarbrewpub": "venue:atlanta",
+  "xris_lobo": "event-sponsor-venue:los_angeles",
+  "yapyap.dog": {
+    "city": "london",
+    "source": "feed_discovery_20260820_1pm",
+    "type": "event-organizer"
+  },
+  "zoomies.dog._": "event-sponsor-venue:sydney",
+  "zoomies_doggydaycare": {
+    "city": "los-angeles",
+    "source": "feed_discovery_20260820_1pm",
+    "type": "business"
   }
 }
