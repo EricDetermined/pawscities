@@ -99,3 +99,6 @@ ingest24.json
 Badge-*.png
 QR-*.png
 Zoe-Ambassador-Kit/
+# session working artifacts (2026-08-29 revalidation)
+data/*.backup-*.json
+outputs/
