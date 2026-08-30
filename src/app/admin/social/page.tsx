@@ -624,7 +624,11 @@ function SocialCommandCenter() {
                             </div>
                             {item.error_message && <p className="text-xs text-amber-500 mt-0.5 truncate">{item.error_message}</p>}
                           </div>
-                          {item.status === 'needs_review' ? (
+                          {/* 2026-08-30: 'pending' items (awaiting the daily 9:00 UTC
+                              processing run) get the same actions as needs_review —
+                              the attention banner counts both, so both must be
+                              actionable, not dead rows. */}
+                          {item.status === 'needs_review' || item.status === 'pending' ? (
                             <div className="flex items-center gap-1.5 shrink-0">
                               <button
                                 onClick={() => isExpanded ? setCreatingEventForId(null) : openCreateEventForm(item)}
