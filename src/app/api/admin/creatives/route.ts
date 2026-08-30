@@ -143,13 +143,17 @@ export async function GET(request: NextRequest) {
   const status = searchParams.get('status'); // pending_review, approved, posted, etc.
   const view = searchParams.get('view'); // 'upcoming' = calendar view (future queue + recent posts)
   const limit = parseInt(searchParams.get('limit') || '20');
+  // Pagination (2026-08-30): the review page could only ever show the first
+  // `limit` rows — approved items beyond page one were unreachable. We fetch
+  // limit+1 rows so the response can report hasMore without a count query.
+  const offset = Math.max(0, parseInt(searchParams.get('offset') || '0'));
 
   let query = supabase
     .from('creative_queue')
     .select('*')
     .order('scheduled_for', { ascending: true, nullsFirst: false })
     .order('created_at', { ascending: false })
-    .limit(limit);
+    .range(offset, offset + limit); // limit+1 rows for hasMore detection
 
   if (status) {
     query = query.eq('status', status);
@@ -179,7 +183,15 @@ export async function GET(request: NextRequest) {
     statusCounts[s] = count || 0;
   }
 
-  return NextResponse.json({ items: data || [], counts: statusCounts });
+  const rows = data || [];
+  const hasMore = rows.length > limit;
+  return NextResponse.json({
+    items: hasMore ? rows.slice(0, limit) : rows,
+    counts: statusCounts,
+    hasMore,
+    offset,
+    limit,
+  });
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

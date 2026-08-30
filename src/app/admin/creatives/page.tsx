@@ -70,10 +70,15 @@ export default function CreativeReviewPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [editingCaption, setEditingCaption] = useState<{ id: string; caption: string } | null>(null);
   const [editingDate, setEditingDate] = useState<{ id: string; date: string } | null>(null);
+  // Pagination (2026-08-30): the page previously showed only the first 30
+  // rows with no way to reach the rest.
+  const PAGE_SIZE = 30;
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
 
   const fetchItems = useCallback(async () => {
     try {
-      const params = new URLSearchParams({ limit: '30' });
+      const params = new URLSearchParams({ limit: String(PAGE_SIZE), offset: String(page * PAGE_SIZE) });
       if (filter && filter !== 'all') params.set('status', filter);
       const res = await fetch(`/api/admin/creatives?${params}`);
       if (res.status === 401) {
@@ -83,14 +88,17 @@ export default function CreativeReviewPage() {
       const json = await res.json();
       setItems(json.items || []);
       setCounts(json.counts || null);
+      setHasMore(Boolean(json.hasMore));
     } catch {
       // fail silently
     } finally {
       setLoading(false);
     }
-  }, [filter, router]);
+  }, [filter, page, router]);
 
   useEffect(() => { fetchItems(); }, [fetchItems]);
+  // Changing the status filter always restarts at page 1.
+  useEffect(() => { setPage(0); }, [filter]);
 
   // ── Generate batch ────────────────────────────────────────────────────────
 
@@ -453,6 +461,27 @@ export default function CreativeReviewPage() {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {/* Pagination — always reachable whenever there is more than one page */}
+      {!loading && (page > 0 || hasMore) && (
+        <div className="flex items-center justify-center gap-4 mt-6 pb-8">
+          <button
+            onClick={() => { setLoading(true); setPage(p => Math.max(0, p - 1)); }}
+            disabled={page === 0}
+            className="px-4 py-2 rounded-lg border text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed bg-white hover:bg-gray-50"
+          >
+            ← Previous
+          </button>
+          <span className="text-sm text-gray-600">Page {page + 1}</span>
+          <button
+            onClick={() => { setLoading(true); setPage(p => p + 1); }}
+            disabled={!hasMore}
+            className="px-4 py-2 rounded-lg border text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed bg-white hover:bg-gray-50"
+          >
+            Next →
+          </button>
         </div>
       )}
     </div>
