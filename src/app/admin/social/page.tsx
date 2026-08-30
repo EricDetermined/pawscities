@@ -204,7 +204,7 @@ function SocialCommandCenter() {
         authFetch('/api/admin/social?type=comments'),
         authFetch('/api/admin/social?type=performance'),
         authFetch('/api/admin/social?type=actions'),
-        authFetch('/api/admin/creatives?view=upcoming&limit=60'),
+        authFetch('/api/admin/creatives?view=upcoming&limit=300'),
         authFetch('/api/admin/social?type=discovery'),
         authFetch('/api/admin/social?type=pending-events'),
       ]);
