@@ -543,7 +543,7 @@ async function handleProcessIngest(request: NextRequest) {
             await supabase
               .from('ingest_queue')
               .update({
-                status: 'needs_review',
+                status: 'dismissed', // one-surface flow (2026-08-30): auto-filed with reason; PENDING events are the single human queue
                 error_message: `Low quality score (${qualityScore}/100): ${qualityIssues.join(', ')}`,
                 processed_at: new Date().toISOString(),
               })
@@ -572,7 +572,7 @@ async function handleProcessIngest(request: NextRequest) {
           await supabase
             .from('ingest_queue')
             .update({
-              status: 'needs_review',
+              status: 'dismissed', // one-surface flow (2026-08-30): auto-filed with reason; PENDING events are the single human queue
               error_message: 'Could not extract event name from content',
               processed_at: new Date().toISOString(),
             })
@@ -618,7 +618,7 @@ async function handleProcessIngest(request: NextRequest) {
             await supabase
               .from('ingest_queue')
               .update({
-                status: 'needs_review',
+                status: 'dismissed', // one-surface flow (2026-08-30): auto-filed with reason; PENDING events are the single human queue
                 error_message:
                   `Geo conflict: resolved as "${resolvedCity}" but the venue address ` +
                   `names another region. Confirm the city before publishing.`,
@@ -634,7 +634,7 @@ async function handleProcessIngest(request: NextRequest) {
           await supabase
             .from('ingest_queue')
             .update({
-              status: 'needs_review',
+              status: 'dismissed', // one-surface flow (2026-08-30): auto-filed with reason; PENDING events are the single human queue
               error_message: 'Could not resolve city',
               processed_at: new Date().toISOString(),
             })
@@ -683,7 +683,7 @@ async function handleProcessIngest(request: NextRequest) {
           await supabase
             .from('ingest_queue')
             .update({
-              status: 'needs_review',
+              status: 'dismissed', // one-surface flow (2026-08-30): auto-filed with reason; PENDING events are the single human queue
               error_message: `Duplicate: event "${eventName}" matches existing event in events table`,
               processed_at: new Date().toISOString(),
             })
@@ -712,7 +712,7 @@ async function handleProcessIngest(request: NextRequest) {
           await supabase
             .from('ingest_queue')
             .update({
-              status: 'needs_review',
+              status: 'dismissed', // one-surface flow (2026-08-30): auto-filed with reason; PENDING events are the single human queue
               error_message: `Duplicate: similar item already processed in ingest_queue`,
               processed_at: new Date().toISOString(),
             })
@@ -728,7 +728,7 @@ async function handleProcessIngest(request: NextRequest) {
           await supabase
             .from('ingest_queue')
             .update({
-              status: 'needs_review',
+              status: 'dismissed', // one-surface flow (2026-08-30): auto-filed with reason; PENDING events are the single human queue
               error_message: `No event date could be extracted — needs manual date entry`,
               processed_at: new Date().toISOString(),
             })
@@ -821,7 +821,7 @@ async function handleProcessIngest(request: NextRequest) {
             await supabase
               .from('ingest_queue')
               .update({
-                status: 'needs_review',
+                status: 'dismissed', // one-surface flow (2026-08-30): auto-filed with reason; PENDING events are the single human queue
                 error_message: `Duplicate: same venue ("${venueName}") and date (${finalDate}) as existing event "${venueDup.name}"`,
                 processed_at: new Date().toISOString(),
               })

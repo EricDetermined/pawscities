@@ -483,9 +483,14 @@ function SocialCommandCenter() {
             const needsReviewDiscoveries = discoveryItems.filter(d => d.status === 'needs_review' || d.status === 'pending').length;
             const scrollToDiscoveries = () => document.getElementById('recent-discoveries')?.scrollIntoView({ behavior: 'smooth' });
             const scrollToPendingEvents = () => document.getElementById('pending-events-section')?.scrollIntoView({ behavior: 'smooth' });
+            // One-surface flow (2026-08-30, per Eric): PENDING events are the
+            // single human review queue. Discovery is a background log —
+            // clean candidates auto-become PENDING events (3x daily), dupes
+            // and junk auto-dismiss with a reason. Discoveries only surface
+            // here if something is stuck unprocessed.
             const actions: { label: string; count: number; onClick?: () => void; href?: string }[] = [
               ...(pendingEvents.length > 0 ? [{ label: 'events awaiting approval', count: pendingEvents.length, onClick: scrollToPendingEvents }] : []),
-              ...(needsReviewDiscoveries > 0 ? [{ label: 'discoveries to review (create event or dismiss)', count: needsReviewDiscoveries, onClick: scrollToDiscoveries }] : []),
+              ...(needsReviewDiscoveries > 0 ? [{ label: 'discoveries queued for auto-processing (no action needed)', count: needsReviewDiscoveries, onClick: scrollToDiscoveries }] : []),
               ...((creativeCounts.pending_review || 0) > 0 ? [{ label: 'creatives awaiting review', count: creativeCounts.pending_review, href: '/admin/creatives' }] : []),
               ...(unrepliedComments.length > 0 ? [{ label: 'comments awaiting reply', count: unrepliedComments.length, onClick: () => setActiveTab('comments') }] : []),
             ];
