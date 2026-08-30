@@ -139,6 +139,9 @@ export default function AmbassadorPageClient() {
     howExplore: '',
     availability: 'explorer',
     followerCount: '',
+    handleType: 'personal',
+    dogName: '',
+    announcementPreference: 'own_name',
   });
 
   // Check for invite code in URL on mount
@@ -574,6 +577,15 @@ export default function AmbassadorPageClient() {
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
                     placeholder="@yourusername"
                   />
+                  <select
+                    value={form.handleType}
+                    onChange={(e) => setForm({ ...form, handleType: e.target.value })}
+                    className="mt-2 w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none bg-white text-sm text-gray-700"
+                  >
+                    <option value="personal">This is my personal account</option>
+                    <option value="dog_account">This is a dedicated account for my dog</option>
+                  </select>
+                  <p className="mt-1 text-xs text-gray-400">A dog-dedicated account works great for the role — either is welcome, and you can switch later.</p>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1.5">Your City *</label>
@@ -588,6 +600,32 @@ export default function AmbassadorPageClient() {
                       <option key={city} value={city}>{city}</option>
                     ))}
                   </select>
+                </div>
+              </div>
+
+              {/* Dog & announcement options (2026-08-30) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Your Dog&apos;s Name <span className="font-normal text-gray-400">(optional)</span></label>
+                  <input
+                    type="text"
+                    value={form.dogName}
+                    onChange={(e) => setForm({ ...form, dogName: e.target.value })}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
+                    placeholder="e.g. Biscuit"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">How should we announce you?</label>
+                  <select
+                    value={form.announcementPreference}
+                    onChange={(e) => setForm({ ...form, announcementPreference: e.target.value })}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none bg-white"
+                  >
+                    <option value="own_name">Use my name</option>
+                    <option value="dog_name">Feature my dog&apos;s name &amp; photo instead</option>
+                  </select>
+                  <p className="mt-1 text-xs text-gray-400">Choose your dog and we&apos;ll ask for a favorite photo during onboarding — your announcement post will star them.</p>
                 </div>
               </div>
 

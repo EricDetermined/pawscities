@@ -21,6 +21,9 @@ interface Application {
   full_name: string;
   email: string;
   instagram_handle: string | null;
+  handle_type?: string | null;
+  dog_name?: string | null;
+  announcement_preference?: string | null;
   city: string;
   why_join: string;
   how_explore: string;
@@ -589,6 +592,15 @@ export default function AmbassadorsAdminPage() {
                       <div>
                         <p className="text-xs font-medium text-gray-500 uppercase mb-1">Follower Count</p>
                         <p className="text-sm text-gray-900">{app.follower_count || 'Not provided'}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-500 uppercase mb-1">Dog / Announcement</p>
+                        <p className="text-sm text-gray-900">
+                          {app.dog_name ? `🐕 ${app.dog_name}` : 'No dog name'}
+                          {' · '}
+                          {app.announcement_preference === 'dog_name' ? 'announce as DOG (needs photo at onboarding)' : 'announce as owner'}
+                          {app.handle_type === 'dog_account' ? ' · dedicated dog account' : ''}
+                        </p>
                       </div>
                       <div>
                         <p className="text-xs font-medium text-gray-500 uppercase mb-1">Invite Code Used</p>
