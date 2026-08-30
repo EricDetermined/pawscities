@@ -195,6 +195,12 @@ def cmd_record_replies(payload_arg):
                 "found_at": now,
             })
             new_replies += 1
+        # Likes on OUR comment (2026-08-29): a like from the target account is a
+        # real engagement signal even with no reply — Tokyo especially engages
+        # via likes/follows rather than comment replies, so counting replies
+        # alone made that market look broken when it is just quieter.
+        if r.get("our_comment_likes") is not None:
+            entry["our_comment_likes"] = int(r.get("our_comment_likes") or 0)
         entry["reply_checked_at"] = now
         # Mark which checker verified this. The pre-2026-08-19 checker required a
         # comment_pk that browser-posted comments never had, so its 375 "checked,
@@ -219,11 +225,27 @@ def cmd_record_replies(payload_arg):
     total_replies = sum(len(c.get("replies") or []) for c in tracker["comments"])
     v2 = [c for c in tracker["comments"] if c.get("checker") == "browser_v2"]
     v2_replied = [c for c in v2 if c.get("replies")]
+    # ENGAGED = replied OR our comment was liked (2026-08-29). Reply rate alone
+    # under-measures quiet-reply markets (Tokyo); likes on our comment count.
+    v2_liked = [c for c in v2 if (c.get("our_comment_likes") or 0) > 0]
+    v2_engaged = [c for c in v2 if c.get("replies") or (c.get("our_comment_likes") or 0) > 0]
+    by_city = {}
+    for c in v2:
+        city = c.get("city") or "?"
+        b = by_city.setdefault(city, {"checked": 0, "replied": 0, "liked": 0, "engaged": 0})
+        b["checked"] += 1
+        if c.get("replies"): b["replied"] += 1
+        if (c.get("our_comment_likes") or 0) > 0: b["liked"] += 1
+        if c.get("replies") or (c.get("our_comment_likes") or 0) > 0: b["engaged"] += 1
     tracker["stats"] = {
         "total_replies": total_replies,
         "checked_v2": len(v2),
         "replied_v2": len(v2_replied),
+        "liked_v2": len(v2_liked),
+        "engaged_v2": len(v2_engaged),
         "reply_rate_v2": round(100.0 * len(v2_replied) / max(len(v2), 1), 2),
+        "engagement_rate_v2": round(100.0 * len(v2_engaged) / max(len(v2), 1), 2),
+        "by_city": by_city,
         "legacy_checked_unreliable": sum(
             1 for c in tracker["comments"]
             if c.get("reply_checked_at") and c.get("checker") != "browser_v2"

@@ -47,7 +47,8 @@ async function check(codes){
       const k = await fetch(`/api/v1/media/${mid}/comments/${ours.pk}/child_comments/`,{headers:H}).then(r=>r.json());
       replies = (k.child_comments||[]).map(x => ({from:x.user.username, text:x.text, created_at:x.created_at}));
     }
-    out.push({shortcode:code, our_comment_pk:String(ours.pk), media_pk:mid, replies});
+    out.push({shortcode:code, our_comment_pk:String(ours.pk), media_pk:mid, replies,
+      our_comment_likes: ours.comment_like_count || 0});
   }
   return out;
 }
@@ -57,6 +58,18 @@ Run in batches of ~15 — larger batches exceed the 45s CDP timeout. Then:
 
 ```bash
 python3 agents/growth-tracker.py record-replies /tmp/replies.json
+```
+
+**Engagement = replies + likes-on-our-comment (2026-08-29).** The tracker now
+computes `engagement_rate_v2` and a `by_city` breakdown counting a comment as
+engaged when it got a reply OR the target liked it. Judge markets on the
+engagement rate, not the reply rate — Tokyo in particular engages via likes
+and follow-backs rather than comment replies, and looked falsely broken under
+replies-only measurement. Follow-backs are attributed separately by
+`record-followers` (nightly follower diff).
+
+```bash
+# (kept for reference)
 ```
 
 ### 2. Follower sweep
