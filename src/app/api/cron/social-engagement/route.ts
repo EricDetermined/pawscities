@@ -31,6 +31,14 @@ function classifySentiment(text: string): Sentiment {
   // Spam signals
   if (/\b(dm me|check (my|our) (bio|page|profile)|free follow|click (the )?link|giveaway winner|make \$\d|earn money)\b/i.test(lower)) return 'spam';
   if ((lower.match(/@\w+/g) || []).length >= 3) return 'spam'; // Tagging spam
+  // Promo-network mention spam (2026-08-30): 17 comments from throwaway
+  // accounts each tagging @petmagazinesg (paid-feature fishing) clogged the
+  // reply inbox. A comment that is ONLY a third-party @mention (+emoji) is
+  // never community — it's a promo tag.
+  const mentionStripped = t.replace(/@[\w._]+/g, '').replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}\s]+/gu, '');
+  if ((lower.match(/@\w+/g) || []).length >= 1 && mentionStripped.length === 0) return 'spam';
+  if (/petmagazine|featurepage|feature_page/i.test(lower)) return 'spam';
+  if (/\b(can send it|send it\?|check dm)\b/i.test(lower)) return 'spam';
 
   // Share/repost requests — typically engagement farming accounts
   if (/\b(repost|re-post|share (this|on|it)|send (this|the|me the) post|send (this|the) (post|beitrag)|can we (share|repost|post)|dürfen wir.*reposten|schick mir|send (it|this) to me|post (this|it) (on|to)|send this post please)\b/i.test(lower)) return 'share_request';
@@ -350,6 +358,8 @@ export async function GET(request: NextRequest) {
             // New comment — insert it
             newCommentsFound++;
 
+            // Spam never enters the reply inbox (2026-08-30): insert it
+            // pre-closed so it can't inflate "comments awaiting reply".
             await supabase
               .from('social_comments')
               .insert({
@@ -358,7 +368,9 @@ export async function GET(request: NextRequest) {
                 username: comment.username,
                 text: comment.text,
                 commented_at: comment.timestamp,
-                replied: false,
+                replied: sentiment === 'spam',
+                reply_text: sentiment === 'spam' ? '[spam-filtered at ingest — no reply]' : null,
+                replied_at: sentiment === 'spam' ? new Date().toISOString() : null,
                 sentiment,
               });
 

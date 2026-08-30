@@ -99,7 +99,11 @@ export default function AdminLayout({
         setBadgeCounts({
           events: data.events?.pending || 0,
           creatives: data.creatives?.pendingReview || 0,
-          discovery: data.discovery?.needsReview || 0,
+          // ONE definition everywhere (2026-08-30): actionable discoveries =
+          // needs_review + pending. The sidebar previously counted only
+          // needs_review while the Social page banner counted both, so Eric
+          // saw "9" in the sidebar and "13" in the banner for the same queue.
+          discovery: (data.discovery?.needsReview || 0) + (data.discovery?.pending || 0),
           claims: data.stats?.pendingClaims || 0,
           photos: data.stats?.pendingPhotos || 0,
           validation: data.stats?.pendingValidation || 0,
