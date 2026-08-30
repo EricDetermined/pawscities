@@ -1,0 +1,1931 @@
+{
+  "city": "San Diego",
+  "places": [
+    {
+      "name": "Stone Brewing World Bistro & Gardens - Liberty Station",
+      "category": "restaurants",
+      "address": "2816 Historic Decatur Rd #116, San Diego, CA 92106, USA",
+      "neighborhood": "Liberty Station",
+      "description": "Sprawling brewery bistro with a huge dog-friendly outdoor garden, bocce courts, and an Astroturf field where leashed pups lounge during summer movie nights.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://www.stonebrewing.com",
+      "phone": null
+    },
+    {
+      "name": "Ballast Point Brewing - Little Italy",
+      "category": "restaurants",
+      "address": "2215 India St, San Diego, CA 92101, USA",
+      "neighborhood": "Little Italy",
+      "description": "Ballast Point's R&D brewery and kitchen welcomes leashed dogs on its spacious social patio with fire pits, a favorite stop after strolling India Street.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://ballastpoint.com",
+      "phone": null
+    },
+    {
+      "name": "Societe Brewing Company",
+      "category": "restaurants",
+      "address": "8262 Clairemont Mesa Blvd, San Diego, CA 92111, USA",
+      "neighborhood": "Kearny Mesa",
+      "description": "One of San Diego's most dog-loving taprooms, where leashed pups are a fixture at the shaded patio and water bowls are easy to come by.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": true,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 82,
+      "source": "sd-launch-research",
+      "website": "https://www.societebrewing.com",
+      "phone": null
+    },
+    {
+      "name": "AleSmith Brewing Company",
+      "category": "restaurants",
+      "address": "9990 AleSmith Ct, San Diego, CA 92126, USA",
+      "neighborhood": "Miramar",
+      "description": "Iconic Miramar brewery with spacious outdoor areas where leashed dogs relax beside patio heaters and a large oblong firepit on cool evenings.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://alesmith.com",
+      "phone": null
+    },
+    {
+      "name": "Pure Project - North Park",
+      "category": "restaurants",
+      "address": "2867 El Cajon Blvd, San Diego, CA 92104, USA",
+      "neighborhood": "North Park",
+      "description": "Rainforest-inspired taproom that keeps complimentary dog treats behind the bar and water bowls strategically placed at every Pure Project location.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://www.purebrewing.org",
+      "phone": null
+    },
+    {
+      "name": "North Park Beer Company",
+      "category": "restaurants",
+      "address": "3038 University Ave, San Diego, CA 92104, USA",
+      "neighborhood": "North Park",
+      "description": "Award-winning neighborhood brewery with a dog-friendly patio at each location and a full kitchen, so pups can hang out while you work through the tap list.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 87,
+      "source": "sd-launch-research",
+      "website": "https://www.northparkbeerco.com",
+      "phone": null
+    },
+    {
+      "name": "Second Chance Beer Company",
+      "category": "restaurants",
+      "address": "15378 Avenue of Science, San Diego, CA 92128, USA",
+      "neighborhood": "Carmel Mountain",
+      "description": "Rescue-obsessed brewery where dogs are welcome inside and out, 1% of Buddy Lager sales fund dog rescues, and the taproom hosts adoption events and an annual Pupapalooza festival.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": true,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.secondchancebeer.com",
+      "phone": null
+    },
+    {
+      "name": "Eppig Brewing Waterfront Biergarten",
+      "category": "restaurants",
+      "address": "2817 Dickens St, San Diego, CA 92106, USA",
+      "neighborhood": "Point Loma",
+      "description": "All-outdoor biergarten right on the America's Cup Harbor where leashed dogs join the picnic tables for lagers with a marina view.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.eppigbrewing.com",
+      "phone": null
+    },
+    {
+      "name": "Duck Foot Brewing - Miramar",
+      "category": "restaurants",
+      "address": "8920 Kenamar Dr #210, San Diego, CA 92121, USA",
+      "neighborhood": "Miramar",
+      "description": "Gluten-reduced craft brewery with a pet-friendly taproom patio, rotating food trucks, and live music where well-behaved pups are regulars.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://duckfootbeer.com",
+      "phone": null
+    },
+    {
+      "name": "Harland Brewing - Bay Park",
+      "category": "restaurants",
+      "address": "4112 Napier St, San Diego, CA 92110, USA",
+      "neighborhood": "Bay Park",
+      "description": "Laid-back taproom whose large heated back patio is very pet friendly, making it an easy year-round hangout with your leashed dog.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://harlandbeer.com",
+      "phone": null
+    },
+    {
+      "name": "Belching Beaver Brewery - North Park",
+      "category": "restaurants",
+      "address": "4223 30th St, San Diego, CA 92104, USA",
+      "neighborhood": "North Park",
+      "description": "Social 30th Street tasting room famous for peanut butter stout, with dog-friendly outdoor seating in the heart of North Park's beer corridor.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": false,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 82,
+      "source": "sd-launch-research",
+      "website": "https://belchingbeaver.com",
+      "phone": null
+    },
+    {
+      "name": "Fall Brewing Company",
+      "category": "restaurants",
+      "address": "4542 30th St, San Diego, CA 92116, USA",
+      "neighborhood": "North Park",
+      "description": "Punk-rock neighborhood brewery whose casual patio has heat and fire lamps, with leashed dogs welcome at the outdoor tables.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": false,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 84,
+      "source": "sd-launch-research",
+      "website": "https://fallbrewingcompany.com",
+      "phone": null
+    },
+    {
+      "name": "Coronado Brewing Company",
+      "category": "restaurants",
+      "address": "170 Orange Ave, Coronado, CA 92118, USA",
+      "neighborhood": "Coronado",
+      "description": "Island institution since 1996 that allows canines at its San Diego area locations, with a dog-friendly patio steps from the ferry landing.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 82,
+      "source": "sd-launch-research",
+      "website": "https://coronadobrewing.com",
+      "phone": null
+    },
+    {
+      "name": "Culture Brewing Co. - Solana Beach",
+      "category": "restaurants",
+      "address": "111 S Cedros Ave, Solana Beach, CA 92075, USA",
+      "neighborhood": "Solana Beach",
+      "description": "Come-as-you-are Cedros Design District taproom that explicitly welcomes dogs (and their people) right inside the gallery-like tasting room.",
+      "dogFeatures": {
+        "outdoorSeating": false,
+        "waterBowl": true,
+        "indoorAllowed": true,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 72,
+      "source": "sd-launch-research",
+      "website": "https://www.culturebrewingco.com",
+      "phone": null
+    },
+    {
+      "name": "Deft Brewing - The Garten",
+      "category": "restaurants",
+      "address": "5328 Banks St, San Diego, CA 92110, USA",
+      "neighborhood": "Bay Park",
+      "description": "Brewery with a vibrant open-air garden area, The Garten, offering shade, plenty of seating, and room for leashed dogs to stretch out during trivia and live music nights.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 78,
+      "source": "sd-launch-research",
+      "website": "https://www.deftbrewing.com",
+      "phone": null
+    },
+    {
+      "name": "Pizza Port Ocean Beach",
+      "category": "restaurants",
+      "address": "1956 Bacon St, San Diego, CA 92107, USA",
+      "neighborhood": "Ocean Beach",
+      "description": "Legendary surf-town brewpub where dogs join the large outdoor patio for award-winning house beers and pizza a few blocks from OB Dog Beach.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.pizzaport.com",
+      "phone": null
+    },
+    {
+      "name": "Sally's Fish House & Bar",
+      "category": "restaurants",
+      "address": "1 Market Pl, San Diego, CA 92101, USA",
+      "neighborhood": "Marina / Seaport Village",
+      "description": "Waterfront seafood spot with boardwalk patio tables, a grassy area for dogs, and a dedicated dog menu featuring pupcakes, chicken and rice, and crab cookies.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": true
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.sallyssandiego.com",
+      "phone": null
+    },
+    {
+      "name": "Shorehouse Kitchen",
+      "category": "restaurants",
+      "address": "2236 Avenida de la Playa, La Jolla, CA 92037, USA",
+      "neighborhood": "La Jolla Shores",
+      "description": "Beachy brunch favorite with a spacious shaded patio, water bowls on request, and a special doggie menu for four-legged guests.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": true
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.shorehousekitchen.com",
+      "phone": null
+    },
+    {
+      "name": "Fig Tree Cafe - Pacific Beach",
+      "category": "restaurants",
+      "address": "5119 Cass St, San Diego, CA 92109, USA",
+      "neighborhood": "Pacific Beach",
+      "description": "Entirely outdoor trellis-covered garden patio with complimentary water bowls and a dog menu of eggs, bacon, and chicken with rice.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": true
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://figtreeeatery.com",
+      "phone": "(858) 274-2233"
+    },
+    {
+      "name": "Lazy Dog Restaurant & Bar",
+      "category": "restaurants",
+      "address": "1202 Camino del Rio N, San Diego, CA 92108, USA",
+      "neighborhood": "Mission Valley",
+      "description": "Dog-themed chain with a large fire-pit patio and an actual dog menu of grilled hamburger patty or chicken with brown rice served in a stainless bowl.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": true
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://lazydogrestaurants.com",
+      "phone": "(619) 481-6191"
+    },
+    {
+      "name": "Buona Forchetta - South Park",
+      "category": "restaurants",
+      "address": "3001 Beech St, San Diego, CA 92102, USA",
+      "neighborhood": "South Park",
+      "description": "Beloved Neapolitan pizzeria whose spacious tented patio is famously dog friendly, with water bowls and staff who dote on visiting pups.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://buonaforchettasd.com",
+      "phone": "(619) 381-4844"
+    },
+    {
+      "name": "Barbarella Restaurant & Bar",
+      "category": "restaurants",
+      "address": "2171 Avenida de la Playa, La Jolla, CA 92037, USA",
+      "neighborhood": "La Jolla Shores",
+      "description": "Art-filled patio restaurant with the dedicated 'Ruffarella' dog menu, including two scrambled eggs ('Rover Easy'), organic chicken, and a vanilla ice cream scoop.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": true
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://barbarellarestaurant.com",
+      "phone": null
+    },
+    {
+      "name": "The Prado at Balboa Park",
+      "category": "restaurants",
+      "address": "1549 El Prado, San Diego, CA 92101, USA",
+      "neighborhood": "Balboa Park",
+      "description": "Upscale Cohn Restaurant Group landmark whose garden patio welcomes leashed dogs for brunch after a walk through Balboa Park.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://www.cohnrestaurants.com/theprado",
+      "phone": null
+    },
+    {
+      "name": "Park & Rec",
+      "category": "restaurants",
+      "address": "4612 Park Blvd, San Diego, CA 92116, USA",
+      "neighborhood": "University Heights",
+      "description": "Craft cocktail bar billed as an urban playground for adults and dogs, with a dog-friendly courtyard, outdoor games, and rotating food trucks.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://parkandrecsd.com",
+      "phone": "(619) 795-9700"
+    },
+    {
+      "name": "Parkhouse Eatery",
+      "category": "restaurants",
+      "address": "4574 Park Blvd, San Diego, CA 92116, USA",
+      "neighborhood": "University Heights",
+      "description": "Neighborhood brunch house since 1996 with the largest garden patio in University Heights and open arms for furry friends at outdoor tables.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 74,
+      "source": "sd-launch-research",
+      "website": "https://parkhousesd.com",
+      "phone": "(619) 295-7275"
+    },
+    {
+      "name": "Baja Betty's",
+      "category": "restaurants",
+      "address": "1421 University Ave, San Diego, CA 92103, USA",
+      "neighborhood": "Hillcrest",
+      "description": "Festive Hillcrest cantina known for bottomless-mimosa brunch that welcomes leashed dogs at its street-side patio tables.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 78,
+      "source": "sd-launch-research",
+      "website": "https://www.bajabettyssd.com",
+      "phone": null
+    },
+    {
+      "name": "Raglan Public House",
+      "category": "restaurants",
+      "address": "1851 Bacon St, San Diego, CA 92107, USA",
+      "neighborhood": "Ocean Beach",
+      "description": "Kiwi-inspired burger pub a short walk from OB Dog Beach, where leashed dogs are welcome on the relaxed front patio.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 78,
+      "source": "sd-launch-research",
+      "website": "https://www.raglanpublichouse.com",
+      "phone": null
+    },
+    {
+      "name": "Union Kitchen & Tap - Gaslamp",
+      "category": "restaurants",
+      "address": "333 Fifth Ave, San Diego, CA 92101, USA",
+      "neighborhood": "Gaslamp Quarter",
+      "description": "Craft-beer gastropub in the heart of the Gaslamp that seats leashed dogs at its Fifth Avenue sidewalk patio.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 75,
+      "source": "sd-launch-research",
+      "website": "https://www.unionkitchenandtap.com",
+      "phone": null
+    },
+    {
+      "name": "Knotty Barrel",
+      "category": "restaurants",
+      "address": "844 Market St, San Diego, CA 92101, USA",
+      "neighborhood": "East Village / Gaslamp",
+      "description": "Gastropub with 100+ beers where staff bring water bowls and treats to dogs seated at the outdoor bar and patio tables.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 78,
+      "source": "sd-launch-research",
+      "website": "https://www.knottybarrel.com",
+      "phone": null
+    },
+    {
+      "name": "The Henry",
+      "category": "restaurants",
+      "address": "1031 Orange Ave, Coronado, CA 92118, USA",
+      "neighborhood": "Coronado",
+      "description": "Polished all-day New American restaurant where leashed, friendly dogs are welcome at tables on the Orange Avenue patio.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://www.thehenryrestaurant.com",
+      "phone": null
+    },
+    {
+      "name": "Bluewater Boathouse Seafood Grill",
+      "category": "restaurants",
+      "address": "1701 Strand Way, Coronado, CA 92118, USA",
+      "neighborhood": "Coronado",
+      "description": "Historic boathouse restaurant overlooking the Coronado Yacht Club where pups get a patio seat and can order from a dedicated dog menu.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": true
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://www.bluewatergrill.com",
+      "phone": null
+    },
+    {
+      "name": "Encinitas Fish Shop",
+      "category": "restaurants",
+      "address": "996 N Coast Hwy 101, Encinitas, CA 92024, USA",
+      "neighborhood": "Encinitas / Leucadia",
+      "description": "Counter-service fresh fish spot whose dog patio is a real draw, with staff bringing bowls of water right to the table for pups.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": null,
+      "phone": "(760) 436-4665"
+    },
+    {
+      "name": "Communal Coffee",
+      "category": "cafes",
+      "address": "2335 University Ave, San Diego, CA 92104, USA",
+      "neighborhood": "North Park",
+      "description": "Coffee-and-flower-shop hybrid where dogs can accompany you inside while ordering and staff frequently hand out pup cups and small treats on the patio.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://communalcoffee.com",
+      "phone": null
+    },
+    {
+      "name": "James Coffee Co.",
+      "category": "cafes",
+      "address": "2355 India St, San Diego, CA 92101, USA",
+      "neighborhood": "Little Italy",
+      "description": "Industrial-chic roastery in a converted warehouse where dogs are welcome at the pet-friendly outdoor courtyard tables.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://www.jamescoffeeco.com",
+      "phone": null
+    },
+    {
+      "name": "Better Buzz Coffee - Pacific Beach Grand",
+      "category": "cafes",
+      "address": "822 Grand Ave, San Diego, CA 92109, USA",
+      "neighborhood": "Pacific Beach",
+      "description": "Flagship roastery serving free puppuccinos, with an ocean-view rooftop deck where dogs lounge on the porch-swing day beds, plus a drive-thru for beach days.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://betterbuzzcoffee.com",
+      "phone": null
+    },
+    {
+      "name": "Chance's Coffee",
+      "category": "cafes",
+      "address": "2311 El Cajon Blvd, San Diego, CA 92104, USA",
+      "neighborhood": "North Park",
+      "description": "Vietnamese coffee shop named after the owners' rescue dog Chance, with a bright dog-friendly patio where pups get complimentary treats.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.chancescoffee.com",
+      "phone": null
+    },
+    {
+      "name": "Moniker Coffee Co.",
+      "category": "cafes",
+      "address": "2860 Sims Rd, San Diego, CA 92106, USA",
+      "neighborhood": "Liberty Station",
+      "description": "Spacious Liberty Station cafe with multiple dog-friendly outdoor lounging spots, and baristas will hand over a treat for your pup at the register.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.monikercoffee.com",
+      "phone": null
+    },
+    {
+      "name": "Selva Coffee House",
+      "category": "cafes",
+      "address": "6225 Mission Gorge Rd, San Diego, CA 92120, USA",
+      "neighborhood": "Grantville",
+      "description": "Hidden cafe tucked inside Terra Bella Nursery where staff offer puppuccinos and keep water bowls out for dogs among the plants.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": true,
+        "dogMenu": false
+      },
+      "confidence": 76,
+      "source": "sd-launch-research",
+      "website": null,
+      "phone": null
+    },
+    {
+      "name": "Bird Rock Coffee Roasters",
+      "category": "cafes",
+      "address": "5627 La Jolla Blvd, La Jolla, CA 92037, USA",
+      "neighborhood": "Bird Rock / La Jolla",
+      "description": "Direct-trade roaster whose sidewalk patio is a neighborhood dog-walking hub, with water bowls set out for four-legged regulars.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 78,
+      "source": "sd-launch-research",
+      "website": "https://birdrockcoffee.com",
+      "phone": null
+    },
+    {
+      "name": "Pannikin Coffee & Tea",
+      "category": "cafes",
+      "address": "510 N Coast Hwy 101, Encinitas, CA 92024, USA",
+      "neighborhood": "Leucadia / Encinitas",
+      "description": "Historic train-depot cafe (since 1968) with a huge sun-dappled dog-friendly patio featuring grass, Adirondack chairs, and sheltered pet-friendly seating.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://pannikincoffeeandtea.com",
+      "phone": "(760) 436-5824"
+    },
+    {
+      "name": "Lofty Coffee - Encinitas",
+      "category": "cafes",
+      "address": "90 N Coast Hwy 101 #214, Encinitas, CA 92024, USA",
+      "neighborhood": "Encinitas",
+      "description": "Craft roaster and cafe that welcomes pets at its breezy outdoor tables just off Highway 101, a favorite post-beach-walk stop.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 76,
+      "source": "sd-launch-research",
+      "website": "https://loftycoffee.com",
+      "phone": null
+    },
+    {
+      "name": "Cafe 1134",
+      "category": "cafes",
+      "address": "1134 Orange Ave, Coronado, CA 92118, USA",
+      "neighborhood": "Coronado",
+      "description": "Long-running Coronado coffee house and bistro with both front and rear dog-friendly patios along Orange Avenue.",
+      "dogFeatures": {
+        "outdoorSeating": true,
+        "waterBowl": true,
+        "indoorAllowed": false,
+        "treats": false,
+        "dogMenu": false
+      },
+      "confidence": 75,
+      "source": "sd-launch-research",
+      "website": null,
+      "phone": null
+    },
+    {
+      "name": "The Original Paw Pleasers",
+      "category": "bakeries",
+      "address": "2818 University Ave, San Diego, CA 92104, USA",
+      "neighborhood": "North Park",
+      "description": "San Diego's original dog bakery (since 1992) serving fresh-baked dog cookies, custom birthday cakes, and doggie ice cream in a pet boutique setting.",
+      "dogFeatures": {
+        "outdoorSeating": false,
+        "waterBowl": true,
+        "indoorAllowed": true,
+        "treats": true,
+        "dogMenu": true
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://pawpleasers.com",
+      "phone": null
+    },
+    {
+      "name": "Woofpak Bakery",
+      "category": "bakeries",
+      "address": "4545 La Jolla Village Dr, Suite E4, San Diego, CA 92122, USA",
+      "neighborhood": "University City / UTC",
+      "description": "Dog bakery near Westfield UTC selling freshly baked treats, chews, and celebration cakes, with dogs welcome inside to pick their own.",
+      "dogFeatures": {
+        "outdoorSeating": false,
+        "waterBowl": true,
+        "indoorAllowed": true,
+        "treats": true,
+        "dogMenu": true
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://woofpakbakery.com",
+      "phone": null
+    },
+    {
+      "name": "Dexter's Deli",
+      "category": "bakeries",
+      "address": "1229 Camino Del Mar, Del Mar, CA 92014, USA",
+      "neighborhood": "Del Mar",
+      "description": "Natural pet food deli since 1996 offering dog birthday cakes, pupcakes, and a bakery case of healthy treats, with dogs welcome to browse in-store.",
+      "dogFeatures": {
+        "outdoorSeating": false,
+        "waterBowl": true,
+        "indoorAllowed": true,
+        "treats": true,
+        "dogMenu": true
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://www.dextersdeli.com",
+      "phone": "(858) 792-3707"
+    },
+    {
+      "name": "Ocean Beach Dog Beach (Original Dog Beach)",
+      "category": "beaches",
+      "address": "End of Voltaire Street at West Point Loma Blvd, San Diego, CA 92107, USA",
+      "neighborhood": "Ocean Beach",
+      "description": "San Diego's original leash-free beach (since 1972) is off-leash 24 hours a day, 365 days a year at the north end of Ocean Beach, with rinse stations and waste-bag dispensers near the entrance.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/bchdog",
+      "phone": null
+    },
+    {
+      "name": "Fiesta Island Dog Park (Mission Bay)",
+      "category": "beaches",
+      "address": "Fiesta Island Rd, San Diego, CA 92109, USA",
+      "neighborhood": "Mission Bay",
+      "description": "A huge leash-optional island in Mission Bay open 6 a.m. to 10 p.m., where dogs can run off-leash along calm bayfront shoreline and interior dunes, including a dedicated fenced off-leash area at the south end.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/regional/missionbay/fiestaisland",
+      "phone": null
+    },
+    {
+      "name": "Coronado Dog Beach",
+      "category": "beaches",
+      "address": "100 Ocean Blvd, Coronado, CA 92118, USA",
+      "neighborhood": "Coronado",
+      "description": "Dogs may run off-leash on the designated stretch of sand at the north end of Coronado Beach near North Island (leash required everywhere en route), with a dog rinse-off hose station at the beach entrance.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.coronado.ca.us/757/Dogs",
+      "phone": null
+    },
+    {
+      "name": "Del Mar Dog Beach (North Beach)",
+      "category": "beaches",
+      "address": "3200 Camino Del Mar at 29th Street, Del Mar, CA 92014, USA",
+      "neighborhood": "Del Mar",
+      "description": "Seasonal off-leash beach north of 29th Street: dogs under voice control may go leash-free from the day after Labor Day through June 15, but a 6-foot leash is required during summer (June 16 through Labor Day), with fines starting around $285.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.delmar.ca.us/206/Dog-Friendly-Beaches",
+      "phone": null
+    },
+    {
+      "name": "Cardiff State Beach",
+      "category": "beaches",
+      "address": "2500 S Coast Hwy 101, Cardiff-by-the-Sea, Encinitas, CA 92007, USA",
+      "neighborhood": "Cardiff-by-the-Sea",
+      "description": "One of the few North County state beaches that welcomes dogs on a 6-foot leash along the sand south of Tower 16, open daily from 7 a.m. to sunset (day-use parking fee applies).",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.parks.ca.gov/?page_id=656",
+      "phone": null
+    },
+    {
+      "name": "Pacific Beach & Mission Beach (Off-Hours Dog Access)",
+      "category": "beaches",
+      "address": "Ocean Front Walk, San Diego, CA 92109, USA",
+      "neighborhood": "Pacific Beach",
+      "description": "Leashed dogs are welcome on these city beaches and the boardwalk outside restricted hours only: before 9 a.m. and after 6 p.m. April 1-Oct. 31, and before 9 a.m. and after 4 p.m. Nov. 1-March 31.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/bchdog",
+      "phone": null
+    },
+    {
+      "name": "Nate's Point Dog Park (Balboa Park)",
+      "category": "parks",
+      "address": "Balboa Dr & El Prado, San Diego, CA 92101, USA",
+      "neighborhood": "Balboa Park",
+      "description": "Balboa Park's most popular off-leash park, a roughly 2.3-acre fully fenced area on the south side of the Cabrillo Bridge that is open 24 hours with a drinking fountain, picnic tables and mature shade trees.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": true,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/leashfree",
+      "phone": null
+    },
+    {
+      "name": "Morley Field Dog Park (Balboa Park)",
+      "category": "parks",
+      "address": "2221 Morley Field Dr, San Diego, CA 92104, USA",
+      "neighborhood": "North Park / Balboa Park",
+      "description": "An unfenced, grassy off-leash area northwest of the Morley Field tennis courts that is open 24 hours for well-recalled dogs, with shade trees and plenty of room to sprint.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/leashfree",
+      "phone": null
+    },
+    {
+      "name": "Grape Street Dog Park",
+      "category": "parks",
+      "address": "Grape St & 28th St, San Diego, CA 92102, USA",
+      "neighborhood": "South Park",
+      "description": "A beloved 5-acre unfenced meadow with canyon views where dogs may be off-leash only during posted hours: Monday-Friday 7:30 a.m.-9 p.m. and weekends/holidays 9 a.m.-9 p.m.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/leashfree",
+      "phone": null
+    },
+    {
+      "name": "Dusty Rhodes Dog Park",
+      "category": "parks",
+      "address": "2250 Sunset Cliffs Blvd, San Diego, CA 92107, USA",
+      "neighborhood": "Ocean Beach",
+      "description": "A 1-acre fenced off-leash area inside Dusty Rhodes Neighborhood Park (open dawn to dusk) that makes a perfect grassy warm-up or cool-down stop minutes from OB Dog Beach.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": false,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/leashfree",
+      "phone": null
+    },
+    {
+      "name": "Capehart Dog Park",
+      "category": "parks",
+      "address": "Felspar St & Soledad Mountain Rd, San Diego, CA 92109, USA",
+      "neighborhood": "Pacific Beach",
+      "description": "Pacific Beach's 1-acre dog park is open 24 hours with separate fenced pens for small and large dogs, water stations, picnic tables, benches and its own parking lot.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": true,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/leashfree",
+      "phone": null
+    },
+    {
+      "name": "Kearny Mesa Dog Park",
+      "category": "parks",
+      "address": "3170 Armstrong St, San Diego, CA 92111, USA",
+      "neighborhood": "Kearny Mesa",
+      "description": "A 1-acre lighted, fenced off-leash park open 6:30 a.m. to 10 p.m. with dog water stations and human drinking fountains — one of the few San Diego dog parks usable after dark.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": true,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/leashfree",
+      "phone": null
+    },
+    {
+      "name": "Torrey Highlands Dog Park",
+      "category": "parks",
+      "address": "Lansdale Dr at Del Mar Heights Rd, San Diego, CA 92129, USA",
+      "neighborhood": "Torrey Highlands",
+      "description": "A 1-acre fenced off-leash area with both turfed and mulched surfaces, open dawn to dusk and popular with Carmel Valley and Del Mar Heights dog owners.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/leashfree",
+      "phone": null
+    },
+    {
+      "name": "Doyle Community Park Dog Park",
+      "category": "parks",
+      "address": "8175 Regents Rd, San Diego, CA 92122, USA",
+      "neighborhood": "University City",
+      "description": "Two fenced, turfed off-leash yards (one for small dogs, one for large/all dogs) behind the Doyle Recreation Center, technically open 24 hours though unlighted after dark.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/leashfree",
+      "phone": null
+    },
+    {
+      "name": "Rancho Bernardo Off-Leash Dog Park",
+      "category": "parks",
+      "address": "18448 W Bernardo Dr, San Diego, CA 92127, USA",
+      "neighborhood": "Rancho Bernardo",
+      "description": "A 2.66-acre leash-free park (open dawn to dusk) with three fully fenced sections for small dogs under 30 lbs, large dogs and all dogs, each with dog water fountains and waste-bag stations.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": true,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "http://ranchobernardodogpark.com/",
+      "phone": null
+    },
+    {
+      "name": "Ward Canyon Dog Park",
+      "category": "parks",
+      "address": "3905 Adams Ave, San Diego, CA 92116, USA",
+      "neighborhood": "Normal Heights",
+      "description": "A neighborhood favorite open dawn to dusk with two fenced, wood-chipped pens for small and large dogs, plus shade pergolas, benches and adjacent parking.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": false,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/leashfree",
+      "phone": null
+    },
+    {
+      "name": "Maddox Dog Park",
+      "category": "parks",
+      "address": "7815 Flanders Dr, San Diego, CA 92126, USA",
+      "neighborhood": "Mira Mesa",
+      "description": "Mira Mesa's 0.65-acre fenced off-leash park (open dawn to dusk) features a turfed run, a walking path and a drinking fountain for thirsty pups.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": true,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/dogs/leashfree",
+      "phone": null
+    },
+    {
+      "name": "Waterfront Park",
+      "category": "parks",
+      "address": "1600 Pacific Hwy, San Diego, CA 92101, USA",
+      "neighborhood": "Downtown / Embarcadero",
+      "description": "A 12-acre bayfront lawn and garden park beside the County Administration Center where leashed dogs are welcome for harbor-view strolls (leash required at all times; dogs stay out of the splash fountain).",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiegocounty.gov/parks/picnic/waterfrontpark.html",
+      "phone": null
+    },
+    {
+      "name": "Los Peñasquitos Canyon Preserve",
+      "category": "activities",
+      "address": "12020 Black Mountain Rd, San Diego, CA 92129, USA",
+      "neighborhood": "Rancho Peñasquitos",
+      "description": "A mostly flat 6-7 mile canyon trail to a year-round waterfall where dogs are welcome on leashes no longer than 8 feet, with creekside shade from oaks and sycamores along the way.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/osp/lospenasquitos",
+      "phone": "(858) 484-7504"
+    },
+    {
+      "name": "Mission Trails Regional Park & Cowles Mountain",
+      "category": "activities",
+      "address": "One Father Junipero Serra Trail, San Diego, CA 92119, USA",
+      "neighborhood": "San Carlos / Mission Trails",
+      "description": "Leashed dogs are allowed on the park's 60+ miles of trails including the iconic Cowles Mountain summit hike (Golfcrest Dr & Navajo Rd trailhead) — leashes are strictly enforced and hot-weather hikes with dogs are discouraged.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://mtrp.org/",
+      "phone": "(619) 668-3281"
+    },
+    {
+      "name": "Lake Miramar (Miramar Reservoir) Loop",
+      "category": "activities",
+      "address": "10710 Scripps Lake Dr, San Diego, CA 92131, USA",
+      "neighborhood": "Scripps Ranch",
+      "description": "A gentle, paved 4.9-mile loop around the reservoir (open sunrise to sunset, no entry fee) where dogs must stay leashed and at least 50 feet from the water, with picnic tables and restrooms along the route.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/reservoirs-lakes/miramar-reservoir",
+      "phone": null
+    },
+    {
+      "name": "Sunset Cliffs Natural Park",
+      "category": "activities",
+      "address": "Sunset Cliffs Blvd & Ladera St, San Diego, CA 92107, USA",
+      "neighborhood": "Point Loma",
+      "description": "Leashed dogs are welcome on the dramatic 1.5-mile blufftop trail overlooking the Pacific — keep pups well back from the crumbly cliff edges and note there is no beach access for dogs here.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.sandiego.gov/park-and-recreation/parks/regional/shoreline/sunset",
+      "phone": null
+    },
+    {
+      "name": "SoCal Surf Dogs / Surf Dog Lessons at Del Mar Dog Beach",
+      "category": "activities",
+      "address": "3200 Camino Del Mar, Del Mar, CA 92014, USA",
+      "neighborhood": "Del Mar",
+      "description": "The country's best-known dog surfing club helps run summer surf-dog clinics with Helen Woodward Animal Center at Del Mar's North Beach — roughly 50-minute lessons (about $45) include board, canine life vest and instruction, capped around 10 dogs per class.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "http://www.socalsurfdogs.com/",
+      "phone": null
+    },
+    {
+      "name": "SUP Pups San Diego",
+      "category": "activities",
+      "address": "2592 Laning Rd, San Diego, CA 92106, USA",
+      "neighborhood": "Liberty Station / Point Loma",
+      "description": "Private stand-up paddleboard lessons designed for you and your dog, launching from the sandy Liberty Station waterfront with doggie life jackets provided and a pre-paddle meet-and-sniff to settle nerves.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://suppups.com/",
+      "phone": null
+    },
+    {
+      "name": "Eco Boat Rentals (Dog-Friendly Pedal Boats)",
+      "category": "activities",
+      "address": "1880 Harbor Island Dr, San Diego, CA 92101, USA",
+      "neighborhood": "Harbor Island",
+      "description": "Hydro-cycle pedal boat and pedal kayak rentals on San Diego Bay that explicitly welcome leashed dogs aboard — up to two large or four small dogs per boat — with canine life vests provided in multiple sizes.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 70,
+      "source": "sd-launch-research",
+      "website": "https://www.ecoboatrentals.com/",
+      "phone": null
+    },
+    {
+      "name": "Next Level Sailing (Dog-Friendly Whale Watching)",
+      "category": "activities",
+      "address": "1492 N Harbor Dr, San Diego, CA 92101, USA",
+      "neighborhood": "Downtown / Embarcadero",
+      "description": "One of San Diego's only genuinely dog-friendly whale watching and sailing outfits — you select the number of dogs when booking a trip aboard the 139-foot schooner America, with a per-sailing limit on four-legged passengers.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 75,
+      "source": "sd-launch-research",
+      "website": "https://nextlevelsailing.com/",
+      "phone": null
+    },
+    {
+      "name": "Seaport Village",
+      "category": "activities",
+      "address": "849 W Harbor Dr, San Diego, CA 92101, USA",
+      "neighborhood": "Downtown / Embarcadero",
+      "description": "Leashed dogs are welcome throughout this bayfront shopping and dining village's outdoor walkways and grassy park areas, and several shops and patios set out water bowls and treats for visiting pups.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.seaportvillage.com/",
+      "phone": null
+    },
+    {
+      "name": "Liberty Station & NTC Park",
+      "category": "activities",
+      "address": "2455 Cushing Rd, San Diego, CA 92106, USA",
+      "neighborhood": "Point Loma",
+      "description": "The former Naval Training Center's waterfront lawns, arts-district plazas and 46-acre NTC Park are ideal for leashed dog walks, with many surrounding patios and shops that welcome dogs outdoors.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://libertystation.com/",
+      "phone": null
+    },
+    {
+      "name": "Hotel del Coronado",
+      "category": "hotels",
+      "address": "1500 Orange Ave, Coronado, CA 92118, USA",
+      "neighborhood": "Coronado",
+      "description": "The iconic beachfront resort welcomes up to two dogs of 40 lbs or less for a $150 non-refundable fee per stay ($200 in Beach Village or Shore House), though pets are not allowed on the beach directly in front of the resort.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.hoteldel.com/stay/pets/",
+      "phone": "(619) 435-6611"
+    },
+    {
+      "name": "The Dana on Mission Bay",
+      "category": "hotels",
+      "address": "1710 W Mission Bay Dr, San Diego, CA 92109, USA",
+      "neighborhood": "Mission Bay",
+      "description": "This bayfront resort's 'Dana for Dogs' program accepts up to two dogs of any size for $40/night for the first dog plus $20/night for a second, with grassy waterfront walking paths a few minutes from Fiesta Island's off-leash area.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://thedana.com/san-diego-hotel/dog-friendly/",
+      "phone": "(619) 222-6440"
+    },
+    {
+      "name": "Paradise Point Resort & Spa",
+      "category": "hotels",
+      "address": "1404 Vacation Rd, San Diego, CA 92109, USA",
+      "neighborhood": "Mission Bay",
+      "description": "A 44-acre private island resort on Mission Bay that welcomes two pets of any size or breed for a $150 (+tax) non-refundable cleaning fee per stay, with a mile of walkable bayfront beach outside the bungalows (pets may not be left unattended).",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://paradisepoint.com/",
+      "phone": "(858) 274-4630"
+    },
+    {
+      "name": "The Lafayette Hotel & Club",
+      "category": "hotels",
+      "address": "2223 El Cajon Blvd, San Diego, CA 92104, USA",
+      "neighborhood": "North Park",
+      "description": "This restored 1946 landmark accepts up to two dogs under 45 lbs for a $100 pet fee each plus a one-time $100 cleaning fee (no cats), a short walk from Balboa Park's Morley Field off-leash area.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.lafayettehotelsd.com/",
+      "phone": "(619) 296-2101"
+    },
+    {
+      "name": "Alma San Diego Downtown (formerly Kimpton Alma)",
+      "category": "hotels",
+      "address": "1047 5th Ave, San Diego, CA 92101, USA",
+      "neighborhood": "Gaslamp Quarter",
+      "description": "Now a Tribute Portfolio hotel, Alma keeps its dog-loving DNA: up to two pets (about 50 lbs each) for a $75 non-refundable fee per stay, with pet beds, bowls and treats available on request.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://www.marriott.com/en-us/hotels/sanbd-alma-san-diego-downtown-a-tribute-portfolio-hotel/overview/",
+      "phone": "(619) 515-3000"
+    },
+    {
+      "name": "Loews Coronado Bay Resort",
+      "category": "hotels",
+      "address": "4000 Coronado Bay Rd, Coronado, CA 92118, USA",
+      "neighborhood": "Coronado",
+      "description": "The 'Loews Loves Pets' program welcomes two pets in designated rooms for a $150 fee per stay, complete with a check-in welcome gift (pet tag, bowl and treat), a gourmet pet room-service menu and dog-walking routes around the bayside grounds.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": true,
+        "outdoorSeating": false
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.loewshotels.com/coronado-bay-resort/discover/loews-loves-pets",
+      "phone": "(619) 424-4000"
+    },
+    {
+      "name": "Pendry San Diego",
+      "category": "hotels",
+      "address": "550 J St, San Diego, CA 92101, USA",
+      "neighborhood": "Gaslamp Quarter",
+      "description": "This luxury Gaslamp hotel welcomes up to two dogs (roughly 50 lbs each) for $100 + tax per stay and provides dog beds, bowls and treats, though dogs cannot join you in the food-and-drink venues or be left alone in rooms.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.pendry.com/san-diego/",
+      "phone": "(619) 738-7000"
+    },
+    {
+      "name": "Hotel Indigo San Diego Gaslamp Quarter",
+      "category": "hotels",
+      "address": "509 9th Ave, San Diego, CA 92101, USA",
+      "neighborhood": "East Village / Gaslamp",
+      "description": "A famously pet-forward IHG boutique that accepts two pets of any size for a $100 fee per stay and stocks treats, beds and bowls, with a landscaped rooftop deck and nearby pocket parks for potty breaks.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": true,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.ihg.com/hotelindigo/hotels/us/en/san-diego/sanis/hoteldetail",
+      "phone": "(619) 727-4000"
+    },
+    {
+      "name": "Ocean Villa Inn",
+      "category": "hotels",
+      "address": "5142 W Point Loma Blvd, San Diego, CA 92107, USA",
+      "neighborhood": "Ocean Beach",
+      "description": "A budget-friendly inn literally steps from OB Dog Beach with first-floor dog-friendly rooms ($30 + tax covers up to two pets), an on-site dog wash with complimentary shampoo and towels, free treats and a small dog run.",
+      "dogFeatures": {
+        "offLeashArea": true,
+        "fenced": true,
+        "waterBowl": true,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.oceanvillainn.com/",
+      "phone": "(619) 224-3481"
+    },
+    {
+      "name": "Motel 6 San Diego Hotel Circle - Mission Valley",
+      "category": "hotels",
+      "address": "2424 Hotel Circle N, San Diego, CA 92108, USA",
+      "neighborhood": "Mission Valley",
+      "description": "A true budget option where two pets of any size stay free (no pet fee) in any room, with on-property pet walking areas and waste stations and central freeway access to the beaches and Balboa Park.",
+      "dogFeatures": {
+        "offLeashArea": false,
+        "fenced": false,
+        "waterBowl": false,
+        "shadeAvailable": false,
+        "outdoorSeating": false
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.motel6.com/property/motel-san-diego-ca-california-us-294705/",
+      "phone": "(619) 296-1612"
+    },
+    {
+      "name": "Camp Run-A-Mutt Point Loma",
+      "category": "daycare",
+      "address": "4030 Sports Arena Blvd, San Diego, CA 92110, USA",
+      "neighborhood": "Point Loma / Midway",
+      "description": "Award-winning 100% cage-free dog daycare and boarding (SD Union-Tribune Best of 2025) with over 11,000 sq ft of play space and live 'Muttcam' webcams.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 92,
+      "source": "sd-launch-research",
+      "website": "https://camprunamutt.com/location/pointloma/",
+      "phone": "(619) 225-2267"
+    },
+    {
+      "name": "Camp Run-A-Mutt Sorrento Valley",
+      "category": "daycare",
+      "address": "11468 Sorrento Valley Rd, Ste B, San Diego, CA 92121, USA",
+      "neighborhood": "Sorrento Valley",
+      "description": "Cage-free daycare and overnight boarding outpost of San Diego's homegrown Camp Run-A-Mutt franchise, with dogs supervised in open play yards and viewable on live webcams.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://camprunamutt.com/location/sorrentovalley/",
+      "phone": "(858) 272-6310"
+    },
+    {
+      "name": "Camp Run-A-Mutt East County",
+      "category": "daycare",
+      "address": "1506 Pioneer Way, El Cajon, CA 92020, USA",
+      "neighborhood": "El Cajon / East County",
+      "description": "East County branch of the cage-free daycare and boarding brand with 7,000+ sq ft of romping space, splash areas, and live webcams for owners.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://camprunamutt.com/location/eastcounty/",
+      "phone": null
+    },
+    {
+      "name": "Paw Commons Pet Resort - Hillcrest",
+      "category": "daycare",
+      "address": "3915 9th Ave, San Diego, CA 92103, USA",
+      "neighborhood": "Hillcrest",
+      "description": "Locally founded pet resort (est. 2001) offering group-play daycare, boarding, grooming, and training with webcam access during business hours.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://www.pawcommons.com/hillcrest-san-diego-ca/",
+      "phone": null
+    },
+    {
+      "name": "Snug Pet Resort & Animal Hospital",
+      "category": "daycare",
+      "address": "11339 Sorrento Valley Rd, San Diego, CA 92121, USA",
+      "neighborhood": "Sorrento Valley",
+      "description": "Luxury boarding and daycare campus with an on-site animal hospital, full-time certified trainers, and webcams so owners can check in on their pets.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://www.snugpetresort.com/",
+      "phone": "(858) 643-0010"
+    },
+    {
+      "name": "Dog Days San Diego",
+      "category": "daycare",
+      "address": "2926 Garnet Ave, San Diego, CA 92109, USA",
+      "neighborhood": "Pacific Beach",
+      "description": "Neighborhood cage-free social daycare and overnight boarding open 7 days a week, with indoor play rooms, positive-reinforcement training, and holistic food retail.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.dogdayssandiego.com/",
+      "phone": "(619) 375-6268"
+    },
+    {
+      "name": "Fon Jon Pet Care",
+      "category": "daycare",
+      "address": "5050 Santa Fe St, San Diego, CA 92109, USA",
+      "neighborhood": "Bay Park / Pacific Beach",
+      "description": "San Diego institution boarding and daycaring dogs since 1950 — one of the city's longest-running kennels, now with modern daycare, grooming, and training.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://fonjonpetcare.com/",
+      "phone": null
+    },
+    {
+      "name": "The Barking Lot of Hillcrest",
+      "category": "daycare",
+      "address": "3781 Park Blvd, San Diego, CA 92103, USA",
+      "neighborhood": "Hillcrest",
+      "description": "Family-run neighborhood icon (formerly Canine Lodge and Spa) serving San Diego pets for 20+ years with daycare, boarding, and grooming under one roof.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://www.thebarkinglotofhillcrest.com/",
+      "phone": "(760) 445-4861"
+    },
+    {
+      "name": "VCA Emergency Animal Hospital & Referral Center",
+      "category": "vets",
+      "address": "7675 Mission Valley Rd, San Diego, CA 92108, USA",
+      "neighborhood": "Mission Valley",
+      "description": "Full-service 24-hour emergency and specialty hospital with around-the-clock ICU and board-certified specialists in critical care, cardiology, neurology, oncology, and surgery.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": false,
+        "waterBowl": true
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://vcahospitals.com/emergency",
+      "phone": "(619) 299-2400"
+    },
+    {
+      "name": "Veterinary Specialty Hospital - Sorrento Valley (Ethos)",
+      "category": "vets",
+      "address": "10435 Sorrento Valley Rd, San Diego, CA 92121, USA",
+      "neighborhood": "Sorrento Valley",
+      "description": "24/7 emergency and specialty referral hospital operating since 1990, part of Ethos Veterinary Health, with distinguished specialists in surgery, critical care, and diagnostics.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": false,
+        "waterBowl": true
+      },
+      "confidence": 95,
+      "source": "sd-launch-research",
+      "website": "https://www.vshsd.com/",
+      "phone": "(858) 875-7500"
+    },
+    {
+      "name": "Kensington Veterinary Hospital",
+      "category": "vets",
+      "address": "3817 Adams Ave, San Diego, CA 92116, USA",
+      "neighborhood": "Kensington",
+      "description": "Beloved Adams Avenue neighborhood clinic praised for calm, fear-free visits and doctors who take time to explain every treatment.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://kensingtonvet.com/",
+      "phone": "(619) 584-8418"
+    },
+    {
+      "name": "Cabrillo Pet Hospital",
+      "category": "vets",
+      "address": "4134 Voltaire St, San Diego, CA 92107, USA",
+      "neighborhood": "Point Loma / Ocean Beach",
+      "description": "The only AAHA-accredited pet hospital serving Point Loma and Ocean Beach, ranked among California's top-rated clinics by verified pet-parent reviews.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://www.cabrillopethospital.com/",
+      "phone": null
+    },
+    {
+      "name": "Amici Pet Hospital of Little Italy",
+      "category": "vets",
+      "address": "2135 Columbia St, San Diego, CA 92101, USA",
+      "neighborhood": "Little Italy",
+      "description": "Highly rated downtown practice offering wellness care plus walk-in urgent care hours for the Little Italy and downtown dog community.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://amicipethospital.com/",
+      "phone": "(619) 795-2400"
+    },
+    {
+      "name": "Bodhi Animal Hospital",
+      "category": "vets",
+      "address": "2200 University Ave, San Diego, CA 92104, USA",
+      "neighborhood": "North Park",
+      "description": "State-of-the-art, AAHA-accredited North Park practice with 750+ positive reviews, known for personalized high-touch care for city dogs and cats.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.thrivepetcare.com/locations/california/san-diego/bodhi-animal-hospital",
+      "phone": null
+    },
+    {
+      "name": "Sit Means Sit Dog Training San Diego",
+      "category": "trainers",
+      "address": "10035 Carroll Canyon Rd, Ste E, San Diego, CA 92131, USA",
+      "neighborhood": "Scripps Ranch / Mira Mesa",
+      "description": "One of San Diego's most-reviewed obedience schools, offering tailored programs for behavior issues from puppy basics through off-leash reliability.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://sitmeanssitsandiego.com/",
+      "phone": null
+    },
+    {
+      "name": "Pawtopia Dog Training",
+      "category": "trainers",
+      "address": "5666 La Jolla Blvd, Ste 25, San Diego, CA 92037, USA",
+      "neighborhood": "Bird Rock / La Jolla",
+      "description": "Respected positive-reinforcement training company led by certified behavior consultants, offering private lessons, day training, and behavior-modification programs.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 82,
+      "source": "sd-launch-research",
+      "website": "https://pawtopia.com/",
+      "phone": null
+    },
+    {
+      "name": "The Noble Dogs",
+      "category": "trainers",
+      "address": "1617 Scott St, San Diego, CA 92106, USA",
+      "neighborhood": "Point Loma",
+      "description": "4.8-star training outfit focused on obedience, socialization, and behavior transformation with programs tailored to each individual dog.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 82,
+      "source": "sd-launch-research",
+      "website": "https://www.thenobledogs.com/",
+      "phone": "(619) 947-1709"
+    },
+    {
+      "name": "Blue Leash Dog Training",
+      "category": "trainers",
+      "address": "5401 Bahia Ln, La Jolla, CA 92037, USA",
+      "neighborhood": "La Jolla",
+      "description": "Five-star boutique trainer known for a kind, patient approach across group classes, puppy obedience, private lessons, and behavior workshops around San Diego.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 65,
+      "source": "sd-launch-research",
+      "website": "https://www.blueleash.com/",
+      "phone": null
+    },
+    {
+      "name": "Dexter's Deli - Del Mar",
+      "category": "shops",
+      "address": "1229 Camino Del Mar, Del Mar, CA 92014, USA",
+      "neighborhood": "Del Mar",
+      "description": "Pioneering natural pet food store (est. 1996) famous for house-made dog birthday cakes, pupcakes, and holistic foods and supplements.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 92,
+      "source": "sd-launch-research",
+      "website": "https://www.dextersdeli.com/",
+      "phone": "(858) 792-3707"
+    },
+    {
+      "name": "Dexter's Deli - North Park",
+      "category": "shops",
+      "address": "3773 30th St, San Diego, CA 92104, USA",
+      "neighborhood": "North Park",
+      "description": "City outpost of the beloved natural pet market, stocking raw and holistic diets, supplements, and fresh-baked dog treats on North Park's 30th Street strip.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.dextersdeli.com/",
+      "phone": null
+    },
+    {
+      "name": "Shore Thing Pet Supply",
+      "category": "shops",
+      "address": "4836 Newport Ave, Ste A, San Diego, CA 92107, USA",
+      "neighborhood": "Ocean Beach",
+      "description": "Family-owned Ocean Beach pet supply shop with a self-serve dog wash and thoughtful, personal service steps from Dog Beach.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://shorethingpetsupply.com/",
+      "phone": null
+    },
+    {
+      "name": "Bella Woof",
+      "category": "shops",
+      "address": "7755 Girard Ave, La Jolla, CA 92037, USA",
+      "neighborhood": "La Jolla Village",
+      "description": "Woman-owned, full-service dog boutique in the Village of La Jolla combining professionally vetted premium products with grooming and training.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 88,
+      "source": "sd-launch-research",
+      "website": "https://bellawoof.com/",
+      "phone": "(619) 237-0730"
+    },
+    {
+      "name": "Pet Me Please",
+      "category": "shops",
+      "address": "3537 Adams Ave, San Diego, CA 92116, USA",
+      "neighborhood": "Normal Heights",
+      "description": "Long-running independent pet food and supply boutique on Adams Avenue known for quality kibble, raw options, and neighborly service.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 82,
+      "source": "sd-launch-research",
+      "website": null,
+      "phone": "(619) 230-5023"
+    },
+    {
+      "name": "Muttropolis",
+      "category": "shops",
+      "address": "227 S Cedros Ave, Solana Beach, CA 92075, USA",
+      "neighborhood": "Cedros Design District, Solana Beach",
+      "description": "Curated luxury dog boutique on the Cedros Design District strip offering designer apparel, toys, and gourmet treats, plus regular dog adoption events.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 90,
+      "source": "sd-launch-research",
+      "website": "https://www.muttropolis.com/",
+      "phone": "(858) 755-3647"
+    },
+    {
+      "name": "Noah's Natural Pet Market",
+      "category": "shops",
+      "address": "4431 Cass St, San Diego, CA 92109, USA",
+      "neighborhood": "Pacific Beach",
+      "description": "Independent natural pet market loved for its curated selection, baked dog goods, and doggy ice cream a few blocks from the PB boardwalk.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 85,
+      "source": "sd-launch-research",
+      "website": "https://www.noahsnaturalpetmarket.com/",
+      "phone": "(858) 270-8161"
+    },
+    {
+      "name": "Super Pet Shop",
+      "category": "shops",
+      "address": "3191 Sports Arena Blvd, San Diego, CA 92110, USA",
+      "neighborhood": "Midway / Sports Arena",
+      "description": "The largest independently owned and operated pet store in San Diego, a 5-star-rated alternative to the big-box chains.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 75,
+      "source": "sd-launch-research",
+      "website": null,
+      "phone": null
+    },
+    {
+      "name": "San Diego Paw Co.",
+      "category": "shops",
+      "address": "1980 Kettner Blvd, San Diego, CA 92101, USA",
+      "neighborhood": "Little Italy",
+      "description": "Walkable Little Italy pet boutique stocking high-quality foods, toys, and treats, with grooming services on site.",
+      "dogFeatures": {
+        "indoorAllowed": true,
+        "treats": true,
+        "waterBowl": true
+      },
+      "confidence": 80,
+      "source": "sd-launch-research",
+      "website": "https://sdpawco.com/",
+      "phone": "(619) 564-6771"
+    }
+  ]
+}
