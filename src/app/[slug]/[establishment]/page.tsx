@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import NewsletterSignup from '@/components/NewsletterSignup';
-import { getCityConfig, CATEGORIES } from '@/lib/cities-config';
+import { getCityConfig, CATEGORIES, getCurrencySymbol } from '@/lib/cities-config';
 import { getEstablishment, getCityEstablishments } from '@/lib/data';
 import { createClient } from '@supabase/supabase-js';
 import type { Metadata } from 'next';
@@ -300,7 +300,7 @@ export default async function EstablishmentPage({ params }: Props) {
                 </div>
                 <div className="flex items-center gap-0.5 text-gray-600 font-medium">
                   {Array.from({ length: 4 }).map((_, i) => (
-                    <span key={i} className={i < place.priceLevel ? 'text-gray-800' : 'text-gray-300'}>$</span>
+                    <span key={i} className={i < place.priceLevel ? 'text-gray-800' : 'text-gray-300'}>{getCurrencySymbol(params.slug)}</span>
                   ))}
                 </div>
                 {place.neighborhood && (
@@ -528,7 +528,7 @@ export default async function EstablishmentPage({ params }: Props) {
                           <span>{s.rating.toFixed(1)}</span>
                         </div>
                         <span className="text-gray-300">|</span>
-                        <span>{Array.from({ length: s.priceLevel }).map(() => '$').join('')}</span>
+                        <span>{getCurrencySymbol(params.slug).repeat(s.priceLevel)}</span>
                         {s.neighborhood && (
                           <>
                             <span className="text-gray-300">|</span>

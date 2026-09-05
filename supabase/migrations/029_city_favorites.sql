@@ -1,0 +1,2 @@
+-- 029: City favorites (2026-09-04 heuristic eval) — heart/save whole cities.
+CREATE TABLE IF NOT EXISTS city_favorites (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE, city_slug VARCHAR(50) NOT NULL, created_at TIMESTAMPTZ DEFAULT NOW(), UNIQUE(user_id, city_slug)); ALTER TABLE city_favorites ENABLE ROW LEVEL SECURITY; CREATE POLICY "own city favorites" ON city_favorites FOR ALL USING (user_id IN (SELECT id FROM users WHERE supabase_id = auth.uid()));

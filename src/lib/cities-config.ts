@@ -186,3 +186,13 @@ export function getActiveCities(): CityConfig[] {
 export function getCategoryBySlug(slug: string) {
   return CATEGORIES.find(c => c.slug === slug);
 }
+
+// City-local currency symbols (2026-09-04 heuristic eval; Eric chose
+// city-local over visitor-local — prices belong to the place).
+const CURRENCY_BY_COUNTRY: Record<string, string> = {
+  US: '$', FR: '\u20AC', ES: '\u20AC', GB: '\u00A3', CH: 'CHF\u00A0', AU: 'A$', JP: '\u00A5',
+};
+export function getCurrencySymbol(citySlug: string): string {
+  const city = CITIES[citySlug];
+  return (city && CURRENCY_BY_COUNTRY[city.countryCode]) || '$';
+}

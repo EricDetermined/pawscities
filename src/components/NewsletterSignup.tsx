@@ -96,6 +96,7 @@ export default function NewsletterSignup({
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setStatus('idle'); }}
                 placeholder="your@email.com"
+                aria-label="Email address for newsletter"
                 required
                 className="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder-white/40 focus:bg-white/15 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-orange-400/50 transition-all text-sm"
               />
@@ -141,6 +142,7 @@ export default function NewsletterSignup({
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setStatus('idle'); }}
                   placeholder="your@email.com"
+                aria-label="Email address for newsletter"
                   required
                   className="flex-1 md:w-64 px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/60 focus:bg-white/30 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all text-sm"
                 />
@@ -177,6 +179,7 @@ export default function NewsletterSignup({
               value={email}
               onChange={(e) => { setEmail(e.target.value); setStatus('idle'); }}
               placeholder="your@email.com"
+                aria-label="Email address for newsletter"
               required
               className="flex-1 px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:border-gray-500 focus:outline-none text-xs"
             />
@@ -216,6 +219,7 @@ export default function NewsletterSignup({
               value={email}
               onChange={(e) => { setEmail(e.target.value); setStatus('idle'); }}
               placeholder="your@email.com"
+                aria-label="Email address for newsletter"
               required
               className="flex-1 sm:w-56 px-4 py-2.5 rounded-xl border border-gray-300 text-gray-900 placeholder-gray-400 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400/20 text-sm"
             />

@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Badge } from '@/components/ui';
 import type { CityConfig } from '@/lib/cities-config';
+import { getCurrencySymbol } from '@/lib/cities-config';
 import type { Establishment, CategorySlug, PawEvent } from '@/types';
 import { PremiumCard } from '@/components/ListingBadges';
 import ShareButtons from '@/components/ShareButtons';
@@ -383,6 +384,7 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
             </div>
           </div>
         ))}
+        <p className="text-xs text-gray-400 text-center pt-1">— end of list · {events.length} upcoming —</p>
       </div>
 
       <div className="mt-4 pt-3 border-t border-gray-100">
@@ -521,7 +523,8 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
           </div>
 
           {/* Category filters */}
-          <div className="flex flex-wrap gap-2">
+          <p id="category-filter-label" className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Filter by category</p>
+          <div className="flex flex-wrap gap-2" role="group" aria-labelledby="category-filter-label">
             <button
               onClick={() => setSelectedCategory(null)}
               className={`filter-chip ${selectedCategory === null ? 'active' : ''}`}
@@ -651,7 +654,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                     <div className="flex items-center gap-3 mb-2 text-sm">
                       <span className="flex items-center gap-1"><span className="text-yellow-500">{'\u2605'}</span> <span className="font-medium">{establishment.rating.toFixed(1)}</span> {establishment.reviewCount > 0 && <span className="text-gray-400">({establishment.reviewCount})</span>}</span>
                       <span className="text-gray-300">{'\u2022'}</span>
-                      <span className="text-gray-600">{'\u20AC'.repeat(establishment.priceLevel)}</span>
+                      <span className="text-gray-600" aria-label={`Price level ${establishment.priceLevel} of 4`}>{getCurrencySymbol(city.slug).repeat(establishment.priceLevel)}</span>
                       {establishment.neighborhood && (<><span className="text-gray-300">{'\u2022'}</span><span className="text-gray-500 text-xs">{establishment.neighborhood}</span></>)}
                     </div>
                     <p className="text-sm text-gray-600 line-clamp-2 mb-3">{establishment.description}</p>

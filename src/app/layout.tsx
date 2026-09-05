@@ -80,7 +80,8 @@ export default function RootLayout({
         }) }} />
         <AuthProvider>
           <Header />
-          {children}
+          {/* main landmark = skip-link target (2026-09-04 heuristic eval) */}
+          <main id="main-content">{children}</main>
         </AuthProvider>
         <Analytics />
         <SpeedInsights />

@@ -43,6 +43,30 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  // City hearts (2026-09-04 heuristic eval): save favorite cities; logged-out
+  // users get a sign-in prompt instead of a silent no-op.
+  const [favCities, setFavCities] = useState<Set<string>>(new Set());
+  const [showCityLoginPrompt, setShowCityLoginPrompt] = useState(false);
+  useEffect(() => {
+    fetch('/api/city-favorites')
+      .then(r => r.json())
+      .then(d => setFavCities(new Set(d.cities || [])))
+      .catch(() => {});
+  }, []);
+  const toggleCityFavorite = async (slug: string) => {
+    const res = await fetch('/api/city-favorites', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ citySlug: slug }),
+    });
+    if (res.status === 401) { setShowCityLoginPrompt(true); return; }
+    const d = await res.json();
+    setFavCities(prev => {
+      const next = new Set(prev);
+      if (d.favorited) next.add(slug); else next.delete(slug);
+      return next;
+    });
+  };
   const [locatingUser, setLocatingUser] = useState(false);
   const [nearestCity, setNearestCity] = useState<CityConfig | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -364,7 +388,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
             Find dog-friendly places in {cities.length} amazing destinations
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {cities.map((city) => {
+            {[...cities].sort((a, b) => a.name.localeCompare(b.name)).map((city) => {
               const stats = cityStats[city.slug];
               const count = stats?.count || 0;
               const href = activeCategory
@@ -393,6 +417,16 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <button
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleCityFavorite(city.slug); }}
+                    aria-label={favCities.has(city.slug) ? `Remove ${city.name} from favorites` : `Save ${city.name} to favorites`}
+                    aria-pressed={favCities.has(city.slug)}
+                    className="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-black/35 border border-white/60 backdrop-blur-sm hover:bg-black/55 transition-colors"
+                  >
+                    <svg className={`w-5 h-5 ${favCities.has(city.slug) ? 'text-red-400 fill-red-400' : 'text-white fill-none'}`} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </button>
                   <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 text-white">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full">
@@ -598,6 +632,20 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
           </div>
         </div>
       </footer>
+
+      {/* Sign-in prompt for hearting cities while logged out */}
+      {showCityLoginPrompt && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 p-4" role="dialog" aria-modal="true" aria-labelledby="city-login-title" onClick={() => setShowCityLoginPrompt(false)}>
+          <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <h3 id="city-login-title" className="text-lg font-bold mb-2">Sign in to save cities</h3>
+            <p className="text-sm text-gray-600 mb-4">Create a free account to heart your favorite cities, save places, and build your dog&apos;s profile.</p>
+            <div className="flex gap-3">
+              <a href="/login" className="flex-1 text-center py-2.5 rounded-lg bg-orange-600 text-white text-sm font-semibold hover:bg-orange-700 transition-colors">Sign in</a>
+              <button onClick={() => setShowCityLoginPrompt(false)} className="flex-1 py-2.5 rounded-lg border border-gray-500 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">Not now</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

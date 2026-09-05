@@ -189,7 +189,7 @@ export default async function CityPage({ params }: CityPageProps) {
   // Fetch upcoming events for this city
   let cityEvents: Awaited<ReturnType<typeof getCityEvents>> = { events: [], total: 0 };
   try {
-    cityEvents = await getCityEvents(citySlug, { limit: 20 });
+    cityEvents = await getCityEvents(citySlug, { limit: 100 });
   } catch (e) {
     console.error(`Failed to fetch events for ${citySlug}:`, e);
   }
