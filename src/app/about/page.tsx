@@ -105,19 +105,37 @@ export default function AboutPage() {
             Two dogs guide everything we make.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-orange-50 rounded-lg p-4">
-              <h3 className="font-semibold text-gray-900 mb-1">Marley</h3>
-              <p className="text-sm text-gray-600">
-                A cream-white cockapoo in a navy bandana. The thoughtful one —
-                he reads the reviews twice before picking a patio.
-              </p>
+            <div className="bg-orange-50 rounded-lg overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://tnqctocershbclhbjnwg.supabase.co/storage/v1/object/public/photos/mascot-library/paris-marley-v1.png"
+                alt="Cartoon illustration of Marley, a shaggy cream-white cockapoo, relaxing in a cozy café window seat"
+                className="w-full aspect-square object-cover"
+                loading="lazy"
+              />
+              <div className="p-4">
+                <h3 className="font-semibold text-gray-900 mb-1">Marley</h3>
+                <p className="text-sm text-gray-600">
+                  A cream-white cockapoo. The thoughtful one — he reads the
+                  reviews twice before picking a patio.
+                </p>
+              </div>
             </div>
-            <div className="bg-orange-50 rounded-lg p-4">
-              <h3 className="font-semibold text-gray-900 mb-1">Buster</h3>
-              <p className="text-sm text-gray-600">
-                A golden-honey mixed breed in an olive-green collar. The
-                adventurer — first to the beach, first in the water.
-              </p>
+            <div className="bg-orange-50 rounded-lg overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://tnqctocershbclhbjnwg.supabase.co/storage/v1/object/public/photos/mascot-library/sydney-buster-v2.png"
+                alt="Cartoon illustration of Buster, a golden-honey mixed breed, joyfully splashing through the water"
+                className="w-full aspect-square object-cover"
+                loading="lazy"
+              />
+              <div className="p-4">
+                <h3 className="font-semibold text-gray-900 mb-1">Buster</h3>
+                <p className="text-sm text-gray-600">
+                  A golden-honey mixed breed. The adventurer — first to the
+                  beach, first in the water.
+                </p>
+              </div>
             </div>
           </div>
         </section>
