@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
 
       // Pending events for inline approval — soonest first
       safe(supabase.from('events')
-        .select('id, name, start_date, end_date, venue_name, source, source_handle, external_url, discovery_score, created_at, cities!inner(name, slug)')
+        .select('id, name, start_date, end_date, start_time, end_time, is_free, description, venue_name, venue_address, source, source_handle, external_url, discovery_score, created_at, cities!inner(name, slug)')
         .eq('status', 'PENDING')
         .order('start_date', { ascending: true })
         .limit(10), 'pendingEventsData'),

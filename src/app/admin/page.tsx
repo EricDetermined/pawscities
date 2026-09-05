@@ -44,8 +44,8 @@ interface DashboardData {
   };
   pendingEventsData: {
     id: string; name: string; start_date: string; end_date: string | null;
-    start_time?: string | null; is_free?: boolean | null; description?: string | null;
-    venue_name: string | null; source: string; source_handle: string | null;
+    start_time?: string | null; end_time?: string | null; is_free?: boolean | null; description?: string | null;
+    venue_name: string | null; venue_address?: string | null; source: string; source_handle: string | null;
     external_url: string | null; discovery_score: number | null;
     created_at: string; cities: { name: string; slug: string };
   }[];
@@ -76,6 +76,11 @@ export default function AdminDashboard() {
     name: string; citySlug: string; startDate: string; endDate: string;
     venueName: string; venueAddress: string; externalUrl: string; description: string;
   }>({ name: '', citySlug: '', startDate: '', endDate: '', venueName: '', venueAddress: '', externalUrl: '', description: '' });
+  const [editingEventId, setEditingEventId] = useState<string | null>(null);
+  const [editEventForm, setEditEventForm] = useState<{
+    name: string; startDate: string; endDate: string; startTime: string; endTime: string;
+    venueName: string; venueAddress: string; externalUrl: string; description: string;
+  }>({ name: '', startDate: '', endDate: '', startTime: '', endTime: '', venueName: '', venueAddress: '', externalUrl: '', description: '' });
 
   const fetchData = useCallback(async () => {
     try {
@@ -112,6 +117,59 @@ export default function AdminDashboard() {
         fetchData();
       } else {
         setStatusMessage({ text: result.error || 'Failed', type: 'error' });
+        setTimeout(() => setStatusMessage(null), 5000);
+      }
+    } catch { setStatusMessage({ text: 'Network error', type: 'error' }); setTimeout(() => setStatusMessage(null), 5000); }
+    finally { setActioningId(null); }
+  };
+
+  const openEditEvent = (event: DashboardData['pendingEventsData'][0]) => {
+    setEditingEventId(event.id);
+    setEditEventForm({
+      name: event.name || '',
+      startDate: event.start_date || '',
+      endDate: event.end_date || '',
+      startTime: event.start_time ? String(event.start_time).slice(0, 5) : '',
+      endTime: event.end_time ? String(event.end_time).slice(0, 5) : '',
+      venueName: event.venue_name || '',
+      venueAddress: event.venue_address || '',
+      externalUrl: event.external_url || '',
+      description: event.description || '',
+    });
+  };
+
+  const handleSaveEventEdit = async (eventId: string) => {
+    if (!editEventForm.name || !editEventForm.startDate) {
+      setStatusMessage({ text: 'Name and start date are required', type: 'error' });
+      setTimeout(() => setStatusMessage(null), 5000);
+      return;
+    }
+    setActioningId(eventId);
+    try {
+      const res = await fetch(`/api/admin/events/${eventId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'edit',
+          name: editEventForm.name,
+          startDate: editEventForm.startDate,
+          endDate: editEventForm.endDate || null,
+          startTime: editEventForm.startTime || null,
+          endTime: editEventForm.endTime || null,
+          venueName: editEventForm.venueName || null,
+          venueAddress: editEventForm.venueAddress || null,
+          externalUrl: editEventForm.externalUrl || null,
+          description: editEventForm.description || null,
+        }),
+      });
+      const result = await res.json();
+      if (res.ok) {
+        setEditingEventId(null);
+        setStatusMessage({ text: result.message || 'Event updated', type: 'success' });
+        setTimeout(() => setStatusMessage(null), 5000);
+        fetchData();
+      } else {
+        setStatusMessage({ text: result.error || 'Failed to save', type: 'error' });
         setTimeout(() => setStatusMessage(null), 5000);
       }
     } catch { setStatusMessage({ text: 'Network error', type: 'error' }); setTimeout(() => setStatusMessage(null), 5000); }
@@ -422,8 +480,10 @@ export default function AdminDashboard() {
                   if (!event.venue_name) missingFields.push('venue');
                   if (linkQuality === 'homepage' || linkQuality === 'shallow') missingFields.push('event-specific link');
                   const isReady = missingFields.length === 0;
+                  const isEditing = editingEventId === event.id;
                   return (
-                    <div key={event.id} className="p-4 flex items-start gap-4 hover:bg-gray-50 transition-colors">
+                    <div key={event.id} className={`p-4 transition-colors ${isEditing ? 'bg-orange-50/30' : 'hover:bg-gray-50'}`}>
+                    <div className="flex items-start gap-4">
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-gray-900 truncate">{event.name}</p>
                         <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-gray-500">
@@ -465,6 +525,14 @@ export default function AdminDashboard() {
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         <button
+                          onClick={() => isEditing ? setEditingEventId(null) : openEditEvent(event)}
+                          disabled={actioningId === event.id}
+                          title="Edit event details inline"
+                          className={`px-3 py-1.5 text-xs font-medium rounded-lg disabled:opacity-50 transition-colors ${isEditing ? 'bg-gray-200 text-gray-700' : 'bg-blue-50 text-blue-600 hover:bg-blue-100'}`}
+                        >
+                          {isEditing ? 'Close' : 'Edit'}
+                        </button>
+                        <button
                           onClick={() => handleEventAction(event.id, 'approve')}
                           disabled={actioningId === event.id}
                           title={!isReady ? `Warning — missing: ${missingFields.join(', ')}` : 'Approve event'}
@@ -480,6 +548,111 @@ export default function AdminDashboard() {
                           Reject
                         </button>
                       </div>
+                    </div>
+
+                    {/* Inline edit form */}
+                    {isEditing && (
+                      <div className="mt-3 border-t border-gray-200 pt-3">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                          <div className="col-span-2 md:col-span-3">
+                            <label className="text-xs text-gray-500">Event Name *</label>
+                            <input
+                              type="text" value={editEventForm.name}
+                              onChange={e => setEditEventForm(f => ({ ...f, name: e.target.value }))}
+                              className="w-full px-2 py-1.5 text-sm border border-gray-500 rounded-lg focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-xs text-gray-500">Start Date *</label>
+                            <input
+                              type="date" value={editEventForm.startDate}
+                              onChange={e => setEditEventForm(f => ({ ...f, startDate: e.target.value }))}
+                              className="w-full px-2 py-1.5 text-sm border border-gray-500 rounded-lg focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-xs text-gray-500">End Date</label>
+                            <input
+                              type="date" value={editEventForm.endDate}
+                              onChange={e => setEditEventForm(f => ({ ...f, endDate: e.target.value }))}
+                              className="w-full px-2 py-1.5 text-sm border border-gray-500 rounded-lg focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+                            />
+                          </div>
+                          <div className="flex gap-2">
+                            <div className="flex-1">
+                              <label className="text-xs text-gray-500">Start Time</label>
+                              <input
+                                type="time" value={editEventForm.startTime}
+                                onChange={e => setEditEventForm(f => ({ ...f, startTime: e.target.value }))}
+                                className="w-full px-2 py-1.5 text-sm border border-gray-500 rounded-lg focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+                              />
+                            </div>
+                            <div className="flex-1">
+                              <label className="text-xs text-gray-500">End Time</label>
+                              <input
+                                type="time" value={editEventForm.endTime}
+                                onChange={e => setEditEventForm(f => ({ ...f, endTime: e.target.value }))}
+                                className="w-full px-2 py-1.5 text-sm border border-gray-500 rounded-lg focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="text-xs text-gray-500">Venue Name</label>
+                            <input
+                              type="text" value={editEventForm.venueName}
+                              onChange={e => setEditEventForm(f => ({ ...f, venueName: e.target.value }))}
+                              className="w-full px-2 py-1.5 text-sm border border-gray-500 rounded-lg focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+                              placeholder="Venue name"
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <label className="text-xs text-gray-500">Venue Address</label>
+                            <input
+                              type="text" value={editEventForm.venueAddress}
+                              onChange={e => setEditEventForm(f => ({ ...f, venueAddress: e.target.value }))}
+                              className="w-full px-2 py-1.5 text-sm border border-gray-500 rounded-lg focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+                              placeholder="Street address"
+                            />
+                          </div>
+                          <div className="col-span-2 md:col-span-3">
+                            <label className="text-xs text-gray-500">Event URL</label>
+                            <input
+                              type="text" value={editEventForm.externalUrl}
+                              onChange={e => setEditEventForm(f => ({ ...f, externalUrl: e.target.value }))}
+                              className="w-full px-2 py-1.5 text-sm border border-gray-500 rounded-lg focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+                              placeholder="https://... (link to the specific event page)"
+                            />
+                          </div>
+                          <div className="col-span-2 md:col-span-3">
+                            <label className="text-xs text-gray-500">Description</label>
+                            <textarea
+                              value={editEventForm.description} rows={3}
+                              onChange={e => setEditEventForm(f => ({ ...f, description: e.target.value }))}
+                              className="w-full px-2 py-1.5 text-sm border border-gray-500 rounded-lg focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+                              placeholder="What is this event? Dogs welcome? Cost?"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-end gap-2 mt-2">
+                          <span className="text-xs text-gray-400 mr-auto">
+                            {!editEventForm.name ? '⚠ Name required' : !editEventForm.startDate ? '⚠ Start date required' : 'Changes save directly to the event'}
+                          </span>
+                          <button
+                            onClick={() => setEditingEventId(null)}
+                            className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            onClick={() => handleSaveEventEdit(event.id)}
+                            disabled={actioningId === event.id || !editEventForm.name || !editEventForm.startDate}
+                            className="px-3 py-1.5 text-xs font-medium text-white bg-orange-600 rounded-lg hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                          >
+                            {actioningId === event.id ? 'Saving...' : 'Save Changes'}
+                          </button>
+                        </div>
+                      </div>
+                    )}
                     </div>
                   );
                 })
