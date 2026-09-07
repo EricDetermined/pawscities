@@ -108,11 +108,9 @@ def save_history(history):
         json.dump(payload, f, indent=2)
 
 
-# RAMP MODE (account flagged 2026-08-23, restored 08-24): cap enforced in CODE,
-# not by sessions reading a task file — a session that forgets the ramp would
-# otherwise happily post the configured 35/day. Delete after 2026-09-07.
-RAMP_CAP_UNTIL = "2026-09-07"
-RAMP_CAP = 28  # Eric-approved step-up 2026-09-01 (35 + follows/DMs return at the Sep 7 health gate)
+# Ramp complete (2026-09-07): account healthy through the Aug 23 flag recovery,
+# 28/day clean since Sep 1. Full volume restored with Eric's go-ahead 2026-09-07.
+# History: flagged 08-23, restored 08-24, ramp 10 -> 20 -> 28 -> full.
 
 
 def load_config():
@@ -122,11 +120,6 @@ def load_config():
     else:
         with open(CONFIG_FILE) as f:
             cfg = json.load(f)
-    if datetime.now(timezone.utc).date().isoformat() <= RAMP_CAP_UNTIL:
-        configured = int(cfg.get("daily_cap", 15) or 15)
-        if configured > RAMP_CAP:
-            cfg["daily_cap"] = RAMP_CAP
-            cfg["_ramp_note"] = f"daily_cap {configured} -> {RAMP_CAP} (ramp until {RAMP_CAP_UNTIL})"
     return cfg
 
 

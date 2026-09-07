@@ -97,12 +97,12 @@
       "parisdog"
     ],
     "tokyo": [
-      "東京犬",
+      "\u6771\u4eac\u72ac",
       "dogsoftokyo",
       "tokyodog",
-      "東京ドッグカフェ",
-      "ドッグカフェ東京",
-      "犬とお出かけ東京"
+      "\u6771\u4eac\u30c9\u30c3\u30b0\u30ab\u30d5\u30a7",
+      "\u30c9\u30c3\u30b0\u30ab\u30d5\u30a7\u6771\u4eac",
+      "\u72ac\u3068\u304a\u51fa\u304b\u3051\u6771\u4eac"
     ],
     "geneva": [
       "dogfriendlygeneva",
@@ -153,7 +153,7 @@
       "tz": "Europe/Paris"
     },
     "tokyo": {
-      "name": "東京 (Tokyo)",
+      "name": "\u6771\u4eac (Tokyo)",
       "tz": "Asia/Tokyo"
     },
     "geneva": {
