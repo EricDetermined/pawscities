@@ -390,6 +390,65 @@ export const CONTENT_BANK: ContentFact[] = [
   { city: 'atlanta', type: 'tip', headline: 'Pollen Season Affects Dogs Too', body: 'Atlanta\'s spring pollen counts are famously extreme, and dogs get seasonal allergies as well — itchy paws, ear infections and licking. A wipe-down after walks makes a real difference.', icon: '🌼🐾' },
   { city: 'atlanta', type: 'spotlight', headline: 'Old Fourth Ward Skatepark\'s Green Edge', body: 'Historic Fourth Ward Park pairs a stormwater pond with wide lawns off the Eastside Trail — a favorite leashed loop for Old Fourth Ward dogs, with skyline views over the water.', icon: '🛹🐾', placeName: 'Historic Fourth Ward Park Atlanta' },
   { city: 'atlanta', type: 'did-you-know', headline: 'Atlanta\'s Tree Canopy Is a Dog Perk', body: 'Atlanta has one of the densest urban tree canopies of any major U.S. city, covering a large share of its land area. For dogs, that translates to shaded sidewalks when the temperature climbs.', icon: '🌳☀️' },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // WAVE 5 — added 2026-09-07 by the weekly ops agent.
+  //
+  // WHY: the bank ran dry. pickNextContent() had zero unused headlines left,
+  // so POST /api/admin/creatives {action:'generate_batch'} was returning
+  // {success:true, generated:0} — a silent no-op, not an error. Refilling the
+  // array is the only thing that restarts content_bank generation.
+  //
+  // THEME: deliberately avoids the venue/landmark/statistic ground the first
+  // four waves already cover (that is where the duplicate risk now lives).
+  // This wave is seasonal hazards, emergency preparedness and safety — topics
+  // with a long shelf life that don't go stale when a café closes.
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // PARIS — Wave 5
+  { city: 'paris', type: 'tip', headline: 'Bastille Day: Plan Around the Fireworks', body: 'The 14 July displays are loud across the whole city. Walk your dog well before dark, close the windows, leave background noise on, and check the microchip details are current — fireworks nights are when dogs bolt.', icon: '🎆🐕' },
+  { city: 'paris', type: 'guide', headline: 'Know Your Emergency Vet Before You Need One', body: 'Out-of-hours veterinary care in France runs through dedicated urgence vétérinaire clinics rather than your usual practice. Save the nearest 24-hour number in your phone now — a Sunday night is a bad time to start searching.', icon: '🏥🐾' },
+  { city: 'paris', type: 'did-you-know', headline: 'Three Things on a Café Table to Watch', body: 'Chocolate, grapes and anything sweetened with xylitol are all genuinely toxic to dogs. On a terrace, the dropped square of dark chocolate is the one that catches people out.', icon: '🍫🚫' },
+
+  // GENEVA — Wave 5
+  { city: 'geneva', type: 'guide', headline: 'Trail Injuries Happen on the Way Down', body: 'Dogs climb better than they descend. On Alpine descents, go slower than you think you need to and watch for limping — steep downhill sections are where paw and joint injuries turn up.', icon: '⛰️🐾' },
+  { city: 'geneva', type: 'tip', headline: 'A Winter Coat Isn\'t a Costume', body: 'Thin-coated, small and short-haired dogs genuinely lose heat fast in a Geneva winter. A proper coat and shorter walks below freezing are welfare, not fashion.', icon: '🧥❄️' },
+  { city: 'geneva', type: 'did-you-know', headline: 'Livestock Country Has Its Own Rules', body: 'Swiss trails cross working pasture. Leash up around cattle and sheep, give herds a wide berth, and never walk between a cow and her calf — a protective mother is the real hazard, not the herd.', icon: '🐄🐕' },
+
+  // LONDON — Wave 5
+  { city: 'london', type: 'did-you-know', headline: 'Conkers and Acorns Are Autumn Hazards', body: 'Horse chestnuts and acorns are both toxic to dogs, and London parks are carpeted with them each autumn. Dogs that pick things up need watching from September onwards.', icon: '🌰⚠️' },
+  { city: 'london', type: 'tip', headline: 'Firework Season Starts Before Bonfire Night', body: 'Displays run for weeks around 5 November, not one evening. Start building your dog\'s tolerance in October — a safe den, background noise and a walk before dusk beat improvising on the night.', icon: '🎇🐶' },
+  { city: 'london', type: 'guide', headline: 'Find Out Who Covers Your Vet at 2am', body: 'UK practices are required to arrange 24-hour emergency cover, but it is often a different clinic across town. Ask yours who they route to out of hours, and put that address in your phone.', icon: '🏥🇬🇧' },
+
+  // BARCELONA — Wave 5
+  { city: 'barcelona', type: 'did-you-know', headline: 'Processionary Caterpillars: The Late-Winter Risk', body: 'From late winter into spring, pine processionary caterpillars appear under pines across Catalonia. Their hairs cause severe reactions in dogs. Keep clear of the nests, and never let a dog nose a line of them.', icon: '🌲⚠️' },
+  { city: 'barcelona', type: 'tip', headline: 'Sant Joan Is the Loudest Night of the Year', body: 'The 23 June celebrations mean fireworks and firecrackers across Barcelona for hours. Keep dogs indoors, make sure ID and microchip details are current, and set up a quiet interior room in advance.', icon: '🔥🐕' },
+  { city: 'barcelona', type: 'did-you-know', headline: 'Heat Stroke: The Signs to Act On', body: 'Heavy frantic panting, bright red gums, stumbling or vomiting. Move to shade, wet the paws and belly with cool — not iced — water, and call a vet straight away. Minutes matter more than the drive.', icon: '🌡️🚨' },
+
+  // LOS ANGELES — Wave 5
+  { city: 'losangeles', type: 'tip', headline: 'Never Leave a Dog in a Parked Car', body: 'Interior temperatures climb dangerously within minutes, even with the windows cracked and even on a mild LA day. California law also allows a dog to be removed from a hot car in an emergency.', icon: '🚗🚫' },
+  { city: 'losangeles', type: 'guide', headline: 'Wildfire Season: Pack the Dog\'s Go-Bag', body: 'Evacuations in LA move fast. Keep a bag ready with several days of food, medications, water, a carrier, a spare leash and a copy of vaccination records — plus a current photo of your dog on your phone.', icon: '🎒🔥' },
+  { city: 'losangeles', type: 'did-you-know', headline: 'A Microchip Is Only as Good as Its Phone Number', body: 'Chips get scanned, registries get called, and the call goes to whatever number was entered years ago. Update the registry whenever you move or change your number — it is the step almost everyone skips.', icon: '📱🐾' },
+
+  // NYC — Wave 5
+  { city: 'nyc', type: 'did-you-know', headline: 'More Dogs Go Missing on July 4th Than Any Other Night', body: 'Fireworks panic sends dogs through screen doors and off leads. Check the tag, confirm the microchip registry has your current number, and keep your dog inside for the evening.', icon: '🎆🏙️' },
+  { city: 'nyc', type: 'guide', headline: 'Apartment Dogs Need Decompression, Not Just Miles', body: 'In a small NYC apartment, a long chew, a slow sniffing walk and a predictable settle routine do more for a dog\'s nervous system than another mile of crowded pavement.', icon: '🛋️🐕' },
+  { city: 'nyc', type: 'tip', headline: 'Your Dog Walks a Foot Off the Ground', body: 'Radiant heat coming off midsummer sidewalks and subway grates is far worse at dog height than the forecast suggests. On a 90-degree afternoon, the air your dog is breathing is hotter than yours.', icon: '☀️🌆' },
+
+  // SYDNEY — Wave 5
+  { city: 'sydney', type: 'tip', headline: 'New Year\'s Eve: Secure the Yard Early', body: 'Sydney\'s NYE fireworks carry right across the city. Bring dogs inside before dark, secure gates and fences, update ID tags, and set up a quiet interior room with background noise.', icon: '🎆🇦🇺' },
+  { city: 'sydney', type: 'guide', headline: 'Snake Season on the Bush Tracks', body: 'From spring, snakes are active on Sydney\'s bush trails. Keep dogs leashed and on the path, out of long grass and leaf litter, and know where your nearest 24-hour vet is before you set out.', icon: '🐍⚠️' },
+  { city: 'sydney', type: 'did-you-know', headline: 'Pink Noses Sunburn', body: 'Dogs with pale noses, thin coats or bare bellies burn in Australian sun, and repeated burns carry the same risks they do for us. Dog-safe sunscreen on the nose and ear tips, and shade through the middle of the day.', icon: '🧴☀️' },
+
+  // TOKYO — Wave 5
+  { city: 'tokyo', type: 'guide', headline: 'Typhoon Season Means Indoor Days', body: 'Late summer typhoons close parks and make walks impossible for a day or two at a time. Keep puzzle feeders, chews and a few extra days of food on hand so a shut-in stretch isn\'t a crisis.', icon: '🌀🐕' },
+  { city: 'tokyo', type: 'tip', headline: 'The Emergency Kit Includes the Dog', body: 'Tokyo households keep earthquake kits as a matter of course. Add a carrier, several days of dog food and water, spare medication and a copy of vaccination records — evacuation centres often ask for them.', icon: '🎒🗾' },
+  { city: 'tokyo', type: 'did-you-know', headline: 'Building Rules Matter More Than the Lease', body: 'Many Tokyo apartment buildings set their own pet rules on top of the tenancy agreement — carrying dogs through shared corridors and lifts is one of the most common. Read the building rules, not just the contract.', icon: '🏢🐾' },
+
+  // ATLANTA — Wave 5
+  { city: 'atlanta', type: 'tip', headline: 'Storm Season Is Thunder Season', body: 'Atlanta\'s spring and summer storms roll through often and loudly. A quiet interior room away from windows, background noise and a snug wrap help thunder-anxious dogs far more than reassurance does.', icon: '⛈️🐕' },
+  { city: 'atlanta', type: 'guide', headline: 'Copperheads on Georgia Trails', body: 'Copperheads are common in wooded Georgia parks through the warm months and rely on camouflage rather than fleeing. Keep dogs leashed and on the trail, away from leaf litter, wood piles and rock stacks.', icon: '🐍🌿' },
+  { city: 'atlanta', type: 'did-you-know', headline: 'Rabies Vaccination Is the Paperwork That Opens Doors', body: 'Georgia requires rabies vaccination, and proof of it is what gets your dog into boarding, daycare, training classes and most organised events. Keep a photo of the certificate on your phone.', icon: '💉📄' },
 ];
 
 /**
