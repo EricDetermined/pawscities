@@ -421,6 +421,14 @@ def cmd_mark_posted(comment_id, comment_pk="", media_pk=""):
     queue = load_queue()
     history = load_history()
 
+    # Keep the session lock's mtime = last real activity. Scheduled sessions
+    # sometimes die before their lock-release step (9am + 1pm on 2026-09-09),
+    # so other actors treat a lock as stale after 30 min WITHOUT activity
+    # rather than 90 min from creation. Touching here makes that safe.
+    _lock = ENGAGEMENT_DIR / ".session-lock"
+    if _lock.exists():
+        os.utime(_lock, None)
+
     found = False
     for item in queue["items"]:
         if item["id"] == comment_id:
