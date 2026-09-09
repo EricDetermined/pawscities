@@ -856,7 +856,7 @@ async function handleProcessIngest(request: NextRequest) {
             is_free: isFree,
             is_featured: false,
             status: 'PENDING',
-            source: item.submitted_by === 'cron:event-discovery' ? 'discovery_agent' : 'admin',
+            source: ['cron:event-discovery', 'cron:handle-discovery'].includes(item.submitted_by) ? 'discovery_agent' : 'admin',
             submitter_email: item.submitted_by,
             source_post_url: item.url,
             source_handle: isUsefulHandle(sourceHandle) ? sourceHandle : effectiveUsername,
