@@ -442,6 +442,30 @@ export async function GET(request: NextRequest) {
       };
     });
 
+    // ── NEW events captured in the last 24h (all channels) ───────────────
+    // One digest section instead of one email per event (Eric, 2026-09-10):
+    // per-event "New event submission" alerts are suppressed for admin/agent
+    // submissions; this list is the single daily confirmation that captured
+    // events landed on the admin dashboard for review.
+    const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { data: recentlyCreated } = await supabase
+      .from('events')
+      .select('name, start_date, status, source, cities(slug)')
+      .gte('created_at', dayAgo)
+      .in('status', ['PENDING', 'APPROVED'])
+      .order('created_at', { ascending: false })
+      .limit(25);
+    const newEventsForReview = (recentlyCreated || []).map((e: { name: string; start_date: string; status: string; source: string | null; cities: { slug: string } | { slug: string }[] | null }) => {
+      const cityObj = Array.isArray(e.cities) ? e.cities[0] : e.cities;
+      return {
+        name: e.name,
+        city: cityObj?.slug || '?',
+        startDate: e.start_date,
+        source: e.source === 'discovery_agent' ? 'auto-discovery' : (e.source || 'submission'),
+        status: e.status,
+      };
+    });
+
     // ═══════════════════════════════════════════════════════════════
     // 8. ASSEMBLE AND SEND THE DIGEST
     // ═══════════════════════════════════════════════════════════════
@@ -503,6 +527,7 @@ export async function GET(request: NextRequest) {
       },
       events: eventsData,
       urgentEvents: urgentEvents.length > 0 ? urgentEvents : undefined,
+      newEventsForReview: newEventsForReview.length > 0 ? newEventsForReview : undefined,
       creativeQueue: {
         remaining: creativesRemaining,
         needsReview: needsReviewCount || 0,

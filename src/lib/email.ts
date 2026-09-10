@@ -484,6 +484,15 @@ export interface MarketingDigestData {
     startDate: string;
     daysUntil: number;
   }[];
+  // Events created in the last 24h (all discovery channels + agent batches).
+  // One digest section instead of one email per event (Eric, 2026-09-10).
+  newEventsForReview?: {
+    name: string;
+    city: string;
+    startDate: string;
+    source: string;
+    status: string;
+  }[];
   // Creative queue health (unified pipeline)
   creativeQueue?: {
     remaining: number;
@@ -672,8 +681,23 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
       </table>
     </td></tr>` : '';
 
+  const newEventsHtml = (data.newEventsForReview && data.newEventsForReview.length > 0)
+    ? `
+    <tr><td style="padding:16px 0 0;">
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f9ff;border:2px solid #0ea5e9;border-radius:8px;">
+        <tr><td style="padding:14px 16px;">
+          <div style="font-size:16px;font-weight:700;color:#075985;">🆕 ${data.newEventsForReview.length} new event${data.newEventsForReview.length > 1 ? 's' : ''} captured in the last 24h — on your admin dashboard</div>
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:8px;font-size:13px;color:#0c4a6e;">
+            ${data.newEventsForReview.map(e => `<tr><td style="padding:3px 0;"><strong>${e.name}</strong> — ${e.city} · ${e.startDate} <span style="color:#64748b;">(${e.source}${e.status === 'APPROVED' ? ' · auto-approved' : ''})</span></td></tr>`).join('')}
+          </table>
+          <div style="margin-top:10px;"><a href="https://pawcities.com/admin/events" style="background:#0ea5e9;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;">Review &amp; Approve →</a></div>
+        </td></tr>
+      </table>
+    </td></tr>` : '';
+
   const html = baseTemplate(`🐾 Daily Marketing Digest — ${today}`, `
     ${urgentEventsHtml}
+    ${newEventsHtml}
     ${healthBanner}
     ${healthDetailsHtml}
     ${failedPostsHtml}

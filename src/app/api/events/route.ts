@@ -272,15 +272,27 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send admin notification email (fire-and-forget, don't block response)
-    sendNewEventAdminAlert(
-      name,
-      city.name || citySlug,
-      startDate,
-      submitterName,
-      submitterEmail,
-      body.venueName || null,
-    ).catch(err => console.error('[EMAIL] Failed to send event admin alert:', err));
+    // Send admin notification email (fire-and-forget, don't block response).
+    // SKIP for admin/agent submissions (2026-09-10): agent batches were firing
+    // one email per event straight into Eric's inbox. Admin-submitted events
+    // are instead summarized in the daily marketing digest's "new events
+    // captured" section — one email per day, confirming they're on the
+    // dashboard for review. Genuine third-party submissions still alert.
+    const adminEmails = (process.env.ADMIN_EMAILS || '')
+      .split(',').map(e => e.trim().toLowerCase()).filter(Boolean);
+    const isAdminSubmission = adminEmails.includes(String(submitterEmail).toLowerCase().trim());
+    if (isAdminSubmission) {
+      console.log(`[EVENTS] Admin/agent submission "${name}" — per-event email suppressed (daily digest covers it)`);
+    } else {
+      sendNewEventAdminAlert(
+        name,
+        city.name || citySlug,
+        startDate,
+        submitterName,
+        submitterEmail,
+        body.venueName || null,
+      ).catch(err => console.error('[EMAIL] Failed to send event admin alert:', err));
+    }
 
     return NextResponse.json({
       success: true,
