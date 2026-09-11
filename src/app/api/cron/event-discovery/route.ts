@@ -337,6 +337,17 @@ async function discoverGoogleEvents(citySlug: string): Promise<Array<{
   source: 'google_events';
   score: number;
 }>> {
+  // ── DISABLED 2026-09-11 (Apify free-tier decision) ──────────────────────
+  // 30-day audit: this channel produced 0 created events (14 of 17 candidates
+  // auto-rejected for having no actionable source). The Eventbrite actor and
+  // the free channels (Instagram hashtags, handle-discovery watchlist,
+  // curated scrapers, agent sessions) cover discovery. Re-enable by setting
+  // GOOGLE_EVENTS_DISCOVERY=on if it ever earns its cost again.
+  if (process.env.GOOGLE_EVENTS_DISCOVERY !== 'on') {
+    console.log('[GOOGLE-EVENTS] Channel disabled (0 events created in 30d audit, 2026-09-11)');
+    return [];
+  }
+
   const APIFY_TOKEN = getApifyToken();
   if (!APIFY_TOKEN) {
     console.warn('[GOOGLE-EVENTS] APIFY_TOKEN not configured, skipping');
