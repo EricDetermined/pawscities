@@ -22,7 +22,7 @@ export const maxDuration = 300;
  * browser session.
  *
  * Each run:
- *   1. Picks the ~40 active handles with the oldest last_checked_at (nulls
+ *   1. Picks the ~60 active handles with the oldest last_checked_at (nulls
  *      first) — unfinished handles carry to the next run automatically.
  *   2. Business-discovers each handle's recent media (6 most recent posts).
  *   3. Filters media newer than last_post_timestamp (or last 7 days on the
@@ -49,10 +49,10 @@ function getSupabaseAdmin() {
   );
 }
 
-const HANDLES_PER_RUN = 40;
+const HANDLES_PER_RUN = 60; // 40→60 (2026-09-11, Eric: increase discovery); 2x daily = ~120 handles/day
 const MEDIA_PER_HANDLE = 6;
 const MIN_EVENT_SCORE = 35;      // same quality bar as the hashtag channel
-const VISION_SCAN_BUDGET = 15;   // per-run GPT-4o Vision cap (cost control)
+const VISION_SCAN_BUDGET = 20;   // per-run GPT-4o Vision cap (cost control; 15→20 with 60-handle batches)
 const MAX_FAILURES = 5;          // deactivate after this many consecutive failures
 const TIME_BUDGET_MS = 240_000;  // stop early, stay safely under maxDuration
 const PER_HANDLE_DELAY_MS = 400; // Graph API rate-limit courtesy

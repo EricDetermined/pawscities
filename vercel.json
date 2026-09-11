@@ -52,7 +52,7 @@
     },
     {
       "path": "/api/cron/handle-discovery",
-      "schedule": "30 7 * * *"
+      "schedule": "30 7,19 * * *"
     },
     {
       "path": "/api/cron/marketing-digest",
