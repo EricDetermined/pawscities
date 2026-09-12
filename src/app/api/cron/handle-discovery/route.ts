@@ -230,6 +230,21 @@ export async function GET(request: NextRequest) {
         let score = classifyEventRelevance(post.caption || '', 0);
         if (score < MIN_EVENT_SCORE) continue;
 
+        // ── Dog-relevance hard gate for unvetted handles (2026-09-12) ──────
+        // A science museum (@citedessciences) slipped a fakir exhibition into
+        // pending events; the downstream extractor then INVENTED a dog line
+        // to justify it. Handles typed venue/organizer/community were vetted
+        // as dog-relevant at seeding, so their posts pass; anything typed
+        // 'unknown'/'brand'/null must mention dogs in the RAW caption or be
+        // skipped — extractor output can't be trusted to add relevance.
+        const VETTED_TYPES = ['venue', 'organizer', 'community'];
+        if (!VETTED_TYPES.includes(wh.handle_type || '')) {
+          const rawCaption = post.caption || '';
+          if (!/dog|chien|perro|perra|gos(sos)?\b|犬|ワンちゃん|わんこ|pup|paw|woof|canin|doggo|pooch|hund/i.test(rawCaption)) {
+            continue;
+          }
+        }
+
         let city = detectCity(post.caption || '') || wh.city || null;
         if (city && hasGeoConflict(city, post.caption || '')) continue;
 
