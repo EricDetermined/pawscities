@@ -87,9 +87,9 @@ By accepting this agreement, you agree to the following terms:
 
 1. PURPOSE: You will represent and promote Paw Cities within your designated city by creating content, building community relationships, and participating in program activities.
 
-2. RELATIONSHIP: You are an independent contractor, not an employee. You set your own schedule and use your own equipment. You are free to work with non-competing brands.
+2. RELATIONSHIP: This is a voluntary, commission-only collaboration. You are an independent collaborator, not an employee, worker, or agent of Paw Cities. Nothing in this agreement creates an employment relationship, and neither party intends one: Paw Cities sets no working hours, no minimum activity levels, no quotas, and no required deliverables; you decide entirely for yourself whether, when, and how to participate, using your own equipment. You are free to work with any other brands, including during the program. You may not enter into contracts, incur obligations, or make commitments on Paw Cities' behalf.
 
-3. COMPENSATION: Rewards are limited to the program's published incentive structure, including commission on paid business subscriptions referred through your unique link. Reward structures may be modified with 30 days' notice.
+3. COMPENSATION: There is no salary, wage, fee, retainer, or guaranteed payment of any kind. The only compensation under this program is a commission on paid business subscriptions that originate from your unique referral code, plus the non-monetary program benefits (badge, early access, features). If no business subscribes through your code, no compensation is owed, and no minimum earnings are implied or promised. Commission structures may be modified prospectively with 30 days' notice. You are responsible for your own taxes on any commission received.
 
 4. INTELLECTUAL PROPERTY: Content you create remains yours. You grant Paw Cities a perpetual, non-exclusive license to use, repost, and adapt your content for marketing purposes with credit. You may revoke this license for specific content with 30 days' written notice.
 
