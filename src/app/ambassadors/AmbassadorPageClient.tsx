@@ -101,9 +101,13 @@ By accepting this agreement, you agree to the following terms:
 
 8. TERMINATION: Either party may terminate with 14 days' written notice. Immediate termination is reserved for serious violations including brand-damaging conduct, confidentiality breaches, or illegal activity.
 
-9. DATA PROTECTION: Both parties will handle personal data in accordance with applicable laws (GDPR, CCPA, etc.).
+9. DATA PROTECTION: Both parties will handle personal data in accordance with applicable data protection laws, including the EU/UK GDPR and CCPA. For ambassadors in the EU/UK: (a) Paw Cities is the data controller for the personal data you provide under this program and processes it only to operate the program; (b) you consent to your program data being processed on servers in the United States, protected by appropriate safeguards; (c) any personal data of community members you collect at events or meetups (names, emails, photos) is collected on Paw Cities' behalf — handle it only per our instructions, share it only through official Paw Cities channels, and delete local copies when no longer needed; (d) you may request access to or deletion of your data at any time via eric@pawcities.com.
 
-This agreement is governed by applicable local law. By clicking "I Accept," you confirm you have read, understood, and agree to these terms.`;
+10. GOVERNING LAW: This agreement is governed by the laws of the jurisdiction where the ambassador resides, and nothing in it deprives you of mandatory consumer or worker protections of your country of residence. Both parties will attempt good-faith resolution before any formal proceedings.
+
+(v1.1, 2026-09-12: expanded EU/UK data-protection safeguards and clarified governing law for international ambassadors.)
+
+By clicking "I Accept," you confirm you have read, understood, and agree to these terms.`;
 
 interface InviteData {
   code: string;
