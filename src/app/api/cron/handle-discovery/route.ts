@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import {
   classifyEventRelevance,
+  classifyDogEvidence,
   extractMentionedHandles,
   isBusinessPost,
   hasGeoConflict,
@@ -230,20 +231,15 @@ export async function GET(request: NextRequest) {
         let score = classifyEventRelevance(post.caption || '', 0);
         if (score < MIN_EVENT_SCORE) continue;
 
-        // ── Dog-relevance hard gate for unvetted handles (2026-09-12) ──────
-        // A science museum (@citedessciences) slipped a fakir exhibition into
-        // pending events; the downstream extractor then INVENTED a dog line
-        // to justify it. Handles typed venue/organizer/community were vetted
-        // as dog-relevant at seeding, so their posts pass; anything typed
-        // 'unknown'/'brand'/null must mention dogs in the RAW caption or be
-        // skipped — extractor output can't be trusted to add relevance.
-        const VETTED_TYPES = ['venue', 'organizer', 'community'];
-        if (!VETTED_TYPES.includes(wh.handle_type || '')) {
-          const rawCaption = post.caption || '';
-          if (!/dog|chien|perro|perra|gos(sos)?\b|犬|ワンちゃん|わんこ|pup|paw|woof|canin|doggo|pooch|hund/i.test(rawCaption)) {
-            continue;
-          }
-        }
+        // ── Dog-evidence gate, ALL handles (tightened 2026-09-18 per Eric) ──
+        // The old gate exempted vetted dog venues — but venues post their
+        // non-dog events too (karaoke nights, plant sales), which is how 24
+        // no-dog-reference events reached the site. Now EVERY post needs dog
+        // evidence in its own caption. If the caption has none but the post
+        // has an image, we fall through to the vision scan below and re-check
+        // against the POSTER text — the reconfirmation Eric asked for. The
+        // final check after the vision block skips anything still evidence-free.
+        let dogEvidence = classifyDogEvidence(post.caption || '');
 
         let city = detectCity(post.caption || '') || wh.city || null;
         if (city && hasGeoConflict(city, post.caption || '')) continue;
@@ -258,7 +254,7 @@ export async function GET(request: NextRequest) {
         if (
           (post.media_type === 'IMAGE' || post.media_type === 'CAROUSEL_ALBUM') &&
           post.media_url &&
-          stats.visionScansUsed < VISION_SCAN_BUDGET
+          (stats.visionScansUsed < VISION_SCAN_BUDGET || dogEvidence === 'none')
         ) {
           const visionResult = await scanPosterWithVision(post.media_url);
           stats.visionScansUsed++;
@@ -289,7 +285,16 @@ export async function GET(request: NextRequest) {
               if (!mentionedHandles.includes(h)) mentionedHandles.push(h);
             }
           }
+
+          // Poster reconfirmation: the poster text may carry the dog evidence
+          // the caption lacked ("dogs welcome", "pup party", breed names).
+          dogEvidence = classifyDogEvidence(caption);
         }
+
+        // ── FINAL dog-evidence check: no evidence in caption OR poster → skip.
+        // "This handle is a dog venue" is not evidence that THIS event is a
+        // dog event (2026-09-18, per Eric).
+        if (dogEvidence === 'none') continue;
 
         stats.candidates++;
 

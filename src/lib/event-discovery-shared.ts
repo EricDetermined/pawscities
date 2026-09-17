@@ -287,3 +287,20 @@ If it's not an event poster (just a photo of a dog, meme, etc.), set isEventPost
     return null;
   }
 }
+
+// ─── Dog-evidence classifier (2026-09-18, per Eric) ─────────────────────────
+// 24 of 193 upcoming approved events had ZERO dog reference: the relevance
+// score can be reached on event-ness alone, and dog-venue handles post their
+// non-dog events too (karaoke nights, plant sales). Every event must now
+// carry explicit dog evidence in its own text (or poster-vision text) —
+// "the venue is dog-friendly" is not evidence that THIS event is.
+const DOG_STRONG = /dog show|dog parade|dog festival|dog market|dog swim|doggy|dog run|dog walk|pup ?cup|dog menu|dog treats|dog ice cream|off.?leash|adoptab|adoption|puppy|puppies|pup[ -]?(friendly|party|meetup)|dogs? (welcome|invited|free|allowed|register)|bring your (dog|pup)|leashed dogs|caniparc|canicross|canitrail|dog costume|paw(s|ty)?\b|woof|bark(ing|s)?\b|canine|K-?9|cavoodle|cockapoo|dachshund|corgi|frenchie|french bulldog|golden retriever|labrador|beagle|schnauzer|terrier|greyhound|husky|poodle|shiba|akita|boston terrier|zoomies|わんわん|犬|ワンちゃん|わんこ|perr[oa]s?\b|chiens?\b|gos(sos)?\b|hunde?\b/i;
+const DOG_WEAK = /\bdogs?\b|\bpups?\b|\bpets?\b|dog.?friendly|pet.?friendly|mascotas?|toutou/i;
+
+export type DogEvidence = 'strong' | 'weak' | 'none';
+
+export function classifyDogEvidence(text: string): DogEvidence {
+  if (DOG_STRONG.test(text)) return 'strong';
+  if (DOG_WEAK.test(text)) return 'weak';
+  return 'none';
+}

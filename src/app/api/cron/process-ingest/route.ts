@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { enrichEventWithAI } from '@/lib/dalle';
+import { classifyDogEvidence } from '@/lib/event-discovery-shared';
 
 export const maxDuration = 300; // allow Instagram post fetch + vision for email-submitted links
 
@@ -514,6 +515,11 @@ async function handleProcessIngest(request: NextRequest) {
         let mentionedHandles: string[] = [];
         let qualityScore = 0;
         let qualityIssues: string[] = [];
+        // Dog-evidence gate context (2026-09-18) — see gate below; hoisted so
+        // the fast-track check further down can read them.
+        const isHumanSource = ['email', 'admin'].includes(item.source) ||
+          (item.submitted_by || '').includes('@');
+        const dogEvidence = classifyDogEvidence(item.raw_text || '');
         let localLanguageNote: string | null = null;
         let detectedCity: string | null = item.city || null;
 
@@ -539,6 +545,24 @@ async function handleProcessIngest(request: NextRequest) {
           console.log(`[PROCESS-INGEST] AI enriched "${eventName}" — quality: ${qualityScore}/100, city: ${detectedCity}, handles: ${mentionedHandles.length}`);
 
           // Quality gate: skip low-quality items (raised from 20 to 30)
+          // ── DOG-EVIDENCE GATE (2026-09-18, per Eric) ─────────────────────
+          // Agent-discovered items must prove in their RAW text (caption +
+          // poster-vision text, before any AI rewriting) that THIS event is a
+          // dog event. Human-submitted items (email forwards, admin) are
+          // exempt — Eric vouched for those by sending them.
+          if (!isHumanSource && dogEvidence === 'none') {
+            await supabase
+              .from('ingest_queue')
+              .update({
+                status: 'dismissed',
+                error_message: 'no_dog_evidence: raw text contains no dog reference — event-ness alone is not enough',
+                processed_at: new Date().toISOString(),
+              })
+              .eq('id', item.id);
+            results.errors.push(`${item.id}: no dog evidence`);
+            continue;
+          }
+
           if (qualityScore < 30) {
             await supabase
               .from('ingest_queue')
@@ -919,7 +943,9 @@ async function handleProcessIngest(request: NextRequest) {
           } catch { return false; }
         })();
 
-        if (daysUntilEvent >= 0 && daysUntilEvent <= 7 && isEventSpecificLink) {
+        // Fast-track additionally requires STRONG dog evidence (2026-09-18):
+        // weak "dog-friendly" adjacency stays PENDING for Eric's judgment.
+        if (daysUntilEvent >= 0 && daysUntilEvent <= 7 && isEventSpecificLink && (isHumanSource || dogEvidence === 'strong')) {
           try {
             await supabase
               .from('events')
