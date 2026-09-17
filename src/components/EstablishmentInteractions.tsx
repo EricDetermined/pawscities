@@ -359,10 +359,13 @@ export default function EstablishmentInteractions({
             <div className="text-4xl mb-3">{String.fromCodePoint(0x1F43E)}</div>
             <h3 className="text-lg font-bold mb-2">Sign in to {loginPromptAction}</h3>
             <p className="text-sm text-gray-500 mb-4">
-              Create a free account to {loginPromptAction}, save favorites, and more.
+              {/* avoid "save favorites, save favorites" when the action IS saving favorites */}
+              Create a free account to {loginPromptAction}
+              {loginPromptAction.includes('favorite') ? ', write reviews, and more.' : ', save favorites, and more.'}
             </p>
+            {/* send the user back here after signing in (audit #4, 2026-09-17) */}
             <a
-              href="/login"
+              href={`/login?redirect=${encodeURIComponent(typeof window !== 'undefined' ? window.location.pathname : '/')}`}
               className="block w-full px-4 py-2.5 bg-primary-500 text-white rounded-lg text-sm font-medium hover:bg-primary-600 transition-colors mb-2"
             >
               Sign In

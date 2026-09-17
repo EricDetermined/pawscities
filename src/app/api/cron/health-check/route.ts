@@ -849,6 +849,37 @@ export async function GET(request: NextRequest) {
   const skipEmail = searchParams.get('skipEmail') === 'true';
 
   // Run all health checks in parallel
+
+// ── Public API contract check (added 2026-09-17 after the reviews-500 miss) ──
+// Every audit before this tested with credentials; these hit the PUBLIC
+// surface exactly like a signed-out visitor and fail loudly on any 5xx.
+async function checkPublicApiContracts(): Promise<CheckResult> {
+  const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://pawcities.com';
+  const targets: { path: string; expect: number[] }[] = [
+    { path: '/api/reviews?establishmentId=00000000-0000-4000-8000-000000000000', expect: [200] },
+    { path: '/api/events?city=london', expect: [200] },
+    { path: '/api/business/submit', expect: [401, 405] },   // GET without auth: clean 4xx, never 5xx
+    { path: '/api/subscribe', expect: [400, 405] },
+  ];
+  const failures: string[] = [];
+  for (const t of targets) {
+    try {
+      const res = await fetch(`${base}${t.path}`, { signal: AbortSignal.timeout(10000) });
+      if (res.status >= 500) failures.push(`${t.path} → ${res.status}`);
+      else if (!t.expect.includes(res.status) && res.status !== 200) {
+        // unexpected but non-5xx: warn-level detail only
+        failures.push(`${t.path} → ${res.status} (expected ${t.expect.join('/')})`);
+      }
+    } catch (e) {
+      failures.push(`${t.path} → unreachable (${String(e).slice(0, 60)})`);
+    }
+  }
+  if (failures.length > 0) {
+    return { name: 'Public API Contracts', status: 'critical', message: `Signed-out API failures: ${failures.join('; ')}` };
+  }
+  return { name: 'Public API Contracts', status: 'healthy', message: 'All public endpoints respond cleanly to unauthenticated requests' };
+}
+
   const checks = await Promise.all([
     checkInstagramToken(),
     checkGooglePlacesAPI(),
@@ -863,6 +894,7 @@ export async function GET(request: NextRequest) {
     checkPhotoProxy(),
     checkEmailService(),
     checkBusinessClaimFlow(),
+    checkPublicApiContracts(),
     checkAmbassadorFlow(),
     checkAndCleanPastEvents(),
   ]);

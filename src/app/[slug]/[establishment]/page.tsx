@@ -161,7 +161,7 @@ export default async function EstablishmentPage({ params }: Props) {
 
   const allPlaces = await getCityEstablishments(citySlug);
   const similar = allPlaces
-    .filter(e => e.categorySlug === place!.categorySlug && e.id !== place!.id)
+    .filter(e => e.categorySlug === place!.categorySlug && e.id !== place!.id && e.slug !== place!.slug) // slug check too: static/DB overlay can give the same place two ids (audit #6)
     .slice(0, 3);
 
   const category = CATEGORIES.find(c => c.slug === place.categorySlug);
