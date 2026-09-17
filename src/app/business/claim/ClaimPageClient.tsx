@@ -202,6 +202,12 @@ export default function ClaimPageClient() {
   const handleSubmitClaim = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedEstablishment) return;
+    // Signed-out users previously hit a bare 401 that read as "error saving"
+    // (this cost us Bark Bermondsey Square's claim for 3 weeks, 2026-08-23).
+    if (!user) {
+      setSubmitResult({ success: false, message: 'You need a free account to submit — please sign in (top right) and then press submit again. Everything you typed will stay filled in.' });
+      return;
+    }
     setIsSubmitting(true);
     setSubmitResult(null);
     try {
@@ -234,6 +240,12 @@ export default function ClaimPageClient() {
 
   const handleSubmitNew = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Signed-out users previously hit a bare 401 that read as "error saving"
+    // (this cost us Bark Bermondsey Square's claim for 3 weeks, 2026-08-23).
+    if (!user) {
+      setSubmitResult({ success: false, message: 'You need a free account to submit — please sign in (top right) and then press submit again. Everything you typed will stay filled in.' });
+      return;
+    }
     setIsSubmittingNew(true);
     setSubmitResult(null);
     try {
