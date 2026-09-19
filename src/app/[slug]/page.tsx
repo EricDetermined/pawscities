@@ -89,10 +89,10 @@ function dbToEstablishment(dbEst: Record<string, unknown>, citySlug: string, cit
       groomers: 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=800&h=600&fit=crop',
       activities: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&h=600&fit=crop',
       bakeries: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&h=600&fit=crop',
-      shops: 'https://images.unsplash.com/photo-1583337130417-13104dec14a8?w=800&h=600&fit=crop',
+      shops: 'https://images.unsplash.com/photo-1591946614720-90a587da4a36?w=800&h=600&fit=crop',
       daycare: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=600&fit=crop',
       trainers: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=600&fit=crop',
-      walkers: 'https://images.unsplash.com/photo-1522276498395-f4f68f7f8571?w=800&h=600&fit=crop',
+      walkers: 'https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=800&h=600&fit=crop',
     };
     images = [fallbacks[catSlug] || fallbacks.restaurants];
   }
