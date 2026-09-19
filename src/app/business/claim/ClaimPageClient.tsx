@@ -84,6 +84,7 @@ export default function ClaimPageClient() {
     listingType: 'storefront' as 'storefront' | 'mobile' | 'online',
     address: '',
     serviceArea: '',
+    heroImageUrl: '',
     cityId: '',
     categoryId: '',
     description: '',
@@ -488,6 +489,15 @@ export default function ClaimPageClient() {
                 <p className="mt-1 text-xs text-gray-400">Describe the area your business serves</p>
               </div>
             )}
+
+            {/* Hero image (2026-09-20, per Eric): every business picks the ONE
+                image that fronts their listing; it goes through admin photo
+                moderation before appearing. */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Hero image (the photo that fronts your listing)</label>
+              <input type="url" value={newForm.heroImageUrl} onChange={(e) => setNewForm(prev => ({ ...prev, heroImageUrl: e.target.value }))} placeholder="Link to your best photo (e.g. from your website or Instagram)" className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" />
+              <p className="text-xs text-gray-500 mt-1">Optional but recommended — this is the first thing dog parents see. Reviewed by our team before it goes live.</p>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>

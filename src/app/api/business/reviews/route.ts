@@ -105,6 +105,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No approved business claim found' }, { status: 404 });
     }
 
+    // ── PREMIUM GATE (2026-09-20, per Eric): responding to reviews is a
+    // paid-tier feature — the free listing shows reviews read-only.
+    const { data: subscription } = await supabase
+      .from('subscriptions')
+      .select('tier')
+      .eq('establishment_id', claim.establishment_id)
+      .eq('status', 'ACTIVE')
+      .single();
+    if ((subscription?.tier || 'free') === 'free') {
+      return NextResponse.json(
+        { error: 'Responding to reviews is a Premium feature. Upgrade your plan to reply to your customers directly.', upgradeRequired: true },
+        { status: 403 }
+      );
+    }
+
     // Verify the review belongs to this establishment
     const { data: review, error: reviewError } = await supabase
       .from('reviews')

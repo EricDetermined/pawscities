@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, address, cityId, categoryId, description, phone, website: rawWebsite, contactName, contactEmail, dogFeatures, listingType: rawListingType, serviceArea, referredBy } = body;
+    const { name, address, cityId, categoryId, description, phone, website: rawWebsite, contactName, contactEmail, dogFeatures, listingType: rawListingType, serviceArea, referredBy, heroImageUrl } = body;
     // Normalize website URL - ensure https:// prefix
     const website = rawWebsite ? (rawWebsite.match(/^https?:\/\//) ? rawWebsite : `https://${rawWebsite}`) : '';
     // Normalize listing type - default to storefront
@@ -229,6 +229,22 @@ export async function POST(request: Request) {
     if (estError) {
       console.error('Error creating establishment:', estError);
       return NextResponse.json({ error: `Failed to create establishment: ${estError.message}` }, { status: 500 });
+    }
+
+    // ── Hero image from onboarding (2026-09-20, per Eric) ──────────────────
+    // The business names ONE image to front their listing. It enters the same
+    // PENDING → admin Photo Moderation flow as every other photo; on approval
+    // the moderation handler sets it as primary_image (first approved photo
+    // becomes the cover). Nothing goes live without review.
+    if (heroImageUrl && typeof heroImageUrl === 'string' && /^https?:\/\//.test(heroImageUrl) && establishment) {
+      const { error: heroErr } = await supabaseAdmin.from('Photo').insert({
+        url: heroImageUrl.trim(),
+        caption: '[HERO] Submitted at onboarding',
+        establishment_id: establishment.id,
+        user_id: existingUser.id,
+        isApproved: false,
+      });
+      if (heroErr) console.error('Hero photo insert failed (non-blocking):', heroErr.message);
     }
 
     // Google Places enrichment (non-blocking — only for storefronts with a physical address)
