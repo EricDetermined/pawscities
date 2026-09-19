@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
 
   let { data: dbUser } = await supabase
     .from('users')
-    .select('id')
+    .select('id, name')
     .eq('supabase_id', user.id)
     .single();
 
@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
         email: user.email || '',
         name: user.user_metadata?.name || user.email?.split('@')[0] || 'Dog Lover',
       })
-      .select('id')
+      .select('id, name')
       .single();
     dbUser = newUser;
   }
@@ -148,6 +148,43 @@ export async function POST(request: NextRequest) {
   if (activityError) {
     console.error('Failed to record review activity:', activityError.message);
   }
+
+  // Notify the business owner (fire-and-forget; never block the reviewer).
+  // Free-tier owners get an upgrade CTA — this is the highest-intent upgrade
+  // moment there is (2026-09-20, per Eric).
+  (async () => {
+    try {
+      const { data: est } = await supabaseAdmin
+        .from('establishments')
+        .select('id, name, slug, claimed_by, cities(slug)')
+        .eq('id', establishmentId)
+        .single();
+      if (!est?.claimed_by) return; // unclaimed listing → nobody to notify
+      const { data: owner } = await supabaseAdmin
+        .from('users')
+        .select('email')
+        .eq('id', est.claimed_by)
+        .single();
+      if (!owner?.email) return;
+      const { data: sub } = await supabaseAdmin
+        .from('subscriptions')
+        .select('tier')
+        .eq('establishment_id', establishmentId)
+        .eq('status', 'ACTIVE')
+        .single();
+      const isFree = (sub?.tier || 'free') === 'free';
+      const citySlug = Array.isArray(est.cities) ? est.cities[0]?.slug : (est.cities as { slug?: string } | null)?.slug;
+      const base = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://pawcities.com';
+      const listingUrl = citySlug ? `${base}/${citySlug}/${est.slug}` : base;
+      const { sendReviewNotification } = await import('@/lib/email');
+      await sendReviewNotification(
+        owner.email, est.name, dbUser.name || 'A dog parent',
+        rating, content || null, listingUrl, isFree,
+      );
+    } catch (e) {
+      console.error('[REVIEWS] owner notification failed (non-blocking):', e);
+    }
+  })();
 
   return NextResponse.json({ review }, { status: 201 });
 }

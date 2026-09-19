@@ -853,6 +853,41 @@ export async function GET(request: NextRequest) {
 // ── Public API contract check (added 2026-09-17 after the reviews-500 miss) ──
 // Every audit before this tested with credentials; these hit the PUBLIC
 // surface exactly like a signed-out visitor and fail loudly on any 5xx.
+async function checkClientErrors(): Promise<CheckResult> {
+  try {
+    const supabase = getSupabaseAdmin();
+    const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { data, error } = await supabase
+      .from('client_errors')
+      .select('message, source, severity, url')
+      .gte('created_at', since)
+      .order('created_at', { ascending: false })
+      .limit(500);
+    if (error) {
+      // Table missing is not itself an outage — report as healthy-with-note.
+      return { name: 'Client Errors', status: 'healthy', message: `Error sink unavailable: ${error.message}` };
+    }
+    const rows = data || [];
+    const total = rows.length;
+    const boundary = rows.filter(r => r.source === 'boundary').length;
+    // Group by message to find the top offender.
+    const counts: Record<string, number> = {};
+    for (const r of rows) counts[r.message] = (counts[r.message] || 0) + 1;
+    const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+    const topStr = top ? ` Top: "${top[0].slice(0, 80)}" (${top[1]}x)` : '';
+    // Thresholds: any React crash, or a spike of any single error, is worth a look.
+    if (boundary > 0) {
+      return { name: 'Client Errors', status: 'critical', message: `${boundary} page crash(es) + ${total} total browser errors in 24h.${topStr}`, details: { total, boundary } };
+    }
+    if (total >= 25 || (top && top[1] >= 10)) {
+      return { name: 'Client Errors', status: 'warning', message: `${total} browser errors in 24h.${topStr}`, details: { total } };
+    }
+    return { name: 'Client Errors', status: 'healthy', message: total === 0 ? 'No browser errors in 24h' : `${total} minor browser error(s) in 24h.${topStr}` };
+  } catch (e) {
+    return { name: 'Client Errors', status: 'healthy', message: `Check error: ${String(e).slice(0, 80)}` };
+  }
+}
+
 async function checkPublicApiContracts(): Promise<CheckResult> {
   const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://pawcities.com';
   const targets: { path: string; expect: number[] }[] = [
@@ -895,6 +930,7 @@ async function checkPublicApiContracts(): Promise<CheckResult> {
     checkEmailService(),
     checkBusinessClaimFlow(),
     checkPublicApiContracts(),
+    checkClientErrors(),
     checkAmbassadorFlow(),
     checkAndCleanPastEvents(),
   ]);

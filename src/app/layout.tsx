@@ -6,6 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import '@/styles/globals.css';
 import { Header } from '@/components/layout/Header';
+import ErrorReporter from '@/components/ErrorReporter';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -78,6 +79,7 @@ export default function RootLayout({
             'query-input': 'required name=search_term_string',
           },
         }) }} />
+        <ErrorReporter />
         <AuthProvider>
           <Header />
           {/* main landmark = skip-link target (2026-09-04 heuristic eval) */}

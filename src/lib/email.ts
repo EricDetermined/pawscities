@@ -277,6 +277,40 @@ export async function sendNewEventAdminAlert(
   );
 }
 
+/**
+ * Notify a business owner that they received a review. For FREE-tier owners
+ * this is the highest-intent upgrade moment (they want to reply but can't),
+ * so the CTA points at the upgrade page; Premium owners get a "reply now"
+ * CTA instead. (2026-09-20, per Eric.)
+ */
+export async function sendReviewNotification(
+  to: string,
+  businessName: string,
+  reviewerName: string,
+  rating: number,
+  reviewText: string | null,
+  listingUrl: string,
+  isFree: boolean,
+): Promise<EmailResult> {
+  const stars = '★'.repeat(Math.max(1, Math.min(5, rating))) + '☆'.repeat(5 - Math.max(1, Math.min(5, rating)));
+  const snippet = reviewText ? `<blockquote style="margin:12px 0;padding:10px 14px;border-left:3px solid #ea580c;color:#444;font-style:italic;">${reviewText.slice(0, 240)}${reviewText.length > 240 ? '…' : ''}</blockquote>` : '';
+  const cta = isFree
+    ? `${ctaButton('Upgrade to reply to this review', `${getAppUrl()}/business/upgrade`)}
+<p style="font-size:13px;color:#888;">Responding to reviews is a Premium feature — upgrade to reply directly to ${reviewerName} and every future reviewer.</p>`
+    : `${ctaButton('Reply to this review', `${getAppUrl()}/business`)}`;
+  return sendEmail(
+    to,
+    `New ${rating}★ review for ${businessName} on Paw Cities`,
+    baseTemplate('You got a new review!', `
+<p><strong>${reviewerName}</strong> just reviewed <strong>${businessName}</strong>:</p>
+<p style="font-size:20px;color:#ea580c;letter-spacing:2px;margin:8px 0;">${stars}</p>
+${snippet}
+<p><a href="${listingUrl}" style="color:#ea580c;">See it on your listing →</a></p>
+${cta}
+`)
+  );
+}
+
 export async function sendBusinessAccountSetup(
   to: string,
   businessName: string
