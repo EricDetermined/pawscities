@@ -853,6 +853,37 @@ export async function GET(request: NextRequest) {
 // ── Public API contract check (added 2026-09-17 after the reviews-500 miss) ──
 // Every audit before this tested with credentials; these hit the PUBLIC
 // surface exactly like a signed-out visitor and fail loudly on any 5xx.
+async function checkStripeConfig(): Promise<CheckResult> {
+  // Reads its OWN env at runtime (this runs on Vercel) and reports MODE +
+  // presence only — never the secret values. Answers "is billing wired to go
+  // live?" without exposing keys. (2026-09-20, per Eric.)
+  const secret = process.env.STRIPE_SECRET_KEY || '';
+  const webhook = process.env.STRIPE_WEBHOOK_SECRET || '';
+  const monthly = process.env.STRIPE_MONTHLY_PRICE_ID || '';
+  const annual = process.env.STRIPE_ANNUAL_PRICE_ID || '';
+
+  const mode = secret.startsWith('sk_live_') ? 'LIVE'
+    : secret.startsWith('sk_test_') ? 'TEST'
+    : secret ? 'unknown-prefix' : 'MISSING';
+
+  const missing: string[] = [];
+  if (!secret) missing.push('STRIPE_SECRET_KEY');
+  if (!webhook) missing.push('STRIPE_WEBHOOK_SECRET');
+  if (!monthly) missing.push('STRIPE_MONTHLY_PRICE_ID');
+  if (!annual) missing.push('STRIPE_ANNUAL_PRICE_ID');
+
+  if (missing.length > 0) {
+    return { name: 'Stripe Config', status: 'critical', message: `Billing NOT ready — missing env: ${missing.join(', ')} (key mode: ${mode})`, details: { mode, missing } };
+  }
+  if (mode === 'TEST') {
+    return { name: 'Stripe Config', status: 'warning', message: 'All vars set but key is in TEST mode — real cards will not charge. Switch to sk_live_ before launch.', details: { mode } };
+  }
+  if (mode !== 'LIVE') {
+    return { name: 'Stripe Config', status: 'warning', message: `All vars set but STRIPE_SECRET_KEY has an unexpected prefix (mode: ${mode}).`, details: { mode } };
+  }
+  return { name: 'Stripe Config', status: 'healthy', message: 'LIVE key + webhook secret + both price IDs all set.', details: { mode } };
+}
+
 async function checkClientErrors(): Promise<CheckResult> {
   try {
     const supabase = getSupabaseAdmin();
@@ -931,6 +962,7 @@ async function checkPublicApiContracts(): Promise<CheckResult> {
     checkBusinessClaimFlow(),
     checkPublicApiContracts(),
     checkClientErrors(),
+    checkStripeConfig(),
     checkAmbassadorFlow(),
     checkAndCleanPastEvents(),
   ]);
