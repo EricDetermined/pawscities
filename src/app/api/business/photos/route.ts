@@ -69,15 +69,15 @@ export async function GET() {
         label: index === 0 ? 'Main Google Business Photo' : `Google Business Photo ${index + 1}`,
       }));
 
-    // Get subscription tier
-    const { data: subscription } = await supabase
-      .from('subscriptions')
+    // Tier lives on establishments (set by the Stripe webhook). Reading it
+    // from subscriptions (no tier column) silently treated paid customers as
+    // free — fixed 2026-09-20.
+    const { data: estTier } = await supabase
+      .from('establishments')
       .select('tier')
-      .eq('establishment_id', claim.establishmentId)
-      .eq('status', 'ACTIVE')
+      .eq('id', claim.establishmentId)
       .single();
-
-    const tier = subscription?.tier || 'free';
+    const tier = estTier?.tier || 'free';
     const maxPhotos = TIER_LIMITS[tier] || 1;
 
     return NextResponse.json({
@@ -116,15 +116,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No approved business claim found' }, { status: 404 });
     }
 
-    // Get subscription tier
-    const { data: subscription } = await supabase
-      .from('subscriptions')
+    const { data: estTier } = await supabase
+      .from('establishments')
       .select('tier')
-      .eq('establishment_id', estResult.establishmentId)
-      .eq('status', 'ACTIVE')
+      .eq('id', estResult.establishmentId)
       .single();
-
-    const tier = subscription?.tier || 'free';
+    const tier = estTier?.tier || 'free';
     const maxPhotos = TIER_LIMITS[tier] || 1;
 
     // Check existing photo count using Photo table (camelCase)

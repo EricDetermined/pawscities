@@ -107,13 +107,12 @@ export async function POST(request: NextRequest) {
 
     // ── PREMIUM GATE (2026-09-20, per Eric): responding to reviews is a
     // paid-tier feature — the free listing shows reviews read-only.
-    const { data: subscription } = await supabase
-      .from('subscriptions')
+    const { data: estTier } = await supabase
+      .from('establishments')
       .select('tier')
-      .eq('establishment_id', claim.establishment_id)
-      .eq('status', 'ACTIVE')
+      .eq('id', claim.establishment_id)
       .single();
-    if ((subscription?.tier || 'free') === 'free') {
+    if ((estTier?.tier || 'free') === 'free') {
       return NextResponse.json(
         { error: 'Responding to reviews is a Premium feature. Upgrade your plan to reply to your customers directly.', upgradeRequired: true },
         { status: 403 }

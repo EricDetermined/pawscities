@@ -20,13 +20,12 @@ export async function GET(request: NextRequest) {
 
     // Check subscription - export is Premium only
     const { data: subscription } = await supabase
-      .from('subscriptions')
+      .from('establishments')
       .select('tier')
-      .eq('establishment_id', establishmentId)
-      .eq('status', 'ACTIVE')
+      .eq('id', establishmentId)
       .single();
 
-    const tier = subscription?.tier || 'free';
+    const tier = (subscription as { tier?: string } | null)?.tier || 'free';
 
     if (tier !== 'premium' && dbUser.role !== 'ADMIN') {
       return NextResponse.json(

@@ -31,13 +31,13 @@ export async function GET(request: NextRequest) {
 
     // Get subscription tier
     const { data: subscription } = await supabase
-      .from('subscriptions')
+      .from('establishments')
       .select('tier')
-      .eq('establishment_id', establishmentId)
+      .eq('id', establishmentId)
       .eq('status', 'ACTIVE')
       .single();
 
-    const tier = subscription?.tier || 'free';
+    const tier = (subscription as { tier?: string } | null)?.tier || 'free';
 
     // Get click events for the date range
     // Table is "ClickEvent" with camelCase columns: eventType, establishmentId, createdAt, userId
