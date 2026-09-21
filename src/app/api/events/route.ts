@@ -37,10 +37,14 @@ export async function GET(request: NextRequest) {
     const page = Math.max(1, parseInt(searchParams.get('page') || '1'));
     const offset = (page - 1) * limit;
 
-    // Today's date in UTC — the core filter that prevents past events
-    const today = new Date().toISOString().split('T')[0];
+    // Visibility cutoff = yesterday (UTC). Using a one-day grace instead of
+    // today(UTC) keeps events that are happening TODAY in a western timezone
+    // from vanishing overnight when UTC rolls past midnight, and — paired with
+    // the end_date clause below — keeps multi-day events visible until they
+    // actually end. (2026-09-20: all of Sep 20's events disappeared at 00:10 UTC.)
+    const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
-    // Build query: approved + pending events with sufficient data, start_date >= today
+    // Build query: approved + pending events with sufficient data, still upcoming
     let query = supabase
       .from('events')
       .select(`
@@ -52,7 +56,8 @@ export async function GET(request: NextRequest) {
       // a link, an Instagram handle, or a named venue. (Requiring all of them
       // silently hid legitimate approved events.)
       .or('external_url.not.is.null,source_handle.not.is.null,venue_name.not.is.null')
-      .gte('start_date', today)
+      // Upcoming = start OR end (multi-day) is on/after the cutoff.
+      .or(`start_date.gte.${cutoff},end_date.gte.${cutoff}`)
       .order('start_date', { ascending: true })
       .range(offset, offset + limit - 1);
 
@@ -281,8 +286,21 @@ export async function POST(request: NextRequest) {
     const adminEmails = (process.env.ADMIN_EMAILS || '')
       .split(',').map(e => e.trim().toLowerCase()).filter(Boolean);
     const isAdminSubmission = adminEmails.includes(String(submitterEmail).toLowerCase().trim());
+
+    // The weekly signed-out journey audit submits a throwaway event through this
+    // form to prove submission still works, then deletes it. That test used to
+    // fire a real "New Event Submission" admin email — noise that looked like a
+    // stuck real event (2026-09-20, per Eric). Any submission carrying the QA
+    // sentinel ("zzz-test" in the name/email, or the reserved audit domain) is
+    // recognized as automated self-test: the flow still runs and inserts, but no
+    // admin alert is sent. Keep the sentinel in sync with the audit task prompt.
+    const sentinel = /zzz-test|@pawcities-audit\.test$/i;
+    const isAuditTest = sentinel.test(String(name)) || sentinel.test(String(submitterEmail));
+
     if (isAdminSubmission) {
       console.log(`[EVENTS] Admin/agent submission "${name}" — per-event email suppressed (daily digest covers it)`);
+    } else if (isAuditTest) {
+      console.log(`[EVENTS] Audit self-test submission "${name}" — admin email suppressed (QA sentinel)`);
     } else {
       sendNewEventAdminAlert(
         name,

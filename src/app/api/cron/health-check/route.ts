@@ -555,15 +555,28 @@ async function checkAndCleanPastEvents(): Promise<CheckResult> {
   try {
     const supabase = getSupabaseAdmin();
     const today = new Date().toISOString().split('T')[0];
+    // Cutoff = yesterday (UTC). An event is only "past" once its LAST day is
+    // before this cutoff. The one-day margin absorbs the UTC-vs-local-timezone
+    // gap so we never archive an event that is still today (or ongoing) in a
+    // western timezone like America/Los_Angeles. (2026-09-20 fix: a multi-day
+    // event on Sep 20 & Sep 27 was wrongly archived at 00:10 UTC.)
+    const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
-    // Find past APPROVED events
-    const { data: pastEvents } = await supabase
+    // Candidate net: any APPROVED event whose start date has already passed.
+    const { data: candidates } = await supabase
       .from('events')
-      .select('id, name, start_date')
+      .select('id, name, start_date, end_date')
       .eq('status', 'APPROVED')
       .lt('start_date', today);
 
-    if (!pastEvents || pastEvents.length === 0) {
+    // Only truly-past events: use end_date when present (multi-day events run
+    // until their end), otherwise fall back to start_date.
+    const pastEvents = (candidates || []).filter(ev => {
+      const effectiveEnd = ev.end_date || ev.start_date;
+      return effectiveEnd < cutoff;
+    });
+
+    if (pastEvents.length === 0) {
       return {
         name: 'Past Event Cleanup',
         status: 'healthy',

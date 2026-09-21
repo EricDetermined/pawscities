@@ -47,11 +47,27 @@ function mapEvent(row: Record<string, unknown>): PawEvent {
 }
 
 /**
- * Get today's date string in YYYY-MM-DD format.
- * Used as the baseline for filtering out past events.
+ * Visibility cutoff = yesterday (UTC) in YYYY-MM-DD.
+ *
+ * "Upcoming" is computed against this cutoff, not against today(UTC), for two
+ * reasons (both surfaced 2026-09-20 when all of Sep 20's events vanished at
+ * 00:10 UTC while it was still Sep 20 in the Americas):
+ *   1. The one-day grace absorbs the gap between UTC midnight and local time, so
+ *      an event happening TODAY in a western timezone isn't hidden overnight.
+ *   2. Paired with UPCOMING_OR below, multi-day events stay visible until their
+ *      end_date, not just their start_date.
  */
-function getToday(): string {
-  return new Date().toISOString().split('T')[0];
+function getCutoff(): string {
+  return new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+}
+
+/**
+ * PostgREST OR filter: keep an event if EITHER its start OR its end (for
+ * multi-day events) is on/after the cutoff. Single-day events (end_date null)
+ * fall back to the start_date condition.
+ */
+function upcomingOr(cutoff: string): string {
+  return `start_date.gte.${cutoff},end_date.gte.${cutoff}`;
 }
 
 /**
@@ -66,7 +82,7 @@ function getToday(): string {
  */
 export async function getHomepageEvents(limit: number = 8): Promise<PawEvent[]> {
   const supabase = getSupabaseAdmin();
-  const today = getToday();
+  const cutoff = getCutoff();
 
   // Fetch more than needed so we can curate for city diversity
   const { data, error } = await supabase
@@ -77,7 +93,7 @@ export async function getHomepageEvents(limit: number = 8): Promise<PawEvent[]> 
     `)
     .in('status', ['APPROVED', 'PENDING'])
     .not('venue_name', 'is', null)
-    .gte('start_date', today)
+    .or(upcomingOr(cutoff))
     .order('start_date', { ascending: true })
     .limit(30);
 
@@ -135,7 +151,7 @@ export async function getCityEvents(
   options: { limit?: number; page?: number } = {}
 ): Promise<{ events: PawEvent[]; total: number }> {
   const supabase = getSupabaseAdmin();
-  const today = getToday();
+  const cutoff = getCutoff();
   const limit = options.limit || 50;
   const page = options.page || 1;
   const offset = (page - 1) * limit;
@@ -160,7 +176,7 @@ export async function getCityEvents(
     .eq('city_id', city.id)
     .in('status', ['APPROVED', 'PENDING'])
     .not('venue_name', 'is', null)
-    .gte('start_date', today)
+    .or(upcomingOr(cutoff))
     .order('start_date', { ascending: true })
     .range(offset, offset + limit - 1);
 
@@ -218,7 +234,7 @@ export async function getEventBySlug(
  */
 export async function getEventCountsByCity(): Promise<Record<string, number>> {
   const supabase = getSupabaseAdmin();
-  const today = getToday();
+  const cutoff = getCutoff();
 
   const { data, error } = await supabase
     .from('events')
@@ -228,7 +244,7 @@ export async function getEventCountsByCity(): Promise<Record<string, number>> {
     `)
     .in('status', ['APPROVED', 'PENDING'])
     .not('venue_name', 'is', null)
-    .gte('start_date', today);
+    .or(upcomingOr(cutoff));
 
   if (error || !data) return {};
 
@@ -250,13 +266,13 @@ export async function getEventCountsByCity(): Promise<Record<string, number>> {
  */
 export async function getTotalUpcomingEventCount(): Promise<number> {
   const supabase = getSupabaseAdmin();
-  const today = getToday();
+  const cutoff = getCutoff();
 
   const { count, error } = await supabase
     .from('events')
     .select('id', { count: 'exact', head: true })
     .in('status', ['APPROVED', 'PENDING'])
-    .gte('start_date', today);
+    .or(upcomingOr(cutoff));
 
   if (error) {
     console.error('Failed to count upcoming events:', error);
