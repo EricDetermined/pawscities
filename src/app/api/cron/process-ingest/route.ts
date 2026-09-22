@@ -770,10 +770,20 @@ async function handleProcessIngest(request: NextRequest) {
         // ("Saturday, September 12") and AI extraction sometimes guesses a
         // past year. If the content contains no explicit year, assume the
         // next future occurrence instead of rejecting.
+        //
+        // GRACE WINDOW (2026-09-21): only assume NEXT year when the current-year
+        // date is more than 7 days past. Without this, an event that happened
+        // three days ago was pushed a FULL YEAR forward and sat on city pages as
+        // a phantom "upcoming" event — 16 such rows reached production. A
+        // just-passed event is a past event; it falls through to the rejection
+        // below. Mirrors resolveEventDate() in src/lib/event-discovery-shared.ts.
+        const YEAR_ROLL_GRACE_MS = 7 * 24 * 60 * 60 * 1000;
         if (eventDateObj < startOfToday && !/\b20\d{2}\b/.test(effectiveRawText || '')) {
           const rolled = new Date(eventDateObj);
           rolled.setUTCFullYear(startOfToday.getUTCFullYear());
-          if (rolled < startOfToday) rolled.setUTCFullYear(startOfToday.getUTCFullYear() + 1);
+          if (rolled.getTime() < startOfToday.getTime() - YEAR_ROLL_GRACE_MS) {
+            rolled.setUTCFullYear(startOfToday.getUTCFullYear() + 1);
+          }
           eventDateObj = rolled;
           finalDate = rolled.toISOString().split('T')[0];
           console.log(`[PROCESS-INGEST] No explicit year in content — rolled "${eventName}" forward to ${finalDate}`);
