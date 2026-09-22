@@ -278,6 +278,37 @@ export async function sendNewEventAdminAlert(
 }
 
 /**
+ * Notify admins that someone requested an ambassador invite via the /ambassadors
+ * gate (the public "front door" for the invite-only program). Review + approve
+ * in the admin ambassadors dashboard, which sends them an invite code.
+ */
+export async function sendAmbassadorRequestAlert(
+  name: string,
+  email: string,
+  city?: string | null,
+  instagramHandle?: string | null,
+  reason?: string | null,
+): Promise<EmailResult> {
+  if (getAdminEmails().length === 0) {
+    console.warn('[EMAIL] No ADMIN_EMAILS configured, skipping ambassador request alert');
+    return { success: false, error: 'No admin emails configured' };
+  }
+  const html = baseTemplate('New Ambassador Request', `
+<p>Someone asked to join the Ambassador program via the /ambassadors page.</p>
+<table width="100%" cellpadding="8" cellspacing="0" style="margin:16px 0;border:1px solid #e5e5e5;border-radius:8px;font-size:14px;">
+  <tr style="background:#f9f9f9;"><td style="font-weight:600;width:140px;">Name</td><td>${name}</td></tr>
+  <tr><td style="font-weight:600;">Email</td><td><a href="mailto:${email}" style="color:#ea580c;">${email}</a></td></tr>
+  ${city ? `<tr style="background:#f9f9f9;"><td style="font-weight:600;">City</td><td>${city}</td></tr>` : ''}
+  ${instagramHandle ? `<tr><td style="font-weight:600;">Instagram</td><td><a href="https://www.instagram.com/${instagramHandle}/" style="color:#ea580c;">@${instagramHandle}</a></td></tr>` : ''}
+  ${reason ? `<tr style="background:#f9f9f9;"><td style="font-weight:600;">Why</td><td>${reason}</td></tr>` : ''}
+</table>
+${ctaButton('Review in Admin Dashboard', `${getAppUrl()}/admin/ambassadors`)}
+<p style="font-size:13px;color:#888;">Approve to generate and send an invite code, or dismiss.</p>
+`);
+  return sendEmail(getAdminEmails(), `New ambassador request: ${name}${city ? ` (${city})` : ''}`, html);
+}
+
+/**
  * Notify a business owner that they received a review. For FREE-tier owners
  * this is the highest-intent upgrade moment (they want to reply but can't),
  * so the CTA points at the upgrade page; Premium owners get a "reply now"

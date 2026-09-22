@@ -133,6 +133,40 @@ export default function AmbassadorPageClient() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
+  // Request-an-invite: public front door for people who don't have a code yet.
+  const [showRequest, setShowRequest] = useState(false);
+  const [reqForm, setReqForm] = useState({ name: '', email: '', city: '', instagramHandle: '', reason: '' });
+  const [reqSubmitting, setReqSubmitting] = useState(false);
+  const [reqSubmitted, setReqSubmitted] = useState(false);
+  const [reqError, setReqError] = useState('');
+
+  const handleRequestSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setReqError('');
+    if (!reqForm.name.trim() || !reqForm.email.trim()) {
+      setReqError('Please add your name and email.');
+      return;
+    }
+    setReqSubmitting(true);
+    try {
+      const res = await fetch('/api/ambassadors/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqForm),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setReqError(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+      setReqSubmitted(true);
+    } catch {
+      setReqError('Something went wrong. Please try again.');
+    } finally {
+      setReqSubmitting(false);
+    }
+  };
+
   const [form, setForm] = useState({
     fullName: '',
     email: '',
@@ -275,13 +309,85 @@ export default function AmbassadorPageClient() {
             </button>
           </form>
 
-          <p className="mt-8 text-sm text-gray-400">
-            Don&apos;t have an invite? Follow{' '}
-            <a href="https://instagram.com/thepawcities" target="_blank" rel="noopener noreferrer" className="text-orange-600 font-medium hover:underline">
-              @thepawcities
-            </a>{' '}
-            for future opportunities.
-          </p>
+          {!showRequest && !reqSubmitted && (
+            <p className="mt-8 text-sm text-gray-500">
+              Don&apos;t have an invite?{' '}
+              <button
+                type="button"
+                onClick={() => setShowRequest(true)}
+                className="text-orange-600 font-semibold hover:underline"
+              >
+                Request an invite
+              </button>
+              {' '}or follow{' '}
+              <a href="https://instagram.com/thepawcities" target="_blank" rel="noopener noreferrer" className="text-orange-600 font-medium hover:underline">
+                @thepawcities
+              </a>.
+            </p>
+          )}
+
+          {showRequest && !reqSubmitted && (
+            <form onSubmit={handleRequestSubmit} className="mt-8 space-y-3 text-left">
+              <p className="text-sm text-gray-600 text-center">
+                Tell us a little about you and we&apos;ll be in touch if there&apos;s a fit.
+              </p>
+              <input
+                type="text" required value={reqForm.name}
+                onChange={(e) => setReqForm({ ...reqForm, name: e.target.value })}
+                placeholder="Your name"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
+              />
+              <input
+                type="email" required value={reqForm.email}
+                onChange={(e) => setReqForm({ ...reqForm, email: e.target.value })}
+                placeholder="Email"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
+              />
+              <input
+                type="text" value={reqForm.city}
+                onChange={(e) => setReqForm({ ...reqForm, city: e.target.value })}
+                placeholder="Your city"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
+              />
+              <input
+                type="text" value={reqForm.instagramHandle}
+                onChange={(e) => setReqForm({ ...reqForm, instagramHandle: e.target.value })}
+                placeholder="Instagram handle (optional)"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
+              />
+              <textarea
+                value={reqForm.reason}
+                onChange={(e) => setReqForm({ ...reqForm, reason: e.target.value })}
+                placeholder="Why you'd be a great ambassador (optional)"
+                rows={3}
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none resize-none"
+              />
+              {reqError && <p className="text-red-600 text-sm">{reqError}</p>}
+              <button
+                type="submit" disabled={reqSubmitting}
+                className="w-full py-3 bg-orange-600 text-white rounded-xl font-bold hover:bg-orange-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {reqSubmitting ? 'Sending...' : 'Request an invite'}
+              </button>
+              <button
+                type="button" onClick={() => setShowRequest(false)}
+                className="w-full text-sm text-gray-400 hover:underline"
+              >
+                Back
+              </button>
+            </form>
+          )}
+
+          {reqSubmitted && (
+            <div className="mt-8 p-6 bg-orange-50 border border-orange-200 rounded-xl">
+              <p className="text-2xl mb-2">🐾</p>
+              <p className="text-gray-800 font-semibold">Thanks! Your request is in.</p>
+              <p className="text-gray-600 text-sm mt-1">
+                We&apos;ll review it and reach out by email if there&apos;s a fit. In the meantime, follow{' '}
+                <a href="https://instagram.com/thepawcities" target="_blank" rel="noopener noreferrer" className="text-orange-600 font-medium hover:underline">@thepawcities</a>.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     );

@@ -26,7 +26,7 @@ export async function GET() {
   try {
     const supabase = getSupabaseAdmin();
 
-    const [invitesResult, applicationsResult, referredClaimsResult] = await Promise.all([
+    const [invitesResult, applicationsResult, referredClaimsResult, requestsResult] = await Promise.all([
       supabase
         .from('ambassador_invites')
         .select('*')
@@ -40,12 +40,19 @@ export async function GET() {
         .select('id, business_name, contact_name, contact_email, status, referred_by, created_at')
         .not('referred_by', 'is', null)
         .order('created_at', { ascending: false }),
+      supabase
+        .from('ambassador_requests')
+        .select('*')
+        // pending first, then newest
+        .order('status', { ascending: true })
+        .order('created_at', { ascending: false }),
     ]);
 
     return NextResponse.json({
       invites: invitesResult.data || [],
       applications: applicationsResult.data || [],
       referredBusinesses: referredClaimsResult.data || [],
+      requests: requestsResult.data || [],
     });
   } catch (err) {
     console.error('[ADMIN AMBASSADOR] Fetch error:', err);

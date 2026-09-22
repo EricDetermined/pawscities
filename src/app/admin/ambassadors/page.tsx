@@ -45,6 +45,18 @@ interface ReferredBusiness {
   created_at: string;
 }
 
+interface AmbassadorRequest {
+  id: string;
+  name: string;
+  email: string;
+  city: string | null;
+  instagram_handle: string | null;
+  reason: string | null;
+  status: string;
+  invite_code: string | null;
+  created_at: string;
+}
+
 const CITIES = ['Atlanta', 'Barcelona', 'Geneva', 'London', 'Los Angeles', 'New York City', 'Paris', 'Sydney', 'Tokyo'];
 const TIERS = [
   { value: '', label: 'No preference' },
@@ -70,8 +82,10 @@ export default function AmbassadorsAdminPage() {
   const [invites, setInvites] = useState<Invite[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
   const [referredBusinesses, setReferredBusinesses] = useState<ReferredBusiness[]>([]);
+  const [requests, setRequests] = useState<AmbassadorRequest[]>([]);
+  const [actingRequest, setActingRequest] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'invites' | 'applications' | 'referrals'>('invites');
+  const [activeTab, setActiveTab] = useState<'invites' | 'applications' | 'referrals' | 'requests'>('invites');
 
   // New invite form
   const [recipientName, setRecipientName] = useState('');
@@ -124,6 +138,7 @@ export default function AmbassadorsAdminPage() {
         setInvites(data.invites || []);
         setApplications(data.applications || []);
         setReferredBusinesses(data.referredBusinesses || []);
+        setRequests(data.requests || []);
       }
     } catch (err) {
       console.error('Failed to fetch ambassador data:', err);
@@ -135,6 +150,36 @@ export default function AmbassadorsAdminPage() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  async function actOnRequest(id: string, action: 'approve' | 'dismiss') {
+    setActingRequest(id);
+    setSuccessMessage('');
+    setErrorMessage('');
+    try {
+      const res = await fetch('/api/admin/ambassadors/requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, action }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setSuccessMessage(
+          action === 'approve'
+            ? `Approved — invite ${data.code} ${data.emailSent ? 'emailed to applicant' : 'created (email not sent)'}.`
+            : 'Request dismissed.'
+        );
+        await fetchData();
+      } else {
+        setErrorMessage(data.error || 'Action failed');
+      }
+    } catch {
+      setErrorMessage('Action failed');
+    } finally {
+      setActingRequest(null);
+    }
+  }
+
+  const pendingRequests = requests.filter(r => r.status === 'pending');
 
   async function handleCreateInvite(e: React.FormEvent) {
     e.preventDefault();
@@ -399,6 +444,21 @@ export default function AmbassadorsAdminPage() {
         >
           Referrals ({referredBusinesses.length})
         </button>
+        <button
+          onClick={() => setActiveTab('requests')}
+          className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            activeTab === 'requests'
+              ? 'bg-white text-gray-900 shadow-sm'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Requests ({requests.length})
+          {pendingRequests.length > 0 && (
+            <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-yellow-100 text-yellow-700">
+              {pendingRequests.length}
+            </span>
+          )}
+        </button>
       </div>
 
       {/* Invites Tab */}
@@ -538,6 +598,71 @@ export default function AmbassadorsAdminPage() {
                       </tr>
                     );
                   })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Requests Tab */}
+      {activeTab === 'requests' && (
+        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+          {requests.length === 0 ? (
+            <p className="p-6 text-gray-500 text-sm">No invite requests yet. Submissions from the Request an invite option on the ambassadors page appear here.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-200 bg-gray-50">
+                    <th className="text-left p-3 font-medium text-gray-600">Name</th>
+                    <th className="text-left p-3 font-medium text-gray-600">Contact</th>
+                    <th className="text-left p-3 font-medium text-gray-600">City</th>
+                    <th className="text-left p-3 font-medium text-gray-600">Why</th>
+                    <th className="text-left p-3 font-medium text-gray-600">Status</th>
+                    <th className="text-left p-3 font-medium text-gray-600">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {requests.map(r => (
+                    <tr key={r.id} className="border-b border-gray-100 align-top">
+                      <td className="p-3 font-medium text-gray-900">{r.name}</td>
+                      <td className="p-3 text-gray-600">
+                        <a href={`mailto:${r.email}`} className="text-orange-600 hover:underline">{r.email}</a>
+                        {r.instagram_handle && (
+                          <div><a href={`https://instagram.com/${r.instagram_handle}`} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:underline">@{r.instagram_handle}</a></div>
+                        )}
+                      </td>
+                      <td className="p-3 text-gray-600">{r.city || '—'}</td>
+                      <td className="p-3 text-gray-600 max-w-xs">{r.reason || '—'}</td>
+                      <td className="p-3">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${STATUS_COLORS[r.status] || 'bg-gray-100 text-gray-600'}`}>{r.status}</span>
+                        {r.invite_code && <div className="text-xs text-gray-400 mt-1 font-mono">{r.invite_code}</div>}
+                      </td>
+                      <td className="p-3">
+                        {r.status === 'pending' ? (
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => actOnRequest(r.id, 'approve')}
+                              disabled={actingRequest === r.id}
+                              className="px-3 py-1.5 bg-orange-600 text-white rounded-md text-xs font-medium hover:bg-orange-700 disabled:opacity-50"
+                            >
+                              {actingRequest === r.id ? '…' : 'Approve + send invite'}
+                            </button>
+                            <button
+                              onClick={() => actOnRequest(r.id, 'dismiss')}
+                              disabled={actingRequest === r.id}
+                              className="px-3 py-1.5 border border-gray-300 text-gray-600 rounded-md text-xs font-medium hover:bg-gray-50 disabled:opacity-50"
+                            >
+                              Dismiss
+                            </button>
+                          </div>
+                        ) : (
+                          <span className="text-xs text-gray-400">{'—'}</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
