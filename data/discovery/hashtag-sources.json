@@ -1,0 +1,41 @@
+{
+  "_doc": "Per-city Instagram hashtag/location sources for the net-new handle-discovery sweep. The hashtag-location-discovery scheduled task opens these Explore pages (https://www.instagram.com/explore/tags/<tag>/), harvests post-OWNER handles (visible in the DOM, unlike the Graph API), semantically vets them (dog event/venue/organizer, correct city, not an individual pet account), and inserts the net-new ones into watch_handles via agents/add-watch-handles.mjs. The existing free server-side handle-discovery cron then mines them forever — the compounding loop. Tags are stored WITHOUT the leading #. Add location URLs under 'locations' as full Explore location URLs when known.",
+  "cities": {
+    "losangeles": {
+      "tags": ["ladogs", "dogfriendlyla", "losangelesdogs", "ladogevents", "dogsoflosangeles", "socaldogs", "lapups"],
+      "locations": []
+    },
+    "newyork": {
+      "tags": ["nycdogs", "dogfriendlynyc", "dogsofnyc", "nycdogevents", "brooklyndogs", "manhattandogs", "nycpups"],
+      "locations": []
+    },
+    "london": {
+      "tags": ["londondogs", "dogfriendlylondon", "dogsoflondon", "londondogevents", "londonpups", "dogfriendlyuk"],
+      "locations": []
+    },
+    "paris": {
+      "tags": ["chiensdeparis", "dogfriendlyparis", "parisdogs", "chienparis", "dogsofparis", "parisianpups"],
+      "locations": []
+    },
+    "barcelona": {
+      "tags": ["perrosbarcelona", "dogfriendlybarcelona", "dogsofbarcelona", "barcelonadogs", "perrosbcn", "gossosbcn"],
+      "locations": []
+    },
+    "tokyo": {
+      "tags": ["tokyodogs", "dogfriendlytokyo", "dogsoftokyo", "tokyodog", "inutokyo", "犬とお出かけ", "tokyodogcafe"],
+      "locations": []
+    },
+    "sydney": {
+      "tags": ["sydneydogs", "dogfriendlysydney", "dogsofsydney", "sydneydogevents", "sydneypups", "dogfriendlyaustralia"],
+      "locations": []
+    },
+    "geneva": {
+      "tags": ["genevadogs", "dogfriendlygeneva", "chiensgeneve", "genevedog", "dogsofgeneva", "swissdogs"],
+      "locations": []
+    },
+    "atlanta": {
+      "tags": ["atlantadogs", "dogfriendlyatlanta", "dogsofatlanta", "atldogs", "atlantadogevents", "atlpups"],
+      "locations": []
+    }
+  }
+}
