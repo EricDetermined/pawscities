@@ -65,9 +65,8 @@ const TIERS = [
     ],
     perks: [
       'Everything in Trailblazer, plus:',
-      'Monthly stipend (€100–200)',
       'Strategy input with headquarters',
-      'Annual ambassador retreat',
+      'Future global ambassador gathering (as we grow)',
     ],
     term: '6-month minimum (by invitation)',
   },
