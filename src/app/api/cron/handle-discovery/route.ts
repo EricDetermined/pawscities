@@ -9,6 +9,7 @@ import {
   hasGeoConflict,
   detectCity,
   scanPosterWithVision,
+  containsPlausibleDate,
 } from '@/lib/event-discovery-shared';
 
 export const dynamic = 'force-dynamic';
@@ -53,7 +54,20 @@ function getSupabaseAdmin() {
 const HANDLES_PER_RUN = 60; // 40→60 (2026-09-11, Eric: increase discovery); 2x daily = ~120 handles/day
 const MEDIA_PER_HANDLE = 6;
 const MIN_EVENT_SCORE = 35;      // same quality bar as the hashtag channel
-const VISION_SCAN_BUDGET = 20;   // per-run GPT-4o Vision cap (cost control; 15→20 with 60-handle batches)
+
+// ── GPT-4o Vision budget (reworked 2026-09-21, per Eric) ──────────────────────
+// Before: a flat 20-scan cap spent first-come, so the earliest handles in the
+// batch consumed it and everything after fell back to caption-only. That
+// inverted the priority — a post captioned "Pup Party this weekend!" HAS dog
+// evidence, so once the budget ran out its flyer was never read, and the flyer
+// is exactly where the date, time and address live. The posts most likely to be
+// real events stopped being scanned first.
+//
+// Now the budget is tiered by what the caption is missing (see visionPriority
+// below). Scans run at detail:'low' — fractions of a cent each — so the cap is
+// about bounding a runaway run, not about rationing normal ones.
+const VISION_SCAN_BUDGET = 60;       // 20→60: per-run cap for dated + undated dog posts
+const VISION_LOW_PRIORITY_BUDGET = 20; // of that, at most 20 on posts whose caption ALREADY has a date
 const MAX_FAILURES = 5;          // deactivate after this many consecutive failures
 const TIME_BUDGET_MS = 240_000;  // stop early, stay safely under maxDuration
 const PER_HANDLE_DELAY_MS = 400; // Graph API rate-limit courtesy
@@ -154,6 +168,11 @@ export async function GET(request: NextRequest) {
     deactivatedNonBusiness: 0,
     deactivatedFailures: 0,
     visionScansUsed: 0,
+    // Where the Vision budget actually went. If `low` is at its cap while
+    // `high` is starved, or visionSkippedNoBudget climbs, the tiers need
+    // retuning — that's the failure mode the flat 20-scan cap hid.
+    visionScansByPriority: { required: 0, high: 0, low: 0 },
+    visionSkippedNoBudget: 0,
     failures: [] as string[],
   };
   let permissionError: string | null = null;
@@ -251,13 +270,40 @@ export async function GET(request: NextRequest) {
         let visionEnriched = false;
 
         // ── GPT-4o Vision poster extraction on image posts ──
-        if (
-          (post.media_type === 'IMAGE' || post.media_type === 'CAROUSEL_ALBUM') &&
-          post.media_url &&
-          (stats.visionScansUsed < VISION_SCAN_BUDGET || dogEvidence === 'none')
-        ) {
-          const visionResult = await scanPosterWithVision(post.media_url);
+        // Priority decides who gets the budget, rather than arrival order:
+        //   required — no dog evidence in the caption. The scan IS the evidence
+        //              gate; without it the post is dropped outright, so this
+        //              tier is uncapped (unchanged behaviour).
+        //   high     — dog evidence but NO plausible date. We know it's a dog
+        //              event and can't tell when: the flyer almost certainly
+        //              carries the date/time/address. These get first claim.
+        //   low      — dog evidence AND a date already in the caption. Still
+        //              worth reading (flyers add venue, price, tickets), but
+        //              capped so it can't starve the tier above.
+        const scannableImageUrl =
+          (post.media_type === 'IMAGE' || post.media_type === 'CAROUSEL_ALBUM') && post.media_url
+            ? post.media_url
+            : null;
+
+        const visionPriority: 'required' | 'high' | 'low' =
+          dogEvidence === 'none'
+            ? 'required'
+            : containsPlausibleDate(post.caption || '')
+              ? 'low'
+              : 'high';
+
+        const visionBudgetOk =
+          visionPriority === 'required' ||
+          (visionPriority === 'high'
+            ? stats.visionScansUsed < VISION_SCAN_BUDGET
+            : stats.visionScansUsed < VISION_LOW_PRIORITY_BUDGET);
+
+        if (scannableImageUrl && !visionBudgetOk) stats.visionSkippedNoBudget++;
+
+        if (scannableImageUrl && visionBudgetOk) {
+          const visionResult = await scanPosterWithVision(scannableImageUrl);
           stats.visionScansUsed++;
+          stats.visionScansByPriority[visionPriority]++;
 
           if (visionResult?.isEventPoster) {
             score = Math.min(score + 25, 100);

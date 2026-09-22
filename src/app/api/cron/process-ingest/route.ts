@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { enrichEventWithAI } from '@/lib/dalle';
-import { classifyDogEvidence } from '@/lib/event-discovery-shared';
+import { classifyDogEvidence, containsPlausibleDate } from '@/lib/event-discovery-shared';
 
 export const maxDuration = 300; // allow Instagram post fetch + vision for email-submitted links
 
@@ -340,19 +340,8 @@ async function scanPostImageForEvent(imageUrl: string): Promise<string | null> {
   }
 }
 
-// True when the text contains anything that plausibly looks like an event date.
-// Email clients truncate forwarded captions ("…Pismo Beach Pier..." with the
-// date cut off) — if no date-ish token survives, we must fetch the full post.
-function containsPlausibleDate(text: string): boolean {
-  const t = (text || '').toLowerCase();
-  return (
-    /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*\d{1,2}/i.test(t) ||
-    /\d{1,2}\s*(?:of\s+)?(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|janv|févr|avril|juin|juil|août|sept|octobre|nov|déc|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i.test(t) ||
-    /\d{1,2}[\/\-.]\d{1,2}([\/\-.]\d{2,4})?\b/.test(t) ||
-    /\d{1,2}月\s*\d{1,2}日/.test(t) ||
-    /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b.*\d/i.test(t)
-  );
-}
+// containsPlausibleDate moved to @/lib/event-discovery-shared (2026-09-21) so
+// handle-discovery can use the same heuristic to prioritise its Vision budget.
 
 // True when raw_text is essentially just links/signature with no real caption
 function lacksCaptionContent(rawText: string): boolean {

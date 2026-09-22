@@ -304,3 +304,23 @@ export function classifyDogEvidence(text: string): DogEvidence {
   if (DOG_WEAK.test(text)) return 'weak';
   return 'none';
 }
+
+// True when the text contains anything that plausibly looks like an event date.
+// Two callers rely on this:
+//   - process-ingest: email clients truncate forwarded captions ("…Pismo Beach
+//     Pier..." with the date cut off) — if no date-ish token survives, fetch the
+//     full post.
+//   - handle-discovery: a caption that shows dog evidence but carries NO date is
+//     the strongest signal that the event's date/time/address live on the flyer
+//     image, so those posts get first claim on the Vision budget.
+// Covers EN/FR/ES month names and the JA 月日 form for our 9 markets.
+export function containsPlausibleDate(text: string): boolean {
+  const t = (text || '').toLowerCase();
+  return (
+    /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*\d{1,2}/i.test(t) ||
+    /\d{1,2}\s*(?:of\s+)?(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|janv|févr|avril|juin|juil|août|sept|octobre|nov|déc|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i.test(t) ||
+    /\d{1,2}[\/\-.]\d{1,2}([\/\-.]\d{2,4})?\b/.test(t) ||
+    /\d{1,2}月\s*\d{1,2}日/.test(t) ||
+    /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b.*\d/i.test(t)
+  );
+}
