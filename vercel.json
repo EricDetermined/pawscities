@@ -67,6 +67,10 @@
       "schedule": "30 9 * * *"
     },
     {
+      "path": "/api/cron/enrich-contact-emails",
+      "schedule": "0 5 * * *"
+    },
+    {
       "path": "/api/cron/weekly-digest",
       "schedule": "0 15 * * 0"
     },

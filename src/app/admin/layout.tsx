@@ -28,6 +28,7 @@ const navSections: NavSection[] = [
       { title: 'Creatives', href: '/admin/creatives', icon: '\u{1F3A8}', badgeKey: 'creatives' },
       { title: 'Discovery', href: '/admin/social', icon: '\u{1F50D}', badgeKey: 'discovery' },
       { title: 'Business Claims', href: '/admin/claims', icon: '\u{1F4CB}', badgeKey: 'claims' },
+      { title: 'Pending Listings', href: '/admin/pending-listings', icon: '\u{1F3EA}' },
       { title: 'Photo Moderation', href: '/admin/photos', icon: '\u{1F4F8}', badgeKey: 'photos' },
       { title: 'Validation', href: '/admin/validation', icon: '✅', badgeKey: 'validation' },
     ],
