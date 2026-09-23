@@ -28,7 +28,7 @@ function admin() {
 }
 
 // Reject junk / non-contact addresses commonly found in page source.
-const BAD = /(\.png|\.jpg|\.jpeg|\.gif|\.svg|\.webp|@\dx|@sentry|wixpress|example\.com|@sentry\.io|your-email|email@|@2x|godaddy|squarespace|\.wixpress)/i;
+const BAD = /(\.png|\.jpg|\.jpeg|\.gif|\.svg|\.webp|@\dx|@2x|@sentry|wixpress|squarespace|godaddy|your-email|@example\.|@domain\.|@yourdomain|@email\.|@test\.|@sentry\.|@wix\.|noreply@|no-reply@|donotreply@|sentry|example@|mail@domain|user@|name@|firstname|lastname|email@example)/i;
 const PREFERRED = /^(contact|info|hello|hi|bonjour|hola|reservations|booking|reception)@/i;
 
 function extractEmail(html: string, domain: string): string | null {
