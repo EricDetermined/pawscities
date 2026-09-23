@@ -1868,10 +1868,6 @@
   ],
   "city_breakdown": {
     "los_angeles": [
-      "woofgangweho",
-      "doodlesofcalifornia",
-      "doodlesofla",
-      "thedogcafe_la",
       "dogsonlysocialclub",
       "4pawsn1tail",
       "vaccinevets",
@@ -1931,7 +1927,24 @@
       "vanderpumpdogs",
       "la_pawnaderia",
       "losangelesfunevents",
-      "oldtownmonrovia"
+      "oldtownmonrovia",
+      "jennyandthepets_",
+      "theartistfair",
+      "littlebeast.co",
+      "bloom_and_flow_collective",
+      "amandajoycoleman",
+      "pawradise.park",
+      "wh9bar",
+      "cityofcalabasas",
+      "greysave",
+      "theofficialcollarclub",
+      "westcoastwienersla",
+      "pompartycollective",
+      "losangeles.pups",
+      "mylittlepeepaw",
+      "mainstreetsm",
+      "pupthriveshop",
+      "peonyceleste"
     ],
     "new_york": [
       "happydogsnyc",
@@ -1941,7 +1954,6 @@
       "nycstreetdogs",
       "nycdogadventures",
       "petnannynyc",
-      "brooklynbark",
       "nycpetservices",
       "chateaulewoof",
       "mymochi.handmadepetsnack",
@@ -1986,7 +1998,25 @@
       "jetsetpetsnyc",
       "nycfunevents",
       "nyc_forfree",
-      "nycfamilyexplorer"
+      "nycfamilyexplorer",
+      "averagesocialite",
+      "clearviewfestival",
+      "theivynyc",
+      "whattodonyc",
+      "meetmaev",
+      "coffeecakescafe",
+      "rockawaydogparade",
+      "cavapoofriendsnyc",
+      "poetrysocietyny",
+      "museumofthedog",
+      "hokaflatironnyc",
+      "barkhousenyc",
+      "tzu_ming_doodle",
+      "socialpawsapp",
+      "newyork.residents",
+      "williamsburgvets",
+      "corgicafenyc",
+      "coda.hotels"
     ],
     "geneva": [
       "outdoors_initiative",
@@ -1995,7 +2025,8 @@
       "retreatpetcare",
       "pata.paw",
       "pilpoileduc",
-      "funkyspaw"
+      "funkyspaw",
+      "amisduteckelgeneve"
     ],
     "london": [
       "thedogvine",
@@ -2013,7 +2044,6 @@
       "theitaliangreyhound",
       "love.my.human",
       "lmhtownhouse",
-      "londonschnauzersocial",
       "lifewithkenjijoy",
       "alldogsmatter",
       "pupcrawl.co",
@@ -2046,7 +2076,16 @@
       "pawrawellness",
       "the_dog_nutritionist",
       "bermondsstfest",
-      "chilliinlondon"
+      "chilliinlondon",
+      "woofabout",
+      "londondogweek",
+      "anekajohnsonofficial",
+      "eastvillageldn",
+      "lukesdogschool",
+      "chiswickhousedogshow",
+      "wolfevets",
+      "islingtonsq",
+      "pilates.mad"
     ],
     "paris": [
       "leparisienpoodle",
@@ -2054,31 +2093,27 @@
       "milo_de_montmartre",
       "empruntemontoutou",
       "paris.attractive",
-      "natsuleshiba",
       "lolaledoux_photographe",
       "lameutedotone",
       "thebarksociety.paris",
       "thefurlove",
       "monceau.dog.club",
-      "toutous.neuilly",
-      "voilaconceptstore",
       "leboneappart",
-      "cliniqueveterinairedumarche"
+      "petcheri",
+      "parisdogweek",
+      "sookiecutielab"
     ],
     "barcelona": [
-      "brigada.barcelona",
       "retorn_oficial",
       "gosbi_official",
       "santevet_es",
       "protectora_spac",
       "allaboutlloyd_",
       "perrosalagua",
-      "barcelonadogwalking",
       "canpenedes",
       "protectora.bcn",
       "protectoraanimalsparets",
       "altudog",
-      "barkynperros",
       "guaucat",
       "salvandopeludosespana",
       "trasto.liah",
@@ -2089,7 +2124,6 @@
       "lagalgarosa",
       "barcelonadogs",
       "rucan_dogs",
-      "dogsmompaseoperrosbcn",
       "proanimalsbcn",
       "mydogbcn",
       "barkcelonastore",
@@ -2103,30 +2137,26 @@
       "wander_woofs_",
       "festesanimals",
       "fm_vallespir",
-      "gab_grupo.ayuda.bodegueros"
+      "gab_grupo.ayuda.bodegueros",
+      "voilaconceptstore"
     ],
     "tokyo": [
       "dogcafe_tokyo",
       "theyoyogidogs",
       "yuzu0205_mama",
-      "pon_inu",
       "hina_utagram",
-      "yoyogipark_dogrun_supporters",
       "tails_shibuya",
-      "shiba_inu_satomi",
       "japandogwalker",
       "shirayuki_to_3bikinowanko",
-      "marutaro",
       "dogood_yoyogipark",
       "wantime_media",
       "wa_marutto",
-      "pupu_maruco",
       "tails_salon_shibuya",
-      "dogsalon_bungohills",
       "odewanbu",
       "sippofesta",
       "wanfes.with",
-      "pandabashi_sky"
+      "pandabashi_sky",
+      "dogsidelounge"
     ],
     "atlanta": [
       "clyde_loves_lola",
@@ -2144,7 +2174,6 @@
       "woofgangsmyrna",
       "draftydane",
       "creaturecomfortsbeer",
-      "fripperssausages",
       "bloomandbranchstudio",
       "atlanta_dog_trainer",
       "earthwisepet_grantpark",
@@ -2152,7 +2181,9 @@
       "drinklouielouie",
       "disco_ufo_",
       "parkgrounds",
-      "homelesspetsfoundation"
+      "homelesspetsfoundation",
+      "bitelinesatl",
+      "thehappibrand"
     ],
     "sydney": [
       "streetpawsfestivalofficial",
@@ -2160,7 +2191,6 @@
       "elizabeth_bay_cafe",
       "theerkohotel",
       "dogge_official",
-      "walknroll.syd",
       "brewdogsoutheveleigh",
       "publichousepetersham",
       "pupsinpubsaus",
@@ -2173,7 +2203,6 @@
       "leichhardtbowlo",
       "bankhotel",
       "hairytalesau",
-      "toxtethhotel",
       "white_cockatoo_hotel",
       "sydneytramwaymuseum",
       "furrificpetaccessories",
@@ -2211,7 +2240,16 @@
       "poundpaws",
       "iikomazesoba",
       "thetoxteth",
-      "maggiesrescue"
+      "maggiesrescue",
+      "olliethepuppy10",
+      "life_of_lilo_",
+      "cameliagrovehotel",
+      "bondipavilionofficial",
+      "itsbensonslife",
+      "flynnswalk",
+      "ellaluxedit",
+      "macquarie_veterinary_hospital",
+      "stuart.collaroy.corgi"
     ],
     "los-angeles": [
       "pawradise.park",
@@ -2219,13 +2257,24 @@
       "dogsonlysocialclub",
       "lappeitup",
       "club_mascota_shop",
-      "thegoodpeoplebadhabits"
+      "thegoodpeoplebadhabits",
+      "the.style.den",
+      "pompartycollective",
+      "prancersfarm"
     ],
     "new-york": [
-      "badassanimalrescue"
+      "badassanimalrescue",
+      "barkhousenyc",
+      "bryantparknyc",
+      "sixpointatbfpl",
+      "nycdogevents",
+      "whattodonyc",
+      "amcny",
+      "welltaylpets",
+      "pettalentsearch"
     ]
   },
-  "last_curated_update": "2026-08-29 nightly-deep-discovery",
+  "last_curated_update": "2026-09-12",
   "curation_notes": [
     {
       "date": "2026-08-20",
@@ -2245,6 +2294,38 @@
     "2026-08-22 nightly: +17 handles (event/sponsor/venue), removed nydogparade, swissdogarena, doggywash.ch, beesbarkbar_1, parisian.paws, pawsandperros, barcelonadogcare. First strike recorded: dogcarebarcelona (newest post 2025-10-19), wethedogsnyc (no posts in 21d), creaturecomfortsbeer (mostly non-dog).",
     "2026-08-23 nightly: +7 event/sponsor/venue handles (festesanimals, fm_vallespir, gab_grupo.ayuda.bodegueros, the_dog_nutritionist, pawelier, thenextfunthing, pilpoileduc); -2 removed (theparisianpoodle, bennyboybrewery).",
     "2026-08-27 nightly: +3 handles (manhattandogclub, canyonviewranch, vanderpumpdogs - event/sponsor/venue, from feed harvest); removed on 2nd strike: dogcarebarcelona, wethedogsnyc, tokyodoglife, shibuyadogstory. First strikes recorded: tokyo_dog_show_official (25d), pawsapaloozala (80d), walknroll.syd (no visible posts), dogsalon_bungohills (113d).",
-    "2026-08-28 evening sweep: removed dogcafe.tokyo, dogs_of_balgowlah_village, tokyo_dog_show_official (2nd stale strike); added funkyspaw (Funky's Paw grooming, Bernex/Geneva) \u2014 NOT yet followed, follow paused during ramp."
+    "2026-08-28 evening sweep: removed dogcafe.tokyo, dogs_of_balgowlah_village, tokyo_dog_show_official (2nd stale strike); added funkyspaw (Funky's Paw grooming, Bernex/Geneva) — NOT yet followed, follow paused during ramp.",
+    "2026-08-30 nightly: removed @walknroll.syd from sydney — account is now PRIVATE (2nd strike).",
+    "2026-09-01 nightly: added petcheri (paris, event-sponsor-venue) - pet brand exhibiting at Paris dog events (la Corgichon @ le Bone Appart).",
+    "2026-09-03 nightly: REMOVED toxtethhotel (sydney) — account now 0 posts / 4 followers, effectively dead. REMOVED shiba_inu_satomi (tokyo) — geo mismatch, account is #shibainuindonesia, not Tokyo. STALE (first strike, >21d since last post): barcelonadogwalking, dogsmompaseoperrosbcn, brigada.barcelona, trasto.liah (barcelona); yoyogipark_dogrun_supporters, dogsalon_bungohills, pon_inu, marutaro (tokyo); fripperssausages (atlanta). Remove on second consecutive strike. NOTE: thefurlove is filed under paris but is a London brand (London Dog Week) — city tag should move to london.",
+    {
+      "date": "2026-09-07",
+      "removed": [
+        "woofgangweho (los_angeles)",
+        "thedogcafe_la (los_angeles)",
+        "brigada.barcelona (barcelona)"
+      ],
+      "reason": "woofgangweho returns 'Profile isn't available' (account gone); thedogcafe_la last post 2021-01-08 (>5y stale, second strike); brigada.barcelona shelter marked CERRADO, last post 2025-11-24 and rescue/adoption content is off brand-safety",
+      "flagged_stale_first_strike": [
+        "nycstreetdogs (new-york) - newest grid post ~2026-07, and its most recent posts geotag Paris rather than NYC"
+      ],
+      "mislabel_flagged": [
+        "allaboutlloyd_ listed under barcelona but bio reads 'Tokyo | London' and recent content is sponsored beauty/lifestyle - recategorise or drop"
+      ],
+      "added": [
+        "parisdogweek (paris)",
+        "bloom_and_flow_collective (los_angeles)",
+        "amandajoycoleman (los_angeles)",
+        "eastvillageldn (london)",
+        "lukesdogschool (london)",
+        "dogsidelounge (tokyo)",
+        "olliethepuppy10 (sydney)",
+        "life_of_lilo_ (sydney)"
+      ],
+      "note": "Venue/sponsor/community handles surfaced by the 2026-09-07 nightly sweep. Following action is PAUSED during ramp - these are queued for Eric to follow manually."
+    },
+    "2026-09-09 nightly: added chiswickhousedogshow/wolfevets/arznerbar (london), rockawaydogparade/cavapoofriendsnyc/poetrysocietyny (new_york), pawradise.park (los_angeles). Flagged stale/low-value: pawsapaloozala (LA, newest post 2026-06-08), dogcafe_tokyo (Tokyo, newest 2026-08-22 then a 2-year gap), sandy.springs.farmers.market (Atlanta, food-vendor content, no dog posts), uptown_festival (London, general family festival, dog angle only). Do-not-target: rescueme_atl (shelter-grief content).",
+    "2026-09-12 nightly: +5 handles (coda.hotels NY venue, flynnswalk SYD organizer, mylittlepeepaw + mainstreetsm LA organizers, bitelinesatl ATL event guide) — all also in Supabase watch_handles. Moved voilaconceptstore paris→barcelona (bio: Barcelona; Gràcia dog cafe) and recorded first stale strike (newest post 2026-03-30). First stale strikes: funkyspaw (newest non-pinned 2026-08-27, ok) NO; sundaydogsocial (newest 2026-06-27), londondogweek (newest 2026-08-10), thebarksociety.paris (only a 9-like video since Jan), wantime_media (pinned 2024, no fresh), milo_de_montmartre (grid pinned 2021-22 only). Tokyo profiles thin: dogsidelounge newest 08-17, sippofesta newest 08-19 (>21d), dogcafe_tokyo 57 followers/4 likes.",
+    "2026-09-14 nightly: +7 handles (pupthriveshop, peonyceleste LA; pilates.mad LDN; thehappibrand ATL; ellaluxedit, macquarie_veterinary_hospital, stuart.collaroy.corgi SYD). Stale strikes cleared: wantime_media (09-12 post), thebarksociety.paris (09-12). First stale strike: marutaro (03-29), dogsalon_bungohills (05-07), barcelonadogwalking (05-19), fripperssausages (07-18), yoyogipark_dogrun_supporters (07-18), barkynperros (07-28), wehoweens (07-31), cliniqueveterinairedumarche (08-07), londonschnauzersocial (no posts returned). Second strike/removed: none this run (previous first-strikes sundaydogsocial/londondogweek/milo_de_montmartre not re-checked tonight)."
   ]
 }

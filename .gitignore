@@ -102,3 +102,18 @@ Zoe-Ambassador-Kit/
 # session working artifacts (2026-08-29 revalidation)
 data/*.backup-*.json
 outputs/
+
+# ─── Added 2026-09-22: agent report deliverables & root scratch ──────────────
+# Weekly ops-review reports — agent deliverables regenerated each run (keep in Drive)
+WEEKLY-OPS-REVIEW-*.md
+# Root-level JSON scratch from discovery runs (e.g. ev.json)
+/ev.json
+# Outreach contact roundups (agent deliverables, not code)
+EventHost-Contacts-*.md
+
+# Ambassador / marketing collateral (binary, belongs in Drive not git)
+# Extends the existing *.docx / Badge-*.png rules to image/pdf one-sheets & reviews
+PawCities-Ambassador-*.jpg
+PawCities-Ambassador-*.pdf
+PawCities-Community-Features.jpg
+PawCities-Site-Review-*.jpg

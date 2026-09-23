@@ -1,0 +1,119 @@
+[
+  {
+    "date": "2026-09-06",
+    "totals": {
+      "members": 5,
+      "publicDogs": 0,
+      "follows": 0,
+      "packs": 0,
+      "checkIns": 3,
+      "reviews": 1,
+      "subscribers": 7,
+      "upcomingEvents": 140,
+      "eventsPendingReview": 0
+    },
+    "last7Days": {
+      "newMembers": 0,
+      "newDogs": 0,
+      "newFollows": 0,
+      "newPacks": 0,
+      "checkIns": 0,
+      "reviews": 0,
+      "newSubscribers": 0
+    }
+  },
+  {
+    "date": "2026-09-13",
+    "totals": {
+      "members": 5,
+      "publicDogs": 0,
+      "follows": 0,
+      "packs": 0,
+      "checkIns": 3,
+      "reviews": 1,
+      "subscribers": 9,
+      "upcomingEvents": 164,
+      "eventsPendingReview": 5
+    },
+    "last7Days": {
+      "newMembers": 0,
+      "newDogs": 0,
+      "newFollows": 0,
+      "newPacks": 0,
+      "checkIns": 0,
+      "reviews": 0,
+      "newSubscribers": 2
+    }
+  },
+  {
+    "date": "2026-09-20",
+    "totals": {
+      "members": 5,
+      "publicDogs": 0,
+      "follows": 0,
+      "packs": 0,
+      "checkIns": 3,
+      "reviews": 1,
+      "subscribers": 10,
+      "upcomingEvents": 206,
+      "eventsPendingReview": 19
+    },
+    "last7Days": {
+      "newMembers": 0,
+      "newDogs": 0,
+      "newFollows": 0,
+      "newPacks": 0,
+      "checkIns": 0,
+      "reviews": 0,
+      "newSubscribers": 2
+    }
+  },
+  {
+    "date": "2026-09-21",
+    "totals": {
+      "members": 5,
+      "publicDogs": 0,
+      "follows": 0,
+      "packs": 0,
+      "checkIns": 3,
+      "reviews": 1,
+      "subscribers": 10,
+      "upcomingEvents": 181,
+      "eventsPendingReview": 23
+    },
+    "last7Days": {
+      "newMembers": 0,
+      "newDogs": 0,
+      "newFollows": 0,
+      "newPacks": 0,
+      "checkIns": 0,
+      "reviews": 0,
+      "newSubscribers": 1
+    },
+    "eventSupply": {
+      "createdLast7d": 172,
+      "createdPrior7d": 114,
+      "liveQualityLast7d": 109,
+      "upcomingApproved": 186,
+      "addsPerDay": 24.6,
+      "wowPct": 50.9,
+      "byCity": {
+        "Los Angeles": 56,
+        "New York": 41,
+        "Atlanta": 20,
+        "Paris": 16,
+        "London": 16,
+        "Tokyo": 14,
+        "Sydney": 13,
+        "Geneva": 6,
+        "Barcelona": 4
+      }
+    },
+    "instagram": {
+      "followers": 146,
+      "followers7dDelta": 15,
+      "commentsPosted7d": 100,
+      "commentsPostedPrior7d": 148
+    }
+  }
+]

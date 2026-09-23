@@ -61,7 +61,7 @@
     "added": "2026-07-23"
   },
   "bringfido": {
-    "reason": "COMPETITOR \u2014 direct competitor aggregator; never engage or drive audience to them",
+    "reason": "COMPETITOR — direct competitor aggregator; never engage or drive audience to them",
     "added": "2026-07-27"
   },
   "margaritavillehotelkansascity": {
@@ -133,39 +133,43 @@
     "added": "2026-08-17"
   },
   "petmagazinesg": {
-    "reason": "petmagazinesg promo network \u2014 mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
+    "reason": "petmagazinesg promo network — mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
     "added": "2026-08-30"
   },
   "world_animal_hub": {
-    "reason": "petmagazinesg promo network \u2014 mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
+    "reason": "petmagazinesg promo network — mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
     "added": "2026-08-30"
   },
   "world__animal__hub": {
-    "reason": "petmagazinesg promo network \u2014 mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
+    "reason": "petmagazinesg promo network — mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
     "added": "2026-08-30"
   },
   "dogartist.255": {
-    "reason": "petmagazinesg promo network \u2014 mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
+    "reason": "petmagazinesg promo network — mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
     "added": "2026-08-30"
   },
   "dogartist_42": {
-    "reason": "petmagazinesg promo network \u2014 mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
+    "reason": "petmagazinesg promo network — mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
     "added": "2026-08-30"
   },
   "ankush_khicher29": {
-    "reason": "petmagazinesg promo network \u2014 mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
+    "reason": "petmagazinesg promo network — mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
     "added": "2026-08-30"
   },
   "x._.parmod": {
-    "reason": "petmagazinesg promo network \u2014 mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
+    "reason": "petmagazinesg promo network — mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
     "added": "2026-08-30"
   },
   "sophia_spv708": {
-    "reason": "petmagazinesg promo network \u2014 mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
+    "reason": "petmagazinesg promo network — mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
     "added": "2026-08-30"
   },
   "music_vijendra131": {
-    "reason": "petmagazinesg promo network \u2014 mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
+    "reason": "petmagazinesg promo network — mention-spam on our posts fishing for paid-feature DMs (2026-08-30)",
     "added": "2026-08-30"
+  },
+  "dogdoesdisco_id": {
+    "reason": "Dog Does Disco festival at 'Tribeca Park, Central Park' JAKARTA, Indonesia — location string is a NYC geo-lookalike; Indonesian-language account, not in markets",
+    "added": "2026-09-07"
   }
 }
