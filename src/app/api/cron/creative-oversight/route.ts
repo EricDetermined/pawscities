@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { getSiteBaseUrl } from '@/lib/base-url';
 
 // ─── Config ────────────────────────────────────────────────────────────────────
 
@@ -275,7 +276,7 @@ export async function GET(request: NextRequest) {
       // ════════════════════════════════════════════════════════════════════════
       const swapDetails: string[] = [];
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+        const baseUrl = getSiteBaseUrl();
 
         // Photos already committed (recently posted) — never reuse these.
         const { data: postedRows } = await supabase

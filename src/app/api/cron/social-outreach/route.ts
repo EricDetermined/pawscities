@@ -37,7 +37,11 @@ const ALL_HASHTAGS = [
   'pawcities',
 ];
 
-const HASHTAGS_PER_RUN = 4; // 4/day — stay well within Meta's rate limits
+// 2/day = 14 unique/week. Instagram caps ig_hashtag_search at 30 unique
+// hashtags per rolling 7 days PER USER, and this budget is SHARED with the
+// event-discovery cron's Meta-IG channel (capped to ~14/week there). 14+14=28,
+// leaving headroom under 30. Raising this risks "degraded" hashtag errors.
+const HASHTAGS_PER_RUN = 2;
 
 interface HashtagMedia {
   id: string;

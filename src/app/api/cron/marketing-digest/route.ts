@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { sendMarketingDigest, type MarketingDigestData } from '@/lib/email';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { getSiteBaseUrl } from '@/lib/base-url';
 function getMetaToken() { return process.env.META_PAGE_ACCESS_TOKEN; }
 function getInstagramAccountId() { return process.env.INSTAGRAM_ACCOUNT_ID; }
 function getMetaApiVersion() { return process.env.META_API_VERSION || 'v21.0'; }
@@ -46,7 +47,7 @@ export async function GET(request: NextRequest) {
   // When true, compute everything and return JSON but DON'T send the email.
   // Used by the in-app monitor so the daily email is sent by exactly one trigger.
   const skipEmail = request.nextUrl.searchParams.get('skipEmail') === 'true';
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+  const baseUrl = getSiteBaseUrl();
   const cronSecret = process.env.CRON_SECRET || '';
 
   try {
@@ -108,7 +109,7 @@ export async function GET(request: NextRequest) {
 
     // Site pages — check ALL city pages so 404s get flagged in the daily email
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+      const baseUrl = getSiteBaseUrl();
       const cityPages = [
         '/', '/geneva', '/paris', '/london', '/barcelona', '/sydney', '/tokyo',
         '/losangeles', '/newyork', '/atlanta', '/los-angeles', '/new-york',

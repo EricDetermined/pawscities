@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { getSiteBaseUrl } from '@/lib/base-url';
+import { isBrowserIgSessionActive } from '@/lib/ig-lock';
 import { publishImagePost, publishCarouselPost } from '@/lib/instagram';
 import { generateAndUploadMascotImage } from '@/lib/dalle';
 
@@ -18,9 +20,7 @@ function getSupabaseAdmin() {
 }
 
 function getBaseUrl(): string {
-  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return 'http://localhost:3000';
+  return getSiteBaseUrl();
 }
 
 // ─── Carousel Image Validation ────────────────────────────────────────────────
@@ -125,6 +125,15 @@ export async function GET(request: NextRequest) {
 
   if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // Defer if a browser engagement/discovery session is actively driving the IG
+  // account — never automate the account from two surfaces at once (2026-08
+  // suspension risk). Advisory lock with a staleness guard; a deferred post just
+  // waits for its next slot (there are 4/day + a never-zero guarantee).
+  if (await isBrowserIgSessionActive()) {
+    console.log('[SOCIAL-POST] Deferred: a browser IG session is active (ig-lock held).');
+    return NextResponse.json({ status: 'deferred', reason: 'browser_ig_session_active' });
   }
 
   try {

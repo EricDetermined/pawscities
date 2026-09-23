@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { getSiteBaseUrl } from '@/lib/base-url';
 
 function getSupabaseAdmin() {
   return createClient(
@@ -266,7 +267,7 @@ async function checkInstagramPosting(): Promise<CheckResult> {
 
 /** Check that ALL city pages and key site pages are responding */
 async function checkSitePages(): Promise<CheckResult> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+  const baseUrl = getSiteBaseUrl();
 
   // CRITICAL: Check EVERY city page, not just a few.
   // Include both canonical slugs and hyphenated alternatives for multi-word cities.
@@ -343,7 +344,7 @@ async function checkPhotoProxy(): Promise<CheckResult> {
       return { name: 'Photo Proxy', status: 'warning', message: 'No photo refs found to test' };
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+    const baseUrl = getSiteBaseUrl();
     const photoUrl = `${baseUrl}/api/places/photo?name=${encodeURIComponent(est.photo_refs[0])}&maxWidth=100`;
 
     // redirect:'manual' (2026-08-25): the proxy now 302s to an Unsplash
@@ -699,7 +700,7 @@ async function checkEstablishmentQuality(): Promise<CheckResult> {
 
 /** Smoke-test the business claim/signup funnel — verify key endpoints respond */
 async function checkBusinessClaimFlow(): Promise<CheckResult> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+  const baseUrl = getSiteBaseUrl();
   const issues: string[] = [];
 
   try {
@@ -767,7 +768,7 @@ async function checkBusinessClaimFlow(): Promise<CheckResult> {
 
 /** Smoke-test the ambassador invite flow — verify invite validation works */
 async function checkAmbassadorFlow(): Promise<CheckResult> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com';
+  const baseUrl = getSiteBaseUrl();
   const issues: string[] = [];
 
   try {
@@ -933,7 +934,7 @@ async function checkClientErrors(): Promise<CheckResult> {
 }
 
 async function checkPublicApiContracts(): Promise<CheckResult> {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://pawcities.com';
+  const base = getSiteBaseUrl();
   const targets: { path: string; expect: number[] }[] = [
     { path: '/api/reviews?establishmentId=00000000-0000-4000-8000-000000000000', expect: [200] },
     { path: '/api/events?city=london', expect: [200] },

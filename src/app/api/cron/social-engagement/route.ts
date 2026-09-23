@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { isBrowserIgSessionActive } from '@/lib/ig-lock';
 function getMetaToken() { return process.env.META_PAGE_ACCESS_TOKEN; }
 function getInstagramAccountId() { return process.env.INSTAGRAM_ACCOUNT_ID; }
 function getMetaApiVersion() { return process.env.META_API_VERSION || 'v21.0'; }
@@ -199,6 +200,15 @@ async function postReply(
 export async function GET(request: NextRequest) {
   if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // Defer if a browser engagement session is actively driving the IG account —
+  // this cron posts auto-replies, so it must not run concurrently with the
+  // browser comment sessions (2026-08 suspension risk). Advisory, staleness-
+  // guarded lock; a deferred run simply catches up on the next daily run.
+  if (await isBrowserIgSessionActive()) {
+    console.log('[SOCIAL-ENGAGEMENT] Deferred: a browser IG session is active (ig-lock held).');
+    return NextResponse.json({ status: 'deferred', reason: 'browser_ig_session_active' });
   }
 
   const META_PAGE_ACCESS_TOKEN = getMetaToken();

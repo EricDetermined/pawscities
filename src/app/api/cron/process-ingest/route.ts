@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { getSiteBaseUrl } from '@/lib/base-url';
 import { enrichEventWithAI } from '@/lib/dalle';
 import { classifyDogEvidence, containsPlausibleDate } from '@/lib/event-discovery-shared';
 
@@ -951,8 +952,7 @@ async function handleProcessIngest(request: NextRequest) {
               .update({ status: 'APPROVED' })
               .eq('id', newEvent.id);
 
-            const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
-              || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://pawcities.com');
+            const baseUrl = getSiteBaseUrl();
             const creativeRes = await fetch(`${baseUrl}/api/admin/creatives`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },

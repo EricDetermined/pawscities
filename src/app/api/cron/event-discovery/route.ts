@@ -588,7 +588,7 @@ export async function GET(request: NextRequest) {
 
   const globalIdx1 = dayOfYear % GLOBAL_EVENT_HASHTAGS.length;
   const globalIdx2 = (dayOfYear + 5) % GLOBAL_EVENT_HASHTAGS.length;
-  const selectedHashtags: Array<{ hashtag: string; city: string | null }> = [
+  let selectedHashtags: Array<{ hashtag: string; city: string | null }> = [
     { hashtag: GLOBAL_EVENT_HASHTAGS[globalIdx1], city: null },
     ...(globalIdx1 !== globalIdx2 ? [{ hashtag: GLOBAL_EVENT_HASHTAGS[globalIdx2], city: null }] : []),
   ];
@@ -620,7 +620,20 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  console.log(`[EVENT-DISCOVERY] Day ${dayOfYear} — scanning ${selectedHashtags.length} hashtags across all cities`);
+  // ─── Cap Meta-IG hashtag scans to respect IG's 30-unique/7-day limit ───────
+  // This ig_hashtag_search budget is SHARED with the social-outreach cron
+  // (now 2/day = 14/week). Cap this channel to ~14/week; at 2 runs/week that's
+  // 7/run. Rotate which slice we scan each run so coverage still cycles through
+  // all cities over time. (Apify-IG + curated scrapers + handle-discovery cover
+  // the rest and do NOT touch this quota.) Raising this risks quota errors.
+  const MAX_META_HASHTAGS_PER_RUN = 7;
+  if (selectedHashtags.length > MAX_META_HASHTAGS_PER_RUN) {
+    const rotateStart = (dayOfYear * MAX_META_HASHTAGS_PER_RUN) % selectedHashtags.length;
+    const rotated = [...selectedHashtags.slice(rotateStart), ...selectedHashtags.slice(0, rotateStart)];
+    selectedHashtags = rotated.slice(0, MAX_META_HASHTAGS_PER_RUN);
+  }
+
+  console.log(`[EVENT-DISCOVERY] Day ${dayOfYear} — scanning ${selectedHashtags.length} hashtags (capped ${MAX_META_HASHTAGS_PER_RUN}/run for IG quota)`);
   console.log(`[EVENT-DISCOVERY] Hashtags: ${selectedHashtags.map(h => `#${h.hashtag} (${h.city || 'global'})`).join(', ')}`);
 
   const discoveredEvents: Array<{
@@ -913,12 +926,15 @@ export async function GET(request: NextRequest) {
   if (apifyConfigured) {
     console.log('[APIFY-INSTAGRAM] Starting Apify Instagram hashtag discovery...');
 
-    // Rotate through event-focused hashtags — these are high-yield for events
+    // Rotate through event-focused hashtags — these are high-yield for events.
+    // IMPORTANT (2026-09-22): kept DISJOINT from GLOBAL_EVENT_HASHTAGS (the
+    // Meta-IG channel above). They previously overlapped (dogfriendlyevent,
+    // pupupevent, barkinthpark, yappyhour, dogbrunch, dogmeetup, petfriendlyevent),
+    // so the same posts were pulled by both channels and each ran a paid GPT-4o
+    // Vision scan before permalink dedup — money spent twice for one post.
     const apifyIgHashtags = [
-      'dogfriendlyevent', 'dogevent', 'dogfestival', 'pupupevent',
-      'barkinthpark', 'dogadoptionevent', 'yappyhour', 'dogbrunch',
-      'dogfriendlyfestival', 'petfriendlyevent', 'dogshow', 'dogwalk',
-      'dogmeetup', 'dogfriendlybrunch', 'dogdayevent',
+      'dogevent', 'dogfestival', 'dogadoptionevent', 'dogfriendlyfestival',
+      'dogshow', 'dogwalk', 'dogfriendlybrunch', 'dogdayevent',
     ];
 
     // Scan 3 hashtags per run, rotating daily

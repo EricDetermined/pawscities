@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { CITY_META } from '@/lib/social-content';
+import { getSiteBaseUrl } from '@/lib/base-url';
 
 export const maxDuration = 120;
 
@@ -15,9 +16,7 @@ function getSupabaseAdmin() {
 }
 
 function getBaseUrl(): string {
-  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return 'http://localhost:3000';
+  return getSiteBaseUrl();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { getSiteBaseUrl } from '@/lib/base-url';
 
 // ─── Config ────────────────────────────────────────────────────────────────────
-function getAppUrl() { return process.env.NEXT_PUBLIC_BASE_URL || 'https://pawcities.com'; }
+function getAppUrl() { return getSiteBaseUrl(); }
 
 function getSupabaseAdmin() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
