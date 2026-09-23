@@ -48,6 +48,8 @@ export async function GET(request: NextRequest) {
       // Validation queue
       pendingValidation,
       pendingAmbassadors,
+      // Action items
+      pendingListings, unclaimedContactable, listingsMissingEmail, emailsGathered, businessDmsSent,
     ] = await Promise.all([
       // Core stats
       safe(supabase.from('cities').select('*', { count: 'exact', head: true }), 'cities'),
@@ -119,6 +121,18 @@ export async function GET(request: NextRequest) {
       // Validation queue count
       safe(supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('status', 'PENDING'), 'pendingValidation'),
       safe(supabase.from('ambassador_applications').select('*', { count: 'exact', head: true }).eq('status', 'pending'), 'pendingAmbassadors'),
+
+      // ── Action items (outstanding work) ──────────────────────────────
+      // Listings awaiting human approval before they publish
+      safe(supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('status', 'PENDING_REVIEW'), 'pendingListings'),
+      // Live businesses nobody has claimed yet that we can reach out to invite
+      safe(supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('status', 'ACTIVE').is('claimed_by', null).or('instagram_handle.not.is.null,email.not.is.null'), 'unclaimedContactable'),
+      // Live listings we still need to gather a contact email for
+      safe(supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('status', 'ACTIVE').is('email', null).not('website', 'is', null), 'listingsMissingEmail'),
+      // Live listings for which an email has already been gathered (context)
+      safe(supabase.from('establishments').select('*', { count: 'exact', head: true }).eq('status', 'ACTIVE').not('email', 'is', null), 'emailsGathered'),
+      // Business-invitation DMs sent (best-effort — table may not exist)
+      safe(admin ? admin.from('dm_invitations').select('*', { count: 'exact', head: true }) : Promise.resolve({ count: 0, data: null, error: null, status: 200, statusText: 'OK' } as any), 'businessDmsSent'),
     ]);
 
     // Compute content remaining
@@ -168,6 +182,13 @@ export async function GET(request: NextRequest) {
       discovery: {
         needsReview: ingestNeedsReview.count || 0,
         pending: ingestPending.count || 0,
+      },
+      actionItems: {
+        pendingListings: pendingListings.count || 0,
+        unclaimedContactable: unclaimedContactable.count || 0,
+        listingsMissingEmail: listingsMissingEmail.count || 0,
+        emailsGathered: emailsGathered.count || 0,
+        businessDmsSent: businessDmsSent.count || 0,
       },
       pendingEventsData: pendingEventsData.data || [],
       pendingCreativesData: pendingCreativesData.data || [],

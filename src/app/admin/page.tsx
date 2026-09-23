@@ -42,6 +42,13 @@ interface DashboardData {
     needsReview: number;
     pending: number;
   };
+  actionItems: {
+    pendingListings: number;
+    unclaimedContactable: number;
+    listingsMissingEmail: number;
+    emailsGathered: number;
+    businessDmsSent: number;
+  };
   pendingEventsData: {
     id: string; name: string; start_date: string; end_date: string | null;
     start_time?: string | null; end_time?: string | null; is_free?: boolean | null; description?: string | null;
@@ -349,6 +356,42 @@ export default function AdminDashboard() {
           ))}
         </div>
       )}
+
+      {/* ── Action Items ───────────────────────────────────────────────── */}
+      <div>
+        <h2 className="font-semibold text-gray-900 mb-3">Action Items</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <MiniStat
+            label="Listings to review"
+            value={data.actionItems.pendingListings}
+            icon="🏪"
+            sub="pending approval"
+            href="/admin/pending-listings"
+            warn={data.actionItems.pendingListings > 0}
+          />
+          <MiniStat
+            label="Businesses to invite"
+            value={data.actionItems.unclaimedContactable}
+            icon="📨"
+            sub="unclaimed & contactable"
+            href="/admin/pending-listings"
+            warn={data.actionItems.unclaimedContactable > 0}
+          />
+          <MiniStat
+            label="Emails to gather"
+            value={data.actionItems.listingsMissingEmail}
+            icon="✉️"
+            sub={`${data.actionItems.emailsGathered} gathered`}
+            warn={data.actionItems.listingsMissingEmail > 0}
+          />
+          <MiniStat
+            label="Business DMs sent"
+            value={data.actionItems.businessDmsSent}
+            icon="💬"
+            sub="invitations sent"
+          />
+        </div>
+      </div>
 
       {/* ── Pipeline Health Ribbon ─────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
