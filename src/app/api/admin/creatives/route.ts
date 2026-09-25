@@ -773,35 +773,72 @@ export async function PATCH(request: NextRequest) {
 
   // ── Regenerate image ────────────────────────────────────────────────────────
   if (action === 'regenerate') {
-    if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json({ error: 'No OPENAI_API_KEY configured' }, { status: 400 });
-    }
-
-    // Fetch the creative to get its prompt
     const { data: creative } = await supabase
       .from('creative_queue')
-      .select('image_prompt, city, narrator, content_index')
+      .select('image_prompt, city, narrator, content_index, format, headline, caption, image_url')
       .eq('id', id)
       .single();
 
-    if (!creative?.image_prompt) {
-      return NextResponse.json({ error: 'No image prompt found' }, { status: 404 });
+    if (!creative) return NextResponse.json({ error: 'Creative not found' }, { status: 404 });
+
+    // Mascot/illustration creatives carry a DALL-E prompt → regenerate via DALL-E.
+    if (creative.image_prompt) {
+      if (!process.env.OPENAI_API_KEY) {
+        return NextResponse.json({ error: 'No OPENAI_API_KEY configured' }, { status: 400 });
+      }
+      const storagePath = `mascot-creatives/${creative.city}-${creative.narrator}-regen-${Date.now()}.png`;
+      const dalleResult = await generateAndUploadMascotImage(creative.image_prompt, storagePath);
+      if (!dalleResult) {
+        return NextResponse.json({ error: 'DALL-E generation failed' }, { status: 500 });
+      }
+      const { error: updateError } = await supabase
+        .from('creative_queue')
+        .update({ image_url: dalleResult.publicUrl })
+        .eq('id', id);
+      if (updateError) return NextResponse.json({ error: updateError.message }, { status: 500 });
+      return NextResponse.json({ success: true, image_url: dalleResult.publicUrl });
     }
 
-    const storagePath = `mascot-creatives/${creative.city}-${creative.narrator}-regen-${Date.now()}.png`;
-    const dalleResult = await generateAndUploadMascotImage(creative.image_prompt, storagePath);
-
-    if (!dalleResult) {
-      return NextResponse.json({ error: 'DALL-E generation failed' }, { status: 500 });
+    // Text-card (and any promptless) creatives: re-render the branded card with a
+    // FRESH dog photo. pickContextualDogPhotoWithId picks randomly, so each press
+    // gives a genuinely different dog — the old path 404'd here, so the button
+    // looked like it did nothing.
+    const citySlug = (creative.city || 'losangeles').toLowerCase();
+    const cityName = citySlug.charAt(0).toUpperCase() + citySlug.slice(1);
+    const { pickContextualDogPhotoWithId } = await import('@/lib/dog-photos');
+    const picked = pickContextualDogPhotoWithId(
+      { text: creative.headline || '', citySlug, description: creative.caption || undefined },
+      'wide',
+    );
+    const baseUrl = getCreativeBaseUrl();
+    const ogParams = new URLSearchParams({
+      headline: creative.headline || 'Paw Cities',
+      body: truncateAtWord(creative.caption || '', 120),
+      city: cityName,
+      citySlug,
+      type: 'announcement',
+      photo: picked.photoId,
+    });
+    const ogRes = await fetch(`${baseUrl}/api/social/text-card-creative?${ogParams}`, {
+      signal: AbortSignal.timeout(20000),
+    });
+    if (!ogRes.ok) {
+      return NextResponse.json({ error: `Card render failed (${ogRes.status})` }, { status: 502 });
     }
-
+    const imgBuffer = Buffer.from(await ogRes.arrayBuffer());
+    const storagePath = `text-card-creatives/${citySlug}-regen-${Date.now()}.png`;
+    const { error: uploadError } = await supabase.storage
+      .from('photos')
+      .upload(storagePath, imgBuffer, { contentType: 'image/png', upsert: true });
+    if (uploadError) return NextResponse.json({ error: uploadError.message }, { status: 500 });
+    const { data: urlData } = supabase.storage.from('photos').getPublicUrl(storagePath);
+    const publicUrl = urlData?.publicUrl || null;
     const { error: updateError } = await supabase
       .from('creative_queue')
-      .update({ image_url: dalleResult.publicUrl })
+      .update({ image_url: publicUrl })
       .eq('id', id);
-
     if (updateError) return NextResponse.json({ error: updateError.message }, { status: 500 });
-    return NextResponse.json({ success: true, image_url: dalleResult.publicUrl });
+    return NextResponse.json({ success: true, image_url: publicUrl });
   }
 
   return NextResponse.json({ error: 'Unknown action' }, { status: 400 });
