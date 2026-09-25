@@ -3,7 +3,7 @@
 // translation falls back to English (see messages.ts / client.tsx / server.ts).
 // Locale is cookie-based (pc_locale), NOT URL-based — routes are unchanged.
 
-export const SUPPORTED = ['en', 'fr', 'es', 'ja'] as const;
+export const SUPPORTED = ['en', 'fr', 'es', 'ja', 'ca'] as const;
 export type Locale = (typeof SUPPORTED)[number];
 
 export const DEFAULT_LOCALE: Locale = 'en';
@@ -17,6 +17,7 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   fr: 'Français',
   es: 'Español',
   ja: '日本語',
+  ca: 'Català',
 };
 
 // Default language per city slug. A visitor who has NOT explicitly chosen a
@@ -25,7 +26,7 @@ export const LOCALE_LABELS: Record<Locale, string> = {
 export const CITY_DEFAULT_LOCALE: Record<string, Locale> = {
   paris: 'fr',
   geneva: 'fr',
-  barcelona: 'es',
+  barcelona: 'ca',
   tokyo: 'ja',
   london: 'en',
   sydney: 'en',

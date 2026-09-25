@@ -6,6 +6,7 @@ import en from './messages/en.json';
 import fr from './messages/fr.json';
 import es from './messages/es.json';
 import ja from './messages/ja.json';
+import ca from './messages/ca.json';
 import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from './locales';
 
 export type Messages = Record<string, string>;
@@ -15,6 +16,7 @@ export const CATALOGS: Record<Locale, Messages> = {
   fr: fr as Messages,
   es: es as Messages,
   ja: ja as Messages,
+  ca: ca as Messages,
 };
 
 export function getMessages(locale: Locale): Messages {
