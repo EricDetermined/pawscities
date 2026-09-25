@@ -154,7 +154,16 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // ── Insert the approved claim (email-verified) + activate the listing ─────
+  // ── Insert the approved claim + activate the listing ──────────────────────
+  // Record what was ACTUALLY proven, which differs by how the link was delivered:
+  //   email-invite → the token went to the business's own address, so opening it
+  //                  proves control of that address.
+  //   dm-invite    → the token was sent in an Instagram DM to the business's own
+  //                  account and the address was supplied by them in that thread,
+  //                  so it proves control of the IG account, NOT of the mailbox.
+  // Both auto-approve (a free listing claim is low-stakes and reversible), but the
+  // audit trail must not overstate the weaker one.
+  const viaDm = row.source === 'dm-invite';
   const nowIso = new Date().toISOString();
   const { error: claimErr } = await sb.from('business_claims').insert({
     user_id: dbUserId,
@@ -162,10 +171,12 @@ export async function POST(request: NextRequest) {
     business_name: businessName,
     contact_name: businessName,
     contact_email: email,
-    verification_method: 'email_token',
+    verification_method: viaDm ? 'instagram_dm' : 'email_token',
     status: 'APPROVED',
     reviewed_at: nowIso,
-    review_notes: 'Auto-approved: one-click claim from emailed verification link (email control proven)',
+    review_notes: viaDm
+      ? 'Auto-approved: one-click claim from a link we sent in an Instagram DM to the business account; contact email supplied by the business in that thread (Instagram account control proven, email address not independently verified)'
+      : 'Auto-approved: one-click claim from emailed verification link (email control proven)',
     source: row.source || 'email-invite',
   });
   if (claimErr) {
