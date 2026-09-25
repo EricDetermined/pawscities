@@ -15,6 +15,7 @@ interface MarketingData {
   claims: { activeListings: number; claimedListings: number; unclaimedContactable: number; pendingListings: number; claimRate: number };
   email: { gathered: number; missing: number; coverage: number; cursorDone: boolean };
   dms: { sent: number; followerBusinesses: number; followerUnclaimed: number };
+  invites: { sent: number; claimedTotal: number; bySource: { email: number; dm: number; ambassador: number; organic: number; other: number } };
   localization: { establishmentsWithDescription: number; eventsWithDescription: number; byLocale: LocaleRow[] };
   agents: { heartbeats: Heartbeat[]; igLock: { active: boolean; since: string | null; stale: boolean } };
 }
@@ -82,7 +83,7 @@ export default function MarketingPage() {
   if (err && !data) return <div className="p-6 text-red-600">{err}</div>;
   if (!data) return null;
 
-  const { claims, email, dms, localization, agents } = data;
+  const { claims, email, dms, invites, localization, agents } = data;
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -152,6 +153,28 @@ export default function MarketingPage() {
         <div className="bg-white border rounded-xl p-4">
           <div className="flex justify-between text-sm mb-1"><span className="text-gray-600">Contactable-by-email coverage</span><span className="font-medium">{email.coverage}%</span></div>
           <Bar pct={email.coverage} color="#2563eb" />
+        </div>
+      </section>
+
+      {/* Email invite engine */}
+      <section>
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3">Email Invite Engine</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <Stat label="Invites emailed" value={invites.sent} sub="one-click claim links" color="#2563eb" />
+          <Stat label="Claims won (all channels)" value={invites.claimedTotal} color="#059669" />
+          <Stat label="Emails ready to invite" value={email.gathered} sub="in the send queue" />
+        </div>
+      </section>
+
+      {/* Claims by channel */}
+      <section>
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3">Claims by Channel</h2>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <Stat label="Email invite" value={invites.bySource.email} color="#2563eb" />
+          <Stat label="Instagram DM" value={invites.bySource.dm} color="#0369a1" />
+          <Stat label="Ambassador" value={invites.bySource.ambassador} color="#7c3aed" />
+          <Stat label="Organic" value={invites.bySource.organic} />
+          <Stat label="Older / untagged" value={invites.bySource.other} color="#9ca3af" />
         </div>
       </section>
 

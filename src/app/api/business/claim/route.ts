@@ -86,6 +86,7 @@ export async function POST(request: NextRequest) {
     verificationMethod,
     verificationDoc,
     referredBy,
+    source,
   } = await request.json();
 
   if (!establishmentId || !businessName || !contactName || !contactEmail) {
@@ -277,6 +278,7 @@ export async function POST(request: NextRequest) {
         reviewed_at: new Date().toISOString(),
       }),
       referred_by: referredBy || null,
+      source: source || (referredBy ? 'ambassador' : 'organic'),
     })
     .select()
     .single();

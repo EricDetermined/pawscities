@@ -12,6 +12,26 @@ export async function GET(request: NextRequest) {
 
   const searchParams = request.nextUrl.searchParams;
   const query = searchParams.get('q');
+  const byId = searchParams.get('id');
+
+  // Direct lookup by establishment id — used to pre-select a specific listing
+  // when a business arrives from a deep link (e.g. a DM/email claim invite).
+  if (byId) {
+    const { data: est, error } = await supabase
+      .from('establishments')
+      .select('id, name, slug, address, city_id, primary_image, category_id, website, status')
+      .eq('id', byId)
+      .maybeSingle();
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    if (!est || est.status !== 'ACTIVE') return NextResponse.json({ establishments: [] });
+    const { data: claim } = await supabase
+      .from('business_claims')
+      .select('status')
+      .eq('establishment_id', est.id)
+      .in('status', ['APPROVED', 'PENDING'])
+      .maybeSingle();
+    return NextResponse.json({ establishments: [{ ...est, isClaimed: !!claim }] });
+  }
 
   if (!query || query.trim().length < 2) {
     return NextResponse.json({ error: 'Search query must be at least 2 characters' }, { status: 400 });

@@ -54,6 +54,8 @@ export default function ClaimPageClient() {
   const searchParams = useSearchParams();
   const { user } = useAuth();
   const referralCode = searchParams.get('ref') || null;
+  // Channel attribution: deep links from DMs/emails carry ?src=dm|email-invite
+  const sourceParam = searchParams.get('src') || (referralCode ? 'ambassador' : 'organic');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Establishment[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -177,6 +179,25 @@ export default function ClaimPageClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Pre-select a specific listing when arriving from a deep link (?establishment=<id>),
+  // e.g. a DM or email claim invite — the business lands ready to confirm, no search.
+  useEffect(() => {
+    const estId = searchParams.get('establishment');
+    if (!estId) return;
+    fetch(`/api/business/search?id=${encodeURIComponent(estId)}`)
+      .then(res => res.json())
+      .then(data => {
+        const est = data.establishments?.[0];
+        if (est && !est.isClaimed) {
+          setSelectedEstablishment(est);
+          setClaimForm(prev => ({ ...prev, businessName: est.name }));
+          setHasSearched(true);
+        }
+      })
+      .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSearch = async () => {
     if (searchQuery.trim().length < 2) return;
     setIsSearching(true);
@@ -224,11 +245,12 @@ export default function ClaimPageClient() {
           verificationMethod: claimForm.verificationMethod,
           verificationDoc: claimForm.verificationDoc || null,
           referredBy: referralCode,
+          source: sourceParam,
         }),
       });
       const data = await res.json();
       if (res.ok) {
-        router.push('/business/claim/success');
+        router.push(`/business/claim/success${data.autoApproved ? '?approved=1' : ''}`);
       } else {
         setSubmitResult({ success: false, message: data.error || 'Failed to submit claim' });
       }

@@ -179,6 +179,42 @@ ${ctaButton('Review in Admin Dashboard', `${getAppUrl()}/admin/claims`)}
 
 // âââ Public Email Functions âââââââââââââââââââââââââââââââââââââââââââââââââââ
 
+function claimInviteTemplate(businessName: string, cityName: string, claimUrl: string, unsubUrl: string): string {
+  const cityLine = cityName ? `in ${cityName} and 8 other cities` : 'across 9 cities';
+  const mailing = process.env.MAILING_ADDRESS || 'Paw Cities';
+  const inner = `
+<p>Hi ${businessName},</p>
+<p>We&rsquo;re Paw Cities, a free guide to dog-friendly places, events and community ${cityLine}. We already have a listing for you, and dog owners are finding it.</p>
+<p>You can claim it for free to manage your details, add photos, and post your events. It takes one click, no password needed. This link came to your business email, which is all the verification we need.</p>
+${ctaButton('Claim your free listing', claimUrl)}
+<p style="font-size:14px;color:#666;">Once you claim it, you can set a password anytime to manage everything from your dashboard.</p>
+<p style="font-size:13px;color:#888;">If this isn&rsquo;t your business, no problem, you can ignore this email and nothing will change.</p>`;
+  // Compliance footer: sender identity, postal address, and one-click unsubscribe.
+  const complianceFooter = `
+<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;padding-top:16px;border-top:1px solid #eee;">
+<tr><td style="font-size:12px;color:#999;line-height:1.5;">
+  <p style="margin:0 0 6px;">You received this because ${businessName} is listed on Paw Cities as a dog-friendly business.</p>
+  <p style="margin:0 0 6px;">${mailing}</p>
+  <p style="margin:0;"><a href="${unsubUrl}" style="color:#999;text-decoration:underline;">Unsubscribe from these invitations</a></p>
+</td></tr></table>`;
+  return baseTemplate('Your free Paw Cities listing is ready', inner + complianceFooter);
+}
+
+/** One-click claim invitation sent to a business's own contact email. */
+export async function sendClaimInvite(
+  to: string,
+  businessName: string,
+  cityName: string,
+  claimUrl: string,
+  unsubUrl: string,
+): Promise<EmailResult> {
+  return sendEmail(
+    to,
+    `${businessName}, your free Paw Cities listing is ready to claim`,
+    claimInviteTemplate(businessName, cityName, claimUrl, unsubUrl),
+  );
+}
+
 export async function sendClaimConfirmation(
   to: string,
   businessName: string,

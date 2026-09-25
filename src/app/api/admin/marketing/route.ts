@@ -69,6 +69,16 @@ export async function GET() {
     cnt('followerUnclaimed', () => sb.from('establishments').select('*', { count: 'exact', head: true }).eq('source', 'ig-follower').eq('status', 'ACTIVE').is('claimed_by', null).not('instagram_handle', 'is', null)),
   ]);
 
+  // ── Email invite engine + claim attribution ─────────────────────
+  const [invitesSent, claimsTotal, claimsEmail, claimsDm, claimsAmbassador, claimsOrganic] = await Promise.all([
+    cnt('invitesSent', () => sb.from('establishments').select('*', { count: 'exact', head: true }).not('claim_invite_sent_at', 'is', null)),
+    cnt('claimsTotal', () => sb.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED')),
+    cnt('claimsEmail', () => sb.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED').eq('source', 'email-invite')),
+    cnt('claimsDm', () => sb.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED').eq('source', 'dm')),
+    cnt('claimsAmbassador', () => sb.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED').eq('source', 'ambassador')),
+    cnt('claimsOrganic', () => sb.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED').eq('source', 'organic')),
+  ]);
+
   // ── Localization coverage ────────────────────────────────────────
   const estWithDesc = await cnt('estWithDesc', () => sb.from('establishments').select('*', { count: 'exact', head: true }).not('description', 'is', null));
   const evtWithDesc = await cnt('evtWithDesc', () => sb.from('events').select('*', { count: 'exact', head: true }).not('description', 'is', null));
@@ -121,6 +131,17 @@ export async function GET() {
       sent: dmsSent,
       followerBusinesses,
       followerUnclaimed,
+    },
+    invites: {
+      sent: invitesSent,
+      claimedTotal: claimsTotal,
+      bySource: {
+        email: claimsEmail,
+        dm: claimsDm,
+        ambassador: claimsAmbassador,
+        organic: claimsOrganic,
+        other: Math.max(0, claimsTotal - claimsEmail - claimsDm - claimsAmbassador - claimsOrganic),
+      },
     },
     localization: {
       establishmentsWithDescription: estWithDesc,

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const FREE_FEATURES = [
   'Basic business listing',
@@ -23,6 +24,11 @@ const PREMIUM_FEATURES = [
 ];
 
 export default function ClaimSuccessPage() {
+  const [approved, setApproved] = useState(false);
+  useEffect(() => {
+    setApproved(new URLSearchParams(window.location.search).get('approved') === '1');
+  }, []);
+
   return (
     <div className="max-w-4xl mx-auto">
       {/* Success Banner */}
@@ -32,9 +38,11 @@ export default function ClaimSuccessPage() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Claim Submitted!</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{approved ? 'Your listing is live!' : 'Claim Submitted!'}</h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto">
-          Your business claim is now under review. We&apos;ll verify your information and notify you within 1&ndash;2 business days.
+          {approved
+            ? 'We verified your ownership instantly, so your listing is active now and yours to manage. Check your inbox for a quick link to set your password.'
+            : 'Your business claim is now under review. We’ll verify your information and notify you within 1–2 business days.'}
         </p>
       </div>
 
