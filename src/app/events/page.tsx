@@ -16,6 +16,10 @@ interface EventRow {
   slug: string;
   name: string;
   description: string | null;
+  description_fr: string | null;
+  description_es: string | null;
+  description_ja: string | null;
+  description_ca: string | null;
   venue_name: string | null;
   external_url: string | null;
   source_handle: string | null;
@@ -60,7 +64,7 @@ export default async function EventsPage({
       let q = admin
         .from('events')
         .select(
-          'id, slug, name, description, venue_name, external_url, source_handle, start_date, start_time, image_url, is_free, tags, cities!inner(slug, name)'
+          'id, slug, name, description, description_fr, description_es, description_ja, description_ca, venue_name, external_url, source_handle, start_date, start_time, image_url, is_free, tags, cities!inner(slug, name)'
         )
         .in('status', ['APPROVED', 'PENDING'])
         .or('external_url.not.is.null,source_handle.not.is.null,venue_name.not.is.null')

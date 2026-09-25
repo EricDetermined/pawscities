@@ -6,6 +6,7 @@ import ShareButtons from '@/components/ShareButtons';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import OutboundLink from '@/components/OutboundLink';
 import { getServerLocale, t as translate } from '@/i18n/server';
+import { localizedDescription } from '@/i18n/content';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,6 +17,10 @@ interface EventDetail {
   slug: string;
   name: string;
   description: string | null;
+  description_fr: string | null;
+  description_es: string | null;
+  description_ja: string | null;
+  description_ca: string | null;
   venue_name: string | null;
   venue_address: string | null;
   external_url: string | null;
@@ -34,7 +39,7 @@ interface EventDetail {
 }
 
 const EVENT_FIELDS =
-  'id, slug, name, description, venue_name, venue_address, external_url, source_handle, source_post_url, start_date, end_date, start_time, end_time, image_url, is_free, tags, status, city_id, cities!inner(slug, name)';
+  'id, slug, name, description, description_fr, description_es, description_ja, description_ca, venue_name, venue_address, external_url, source_handle, source_post_url, start_date, end_date, start_time, end_time, image_url, is_free, tags, status, city_id, cities!inner(slug, name)';
 
 /**
  * Fetch an event regardless of status.
@@ -172,6 +177,7 @@ export default async function EventDetailPage({
   const city = event.cities;
   const locale = getServerLocale(city?.slug);
   const tt = (key: string, vars?: Record<string, string | number>) => translate(locale, key, true, vars);
+  const displayDescription = localizedDescription(event, locale);
   const handle = event.source_handle
     ? event.source_handle.startsWith('@')
       ? event.source_handle
@@ -376,9 +382,9 @@ export default async function EventDetailPage({
               )}
             </div>
 
-            {event.description && (
+            {displayDescription && (
               <p className="mt-6 text-gray-600 whitespace-pre-line leading-relaxed">
-                {event.description}
+                {displayDescription}
               </p>
             )}
 
@@ -424,7 +430,7 @@ export default async function EventDetailPage({
               <ShareButtons
                 url={pageUrl}
                 title={`${event.name} — dog-friendly event in ${city?.name || ''}`}
-                description={event.description || undefined}
+                description={displayDescription || undefined}
               />
             </div>
           </div>

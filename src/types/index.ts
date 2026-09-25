@@ -66,6 +66,9 @@ export interface Establishment {
   nameFr?: string;
   description: string;
   descriptionFr?: string;
+  descriptionEs?: string;
+  descriptionJa?: string;
+  descriptionCa?: string;
   address: string;
   latitude: number;
   longitude: number;
