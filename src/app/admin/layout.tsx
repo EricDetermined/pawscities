@@ -54,6 +54,7 @@ const navSections: NavSection[] = [
   {
     label: 'System',
     items: [
+      { title: 'Marketing', href: '/admin/marketing', icon: '\u{1F4E3}' },
       { title: 'Research Agent', href: '/admin/research', icon: '\u{1F916}' },
       { title: 'Analytics', href: '/admin/analytics', icon: '\u{1F4C8}' },
       { title: 'Health Monitor', href: '/admin/health', icon: '\u{1FA7A}' },
