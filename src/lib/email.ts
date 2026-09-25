@@ -30,7 +30,8 @@ interface EmailResult {
 async function sendEmail(
   to: string | string[],
   subject: string,
-  html: string
+  html: string,
+  opts?: { from?: string; replyTo?: string | string[] }
 ): Promise<EmailResult> {
   if (!process.env.RESEND_API_KEY) {
     console.warn('[EMAIL] RESEND_API_KEY not configured, skipping email send');
@@ -39,10 +40,11 @@ async function sendEmail(
 
   try {
     const { error } = await getResend().emails.send({
-      from: getEmailFrom(),
+      from: opts?.from || getEmailFrom(),
       to: Array.isArray(to) ? to : [to],
       subject,
       html,
+      ...(opts?.replyTo ? { replyTo: opts.replyTo } : {}),
     });
 
     if (error) {
@@ -208,10 +210,16 @@ export async function sendClaimInvite(
   claimUrl: string,
   unsubUrl: string,
 ): Promise<EmailResult> {
+  // Cold invite that asks for a reply → send from a warm, monitored, replyable
+  // address (never the transactional no-reply). Replies route to Eric.
   return sendEmail(
     to,
     `${businessName}, your free Paw Cities listing is ready to claim`,
     claimInviteTemplate(businessName, cityName, claimUrl, unsubUrl),
+    {
+      from: process.env.CLAIM_INVITE_FROM || 'Paw Cities <hello@pawcities.com>',
+      replyTo: process.env.CLAIM_INVITE_REPLY_TO || 'Eric@pawcities.com',
+    },
   );
 }
 
