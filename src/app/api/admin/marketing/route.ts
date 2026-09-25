@@ -4,6 +4,7 @@ import { requireAdmin } from '@/lib/admin';
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { getIgLockState } from '@/lib/ig-lock';
+import { computeOutreachFunnel, normalizeSource } from '@/lib/outreach-funnel';
 
 /**
  * Marketing command center data (2026-09-24).
@@ -70,14 +71,20 @@ export async function GET() {
   ]);
 
   // ── Email invite engine + claim attribution ─────────────────────
-  const [invitesSent, claimsTotal, claimsEmail, claimsDm, claimsAmbassador, claimsOrganic] = await Promise.all([
-    cnt('invitesSent', () => sb.from('establishments').select('*', { count: 'exact', head: true }).not('claim_invite_sent_at', 'is', null)),
-    cnt('claimsTotal', () => sb.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED')),
-    cnt('claimsEmail', () => sb.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED').eq('source', 'email-invite')),
-    cnt('claimsDm', () => sb.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED').eq('source', 'dm')),
-    cnt('claimsAmbassador', () => sb.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED').eq('source', 'ambassador')),
-    cnt('claimsOrganic', () => sb.from('business_claims').select('*', { count: 'exact', head: true }).eq('status', 'APPROVED').eq('source', 'organic')),
-  ]);
+  // Attribution is computed from the raw rows via normalizeSource() rather than
+  // matching a literal string per channel: the claim flow writes 'dm-invite',
+  // older rows say 'dm', and an equality filter on one spelling silently read
+  // zero DM conversions (fixed 2026-09-25).
+  const invitesSent = await cnt('invitesSent', () => sb.from('establishments').select('*', { count: 'exact', head: true }).not('claim_invite_sent_at', 'is', null));
+  const claimBreakdown = { total: 0, email: 0, dm: 0, ambassador: 0, organic: 0, other: 0 };
+  try {
+    const { data, error } = await sb.from('business_claims').select('source,status').eq('status', 'APPROVED').limit(5000);
+    if (error) throw new Error(error.message);
+    for (const row of data || []) {
+      claimBreakdown.total += 1;
+      claimBreakdown[normalizeSource((row as { source: string | null }).source)] += 1;
+    }
+  } catch (e: any) { console.error('[marketing] claimBreakdown', e?.message); }
 
   // ── Localization coverage ────────────────────────────────────────
   const estWithDesc = await cnt('estWithDesc', () => sb.from('establishments').select('*', { count: 'exact', head: true }).not('description', 'is', null));
@@ -112,7 +119,13 @@ export async function GET() {
 
   const igLock = await getIgLockState().catch(() => ({ active: false, since: null, stale: false }));
 
+  // Per-channel funnel + stalls, from the shared accounting lib so this page,
+  // the digest email and the agents always quote the same numbers.
+  const funnel = await computeOutreachFunnel(sb, heartbeats.map((h) => ({ agent: h.agent, status: h.status, at: h.at })))
+    .catch((e: any) => { console.error('[marketing] funnel', e?.message); return null; });
+
   return NextResponse.json({
+    funnel,
     generatedAt: new Date().toISOString(),
     claims: {
       activeListings,
@@ -134,13 +147,13 @@ export async function GET() {
     },
     invites: {
       sent: invitesSent,
-      claimedTotal: claimsTotal,
+      claimedTotal: claimBreakdown.total,
       bySource: {
-        email: claimsEmail,
-        dm: claimsDm,
-        ambassador: claimsAmbassador,
-        organic: claimsOrganic,
-        other: Math.max(0, claimsTotal - claimsEmail - claimsDm - claimsAmbassador - claimsOrganic),
+        email: claimBreakdown.email,
+        dm: claimBreakdown.dm,
+        ambassador: claimBreakdown.ambassador,
+        organic: claimBreakdown.organic,
+        other: claimBreakdown.other,
       },
     },
     localization: {

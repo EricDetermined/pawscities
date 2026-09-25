@@ -10,8 +10,19 @@ import React, { useCallback, useEffect, useState } from 'react';
 interface Heartbeat { agent: string; status: string; detail: string; at: string | null }
 interface LocaleRow { code: string; label: string; establishments: number; events: number; estPct: number; evtPct: number }
 
+interface AttentionItem { kind: string; severity: 'critical' | 'warn' | 'info'; label: string; detail: string; count: number; examples: string[] }
+interface OutreachFunnel {
+  inventory: { activeListings: number; unclaimed: number; readyToEmail: number; readyToDm: number; missingEmail: number; optedOut: number };
+  dm: { sent: number; replied: number; replyRate: number; linksDelivered: number; clicked: number; clickRate: number; claimed: number; sent7d: number; replied7d: number };
+  email: { invitesSent: number; clicked: number; clickRate: number; claimed: number; sent7d: number; clicked7d: number };
+  claims: { total: number; last7d: number; last30d: number };
+  tokens: { outstanding: number; expiringSoon: number; expiredUnused: number };
+  attention: AttentionItem[];
+}
+
 interface MarketingData {
   generatedAt: string;
+  funnel: OutreachFunnel | null;
   claims: { activeListings: number; claimedListings: number; unclaimedContactable: number; pendingListings: number; claimRate: number };
   email: { gathered: number; missing: number; coverage: number; cursorDone: boolean };
   dms: { sent: number; followerBusinesses: number; followerUnclaimed: number };
@@ -55,6 +66,27 @@ function Stat({ label, value, sub, color }: { label: string; value: React.ReactN
   );
 }
 
+// One row of the reach → reply → link → click → claim chain, so a channel that
+// stalls at a particular step is obvious at a glance rather than inferred.
+function FunnelRow({ label, value, of, color }: { label: string; value: number; of: number; color: string }) {
+  const p = of > 0 ? Math.round((value / of) * 100) : 0;
+  return (
+    <div>
+      <div className="flex justify-between text-sm mb-1">
+        <span className="text-gray-700">{label}</span>
+        <span className="font-medium text-gray-900">{value}<span className="text-gray-400 font-normal"> · {p}%</span></span>
+      </div>
+      <Bar pct={p} color={color} />
+    </div>
+  );
+}
+
+const SEVERITY: Record<string, { dot: string; text: string; badge: string }> = {
+  critical: { dot: 'bg-red-500', text: 'text-red-700', badge: 'bg-red-50 text-red-700 border-red-200' },
+  warn: { dot: 'bg-amber-500', text: 'text-amber-700', badge: 'bg-amber-50 text-amber-700 border-amber-200' },
+  info: { dot: 'bg-gray-400', text: 'text-gray-600', badge: 'bg-gray-50 text-gray-600 border-gray-200' },
+};
+
 export default function MarketingPage() {
   const [data, setData] = useState<MarketingData | null>(null);
   const [err, setErr] = useState<string | null>(null);
@@ -83,7 +115,7 @@ export default function MarketingPage() {
   if (err && !data) return <div className="p-6 text-red-600">{err}</div>;
   if (!data) return null;
 
-  const { claims, email, dms, invites, localization, agents } = data;
+  const { claims, email, dms, invites, localization, agents, funnel } = data;
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -94,6 +126,78 @@ export default function MarketingPage() {
         </div>
         <button onClick={load} className="px-3 py-1.5 text-sm border rounded-lg hover:bg-gray-50">Refresh</button>
       </div>
+
+      {/* Needs attention — anything stalled, worst first */}
+      {funnel && (
+        <section>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3">Needs Attention</h2>
+          {funnel.attention.length === 0 ? (
+            <div className="bg-white border rounded-xl p-4 text-sm text-green-700 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500 shrink-0" />
+              Nothing stalled. Every reply has a claim link, agents are reporting, and both send queues have inventory.
+            </div>
+          ) : (
+            <div className="bg-white border rounded-xl divide-y">
+              {funnel.attention.map((a) => {
+                const s = SEVERITY[a.severity] || SEVERITY.info;
+                return (
+                  <div key={a.kind} className="p-4 flex gap-3">
+                    <span className={`w-2.5 h-2.5 rounded-full shrink-0 mt-1.5 ${s.dot}`} />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`text-sm font-medium ${s.text}`}>{a.label}</span>
+                        <span className={`text-xs px-1.5 py-0.5 rounded border ${s.badge}`}>{a.count}</span>
+                      </div>
+                      <div className="text-xs text-gray-500 mt-0.5">{a.detail}</div>
+                      {a.examples.length > 0 && (
+                        <div className="text-xs text-gray-700 mt-1 font-mono break-words">{a.examples.join(' · ')}</div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* Outreach funnel by channel */}
+      {funnel && (
+        <section>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3">Outreach Funnel by Channel</h2>
+          <div className="grid md:grid-cols-2 gap-3">
+            <div className="bg-white border rounded-xl p-4 space-y-3">
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-semibold text-gray-900">Instagram DM</h3>
+                <span className="text-xs text-gray-400">{funnel.dm.sent7d} sent · {funnel.dm.replied7d} replied (7d)</span>
+              </div>
+              <FunnelRow label="DMs sent" value={funnel.dm.sent} of={funnel.dm.sent} color="#0369a1" />
+              <FunnelRow label="Replied" value={funnel.dm.replied} of={funnel.dm.sent} color="#0ea5e9" />
+              <FunnelRow label="Claim link delivered" value={funnel.dm.linksDelivered} of={funnel.dm.sent} color="#6366f1" />
+              <FunnelRow label="Link opened" value={funnel.dm.clicked} of={funnel.dm.sent} color="#8b5cf6" />
+              <FunnelRow label="Listing claimed" value={funnel.dm.claimed} of={funnel.dm.sent} color="#059669" />
+            </div>
+            <div className="bg-white border rounded-xl p-4 space-y-3">
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-semibold text-gray-900">Email invite</h3>
+                <span className="text-xs text-gray-400">{funnel.email.sent7d} sent · {funnel.email.clicked7d} opened (7d)</span>
+              </div>
+              <FunnelRow label="Invites emailed" value={funnel.email.invitesSent} of={funnel.email.invitesSent} color="#2563eb" />
+              <FunnelRow label="Link opened" value={funnel.email.clicked} of={funnel.email.invitesSent} color="#8b5cf6" />
+              <FunnelRow label="Listing claimed" value={funnel.email.claimed} of={funnel.email.invitesSent} color="#059669" />
+              <p className="text-xs text-gray-400 pt-1">
+                Email links carry their own verification, so there is no reply step: the business goes straight from inbox to claim.
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
+            <Stat label="Ready to email today" value={funnel.inventory.readyToEmail} sub="queued for the send cron" color={funnel.inventory.readyToEmail ? '#2563eb' : '#b45309'} />
+            <Stat label="Ready to DM today" value={funnel.inventory.readyToDm} sub="unclaimed, has IG handle" color={funnel.inventory.readyToDm < 10 ? '#b45309' : '#0369a1'} />
+            <Stat label="Links outstanding" value={funnel.tokens.outstanding} sub={`${funnel.tokens.expiringSoon} expiring within 7d`} />
+            <Stat label="Claims won" value={funnel.claims.total} sub={`${funnel.claims.last7d} in the last 7 days`} color="#059669" />
+          </div>
+        </section>
+      )}
 
       {/* Agent health */}
       <section>

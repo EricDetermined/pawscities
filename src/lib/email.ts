@@ -618,6 +618,16 @@ export interface MarketingDigestData {
     issuesFound: number;
     topIssues: string[];
   };
+  // Outreach funnel accounting (2026-09-25) — computed by computeOutreachFunnel()
+  // in @/lib/outreach-funnel so the email, the command center and the agents
+  // always quote identical numbers.
+  outreachFunnel?: {
+    dm: { sent: number; replied: number; replyRate: number; linksDelivered: number; clicked: number; claimed: number; sent7d: number; replied7d: number };
+    email: { invitesSent: number; clicked: number; clickRate: number; claimed: number; sent7d: number };
+    claims: { total: number; last7d: number };
+    inventory: { readyToEmail: number; readyToDm: number; missingEmail: number };
+    attention: { kind: string; severity: string; label: string; detail: string; count: number; examples: string[] }[];
+  };
 }
 
 function sectionHeader(emoji: string, title: string, subtitle?: string): string {
@@ -804,6 +814,61 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
       </table>
     </td></tr>` : '';
 
+  // ─── Outreach funnel: did the growth machine convert anything? ──────────
+  // Placed directly under the health banner because a stalled lead is more
+  // urgent than yesterday's post metrics.
+  const f = data.outreachFunnel;
+  const sevColor: Record<string, string> = { critical: '#ef4444', warn: '#f59e0b', info: '#6b7280' };
+  const outreachFunnelHtml = f
+    ? `${sectionHeader('📈', 'Outreach Funnel', `${f.dm.sent7d} DMs and ${f.email.sent7d} email invites in the last 7 days`)}
+       <tr><td>
+        ${f.attention.length > 0 ? `
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 16px;">
+            ${f.attention.map(a => `
+              <tr><td style="padding:8px 12px;border-left:3px solid ${sevColor[a.severity] || '#6b7280'};background:#fafafa;border-radius:0 6px 6px 0;">
+                <strong style="color:${sevColor[a.severity] || '#6b7280'};font-size:13px;">${a.label} (${a.count})</strong>
+                <div style="font-size:12px;color:#6b7280;margin-top:2px;">${a.detail}</div>
+                ${a.examples.length ? `<div style="font-size:12px;color:#374151;margin-top:4px;font-family:ui-monospace,monospace;">${a.examples.join(' · ')}</div>` : ''}
+              </td></tr>
+              <tr><td style="height:6px;"></td></tr>`).join('')}
+          </table>`
+          : `<p style="font-size:13px;color:#22c55e;margin:8px 0 12px;">✅ Nothing stalled — every reply has a claim link and both send queues have inventory.</p>`}
+
+        <table width="100%" cellpadding="0" cellspacing="0" style="font-size:13px;border:1px solid #f0f0f0;border-radius:8px;">
+          <tr style="background:#fafafa;">
+            <td style="padding:8px 12px;font-weight:700;">Channel</td>
+            <td style="padding:8px 12px;text-align:center;">Sent</td>
+            <td style="padding:8px 12px;text-align:center;">Replied</td>
+            <td style="padding:8px 12px;text-align:center;">Link sent</td>
+            <td style="padding:8px 12px;text-align:center;">Opened</td>
+            <td style="padding:8px 12px;text-align:center;">Claimed</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px;border-top:1px solid #f0f0f0;">Instagram DM</td>
+            <td style="padding:8px 12px;text-align:center;border-top:1px solid #f0f0f0;">${f.dm.sent}</td>
+            <td style="padding:8px 12px;text-align:center;border-top:1px solid #f0f0f0;">${f.dm.replied} <span style="color:#9ca3af;">(${f.dm.replyRate}%)</span></td>
+            <td style="padding:8px 12px;text-align:center;border-top:1px solid #f0f0f0;">${f.dm.linksDelivered}</td>
+            <td style="padding:8px 12px;text-align:center;border-top:1px solid #f0f0f0;">${f.dm.clicked}</td>
+            <td style="padding:8px 12px;text-align:center;border-top:1px solid #f0f0f0;font-weight:700;color:#22c55e;">${f.dm.claimed}</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px;border-top:1px solid #f0f0f0;">Email invite</td>
+            <td style="padding:8px 12px;text-align:center;border-top:1px solid #f0f0f0;">${f.email.invitesSent}</td>
+            <td style="padding:8px 12px;text-align:center;border-top:1px solid #f0f0f0;color:#d1d5db;">—</td>
+            <td style="padding:8px 12px;text-align:center;border-top:1px solid #f0f0f0;">${f.email.invitesSent}</td>
+            <td style="padding:8px 12px;text-align:center;border-top:1px solid #f0f0f0;">${f.email.clicked} <span style="color:#9ca3af;">(${f.email.clickRate}%)</span></td>
+            <td style="padding:8px 12px;text-align:center;border-top:1px solid #f0f0f0;font-weight:700;color:#22c55e;">${f.email.claimed}</td>
+          </tr>
+        </table>
+        <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:8px;"><tr>
+          ${statBox('Ready to email', f.inventory.readyToEmail, f.inventory.readyToEmail ? '#2563eb' : '#f59e0b')}
+          ${statBox('Ready to DM', f.inventory.readyToDm, f.inventory.readyToDm < 10 ? '#f59e0b' : '#0369a1')}
+          ${statBox('Missing email', f.inventory.missingEmail, '#6b7280')}
+          ${statBox('Claims (7d)', f.claims.last7d, '#22c55e')}
+        </tr></table>
+       </td></tr>`
+    : '';
+
   const html = baseTemplate(`🐾 Daily Marketing Digest — ${today}`, `
     ${urgentEventsHtml}
     ${newEventsHtml}
@@ -811,6 +876,7 @@ export async function sendMarketingDigest(data: MarketingDigestData): Promise<Em
     ${healthDetailsHtml}
     ${failedPostsHtml}
     ${quickStats}
+    ${outreachFunnelHtml}
 
     ${sectionHeader('📬', 'Posts Published', 'Content posted in the last 24 hours')}
     <tr><td>

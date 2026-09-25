@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { sendMarketingDigest, type MarketingDigestData } from '@/lib/email';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { computeOutreachFunnel } from '@/lib/outreach-funnel';
 import { getSiteBaseUrl } from '@/lib/base-url';
 function getMetaToken() { return process.env.META_PAGE_ACCESS_TOKEN; }
 function getInstagramAccountId() { return process.env.INSTAGRAM_ACCOUNT_ID; }
@@ -468,13 +469,56 @@ export async function GET(request: NextRequest) {
     });
 
     // ═══════════════════════════════════════════════════════════════
+    // 7.5 OUTREACH FUNNEL ACCOUNTING
+    // ═══════════════════════════════════════════════════════════════
+    // Shared with the command center and /api/admin/outreach-funnel. Failure
+    // here must never cost us the whole digest, so it degrades to undefined and
+    // the section simply does not render.
+    let outreachFunnel: MarketingDigestData['outreachFunnel'];
+    let outreachCritical: Array<{ label: string; count: number }> = [];
+    try {
+      const { data: hbRows } = await supabase.from('app_config').select('key,value,updated_at').like('key', 'heartbeat:%');
+      const heartbeats = (hbRows || []).map((row: { key: string; value: string; updated_at: string }) => {
+        let p: any = {};
+        try { p = JSON.parse(String(row.value || '{}')); } catch { /* still counts as reported */ }
+        return { agent: String(row.key).slice('heartbeat:'.length), status: p.status || 'unknown', at: p.at || row.updated_at || null };
+      });
+      const funnel = await computeOutreachFunnel(supabase, heartbeats);
+      outreachFunnel = {
+        dm: funnel.dm,
+        email: funnel.email,
+        claims: { total: funnel.claims.total, last7d: funnel.claims.last7d },
+        inventory: {
+          readyToEmail: funnel.inventory.readyToEmail,
+          readyToDm: funnel.inventory.readyToDm,
+          missingEmail: funnel.inventory.missingEmail,
+        },
+        attention: funnel.attention,
+      };
+      outreachCritical = funnel.attention.filter((a) => a.severity === 'critical');
+    } catch (e: any) {
+      console.error('[marketing-digest] outreach funnel failed:', e?.message);
+    }
+
+    // ═══════════════════════════════════════════════════════════════
     // 8. ASSEMBLE AND SEND THE DIGEST
     // ═══════════════════════════════════════════════════════════════
+    // A dropped lead or a dead outreach agent is a real system problem, so it
+    // escalates the digest banner instead of hiding inside one section.
+    const digestHealthOverall = outreachCritical.length && healthOverall === 'healthy' ? 'warning' as const : healthOverall;
+    const digestHealthChecks = outreachCritical.length
+      ? [...healthChecks, ...outreachCritical.map((a) => ({ name: 'Outreach', status: 'critical' as const, message: `${a.label} (${a.count})` }))]
+      : healthChecks;
+    const digestHealthSummary = outreachCritical.length
+      ? `${healthSummary} · outreach needs attention`
+      : healthSummary;
+
     const digestData: MarketingDigestData = {
+      outreachFunnel,
       health: {
-        overall: healthOverall,
-        checks: healthChecks,
-        summary: healthSummary,
+        overall: digestHealthOverall,
+        checks: digestHealthChecks,
+        summary: digestHealthSummary,
       },
       postsPublished: {
         count: publishedPosts.length,
