@@ -15,7 +15,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const recentAlerts = new Map<string, number>();
 
 export async function POST(request: NextRequest) {
-  let body: { secret?: string; subject?: string; message?: string };
+  let body: { secret?: string; subject?: string; message?: string; level?: string };
   try { body = await request.json(); } catch { return NextResponse.json({ error: 'bad_json' }, { status: 400 }); }
 
   if (body.secret !== process.env.CRON_SECRET) {
@@ -25,13 +25,28 @@ export async function POST(request: NextRequest) {
   const message = (body.message || '').slice(0, 5000);
   if (!subject || !message) return NextResponse.json({ error: 'subject and message required' }, { status: 400 });
 
-  const last = recentAlerts.get(subject);
-  if (last && Date.now() - last < 6 * 60 * 60 * 1000) {
-    return NextResponse.json({ success: true, deduped: true });
+  // level 'info' = routine status report (green daily digests); 'alert' (default)
+  // = something needs a human. Dedupe applies to alerts only, so a stuck-state
+  // alert can't storm; routine info reports always go out.
+  const level = body.level === 'info' ? 'info' : 'alert';
+
+  if (level === 'alert') {
+    const last = recentAlerts.get(subject);
+    if (last && Date.now() - last < 6 * 60 * 60 * 1000) {
+      return NextResponse.json({ success: true, deduped: true });
+    }
   }
 
   const resendKey = process.env.RESEND_API_KEY;
   if (!resendKey) return NextResponse.json({ error: 'resend_not_configured' }, { status: 500 });
+
+  const isInfo = level === 'info';
+  const emoji = isInfo ? '✅' : '🚨';
+  const accent = isInfo ? '#059669' : '#dc2626';
+  const heading = isInfo ? subject : `Action needed: ${subject}`;
+  const footer = isInfo
+    ? 'Daily fleet status from the Paw Cities watchdog. No action needed unless flagged above.'
+    : 'Sent automatically by the Paw Cities alert system the moment a human-required situation was detected.';
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -39,11 +54,11 @@ export async function POST(request: NextRequest) {
     body: JSON.stringify({
       from: 'Paw Cities Alerts <alerts@pawcities.com>',
       to: ['eric@ericdetermined.com'],
-      subject: `🚨 ${subject}`,
+      subject: `${emoji} ${subject}`,
       html: `<div style="font-family:sans-serif;max-width:600px">
-        <h2 style="color:#dc2626">🚨 Action needed: ${subject}</h2>
+        <h2 style="color:${accent}">${emoji} ${heading}</h2>
         <p style="white-space:pre-wrap">${message.replace(/</g, '&lt;')}</p>
-        <p style="color:#6b7280;font-size:12px">Sent automatically by the Paw Cities alert system the moment a human-required situation was detected.</p>
+        <p style="color:#6b7280;font-size:12px">${footer}</p>
       </div>`,
     }),
     signal: AbortSignal.timeout(15000),
