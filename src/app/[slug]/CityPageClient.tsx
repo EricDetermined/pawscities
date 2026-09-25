@@ -12,6 +12,8 @@ import { PremiumCard } from '@/components/ListingBadges';
 import ShareButtons from '@/components/ShareButtons';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import { CityCommunityStrip } from '@/components/community/CityCommunityStrip';
+import { useT, useLocale } from '@/i18n/client';
+import { localizedDescription } from '@/i18n/content';
 
 // Dynamic import for MapView to avoid SSR issues with Leaflet
 const MapView = dynamic(() => import('@/components/map/MapView').then(mod => ({ default: mod.MapView })), {
@@ -98,7 +100,7 @@ function WeatherBanner({ lat, lng, cityName }: { lat: number; lng: number; cityN
 }
 
 /** Group events by relative time period */
-function groupEventsByPeriod(events: PawEvent[]): { label: string; events: PawEvent[] }[] {
+function groupEventsByPeriod(events: PawEvent[]): { key: string; label: string; events: PawEvent[] }[] {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const endOfWeek = new Date(today);
@@ -116,10 +118,10 @@ function groupEventsByPeriod(events: PawEvent[]): { label: string; events: PawEv
     else upcoming.push(e);
   });
 
-  const groups: { label: string; events: PawEvent[] }[] = [];
-  if (thisWeek.length > 0) groups.push({ label: 'This week', events: thisWeek });
-  if (laterThisMonth.length > 0) groups.push({ label: 'Later this month', events: laterThisMonth });
-  if (upcoming.length > 0) groups.push({ label: 'Upcoming', events: upcoming });
+  const groups: { key: string; label: string; events: PawEvent[] }[] = [];
+  if (thisWeek.length > 0) groups.push({ key: 'thisWeek', label: 'This week', events: thisWeek });
+  if (laterThisMonth.length > 0) groups.push({ key: 'laterThisMonth', label: 'Later this month', events: laterThisMonth });
+  if (upcoming.length > 0) groups.push({ key: 'upcoming', label: 'Upcoming', events: upcoming });
   return groups;
 }
 
@@ -153,7 +155,7 @@ function formatDateRange(event: PawEvent): string {
   return timeStr ? `${dateStr} · ${timeStr}` : dateStr;
 }
 
-function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; cityName: string; citySlug: string }) {
+function EventSidebar({ events, cityName, citySlug, t }: { events: PawEvent[]; cityName: string; citySlug: string; t: ReturnType<typeof useT> }) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   if (events.length === 0) {
@@ -161,14 +163,14 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
       <div id="events" className="bg-white rounded-xl border border-gray-200 p-5">
         <div className="flex items-center gap-2 mb-3">
           <span className="text-lg">{'\u{1F4C5}'}</span>
-          <h3 className="font-display text-base font-bold text-gray-900">Events in {cityName}</h3>
+          <h3 className="font-display text-base font-bold text-gray-900">{t('event.eventsIn', { city: cityName })}</h3>
         </div>
-        <p className="text-sm text-gray-500 mb-4">No upcoming events yet for {cityName}.</p>
+        <p className="text-sm text-gray-500 mb-4">{t('event.noEventsYet', { city: cityName })}</p>
         <Link
           href="/events/submit"
           className="inline-flex items-center gap-1.5 text-sm text-orange-600 hover:text-orange-700 font-medium"
         >
-          {'\u{1F43E}'} Submit an event &rarr;
+          {'\u{1F43E}'} {t('event.submit')} &rarr;
         </Link>
       </div>
     );
@@ -181,16 +183,16 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <span className="text-lg">{'\u{1F4C5}'}</span>
-          <h3 className="font-display text-base font-bold text-gray-900">Events</h3>
+          <h3 className="font-display text-base font-bold text-gray-900">{t('event.eventsTitle')}</h3>
         </div>
-        <span className="text-xs text-gray-400">{events.length} upcoming</span>
+        <span className="text-xs text-gray-400">{t('event.upcomingCount', { count: events.length })}</span>
       </div>
 
       <div className="space-y-5 max-h-[70vh] overflow-y-auto pr-1">
         {groups.map((group) => (
           <div key={group.label}>
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
-              {group.label}
+              {t(`event.group.${group.key}`)}
             </p>
             <div className="space-y-2">
               {group.events.map((event) => {
@@ -227,12 +229,12 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
                         <div className="flex items-center gap-1.5 mt-1 flex-wrap">
                           {event.isFree && (
                             <span className="text-[10px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded font-medium">
-                              Free
+                              {t('event.free')}
                             </span>
                           )}
                           {event.isFeatured && (
                             <span className="text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded font-medium">
-                              Featured
+                              {t('event.featured')}
                             </span>
                           )}
                         </div>
@@ -305,7 +307,7 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
                             <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
                             </svg>
-                            <span>Discovered via</span>
+                            <span>{t('event.discoveredVia')}</span>
                             <a
                               href={event.sourcePostUrl || `https://instagram.com/${event.sourceHandle.replace('@', '')}`}
                               target="_blank"
@@ -342,7 +344,7 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
                               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                               </svg>
-                              Website
+                              {t('event.website')}
                             </a>
                           )}
                           {/* Fallback primary: View on Instagram when no website */}
@@ -357,7 +359,7 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
                               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
                               </svg>
-                              View on Instagram
+                              {t('event.viewInstagram')}
                             </a>
                           )}
                           {/* Directions: only when address has street-level detail (contains a number) */}
@@ -372,7 +374,7 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
                               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                               </svg>
-                              Directions
+                              {t('event.directions')}
                             </a>
                           )}
                         </div>
@@ -384,7 +386,7 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
             </div>
           </div>
         ))}
-        <p className="text-xs text-gray-400 text-center pt-1">— end of list · {events.length} upcoming —</p>
+        <p className="text-xs text-gray-400 text-center pt-1">{t('event.endOfList', { count: events.length })}</p>
       </div>
 
       <div className="mt-4 pt-3 border-t border-gray-100">
@@ -392,7 +394,7 @@ function EventSidebar({ events, cityName, citySlug }: { events: PawEvent[]; city
           href="/events/submit"
           className="flex items-center justify-center gap-1.5 w-full py-2 text-sm text-orange-600 hover:text-orange-700 hover:bg-orange-50 rounded-lg font-medium transition-colors"
         >
-          {'\u{1F43E}'} Submit an event
+          {'\u{1F43E}'} {t('event.submit')}
         </Link>
       </div>
     </div>
@@ -408,6 +410,8 @@ interface CityPageClientProps {
 }
 
 export function CityPageClient({ city, establishments, categoryCounts, categories, events = [] }: CityPageClientProps) {
+  const t = useT();
+  const locale = useLocale();
   const searchParams = useSearchParams();
   const initialSearch = searchParams.get('search') || '';
   const initialCategory = searchParams.get('category') || null;
@@ -474,7 +478,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
               <span className="text-sm bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">{city.country}</span>
             </div>
             <h1 className="font-display text-3xl md:text-5xl font-bold mb-2">{city.name}</h1>
-            <p className="text-white/90 max-w-2xl text-sm md:text-base">{city.description}</p>
+            <p className="text-white/90 max-w-2xl text-sm md:text-base">{locale === 'fr' && city.descriptionFr ? city.descriptionFr : city.description}</p>
             <div className="flex items-center gap-4 mt-3 text-sm text-white/80">
               <span>{getCategoryIcon('parks')} {totalPlaces} dog-friendly places</span>
               <span>{'\u2022'}</span>
@@ -502,7 +506,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                 type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={`Search ${totalPlaces} places in ${city.name}...`}
+                placeholder={t('city.searchPlaceholder', { count: totalPlaces, city: city.name })}
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
@@ -523,13 +527,13 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
           </div>
 
           {/* Category filters */}
-          <p id="category-filter-label" className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Filter by category</p>
+          <p id="category-filter-label" className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">{t('city.filterByCategory')}</p>
           <div className="flex flex-wrap gap-2" role="group" aria-labelledby="category-filter-label">
             <button
               onClick={() => setSelectedCategory(null)}
               className={`filter-chip ${selectedCategory === null ? 'active' : ''}`}
             >
-              {'\u{1F43E}'} All ({totalPlaces})
+              {'\u{1F43E}'} {t('city.all')} ({totalPlaces})
             </button>
             {categories.map((cat) => {
               const count = categoryCounts[cat.slug] || 0;
@@ -540,7 +544,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                   onClick={() => setSelectedCategory(selectedCategory === cat.slug ? null : cat.slug)}
                   className={`filter-chip ${selectedCategory === cat.slug ? 'active' : ''}`}
                 >
-                  {getCategoryIcon(cat.slug)} {cat.name} ({count})
+                  {getCategoryIcon(cat.slug)} {locale === 'en' ? cat.name : t(`category.${cat.slug}`)} ({count})
                 </button>
               );
             })}
@@ -553,9 +557,9 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
         <div className="flex items-center justify-between mb-6">
           <p className="text-gray-600">
             {(filtered.length + services.length) === totalPlaces
-              ? `Showing all ${totalPlaces} places`
-              : `${filtered.length + services.length} of ${totalPlaces} places`}
-            {selectedCategory && ` in ${categories.find(c => c.slug === selectedCategory)?.name}`}
+              ? t('city.showingAll', { count: totalPlaces })
+              : t('city.showingSome', { shown: filtered.length + services.length, total: totalPlaces })}
+            {selectedCategory && ` ${t('city.inCategory', { category: locale === 'en' ? (categories.find(c => c.slug === selectedCategory)?.name || '') : t(`category.${selectedCategory}`) })}`}
             {searchQuery && ` matching "${searchQuery}"`}
             {weather?.suggestIndoor && !selectedCategory && ' (indoor-friendly first)'}
             {services.length > 0 && ` (${services.length} online/mobile)`}
@@ -583,8 +587,8 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
             {filtered.length === 0 ? (
               <div className="col-span-full text-center py-16">
                 <div className="text-6xl mb-4">{'\u{1F415}'}</div>
-                <h3 className="text-xl font-semibold text-gray-700 mb-2">No places found</h3>
-                <p className="text-gray-500">Try adjusting your search or filters</p>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">{t('city.noPlaces')}</h3>
+                <p className="text-gray-500">{t('city.tryAdjusting')}</p>
               </div>
             ) : (
               filtered.map((establishment) => (
@@ -635,12 +639,12 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                     {/* Category badge */}
                     <div className="absolute top-3 left-3">
                       <Badge variant="category">
-                        {getCategoryIcon(establishment.categorySlug)} {categories.find(c => c.slug === establishment.categorySlug)?.name}
+                        {getCategoryIcon(establishment.categorySlug)} {locale === 'en' ? categories.find(c => c.slug === establishment.categorySlug)?.name : t(`category.${establishment.categorySlug}`)}
                       </Badge>
                     </div>
                     {establishment.isFeatured && (
                       <div className="absolute bottom-3 left-3">
-                        <Badge variant="premium">{'\u2B50'} Featured</Badge>
+                        <Badge variant="premium">{'\u2B50'} {t('event.featured')}</Badge>
                       </div>
                     )}
                   </div>
@@ -657,7 +661,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                       <span className="text-gray-600" aria-label={`Price level ${establishment.priceLevel} of 4`}>{getCurrencySymbol(city.slug).repeat(establishment.priceLevel)}</span>
                       {establishment.neighborhood && (<><span className="text-gray-300">{'\u2022'}</span><span className="text-gray-500 text-xs">{establishment.neighborhood}</span></>)}
                     </div>
-                    <p className="text-sm text-gray-600 line-clamp-2 mb-3">{establishment.description}</p>
+                    <p className="text-sm text-gray-600 line-clamp-2 mb-3">{localizedDescription(establishment, locale)}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {establishment.dogFeatures.waterBowl && <span className="feature-tag" title="Water Bowl">{'\u{1F4A7}'}</span>}
                       {establishment.dogFeatures.treats && <span className="feature-tag" title="Treats">{'\u{1F9B4}'}</span>}
@@ -679,10 +683,10 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
           <div className="mt-10">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-lg">{'\u{1F310}'}</span>
-              <h2 className="font-display text-xl font-bold text-gray-900">Services & Online</h2>
+              <h2 className="font-display text-xl font-bold text-gray-900">{t('city.servicesOnline')}</h2>
               <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{services.length}</span>
             </div>
-            <p className="text-sm text-gray-500 mb-4">Mobile services and online businesses serving {city.name}</p>
+            <p className="text-sm text-gray-500 mb-4">{t('city.servicesServing', { city: city.name })}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {services.map((est) => (
                 <Link
@@ -716,12 +720,12 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
                     <div className="flex items-center gap-2 mt-0.5 text-xs text-gray-500">
                       <span className="flex items-center gap-0.5"><span className="text-yellow-500">{'★'}</span> {est.rating.toFixed(1)}</span>
                       <span>{'•'}</span>
-                      <span>{getCategoryIcon(est.categorySlug)} {categories.find(c => c.slug === est.categorySlug)?.name}</span>
+                      <span>{getCategoryIcon(est.categorySlug)} {locale === 'en' ? categories.find(c => c.slug === est.categorySlug)?.name : t(`category.${est.categorySlug}`)}</span>
                     </div>
                     {est.serviceArea && (
                       <p className="text-xs text-blue-600 mt-1 line-clamp-1">{est.serviceArea}</p>
                     )}
-                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">{est.description}</p>
+                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">{localizedDescription(est, locale)}</p>
                   </div>
                 </Link>
               ))}
@@ -734,14 +738,14 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
 
         {/* Events Sidebar — right side, desktop only */}
         <div className="hidden lg:block w-[280px] shrink-0">
-          <EventSidebar events={events} cityName={city.name} citySlug={city.slug} />
+          <EventSidebar events={events} cityName={city.name} citySlug={city.slug} t={t} />
         </div>
         </div>
         {/* End flex container */}
 
         {/* Events section — mobile (shown below listings) */}
         <div className="lg:hidden mt-8">
-          <EventSidebar events={events} cityName={city.name} citySlug={city.slug} />
+          <EventSidebar events={events} cityName={city.name} citySlug={city.slug} t={t} />
         </div>
       </div>
 
@@ -752,23 +756,23 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
       <section className="bg-gradient-to-r from-primary-500 to-primary-600 py-10">
         <div className="container mx-auto px-4 text-center">
           <h2 className="font-display text-2xl md:text-3xl font-bold text-white mb-3">
-            Own a dog-friendly business in {city.name}?
+            {t('city.ownBusiness', { city: city.name })}
           </h2>
           <p className="text-white/90 mb-6 max-w-xl mx-auto">
-            Get discovered by thousands of dog owners. Claim your free listing or add your business today.
+            {t('city.getDiscovered')}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/business/claim"
               className="inline-flex items-center justify-center px-6 py-3 bg-white text-primary-600 font-semibold rounded-xl hover:bg-gray-50 transition-colors"
             >
-              Claim Your Listing
+              {t('city.claimListing')}
             </Link>
             <Link
               href="/for-business"
               className="inline-flex items-center justify-center px-6 py-3 bg-white/20 text-white font-semibold rounded-xl hover:bg-white/30 transition-colors border border-white/30"
             >
-              Learn More
+              {t('city.learnMore')}
             </Link>
           </div>
         </div>
@@ -777,19 +781,19 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
       {/* Dog Regulations */}
       <section className="bg-white border-t py-8">
         <div className="container mx-auto px-4">
-          <h2 className="font-display text-xl font-bold mb-4">{'\u{1F415}'} Dog Regulations in {city.name}</h2>
+          <h2 className="font-display text-xl font-bold mb-4">{'\u{1F415}'} {t('city.regulations', { city: city.name })}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-gray-50 rounded-xl p-4">
-              <h3 className="font-semibold mb-1">Leash Policy</h3>
+              <h3 className="font-semibold mb-1">{t('city.leashPolicy')}</h3>
               <p className="text-sm text-gray-600">{city.dogRegulations.leashRequired ? 'Leash required in most public areas' : 'Leash not required in most areas'}</p>
             </div>
             <div className="bg-gray-50 rounded-xl p-4">
-              <h3 className="font-semibold mb-1">Off-Leash Areas</h3>
+              <h3 className="font-semibold mb-1">{t('city.offLeashAreas')}</h3>
               <p className="text-sm text-gray-600">{city.dogRegulations.offLeashAreas ? 'Designated off-leash areas available' : 'Limited off-leash options'}</p>
             </div>
             <div className="bg-gray-50 rounded-xl p-4">
-              <h3 className="font-semibold mb-1">Public Transport</h3>
-              <p className="text-sm text-gray-600">{city.dogRegulations.publicTransport}</p>
+              <h3 className="font-semibold mb-1">{t('city.publicTransport')}</h3>
+              <p className="text-sm text-gray-600">{locale === 'fr' && city.dogRegulations.publicTransportFr ? city.dogRegulations.publicTransportFr : city.dogRegulations.publicTransport}</p>
             </div>
           </div>
         </div>
@@ -814,7 +818,7 @@ export function CityPageClient({ city, establishments, categoryCounts, categorie
             <span className="text-2xl">{'\u{1F43E}'}</span>
             <span className="font-display text-xl font-bold text-white">Paw Cities</span>
           </div>
-          <p className="text-sm text-gray-500">{'\u00A9'} 2026 Paw Cities. Made with love for dogs and their humans.</p>
+          <p className="text-sm text-gray-500">{t('footer.tagline')}</p>
         </div>
       </footer>
     </div>

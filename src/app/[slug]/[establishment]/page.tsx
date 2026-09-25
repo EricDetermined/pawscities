@@ -9,6 +9,9 @@ import type { Establishment, CategorySlug, DogFeatures, ListingType } from '@/ty
 import { ListingBadges } from '@/components/ListingBadges';
 import EstablishmentInteractions from '@/components/EstablishmentInteractions';
 import { TrackedContactButtons } from '@/components/TrackedContactButtons';
+import { getServerLocale, t as translate } from '@/i18n/server';
+import { localizedDescription } from '@/i18n/content';
+import { I18nProvider } from '@/i18n/client';
 
 const BASE_URL = 'https://pawcities.com';
 
@@ -137,7 +140,8 @@ export default async function EstablishmentPage({ params }: Props) {
         place = {
           id: dbEst.id, slug: dbEst.slug, citySlug: citySlug,
           categorySlug: catSlug as CategorySlug,
-          name: dbEst.name, description: dbEst.description || '',
+          name: dbEst.name, nameFr: dbEst.name_fr || undefined,
+          description: dbEst.description || '', descriptionFr: dbEst.description_fr || undefined,
           address: dbEst.address || '', latitude: dbEst.latitude || city.latitude,
           longitude: dbEst.longitude || city.longitude,
           phone: dbEst.phone || undefined, website: dbEst.website || undefined,
@@ -158,6 +162,11 @@ export default async function EstablishmentPage({ params }: Props) {
   }
 
   if (!place) notFound();
+
+  // City-aware locale: explicit cookie choice wins, else the city default.
+  const locale = getServerLocale(params.slug);
+  const tt = (key: string, vars?: Record<string, string | number>) => translate(locale, key, true, vars);
+  const placeDescription = localizedDescription(place, locale);
 
   const allPlaces = await getCityEstablishments(citySlug);
   const similar = allPlaces
@@ -235,6 +244,7 @@ export default async function EstablishmentPage({ params }: Props) {
   };
 
   return (
+    <I18nProvider locale={locale}>
     <div className="min-h-screen bg-gray-50">
       {/* JSON-LD Structured Data */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -246,7 +256,7 @@ export default async function EstablishmentPage({ params }: Props) {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Back to {city.name}
+          {tt('est.backTo', { city: city.name })}
         </Link>
       </nav>
 
@@ -269,7 +279,7 @@ export default async function EstablishmentPage({ params }: Props) {
                   : 'bg-purple-500/80 text-white'
               }`}>
                 {place.listingType === 'mobile' ? '\u{1F6A8}' : '\u{1F310}'}{' '}
-                {place.listingType === 'mobile' ? 'Mobile Service' : 'Online Business'}
+                {place.listingType === 'mobile' ? tt('est.mobileService') : tt('est.onlineBusiness')}
               </span>
             )}
             <p className="text-white/80 text-lg">
@@ -296,7 +306,7 @@ export default async function EstablishmentPage({ params }: Props) {
                     </svg>
                     {place.rating.toFixed(1)}
                   </div>
-                  <span className="text-gray-500 text-sm">{place.reviewCount} Google reviews</span>
+                  <span className="text-gray-500 text-sm">{place.reviewCount} {tt('est.googleReviews')}</span>
                 </div>
                 <div className="flex items-center gap-0.5 text-gray-600 font-medium">
                   {Array.from({ length: 4 }).map((_, i) => (
@@ -313,7 +323,7 @@ export default async function EstablishmentPage({ params }: Props) {
                   </span>
                 )}
               </div>
-              <p className="text-gray-700 leading-relaxed text-lg">{place.description}</p>
+              <p className="text-gray-700 leading-relaxed text-lg">{placeDescription}</p>
 
               {/* Amenities */}
               {place.amenities && place.amenities.length > 0 && (
@@ -331,7 +341,7 @@ export default async function EstablishmentPage({ params }: Props) {
             {featureList.some(f => f.active) && (
             <div className="bg-white rounded-xl p-6 shadow-sm">
               <h2 className="font-display text-xl font-bold mb-4 flex items-center gap-2">
-                <span>🐾</span> Dog-Friendly Features
+                <span>🐾</span> {tt('est.dogFeatures')}
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {featureList.filter(f => f.active).map(feature => (
@@ -340,7 +350,7 @@ export default async function EstablishmentPage({ params }: Props) {
                     className="flex items-center gap-2 p-3 rounded-lg border bg-green-50 border-green-200 text-green-700"
                   >
                     <span className="text-lg">{feature.emoji}</span>
-                    <span className="text-sm font-medium">{feature.label}</span>
+                    <span className="text-sm font-medium">{tt(`feature.${feature.key}`)}</span>
                     <svg className="w-4 h-4 ml-auto text-green-500" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
@@ -349,7 +359,7 @@ export default async function EstablishmentPage({ params }: Props) {
               </div>
               {place.dogFeatures.sizeRestrictions && place.dogFeatures.sizeRestrictions !== 'all' && (
                 <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-700">
-                  Size restriction: {place.dogFeatures.sizeRestrictions} dogs only
+                  {tt('est.sizeRestriction', { size: place.dogFeatures.sizeRestrictions })}
                 </div>
               )}
               {place.dogFeatures.notes && (
@@ -367,7 +377,7 @@ export default async function EstablishmentPage({ params }: Props) {
                   <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  Business Hours
+                  {tt('est.hours')}
                 </h2>
                 <div className="space-y-2">
                   {DAY_NAMES.map((day, i) => {
@@ -378,7 +388,7 @@ export default async function EstablishmentPage({ params }: Props) {
                       <div key={day} className={`flex justify-between items-center py-1.5 px-3 rounded-lg text-sm ${isToday ? 'bg-primary-50 font-medium' : ''}`}>
                         <span className={isToday ? 'text-primary-700' : 'text-gray-600'}>{DAY_LABELS[i]}</span>
                         <span className={isToday ? 'text-primary-700' : 'text-gray-800'}>
-                          {hours ? `${hours.open} - ${hours.close}` : 'Closed'}
+                          {hours ? `${hours.open} - ${hours.close}` : tt('est.closed')}
                         </span>
                       </div>
                     );
@@ -403,23 +413,22 @@ export default async function EstablishmentPage({ params }: Props) {
             {/* Claim CTA — the highest-intent moment for a business owner is finding their own listing */}
             {!isClaimed && (
               <div className="bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 rounded-xl p-5">
-                <h3 className="font-semibold text-gray-900 mb-1">Is this your business? 🏪</h3>
+                <h3 className="font-semibold text-gray-900 mb-1">{tt('est.isThisYourBusiness')} 🏪</h3>
                 <p className="text-sm text-gray-600 mb-3">
-                  Claim this free listing to update your info, respond to reviews, and post events
-                  for {city.name}&apos;s dog community.
+                  {tt('est.claimText', { city: city.name })}
                 </p>
                 <a
                   href={`/business/claim?q=${encodeURIComponent(place.name)}`}
                   className="inline-block px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors"
                 >
-                  Claim this listing
+                  {tt('est.claimListing')}
                 </a>
               </div>
             )}
 
             {/* Contact Info */}
             <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h3 className="font-semibold mb-4">Contact Info</h3>
+              <h3 className="font-semibold mb-4">{tt('est.contactInfo')}</h3>
               <div className="space-y-3">
                 {/* Service area badge for mobile/online */}
                 {place.listingType && place.listingType !== 'storefront' && place.serviceArea && (
@@ -430,7 +439,7 @@ export default async function EstablishmentPage({ params }: Props) {
                     <div>
                       <span className="text-gray-700 font-medium">{place.serviceArea}</span>
                       <p className="text-xs text-gray-400 mt-0.5">
-                        {place.listingType === 'mobile' ? 'Mobile service — travels to you' : 'Online business — serves remotely'}
+                        {place.listingType === 'mobile' ? tt('est.mobileTravels') : tt('est.onlineRemote')}
                       </p>
                     </div>
                   </div>
@@ -477,20 +486,20 @@ export default async function EstablishmentPage({ params }: Props) {
             {city.dogRegulations.leashRequired && (
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
                 <h3 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
-                  <span>🐕</span> {city.name} Dog Rules
+                  <span>🐕</span> {tt('est.dogRules', { city: city.name })}
                 </h3>
                 <p className="text-sm text-amber-700 leading-relaxed flex items-center gap-1">
                   <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
-                  Leash required in public areas
+                  {tt('est.leashRequired')}
                 </p>
                 {city.dogRegulations.offLeashAreas && (
                   <p className="text-sm text-green-700 mt-2 flex items-center gap-1">
                     <svg className="w-4 h-4 shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    Designated off-leash areas available in {city.name}
+                    {tt('est.offLeashAvailable', { city: city.name })}
                   </p>
                 )}
               </div>
@@ -502,7 +511,7 @@ export default async function EstablishmentPage({ params }: Props) {
         {/* Similar Places */}
         {similar.length > 0 && (
           <section className="mt-12">
-            <h2 className="font-display text-2xl font-bold mb-6">More {category?.name} in {city.name}</h2>
+            <h2 className="font-display text-2xl font-bold mb-6">{tt('est.moreIn', { category: locale === 'en' ? (category?.name || '') : translate(locale, `category.${place.categorySlug}`), city: city.name })}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {similar.map(s => (
                   <Link
@@ -536,7 +545,7 @@ export default async function EstablishmentPage({ params }: Props) {
                           </>
                         )}
                       </div>
-                      <p className="text-sm text-gray-500 mt-2 line-clamp-2">{s.description}</p>
+                      <p className="text-sm text-gray-500 mt-2 line-clamp-2">{localizedDescription(s, locale)}</p>
                     </div>
                   </Link>
               ))}
@@ -569,12 +578,13 @@ export default async function EstablishmentPage({ params }: Props) {
             <span className="font-display text-xl font-bold text-white">Paw Cities</span>
           </div>
           <div className="flex items-center gap-6 text-sm">
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">{tt('footer.privacy')}</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">{tt('footer.terms')}</Link>
           </div>
-          <p className="text-sm text-gray-500">© 2026 Paw Cities. Made with love for dogs and their humans.</p>
+          <p className="text-sm text-gray-500">{tt('footer.tagline')}</p>
         </div>
       </footer>
     </div>
+    </I18nProvider>
   );
 }

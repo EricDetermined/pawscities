@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { getServiceClient } from '@/lib/community';
+import { getServerLocale, t as translate } from '@/i18n/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -50,6 +51,8 @@ export default async function EventsPage({
   const admin = getServiceClient();
   const today = new Date().toISOString().split('T')[0];
   const citySlug = searchParams.city || '';
+  const locale = getServerLocale(citySlug);
+  const tt = (key: string, vars?: Record<string, string | number>) => translate(locale, key, true, vars);
 
   const [{ data: cities }, eventsRes] = await Promise.all([
     admin.from('cities').select('slug, name').eq('is_active', true).order('name'),
@@ -87,16 +90,15 @@ export default async function EventsPage({
     <div className="min-h-screen bg-gray-50">
       <div className="bg-gradient-to-br from-orange-500 to-amber-500 text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 text-center">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-3">Dog-Friendly Events 📅</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3">{tt('events.pageTitle')} 📅</h1>
           <p className="text-orange-50 max-w-2xl mx-auto">
-            Yappy hours, pup socials, adoption days — every event comes with a link,
-            contact, or venue so you can actually go.
+            {tt('events.pageSubtitle')}
           </p>
           <Link
             href="/events/submit"
             className="inline-block mt-6 px-6 py-3 bg-white text-orange-600 font-semibold rounded-lg hover:bg-orange-50 transition-colors"
           >
-            Submit an event
+            {tt('event.submit')}
           </Link>
         </div>
       </div>
@@ -112,7 +114,7 @@ export default async function EventsPage({
                 : 'bg-white border border-gray-200 text-gray-600 hover:border-orange-300'
             }`}
           >
-            All cities
+            {tt('events.allCities')}
           </Link>
           {(cities || []).map(c => (
             <Link
@@ -133,16 +135,18 @@ export default async function EventsPage({
           <div className="text-center py-16 bg-white rounded-2xl border border-gray-200">
             <span className="text-5xl block mb-4">📅</span>
             <h2 className="text-xl font-semibold text-gray-900 mb-2">
-              No upcoming events{activeCityName ? ` in ${activeCityName}` : ''} yet
+              {locale === 'en'
+                ? `No upcoming events${activeCityName ? ` in ${activeCityName}` : ''} yet`
+                : `${tt('events.emptyHeading')}${activeCityName ? ` · ${activeCityName}` : ''}`}
             </h2>
             <p className="text-gray-500 mb-6 max-w-md mx-auto">
-              Know of a dog-friendly event? Add it and help the community find it.
+              {tt('events.emptyText')}
             </p>
             <Link
               href="/events/submit"
               className="inline-block px-6 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors"
             >
-              Submit an event
+              {tt('event.submit')}
             </Link>
           </div>
         ) : (
@@ -171,7 +175,7 @@ export default async function EventsPage({
                         <h3 className="font-semibold text-gray-900">{ev.name}</h3>
                         {ev.is_free && (
                           <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-medium">
-                            Free
+                            {tt('event.free')}
                           </span>
                         )}
                       </div>

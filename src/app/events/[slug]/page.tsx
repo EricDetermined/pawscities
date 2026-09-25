@@ -5,6 +5,7 @@ import { getServiceClient } from '@/lib/community';
 import ShareButtons from '@/components/ShareButtons';
 import NewsletterSignup from '@/components/NewsletterSignup';
 import OutboundLink from '@/components/OutboundLink';
+import { getServerLocale, t as translate } from '@/i18n/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -169,6 +170,8 @@ export default async function EventDetailPage({
     state === 'live' ? [] : await getAlternatives(event.city_id, event.slug);
 
   const city = event.cities;
+  const locale = getServerLocale(city?.slug);
+  const tt = (key: string, vars?: Record<string, string | number>) => translate(locale, key, true, vars);
   const handle = event.source_handle
     ? event.source_handle.startsWith('@')
       ? event.source_handle
@@ -310,7 +313,7 @@ export default async function EventDetailPage({
             <div className="flex items-center gap-2 flex-wrap mb-2">
               {event.is_free && (
                 <span className="text-xs px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-medium">
-                  Free to attend
+                  {tt('event.freeToAttend')}
                 </span>
               )}
               {(event.tags || []).slice(0, 4).map(tag => (

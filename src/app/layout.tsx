@@ -7,6 +7,8 @@ import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics';
 import '@/styles/globals.css';
 import { Header } from '@/components/layout/Header';
 import ErrorReporter from '@/components/ErrorReporter';
+import { I18nProvider } from '@/i18n/client';
+import { getLocale } from '@/i18n/server';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -52,8 +54,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Global chrome (header/footer) locale = explicit cookie choice, else English.
+  // City pages additionally apply their city-default locale to page content.
+  const locale = getLocale();
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+    <html lang={locale} className={`${inter.variable} ${outfit.variable}`}>
       <body className="min-h-screen bg-background font-sans antialiased">
         {/* Site-wide JSON-LD: Organization + WebSite with SearchAction */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -80,11 +85,13 @@ export default function RootLayout({
           },
         }) }} />
         <ErrorReporter />
-        <AuthProvider>
-          <Header />
-          {/* main landmark = skip-link target (2026-09-04 heuristic eval) */}
-          <main id="main-content">{children}</main>
-        </AuthProvider>
+        <I18nProvider locale={locale}>
+          <AuthProvider>
+            <Header />
+            {/* main landmark = skip-link target (2026-09-04 heuristic eval) */}
+            <main id="main-content">{children}</main>
+          </AuthProvider>
+        </I18nProvider>
         <Analytics />
         <SpeedInsights />
         <GoogleAnalytics />

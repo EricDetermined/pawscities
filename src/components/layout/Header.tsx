@@ -6,6 +6,8 @@ import { LogoLink } from '@/components/Logo';
 import { usePathname } from 'next/navigation';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { CITIES } from '@/lib/cities-config';
+import { LanguageToggle } from '@/components/layout/LanguageToggle';
+import { useT } from '@/i18n/client';
 
 // Cities alphabetically for the dropdown (2026-09-04 heuristic eval: faster
 // navigation to available cities + predictable ordering).
@@ -13,16 +15,18 @@ const cityLinks = Object.values(CITIES)
   .map(c => ({ name: c.name, href: `/${c.slug}` }))
   .sort((a, b) => a.name.localeCompare(b.name));
 
+// `tKey` maps each item to a translation key; label falls back to English.
 const navigation = [
-  { name: 'Community', href: '/dogs' },
-  { name: 'Events', href: '/events' },
-  { name: 'About', href: '/about' },
-  { name: 'FAQ', href: '/faq' },
-  { name: 'For Business', href: '/for-business' },
+  { name: 'Community', href: '/dogs', tKey: 'nav.community' },
+  { name: 'Events', href: '/events', tKey: 'nav.events' },
+  { name: 'About', href: '/about', tKey: 'nav.about' },
+  { name: 'FAQ', href: '/faq', tKey: 'nav.faq' },
+  { name: 'For Business', href: '/for-business', tKey: 'nav.forBusiness' },
 ]
 
 export function Header() {
   const pathname = usePathname();
+  const t = useT();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [citiesOpen, setCitiesOpen] = useState(false);
   const citiesRef = useRef<HTMLDivElement>(null);
@@ -46,7 +50,7 @@ export function Header() {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:bg-orange-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold"
       >
-        Skip to main content
+        {t('nav.skipToMain')}
       </a>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -67,7 +71,7 @@ export function Header() {
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                Explore Cities
+                {t('nav.exploreCities')}
                 <svg className={`w-4 h-4 transition-transform ${citiesOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -99,13 +103,14 @@ export function Header() {
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                {item.name}
+                {t(item.tKey)}
               </Link>
             ))}
           </nav>
 
-          {/* Right side: User Menu + Mobile Hamburger */}
-          <div className="flex items-center gap-3">
+          {/* Right side: Language + User Menu + Mobile Hamburger */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <LanguageToggle />
             <UserMenu />
 
             {/* Mobile hamburger button */}
@@ -133,7 +138,7 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-100 bg-white">
           <nav className="px-4 py-3 space-y-1" aria-label="Mobile">
-            <p className="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-wide text-gray-400">Cities</p>
+            <p className="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-wide text-gray-400">{t('nav.cities')}</p>
             <div className="grid grid-cols-2 gap-x-2">
               {cityLinks.map(city => (
                 <Link
@@ -148,10 +153,10 @@ export function Header() {
                 </Link>
               ))}
             </div>
-            <p className="px-3 pt-3 pb-0.5 text-xs font-semibold uppercase tracking-wide text-gray-400">Menu</p>
+            <p className="px-3 pt-3 pb-0.5 text-xs font-semibold uppercase tracking-wide text-gray-400">{t('nav.menu')}</p>
             {[...navigation,
-              { name: 'Your Feed', href: '/feed' },
-              { name: 'My Dogs', href: '/profile/dogs' },
+              { name: 'Your Feed', href: '/feed', tKey: 'nav.yourFeed' },
+              { name: 'My Dogs', href: '/profile/dogs', tKey: 'nav.myDogs' },
             ].map((item) => (
               <Link
                 key={item.name}
@@ -163,7 +168,7 @@ export function Header() {
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
-                {item.name}
+                {t(item.tKey)}
               </Link>
             ))}
           </nav>

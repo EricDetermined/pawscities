@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import type { CityConfig } from '@/lib/cities-config';
 import type { PawEvent } from '@/types';
 import NewsletterSignup from '@/components/NewsletterSignup';
+import { useT, useLocale } from '@/i18n/client';
 
 const CATEGORIES = [
   { slug: 'parks', icon: '🌳', label: 'Parks' },
@@ -41,6 +42,8 @@ function formatEventDate(dateStr: string): { day: string; month: string; weekday
 
 export default function HomePageClient({ cities, cityStats, events = [], totalEventCount = 0 }: HomePageClientProps) {
   const router = useRouter();
+  const t = useT();
+  const locale = useLocale();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   // City hearts (2026-09-04 heuristic eval): save favorite cities; logged-out
@@ -148,14 +151,14 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
       <div className="bg-gradient-to-r from-orange-500 to-amber-500 text-white">
         <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-center gap-3 text-sm">
           <span className="hidden sm:inline">🐾</span>
-          <span className="font-medium">Dog-friendly business?</span>
+          <span className="font-medium">{t('home.banner.question')}</span>
           <Link
             href="/for-business"
             className="underline underline-offset-2 font-semibold hover:text-white/90 transition-colors"
           >
-            List for free
+            {t('home.banner.cta')}
           </Link>
-          <span className="text-white/70 hidden sm:inline">— reach dog owners in 9 cities worldwide</span>
+          <span className="text-white/70 hidden sm:inline">{t('home.banner.reach')}</span>
         </div>
       </div>
 
@@ -164,11 +167,10 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
         {/* Left: Content Panel */}
         <div className="flex-1 bg-gradient-to-br from-[#1a1a2e] to-[#16213e] flex flex-col justify-center px-5 sm:px-8 md:px-14 py-10 sm:py-14 md:py-20">
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-3 sm:mb-4">
-            Find Dog-Friendly<br />Places
+            {t('home.hero.title.line1')}<br />{t('home.hero.title.line2')}
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-md mb-5 sm:mb-7 leading-relaxed">
-            Discover the best restaurants, cafes, parks, and more that welcome
-            your furry friend in cities around the world.
+            {t('home.hero.subtitle')}
           </p>
 
           {/* Search Bar */}
@@ -193,7 +195,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search city, park, cafe..."
+                  placeholder={t('home.search.placeholder')}
                   className="w-full pl-11 pr-4 py-3 rounded-xl bg-white/10 border border-white/25 text-white placeholder-white/50 focus:bg-white/15 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-orange-400/50 transition-all text-sm"
                 />
               </div>
@@ -201,7 +203,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
                 type="submit"
                 className="px-3 sm:px-5 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold transition-colors text-sm whitespace-nowrap"
               >
-                Search
+                {t('home.search.button')}
               </button>
             </div>
           </form>
@@ -219,7 +221,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
-                  Finding your location...
+                  {t('home.locating')}
                 </>
               ) : (
                 <>
@@ -227,7 +229,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  Explore Near Me
+                  {t('home.exploreNearMe')}
                 </>
               )}
             </button>
@@ -237,21 +239,21 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
           <div className="flex items-center gap-4 sm:gap-6 mb-5 sm:mb-6 text-white/80 text-xs sm:text-sm">
             <div className="flex items-center gap-1.5">
               <span className="text-orange-400 font-bold text-base sm:text-lg">{cities.length}</span>
-              <span>Cities</span>
+              <span>{t('home.stat.cities')}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-orange-400 font-bold text-base sm:text-lg">
                 {Object.values(cityStats).reduce((sum, s) => sum + s.count, 0) || '500+'}
               </span>
-              <span>Places</span>
+              <span>{t('home.stat.places')}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-orange-400 font-bold text-base sm:text-lg">{totalEventCount || events.length || '50+'}</span>
-              <span>Events</span>
+              <span>{t('home.stat.events')}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-orange-400 font-bold text-base sm:text-lg">12</span>
-              <span>Categories</span>
+              <span>{t('home.stat.categories')}</span>
             </div>
           </div>
 
@@ -267,7 +269,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
                     : 'bg-white/15 border border-white/25 text-white backdrop-blur-sm hover:bg-white/25 hover:border-white/40'
                 }`}
               >
-                {cat.icon} {cat.label}
+                {cat.icon} {locale === 'en' ? cat.label : t(`category.${cat.slug}`)}
               </button>
             ))}
           </div>
@@ -292,14 +294,14 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <span className="text-lg">📅</span>
-                <h2 className="font-display text-lg font-bold text-gray-900">Happening Soon</h2>
-                <span className="text-sm text-gray-500">Dog-friendly events worldwide</span>
+                <h2 className="font-display text-lg font-bold text-gray-900">{t('home.events.heading')}</h2>
+                <span className="text-sm text-gray-500">{t('home.events.subtitle')}</span>
               </div>
               <Link
                 href="/events/submit"
                 className="text-sm text-orange-600 hover:text-orange-700 font-medium hidden sm:inline-flex items-center gap-1"
               >
-                Submit an event &rarr;
+                {t('home.events.submit')} &rarr;
               </Link>
             </div>
             <div className="flex gap-4 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
@@ -331,12 +333,12 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
                         </span>
                         {event.isFree && (
                           <span className="text-xs bg-green-50 text-green-700 px-1.5 py-0.5 rounded">
-                            Free
+                            {t('event.free')}
                           </span>
                         )}
                         {event.isFeatured && (
                           <span className="text-xs bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded">
-                            Featured
+                            {t('event.featured')}
                           </span>
                         )}
                       </div>
@@ -351,8 +353,8 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
               >
                 <div className="text-center">
                   <div className="text-2xl mb-1">🐾</div>
-                  <p className="text-sm font-medium text-orange-700">Know an event?</p>
-                  <p className="text-xs text-orange-500">Submit it free</p>
+                  <p className="text-sm font-medium text-orange-700">{t('home.events.know')}</p>
+                  <p className="text-xs text-orange-500">{t('home.events.submitFree')}</p>
                 </div>
               </Link>
             </div>
@@ -361,7 +363,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
                 href="/events/submit"
                 className="text-sm text-orange-600 hover:text-orange-700 font-medium inline-flex items-center gap-1"
               >
-                Submit an event &rarr;
+                {t('home.events.submit')} &rarr;
               </Link>
             </div>
           </div>
@@ -383,9 +385,9 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
       {/* Cities Grid */}
       <section id="cities-section" className="py-16 px-4">
         <div className="container mx-auto">
-          <h2 className="font-display text-3xl font-bold mb-2">Explore Cities</h2>
+          <h2 className="font-display text-3xl font-bold mb-2">{t('home.cities.heading')}</h2>
           <p className="text-gray-600 mb-8">
-            Find dog-friendly places in {cities.length} amazing destinations
+            {t('home.cities.subtitle', { count: cities.length })}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[...cities].sort((a, b) => a.name.localeCompare(b.name)).map((city) => {
@@ -465,28 +467,28 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
       <section className="py-16 px-4 bg-gray-50">
         <div className="container mx-auto">
           <h2 className="font-display text-3xl font-bold mb-8 text-center">
-            Why Paw Cities?
+            {t('home.why.heading')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
               <div className="text-4xl mb-4">🗺️</div>
-              <h3 className="font-semibold text-lg mb-2">Interactive Maps</h3>
+              <h3 className="font-semibold text-lg mb-2">{t('home.why.maps.title')}</h3>
               <p className="text-gray-600">
-                Find nearby dog-friendly places with our easy-to-use map interface.
+                {t('home.why.maps.text')}
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
               <div className="text-4xl mb-4">🌍</div>
-              <h3 className="font-semibold text-lg mb-2">{cities.length} Global Cities</h3>
+              <h3 className="font-semibold text-lg mb-2">{cities.length} {t('home.why.global.title')}</h3>
               <p className="text-gray-600">
-                From Paris to Atlanta, discover dog-friendly spots wherever you travel.
+                {t('home.why.global.text')}
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
               <div className="text-4xl mb-4">🐾</div>
-              <h3 className="font-semibold text-lg mb-2">Dog-Specific Features</h3>
+              <h3 className="font-semibold text-lg mb-2">{t('home.why.features.title')}</h3>
               <p className="text-gray-600">
-                Filter by water bowls, off-leash areas, dog menus, and more.
+                {t('home.why.features.text')}
               </p>
             </div>
           </div>
@@ -499,17 +501,17 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
           <div className="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <h3 className="font-display text-xl font-bold text-gray-900 mb-1">
-                Know a dog-friendly spot?
+                {t('home.community.heading')}
               </h3>
               <p className="text-gray-600 text-sm">
-                Help fellow dog owners discover great places. Share your favorite spots with the community.
+                {t('home.community.text')}
               </p>
             </div>
             <Link
               href="/business/claim"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-xl font-semibold hover:bg-gray-800 transition-colors whitespace-nowrap text-sm"
             >
-              <span>🐾</span> Share a Place
+              <span>🐾</span> {t('home.community.cta')}
             </Link>
           </div>
         </div>
@@ -529,7 +531,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
           <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl border border-orange-200 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <h3 className="font-display text-xl font-bold text-gray-900 mb-1">
-                Help Us Expand!
+                {t('home.expand.heading')}
               </h3>
               <p className="text-gray-600 text-sm">
                 We&apos;re in 9 cities and growing. Tell us which city you&apos;d love to see next.
@@ -539,7 +541,7 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
               href="/suggest-city"
               className="inline-flex items-center gap-2 px-6 py-3 bg-orange-600 text-white rounded-xl font-semibold hover:bg-orange-700 transition-colors whitespace-nowrap text-sm"
             >
-              <span>🐾</span> Request a City
+              <span>🐾</span> {t('home.expand.cta')}
             </Link>
           </div>
         </div>
@@ -549,24 +551,23 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
       <section className="py-16 px-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white">
         <div className="container mx-auto text-center">
           <h2 className="font-display text-3xl font-bold mb-4">
-            Own a Dog-Friendly Business?
+            {t('home.business.heading')}
           </h2>
           <p className="text-lg opacity-90 max-w-xl mx-auto mb-8">
-            Claim your free listing, manage your profile, and reach thousands of
-            dog owners looking for places like yours.
+            {t('home.business.text')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/for-business"
               className="inline-block px-8 py-3 bg-white text-orange-600 rounded-xl font-bold hover:bg-orange-50 transition-colors shadow-lg"
             >
-              List Your Business Free
+              {t('home.business.listFree')}
             </Link>
             <Link
               href="/for-business#pricing"
               className="inline-block px-8 py-3 bg-white/15 border border-white/30 text-white rounded-xl font-bold hover:bg-white/25 transition-colors"
             >
-              View Premium Plans
+              {t('home.business.viewPlans')}
             </Link>
           </div>
         </div>
@@ -605,29 +606,29 @@ export default function HomePageClient({ cities, cityStats, events = [], totalEv
                 href="/for-business"
                 className="hover:text-white transition-colors"
               >
-                For Business
+                {t('footer.forBusiness')}
               </Link>
               <Link
                 href="/suggest-city"
                 className="hover:text-white transition-colors"
               >
-                Suggest a City
+                {t('footer.suggestCity')}
               </Link>
               <Link
                 href="/privacy"
                 className="hover:text-white transition-colors"
               >
-                Privacy
+                {t('footer.privacy')}
               </Link>
               <Link
                 href="/terms"
                 className="hover:text-white transition-colors"
               >
-                Terms
+                {t('footer.terms')}
               </Link>
             </div>
             <p className="text-sm text-gray-500">
-              &copy; 2026 Paw Cities. Made with love for dogs and their humans.
+              {t('footer.tagline')}
             </p>
           </div>
         </div>

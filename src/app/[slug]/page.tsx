@@ -3,6 +3,8 @@ import { getCityConfig, CATEGORIES } from '@/lib/cities-config';
 import { getCityEstablishments, enrichEstablishmentsWithUserPhotos } from '@/lib/data';
 import { getCityEvents } from '@/lib/events';
 import { CityPageClient } from './CityPageClient';
+import { I18nProvider } from '@/i18n/client';
+import { getServerLocale } from '@/i18n/server';
 import { createClient } from '@supabase/supabase-js';
 import type { Metadata } from 'next';
 import type { Establishment, CategorySlug, DogFeatures, ListingType } from '@/types';
@@ -108,7 +110,9 @@ function dbToEstablishment(dbEst: Record<string, unknown>, citySlug: string, cit
     citySlug,
     categorySlug: catSlug as CategorySlug,
     name: dbEst.name as string,
+    nameFr: (dbEst.name_fr as string) || undefined,
     description: (dbEst.description as string) || `Dog-friendly in ${citySlug}`,
+    descriptionFr: (dbEst.description_fr as string) || undefined,
     address: (dbEst.address as string) || '',
     latitude: (dbEst.latitude as number) || cityLat,
     longitude: (dbEst.longitude as number) || cityLng,
@@ -250,13 +254,15 @@ export default async function CityPage({ params }: CityPageProps) {
       {eventListLd.length > 0 && eventListLd.map((eventLd, i) => (
         <script key={`event-ld-${i}`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventLd) }} />
       ))}
-      <CityPageClient
-        city={city}
-        establishments={establishments}
-        categoryCounts={categoryCounts}
-        categories={CATEGORIES}
-        events={cityEvents.events}
-      />
+      <I18nProvider locale={getServerLocale(city.slug)}>
+        <CityPageClient
+          city={city}
+          establishments={establishments}
+          categoryCounts={categoryCounts}
+          categories={CATEGORIES}
+          events={cityEvents.events}
+        />
+      </I18nProvider>
     </>
   );
 }
