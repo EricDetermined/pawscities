@@ -13,6 +13,45 @@ export interface ContentFact {
   icon: string;
   /** When the post references a specific business, set this so the cron can look up its actual photo via Google Places */
   placeName?: string;
+  /** Optional explicit seasonal window (1=Jan..12=Dec). If set, the item only
+   *  posts in these months. If omitted, seasonality is inferred from the text
+   *  (see factInSeason) and otherwise treated as evergreen. */
+  months?: number[];
+}
+
+// ─── Seasonality gate (2026-09-26) ───────────────────────────────────────────
+// A content-bank item that names a season or a dated festival must not post out
+// of season (a "Sant Joan, June 23" fireworks tip going out in September reads
+// like a robot). Evergreen facts (most of the bank) post any time.
+const SOUTHERN_CITIES = new Set(['sydney']);
+function seasonWindow(kind: 'summer' | 'winter' | 'spring', southern: boolean): number[] {
+  const north: Record<string, number[]> = { summer: [5, 6, 7, 8, 9], winter: [11, 12, 1, 2, 3], spring: [3, 4, 5] };
+  const south: Record<string, number[]> = { summer: [11, 12, 1, 2, 3], winter: [5, 6, 7, 8, 9], spring: [9, 10, 11] };
+  return (southern ? south : north)[kind];
+}
+/** True if this fact is appropriate to post in the given month. */
+export function factInSeason(fact: ContentFact, date: Date = new Date()): boolean {
+  const m = date.getUTCMonth() + 1;
+  if (fact.months && fact.months.length) return fact.months.includes(m);
+  const text = `${fact.headline} ${fact.body}`.toLowerCase();
+  const southern = SOUTHERN_CITIES.has(fact.city);
+  // Dated festivals / specific-date references — narrow, unambiguous.
+  const specifics: Array<[RegExp, number[]]> = [
+    [/sant joan|june 23|23 june/, [6]],
+    [/bastille|july 14|14 july/, [7]],
+    [/halloween/, [10]],
+    [/inunohi|november 1|day of the dog/, [11]],
+    [/christmas|new year/, [12, 1]],
+    [/valentine/, [2]],
+    [/\beaster\b/, [3, 4]],
+    [/thanksgiving/, [11]],
+  ];
+  for (const [re, months] of specifics) if (re.test(text)) return months.includes(m);
+  // Seasonal signals (hemisphere-aware).
+  if (/de-?icer|road salt|sidewalk salt|winter salt|winter coat|freezing|\bsnow\b/.test(text)) return seasonWindow('winter', southern).includes(m);
+  if (/\bsummer\b|heat ?stroke|paw burn|asphalt|foxtail|midday sun|blue-green algae|cyanobacteria/.test(text)) return seasonWindow('summer', southern).includes(m);
+  if (/\bpollen\b/.test(text)) return seasonWindow('spring', southern).includes(m);
+  return true; // evergreen
 }
 
 export const CITY_META: Record<string, { name: string; country: string; emoji: string; slug: string }> = {
@@ -691,7 +730,7 @@ export function pickNextContent(postedHeadlines: Set<string>): ContentFact | nul
   // Try each city in order of fewest posts
   for (const city of sortedCities) {
     const available = CONTENT_BANK.filter(
-      f => f.city === city && !postedHeadlines.has(f.headline)
+      f => f.city === city && !postedHeadlines.has(f.headline) && factInSeason(f)
     );
     if (available.length > 0) {
       // Prefer a DIFFERENT visual style than the last pick for grid diversity
