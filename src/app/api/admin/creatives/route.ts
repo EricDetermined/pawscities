@@ -517,11 +517,17 @@ export async function POST(request: NextRequest) {
       .order('created_at', { ascending: false })
       .limit(4);
 
+    // EVENT POSTS ALWAYS USE THE DATED EVENT CARD (2026-09-26, Eric) ─────────
+    // Every event creative must carry the date + venue + city ON the image so a
+    // dog owner can identify and plan at a glance, with the pawcities CTA to
+    // drive traffic. Pure mascot illustrations have no text overlay, so the date
+    // only lived in the caption — that is how the Howl-O-Weenie post went out
+    // with no visible date. Mascot brand variety stays on content-bank posts.
     const recentFormats = (recentEventCreatives || []).map(c => c.format);
     const recentPhotoCount = recentFormats.filter(f => f === 'photo').length;
-    // Use mascot if the last 3+ event creatives were all photos AND we have OpenAI
-    const useMascot = hasOpenAI && recentPhotoCount >= 3;
-    const visualStyle: VisualStyle = useMascot ? 'mascot' : 'photo';
+    void recentPhotoCount; // retained for future dated-mascot-card variant
+    const useMascot = false;
+    const visualStyle: VisualStyle = 'photo';
 
     // Pick narrator — alternate based on last used
     const lastNarrator = (recentEventCreatives || []).find(c => c.narrator)?.narrator;
