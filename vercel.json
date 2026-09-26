@@ -67,6 +67,10 @@
       "schedule": "30 9 * * *"
     },
     {
+      "path": "/api/cron/event-creative-backfill",
+      "schedule": "0 */6 * * *"
+    },
+    {
       "path": "/api/cron/enrich-contact-emails",
       "schedule": "0 5 * * *"
     },

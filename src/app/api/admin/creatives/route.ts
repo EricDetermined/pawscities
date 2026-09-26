@@ -11,6 +11,8 @@ import {
 import { generateAndUploadMascotImage, generateCharacterCaption } from '@/lib/dalle';
 import { getVisualStyle, getCaptionStyle, type VisualStyle } from '@/lib/visual-strategy';
 import { detectBreeds } from '@/lib/dog-photos';
+import { verifyCronAuth } from '@/lib/cron-auth';
+import { requireAdmin } from '@/lib/admin';
 
 // ─── Card copy + base URL helpers ─────────────────────────────────────────────
 
@@ -199,6 +201,14 @@ export async function GET(request: NextRequest) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export async function POST(request: NextRequest) {
+  // Auth: an admin session (the dashboard) OR a valid CRON_SECRET (the backfill
+  // cron / server-to-server). This endpoint generates content and spends OpenAI/
+  // Google credits, so it must not be open to the public (was unauthenticated).
+  if (!verifyCronAuth(request)) {
+    const auth = await requireAdmin();
+    if (auth.error) return auth.error;
+  }
+
   const supabase = getSupabaseAdmin();
   if (!supabase) return NextResponse.json({ error: 'Not configured' }, { status: 500 });
 
