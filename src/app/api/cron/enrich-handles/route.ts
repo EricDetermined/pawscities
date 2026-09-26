@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { enrichEventHandle, storeInCache } from '@/lib/handle-enrichment';
+import { resolveEventBusinessHandles, mergeHandles } from '@/lib/business-handles';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 120;
+export const maxDuration = 300;
 
 /**
  * GET /api/cron/enrich-handles
@@ -53,11 +54,11 @@ export async function GET(request: NextRequest) {
     // Priority: pending enrichment status + has a venue name + handle is missing/useless
     const { data: events, error: fetchError } = await supabase
       .from('events')
-      .select('id, venue_name, venue_address, city_id, source_handle, mentioned_handles, status')
+      .select('id, name, description, venue_name, venue_address, city_id, source_handle, mentioned_handles, status')
       .eq('enrichment_status', 'pending')
       .not('venue_name', 'is', null)
       .order('created_at', { ascending: false })
-      .limit(10);
+      .limit(6); // lower per-run count: each event now resolves handles for all its businesses
 
     if (fetchError) {
       console.error('[ENRICH-HANDLES] Fetch error:', fetchError);
@@ -75,17 +76,30 @@ export async function GET(request: NextRequest) {
       stats.processed++;
 
       try {
-        // Skip if event already has a good handle
+        // Even when the source/venue handle is already good, still resolve and
+        // tag every OTHER business named in the event (organizer, sponsors,
+        // participating businesses) so no featured business goes untagged.
         if (!needsEnrichment(event.source_handle)) {
-          await supabase
-            .from('events')
-            .update({
-              enrichment_status: 'enriched',
-              enrichment_attempted_at: new Date().toISOString(),
-            })
-            .eq('id', event.id);
+          const cityName = cityNameMap[event.city_id] || 'Unknown';
+          let mentioned = [...(event.mentioned_handles || [])];
+          if (event.source_handle) mentioned.push(event.source_handle);
+          try {
+            const resolvedBiz = await resolveEventBusinessHandles(
+              { name: event.name, description: event.description, venue_name: event.venue_name },
+              supabase, cityName,
+            );
+            mentioned = mergeHandles(mentioned, resolvedBiz, 8);
+            if (resolvedBiz.length) console.log(`[ENRICH-HANDLES] "${event.venue_name}" (has source) → tagged ${resolvedBiz.length} businesses`);
+          } catch (e) {
+            console.error('[ENRICH-HANDLES] multi-business resolve failed:', (e as Error)?.message);
+          }
+          await supabase.from('events').update({
+            enrichment_status: 'enriched',
+            enrichment_attempted_at: new Date().toISOString(),
+            mentioned_handles: mergeHandles(mentioned, [], 8),
+          }).eq('id', event.id);
           stats.skipped++;
-          console.log(`[ENRICH-HANDLES] Skipped "${event.venue_name}" — already has @${event.source_handle}`);
+          console.log(`[ENRICH-HANDLES] Source handle kept for "${event.venue_name}" (@${event.source_handle})`);
           continue;
         }
 
@@ -102,13 +116,29 @@ export async function GET(request: NextRequest) {
 
         if (result.handle) {
           updateData.source_handle = result.handle;
-
-          // Also add to mentioned_handles if not already there
-          const existingHandles = event.mentioned_handles || [];
-          if (!existingHandles.includes(result.handle)) {
-            updateData.mentioned_handles = [...existingHandles, result.handle];
-          }
         }
+
+        // ── Tag EVERY business named in the event, not just the venue ────────
+        // (2026-09-26, Eric) Our funnel is tagging dog-friendly businesses so
+        // they discover us and claim a listing. Resolve handles for the
+        // organizer, co-hosts, sponsors and participating businesses too, and
+        // merge them all into mentioned_handles.
+        let mentioned = [...(event.mentioned_handles || [])];
+        if (result.handle) mentioned.push(result.handle);
+        try {
+          const resolvedBiz = await resolveEventBusinessHandles(
+            { name: event.name, description: event.description, venue_name: event.venue_name },
+            supabase, cityName,
+          );
+          mentioned = mergeHandles(mentioned, resolvedBiz, 8);
+          if (resolvedBiz.length) {
+            console.log(`[ENRICH-HANDLES] "${event.venue_name}" → tagged ${resolvedBiz.length} businesses: ${resolvedBiz.map(r => '@' + r.handle).join(' ')}`);
+          }
+        } catch (e) {
+          console.error('[ENRICH-HANDLES] multi-business resolve failed:', (e as Error)?.message);
+          mentioned = mergeHandles(mentioned, [], 8);
+        }
+        updateData.mentioned_handles = mentioned;
 
         if (result.establishmentId) {
           updateData.establishment_id = result.establishmentId;

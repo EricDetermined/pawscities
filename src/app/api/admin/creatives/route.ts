@@ -539,8 +539,29 @@ export async function POST(request: NextRequest) {
     const eventText = `${event.name} ${event.description || ''} ${(event.tags || []).join(' ')}`;
     const detectedBreeds = detectBreeds(eventText);
 
+    // ── Secure handles for EVERY business named in the event ───────────────
+    // Not just the venue/source: organizer, co-hosts, sponsors, participating
+    // businesses. Tagging every featured business is our core funnel — it
+    // notifies them and is how they find us and claim a listing (2026-09-26,
+    // Eric). Resolve now so the very first post tags them all; persist back to
+    // the event so the roundup and any re-post reuse them.
+    let mentionedForCaption: string[] = event.mentioned_handles || [];
+    try {
+      const { resolveEventBusinessHandles, mergeHandles } = await import('@/lib/business-handles');
+      const resolvedBiz = await resolveEventBusinessHandles(
+        { name: event.name, description: event.description, venue_name: event.venue_name },
+        supabase, cityName,
+      );
+      mentionedForCaption = mergeHandles(mentionedForCaption, resolvedBiz, 8);
+      if (JSON.stringify(mentionedForCaption) !== JSON.stringify(event.mentioned_handles || [])) {
+        await supabase.from('events').update({ mentioned_handles: mentionedForCaption }).eq('id', eventId);
+      }
+    } catch (e) {
+      console.error('[CREATIVE] business handle resolve failed:', (e as Error)?.message);
+    }
+
     // ── Build caption ────────────────────────────────────────────────────
-    const allHandles = event.mentioned_handles || [];
+    const allHandles = mentionedForCaption;
     const handleMentions = allHandles.length > 0
       ? `\n\n${allHandles.map((h: string) => '@' + h.replace('@', '')).join(' ')}`
       : '';
