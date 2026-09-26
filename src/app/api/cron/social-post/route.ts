@@ -4,6 +4,7 @@ import { verifyCronAuth } from '@/lib/cron-auth';
 import { getSiteBaseUrl } from '@/lib/base-url';
 import { isBrowserIgSessionActive } from '@/lib/ig-lock';
 import { publishImagePost, publishCarouselPost } from '@/lib/instagram';
+import { assertPostReady } from '@/lib/post-guard';
 import { generateAndUploadMascotImage } from '@/lib/dalle';
 
 // ─── Config ────────────────────────────────────────────────────────────────────
@@ -508,6 +509,35 @@ export async function GET(request: NextRequest) {
           .update({ status: 'failed', error_message: 'Image verification timed out' })
           .eq('id', creative.id);
         continue;
+      }
+
+      // ── GOLDEN-RULES GATE (last line of defense before publishing) ────────
+      // Enforces docs/MARKETING_GOLDEN_RULES.md in code: no dateless/stale/
+      // link-less post can reach the feed even if selection logic regresses.
+      {
+        const evStart = (creative.content_type === 'event' && creative.event_id)
+          ? (eventDates.get(creative.event_id as string) || null)
+          : null;
+        const guard = assertPostReady(
+          {
+            content_type: creative.content_type as string,
+            format: creative.format as string,
+            event_id: creative.event_id as string | null,
+            image_url: imageUrl,
+            caption: creative.caption as string,
+            headline: creative.headline as string,
+            scheduled_for: creative.scheduled_for as string,
+          },
+          today,
+          evStart,
+        );
+        if (!guard.ok) {
+          console.error(`[SOCIAL-POST] BLOCKED by golden-rules gate: "${creative.headline}" — ${guard.reason}`);
+          await supabase.from('creative_queue')
+            .update({ status: 'rejected', rejection_reason: `Golden-rules gate: ${guard.reason}` })
+            .eq('id', creative.id);
+          continue;
+        }
       }
 
       // ── Dry run ──────────────────────────────────────────────────────────
