@@ -121,7 +121,7 @@ async function validateCarouselImages(urls: string[]): Promise<string[]> {
 export async function GET(request: NextRequest) {
   const dryRun = request.nextUrl.searchParams.get('dryRun') === 'true';
   const prefer = request.nextUrl.searchParams.get('prefer'); // 'content_bank' | 'event' | null
-  const maxPosts = Math.min(parseInt(request.nextUrl.searchParams.get('max') || '1', 10) || 1, 5);
+  let maxPosts = Math.min(parseInt(request.nextUrl.searchParams.get('max') || '1', 10) || 1, 5);
 
   if (!verifyCronAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -143,6 +143,33 @@ export async function GET(request: NextRequest) {
     }
 
     const today = new Date().toISOString().split('T')[0];
+    const addDaysStr = (n: number) => {
+      const d = new Date(today + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n);
+      return d.toISOString().split('T')[0];
+    };
+    const MIN_EVENT_LEAD_DAYS = 3; // every event must be promoted >= 3 days before it happens
+
+    // ── Deadline-aware volume ─────────────────────────────────────────────────
+    // If more event creatives hit their LAST promotable day (exactly the 3-day
+    // floor) than the normal slot capacity, post more today (capped) so none
+    // breaches the lead rule. A heavier day beats a stale or day-of post.
+    try {
+      const floorDate = addDaysStr(MIN_EVENT_LEAD_DAYS);
+      const { data: dueRows } = await supabase
+        .from('creative_queue').select('event_id')
+        .eq('status', 'approved').eq('content_type', 'event').not('event_id', 'is', null)
+        .lte('scheduled_for', today).limit(60);
+      const ids = [...new Set((dueRows || []).map((c: { event_id: string }) => c.event_id))];
+      if (ids.length) {
+        const { data: evs } = await supabase.from('events').select('id, start_date').in('id', ids);
+        const lastChance = (evs || []).filter((e: { start_date: string }) => (e.start_date || '').slice(0, 10) === floorDate).length;
+        if (lastChance > maxPosts) {
+          maxPosts = Math.min(8, lastChance);
+          console.log(`[SOCIAL-POST] Deadline catch-up: ${lastChance} events at 3-day floor → maxPosts=${maxPosts}`);
+        }
+      }
+    } catch (e) { console.log('[SOCIAL-POST] deadline catch-up skipped:', (e as Error)?.message); }
+
     const hasOpenAI = !!process.env.OPENAI_API_KEY;
     const slot = prefer || 'any';
     const published: { headline: string; type: string; postId: string }[] = [];
@@ -224,8 +251,11 @@ export async function GET(request: NextRequest) {
           if (c.content_type === 'event' && c.event_id) {
             const { data: ev } = await supabase
               .from('events').select('start_date').eq('id', c.event_id).single();
-            if (ev?.start_date && ev.start_date < today) continue;
+            // Only pull forward if the event still meets the 3-day lead floor.
+            if (ev?.start_date && ev.start_date.slice(0, 10) < addDaysStr(MIN_EVENT_LEAD_DAYS)) continue;
           }
+          // Never pull forward a stale weekly roundup either.
+          if (c.format === 'carousel' && !c.event_id && (c.scheduled_for as string || '') < addDaysStr(-3)) continue;
           usable.push(c);
         }
         if (usable.length > 0) {
@@ -244,54 +274,63 @@ export async function GET(request: NextRequest) {
       break; // No more candidates — exit loop
     }
 
-    // ── Auto-expire event creatives whose event date has passed ──────────────
+    // ── TIMELINESS GATE (2026-09-26) ─────────────────────────────────────────
+    // Every event must be promoted at least MIN_EVENT_LEAD_DAYS ahead of its
+    // date. Anything past, same-day, or inside the lead window has missed its
+    // window and must NOT post — that is what put a "this week (Sep 14-20)" post
+    // out on Sep 26. Weekly "this week" roundups (carousel, no event_id) and any
+    // creative that lingered well past its scheduled_for are dropped too.
+    const minEventDate = addDaysStr(MIN_EVENT_LEAD_DAYS); // event start must be >= this
+    const roundupStaleCutoff = addDaysStr(-3);            // a weekly roundup must post within 3 days of its week start
+    const genericStaleCutoff = addDaysStr(-5);            // anything scheduled >5 days ago
+
     const eventCreatives = approvedCreatives.filter(c => c.content_type === 'event' && c.event_id);
     let eventDates = new Map<string, string>();
     if (eventCreatives.length > 0) {
       const eventIds = eventCreatives.map(c => c.event_id as string);
-      const { data: events } = await supabase
-        .from('events')
-        .select('id, start_date')
-        .in('id', eventIds);
-
+      const { data: events } = await supabase.from('events').select('id, start_date').in('id', eventIds);
       eventDates = new Map((events || []).map(e => [e.id, e.start_date]));
-
-      for (const creative of eventCreatives) {
-        const eventDate = eventDates.get(creative.event_id as string);
-        if (eventDate && eventDate < today) {
-          console.log(`[SOCIAL-POST] Auto-expiring "${creative.headline}" — event date ${eventDate} has passed`);
-          await supabase.from('creative_queue')
-            .update({ status: 'rejected', rejection_reason: `Event date (${eventDate}) has passed — auto-expired` })
-            .eq('id', creative.id);
-        }
-      }
-
-      const expiredIds = new Set(
-        eventCreatives
-          .filter(c => {
-            const d = eventDates.get(c.event_id as string);
-            return d && d < today;
-          })
-          .map(c => c.id)
-      );
-      approvedCreatives = approvedCreatives.filter(c => !expiredIds.has(c.id));
-
-      if (approvedCreatives.length === 0) {
-        console.log(`[SOCIAL-POST] Slot=${slot} [${postNum + 1}/${maxPosts}]: All candidates expired (past events)`);
-        break;
-      }
-
-      // ── Urgency sort: event creatives with soonest event date go first ──
-      // This ensures we never miss posting an event because content was ahead in queue
-      approvedCreatives.sort((a, b) => {
-        const aIsEvent = a.content_type === 'event' && a.event_id;
-        const bIsEvent = b.content_type === 'event' && b.event_id;
-        const aDate = aIsEvent ? (eventDates.get(a.event_id as string) || '9999') : '9999';
-        const bDate = bIsEvent ? (eventDates.get(b.event_id as string) || '9999') : '9999';
-        // Events with closest deadlines come first; content sorts to the end
-        return aDate < bDate ? -1 : aDate > bDate ? 1 : 0;
-      });
     }
+
+    const dropIds = new Set<unknown>();
+    for (const c of approvedCreatives) {
+      const isEvent = c.content_type === 'event' && c.event_id;
+      const isRoundup = c.format === 'carousel' && !c.event_id; // weekly "this week" roundup
+      const sched = (c.scheduled_for as string) || '';
+      let reason = '';
+      if (isEvent) {
+        const d = eventDates.get(c.event_id as string);
+        const dd = d ? d.slice(0, 10) : '';
+        if (!dd || dd < minEventDate) {
+          reason = (dd && dd >= today)
+            ? `Under ${MIN_EVENT_LEAD_DAYS}-day lead (event ${dd}) — auto-skipped ${today}`
+            : `Event date ${dd || 'unknown'} passed/invalid — auto-expired ${today}`;
+        }
+      } else if (isRoundup && sched && sched < roundupStaleCutoff) {
+        reason = `Stale weekly roundup (scheduled ${sched}) — auto-expired ${today}`;
+      } else if (sched && sched < genericStaleCutoff) {
+        reason = `Stale creative (scheduled ${sched}, >5 days late) — auto-expired ${today}`;
+      }
+      if (reason) {
+        dropIds.add(c.id);
+        console.log(`[SOCIAL-POST] Timeliness gate dropped "${c.headline}": ${reason}`);
+        await supabase.from('creative_queue').update({ status: 'rejected', rejection_reason: reason }).eq('id', c.id);
+      }
+    }
+    approvedCreatives = approvedCreatives.filter(c => !dropIds.has(c.id));
+
+    if (approvedCreatives.length === 0) {
+      console.log(`[SOCIAL-POST] Slot=${slot} [${postNum + 1}/${maxPosts}]: All candidates dropped by timeliness gate`);
+      break;
+    }
+
+    // Post events closest to their (now >= 3-day) deadline first, so none slips
+    // under the floor before it is promoted. Content sorts to the end.
+    approvedCreatives.sort((a, b) => {
+      const aDate = (a.content_type === 'event' && a.event_id) ? (eventDates.get(a.event_id as string) || '9999') : '9999';
+      const bDate = (b.content_type === 'event' && b.event_id) ? (eventDates.get(b.event_id as string) || '9999') : '9999';
+      return aDate < bDate ? -1 : aDate > bDate ? 1 : 0;
+    });
 
     // ── Grid Diversity: Re-sort candidates to prefer different visual style ──
     // Apply diversity to ALL candidates including events. Only truly urgent
