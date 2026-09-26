@@ -315,7 +315,7 @@ export async function GET(request: NextRequest) {
       if (reason) {
         dropIds.add(c.id);
         console.log(`[SOCIAL-POST] Timeliness gate dropped "${c.headline}": ${reason}`);
-        await supabase.from('creative_queue').update({ status: 'rejected', rejection_reason: reason }).eq('id', c.id);
+        await supabase.from('creative_queue').update({ status: 'rejected', rejection_reason: reason, updated_at: new Date().toISOString() }).eq('id', c.id);
       }
     }
     approvedCreatives = approvedCreatives.filter(c => !dropIds.has(c.id));
@@ -489,7 +489,7 @@ export async function GET(request: NextRequest) {
       if (!imageUrl) {
         console.error(`[SOCIAL-POST] No image for "${creative.headline}", marking failed`);
         await supabase.from('creative_queue')
-          .update({ status: 'failed', error_message: 'Could not generate image' })
+          .update({ status: 'failed', error_message: 'Could not generate image', updated_at: new Date().toISOString() })
           .eq('id', creative.id);
         continue;
       }
@@ -500,13 +500,13 @@ export async function GET(request: NextRequest) {
         if (!verifyRes.ok) {
           console.error(`[SOCIAL-POST] Image not accessible (HTTP ${verifyRes.status}) for "${creative.headline}"`);
           await supabase.from('creative_queue')
-            .update({ status: 'failed', error_message: `Image not accessible: HTTP ${verifyRes.status}` })
+            .update({ status: 'failed', error_message: `Image not accessible: HTTP ${verifyRes.status}`, updated_at: new Date().toISOString() })
             .eq('id', creative.id);
           continue;
         }
       } catch {
         await supabase.from('creative_queue')
-          .update({ status: 'failed', error_message: 'Image verification timed out' })
+          .update({ status: 'failed', error_message: 'Image verification timed out', updated_at: new Date().toISOString() })
           .eq('id', creative.id);
         continue;
       }
@@ -534,7 +534,7 @@ export async function GET(request: NextRequest) {
         if (!guard.ok) {
           console.error(`[SOCIAL-POST] BLOCKED by golden-rules gate: "${creative.headline}" — ${guard.reason}`);
           await supabase.from('creative_queue')
-            .update({ status: 'rejected', rejection_reason: `Golden-rules gate: ${guard.reason}` })
+            .update({ status: 'rejected', rejection_reason: `Golden-rules gate: ${guard.reason}`, updated_at: new Date().toISOString() })
             .eq('id', creative.id);
           continue;
         }
